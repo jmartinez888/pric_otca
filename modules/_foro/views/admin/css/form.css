@@ -1,0 +1,43 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 15/03/2018, 02:54:40 PM
+    Author     : R-Cardenas-NA
+*/
+
+
+
+.panel_collapse:after {
+    font-family: "Glyphicons Halflings";
+    content: "\e113";
+    float: right;
+   
+}
+/* Icon when the collapsible content is hidden */
+.panel_collapse.collapsed:after {
+    content: "\e114";
+}
+.btn_collapse{
+  padding: 5px;
+  cursor: pointer;
+  font-size: 10px;
+  
+}
+.btn_collapse:after {
+    font-family: "Glyphicons Halflings";
+    content: "\e114";
+   
+}
+/* Icon when the collapsible content is hidden */
+.btn_collapse.collapsed:after {
+    content: "\e080";
+}
+.head_collapse{
+ margin-top: 10px;
+}
+.cont_collapse {
+    margin: 8px 0 0 25px;
+}

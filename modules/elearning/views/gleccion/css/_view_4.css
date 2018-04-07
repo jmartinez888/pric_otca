@@ -1,0 +1,53 @@
+#micanvas{
+  border: 1px solid gray !important;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 3;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.contenido-pizarra{
+  position: relative;
+  width: 700px;
+  height: 400px;
+  margin-bottom: 10px;
+}
+
+#tmp_fondo_pizarra{
+  position: absolute;
+  max-width: 700px;
+  max-height: 400px;
+  top: 0px;
+  left: 0px;
+  z-index: 1;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+#lb_help{
+  display: none;
+}
+
+.item-pizarra{
+  width: 100%;
+  height: 180px;
+  border: 1px solid gray;
+  position: relative;
+}
+
+.item-pizarra img{
+  width: 100%;
+  height: 100%;
+}
+
+.btn-quitar-pizarra{
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+}

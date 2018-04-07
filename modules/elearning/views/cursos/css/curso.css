@@ -1,0 +1,68 @@
+.curso-item{
+  background-color: #f7f7f9;
+  border: 1px solid #e1e1e8;
+  border-radius: 4px;
+  position: relative;
+}
+
+.ficha-mod{
+  background: #607D8B;
+  height: 80px;
+  border-radius: 2px;
+  color: #ECEFF1;
+  position: relative;
+  margin-bottom: 10px;
+}
+
+.ficha-mod-title{
+  position: absolute;
+  top: 10px;
+  left: 50px;
+  font-size: 18px;
+}
+
+.ficha-mod-desc{
+  position: absolute;
+  top: 35px;
+  left: 50px;
+  font-size: 14px;
+}
+
+.ficha-mod-icon{
+  padding: 20px 0 0 12px;
+  font-size: 30px;
+}
+
+
+.tag-lms{
+  background-color: #EF5350;
+  color: white;
+  border-radius: 2px;
+  width: 300px;
+  padding: 10px;
+}
+
+.tag-inscrito{
+  background-color: #0097A7;
+  color: white;
+  border-radius: 2px;
+  width: 200px;
+  padding: 10px;
+}
+
+.btn-modulo{
+  position: absolute;
+  right: 10px;
+  bottom: 25px;
+  width: 200px;
+  opacity: 0.8 !important;
+  color: white;
+}
+
+.img-certificado{
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 100px;
+  height: 100px;
+}

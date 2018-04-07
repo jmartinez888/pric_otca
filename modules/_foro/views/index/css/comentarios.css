@@ -1,0 +1,294 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 24/02/2018, 11:35:10 AM
+    Author     : R-Cardenas-NA
+*/
+/* CSS Test begin */
+.comment-box {
+    margin-top: 30px !important;
+}
+/* CSS Test end */
+
+.comment-box img {
+    width: 50px;
+    height: auto;
+}
+.comment-box .media-left {
+    padding-right: 0px;
+    /* margin-left: -15px; */
+    /* width: 65px; */
+}
+.comment-box .media-body p {
+    border: 1px solid #ddd;
+    padding: 10px;
+}
+.comment-box .media-body {
+
+}
+.comment-box .media-body .media p {
+    margin-bottom: 0;
+}
+.comment-box .media-heading {
+    background-color: #f5f5f5;
+    border: 1px solid #ddd;
+    padding: 7px 10px 16px;
+    position: relative;
+    margin-bottom: -1px;
+}
+.comment-box .media-heading:before {
+    content: "";
+    width: 12px;
+    height: 18px;
+    background-color: #f5f5f5;
+    border: 1px solid #ddd;
+    border-width: 1px 0 0 1px;
+    -webkit-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+    position: absolute;
+    top: 10px;
+    left: -6px;
+}
+
+
+.widget-area {
+    background-color: #fff;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    -o-border-radius: 4px;
+    border-radius: 4px;
+    -webkit-box-shadow: 0 0 16px rgba(0, 0, 0, 0.05);
+    -moz-box-shadow: 0 0 16px rgba(0, 0, 0, 0.05);
+    -ms-box-shadow: 0 0 16px rgba(0, 0, 0, 0.05);
+    -o-box-shadow: 0 0 16px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 0 16px rgba(0, 0, 0, 0.05);
+    margin-top: 0px;
+    padding: 25px 30px;
+    position: relative;
+    width: 100%;
+}
+.status-upload {
+    background: none repeat scroll 0 0 #f5f5f5;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    -o-border-radius: 4px;
+    border-radius: 4px;
+    float: left;
+    width: 100%;
+}
+.status-upload{
+    float: left;
+    width: 100%;
+}
+.status-upload textarea {
+    background: none repeat scroll 0 0 #fff;
+    border: medium none;
+    -webkit-border-radius: 4px 4px 0 0;
+    -moz-border-radius: 4px 4px 0 0;
+    -ms-border-radius: 4px 4px 0 0;
+    -o-border-radius: 4px 4px 0 0;
+    border-radius: 4px 4px 0 0;
+    color: #777777;
+    /* float: left; */
+    font-family: Lato;
+    font-size: 14px;
+    height: 70px;
+    letter-spacing: 0.3px;
+    padding: 20px;
+    width: 100%;
+    resize:vertical;
+    outline:none;
+    border: 1px solid #F2F2F2;
+}
+.status-upload .load_files{
+        background-color: #e8e8e8;
+    padding: 5px;
+    margin-top: -5px;
+}
+
+.status-upload .files {
+    background-color: #f5f5f5;
+    border: 1px solid #dcdcdc;
+    font-weight: bold;
+    margin: 0 7px 9px;
+    overflow-y: hidden;
+    padding: 4px 4px 4px 8px;
+    /* max-width: 448px; */
+}
+.status-upload .files .file_titulo
+{ display: inline-block;
+    overflow: hidden;
+    padding: 3px 0;
+    text-overflow: ellipsis;
+    vertical-align: bottom;
+    white-space: nowrap;
+    max-width: 315px;
+}
+.status-upload .files .file_size
+{
+    color: #777;
+    display: inline-block;
+    padding: 3px 3px 3px 8px;
+}
+.status-upload .files .file_loading
+{
+  margin-bottom: -5px;
+  display: inline-block;
+
+}
+.status-upload .files .on{
+  padding: 3px 0;
+  border: 3px solid #ffffff; /* Light grey */
+  border-top: 3px solid #44be06; /* Blue */
+  border-radius: 60%;
+  width: 20px;
+  height: 20px;
+  animation: spin 1.2s linear infinite;
+}
+.status-upload .files .off{
+  
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+.status-upload .d-none
+{
+  display:none;
+}
+.status-upload .files .d-block
+{
+  display:block;
+}
+.status-upload .files .file_close
+{
+        background: url(//ssl.gstatic.com/ui/v1/icons/common/x_8px.png) no-repeat 0 0;
+    cursor: pointer;
+    float: right;
+    height: 16px;
+    margin-top: 1px;
+    opacity: .5;
+    width: 16px;
+}
+.status-upload ul {
+    float: left;
+    list-style: none outside none;
+    margin: 0;
+    padding: 0 0 0 15px;
+    width: auto;
+}
+.status-upload ul > li {
+    float: left;
+}
+.status-upload ul > li > a {
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    -o-border-radius: 4px;
+    border-radius: 4px;
+    color: #777777;
+    float: left;
+    font-size: 14px;
+    height: 30px;
+    line-height: 30px;
+    margin: 10px 0 10px 10px;
+    text-align: center;
+    -webkit-transition: all 0.4s ease 0s;
+    -moz-transition: all 0.4s ease 0s;
+    -ms-transition: all 0.4s ease 0s;
+    -o-transition: all 0.4s ease 0s;
+    transition: all 0.4s ease 0s;
+    width: 30px;
+    cursor: pointer;
+}
+.status-upload ul > li > a:hover {
+    background: none repeat scroll 0 0 #606060;
+    color: #fff;
+}
+.status-upload ul > li > span {
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    -o-border-radius: 4px;
+    border-radius: 4px;
+    color: #777777;
+    float: left;
+    font-size: 14px;
+    height: 30px;
+    line-height: 30px;
+    margin: 10px 0 10px 10px;
+    text-align: center;
+    -webkit-transition: all 0.4s ease 0s;
+    -moz-transition: all 0.4s ease 0s;
+    -ms-transition: all 0.4s ease 0s;
+    -o-transition: all 0.4s ease 0s;
+    transition: all 0.4s ease 0s;
+    width: 30px;
+    cursor: pointer;
+}
+.status-upload ul > li > span:hover {
+    background: none repeat scroll 0 0 #606060;
+    color: #fff;
+}
+.status-upload ul > li > span > input[type=file]{
+    /* position: absolute; */
+    /* top: 0; */
+    /* right: 0; */
+    min-width: 50%;
+    /* min-height: 100%; */
+    /* font-size: 100px; */
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: pointer !important;
+    display: block;
+    margin: -30px 0 0 2px;
+    max-width: 82%;
+    z-index: -3;
+    overflow: hidden;
+}
+.status-upload button {
+    border: medium none;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    -o-border-radius: 4px;
+    border-radius: 4px;
+    color: #fff;
+    float: right;
+    font-family: Lato;
+    font-size: 14px;
+    letter-spacing: 0.3px;
+    margin-right: 9px;
+    margin-top: 9px;
+    padding: 6px 15px;
+}
+.dropdown > a > span.green:before {
+    border-left-color: #2dcb73;
+}
+.status-upload button > i {
+    margin-right: 7px;
+}
+
+.form-login {
+    background-color: #EDEDED;
+    padding-top: 10px;
+    padding-bottom: 20px;
+    padding-left: 5px;
+    padding-right: 5px;
+    /* border-radius: 15px; */
+    border-color:#d2d2d2;
+    border-width: 5px;
+    box-shadow:0 1px 0 #cfcfcf;
+}
+.form-control {
+    border-radius: 10px;
+}

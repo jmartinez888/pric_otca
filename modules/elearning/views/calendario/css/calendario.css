@@ -1,0 +1,76 @@
+
+.panel-calendario-header{
+  background: #00a65a;
+  color: white;
+}
+
+#panel-calendario-titulo{
+  font-size: 16px;
+}
+
+.table-calendar{
+  width: 100%;
+}
+.table-calendar tr{
+  width: 100%;
+  border: 1px solid gray;
+}
+
+.table-calendar tr td{
+  height: 100px;
+  background: white;
+  width: 14.1%;
+  padding: 0px !important;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -o-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.table-calendar tr th{
+  text-align: center;
+  background-color: #eee;
+}
+
+.dia-calendario{
+  position: relative;
+}
+
+.no-month{
+  position: relative;
+  background-color: #efe !important;
+}
+
+.no-month:hover{
+  opacity: 0.4;
+}
+
+.dia-calendario:hover{
+  background-color: red;
+  opacity: 0.4;
+  cursor: pointer;
+}
+
+.eventos-dia-calendario{
+  height: 100px;
+  width: 100%;
+}
+
+.fecha-dia-calendario{
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+}
+
+.evento-dia-calendario{
+  width: 98%;
+  background: #1976D2;
+  color: white;
+  margin: 1%;
+  top: 0px;
+  border: 1px solid blue;
+  padding: 2px;
+  font-size: 12px;
+}
