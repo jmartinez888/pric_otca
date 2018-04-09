@@ -52,16 +52,6 @@ $(document).on('ready', function() {
 			$('[data-toggle="tooltip"]').tooltip();
         });
     }   
-
-    //Busqueda Avanzada
-    $("body").on('click', "#busquedaAvanzada", function() {
-        if ($('#ba_div').hasClass('hidden')) {
-            $('#ba_div').removeClass('hidden');
-        } else {
-            $('#ba_div').addClass('hidden');
-        }
-    });
-
     
     //Para el Modal
     $("body").on('click', "#agregar-form-link", function (e) {

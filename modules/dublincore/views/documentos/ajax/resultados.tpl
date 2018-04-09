@@ -1,4 +1,4 @@
-<div class="col-xs-12 col-sm-8 col-md-offset-0 col-md-9 col-lg-offset-0 col-lg-9">
+<div class="col-xs-12 col-sm-8 col-md-offset-0 col-md-9 col-lg-offset-0 col-lg-10">
       <div class="panel panel-default">
         <div class="panel-heading">
   <h4 class="panel-title">

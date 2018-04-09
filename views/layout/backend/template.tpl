@@ -10,6 +10,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
         <link href="{$_layoutParams.ruta_css}bootstrapValidator.css" rel="stylesheet" type="text/css">
         <link href="{$_layoutParams.ruta_css}datepicker.css" rel="stylesheet" type="text/css">
+        <link href="{$_layoutParams.ruta_css}bootstrap-select.min.css" rel="stylesheet" type="text/css">
         <link rel="shortcut icon" href="{$_layoutParams.ruta_img}favicon.ico" type="image/x-icon" />
         <!-- Bootstrap 3.3.4 -->
         <!-- <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" /> -->
@@ -281,6 +282,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <script type="text/javascript" src="{$_layoutParams.root_clear}public/js/jquery.slimscroll.min.js"></script>
         <script type="text/javascript" src="{$_layoutParams.root_clear}public/ckeditor/ckeditor.js"></script>
         <script type="text/javascript" src="{$_layoutParams.ruta_js}bootstrap-datepicker.js"></script>
+        <script type="text/javascript" src="{$_layoutParams.ruta_js}bootstrap-select.min.js"></script>
         <script type="text/javascript" src="{$_layoutParams.ruta_js}bootstrapValidator.js"></script>
 
         <script type="text/javascript" src="{$_layoutParams.root_clear}public/js/highcharts.js"></script>

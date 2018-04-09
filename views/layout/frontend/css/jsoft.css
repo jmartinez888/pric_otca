@@ -422,7 +422,7 @@ top: 28%;
 }
 .dropdown-menu
 {
-	font-size: .8em;
+	/*font-size: .8em;*/
     border-radius: 0;
 }
 .d-md-block{

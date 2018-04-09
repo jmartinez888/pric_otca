@@ -12,6 +12,7 @@
 
         <link href="{$_layoutParams.ruta_css}bootstrapValidator.css" rel="stylesheet" type="text/css">
         <link href="{$_layoutParams.ruta_css}datepicker.css" rel="stylesheet" type="text/css">   
+        <link href="{$_layoutParams.ruta_css}bootstrap-select.min.css" rel="stylesheet" type="text/css">
 
         <!-- <style type="text/css">
             #form1 .selectContainer .form-control-feedback {
@@ -384,6 +385,7 @@
         <script type="text/javascript" src="{$_layoutParams.root_clear}public/js/jquery.slimscroll.min.js"></script>
 
         <script type="text/javascript" src="{$_layoutParams.ruta_js}bootstrap-datepicker.js"></script>
+        <script type="text/javascript" src="{$_layoutParams.ruta_js}bootstrap-select.min.js"></script>
         <script type="text/javascript" src="{$_layoutParams.ruta_js}bootstrapValidator.js"></script>
         <script type="text/javascript" src="{$_layoutParams.root_clear}public/js/highcharts.js"></script>
         <script type="text/javascript" src="{$_layoutParams.root_clear}public/ckeditor/ckeditor.js"></script>

@@ -41,7 +41,7 @@ and open the template in the editor.
 }
 
 .form_registrar_documento
-{  max-width: 90%;
+{   max-width: 90%;
     padding: 0 5px;
     margin: 0 auto;
 }
@@ -49,35 +49,41 @@ and open the template in the editor.
     direction: ltr;
 }
 .table-registro-documento label{
-  margin: 1px 0;
-  font-family: inherit;
-  font-weight: bold;
-  line-height: 1;
-  color: inherit;
+    margin: 1px 0;
+    font-family: inherit;
+    font-weight: bold;
+    line-height: 1;
+    color: inherit;
 }
 
 .btn-buscador{
-      padding: 4px 12px 0px;
-      font-size: 20px;
+    padding: 4px 12px 0px;
+    font-size: 20px;
 }
 
 .div-filtro
 {
-  padding: 15px 0px;
-  font-size: 1.1em
+    padding: 15px 0px;
+    font-size: 1.1em
 }
 
 .div-filtro a{
-  text-decoration: none;
+    text-decoration: none;
 }
 
 .div-filtro a:hover{
-  background-color: #d63232;
+    background-color: #d63232;
 }
-/*.link{
-  text-decoration: underline;
-}*/
+
 .link:hover, .link:active, .link:focus{
-  text-decoration: underline;
-  color: #031e35;
+    text-decoration: underline;
+    color: #031e35;
+}
+
+.text-muted{
+}
+.text-muted:hover{
+    color: #1bb11d;
+    text-decoration: underline;
+    cursor: pointer;
 }

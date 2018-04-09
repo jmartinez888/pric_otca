@@ -59,7 +59,7 @@
 
 
   <div id="resultados" >
-     <div class="col-xs-12 col-sm-offset-2 col-sm-8 col-md-offset-1 col-md-10 col-lg-offset-1 col-lg-10">
+     <div class="col-xs-12  col-md-offset-1 col-md-10 ">
       <div class="panel panel-default">
         <div class="panel-heading">
         <h4 class="panel-title">
@@ -70,28 +70,75 @@
             <div class="row">
               <div class="col-md-12">
                   <div class="row">
-                   <div class="col-md-6 col-md-offset-3">
-                    <div class="input-group">
-                     <input type ="text" class="form-control"  data-toggle="tooltip" data-original-title="{$lenguaje['title_cuadro_buscar']}" placeholder="{$lenguaje['titulo_resultados_documentos']}" name="palabra" id="palabra" onkeypress="tecla_enter_dublincore(event)" value="{$palabrabuscada|default:''}">                  
-                     <span class="input-group-btn">
-                      <button class="btn  btn-success btn-buscador" onclick="buscarPalabraDocumentos('palabra','filtrotemadocumento','filtrotipodocumento','filtroautordocumento','filtroformatodocumento','filtropaisdocumento')" type="button" id="btnEnviar"><i class="glyphicon glyphicon-search"></i></button>
-                      </span>
-                    </div><!-- /input-group -->
-                  </div>
-
-                  {if $_acl->getAutenticado()}
-                    {if isset($filtrousuario)}
-                    <div class="col-md-3 ">
-                      <button class="btn  btn-success " onclick="buscarPalabraDocumentos('palabra','filtrotemadocumento','filtrotipodocumento','filtroautordocumento','filtroformatodocumento','filtropaisdocumento')" type="button" id="btnMisDoc"><i class="glyphicon glyphicon-list"></i> Todos </button>
-                    </div>
-                    {else}
-                      <div class="col-md-3 ">
-                        <button data-toggle="tooltip" data-placement="top" title="Solo Mis Documentos"  class="btn  btn-success " onclick="buscarPalabraDocumentos('palabra','filtrotemadocumento','filtrotipodocumento','filtroautordocumento','filtroformatodocumento','filtropaisdocumento',1)" type="button" id="btnMisDoc"><i class="glyphicon glyphicon-user"></i></button>
+                      <div class="col-md-6 col-md-offset-3">
+                          <div class="input-group">
+                              <input type ="text" class="form-control"  data-toggle="tooltip" data-original-title="{$lenguaje['title_cuadro_buscar']}" placeholder="{$lenguaje['titulo_resultados_documentos']}" name="palabra" id="palabra" onkeypress="tecla_enter_dublincore(event)" value="{$palabrabuscada|default:''}">                  
+                              <span class="input-group-btn">
+                                <button class="btn  btn-success btn-buscador" onclick="buscarPalabraDocumentos('palabra','filtrotemadocumento','filtrotipodocumento','filtroautordocumento','filtroformatodocumento','filtropaisdocumento')" type="button" id="btnEnviar"><i class="glyphicon glyphicon-search"></i></button>
+                              </span>
+                          </div><!-- /input-group -->
                       </div>
-                    {/if}
-                  {/if}
 
-                </div>
+                    {if $_acl->getAutenticado()}
+                      {if isset($filtrousuario)}
+                      <div class="col-md-3 ">
+                        <button class="btn  btn-success " onclick="buscarPalabraDocumentos('palabra','filtrotemadocumento','filtrotipodocumento','filtroautordocumento','filtroformatodocumento','filtropaisdocumento')" type="button" id="btnMisDoc"><i class="glyphicon glyphicon-list"></i> Todos </button>
+                      </div>
+                      {else}
+                        <div class="col-md-3 ">
+                          <button data-toggle="tooltip" data-placement="top" title="Solo Mis Documentos"  class="btn  btn-success " onclick="buscarPalabraDocumentos('palabra','filtrotemadocumento','filtrotipodocumento','filtroautordocumento','filtroformatodocumento','filtropaisdocumento',1)" type="button" id="btnMisDoc"><i class="glyphicon glyphicon-user"></i></button>
+                        </div>
+                      {/if}
+                    {/if}
+                  </div>
+                  <div class="text-center " style="padding-top: 10px; padding-bottom: 10px">
+                      <a class="text-muted" id="busquedaAvanzada" style="">Búsqueda Avanzada</a>
+                  </div>
+                  <div class="form-horizontal col-sm-offset-1 col-sm-10 col-md-offset-2 col-md-8 hidden" id="ba_div">  
+                      {if isset($temadocumento) && count($temadocumento)}                 
+                      <div class="form-group">
+                          <label class="col-xs-3 control-label">Temática : </label>
+                          <div class="col-xs-9">
+                              <!-- <input class="form-control"  list="tematicas"  id ="ba_tematica" type="text"  name="nombre" value="" placeholder="Temática" /> -->
+                              <select class="form-control selectpicker" name="filtrotemadocumento" id="filtrotemadocumento" data-live-search="true">
+                                  <option value=""> -- Seleccione Temática --</option>
+                                  {foreach item=dt from=$temadocumento}
+                                      <option value="{$dt.Ted_Descripcion}">{$dt.Ted_Descripcion}</option>
+                                  {/foreach}
+                                     
+                              </select>
+                          </div>
+                      </div>
+                      {/if} 
+                      {if isset($autores) && count($autores)}
+                      <div class="form-group ">
+                          <label class="col-xs-3 control-label" >Autor : </label>
+                          <div class="col-xs-9">
+                              <!-- <input class="form-control"  list="autores"  id ="ba_autor" type="text" pattern="([a-zA-Z][\sa-zA-Z]+)" name="apellidos" value="" placeholder="Autor" required=""/> -->
+                              <select class="form-control selectpicker" name="filtroautordocumento" id="filtroautordocumento" data-live-search="true">
+                                  <option value=""> -- Seleccione Autor --</option>
+                                  {foreach item=da from=$autores}
+                                      <option value="{$da.Aut_Nombre}">{$da.Aut_Nombre}</option>
+                                  {/foreach}   
+                              </select>
+                          </div>
+                      </div> 
+                      {/if}
+                      {if isset($formatos) && count($formatos)}
+                      <div class="form-group">
+                          <label class="col-xs-3 control-label" >Formato : </label>
+                          <div class="col-xs-9">
+                              <!-- <input  class="form-control"  list="formatos"  id ="ba_dni" type="text"  name="dni" value="" placeholder="Formato" /> -->
+                              <select class="form-control selectpicker" name="filtroformatodocumento" id="filtroformatodocumento" data-live-search="true">
+                                  <option value=""> -- Seleccione Formato --</option>
+                                  {foreach item=df from=$formatos}
+                                      <option value="{$df.Taf_Descripcion}">{$df.Taf_Descripcion}</option>
+                                  {/foreach}  
+                              </select>
+                          </div>
+                      </div>  
+                      {/if}
+                  </div>
               </div> 
 
               <!-- <div class="col-xs-12 text-center">
@@ -122,7 +169,7 @@
                {/if}             
               </div> -->
 
-              <div class="col-md-6 col-md-offset-3 div-filtro text-center">
+              <!-- <div class="col-md-6 col-md-offset-3 div-filtro text-center">
                 {if isset($filtroTema) OR isset($filtroTipo) OR isset($filtroAutor) OR isset($filtroFormato) OR isset($filtroPais) OR isset($filtroLetra) OR isset($filtrousuario)}
                   <strong> Filtro:</strong> 
                 {/if}
@@ -174,7 +221,7 @@
                    Quitar Filtros <i class="fa fa-times"></i>
                    </a>
                 {/if}
-              </div>
+              </div> -->
               {if $totaldocumentos[0] > 0 }
                <div class="col-md-12">
                   <div class="row">
