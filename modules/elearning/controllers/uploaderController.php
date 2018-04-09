@@ -30,7 +30,7 @@ class uploaderController extends elearningController {
       $name = $_FILES["files"]["name"][$i];
       $type = $_FILES["files"]["type"][$i];
       $tmp_name = $_FILES["files"]["tmp_name"][$i];
-      $tmp_ruta = $ruta . $this->Prefijo() . "-" . $pre . "-" . $name;
+      $tmp_ruta = $this->Prefijo() . "-" . $pre . "-" . $name;
 
       if(move_uploaded_file($tmp_name, $tmp_ruta)) {
         array_push($resultados, array( "estado" => 1, "url" => $tmp_ruta ));
