@@ -3,22 +3,23 @@
 
         <li  <?php if (isset($this->_tree[$i]["hijo"]) && sizeof($this->_tree[$i]["hijo"]) > 0): ?> class="dropdown-submenu"<?php else : ?> class="nav-item" <?php endif; ?>>
                
-            <a class="nav-link" href=" <?php if($this->_tree[$i]['Pag_Selectable']==0):
+            <a class="nav-link txt-color-black padding-10" href=" <?php if($this->_tree[$i]['Pag_Selectable']==0):
                             echo BASE_URL."index/index/".$this->_link.$this->_tree[$i]['Pag_IdPagina'];  
                             else : echo $this->_link.$this->_tree[$i]['Pag_Url']; endif;?>"
                             data-toggle="tooltip" data-placement="bottom" 
                             
                             title="<?php echo $this->_tree[$i]['Pag_Nombre'] ?>"> 
-                            <i style="font-size:15px" <?php if($this->_tree[$i]['Pag_IdPagina']==45): ?>
-                            class="fa fa-info-circle" 
+                            <?php if($this->_tree[$i]['Pag_IdPagina']==45): ?>
+                                <i style="font-size:15px" class="fa fa-info-circle" ></i>
+                            <?php echo $this->_tree[$i]['Pag_Nombre'] ?>
                             <?php endif;?>
                             <?php if($this->_tree[$i]['Pag_IdPagina']==46): ?>
-                            class="fa fa-envelope" 
-                            <?php endif;?>
-                            <?php if($this->_tree[$i]['Pag_IdPagina']==44): ?>
-                            class="fa fa-home" 
-                            <?php endif;?> ></i>
+                                <i style="font-size:15px" class="fa fa-envelope" ></i>
                             <?php echo $this->_tree[$i]['Pag_Nombre'] ?>
+                            <?php endif;?>
+                            <?php if($this->_tree[$i]['Pag_IdPagina']==5): ?>
+                                <i class="fa fa-home f-z-19" ></i>
+                            <?php else: echo $this->_tree[$i]['Pag_Nombre']; endif;?>
                         </a>   
             
         <?php

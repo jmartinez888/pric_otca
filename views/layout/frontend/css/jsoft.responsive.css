@@ -2,46 +2,43 @@
 	.logo{
 		max-width: 120px;
 	}
-	.row{
-		margin-left: 0;
-    	margin-right: 0;
+	.texto-header h2{
+	font-size: 20px;
 	}
 	header.active h2.tit-main{
-		font-size: 22px;
+		
+left: 24%;
+		
+font-size: 14px;
+		
+max-width: 287px;
+		
+top: 0;
 	}
 	.tit-main{
-	    color: #fff;
-	    display: inline-block;
-	    max-width: 303px;
-	    text-align: left;
-	    position: relative;
-	    z-index: 1;
-	    margin-top: 35px;
-	    margin-left: 29%;
-	    font-size: 17px;
+		    color: #fff;
+    display: inline-block;
+    max-width: 303px;
+    text-align: left;
+    position: relative;
+    z-index: 1;
+    margin-top: 35px;
+    margin-left: 29%;
+    font-size: 17px;
 	}
-	header.active .logo_otca {
-	    right: 3%;
-	}
-	.h3, h3 {
-	    font-size: 17px;
-	}
+
 	.logo_otca {
 	    position: absolute;
 	    max-width: 128px;
 	    right: 1%;
 	    top: 35%;
 	}
-	.nav-h{
-		height: 25%;
-	}
+
 	.cont-nav-p .navbar-nav, .cont-nav-p .navbar-nav .nav-link {
 	    border-bottom: 2px solid #408C4C;
-	    font-size: 12px;
+	    font-size: 10px;
 	    text-transform: uppercase;
-	}
-	.nav>li>a {
-	    padding: 10px;
+	    padding: .5em;
 	}
 	.cont-nav-p .navbar{
 		min-height: 0;
@@ -50,21 +47,21 @@
 	header.active{
 		    max-width: 735px;
 	}
-	/*header.active .logo{
+	header.active .logo{
 		max-width: 100px;
-	}*/
-	/*header.active .nav-h{
+	}
+	header.active .nav-h{
 	
-	}*/
+	}
 	.active-nav{
-		/*max-width: 735px;*/
+		max-width: 735px;
 		width: 100%;
 	}
 	.contain-jsoft{
 		width: 735px;
 	}
-	.contain-jsoft .item {
-	    margin: 50px 30px 10px;
+	.contain-jsoft .item {   
+    	margin: 0 30px;  
 	}
 	.contador-otca{
 		top: 15%;
@@ -76,36 +73,37 @@
 
 	.enlaces-footer{
 	
-	    height: 40vh;
-	}
+    height: 40vh;
+}
 
 }
 
-@media (max-width:767px){
+@media (max-width:765px){
 	.logo{
 		max-width: 120px;
 	}
 
 	header.active h2.tit-main{
-		max-width: 65%;
-	    left: 20%;
-	    top: 30px;
+	
+max-width: 76%;
+	
+left: 17%;
+	
+top: 5px;
+}
+
+	h2..tit-main{
+		    color: #fff;
+    display: inline-block;
+    max-width: 303px;
+    text-align: left;
+    position: relative;
+    z-index: 1;
+    margin-top: 35px;
+    margin-left: 29%;
+    font-size: 17px;
 	}
 
-	h2 .tit-main{
-	    color: #fff;
-	    display: inline-block;
-	    max-width: 303px;
-	    text-align: left;
-	    position: relative;
-	    z-index: 1;
-	    margin-top: 35px;
-	    margin-left: 29%;
-	    font-size: 17px;
-	}
-	.h3, h3 {
-	    font-size: 15px;
-	}
 	.logo_otca {
 	    position: absolute;
 	    max-width: 128px;
@@ -113,24 +111,22 @@
 	    top: 35%;
 	}
 	.nav-h{
-		height: 30px;
-		width: 73.4%;
+		height: 25px;
 	}
 	.nav-h nav{
-	    padding: 0;
-    	margin-top: -12px;
-    	text-align: left;
+		    padding: 0;
+    margin-top: -12px;
 	}
 	.nav-h nav .navbar-collapse{
 		background: rgb(168, 207, 69);
 	    z-index: 112;
 	    position: relative;
-	    top: 7px;
+	    top: -13px;
 	    width: 100px;
 	}
-	.cont-nav-p .navbar-nav, .cont-nav-p .navbar-nav .nav-link {
+		.cont-nav-p .navbar-nav, .cont-nav-p .navbar-nav .nav-link {
 	    border-bottom: 2px solid #408C4C;
-	    font-size: 14px;
+	    font-size: 10px;
 	    text-transform: uppercase;
 	    padding: .5em;
 	}
@@ -139,16 +135,19 @@
 	}
 
 	header.active{
-		max-width: 735px;
+		    max-width: 735px;
 	}
 	header.active .logo{
-		max-width: 123px;
+		max-width: 106px;
 	}
 	header.active .nav-h{
 	
 	}
+	.texto-header h2{
+	font-size: 17px;
+	}
 	.active-nav{
-		top:87px;
+	top:25px;
 	}
 	.contain-jsoft{
 		width: 735px;
@@ -158,14 +157,16 @@
 	}
 	.contador-otca{
 		top: 15%;
-    	left: 34%;
+    left: 34%;
 	}
 	.item-contador:hover .contador-otca{
     	max-width: 42%;
 	}
+
 	.enlaces-footer{
-	    height: 60vh;
-	}
+	
+    height: 40vh;
+}
 
 }
 
@@ -179,12 +180,13 @@
 		margin:0;
 		
 	}
-	header.active h2.tit-main {
-	    max-width: 64%;
-	    left: 26%;
-	    top: 40px;
-	    font-size: 17px;
+
+	.texto-header{
+		display: none
 	}
+		header.active h2.tit-main{
+			display: none;
+		}
 	.logo{
 		max-width: 79px;
 		top: 20px;
@@ -208,50 +210,45 @@
 	    top: 35%;
 	}
 	.nav-h{
-		height: 30px;
-		width: 81%;
+		height: 25px;
+		width: 78%;
 	}
 	.nav-h nav{
-		padding: 0;
-    	margin-top: -12px;
+		    padding: 0;
+    margin-top: -12px;
 	}
 	.nav-h nav .navbar-collapse{
 		background: rgb(168, 207, 69);
 	    z-index: 112;
 	    position: relative;
-	    top: 7px;
+	    top: -13px;
 	    width: 100px;
 	}
-	/*.cont-nav-p .navbar-nav, .cont-nav-p .navbar-nav .nav-link {
+		.cont-nav-p .navbar-nav, .cont-nav-p .navbar-nav .nav-link {
 	    border-bottom: 2px solid #408C4C;
 	    font-size: 10px;
 	    text-transform: uppercase;
 	    padding: .5em;
-	}*/
+	}
 	.cont-nav-p .navbar{
 		min-height: 0;
 	}
 
 	header.active{
-	    max-width: 735px;
+		    max-width: 735px;
 	}
 	header.active .logo{
-		max-width: 128px;
-        width: 25%;
+		max-width: 106px;
 		top: 0;
 	}
 	.buscador{
-		right:90px;
+		right:20px;
 	}
-	header.active .nav-h {
-	    height: 30px;
-	    width: 78%;
-	}
-	header.active .fondo-header-active {
-	    width: 78%;
+	header.active .nav-h{
+	
 	}
 	.active-nav{
-		top:90px;
+	top:25px;
 	}
 	.contain-jsoft{
 		width: 100%;

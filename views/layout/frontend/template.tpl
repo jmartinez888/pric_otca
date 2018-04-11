@@ -3,13 +3,12 @@
     <head>
         <title>{$titulo|default:"Sin t&iacute;tulo"}</title>
         <meta charset="utf-8">
-        <meta name="google-signin-client_id" content="10097730951-nlq3fqugpntsvnpdp1p0q9775pbifoul.apps.googleusercontent.com">
+        <meta name="google-signin-client_id" content="684672950066-oqa176688bh3tpbftvohouguabu3dpi6.apps.googleusercontent.com">
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
-        <!-- <meta name="robots" content="noindex"> -->
+        <meta name="robots" content="noindex">
 
         <link rel="stylesheet" href="{$_layoutParams.ruta_css}font-awesome.css">   
         <link href="{$_layoutParams.ruta_css}bootstrap.min.css" rel="stylesheet" type="text/css">
-
         <link href="{$_layoutParams.ruta_css}bootstrapValidator.css" rel="stylesheet" type="text/css">
         <link href="{$_layoutParams.ruta_css}datepicker.css" rel="stylesheet" type="text/css">   
         <link href="{$_layoutParams.ruta_css}bootstrap-select.min.css" rel="stylesheet" type="text/css">
@@ -53,60 +52,62 @@
 
     <body >
         <!-- HEADER PRINCIPAL -->
-        <header>
-            <div class="nav-h">
-                <div class="col-md-offset-1 col-md-10">
-                    <div class="col-xs-12">
-                        <nav class="navbar navbar-light">  
-                            <div class="navbar-header">
-                                <button class="navbar-toggle collapsed" style="color: black; box-shadow: 0 0 11px black; padding: 2px 10px 0px; top: 9px; border: 1px solid black; margin: 3px;" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                                    <span class="sr-only">Toggle navigation</span>
-                                    <span class="fa fa-bars" style="font-size: 19px;"></span>
-                                </button>
-                            </div>
-                            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                                <ul class="nav navbar-nav">
+        <div class="container-fluid back-color-black min-height-32" >
+            <div class="row ">
+                <div class="col-md-8 col-md-offset-4 col-sm-10 col-sm-offset-2 col-xs-12  text-align-right">
+                    <nav class="navbar navbar-light padding-0 margin-0 display-inline back-color-black z-i-10" style="min-height: 20px">  
+                        <div class="navbar-header">
+                            <button class="navbar-toggle collapsed" style="color: black; box-shadow: 0 0 11px black; padding: 2px 10px 0px; top: 9px; border: 1px solid black; margin: 3px;" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="sr-only">Toggle navigation</span>
+                                <span class="fa fa-bars" style="font-size: 19px;"></span>
+                            </button>
+                        </div>
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                            <ul class="nav navbar-nav">
+                                <li class="nav-item">
+                                    <a class="nav-link txt-color-white f-z-14" href="#">Español</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link txt-color-white f-z-14" href="#"> | Portugués</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link txt-color-white f-z-14" href="#"> | Inglés</a>
+                                </li> 
+                                <li class="nav-item">
+                                  <a class="nav-link txt-color-white f-z-14" href="#"> | Contácto</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link txt-color-white f-z-14" href="#"> | Acerca de</a>
+                                </li>
+                                {if Session::get('autenticado')}
                                     <li class="nav-item">
-                                        <a class="nav-link" href="#">Español</a>
+                                        <a class="nav-link txt-color-white f-z-14" href="{$_layoutParams.root}acl"  data-toggle="tooltip" data-placement="bottom" title="Intranet"><i style="font-size:15px" class="glyphicon glyphicon-cog"></i> {$lenguaje.text_intranet}</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="#"> | Portugués</a>
+                                        <a class="nav-link txt-color-white f-z-14" href="{$_layoutParams.root}usuarios/login/cerrar"  data-toggle="tooltip" data-placement="bottom" title="Cerrar Sesi&oacute;n"><i style="font-size:15px" class="glyphicon glyphicon-log-out"></i> {$lenguaje.text_cerrarsession}</a>
                                     </li>
+                                {else}
                                     <li class="nav-item">
-                                        <a class="nav-link" href="#"> | Inglés</a>
-                                    </li> 
-                                    <li class="nav-item">
-                                      <a class="nav-link" href="#"> | Contácto</a>
+                                        <a class="nav-link txt-color-white f-z-14" href="#"  data-placement="bottom" class=" form-login" title="Intranet" data-toggle="modal" data-target="#modal-login"> | <i style="font-size:15px" class="glyphicon glyphicon-log-in"></i> Iniciar Sessión</a>                      
                                     </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="#"> | Acerca de</a>
-                                    </li>
-                                    {if Session::get('autenticado')}
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="{$_layoutParams.root}acl"  data-toggle="tooltip" data-placement="bottom" title="Intranet"><i style="font-size:15px" class="glyphicon glyphicon-cog"></i> {$lenguaje.text_intranet}</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="{$_layoutParams.root}usuarios/login/cerrar"  data-toggle="tooltip" data-placement="bottom" title="Cerrar Sesi&oacute;n"><i style="font-size:15px" class="glyphicon glyphicon-log-out"></i> {$lenguaje.text_cerrarsession}</a>
-                                        </li>
-                                    {else}
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="#"  data-placement="bottom" class=" form-login" title="Intranet" data-toggle="modal" data-target="#modal-login"> | <i style="font-size:15px" class="glyphicon glyphicon-log-in"></i> Iniciar Sessión</a>                      
-                                        </li>
-                                    {/if}
-                                </ul>
-                            </div>
-                        </nav>
-                    </div>
+                                {/if}
+                            </ul>
+                        </div>
+                    </nav>
                 </div>
-                   
             </div>
-            <div class="col-md-offset-1 col-md-10" style="float: inherit;">
-                <div class="logo">
-                    <img  src="{$_layoutParams.ruta_img}frontend/logo.png" alt="La ORA" title="ORA">
+        </div>
+
+        <header class="container-fluid">
+            <div class="row">
+                <div class="col col-md-3 col-sm-2 col-xs-6 padding-10">
+                    <img  class="width-250" src="{$_layoutParams.ruta_img}frontend/logo.png" alt="La ORA" title="ORA">
                 </div>
-                <h2 class="tit-main">Plataforma Regional de Intercambio de Información y Conocimientos</h2>
-              
-                <div class="logo_otca">
+                <div class="hidden-xs  texto-header col col-md-6 col-sm-8 border-left-1 txt-color-grey padding-l-10">
+                    <h2 class="txt-color-black display-block ">Plataforma Regional de Intercambio de Información y Conocimientos</h2>
+                    <img class="margin-t-10 width-280" src="{$_layoutParams.ruta_img}frontend/img-banderas.png">
+                </div>       
+                <div class="col col-md-3 col-sm-2 col-xs-6 padding-10 text-align-right">
                     <img src="{$_layoutParams.ruta_img}frontend/logo_otca.png">
                 </div>
                 <div class="fondo-header-active"></div>
@@ -115,10 +116,10 @@
         <!-- HEADER PRINCIPAL -->
 
         <!-- MENU TOP ADMINISTRABLE -->
-        <div class="cont-nav-p">
-            <div class="col-md-offset-1 col-md-10" style="float: inherit; background: #17151526;">
-                <nav class="navbar ">  
-                    <div class="container-fluid">
+        <div >
+            <div class="row">
+                <nav class="col col-md-12 navbar back-color-grey margin-0 padding-10 ">  
+                    <div class="container">
                         <!-- Brand and toggle get grouped for better mobile display -->
                         <div class="navbar-header">
                             <button type="button" style="float: left;color:#fff;padding: 5px 10px;box-shadow: 0 0 11px #f5f4f4; border: 1px solid;  margin: 5px;" class="navbar-toggle collapsed"  data-toggle="collapse" data-target="#navbarSupportedContentUp" aria-controls="navbarSupportedContentUp" aria-expanded="false" aria-label="Toggle navigation">
@@ -134,21 +135,21 @@
                                 </ul>
                             </div>
                             {/foreach}
-                        {/if}
-                      </div>   
-                    <div class="buscador">
-                        <form style="background: #fff;border-radius: 1em;border: 2px solid #336b78;">
-                            <input type="search" style="border: 0;border-radius: 1em;">
-                            <button type="submit" style="background: transparent;border: 0;color: #22454e;"><i class="fa fa-search" style=""></i></button>
-                        </form>
-                    </div>
+                        {/if}  
+                        <div class="buscador">
+                            <form style="background: #fff;border: 2px solid #336b78;">
+                                <input type="search" style="border: 0;border-radius: 1em;">
+                                <button type="submit" style="background: transparent;border: 0;color: #22454e;"><i class="fa fa-search" style=""></i></button>
+                            </form>
+                        </div>
+                    </div> 
                 </nav>
             </div>
         </div>
         <!-- MENU TOP ADMINISTRABLE -->
 
         <!-- CONTENIDO CENTRAL DE LA PAGINA -->
-        <div class="container col-md-offset-1 col-md-10" style="float: inherit; padding-left: 0; padding-right: 0; min-height: 495px">
+        <div class="container back-color-white">
             <noscript><p>Para el correcto funcionamiento debe tener el soporte para javascript habilitado</p></noscript>
             {if isset($_error)}
                 <div id="_errl" class="alert alert-error ">
@@ -176,9 +177,18 @@
                     <div class="col col-md-8 col-sm-8 col-xs-12" style=" padding-top: 20px; padding-bottom:  20px; background: #4B4B4D; color:  #fff;">
                         <div class="row" style="margin:0 !important ">
                             <div class="col col-md-6 col-sm-6 col-xs-6 " style="text-align: left; padding-left: 10px;">
-                                <div class="f-inst">
+                                <div class="f-inst margin-l-10 margin-t-10">
+                                    <p>COORDINADO POR:</p>
+                                    <img class="width-100"  src="{$_layoutParams.ruta_img}frontend/img-footer-otca.png" style=" margin-top: 20px; ">
+                                </div>
+                                <div class="f-inst margin-l-10 margin-t-10">
+                                    <p>FINANCIADO POR:</p>
+                                    <img class="width-100"  src="{$_layoutParams.ruta_img}frontend/img-footer-oimt.png" style=" margin-top: 20px; ">
+                                    <img class="width-100"  src="{$_layoutParams.ruta_img}frontend/img-footer-cdb.png" style=" margin-top: 20px; ">
+                                </div>
+                                <div class="f-inst margin-l-10 margin-t-10">
                                     <p>CON EL APOYO DE:</p>
-                                    <img src="{$_layoutParams.ruta_img}frontend/bg_int.png" style=" margin-top: 20px; ">
+                                    <img class="width-100"  src="{$_layoutParams.ruta_img}frontend/bg_int.png" style=" margin-top: 20px; ">
                                 </div>
                             </div>
                             <div class="col col-md-6 col-sm-6 col-xs-6">
@@ -267,14 +277,14 @@
                                                     <div class="form-group">
                                                         <div class="row">
                                                             <div class="col-sm-6 col-sm-offset-3">
-                                                                <button type="button" name="logear" id="logear" tabindex="4" class="form-control btn btn-login" >Iniciar Sessión</button>
+                                                              <div class="g-signin2" id="signin2"></div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
                                                         <div class="row">
                                                             <div class="col-sm-6 col-sm-offset-3">
-                                                              <div class="g-signin2" id="signin2"></div>
+                                                                <button type="button" name="logear" id="logear" tabindex="4" class="form-control btn btn-login" >Iniciar Sessión</button>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -331,14 +341,14 @@
                                                     <div class="form-group">
                                                         <div class="row">
                                                             <div class="col-sm-6 col-sm-offset-3">
-                                                                <button type="button" name="registrar-login" id="registrar-login" tabindex="8" class="form-control btn btn-register" value="">Crear cuenta</button>
+                                                              <div id="registrar-gmail"></div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
                                                         <div class="row">
                                                             <div class="col-sm-6 col-sm-offset-3">
-                                                              <div id="registrar-gmail"></div>
+                                                                <button type="button" name="registrar-login" id="registrar-login" tabindex="8" class="form-control btn btn-register" value="">Crear cuenta</button>
                                                             </div>
                                                         </div>
                                                     </div>

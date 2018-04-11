@@ -132,7 +132,7 @@ class cursosController extends elearningController {
     $OLeccion = $Lmodel->getLeccion($leccion, $modulo, Session::get("id_usuario"));
     $lecciones = $Lmodel->getLecciones($modulo, Session::get("id_usuario"));
     $clave = array_search($OLeccion["Lec_IdLeccion"], array_column($lecciones, "Lec_IdLeccion"));
-
+// print($lecciones);
     $tmp = $lecciones[$clave];
     $datos_modulo = $Mmodel->getModuloDatos($OLeccion["Mod_IdModulo"]);
 
