@@ -20,7 +20,7 @@
           </div>
           <div class="col-lg-3">
             <div><strong>Duración curso</strong></div>
-            <div>{$curso.Cur_Duracion|default:"---"}</div> <br/>
+            <div>{$curso.Cur_Duracion|default: $duracion}</div> <br/>
           </div>
           <div class="col-lg-3">
             <div><strong>Público objetivo</strong></div>
@@ -32,7 +32,15 @@
           </div>
           <div class="col-lg-3">
             <div><strong>Contacto</strong></div>
-            <div>{$curso.Cur_Contacto|default:"---"}</div>
+            <div>
+              {$curso.Cur_Contacto|default:"---"}
+              <a href="{BASE_URL}elearning/cursos/ficha/{$curso.Cur_IdCurso}" style="display: inline-block;">
+                Detalle
+                <!--button class="btn btn-success">
+                  <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                </button-->
+              </a>
+            </div>
           </div>          
           {if isset($objetivos) && count($objetivos)>0}
           <div class="col-lg-6">
@@ -49,7 +57,7 @@
                   <div class="tag-lms"><center>Está pendiente la aprobación de tu inscripción</center></div>
                 {else}
                   {if $session && $progreso.Completo==1}
-                    <img src="{BASE_URL}modules/elearning/views/cursos/img/certificado.png" class="img-certificado"/>
+                    <!--img src="{BASE_URL}modules/elearning/views/cursos/img/certificado.png" class="img-certificado"/-->
                   {/if}
                   <div class="tag-inscrito">
                     <center>Inscrito {$inscripcion[0].Mat_FechaReg}</center>
@@ -75,7 +83,7 @@
             {/if}
           </div>
           <div class="col-lg-3"><br/>
-            <div class="tag-lms" ><center>Alumnos inscritos {$inscritos}</center></div>
+            <div class="tag-lms" style="width: 100%"><center>Alumnos inscritos {$inscritos}</center></div>
           </div>
 
 
@@ -100,7 +108,7 @@
                 <div class="ficha-mod">
                   <div class="ficha-mod-icon"><span class="glyphicon glyphicon-th"/></div>
                   <div class="ficha-mod-title">{$index}. {$o.Mod_Titulo}</div>
-                  <div class="ficha-mod-desc">{substr($o.Mod_Descripcion, 0, 100)}...</div>
+                  <div class="ficha-mod-desc">{substr($o.Mod_Descripcion, 0, 70)}...</div>
                   {if ($o.Disponible==1 && isset($inscripcion) && count($inscripcion)>0) || ($curso.Usu_IdUsuario == Session::get('id_usuario') && $o.Disponible==1)}
                   <a href="{BASE_URL}elearning/cursos/modulo/{$curso.Cur_IdCurso}/{$o.Mod_IdModulo}/{$o.PrimerLeccion}">
                     <button class="btn btn-success btn-modulo">

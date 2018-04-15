@@ -7,7 +7,8 @@ class perfilController extends usuariosController {
     public function __construct($lang, $url) {
         parent::__construct($lang, $url);
         $this->_perfil = $this->loadModel('perfil');
-        $this->_usuarios = $this->loadModel('index');
+        //$this->_usuarios = $this->loadModel('index'); RODRIGO COMENTÓ ESTO
+        $this->_usuarios = $this->loadModel('usuario');
     }
 
     public function index($idUsuario = false) {

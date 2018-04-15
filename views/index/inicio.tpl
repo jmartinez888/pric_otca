@@ -73,7 +73,7 @@
 <!-- SERVICIOS Y MAPA DE DATOS Y CIFRAS-->
 <div class="row padding-10">
     <div class="col col-md-8 col-sm-12 col-xs-12 ">
-        <div class="contain-jsoft back-color-white padding-10 margin-0 padding-t-50 min-height-vh-40" >
+        <div class="contain-jsoft back-color-white padding-10 margin-0 padding-t-50 min-height-vh-12" >
             <div class="tit-float-left-top">
                 SERVICIOS PRIC
             </div>
@@ -101,7 +101,7 @@
         </div>
     </div>
     <div class="col col-md-4 col-sm-12 col-xs-12">
-        <div class="contain-jsoft margin-0 min-height-vh-40" style="background: url({$_layoutParams.ruta_img}frontend/bg-contador.png); max-height: 270px;">
+        <div class="contain-jsoft margin-0 min-height-vh-12" style="background: url({$_layoutParams.ruta_img}frontend/bg-contador.png); max-height: 270px;">
             <div class="tit-float-left-top">
             Datos y cifras
             </div>

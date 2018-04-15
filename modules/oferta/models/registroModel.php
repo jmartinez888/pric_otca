@@ -86,6 +86,26 @@ public function __construct()
             return $exception->getTraceAsString();
         }
     }
+    public function insertar_traduccion($tabla,$id,$columna,$idioma,$traduccion)
+    {
+        try{
+            $guardar = $this->_db->prepare("INSERT INTO contenido_traducido(Cot_IdContenidoTraducido,Cot_Tabla,Cot_IdRegistro,Cot_Columna,Idi_IdIdioma,Cot_Traduccion) VALUES (null,:tabla,:id,:columna,:idioma,:traduccion)")->execute(array(
+                ':tabla' => $tabla,
+                ':id' => $id,
+                ':columna' => $columna,
+                ':idioma' => $idioma,
+                ':traduccion' => $traduccion
+                ));
+            if($guardar){
+                return true;
+            }else{
+                return false;
+            }
+            
+        } catch (PDOException $exception) {
+            return $exception->getTraceAsString();
+        }
+    }
     public function registar_inst_usuario($id_inst,$id_usuario)
     {
         try{
@@ -132,12 +152,13 @@ public function __construct()
             return $exception->getTraceAsString();
         }
     }
-    public function obtenerotrosdatos($id)
+    public function obtenerotrosdatos($id,$idioma=false)
     {
         try{
-            $sql = "call s_s_listar_otros_datos_por_id(?)";
+            $sql = "call s_s_listar_otros_datos_por_id(?,?)";
             $result = $this->_db->prepare($sql);
             $result->bindParam(1, $id, PDO::PARAM_INT);
+            $result->bindParam(2, $idioma, PDO::PARAM_STR);
             $result->execute();
             return $result->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $exception) {
@@ -173,6 +194,24 @@ public function __construct()
             $listaInstituciones = $this->_db->query("SELECT t.Tem_IdTematica AS Id,t.Tem_Nombre as Nombre FROM tematica t");
             return $listaInstituciones->fetchAll(PDO::FETCH_ASSOC);
 
+        } catch (PDOException $exception) {
+            return $exception->getTraceAsString();
+        }
+    }
+    public function getIdiomas($idioma)
+    {
+        try{
+            $lista_final=array();
+            $listaInstituciones = $this->_db->query("SELECT * FROM idioma");
+            $listaInstituciones=$listaInstituciones->fetchAll(PDO::FETCH_ASSOC);
+            if(count($listaInstituciones)){
+                for ($i=0; $i <count($listaInstituciones) ; $i++) { 
+                    if($listaInstituciones[$i]['Idi_IdIdioma']!==$idioma){
+                        $lista_final[]=$listaInstituciones[$i];
+                    }
+                }
+            }
+            return $lista_final;
         } catch (PDOException $exception) {
             return $exception->getTraceAsString();
         }
@@ -219,7 +258,7 @@ public function __construct()
     public function getDifPorId($id=false)
     {
         try{
-            $listaInstituciones = $this->_db->query("SELECT d.Dif_Nombre AS Nombre,d.Dif_Descripcion AS Descripcion, d.Dif_Link AS Enlace FROM difusion d WHERE d.Ins_IdInstitucion = ".$id);
+            $listaInstituciones = $this->_db->query("SELECT d.Dif_IdDifusion, d.Dif_Nombre AS Nombre,d.Dif_Descripcion AS Descripcion, d.Dif_Link AS Enlace FROM difusion d WHERE d.Ins_IdInstitucion = ".$id);
             return $listaInstituciones->fetchAll();
 
         } catch (PDOException $exception) {

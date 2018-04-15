@@ -54,10 +54,11 @@
         <!-- HEADER PRINCIPAL -->
         <div class="container-fluid back-color-black min-height-32" >
             <div class="row ">
-                <div class="col-md-8 col-md-offset-4 col-sm-10 col-sm-offset-2 col-xs-12  text-align-right">
+                <!-- <div class="col-md-8 col-md-offset-4 col-sm-10 col-sm-offset-2 col-xs-12  text-align-right"> -->
+                <div class="container text-align-right">
                     <nav class="navbar navbar-light padding-0 margin-0 display-inline back-color-black z-i-10" style="min-height: 20px">  
                         <div class="navbar-header">
-                            <button class="navbar-toggle collapsed" style="color: black; box-shadow: 0 0 11px black; padding: 2px 10px 0px; top: 9px; border: 1px solid black; margin: 3px;" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                            <button class="navbar-toggle collapsed" style="color:#fff; box-shadow: 0 0 11px #f5f4f4; padding: 2px 10px 0px; top: 3px; border: 1px solid black; margin: 3px;" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                                 <span class="sr-only">Toggle navigation</span>
                                 <span class="fa fa-bars" style="font-size: 19px;"></span>
                             </button>
@@ -88,7 +89,7 @@
                                     </li>
                                 {else}
                                     <li class="nav-item">
-                                        <a class="nav-link txt-color-white f-z-14" href="#"  data-placement="bottom" class=" form-login" title="Intranet" data-toggle="modal" data-target="#modal-login"> | <i style="font-size:15px" class="glyphicon glyphicon-log-in"></i> Iniciar Sessión</a>                      
+                                        <a class="nav-link txt-color-white f-z-14" href="#"  data-placement="bottom" class=" form-login" title="Intranet" data-toggle="modal" data-target="#modal-login"> | <i style="font-size:15px" class="glyphicon glyphicon-log-in"></i> Iniciar Sesión</a>                      
                                     </li>
                                 {/if}
                             </ul>
@@ -98,7 +99,7 @@
             </div>
         </div>
 
-        <header class="container-fluid">
+        <header class="container">
             <div class="row">
                 <div class="col col-md-3 col-sm-2 col-xs-6 padding-10">
                     <img  class="width-250" src="{$_layoutParams.ruta_img}frontend/logo.png" alt="La ORA" title="ORA">
@@ -122,25 +123,29 @@
                     <div class="container">
                         <!-- Brand and toggle get grouped for better mobile display -->
                         <div class="navbar-header">
-                            <button type="button" style="float: left;color:#fff;padding: 5px 10px;box-shadow: 0 0 11px #f5f4f4; border: 1px solid;  margin: 5px;" class="navbar-toggle collapsed"  data-toggle="collapse" data-target="#navbarSupportedContentUp" aria-controls="navbarSupportedContentUp" aria-expanded="false" aria-label="Toggle navigation">
+                            <button type="button" style="float: left;color: black;padding: 5px 10px;box-shadow: 0 0 11px black; border: 1px solid;  margin: 5px;" class="navbar-toggle collapsed"  data-toggle="collapse" data-target="#navbarSupportedContentUp" aria-controls="navbarSupportedContentUp" aria-expanded="false" aria-label="Toggle navigation">
                                 <span class="sr-only">Toggle navigation</span>
                                 <span class="fa fa-bars" style="font-size: 20px;"></span>
                             </button>
                         </div>
                         {if isset($widgets.top)}
+                        <div class="col-sm-10 col-md-9">
                             {foreach from=$widgets.top item=wd}
-                            <div class="collapse navbar-collapse" id="navbarSupportedContentUp" > 
+                            <div class="collapse navbar-collapse" id="navbarSupportedContentUp" style="font-size: 15px;"> 
                                 <ul class="nav navbar-nav" >   
                                 {$wd}
                                 </ul>
                             </div>
                             {/foreach}
+                        </div>
                         {/if}  
-                        <div class="buscador">
-                            <form style="background: #fff;border: 2px solid #336b78;">
-                                <input type="search" style="border: 0;border-radius: 1em;">
-                                <button type="submit" style="background: transparent;border: 0;color: #22454e;"><i class="fa fa-search" style=""></i></button>
-                            </form>
+                        <div class="col-sm-2 col-md-3">
+                            <div class="buscador">
+                                <form style="background: #fff;border: 2px solid #336b78;">
+                                    <input type="search" style="border: 0;border-radius: 1em;">
+                                    <button type="submit" style="background: transparent;border: 0;color: #22454e;"><i class="fa fa-search" style=""></i></button>
+                                </form>
+                            </div>
                         </div>
                     </div> 
                 </nav>
@@ -172,11 +177,11 @@
 
         <!-- FOOTER -->
         <footer >
-            <div class="container col-md-offset-1 col-md-10" style="float: inherit; padding-left: 0; padding-right: 0;">
+            <div class="container " style="float: inherit; padding-left: 0; padding-right: 0;">
                 <div class="row" style="margin:0 !important ">
                     <div class="col col-md-8 col-sm-8 col-xs-12" style=" padding-top: 20px; padding-bottom:  20px; background: #4B4B4D; color:  #fff;">
                         <div class="row" style="margin:0 !important ">
-                            <div class="col col-md-6 col-sm-6 col-xs-6 " style="text-align: left; padding-left: 10px;">
+                            <div class="col col-md-4 col-sm-6 col-xs-6 " style="text-align: left; padding-left: 10px;">
                                 <div class="f-inst margin-l-10 margin-t-10">
                                     <p>COORDINADO POR:</p>
                                     <img class="width-100"  src="{$_layoutParams.ruta_img}frontend/img-footer-otca.png" style=" margin-top: 20px; ">
@@ -191,7 +196,7 @@
                                     <img class="width-100"  src="{$_layoutParams.ruta_img}frontend/bg_int.png" style=" margin-top: 20px; ">
                                 </div>
                             </div>
-                            <div class="col col-md-6 col-sm-6 col-xs-6">
+                            <div class="col col-md-8 col-sm-6 col-xs-6">
                                 <div style="text-align: right; padding-right: .5em">
                                     <p>CONTÁCTO</p>
                                     <p>SHIS - Ql 05. Conjunto 16, 
@@ -244,7 +249,7 @@
                                     <div class="panel-heading">
                                         <div class="row">
                                             <div class="col-xs-6">
-                                                <a href="#" class="active" id="login-form-link">Iniciar Sessión</a>
+                                                <a href="#" class="active" id="login-form-link">Iniciar Sesión</a>
                                             </div>
                                             <div class="col-xs-6">
                                                 <a href="#" id="register-form-link">Regístrate ahora</a>
@@ -277,14 +282,14 @@
                                                     <div class="form-group">
                                                         <div class="row">
                                                             <div class="col-sm-6 col-sm-offset-3">
-                                                              <div class="g-signin2" id="signin2"></div>
+                                                                <button type="button" name="logear" id="logear" tabindex="4" class="form-control btn btn-login" >Iniciar Sesión</button>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
                                                         <div class="row">
                                                             <div class="col-sm-6 col-sm-offset-3">
-                                                                <button type="button" name="logear" id="logear" tabindex="4" class="form-control btn btn-login" >Iniciar Sessión</button>
+                                                              <div class="g-signin2" id="signin2"></div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -341,14 +346,14 @@
                                                     <div class="form-group">
                                                         <div class="row">
                                                             <div class="col-sm-6 col-sm-offset-3">
-                                                              <div id="registrar-gmail"></div>
+                                                                <button type="button" name="registrar-login" id="registrar-login" tabindex="8" class="form-control btn btn-register" value="">Crear cuenta</button>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
                                                         <div class="row">
                                                             <div class="col-sm-6 col-sm-offset-3">
-                                                                <button type="button" name="registrar-login" id="registrar-login" tabindex="8" class="form-control btn btn-register" value="">Crear cuenta</button>
+                                                              <div id="registrar-gmail"></div>
                                                             </div>
                                                         </div>
                                                     </div>

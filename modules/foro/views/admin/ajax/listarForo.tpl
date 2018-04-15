@@ -23,8 +23,9 @@
                     <td>{$foro.For_FechaCreacion|date_format:"%d-%m-%Y"}</td>
                     <td>{$foro.For_FechaCierre|date_format:"%d-%m-%Y"}</td>
                     <td>
-                        <a data-toggle="tooltip" data-placement="bottom" class="btn btn-default  btn-sm glyphicon glyphicon-user" title="Ver Miembrios" href="{$_layoutParams.root}foro/admin/members/{$foro.For_IdForo}"></a>
                         <a data-toggle="tooltip" data-placement="bottom" class="btn btn-default  btn-sm glyphicon glyphicon-pencil " title="Editar Foro" href="{$_layoutParams.root}foro/admin/form/edit/{$foro.For_IdForo}"></a>
+                        <a data-toggle="tooltip" data-placement="bottom" class="btn btn-default  btn-sm glyphicon glyphicon-user" title="Ver Miembrios" href="{$_layoutParams.root}foro/admin/members/{$foro.For_IdForo}"></a>
+                        <a data-toggle="tooltip" data-placement="bottom" class="btn btn-default  btn-sm glyphicon glyphicon-calendar" title="Ver Actividades" href="{$_layoutParams.root}foro/admin/actividad/{$foro.For_IdForo}"></a>
                         <button data-toggle="tooltip" data-placement="bottom" class="btn btn-default btn-sm glyphicon glyphicon-refresh cambiar_estado" title="Cambiar Estado" id_foro="{$foro.For_IdForo}" estado="{$foro.For_Estado}" > </button>      
                         <button data-toggle="tooltip" data-placement="bottom" class="btn btn-default btn-sm glyphicon glyphicon-trash eliminar_foro" title="Eliminar" id_foro="{$foro.For_IdForo}" > </button>
                     </td>

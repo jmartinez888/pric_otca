@@ -1,7 +1,7 @@
 var _post = null;
 $(document).on('ready', function () {
     $(".cb_select_fecha").attr('checked',false);
-    $('textarea#text_resultados_e').ckeditor();
+    $('textarea#text_descripcion').ckeditor();
     $('body').on('change', '.files_form', function () {
         load_files_form($(this)[0].files, $($($(($($(this).parent()).parent()).parent()).parent()).parent()).find(".load_files"));
         $(this).val("");

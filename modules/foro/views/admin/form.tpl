@@ -1,24 +1,27 @@
 <div  class="container" >   
+    {if $Form_Funcion==forum}
     <h3 class="titulo-view">{$lenguaje.foro_admin_form_label_titulo}</h3>
+    {else}
+       <h3 class="titulo-view">Nuevo Webinar</h3> 
+    {/if}
     <div class="row">
         <form method="post" >
             <div class="col-md-8">
-
                 <div class="form-group">
                     <label for="text_titulo">Título</label>
                     <input type="text" placeholder="Ingrese Título del Foro" class="form-control" id="text_titulo" name="text_titulo">
                 </div>
                 <div class="form-group">
-                    <label for="text_objetivo">Objetivo:</label>
-                    <textarea type="text" placeholder="Ingrese Objetivo del Foro" class="form-control" id="text_objetivo" name="text_objetivo"></textarea>
+                    <label for="text_resumen">Resumen:</label>
+                    <textarea type="text" placeholder="Ingrese Resumen del Foro" class="form-control" id="text_resumen" name="text_resumen"></textarea>
                 </div>
                 <div class="form-group">
                     <label for="text_palabras_claves">Etiquetas:</label>
                     <input type="text" placeholder="Ingrese etiquetas del Foro separadas por ," class="form-control" id="text_palabras_claves" name="text_palabras_claves">
                 </div>
                 <div class="form-group">
-                    <label for="text_resultados_e">Resultados Esperados:</label>
-                    <textarea type="text" class="form-control" id="text_resultados_e" name="text_resultados_e"></textarea>
+                    <label for="text_descripcion">Descripción</label>
+                    <textarea type="text" class="form-control" id="text_descripcion" name="text_descripcion"></textarea>
                 </div>                
             </div> 
             <div class="col-md-4">
@@ -108,7 +111,6 @@
                                     <select class="form-control" id="s_lista_tipo">
                                         <option value="1">Abierto</option>
                                         <option value="0">Cerrado</option>
-
                                     </select>
                                 </div>
                             </div>
@@ -150,6 +152,7 @@
                     </div>   
                 </div>  
             </div>
+            <input type="hidden" id="hd_id_padre" name="hd_id_padre" value="{$iFor_IdPadre|default:0}">
         </form>
     </div>
 </div>

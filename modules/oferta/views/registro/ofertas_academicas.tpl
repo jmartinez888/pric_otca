@@ -1,18 +1,19 @@
 <div class="container">
-	<center><h2>Registro de Instituciones</h2><br></center>
+	<center><h2>{$lenguaje["registro_ins"]}</h2></center><br>
 	<ul class="nav nav-tabs">
-		<li><a>1. Datos Generales</a></li>
-		<li><a>2. Datos Complementarios</a></li>
-		<li class="active"><a>3. Ofertas Académicas</a></li>
-		<li><a>4. Investigación y Difusión</a></li>
+		<li><a>1. {$lenguaje["registro_datos_generales"]}</a></li>
+		<li><a>2. {$lenguaje["registro_datos_complementarios"]}</a></li>
+		<li class="active"><a>3. {$lenguaje["busqueda_avanzada_label_ofertasR"]}</a></li>
+		<li><a>4. {$lenguaje["registro_inv_dif"]}</a></li>
+		<li><a>5. {$lenguaje["registro_li_idiomas"]}</a></li>
 	</ul><br>
-	<h3>Registrar Ofertas Académicas de <b>{$listaIns.Ins_Nombre}</b></h3>
+	<h3>{$lenguaje["registro_ofertas_academicas"]} <b>{$listaIns.Ins_Nombre}</b></h3>
 	<form method="post" class="form-horizontal" role="form">
 		<div class="row">
 			<div class="col-md-4">
-				<label for="tipooferta">Tipo de Oferta Académica</label>
+				<label for="tipooferta">{$lenguaje["busqueda_avanzada_label_tipo_ofertas"]}</label>
 				<select name="tipooferta" id="tipooferta" class="form-control" required>
-					<option>--Seleccione--</option>
+					<option>{$lenguaje["busqueda_avanzada_select_pais"]}</option>
 					{if isset($tipooferta) && count($tipooferta)}
 						{foreach from=$tipooferta item=b}
 							<option value="{$b.Nombre}">{$b.Nombre}</option>
@@ -23,9 +24,9 @@
 		</div>
 		<div class="row">
 			<div class="col-md-4">
-				<label for="tematica">Temática Relacionada</label>
+				<label for="tematica">{$lenguaje["ficha_tematica"]}</label>
 				<select name="tematica" id="tematica" class="form-control" required>
-					<option>--Seleccione--</option>
+					<option>{$lenguaje["busqueda_avanzada_select_pais"]}</option>
 					{if isset($tematica) && count($tematica)}
 						{foreach from=$tematica item=b}
 							<option value="{$b.Id}">{$b.Nombre}</option>
@@ -36,39 +37,39 @@
 		</div>
 		<div class="row">
 			<div class="col-md-4">
-				<label for="nombre">Nombre de la Oferta Académica</label>
+				<label for="nombre">{$lenguaje["registro_oferta_nombre"]}</label>
 				<input type="text" name="nombre" id="nombre" class="form-control" required>
 			</div>
 		</div>
 		<div class="row">
 			<div class="col-md-4">
-				<label for="descripcion">Breve Descripción</label>
+				<label for="descripcion">{$lenguaje["ficha_descripcion"]}</label>
 				<textarea name="descripcion" id="descripcion" class="form-control" required></textarea>
 			</div>
 		</div>
 		<div class="row">
 			<div class="col-md-4">
-				<label for="contacto">Contacto</label>
+				<label for="contacto">{$lenguaje["Contacto"]}</label>
 				<input type="text" name="contacto" id="contacto" class="form-control" required>
 			</div>
 		</div>
 		<input type="hidden" name="guardar" value="1"><br>
 		<div class="row">
 			<div class="col-md-4">
-				<center><input type="submit" class="btn btn-success" value="Registrar Oferta"></center>
+				<center><input type="submit" class="btn btn-success" value="{$lenguaje['registro_oferta_registrar']}"></center>
 				
 			</div>
 		</div>
 	</form>
-	<h3>Lista de Ofertas Académicas de <b>{$listaIns.Ins_Nombre}</b></h3>
+	<h3>{$lenguaje["lista_oferta_title"]} <b>{$listaIns.Ins_Nombre}</b></h3>
 	{if isset($listaofertas) && count($listaofertas)}
 		<table class="table table-bordered">
 			<thead>
-				<th>Tipo</th>
-				<th>Nombre</th>
-				<th>Descripción</th>
-				<th>Temática</th>
-				<th>Contacto</th>
+				<th>{$lenguaje["ficha_tipo"]}</th>
+				<th>{$lenguaje["registro_otros_datos_nombre"]}</th>
+				<th>{$lenguaje["ficha_descripcion"]}</th>
+				<th>{$lenguaje["ficha_tematica"]}</th>
+				<th>{$lenguaje["Contacto"]}</th>
 			</thead>
 			<tbody>
 				{foreach from=$listaofertas item=b}
@@ -83,8 +84,8 @@
 			</tbody>
 		</table>
 	{else}
-	<p>No se encontraron registros.</p>
+	<p>{$lenguaje["busqueda_avanzada_resultados_no"]}</p>
 	{/if}
-<br><a href="{$_layoutParams.root_clear}es/oferta/registro/investigacion/{$id}" class="btn btn-danger">Omitir esta sección</a>
-<a href="{$_layoutParams.root_clear}es/oferta/registro/investigacion/{$id}" class="btn btn-primary">Guardar y Continuar</a>
+<br><a href="{$_layoutParams.root_clear}es/oferta/registro/investigacion/{$id}" class="btn btn-danger">{$lenguaje["registro_otros_datos_omitir"]}</a>
+<a href="{$_layoutParams.root_clear}es/oferta/registro/investigacion/{$id}" class="btn btn-primary">{$lenguaje["registro_otros_datos_guardar"]}</a>
 </div>

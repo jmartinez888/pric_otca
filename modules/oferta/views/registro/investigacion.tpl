@@ -1,27 +1,28 @@
 <div class="container">
-	<center><h2>Registro de Instituciones</h2><br></center>
+	<center><h2>{$lenguaje["registro_ins"]}</h2></center><br>
 	<ul class="nav nav-tabs">
-		<li><a>1. Datos Generales</a></li>
-		<li><a>2. Datos Complementarios</a></li>
-		<li><a>3. Ofertas Académicas</a></li>
-		<li class="active"><a>4. Investigación y Difusión</a></li>
+		<li><a>1. {$lenguaje["registro_datos_generales"]}</a></li>
+		<li><a>2. {$lenguaje["registro_datos_complementarios"]}</a></li>
+		<li><a>3. {$lenguaje["busqueda_avanzada_label_ofertasR"]}</a></li>
+		<li class="active"><a>4. {$lenguaje["registro_inv_dif"]}</a></li>
+		<li><a>5. {$lenguaje["registro_li_idiomas"]}</a></li>
 	</ul><br>
 	<div class="row">
 		<div class="col-md-5">
 			<form method="post" class="form-horizontal" role="form">
 				<fieldset>
-					<legend>Proyectos de Investigación</legend>
+					<legend>{$lenguaje["busqueda_avanzada_label_proyectosR"]}</legend>
 					<div class="row">
 					<div class="col-md-10">
-						<label for="tipooferta">Tipo de Investigación Realizada</label>
+						<label for="tipooferta">{$lenguaje["registro_inv_tipo_inv"]}</label>
 						<input type="text" name="tipooferta" id="tipooferta" class="form-control" required>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-md-10">
-						<label for="tematica">Temática Relacionada</label>
+						<label for="tematica">{$lenguaje["ficha_tematica"]}</label>
 						<select name="tematica" id="tematica" class="form-control" required>
-							<option>--Seleccione--</option>
+							<option>{$lenguaje["busqueda_avanzada_select_pais"]}</option>
 							{if isset($tematica) && count($tematica)}
 								{foreach from=$tematica item=b}
 									<option value="{$b.Id}">{$b.Nombre}</option>
@@ -32,26 +33,26 @@
 				</div>
 				<div class="row">
 					<div class="col-md-10">
-						<label for="nombre">Nombre de la Investigación Realizada</label>
+						<label for="nombre">{$lenguaje["registro_inv_nombre"]}</label>
 						<input type="text" name="nombre" id="nombre" class="form-control" required>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-md-10">
-						<label for="descripcion">Breve Descripción</label>
+						<label for="descripcion">{$lenguaje["ficha_descripcion"]}</label>
 						<textarea name="descripcion" id="descripcion" class="form-control" required></textarea>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-md-10">
-						<label for="contacto">Contacto</label>
+						<label for="contacto">{$lenguaje["Contacto"]}</label>
 						<input type="text" name="contacto" id="contacto" class="form-control" required>
 					</div>
 				</div>
 				<input type="hidden" name="guardar_inv" value="1"><br>
 				<div class="row">
 					<div class="col-md-6">
-						<center><input type="submit" class="btn btn-success" value="Guardar Proyecto de Investigación"></center>
+						<center><input type="submit" class="btn btn-success" value="{$lenguaje['registro_inv_registrar']}"></center>
 						
 					</div>
 				</div>
@@ -61,46 +62,44 @@
 		<div class="col-md-4 col-md-offset-2">
 			<form method="post" class="form-horizontal" role="form">
 				<fieldset>
-					<legend>Medios de Difusión</legend>
+					<legend>{$lenguaje["ficha_dif"]}</legend>
 					<div class="row">
 						<div class="col-md-10">
-							<label for="difusion">Nombre:</label>
+							<label for="difusion">{$lenguaje["registro_otros_datos_nombre"]}</label>
 							<input type="text" name="difusion" id="difusion" class="form-control" required>
 						</div>
 					</div>
 					<div class="row">
 						<div class="col-md-10">
-							<label for="dif_descripcion">Descripcion:</label>
+							<label for="dif_descripcion">{$lenguaje["ficha_descripcion"]}</label>
 							<textarea name="dif_descripcion" id="dif_descripcion" class="form-control" required></textarea>
 						</div>
 					</div>
 					<div class="row">
 						<div class="col-md-10">
-							<label for="dif_enlace">Enlace:</label>
+							<label for="dif_enlace">Link:</label>
 							<input type="text" name="dif_enlace" id="dif_enlace" class="form-control" required>
 						</div>
 					</div>
 					<input type="hidden" name="guardar_dif" value="1"><br>
 					<div class="row">
 						<div class="col-md-6">
-							<center><input type="submit" class="btn btn-success" value="Guardar Medio de Difusión"></center>
+							<center><input type="submit" class="btn btn-success" value="{$lenguaje['registro_dif_registrar']}"></center>
 						</div>
 					</div>
 				</fieldset>
 			</form>
 		</div>
 	</div>
-	<h3>Lista de Proyectos de Investigación de {$listaIns.Ins_Nombre}</h3>
+	<h3>{$lenguaje["lista_inv_title"]}{$listaIns.Ins_Nombre}</h3>
 	{if isset($listaofertas) && count($listaofertas)}
 		<table class="table table-bordered">
 			<thead>
-				<th>Tipo</th>
-				<th>Nombre</th>
-				<th>Descripción</th>
-				<th>Temática</th>
-				<th>Contacto</th>
-				<!--<th>Editar</th>
-				<th>Eliminar</th>-->
+				<th>{$lenguaje["ficha_tipo"]}</th>
+				<th>{$lenguaje["registro_otros_datos_nombre"]}</th>
+				<th>{$lenguaje["ficha_descripcion"]}</th>
+				<th>{$lenguaje["ficha_tematica"]}</th>
+				<th>{$lenguaje["Contacto"]}</th>
 			</thead>
 			<tbody>
 				{foreach from=$listaofertas item=b}
@@ -110,36 +109,36 @@
 						<td>{$b.Descripcion}</td>
 						<td>{$b.Tematica}</td>
 						<td>{$b.Contacto}</td>
-						<!--<td><a href="">[Editar]</a></td>
-						<td><a href="">[Eliminar]</a></td>-->
 					</tr>
 				{/foreach}
 			</tbody>
 		</table>
 	{else}
-	<p>No se encontraron registros.</p>
+	<p>{$lenguaje["busqueda_avanzada_resultados_no"]}</p>
 	{/if}<br>
-	<h3>Lista de Medios de Difusión de {$listaIns.Ins_Nombre}</h3>
+	<h3>{$lenguaje["lista_dif_title"]} {$listaIns.Ins_Nombre}</h3>
 	{if isset($listaDif) && count($listaDif)}
 		<table class="table table-bordered">
 			<thead>
-				<th>Nombre</th>
-				<!--<th>Editar</th>
-				<th>Eliminar</th>-->
+				<th>{$lenguaje["registro_otros_datos_nombre"]}</th>
+				<th>Link</th>
+				<th>{$lenguaje["ficha_descripcion"]}</th>
 			</thead>
 			<tbody>
 				{foreach from=$listaDif item=b}
 					<tr>
 						<td>{$b.Nombre}</td>
-						<!--<td><a href="">[Editar]</a></td>
-						<td><a href="">[Eliminar]</a></td>-->
+						<td>{$b.Enlace}</td>
+						<td>{$b.Descripcion}</td>
 					</tr>
 				{/foreach}
 			</tbody>
 		</table>
 	{else}
-	<p>No se encontraron registros.</p>
+	<p>{$lenguaje["busqueda_avanzada_resultados_no"]}</p>
 	{/if}
-	<br><a href="{$_layoutParams.root_clear}es/oferta/instituciones/ficha/{$id}" class="btn btn-danger">Omitir esta sección y Finalizar</a>
-	<a href="{$_layoutParams.root_clear}es/oferta/instituciones/ficha/{$id}" class="btn btn-primary">Guardar y Finalizar</a>
+	<br>
+<a href="{$_layoutParams.root_clear}es/oferta/registro/idiomas/{$id}" class="btn btn-danger">{$lenguaje["registro_otros_datos_omitir"]}</a>
+<a href="{$_layoutParams.root_clear}es/oferta/registro/idiomas/{$id}" class="btn btn-primary">{$lenguaje["registro_otros_datos_guardar"]}</a>
+
 </div>

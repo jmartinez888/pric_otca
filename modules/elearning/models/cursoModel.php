@@ -144,4 +144,32 @@ class cursoModel extends Model {
       }
       return null;
     }
+
+    public function getUsuarioCurso($id){
+      $sql = "SELECT * FROM usuario 
+              WHERE Usu_Estado = 1 AND Row_Estado = 1
+              AND Usu_IdUsuario = (SELECT Usu_IdUsuario FROM curso 
+                                  WHERE Cur_IdCurso = {$id}
+                                  AND Row_Estado = 1 AND Cur_Estado = 1)";
+      return $this->getArray($sql);
+    }
+
+    public function getCursosUsuario($id){
+      $sql = "SELECT * FROM curso WHERE Cur_Estado = 1 AND Row_Estado = 1 AND Usu_IdUsuario = {$id}";
+      return $this->getArray($sql);
+    }
+
+    public function getDuracionCurso($curso){
+      $sql = "SELECT COUNT(*) as Total FROM leccion 
+              WHERE Mod_IdModulo IN 
+                (SELECT Mod_IdModulo FROM modulo_curso 
+                WHERE Cur_IdCurso = {$curso} AND Mod_Estado = 1 AND Row_Estado = 1)
+              AND Row_Estado = 1 AND Lec_Estado = 1";
+      $lec = $this->getArray($sql);
+      if($lec!=null && count($lec)>0){
+        return $lec[0];
+      }else{
+        return array("Total" => "0");
+      }
+    }
 }

@@ -137,7 +137,7 @@ class indexModel extends Model
         } 
     }
     
-    public function getFicha_Variable($nombre_tabla, $nombre_tabla)
+    public function getFicha_Variable($nombre_tabla)
     {
         try
         {

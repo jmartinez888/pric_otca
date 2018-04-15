@@ -49,7 +49,7 @@
 <div class="container-fluid">
 <div class="row">
     <div class="col-md-12 col-lg-offset-1 col-lg-10">
-    <h2 class="tit-pagina-principal"><center>{$lenguaje["label_h2_titulo_documentos"]}</center></h2>
+    <h2 class="tit-pagina-principal"><center>Repositorio de Documentos</center></h2>
     <input id="metodo" name="metodo" type="hidden" value="buscarporpalabras"/>
     <input id="query" name="query" type="hidden"/>
     </div>       
@@ -94,12 +94,12 @@
                   <div class="text-center " style="padding-top: 10px; padding-bottom: 10px">
                       <a class="text-muted" id="busquedaAvanzada" style="">Búsqueda Avanzada</a>
                   </div>
+
                   <div class="form-horizontal col-sm-offset-1 col-sm-10 col-md-offset-2 col-md-8 hidden" id="ba_div">  
-                      {if isset($temadocumento) && count($temadocumento)}                 
+                      <!-- {if isset($temadocumento) && count($temadocumento)}                 
                       <div class="form-group">
                           <label class="col-xs-3 control-label">Temática : </label>
                           <div class="col-xs-9">
-                              <!-- <input class="form-control"  list="tematicas"  id ="ba_tematica" type="text"  name="nombre" value="" placeholder="Temática" /> -->
                               <select class="form-control selectpicker" name="filtrotemadocumento" id="filtrotemadocumento" data-live-search="true">
                                   <option value=""> -- Seleccione Temática --</option>
                                   {foreach item=dt from=$temadocumento}
@@ -109,18 +109,37 @@
                               </select>
                           </div>
                       </div>
+                      {/if}  -->
+                      {if isset($temadocumento) && count($temadocumento)}                 
+                      <div class="form-group">
+                          <label class="col-xs-3 control-label">Temática : </label>
+                          <div class="col-xs-9">
+                              <!-- <input class="form-control"  list="tematicas"  id ="ba_tematica" type="text"  name="nombre" value="" placeholder="Temática" /> -->
+                              <input type="text" list="temas" class="form-control" id="filtrotemadocumento" name="filtrotemadocumento" placeholder="Temática"/>
+                              <datalist id="temas">
+                                  {foreach item=dat from=$temadocumento}
+                                      <option value="{$dat.Ted_Descripcion}">{$dat.Ted_Descripcion}</option>
+                                  {/foreach}    
+                              </datalist>
+                          </div>
+                      </div>
                       {/if} 
                       {if isset($autores) && count($autores)}
                       <div class="form-group ">
                           <label class="col-xs-3 control-label" >Autor : </label>
                           <div class="col-xs-9">
-                              <!-- <input class="form-control"  list="autores"  id ="ba_autor" type="text" pattern="([a-zA-Z][\sa-zA-Z]+)" name="apellidos" value="" placeholder="Autor" required=""/> -->
-                              <select class="form-control selectpicker" name="filtroautordocumento" id="filtroautordocumento" data-live-search="true">
+                              <input type="text" list="autores" class="form-control" id="filtroautordocumento" name="filtroautordocumento" placeholder="Autor"/>
+                              <datalist id="autores">
+                                  {foreach item=dat from=$autores}
+                                      <option value="{$dat.Aut_Nombre}">{$dat.Aut_Nombre}</option>
+                                  {/foreach}    
+                              </datalist>
+                              <!-- <select class="form-control selectpicker" name="filtroautordocumento" id="filtroautordocumento" data-live-search="true">
                                   <option value=""> -- Seleccione Autor --</option>
                                   {foreach item=da from=$autores}
                                       <option value="{$da.Aut_Nombre}">{$da.Aut_Nombre}</option>
                                   {/foreach}   
-                              </select>
+                              </select> -->
                           </div>
                       </div> 
                       {/if}
@@ -128,7 +147,7 @@
                       <div class="form-group">
                           <label class="col-xs-3 control-label" >Formato : </label>
                           <div class="col-xs-9">
-                              <!-- <input  class="form-control"  list="formatos"  id ="ba_dni" type="text"  name="dni" value="" placeholder="Formato" /> -->
+
                               <select class="form-control selectpicker" name="filtroformatodocumento" id="filtroformatodocumento" data-live-search="true">
                                   <option value=""> -- Seleccione Formato --</option>
                                   {foreach item=df from=$formatos}

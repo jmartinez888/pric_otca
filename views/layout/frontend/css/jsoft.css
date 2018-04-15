@@ -455,7 +455,7 @@ footer{
 	background: #fff;
 }*/
 #publicacion_relevante, #publicacion_reciente,#evento_interes,#dato_interes, #agenda{
-	max-height: 260px;
+	 max-height: 260px; 
 	overflow-y: auto;
 	background: #fff;
 	padding-top: 0px;
@@ -463,7 +463,7 @@ footer{
 }
 
 #agenda span {
-    font-size: 15px;
+    font-size: 14px;
 }
 
 #agenda .container {

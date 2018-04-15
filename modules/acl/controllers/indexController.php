@@ -750,7 +750,7 @@ class indexController extends aclController
             $idPermiso = $this->_aclm->insertarPermiso(
                 $this->getSql('permiso_'), 
                 $this->getAlphaNum('key_'),
-                $this->getInt('modulo_')
+                $this->getInt('modulo_'), 'es'
                 );
         }
             

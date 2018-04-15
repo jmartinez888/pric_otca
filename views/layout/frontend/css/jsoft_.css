@@ -374,7 +374,10 @@ width:100%;
 	background-color: #164e3b;
 	color: #fefefe;
 }
-
+.nav .open>a, .nav .open>a:focus, .nav .open>a:hover {
+    background-color: #eee;
+    border-color: #337ab7;
+}
 
 
 /*Rodrigo*/

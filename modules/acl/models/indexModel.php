@@ -154,6 +154,17 @@ class indexModel extends Model
             return $exception->getTraceAsString();
         }
     }
+    //Util_Permiso_Rol Jhon Martinez
+    public function verificarRol($Rol_Nombre)
+    {
+        try{
+            $rol = $this->_db->query("SELECT * FROM rol WHERE Rol_Nombre = '$Rol_Nombre' ");
+            return $rol->fetchAll();
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("acl(indexModel)", "verificarRol", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
     //Util_Permiso Jhon Martinez
     public function eliminarHabilitarPermiso($Per_IdPermiso = 0,$Row_Estado = 0)
     {
@@ -226,15 +237,16 @@ class indexModel extends Model
         }
     }
     //Util_Permiso Jhon Martinez
-    public function insertarPermiso($iPer_Nombre, $iPer_Ckey, $iMod_Modulo = "", $iIdi_IdIdioma="")
+    public function insertarPermiso($iPer_Nombre = "", $iPer_Ckey = "", $iMod_Modulo = "", $iIdi_IdIdioma="")
     {
-        try {            
+        echo " iPer_Nombre:" . $iPer_Nombre ." iPer_Ckey:". $iPer_Ckey . "iMod_Modulo:" . $iMod_Modulo . "iIdi_IdIdioma:" . $iIdi_IdIdioma;
+        try {             
             $sql = "call s_i_permisos(?,?,?,?)";
             $result = $this->_db->prepare($sql);
             $result->bindParam(1, $iPer_Nombre, PDO::PARAM_STR);
             $result->bindParam(2, $iPer_Ckey, PDO::PARAM_STR);
-            $result->bindParam(3, empty($iMod_Modulo) ? null : $iMod_Modulo, PDO::PARAM_NULL | PDO::PARAM_INT);            
-            $result->bindParam(4, empty($iIdi_IdIdioma) ? null : $iIdi_IdIdioma, PDO::PARAM_NULL | PDO::PARAM_STR);
+            $result->bindParam(3, empty($iMod_Modulo) ? NULL : $iMod_Modulo,  PDO::PARAM_INT);            
+            $result->bindParam(4, empty($iIdi_IdIdioma) ? NULL : $iIdi_IdIdioma,  PDO::PARAM_STR);
            
             $result->execute();
             return $result->fetch();
@@ -582,7 +594,7 @@ class indexModel extends Model
             $sql = "call s_i_rol(?,?,?)";
             $result = $this->_db->prepare($sql);
             $result->bindParam(1, $iRol_Nombre, PDO::PARAM_STR);
-            $result->bindParam(2, empty($iIdi_IdIdioma) ? null : $iIdi_IdIdioma, PDO::PARAM_NULL | PDO::PARAM_STR);
+            $result->bindParam(2, empty($iIdi_IdIdioma) ?  null: $iIdi_IdIdioma, PDO::PARAM_NULL | PDO::PARAM_STR);
             $result->bindParam(3, $iRol_Estado, PDO::PARAM_INT);
             $result->execute();
             return $result->fetch();

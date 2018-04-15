@@ -11,8 +11,9 @@ class indexController extends ofertaController
 
     public function index() {
     	$this->validarUrlIdioma();
-        
+        $this->_view->getLenguaje("oferta_index");
         $this->_view->setJs(array('index'));
+        $idioma = Cookie::lenguaje();
 
         $nombre = $this->getSql('nombre');
         $pagina = $this->getInt('pagina');
@@ -20,7 +21,7 @@ class indexController extends ofertaController
 
         $arrayRowCount = $this->_inst->getInstitucionesRowCount();
         $totalRegistros = $arrayRowCount['CantidadRegistros'];
-        $this->_view->assign('paises', $this->_inst->getPaises());
+        $this->_view->assign('paises', $this->_inst->getPaises($idioma));
         $this->_view->assign('numeracion', 0);
         $this->_view->assign('totalRegistros', 0);
         $this->_view->assign('cantidad', $totalRegistros);
@@ -28,9 +29,10 @@ class indexController extends ofertaController
         $lista2=$this->_inst->getInstitucionesConCantInv(0,CANT_REG_PAG);
         
         $paginador->paginar( $totalRegistros,"listarInstituciones", "", $pagina, CANT_REG_PAG, true);
-        $resumen1 = $this->_inst->getResumenInstituciones();
-        $resumen2 = $this->_inst->getResumenProyectos();
-        $resumen3 = $this->_inst->getResumenOfertas();
+        $resumen1 = $this->_inst->getResumenInstituciones('',$idioma);
+
+        $resumen2 = $this->_inst->getResumenProyectos('','',$idioma);
+        $resumen3 = $this->_inst->getResumenOfertas('','',$idioma);
         $rowcount2a = $this->_inst->getResumenProyectosRowCount();
         $rowcount2 = $rowcount2a['CantidadRegistros'];
         $rowcount3a = $this->_inst->getResumenOfertasRowCount();
@@ -50,6 +52,9 @@ class indexController extends ofertaController
     }
     public function _paginacion_listarInstituciones($txtBuscar = false) 
     {
+     
+        $this->_view->getLenguaje("oferta_index");
+        $idioma = Cookie::lenguaje();
         
         if($txtBuscar=="all"){$txtBuscar="";}
         //Variables de Ajax_JavaScript
@@ -57,16 +62,20 @@ class indexController extends ofertaController
         $filas=$this->getInt('filas');        
         $totalRegistros = $this->getInt('total_registros');
         $paginador = new Paginador();
+        if (!$filas) {
+            $filas = CANT_REG_PAG;
+        } 
         if($pagina==0){
-        $numeracion=0;
-    }else{
-        $numeracion=($pagina-1)*10;    
-    }
+            $numeracion=0;
+        }else{
+            $numeracion=($pagina-1)*$filas;    
+        }
+
         $this->_view->setJs(array('index'));
         $paginador->paginar( $totalRegistros,"listarInstituciones", "$txtBuscar", $pagina, $filas, true);
         $this->_view->assign('numeracion', $numeracion);
-        $paginador->paginar( $totalRegistros,"listarInstituciones", "$txtBuscar", $pagina, CANT_REG_PAG, true);
-        $this->_view->assign('listaIns', $this->_inst->getBusquedaGeneral($pagina,CANT_REG_PAG,$txtBuscar));
+        // $paginador->paginar( $totalRegistros,"listarInstituciones", "$txtBuscar", $pagina, CANT_REG_PAG, true);
+        $this->_view->assign('listaIns', $this->_inst->getBusquedaGeneral($pagina,$filas,$txtBuscar,$idioma));
         $listaO=$this->_inst->getInstitucionesConCantOfertaSinPaginar();
         $this->_view->assign('listaO', $listaO);
         $this->_view->assign('busqueda', 'Si');
@@ -78,11 +87,14 @@ class indexController extends ofertaController
     }
     public function buscarporpalabras($dato = '')
     {
+        $this->validarUrlIdioma();
+        $this->_view->getLenguaje("oferta_index");
+        $idioma = Cookie::lenguaje();
         if($dato=="all"){$dato="";}
         $this->_view->setTemplate(LAYOUT_FRONTEND);
         $pagina = $this->getInt('pagina');
         $filas=$this->getInt('filas');        
-        $this->_view->assign('paises', $this->_inst->getPaises());
+        $this->_view->assign('paises', $this->_inst->getPaises($idioma));
         $arrayRowCount = $this->_inst->getBusquedaGeneralRowCount($dato);
         $totalRegistros = $arrayRowCount['CantidadRegistros'];  
         $this->_view->assign('cantidadResultados', $totalRegistros);
@@ -91,11 +103,11 @@ class indexController extends ofertaController
             if($pagina==0){
                 $numeracion=0;
             }else{
-                $numeracion=($pagina-1)*10;    
+                $numeracion=($pagina-1)*CANT_REG_PAG;    
             }
         $this->_view->assign('titulo', 'Instituciones');
         $paginador->paginar( $totalRegistros,"listarInstituciones", "$dato", $pagina, CANT_REG_PAG, true);
-        $this->_view->assign('listaIns', $this->_inst->getBusquedaGeneral($pagina,CANT_REG_PAG,$dato));
+        $this->_view->assign('listaIns', $this->_inst->getBusquedaGeneral($pagina,CANT_REG_PAG,$dato,$idioma));
         $listaO=$this->_inst->getInstitucionesConCantOfertaSinPaginar();
         $this->_view->assign('listaO', $listaO);
         $this->_view->assign('numeracion', $numeracion);
@@ -125,9 +137,9 @@ class indexController extends ofertaController
         $rowcount3a = $this->_inst->getResumenOfertasRowCount($condicion2,$condicion4);
         $rowcount3 = $rowcount3a['CantidadRegistros'];
 
-        $resumen2 = $this->_inst->getResumenProyectos($condicion2,$condicion3);
-        $resumen1 = $this->_inst->getResumenInstituciones($condicion1);
-        $resumen3 = $this->_inst->getResumenOfertas($condicion2,$condicion4);
+        $resumen2 = $this->_inst->getResumenProyectos($condicion2,$condicion3,$idioma);
+        $resumen1 = $this->_inst->getResumenInstituciones($condicion1,$idioma);
+        $resumen3 = $this->_inst->getResumenOfertas($condicion2,$condicion4,$idioma);
         $this->_view->assign('resumen1', $resumen1);
         $this->_view->assign('resumen2', $resumen2);
         $this->_view->assign('resumen3', $resumen3);
@@ -139,11 +151,14 @@ class indexController extends ofertaController
     }
     public function buscarportematica($dato = '')
     {
+        $this->validarUrlIdioma();
+        $this->_view->getLenguaje("oferta_index");
+        $idioma = Cookie::lenguaje();
         if($dato=="all"){$dato="";}
         $this->_view->setTemplate(LAYOUT_FRONTEND);
         $pagina = $this->getInt('pagina');
         $filas=$this->getInt('filas');        
-        $this->_view->assign('paises', $this->_inst->getPaises());
+        $this->_view->assign('paises', $this->_inst->getPaises($idioma));
         $arrayRowCount = $this->_inst->getBusquedaTematicaRowCount($dato);
         $totalRegistros = $arrayRowCount['CantidadRegistros'];  
         $this->_view->assign('cantidadResultados', $totalRegistros);
@@ -182,11 +197,14 @@ class indexController extends ofertaController
 
     public function busquedaAvanzada($selectPais='',$datos = '',$proyectos='',$ofertas='',$esp='',$mae='',$doc='')
     {
+        $this->validarUrlIdioma();
+        $this->_view->getLenguaje("oferta_index");
+        $idioma = Cookie::lenguaje();
      //   $contador_final=0;
         $this->_view->setTemplate(LAYOUT_FRONTEND);
         $pagina = $this->getInt('pagina');
         $filas=$this->getInt('filas');        
-        $this->_view->assign('paises', $this->_inst->getPaises());
+        $this->_view->assign('paises', $this->_inst->getPaises($idioma));
         
         if($selectPais=="all"){$selectPais="";}
         if($datos=="all"){$datos="";}
@@ -335,7 +353,7 @@ class indexController extends ofertaController
 
         $totalRegistros = count($this->_inst->getBusquedaAvanzadaT($selectGeneral, $WhereGeneral,$group_by));
         //resumen
-        $consultaResumen =" SELECT i.Ins_Tipo AS Tipo, COUNT(i.Ins_IdInstitucion) AS CantidadRegistros FROM institucion i 
+        $consultaResumen =" SELECT i.Ins_Tipo AS Ins_Tipo, COUNT(i.Ins_IdInstitucion) AS CantidadRegistros FROM institucion i 
         INNER JOIN ubigeo u ON i.Ubi_IdUbigeo=u.Ubi_IdUbigeo 
         INNER JOIN pais p ON p.Pai_IdPais=u.Pai_IdPais " . $innerjoinDatos . $innerjoinOfertaProyectos. $WhereGeneral. " GROUP BY i.Ins_Tipo ";
         
@@ -343,7 +361,7 @@ class indexController extends ofertaController
         $this->_view->assign('resumen1', $resumen1);
 
         if($innerjoinOfertaProyectos==''){
-            $consultaResumen2 = "SELECT t.Tem_Nombre AS Tipo, COUNT(o.Ofe_IdOferta) AS CantidadRegistros FROM institucion i 
+            $consultaResumen2 = "SELECT t.Tem_Nombre, COUNT(o.Ofe_IdOferta) AS CantidadRegistros FROM institucion i 
         INNER JOIN ubigeo u ON i.Ubi_IdUbigeo=u.Ubi_IdUbigeo 
         INNER JOIN pais p ON p.Pai_IdPais=u.Pai_IdPais ". $innerjoinDatos . " INNER JOIN oferta o ON o.Ins_IdInstitucion=i.Ins_IdInstitucion INNER JOIN tematica t ON t.Tem_IdTematica=o.Tem_IdTematica ". $WhereGeneral. " AND o.TipoRecurso='Investigacion' GROUP BY t.Tem_Nombre";        
             $consultaResumen2RC = "SELECT COUNT(o.Ofe_IdOferta) AS CantidadRegistros FROM institucion i 
@@ -356,7 +374,7 @@ class indexController extends ofertaController
         INNER JOIN ubigeo u ON i.Ubi_IdUbigeo=u.Ubi_IdUbigeo 
         INNER JOIN pais p ON p.Pai_IdPais=u.Pai_IdPais ". $innerjoinDatos . " INNER JOIN oferta o ON o.Ins_IdInstitucion=i.Ins_IdInstitucion INNER JOIN tematica t ON t.Tem_IdTematica=o.Tem_IdTematica ". $WhereGeneral. " AND o.TipoRecurso='Oferta'";
         }else{
-            $consultaResumen2 = "SELECT t.Tem_Nombre AS Tipo, COUNT(o.Ofe_IdOferta) AS CantidadRegistros FROM institucion i 
+            $consultaResumen2 = "SELECT t.Tem_Nombre, COUNT(o.Ofe_IdOferta) AS CantidadRegistros FROM institucion i 
         INNER JOIN ubigeo u ON i.Ubi_IdUbigeo=u.Ubi_IdUbigeo 
         INNER JOIN pais p ON p.Pai_IdPais=u.Pai_IdPais ". $innerjoinDatos . $innerjoinOfertaProyectos." INNER JOIN tematica t ON t.Tem_IdTematica=o.Tem_IdTematica ".$WhereGeneral. " AND o.TipoRecurso='Investigacion' GROUP BY t.Tem_Nombre";
         $consultaResumen2RC = "SELECT COUNT(o.Ofe_IdOferta) AS CantidadRegistros FROM institucion i 
@@ -388,7 +406,7 @@ class indexController extends ofertaController
         if($pagina==0){
         $numeracion=0;
         }else{
-        $numeracion=($pagina-1)*10;    
+        $numeracion=($pagina-1)*CANT_REG_PAG;    
         }
         $this->_view->assign('titulo', 'Instituciones');
         $paginador->paginar( $totalRegistros,"busquedaAvanzada","", $pagina, CANT_REG_PAG, true);
@@ -429,10 +447,12 @@ class indexController extends ofertaController
      public function _paginacion_busquedaAvanzada($selectPais='',$datos = '',$proyectos='',$ofertas='',$esp='',$mae='',$doc='')
     {
      //   $contador_final=0;
-       
+
+        $this->_view->getLenguaje("oferta_index");
+        $idioma = Cookie::lenguaje();
         $pagina = $this->getInt('pagina');
         $filas=$this->getInt('filas');        
-        $this->_view->assign('paises', $this->_inst->getPaises());
+        $this->_view->assign('paises', $this->_inst->getPaises($idioma));
         //
             if($selectPais=="all"){$selectPais="";}
             if($datos=="all"){$datos="";}
@@ -567,11 +587,14 @@ class indexController extends ofertaController
             }else if($caso_Especial='esp,mae, doc'){
                 $WhereGeneral = " WHERE " . $whereDatos . $whereOferta . $whereProyectos.$wherePais .$whereEsp . " OR " . $whereDatos . $whereOferta . $whereProyectos.$wherePais .$whereDoc . " OR " . $whereDatos . $whereOferta . $whereProyectos.$wherePais .$whereMae;
         }
+        if (!$filas) {
+            $filas = CANT_REG_PAG;
+        } 
 
         $group_by = "GROUP BY p.Pai_Nombre, u.Ubi_Sede,i.Ins_CorreoPagina,i.Ins_Direccion,i.Ins_IdInstitucion,i.Ins_IdPadre,i.Ins_img,
         i.Ins_Nombre,i.Ins_Representante,i.Ins_Telefono,i.Ins_Tipo,i.row_estado,i.Ubi_IdUbigeo";
         
-        $listaFinal = $this->_inst->getBusquedaAvanzada($selectGeneral, $WhereGeneral,$group_by,$pagina,CANT_REG_PAG);
+        $listaFinal = $this->_inst->getBusquedaAvanzada($selectGeneral, $WhereGeneral,$group_by,$pagina,$filas);
 
         $totalRegistros = count($this->_inst->getBusquedaAvanzadaT($selectGeneral, $WhereGeneral,$group_by));
                 
@@ -580,10 +603,10 @@ class indexController extends ofertaController
         if($pagina==0){
         $numeracion=0;
         }else{
-        $numeracion=($pagina-1)*10;    
+        $numeracion=($pagina-1)*$filas;    
         }
         $this->_view->assign('titulo', 'Instituciones');
-        $paginador->paginar( $totalRegistros,"busquedaAvanzada", "", $pagina, CANT_REG_PAG, true);
+        $paginador->paginar( $totalRegistros,"busquedaAvanzada", "", $pagina, $filas, true);
         $this->_view->assign('listaIns', $listaFinal);
         $listaO=$this->_inst->getInstitucionesConCantOfertaSinPaginar();
         $this->_view->assign('listaO', $listaO);

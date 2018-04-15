@@ -19,8 +19,10 @@ class indexController extends foroController {
         $lenguaje = Session::get("fileLenguaje");
         $this->_view->assign('titulo', $lenguaje["foro_index_titulo"]);
 
-        $lista_foros = $this->_model->getForos();
+        $lista_foros = $this->_model->getForosRecientes("forum");
+        $lista_webinars = $this->_model->getForosRecientes("webinar");
         $this->_view->assign('lista_foros', $lista_foros);
+        $this->_view->assign('lista_webinars', $lista_webinars);
         $this->_view->renderizar('index');
     }
 
@@ -37,7 +39,15 @@ class indexController extends foroController {
         $foro = $this->_model->getForo_x_idforo($iFor_IdForo);
         $this->_view->assign('titulo', $lenguaje["foro_ficha_titulo"] . " " . $foro["For_Titulo"]);
         $foro["Archivos"] = $this->_model->getArchivos_x_idforo($iFor_IdForo);
-        $foro["For_Comentarios"] = $this->_model->getComentarios_x_idforo($iFor_IdForo);
+        if($foro["For_Funcion"]=="forum"){
+            $foro["Sub_Foros"] = $this->_model->getSubForo_x_idforo($iFor_IdForo);
+            $foro["For_Comentarios"] = $this->_model->getComentarios_x_idforo($iFor_IdForo);
+        }
+        else {
+            $foro["Sub_Foros"] = array();
+            $foro["For_Comentarios"] = array();
+        }
+       
         
         
         for ($index = 0; $index < count($foro["For_Comentarios"]); $index++) {

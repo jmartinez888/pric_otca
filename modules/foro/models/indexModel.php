@@ -17,12 +17,34 @@ class indexModel extends Model
             return $exception->getTraceAsString();
         }
     }
+    public function getForosRecientes($iFor_Funcion){
+        try{
+            $post = $this->_db->query(
+                    "SELECT f.*,(SELECT COUNT(Com_IdComentario) FROM comentarios c WHERE c.For_IdForo=f.For_IdForo) AS For_TComentarios,(SELECT COUNT(*) FROM usuario_foro uf WHERE uf.For_IdForo=f.For_IdForo AND uf.Row_Estado=1) as For_TParticipantes  FROM foro f WHERE f.For_Funcion LIKE '%$iFor_Funcion%' AND Row_Estado=1
+                    ORDER BY f.For_FechaCreacion DESC 
+                    LIMIT 4");
+            return $post->fetchAll();
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("foro(indexModel)", "getForos", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
     
     public function getForo_x_idforo($iFor_IdForo){
         try{
             $post = $this->_db->query(
-                    "SELECT f.*,(SELECT COUNT(Com_IdComentario) FROM comentarios c WHERE c.For_IdForo=f.For_IdForo) as For_TComentarios  FROM foro f where f.For_IdForo={$iFor_IdForo}");
+                    "SELECT f.*,(SELECT COUNT(Com_IdComentario) FROM comentarios c WHERE c.For_IdForo=f.For_IdForo) as For_TComentarios, (SELECT COUNT(*) FROM usuario_foro uf WHERE uf.For_IdForo=f.For_IdForo AND uf.Row_Estado=1) as For_TParticipantes FROM foro f where f.For_IdForo={$iFor_IdForo}");
             return $post->fetch();
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("foro(indexModel)", "getForos", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
+    public function getSubForo_x_idforo($iFor_IdForo){
+        try{
+            $post = $this->_db->query(
+                    "SELECT f.*,(SELECT COUNT(Com_IdComentario) FROM comentarios c WHERE c.For_IdForo=f.For_IdForo) as For_TComentarios  FROM foro f where f.For_IdPadre={$iFor_IdForo}");
+            return $post->fetchAll();
         } catch (PDOException $exception) {
             $this->registrarBitacora("foro(indexModel)", "getForos", "Error Model", $exception);
             return $exception->getTraceAsString();

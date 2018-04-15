@@ -9,14 +9,14 @@ class claseController extends elearningController {
   public function __construct($lang,$url)
   {
     parent::__construct($lang,$url);
-      if(!Session::get("autenticado")){ $this->redireccionar("elearning/"); }
+    if(!Session::get("autenticado")){ $this->redireccionar("elearning/"); }
   }
 
   public function index(){
     $this->redireccionar("elearning/");
   }
 
-  public function clase($curso="", $modulo="", $leccion=""){
+  public function clase($curso="", $modulo="", $leccion="", $id=""){
     if($curso == "" || !is_numeric($curso)
     || $modulo == "" || !is_numeric($modulo)
       || $leccion == "" || !is_numeric($leccion) ){

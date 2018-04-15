@@ -1,6 +1,7 @@
 var _post = null;
 var _Per_IdPermiso_ = 0;
-$(document).on('ready', function () {   
+$(document).on('ready', function () {  
+
     $('#form3').validator().on('submit', function (e) {
     if (e.isDefaultPrevented()) {
 
@@ -309,17 +310,17 @@ function gestionIdiomas(idrol, idIdiomaOriginal, idIdioma) {
         $('form').validator();
     });
 }
-      function initMap() {
-        var latX = parseFloat(document.getElementById("map").getAttribute("data-lat"));
-        var latY = parseFloat(document.getElementById("map").getAttribute("data-lng"));
-        var uluru = {lat: latX, lng: latY};
-        var map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 3,
-          center: uluru
-        });
-        var marker = new google.maps.Marker({
-          position: uluru,
-          map: map
-        });
-      }
-    
+
+function initMap() {
+    var latX = parseFloat(document.getElementById("map").getAttribute("data-lat"));
+    var latY = parseFloat(document.getElementById("map").getAttribute("data-lng"));
+    var uluru = {lat: latX, lng: latY};
+    var map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 3,
+      center: uluru
+    });
+    var marker = new google.maps.Marker({
+      position: uluru,
+      map: map
+    });
+}    

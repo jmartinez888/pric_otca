@@ -10,7 +10,7 @@ class institucionesController extends ofertaController
 
     public function index() {
     	$this->validarUrlIdioma();
-    	
+    	$this->_view->getLenguaje("oferta_index");
     	$this->_view->setJs(array('index'));
 
 		$nombre = $this->getSql('nombre');
@@ -89,6 +89,8 @@ $this->_view->assign('titulo', 'Instituciones');
     }
     public function buscarporpalabras($dato = '',$pais='')
     {
+        $this->validarUrlIdioma();
+        $this->_view->getLenguaje("oferta_index");
         if($dato=="all"){$dato="";}
         if($pais=="all"){$pais="";}
         $this->_view->setTemplate(LAYOUT_FRONTEND);
@@ -113,12 +115,51 @@ $this->_view->assign('titulo', 'Instituciones');
         $this->_view->assign('paginacion', $paginador->getView('paginacion_ajax_s_filas'));
         $this->_view->renderizar('index', 'instituciones');
     }
-public function ficha($id=false) {
+    public function ficha($id=false,$oferta=false,$id_oferta=false) {
+        $this->validarUrlIdioma();
+        $this->_view->getLenguaje("oferta_index");
+        $idioma = Cookie::lenguaje();
+
+        if($oferta!==false && $id_oferta!==false){
+            $this->validarUrlIdioma();
+                
+        $this->_view->setJs(array('index'));
+
+        $lista=$this->_inst->getInstitucionPorId($id,$idioma);
+        
+        if(Session::get('id_usuario')){
+            $id_usuario = Session::get('id_usuario');   
+            $inst_usuario=$this->_inst->getInstitucionUsuario($id,$id_usuario);
+            if($inst_usuario){
+                
+                $this->_view->assign('inst_usuario', 'si');        
+            }
+        }
+        if($oferta=='Especializacion'){
+            $oferta="Especialización";
+        }
+        if($oferta=='Maestria'){
+            $oferta="Maestría";
+        }
+        if($oferta=='Investigacion'){
+            $oferta="Investigación";
+        }
+
+        $listaOfe=$this->_inst->getOfertaPorId($id_oferta);
+        $this->_view->assign('oferta', $oferta);
+        $this->_view->assign('listaIns', $lista);
+        $this->_view->assign('listaOfe', $listaOfe);
+        $this->_view->assign('titulo', 'Ficha Oferta');
+        $this->_view->setTemplate(LAYOUT_FRONTEND);
+        $this->_view->renderizar('ficha_oferta','instituciones');
+        exit;
+        }
+
         $this->validarUrlIdioma();
                 
         $this->_view->setJs(array('index'));
 
-        $lista=$this->_inst->getInstitucionPorId($id);
+        $lista=$this->_inst->getInstitucionPorId($id,$idioma);
         
         if(Session::get('id_usuario')){
             $id_usuario = Session::get('id_usuario');   
@@ -129,6 +170,10 @@ public function ficha($id=false) {
                 $this->_view->assign('inst_usuario', 'si');        
             }
         }
+        $tiene_traduccion = $this->_inst->tiene_traduccion($id);
+        if(count($tiene_traduccion)){
+        $this->_view->assign('tiene_traduccion', 'si');    
+        }
         
         $this->_view->assign('listaIns', $lista);
         $this->_view->assign('titulo', 'Ficha Institucion');
@@ -137,4 +182,4 @@ public function ficha($id=false) {
 
     }
 }
-?>
+?>  

@@ -4,10 +4,10 @@ public function __construct()
     {
         parent::__construct();
     }
-    public function getPaises()
+    public function getPaises($idioma)
     {
         try{
-            $sql = "SELECT p.Pai_Nombre AS Nombre,p.Pai_IdPais from pais p ";
+            $sql = "SELECT fn_TraducirContenido('pais','Pai_Nombre',p.Pai_IdPais,'$idioma', p.Pai_Nombre) Nombre,p.Pai_IdPais from pais p ";
             $result = $this->_db->prepare($sql);
             $result->execute();
             $lista= $result->fetchAll(PDO::FETCH_ASSOC);
@@ -15,7 +15,6 @@ public function __construct()
                 for ($i=0; $i < count($lista); $i++) { 
                     $lista[$i]['Ciudades']=$this->getCiudadesPorIdPai($lista[$i]['Pai_IdPais']);
                 }
-                    
                 }
             
             return $lista;
@@ -31,6 +30,24 @@ public function __construct()
             $result = $this->_db->prepare($sql);
             $result->execute();
             return $result->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $exception) {
+            return $exception->getTraceAsString();
+        }
+    }
+     public function getIdiomas($idioma)
+    {
+        try{
+            $lista_final=array();
+            $listaInstituciones = $this->_db->query("SELECT * FROM idioma");
+            $listaInstituciones=$listaInstituciones->fetchAll(PDO::FETCH_ASSOC);
+            if(count($listaInstituciones)){
+                for ($i=0; $i <count($listaInstituciones) ; $i++) { 
+                    if($listaInstituciones[$i]['Idi_IdIdioma']!==$idioma){
+                        $lista_final[]=$listaInstituciones[$i];
+                    }
+                }
+            }
+            return $lista_final;
         } catch (PDOException $exception) {
             return $exception->getTraceAsString();
         }
@@ -111,12 +128,13 @@ public function __construct()
             return $exception->getTraceAsString();
         }
     }
-    public function obtenerotrosdatos($id)
+    public function obtenerotrosdatos($id,$idioma=false)
     {
         try{
-            $sql = "call s_s_listar_otros_datos_por_id(?)";
+            $sql = "call s_s_listar_otros_datos_por_id(?,?)";
             $result = $this->_db->prepare($sql);
             $result->bindParam(1, $id, PDO::PARAM_INT);
+            $result->bindParam(2, $idioma, PDO::PARAM_STR);
             $result->execute();
             return $result->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $exception) {
@@ -130,6 +148,26 @@ public function __construct()
             INNER JOIN ubigeo u ON i.Ubi_IdUbigeo=u.Ubi_IdUbigeo 
             INNER JOIN pais p ON p.Pai_IdPais=u.Pai_IdPais
             WHERE i.Ins_IdInstitucion = ".$id);
+            return $listaInstituciones->fetch();
+
+        } catch (PDOException $exception) {
+            return $exception->getTraceAsString();
+        }
+    }
+    public function getInstitucionPorIdTraducido($tabla,$id,$columna,$idioma)
+    {
+        try{
+            $listaInstituciones = $this->_db->query("SELECT fn_TraducirContenido('$tabla','$columna','$id','$idioma',c.Cot_Traduccion) Cot_Traduccion FROM contenido_traducido c ");
+            return $listaInstituciones->fetch();
+
+        } catch (PDOException $exception) {
+            return $exception->getTraceAsString();
+        }
+    }
+    public function getIdTraducido($tabla,$id,$columna,$idioma)
+    {
+        try{
+            $listaInstituciones = $this->_db->query("SELECT c.Cot_IdContenidoTraducido FROM contenido_traducido c WHERE c.Cot_Tabla = '$tabla' and c.Cot_Columna = '$columna' and c.Cot_IdRegistro =  '$id' and c.Idi_IdIdioma = '$idioma' ");
             return $listaInstituciones->fetch();
 
         } catch (PDOException $exception) {
@@ -169,6 +207,40 @@ public function __construct()
             return $exception->getTraceAsString();
         }
     }
+    public function getOfertasPorIdTraducido($id=false,$idioma='')
+    {
+        try{
+            $listaInstituciones = $this->_db->query("SELECT i.Ins_IdInstitucion, o.Ofe_IdOferta, o.Ofe_Tipo AS Tipo, 
+                fn_TraducirContenido('oferta','Ofe_Nombre',o.Ofe_IdOferta,'$idioma', o.Ofe_Nombre) Ofe_Nombre, 
+                fn_TraducirContenido('oferta', 'Ofe_Descripcion',o.Ofe_IdOferta,'$idioma', o.Ofe_Descripcion) Ofe_Descripcion, t.Tem_Nombre AS Tematica,o.Contacto AS Contacto,
+                fn_devolverIdioma('oferta',o.Ofe_IdOferta,'$idioma','$idioma') Idioma
+                FROM institucion i 
+            INNER JOIN oferta o ON i.Ins_IdInstitucion= o.Ins_IdInstitucion 
+            INNER JOIN tematica t ON t.Tem_IdTematica=o.Tem_IdTematica
+            WHERE i.Ins_IdInstitucion = ".$id." AND o.TipoRecurso='Oferta' ");
+            return $listaInstituciones->fetchAll();
+
+        } catch (PDOException $exception) {
+            return $exception->getTraceAsString();
+        }
+    }
+    public function getInvPorIdTraducido($id=false,$idioma='')
+    {
+        try{
+            $listaInstituciones = $this->_db->query("SELECT i.Ins_IdInstitucion, o.Ofe_IdOferta, o.Ofe_Tipo AS Tipo, 
+                fn_TraducirContenido('oferta','Ofe_Nombre',o.Ofe_IdOferta,'$idioma', o.Ofe_Nombre) Ofe_Nombre, 
+                fn_TraducirContenido('oferta', 'Ofe_Descripcion',o.Ofe_IdOferta,'$idioma', o.Ofe_Descripcion) Ofe_Descripcion, t.Tem_Nombre AS Tematica,o.Contacto AS Contacto,
+                fn_devolverIdioma('oferta',o.Ofe_IdOferta,'$idioma','$idioma') Idioma
+                FROM institucion i 
+            INNER JOIN oferta o ON i.Ins_IdInstitucion= o.Ins_IdInstitucion 
+            INNER JOIN tematica t ON t.Tem_IdTematica=o.Tem_IdTematica
+            WHERE i.Ins_IdInstitucion = ".$id." AND o.TipoRecurso='Investigacion' ");
+            return $listaInstituciones->fetchAll();
+
+        } catch (PDOException $exception) {
+            return $exception->getTraceAsString();
+        }
+    }
     public function insertarOferta($id,$t,$n,$d,$tipo,$c)
     {
         try{
@@ -194,6 +266,30 @@ public function __construct()
     {
         try{
             $sql =" UPDATE oferta SET Tem_IdTematica = '$t',Ofe_Nombre='$n',Ofe_Descripcion='$d',Ofe_Tipo='$tipo',Contacto='$c' WHERE Ofe_IdOferta='$id_oferta' ";
+            $result = $this->_db->prepare($sql);
+
+            $result->execute();
+            return $result->rowCount();
+        } catch (PDOException $exception) {
+            return $exception->getTraceAsString();
+        }
+    }
+    public function actualizar_traduccion($id,$c)
+    {
+        try{
+            $sql =" UPDATE contenido_traducido SET Cot_Traduccion = '$c' WHERE Cot_IdContenidoTraducido='$id' ";
+            $result = $this->_db->prepare($sql);
+
+            $result->execute();
+            return $result->rowCount();
+        } catch (PDOException $exception) {
+            return $exception->getTraceAsString();
+        }
+    }
+     public function actualizar_traduccion_param($tabla,$columna,$c,$id,$idioma)
+    {
+        try{
+            $sql =" UPDATE contenido_traducido SET Cot_Traduccion = '$c' WHERE Cot_IdRegistro='$id' and Cot_Tabla= '$tabla' and Cot_Columna = '$columna' and Idi_IdIdioma = '$idioma' ";
             $result = $this->_db->prepare($sql);
 
             $result->execute();

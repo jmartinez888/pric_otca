@@ -1,3 +1,4 @@
+
 <?php
 
 class registroController extends ofertaController
@@ -10,6 +11,7 @@ class registroController extends ofertaController
 
     public function index() {
     	$this->validarUrlIdioma();
+        $this->_view->getLenguaje("oferta_index");
     	$this->_acl->autenticado();
     	$this->_view->setJs(array('index'));
         $this->_view->setJs(array('select2'));
@@ -130,6 +132,8 @@ class registroController extends ofertaController
 
     public function _mostrarciudades($txtBuscar) 
     {
+        $this->validarUrlIdioma();
+        $this->_view->getLenguaje("oferta_index");
         $this->_view->setJs(array('index'));
         $this->_view->assign('Ciudades', $this->_inst->getCiudadesPorIdPai($txtBuscar));
         $this->_view->assign('titulo', 'Instituciones');
@@ -138,6 +142,8 @@ class registroController extends ofertaController
     
     public function buscarporpalabras($dato = '',$pais='')
     {
+        $this->validarUrlIdioma();
+        $this->_view->getLenguaje("oferta_index");
         if($dato=="all"){$dato="";}
         if($pais=="all"){$pais="";}
         $this->_view->setTemplate(LAYOUT_FRONTEND);
@@ -164,7 +170,7 @@ class registroController extends ofertaController
     }
 public function ficha($id=false) {
         $this->validarUrlIdioma();
-        
+        $this->_view->getLenguaje("oferta_index");
         $this->_view->setJs(array('index'));
 
         $lista=$this->_inst->getInstitucionPorId($id);
@@ -177,6 +183,7 @@ public function ficha($id=false) {
     }
     public function ofertas_academicas($id=false) {
         $this->validarUrlIdioma();
+        $this->_view->getLenguaje("oferta_index");
         $this->_acl->autenticado();
         $this->_view->setJs(array('index'));
 
@@ -199,7 +206,7 @@ public function ficha($id=false) {
     }
     public function guardar() {
         $this->validarUrlIdioma();
-        
+        $this->_view->getLenguaje("oferta_index");
         $this->_view->setJs(array('index'));
         
         
@@ -210,6 +217,7 @@ public function ficha($id=false) {
     }
     public function investigacion($id=false) {
         $this->validarUrlIdioma();
+        $this->_view->getLenguaje("oferta_index");
         $this->_acl->autenticado();
         $this->_view->setJs(array('index'));
 
@@ -217,7 +225,7 @@ public function ficha($id=false) {
             $lista=$this->_inst->insertarInv($id,$this->getInt('tematica'),$this->getSql('nombre'),$this->getSql('descripcion'),$this->getSql('tipooferta'),$this->getSql('contacto'));
         }
         if($this->getInt('guardar_dif') == 1){
-            $lista=$this->_inst->insertarDif($id,$this->getSql('difusion'));
+            $lista=$this->_inst->insertarDif($id,$this->getSql('difusion'),$this->getSql('dif_descripcion'),$this->getSql('dif_enlace'));
         }
 
         $lista=$this->_inst->getInstitucionPorId($id);
@@ -233,6 +241,81 @@ public function ficha($id=false) {
         $this->_view->assign('titulo', 'Investigación');
         $this->_view->setTemplate(LAYOUT_FRONTEND);
         $this->_view->renderizar('investigacion','registro');
+
+    }
+    public function idiomas($id=false) {
+        $this->validarUrlIdioma();
+        $this->_view->getLenguaje("oferta_index");
+        $this->_acl->autenticado();
+        $this->_view->setJs(array('index'));
+        $idioma = Cookie::lenguaje();
+        
+        $listaIdiomas = $this->_inst->getIdiomas($idioma);
+        $listaOfertasDifusion = $this->_inst->getDifPorId($id);
+        $listaofertas = $this->_inst->getOfertasPorId($id);
+        $listaOfertasInv = $this->_inst->getInvPorId($id);
+        $otros_datos_ins = $this->_inst->obtenerotrosdatos($id);
+        $lista=$this->_inst->getInstitucionPorId($id);
+        $tematica = $this->_inst->getTematicas();
+        
+        $idioma_1 = $listaIdiomas[0];
+        $idioma_2 = $listaIdiomas[1];
+
+        if($this->getInt('guardando') == 1){
+            
+            $this->_inst->insertar_traduccion('Institucion',$id,'Ins_Nombre',$this->getSql('idi1_ididioma'),$this->getSql('idi1_nombre'));
+            $this->_inst->insertar_traduccion('Institucion',$id,'Ins_Descripcion',$this->getSql('idi1_ididioma'),$this->getSql('idi1_descripcion'));
+            $this->_inst->insertar_traduccion('institucion',$id,'Ins_Nombre',$this->getSql('idi2_ididioma'),$this->getSql('idi2_nombre'));
+            $this->_inst->insertar_traduccion('institucion',$id,'Ins_Descripcion',$this->getSql('idi2_ididioma'),$this->getSql('idi2_descripcion'));
+            if(count($otros_datos_ins)){
+                for ($i=0; $i < count($otros_datos_ins); $i++) { 
+                    $this->_inst->insertar_traduccion('institucion_otros_datos',$this->getSql('idi1_idiod_'.$i),'Atributo',$this->getSql('idi1_ididioma'),$this->getSql('idi1_atributo_'.$i));
+                    $this->_inst->insertar_traduccion('institucion_otros_datos',$this->getSql('idi1_idiod_'.$i),'Valor',$this->getSql('idi1_ididioma'),$this->getSql('idi1_valor_'.$i));
+                    $this->_inst->insertar_traduccion('institucion_otros_datos',$this->getSql('idi1_idiod_'.$i),'Atributo',$this->getSql('idi2_ididioma'),$this->getSql('idi2_atributo_'.$i));
+                    $this->_inst->insertar_traduccion('institucion_otros_datos',$this->getSql('idi1_idiod_'.$i),'Valor',$this->getSql('idi2_ididioma'),$this->getSql('idi2_valor_'.$i));
+                }
+            }
+            if(count($listaofertas)){
+                for ($j=0; $j <count($listaofertas) ; $j++) { 
+                    $this->_inst->insertar_traduccion('oferta',$this->getSql('idi1_idoferta_'.$j),'Ofe_Nombre',$this->getSql('idi1_ididioma'),$this->getSql('idi1_nombre_'.$j));
+                    $this->_inst->insertar_traduccion('oferta',$this->getSql('idi1_idoferta_'.$j),'Ofe_Descripcion',$this->getSql('idi1_ididioma'),$this->getSql('idi1_descripcion_'.$j));
+                    $this->_inst->insertar_traduccion('oferta',$this->getSql('idi1_idoferta_'.$j),'Ofe_Nombre',$this->getSql('idi2_ididioma'),$this->getSql('idi2_nombre_'.$j));
+                    $this->_inst->insertar_traduccion('oferta',$this->getSql('idi1_idoferta_'.$j),'Ofe_Descripcion',$this->getSql('idi2_ididioma'),$this->getSql('idi2_descripcion_'.$j));
+                }
+            }
+            if(count($listaOfertasInv)){
+                for ($k=0; $k < count($listaOfertasInv); $k++) { 
+                    $this->_inst->insertar_traduccion('oferta',$this->getSql('idi1_idinv_'.$k),'Ofe_Nombre',$this->getSql('idi1_ididioma'),$this->getSql('idi1_nombre_inv_'.$k));
+                    $this->_inst->insertar_traduccion('oferta',$this->getSql('idi1_idinv_'.$k),'Ofe_Descripcion',$this->getSql('idi1_ididioma'),$this->getSql('idi1_descripcion_inv_'.$k));
+                    $this->_inst->insertar_traduccion('oferta',$this->getSql('idi1_idinv_'.$k),'Ofe_Nombre',$this->getSql('idi2_ididioma'),$this->getSql('idi2_nombre_inv_'.$k));
+                    $this->_inst->insertar_traduccion('oferta',$this->getSql('idi1_idinv_'.$k),'Ofe_Descripcion',$this->getSql('idi2_ididioma'),$this->getSql('idi2_descripcion_inv_'.$k));
+                }
+            }
+            if (count($listaOfertasDifusion)) {
+                for ($l=0; $l < count($listaOfertasDifusion); $l++) { 
+                    $this->_inst->insertar_traduccion('difusion',$this->getSql('idi1_iddif_'.$l),'Dif_Nombre',$this->getSql('idi1_ididioma'),$this->getSql('idi1_difusion_'.$l));
+                    $this->_inst->insertar_traduccion('difusion',$this->getSql('idi1_iddif_'.$l),'Dif_Descripcion',$this->getSql('idi1_ididioma'),$this->getSql('idi1_dif_descripcion_'.$l));
+                    $this->_inst->insertar_traduccion('difusion',$this->getSql('idi1_iddif_'.$l),'Dif_Nombre',$this->getSql('idi2_ididioma'),$this->getSql('idi2_difusion_'.$l));
+                    $this->_inst->insertar_traduccion('difusion',$this->getSql('idi1_iddif_'.$l),'Dif_Descripcion',$this->getSql('idi2_ididioma'),$this->getSql('idi2_dif_descripcion_'.$l));
+                }
+            }
+            $this->_view->assign('guardado_correctamente', 'si');    
+        }
+        
+        $this->_view->assign('otros_datos_ins', $otros_datos_ins);
+        $this->_view->assign('listaofertas', $listaofertas);
+        $this->_view->assign('idioma_1', $idioma_1);
+        $this->_view->assign('idioma_2', $idioma_2);
+        $this->_view->assign('idioma_guardado', '');
+        $this->_view->assign('idioma_actual', $idioma);
+        $this->_view->assign('listaOfertasInv', $listaOfertasInv);
+        $this->_view->assign('listaOfertasDifusion', $listaOfertasDifusion);
+        $this->_view->assign('id', $id);
+        $this->_view->assign('tematica', $tematica);
+        $this->_view->assign('listaIns', $lista);
+        $this->_view->assign('titulo', 'Investigación');
+        $this->_view->setTemplate(LAYOUT_FRONTEND);
+        $this->_view->renderizar('idiomas','registro');
 
     }
 }

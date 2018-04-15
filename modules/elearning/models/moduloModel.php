@@ -109,7 +109,8 @@ class moduloModel extends Model {
         foreach ($modulos as $m) {
           $lec = "SELECT L.*, (CASE WHEN Lec_FechaHasta <= NOW() THEN 0 ELSE 1 END) as Activo
                   FROM leccion L
-                  WHERE L.Mod_IdModulo = {$m['Mod_IdModulo']}";
+                  WHERE L.Mod_IdModulo = {$m['Mod_IdModulo']}
+                    AND L.Lec_Estado = 1 AND L.Row_Estado = 1";
           $m["LECCIONES"] = $this->getArray($lec);
           array_push($resultado, $m);
         }

@@ -7,7 +7,7 @@
 
 .ficha-mod{
   background: #607D8B;
-  height: 80px;
+  height: 128px;
   border-radius: 2px;
   color: #ECEFF1;
   position: relative;
@@ -52,10 +52,10 @@
 
 .btn-modulo{
   position: absolute;
-  right: 10px;
-  bottom: 25px;
+  left: 25px;
+  bottom: 10px;
   width: 200px;
-  opacity: 0.8 !important;
+  opacity: 0.9 !important;
   color: white;
 }
 

@@ -4,35 +4,52 @@
   }
 </style>
 <div class="row">
-    <div class="col-lg-7 tittle-modulo ">
-       <h4><strong> Módulo {$modulo["Index"]}: {$modulo["Mod_Titulo"]}</strong></h4>
-    </div>
-    <div class="col-lg-3 derecha">
+  <div class="col-lg-5 tittle-modulo ">
+     <h4><strong> Módulo {$modulo.Index}: {$modulo["Mod_Titulo"]}</strong></h4>
+  </div>
+  <div class="col-lg-5 derecha" style="margin-top: 5px !important">
       <span>Lección {$leccion["Index"]} de {count($lecciones)}</span>
       {if $leccion["Index"] > 1 }
       <form method="post" action="{BASE_URL}elearning/cursos/_previous_leccion/" style="display: inline-block">
         <input value="{$curso}" name="curso" hidden="hidden"/>
         <input value="{$leccion.Lec_IdLeccion}" name="leccion" hidden="hidden"/>
-        <button class="course-students-amount btn btn-danger"> Anterior</button>
+        <button class="course-students-amount btn btn-danger"> 
+          <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>  
+          Anterior
+        </button>
       </form>
+      {else}
+      <button class="course-students-amount btn btn-default" disabled="disabled"> 
+          <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>  
+          Anterior
+      </button>
       {/if}
       {if $leccion["Index"] < {count($lecciones)} }
       <form method="post" action="{BASE_URL}elearning/cursos/_next_leccion/" style="display: inline-block">
         <input value="{$curso}" name="curso" hidden="hidden"/>
         <input value="{$leccion.Lec_IdLeccion}" name="leccion" hidden="hidden"/>
-        <button class="course-students-amount btn btn-danger"> Siguiente</button>
+        <button class="course-students-amount btn btn-danger"> 
+          <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+          Siguiente
+        </button>
       </form>
       {else}
         <a href="{BASE_URL}elearning/cursos/curso/{$curso}">
-          <button class="course-students-amount btn btn-danger"> Ir a curso</button>
+          <button class="course-students-amount btn btn-danger"> 
+            <span class="glyphicon glyphicon-book" aria-hidden="true"></span>
+            Ir a curso
+          </button>
         </a>
       {/if}
-    </div>
-    <div class="col-lg-2">
-      <a href="{BASE_URL}elearning/cursos/curso/{$curso}">
-        <button class="course-students-amount btn btn-danger"> Volver a curso</button>
-      </a>
-    </div>
+  </div>
+  <div class="col-lg-2" style="margin-top: 5px !important">
+    <a href="{BASE_URL}elearning/cursos/curso/{$curso}">
+    <button class="course-students-amount btn btn-danger"> 
+      <span class="glyphicon glyphicon-book" aria-hidden="true"></span>
+      Volver a curso
+    </button>
+  </a>
+  </div>
 </div>
 <div class="row">
   <div class="col-lg-3">    

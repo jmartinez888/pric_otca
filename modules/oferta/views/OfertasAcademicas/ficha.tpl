@@ -23,7 +23,6 @@
 							<h3>Detalle: {$listaIns.Ofe_Descripcion}</h3>
 						</div>
 					</div>
-					
 				</div>
 			</div>
 		</div>

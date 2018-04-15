@@ -87,16 +87,24 @@ class adminController extends foroController {
         $this->_paginacion_listarForo();
     }
 
-    public function form($tipo, $id_foro = 0) {
+    public function form($tipo = "", $funcion = "forum", $id_foro = 0) {
 
         $this->validarUrlIdioma();
 
+        if ($tipo != "new" && $tipo != "edit") {
+            $this->redireccionar("foro/admin");
+        }
+        if ($funcion != "forum" && $funcion != "webinar") {
+            $this->redireccionar("foro/admin");
+        }
+
+
         if ($this->botonPress("bt_guardar")) {
             $iFor_Titulo = $this->getTexto('text_titulo');
-            $iFor_Objetivo = $this->getTexto('text_objetivo');
-            $iFor_ResultadosEsperados = $this->getTexto('text_resultados_e');
+            $iFor_Resumen = $this->getTexto('text_resumen');
+            $iFor_Descripcion = $this->getTexto('text_descripcion');
             $iFor_Palabras = $this->getTexto('text_palabras_claves');
-            $iFor_FechaCreacion=$this->getTexto('start_time');
+            $iFor_FechaCreacion = $this->getTexto('start_time');
             $iFor_FechaCierre = $this->getTexto('end_time');
             $iFor_Tipo = $this->getInt('s_lista_tipo');
             $iFor_Estado = $this->getInt('s_lista_estado');
@@ -104,9 +112,12 @@ class adminController extends foroController {
             $iEnt_IdEntidad = $this->getInt('s_lista_entidad');
             $iUsu_IdUsuario = Session::get('id_usuario');
             $iIdi_IdIdioma = 'es';
-            $iFile_foro = html_entity_decode($this->getTexto('hd_file_form'));            
+            $iFor_Funcion = $funcion;
+            $iFor_IdPadre = $this->getInt('hd_id_padre');
+            $iFile_foro = html_entity_decode($this->getTexto('hd_file_form'));
             $aFile_foro = json_decode($iFile_foro, true);
-            
+
+
             // echo "/iFor_Titulo".$iFor_Titulo. "/iFor_Objetivo".$iFor_Objetivo."/iFor_ResultadosEsperados".$iFor_ResultadosEsperados."/iFor_Palabras".$iFor_Palabras."/iFor_FechaCierre".$iFor_FechaCierre.
             // "/iFor_Tipo".$iFor_Tipo."/iFor_Estado".$iFor_Estado."/iLit_IdLineaTematica".$iLit_IdLineaTematica."/iEnt_IdEntidad".$iEnt_IdEntidad."/iUsu_IdUsuario".$iUsu_IdUsuario."/iIdi_IdIdioma".$iIdi_IdIdioma; exit;
 
@@ -114,15 +125,15 @@ class adminController extends foroController {
 
             $result_rec = $model_recurso->insertarRecurso("Base de datos de documentos del foro " . $iFor_Titulo, "Proyecto PRIC/OTCA", 1, 1, 3, "Proyecto PRIC/OTCA", "", $iIdi_IdIdioma);
 
-            $result_foro = $this->_model->insertarForo($iFor_Titulo, $iFor_Objetivo, $iFor_ResultadosEsperados, $iFor_Palabras, $iFor_FechaCreacion,$iFor_FechaCierre, $iFor_Tipo, $iFor_Estado, $iLit_IdLineaTematica, $iUsu_IdUsuario, $iEnt_IdEntidad, $result_rec[0], $iIdi_IdIdioma);
+            $result_foro = $this->_model->insertarForo($iFor_Titulo, $iFor_Resumen, $iFor_Descripcion, $iFor_Palabras, $iFor_FechaCreacion, $iFor_FechaCierre, $iFor_Funcion, $iFor_Tipo, $iFor_Estado, $iFor_IdPadre, $iLit_IdLineaTematica, $iUsu_IdUsuario, $iEnt_IdEntidad, $result_rec[0], $iIdi_IdIdioma);
 
-       
+            if(count($aFile_foro))
             foreach ($aFile_foro as $key => $value) {
-                $result_e = $this->_model->insertarFileForo($value["name"], $value["type"], $value["size"], $result_foro[0], $result_rec[0]);              
+                $result_e = $this->_model->insertarFileForo($value["name"], $value["type"], $value["size"], $result_foro[0], $result_rec[0]);
             }
-            
-        
-            
+
+
+
             $iRol_IdRol = $this->_acl->getIdRol_x_ckey("lider_foro");
             $model_index = $this->loadModel('index');
             $result_inscrip = $model_index->inscribir_participante_foro($result_foro[0], $iUsu_IdUsuario, $iRol_IdRol["Rol_IdRol"], 1);
@@ -133,11 +144,16 @@ class adminController extends foroController {
 
         $this->_view->getLenguaje("foro_admin_index");
         $lenguaje = Session::get("fileLenguaje");
+
         $this->_view->assign('titulo', $lenguaje["foro_admin_form_titulo"]);
-        $this->_view->setJs(array('form', array(BASE_URL . 'public/ckeditor/ckeditor.js'), array(BASE_URL . 'public/ckeditor/adapters/jquery.js'),array(BASE_URL . 'public/js/jquery-ui.min.js'),array(BASE_URL . 'public/js/jquery-ui-timepicker-addon.js')));
-        $this->_view->setCss(array('form',array(BASE_URL."public/css/jquery-ui-timepicker-addon.css"),array(BASE_URL."public/css/jquery-ui.min.css")));
+        $this->_view->assign('Form_Funcion', $funcion);
+        $this->_view->setJs(array('form', array(BASE_URL . 'public/ckeditor/ckeditor.js'), array(BASE_URL . 'public/ckeditor/adapters/jquery.js'), array(BASE_URL . 'public/js/jquery-ui.min.js'), array(BASE_URL . 'public/js/jquery-ui-timepicker-addon.js')));
+        $this->_view->setCss(array('form', array(BASE_URL . "public/css/jquery-ui-timepicker-addon.css"), array(BASE_URL . "public/css/jquery-ui.min.css")));
         $this->_view->assign('start_date', date('d-m-Y H:m'));
-        $this->_view->assign('end_date', date('d-m-Y H:m',strtotime('+1 day'))); 
+        $this->_view->assign('end_date', date('d-m-Y H:m', strtotime('+1 day')));
+        if ($tipo == "new" && $id_foro != 0) {
+            $this->_view->assign('iFor_IdPadre', $id_foro);
+        }
         $this->_view->renderizar('form');
     }
 
@@ -172,6 +188,63 @@ class adminController extends foroController {
         } else {
             return $this->redireccionar("foro/admin");
         }
+    }
+
+    public function actividad($id_foro = 0) {
+        if ($id_foro == 0) {
+            $this->redireccionar("foro/admin");
+        }
+        $foro = $this->_model->getForos_x_Id($id_foro);
+        if (empty($foro)) {
+            $this->redireccionar("foro/admin");
+        }
+
+        if ($this->botonPress("bt_guardar")) {
+            $this->_registrarActividad($id_foro);
+        }
+        if ($this->botonPress("bt_editar")) {
+            $this->_registrarActividad($id_foro);
+        }
+        if ($this->botonPress("bt_eliminar")) {
+            $this->_eliminarrActividad($id_foro);
+        }
+        $foro["For_Actividades"]=json_encode($this->_model->listarActividadForo($id_foro));
+
+        $this->_view->assign('foro', $foro);
+        $this->_view->setJs(array('actividad', array(BASE_URL . 'public/js/fullcalendar/moment.min.js'), array(BASE_URL . 'public/js/fullcalendar/fullcalendar.min.js'), array(BASE_URL . 'public/js/fullcalendar/locale/es.js'), array(BASE_URL . 'public/js/jquery-ui.min.js'), array(BASE_URL . 'public/js/jquery-ui-timepicker-addon.js')));
+        $this->_view->setCss(array('actividad', array(BASE_URL . "public/css/fullcalendar/fullcalendar.min.css"), array(BASE_URL . "public/css/jquery-ui-timepicker-addon.css"), array(BASE_URL . "public/css/jquery-ui.min.css")));
+        $this->_view->renderizar('actividad');
+    }
+
+    private function _registrarActividad($id_foro) {
+        $iFor_IdForo=$id_foro;
+        $iAcf_Titulo=$this->getTexto('tb_titulo');
+        $iAcf_Resumen=$this->getTexto('tb_resumen');
+        $iAcf_FechaInicio=$this->getTexto('start_time');
+        $iAcf_FechaFin=$this->getTexto('end_time');
+        
+        $resul=$this->_model->insertarActividadForo($iAcf_Titulo,$iAcf_Resumen,$iAcf_FechaInicio,$iAcf_FechaFin,$iFor_IdForo,1,"es");       
+        
+        $this->redireccionar("foro/admin/actividad/$id_foro");
+    }
+     private function _editarActividad($id_foro) {
+        $iFor_IdForo=$id_foro;
+        $iAcf_IdActividadForo=$this->getInt('hd_id_actividad');
+        $iAcf_Titulo=$this->getTexto('tb_titulo');
+        $iAcf_Resumen=$this->getTexto('tb_resumen');
+        $iAcf_FechaInicio=$this->getTexto('start_time');
+        $iAcf_FechaFin=$this->getTexto('end_time');
+        
+        $resul=$this->_model->insertarActividadForo($iAcf_Titulo,$iAcf_Resumen,$iAcf_FechaInicio,$iAcf_FechaFin,$iFor_IdForo,1,"es");       
+        
+        $this->redireccionar("foro/admin/actividad/$id_foro");
+    }
+    private function _eliminarrActividad($id_foro) {      
+        $iAcf_IdActividadForo=$this->getInt('hd_id_actividad');
+    
+        $resul=$this->_model->updestadoRowActividadForo($iAcf_IdActividadForo,0);       
+        
+        $this->redireccionar("foro/admin/actividad/$id_foro");
     }
 
     public function _paginacion_listaMembers($filtro = "") {

@@ -1,25 +1,25 @@
 <div class="container">
 	<div class="row">
 		<div class="col-md-9">
-			<center><h3>Edición de Ofertas Académicas de <b>{$listaIns.Ins_Nombre}</b></h3></center>
+			<center><h3>{$lenguaje["edicion_editar_ofertas_title"]} <b>{$listaIns.Ins_Nombre}</b></h3></center>
 		</div>
 		<div class="col-md-3">
-			<br><a href="{$_layoutParams.root_clear}es/oferta/instituciones/ficha/{$id}" class="btn btn-primary">Finalizar Edición</a>
+			<br><a href="{$_layoutParams.root_clear}es/oferta/instituciones/ficha/{$id}" class="btn btn-primary">{$lenguaje["edicion_editar_fin"]}</a>
 		</div>
 	</div>
 	<ul class="nav nav-tabs">
-		<li class="active"><a>Ofertas Académicas</a></li>
+		<li class="active"><a>{$lenguaje["busqueda_avanzada_label_ofertasR"]}</a></li>
 	</ul><br>
 	<div class="row">
 		<div class="col-md-6">
 			<form method="post" class="form-horizontal" role="form">
 				<fieldset>
-					<legend>Registro</legend>
+					<legend>{$lenguaje["registro_otros_datos_registrar"]}</legend>
 					<div class="row">
 					<div class="col-md-8">
-						<label for="tipooferta">Tipo de Oferta Académica</label>
+						<label for="tipooferta">{{$lenguaje["busqueda_avanzada_label_tipo_ofertas"]}}</label>
 						<select name="tipooferta" id="tipooferta" class="form-control" required>
-							<option>--Seleccione--</option>
+							<option>{$lenguaje["busqueda_avanzada_select_pais"]}</option>
 							{if isset($tipooferta) && count($tipooferta)}
 								{foreach from=$tipooferta item=b}
 									<option value="{$b.Nombre}">{$b.Nombre}</option>
@@ -30,9 +30,9 @@
 				</div>
 				<div class="row">
 					<div class="col-md-8">
-						<label for="tematica">Temática Relacionada</label>
+						<label for="tematica">{$lenguaje["ficha_tematica"]}</label>
 						<select name="tematica" id="tematica" class="form-control" required>
-							<option>--Seleccione--</option>
+							<option>{$lenguaje["busqueda_avanzada_select_pais"]}</option>
 							{if isset($tematica) && count($tematica)}
 								{foreach from=$tematica item=b}
 									<option value="{$b.Id}">{$b.Nombre}</option>
@@ -43,26 +43,26 @@
 				</div>
 				<div class="row">
 					<div class="col-md-8">
-						<label for="nombre">Nombre de la Oferta Académica</label>
+						<label for="nombre">{$lenguaje["registro_oferta_nombre"]}</label>
 						<input type="text" name="nombre" id="nombre" class="form-control" required>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-md-8">
-						<label for="descripcion">Breve Descripción</label>
+						<label for="descripcion">{$lenguaje["ficha_descripcion"]}</label>
 						<textarea name="descripcion" id="descripcion" class="form-control" required></textarea>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-md-8">
-						<label for="contacto">Contacto</label>
+						<label for="contacto">{$lenguaje["Contacto"]}</label>
 						<input type="text" name="contacto" id="contacto" class="form-control" required>
 					</div>
 				</div>
 				<input type="hidden" name="guardar" value="1"><br>
 				<div class="row">
 					<div class="col-md-8">
-						<center><input type="submit" class="btn btn-success" value="Guardar"></center>
+						<center><input type="submit" class="btn btn-success" value="{$lenguaje['registro_oferta_registrar']}"></center>
 					</div>
 				</div>
 				</fieldset>
@@ -72,10 +72,10 @@
 			{if isset($editar_oferta) && count($editar_oferta)}
 				<form method="post" class="form-horizontal" role="form">
 				<fieldset>
-					<legend>Edición</legend>
+					<legend>{$lenguaje["edicion_label_editar"]}</legend>
 					<div class="row">
 					<div class="col-md-8">
-						<label for="tipooferta">Tipo de Oferta Académica</label>
+						<label for="tipooferta">{$lenguaje["busqueda_avanzada_label_tipo_ofertas"]}</label>
 						<select name="tipooferta" id="tipooferta" class="form-control" required>
 							{if isset($tipooferta) && count($tipooferta)}
 								{foreach from=$tipooferta item=b}
@@ -91,7 +91,7 @@
 				</div>
 				<div class="row">
 					<div class="col-md-8">
-						<label for="tematica">Temática Relacionada</label>
+						<label for="tematica">{$lenguaje["ficha_tematica"]}</label>
 						<select name="tematica" id="tematica" class="form-control" required>
 							{if isset($tematica) && count($tematica)}
 								{foreach from=$tematica item=b}
@@ -107,26 +107,26 @@
 				</div>
 				<div class="row">
 					<div class="col-md-8">
-						<label for="nombre">Nombre de la Oferta Académica</label>
+						<label for="nombre">{$lenguaje["registro_oferta_nombre"]}</label>
 						<input type="text" name="nombre" id="nombre" class="form-control" required value="{$editar_oferta.Ofe_Nombre}">
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-md-8">
-						<label for="descripcion">Breve Descripción</label>
+						<label for="descripcion">{$lenguaje["ficha_descripcion"]}</label>
 						<textarea name="descripcion" id="descripcion" class="form-control" required>{$editar_oferta.Ofe_Descripcion}</textarea>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-md-8">
-						<label for="contacto">Contacto</label>
+						<label for="contacto">{$lenguaje["Contacto"]}</label>
 						<input type="text" name="contacto" id="contacto" class="form-control" value="{$editar_oferta.Contacto}" required>
 					</div>
 				</div>
 				<input type="hidden" name="editar" value="1"><br>
 				<div class="row">
 					<div class="col-md-8">
-						<center><input type="submit" class="btn btn-success" value="Editar"></center>
+						<center><input type="submit" class="btn btn-success" value="{$lenguaje['edicion_label_editar']}"></center>
 					</div>
 				</div>
 				</fieldset>
@@ -135,17 +135,17 @@
 		</div>
 	</div>	
 	<div class="row">
-		<h3>Lista de Ofertas Académicas de {$listaIns.Ins_Nombre}</h3>
+		<h3>{$lenguaje["lista_oferta_title"]}  {$listaIns.Ins_Nombre}</h3>
 		{if isset($listaofertas) && count($listaofertas)}
 			<table class="table table-bordered">
 				<thead>
-					<th>Tipo</th>
-					<th>Nombre</th>
-					<th>Descripción</th>
-					<th>Temática</th>
-					<th>Contacto</th>
-					<th>Editar</th>
-					<th>Eliminar</th>
+					<th>{$lenguaje["ficha_tipo"]}</th>
+					<th>{$lenguaje["registro_otros_datos_nombre"]}</th>
+					<th>{$lenguaje["ficha_descripcion"]}</th>
+					<th>{$lenguaje["ficha_tematica"]}</th>
+					<th>{$lenguaje["Contacto"]}</th>
+					<th>{$lenguaje["edicion_label_editar"]}</th>
+					<th>{$lenguaje["edicion_label_eliminar"]}</th>
 				</thead>
 				<tbody>
 					{foreach from=$listaofertas item=b}
@@ -155,12 +155,12 @@
 							<td>{$b.Descripcion}</td>
 							<td>{$b.Tematica}</td>
 							<td>{$b.Contacto}</td>
-							<td><a class="btn btn-success" href="{$_layoutParams.root_clear}es/oferta/editar/ofertas_academicas/{$b.Ins_IdInstitucion}/{$b.Ofe_IdOferta}">[Editar]</a></td>
+							<td><a class="btn btn-success" href="{$_layoutParams.root_clear}es/oferta/editar/ofertas_academicas/{$b.Ins_IdInstitucion}/{$b.Ofe_IdOferta}">[{$lenguaje["edicion_label_editar"]}]</a></td>
 							<td>
 								<form method="post" class="form-horizontal" role="form">
 									<input type="hidden" name="id_oferta" value="{$b.Ofe_IdOferta}">
 									<input type="hidden" name="eliminar" value="1">
-									<input type="submit" name="btn_eliminar" class="btn btn-danger" value="[Eliminar]">
+									<input type="submit" name="btn_eliminar" class="btn btn-danger" value="[{$lenguaje['edicion_label_eliminar']}]">
 								</form>
 							</td>
 						</tr>
@@ -168,7 +168,7 @@
 				</tbody>
 			</table>
 		{else}
-		<p>No se encontraron registros.</p>
+		<p>{$lenguaje["busqueda_avanzada_resultados_no"]}</p>
 		{/if}
 	</div>
 </div>

@@ -3,13 +3,7 @@ var _Per_IdPermiso_ = 0;
 $(document).on('ready', function () {   
     $('#seccion_filtros').hide();
     $('#desactivar_avanzado').hide();
-    $('#form3').validator().on('submit', function (e) {
-    if (e.isDefaultPrevented()) {
-
-    } else {
-
-    }
-    });
+    
     // $('.mitooltip').tooltip();
     // $(function() {
     //     $("[data-toggle='tooltip']").tooltip();
@@ -25,7 +19,6 @@ $(document).on('ready', function () {
     });
     var paginacion = function (pagina, nombrelista, datos,total_registros) {
         
-        
         var pais_buscado = $('#pais_buscado').val(); 
         var datos_buscado = $('#datos_buscado').val();  
         var proyectos_buscado = $('#proyectos_buscado').val();
@@ -34,7 +27,6 @@ $(document).on('ready', function () {
         var maestrias = $('#maestrias').val();
         var doctorados = $('#doctorados').val();
         
-
         if(!pais_buscado && !datos_buscado && !proyectos_buscado && !ofertas_buscado && !especializaciones && !maestrias && !doctorados){
             
             var pagina = {'pagina':pagina,'filas':$("#s_filas_"+nombrelista).val(),'total_registros':total_registros};
@@ -333,7 +325,7 @@ function busquedaAvanzada(){
         if($('#doc').is(':checked')){
             doc = 'doctorados';
         }
-    if(selectPais=="--Seleccione--"){selectPais="all"}
+    if(selectPais=="--Seleccione--" || selectPais=="--Selecione--" || selectPais=="--Select--" ){selectPais="all"}
     if(datos==""){datos="all"}
     if(proyectos==""){proyectos="all"}
     if(ofertas==""){ofertas="all"}

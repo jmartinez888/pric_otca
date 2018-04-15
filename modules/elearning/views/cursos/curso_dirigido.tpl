@@ -13,7 +13,7 @@
         <div>{$curso.Cur_Descripcion}</div> <br/>
         <div class="col-lg-6">
           <div><strong>Duración curso</strong></div>
-          <div>{$curso.Cur_Duracion}</div> <br/>
+          <div>{$curso.Cur_Duracion|default: $duracion}</div> <br/>
         </div>
         <div class="col-lg-6">
           <div><strong>Público objetivo</strong></div>
@@ -25,7 +25,15 @@
         </div>
         <div class="col-lg-6">
           <div><strong>Contacto</strong></div>
-          <div>{$curso.Cur_Contacto}</div>
+          <div>
+            {$curso.Cur_Contacto}
+            <a href="{BASE_URL}elearning/cursos/ficha/{$curso.Cur_IdCurso}" style="display: inline-block;">
+                Detalle
+                <!--button class="btn btn-success">
+                  <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                </button-->
+              </a>
+          </div>
         </div>
       </div>
       <div class="col-lg-12" style="padding-top: 10px; position: relative">
@@ -36,7 +44,7 @@
             {else}
               {if $inscripcion[0].Mat_Valor==1 }
                 {if $session && $progreso.Completo==1}
-                <img src="{BASE_URL}modules/elearning/views/cursos/img/certificado.png" class="img-certificado"/>
+                <!--img src="{BASE_URL}modules/elearning/views/cursos/img/certificado.png" class="img-certificado"/-->
                 {/if}
                 <div class="tag-inscrito">
                   <center>Inscrito {$inscripcion[0].Mat_FechaReg}</center>
@@ -67,6 +75,8 @@
       <div class="col-lg-6"><br/>
         <div class="tag-lms" ><center>Alumnos inscritos {$inscritos}</center></div>
       </div>
+
+
       <div class="col-lg-12">
         <div class="progress" style="margin-top: 20px">
           <div class="progress-bar progress-bar-striped" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: {$progreso.Porcentaje}%">
