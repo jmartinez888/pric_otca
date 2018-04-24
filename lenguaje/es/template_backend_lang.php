@@ -3,7 +3,7 @@
 $lenguaje["no_registros"]="No se encontraron registros..!!!";
 $lenguaje["text_cerrarsession"]="Cerrar Sesion";
 
-$lenguaje["intranet_titulo_inicio"]="PHP MVC";
+$lenguaje["intranet_titulo_inicio"]="ADMINISTRACION PRIC";
 $lenguaje["intranet_bienvenido"]="BIENVENIDO A LA INTRANET PHP MVC";
 $lenguaje["intranet_bienvenido_2"]="Esta plantilla tiene un sistema de menús alternar sensible. El menú aparecerá colapsado en pantallas más pequeñas, y aparecerá no colapsado en pantallas más grandes. Cuando toggled usando el botón de abajo, el menú aparecerá / desaparecerá. En las pantallas pequeñas, el contenido de la página será empujado fuera de la lona. / N Asegúrese de mantener todos los contenidos de la página En el # page-content-envoltura.";
 

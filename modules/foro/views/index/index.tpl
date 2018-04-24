@@ -80,63 +80,26 @@
                     </div>
                     <div class="col-md-12">
                         <div id="agenda" class="tab-pane fade in active show" style="max-height: 500px;">
+                             {foreach from=$lista_agenda item=agenda}
                             <div class="container py-3">
-                                <a href="#" class="link-tabs-jsoft">
+                                <a href="#" class="link-tabs-jsoft" style="padding-top: 31px;">
                                     <div class="row ">
                                         <div class="col col-md-3" style="text-align: center;">
-                                            <span>JUEVES</span>    
+                                            <span class="text-uppercase">{($agenda.For_FechaCreacion|date_format:"%A"|utf8_encode)|substr:0:4}</span>    
                                             <h2 class="fecha-agenda">29</h2>
-                                            <span>MARZO 2018</span>
+                                            <span class="text-uppercase">{$agenda.For_FechaCreacion|date_format:"%B %Y"}</span>
                                         </div>
                                         <div class="col-md-9">
                                             <div class="card-block px-3">
-                                                <h4 class="card-title" style="font-size: 15px;">Foro sobre áreas forestales</h4>
-                                                <p class="card-text" style="font-size: 13px;">Hora: 4:00pm</p>
-                                                <p class="card-text" style="font-size: 13px;">Lugar: Auditorio BIOINFO - IIAP</p>
+                                                <h4 class="card-title" style="font-size: 17px;">{$agenda.For_Titulo|truncate:50:"..."}</h4>
+                                                <p class="card-text" style="font-size: 13px;">Hora: {$agenda.For_FechaCreacion|date_format:"%H:%M"}</p>
                                             </div>
                                         </div>
-
                                     </div>
                                 </a>
                             </div> 
-                            <div class="container py-3">
-                                <a href="#" class="link-tabs-jsoft">
-                                    <div class="row ">
-                                        <div class="col col-md-3" style="text-align: center;">
-                                            <span>LUNES</span>    
-                                            <h2 class="fecha-agenda">19</h2>
-                                            <span>MARZO 2018</span>
-                                        </div>
-                                        <div class="col-md-9">
-                                            <div class="card-block px-3">
-                                                <h4 class="card-title" style="font-size: 15px;">Foro sobre áreas forestales</h4>
-                                                <p class="card-text" style="font-size: 13px;">Hora: 4:00pm</p>
-                                                <p class="card-text" style="font-size: 13px;">Lugar: Auditorio BIOINFO - IIAP</p>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </a>
-                            </div> 
-                            <div class="container py-3">
-                                <a href="#" class="link-tabs-jsoft">
-                                    <div class="row ">
-                                        <div class="col col-md-3" style="text-align: center;">
-                                            <span>VIERNES</span>    
-                                            <h2 class="fecha-agenda">23</h2>
-                                            <span>MARZO 2018</span>
-                                        </div>
-                                        <div class="col-md-9">
-                                            <div class="card-block px-3">
-                                                <h4 class="card-title" style="font-size: 15px;">Feria Internacional CHINAFLOR 2018</h4>
-                                                <p class="card-text" style="font-size: 13px;">Hora: 4:00pm</p>
-                                                <p class="card-text" style="font-size: 13px;">Lugar: Auditorio BIOINFO - IIAP</p>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </a>
-                            </div>    
+                             {/foreach}
+                            
                             <a href="#" class="mas-jsoft">VER MÁS</a>         
 
                         </div>

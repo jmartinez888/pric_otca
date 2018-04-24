@@ -1,29 +1,37 @@
 .foro-item{
-	height: auto;
-	background-color: #f7f7f9;
-	border: 1px solid #e1e1e8;
-	border-radius: 4px;
-	position: relative;
-	padding: 0 8px 8px;
-	margin-bottom: 15px;
+    height: auto;
+    background-color: #f7f7f9;
+    border: 1px solid #e1e1e8;
+    border-radius: 4px;
+    position: relative;
+    padding: 0 8px 8px;
+    margin-bottom: 15px;
 }
 
 .foro-item .page-header{
-	 margin: 5px 0 10px 0;
+    margin: 5px 0 10px 0;
     padding-bottom: 0px;
     border-bottom: 2px solid #408c4c;
 }
 .foro-item .body-item{
-	border-bottom: 2px solid #c0c0c0;
-	padding-bottom: 5px;
+    border-bottom: 2px solid #c0c0c0;
+    padding-bottom: 5px;
 }
 .foro-item p{
-	
+
 }
 .foro-item .footer-item {
     padding-top: 5px;
 }
 
 .foro-item .date{
-	font-style: oblique;
+    font-style: oblique;
+}
+.agenda_hr {
+    margin-top: 5px;
+    margin-bottom: 0px;
+    margin-left: -14px;
+
+    border-color: #6f7271;
+
 }

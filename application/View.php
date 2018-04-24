@@ -250,10 +250,12 @@ class View extends Smarty
 
     public function LoadLenguaje($archivo, $lang = false) 
     {
+        
         if ($lang) 
         {
             $this->_lenguaje = (string) $lang;
         }
+        setlocale(LC_ALL, "spanish");
         $lenguaje_dir = ROOT . 'lenguaje' . DS . $this->_lenguaje . DS . $archivo . "_lang.php";
         if (is_readable($lenguaje_dir)) 
         {

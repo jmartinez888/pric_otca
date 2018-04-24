@@ -43,7 +43,7 @@ const LIST_ABC = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P
 // }
     
 
-define('APP_NAME', 'PHP MVC');
+define('APP_NAME', 'ADMINISTRACION PRIC');
 define('APP_SLOGAN', 'Framework MVC en PHP');
 define('APP_COMPANY', 'www.iiap.org.pe');
 define('COOKIE_TIME', 60*(1*24));//minutos()

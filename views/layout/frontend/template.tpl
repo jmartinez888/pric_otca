@@ -65,13 +65,13 @@
                         </div>
                         <div class="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul class="nav navbar-nav">
-                                <li class="nav-item">
+                                <li class="nav-item" style="background: #565656;">
                                     <a class="nav-link txt-color-white f-z-14" href="#">Español</a>
                                 </li>
-                                <li class="nav-item">
+                                <li class="nav-item" style="background: #565656;">
                                     <a class="nav-link txt-color-white f-z-14" href="#"> | Portugués</a>
                                 </li>
-                                <li class="nav-item">
+                                <li class="nav-item" style="background: #565656;">
                                     <a class="nav-link txt-color-white f-z-14" href="#"> | Inglés</a>
                                 </li> 
                                 <li class="nav-item">
@@ -98,40 +98,42 @@
                 </div>
             </div>
         </div>
+<div class="container-fluid back-color-white" >
 
         <header class="container">
             <div class="row">
-                <div class="col col-md-3 col-sm-2 col-xs-6 padding-10">
+                <div class="col col-md-3 col-sm-2 col-xs-3 padding-10">
                     <img  class="width-250" src="{$_layoutParams.ruta_img}frontend/logo.png" alt="La ORA" title="ORA">
                 </div>
-                <div class="hidden-xs  texto-header col col-md-6 col-sm-8 border-left-1 txt-color-grey padding-l-10">
-                    <h2 class="txt-color-black display-block ">Plataforma Regional de Intercambio de Información y Conocimientos</h2>
-                    <img class="margin-t-10 width-280" src="{$_layoutParams.ruta_img}frontend/img-banderas.png">
+                <div class="col col-md-6 col-sm-8 col-xs-6 hidden-xs  texto-header  border-left-1 txt-color-grey padding-l-10">
+                    <h2 class="txt-color-black display-block text-bold ">Plataforma Regional de Intercambio de Información y Conocimientos</h2>
+                    <img class="margin-t-10 max-width-390" src="{$_layoutParams.ruta_img}frontend/img-banderas.png">
                 </div>       
-                <div class="col col-md-3 col-sm-2 col-xs-6 padding-10 text-align-right">
+                <div class="col col-md-3 col-sm-2 col-xs-3 padding-10 text-align-right">
                     <img src="{$_layoutParams.ruta_img}frontend/logo_otca.png">
                 </div>
                 <div class="fondo-header-active"></div>
             </div>
         </header>
+</div>
         <!-- HEADER PRINCIPAL -->
 
         <!-- MENU TOP ADMINISTRABLE -->
         <div >
             <div class="row">
                 <nav class="col col-md-12 navbar back-color-grey margin-0 padding-10 ">  
-                    <div class="container">
+                    <div class="col container">
                         <!-- Brand and toggle get grouped for better mobile display -->
                         <div class="navbar-header">
-                            <button type="button" style="float: left;color: black;padding: 5px 10px;box-shadow: 0 0 11px black; border: 1px solid;  margin: 5px;" class="navbar-toggle collapsed"  data-toggle="collapse" data-target="#navbarSupportedContentUp" aria-controls="navbarSupportedContentUp" aria-expanded="false" aria-label="Toggle navigation">
+                            <button type="button" style="float: left;color: black;padding: 5px 10px;box-shadow: 0 0 11px black; border: 1px solid;  margin: 5px; margin-left: 29px;" class="navbar-toggle collapsed"  data-toggle="collapse" data-target="#navbarSupportedContentUp" aria-controls="navbarSupportedContentUp" aria-expanded="false" aria-label="Toggle navigation">
                                 <span class="sr-only">Toggle navigation</span>
                                 <span class="fa fa-bars" style="font-size: 20px;"></span>
                             </button>
                         </div>
                         {if isset($widgets.top)}
-                        <div class="col-sm-10 col-md-9">
+                        <div class="col col-sm-10 col-md-9">
                             {foreach from=$widgets.top item=wd}
-                            <div class="collapse navbar-collapse" id="navbarSupportedContentUp" style="font-size: 15px;"> 
+                            <div class="col collapse navbar-collapse" id="navbarSupportedContentUp" style="font-size: 15px;"> 
                                 <ul class="nav navbar-nav" >   
                                 {$wd}
                                 </ul>
@@ -139,14 +141,14 @@
                             {/foreach}
                         </div>
                         {/if}  
-                        <div class="col-sm-2 col-md-3">
+                        
                             <div class="buscador">
                                 <form style="background: #fff;border: 2px solid #336b78;">
-                                    <input type="search" style="border: 0;border-radius: 1em;">
+                                    <input type="search" style="border: 0;">
                                     <button type="submit" style="background: transparent;border: 0;color: #22454e;"><i class="fa fa-search" style=""></i></button>
                                 </form>
                             </div>
-                        </div>
+                        
                     </div> 
                 </nav>
             </div>
@@ -182,30 +184,29 @@
                     <div class="col col-md-8 col-sm-8 col-xs-12" style=" padding-top: 20px; padding-bottom:  20px; background: #4B4B4D; color:  #fff;">
                         <div class="row" style="margin:0 !important ">
                             <div class="col col-md-4 col-sm-6 col-xs-6 " style="text-align: left; padding-left: 10px;">
-                                <div class="f-inst margin-l-10 margin-t-10">
-                                    <p>COORDINADO POR:</p>
-                                    <img class="width-100"  src="{$_layoutParams.ruta_img}frontend/img-footer-otca.png" style=" margin-top: 20px; ">
-                                </div>
+                              
                                 <div class="f-inst margin-l-10 margin-t-10">
                                     <p>FINANCIADO POR:</p>
-                                    <img class="width-100"  src="{$_layoutParams.ruta_img}frontend/img-footer-oimt.png" style=" margin-top: 20px; ">
-                                    <img class="width-100"  src="{$_layoutParams.ruta_img}frontend/img-footer-cdb.png" style=" margin-top: 20px; ">
+                                    <img class="width-100"  src="{$_layoutParams.ruta_img}frontend/img-footer-oimt.png" style=" margin-top: 10px; ">
+                                    
                                 </div>
                                 <div class="f-inst margin-l-10 margin-t-10">
                                     <p>CON EL APOYO DE:</p>
-                                    <img class="width-100"  src="{$_layoutParams.ruta_img}frontend/bg_int.png" style=" margin-top: 20px; ">
+                                    <img class="width-100"  src="{$_layoutParams.ruta_img}frontend/bg_int.png" style=" margin-top: 10px; ">
                                 </div>
                             </div>
                             <div class="col col-md-8 col-sm-6 col-xs-6">
                                 <div style="text-align: right; padding-right: .5em">
-                                    <p>CONTÁCTO</p>
-                                    <p>SHIS - Ql 05. Conjunto 16, 
-                                      <br>casa 21 - Lago Sul - Brasília - DF - Brasil - CEP: 71615-160
-                                      <br>55 61 3248-4119
+                                    <p class="f-z-19" >CONTACTO</p>
+                                    <p>SHIS - Ql 05. Conjunto 16, casa 21                                    
+                                      <br>Lago Sul - Brasília - DF - Brasil 
+                                      <br>CEP: 71615-160
+                                      <br>Teléfono: +55 61 3248-4119
                                       <br>contato@otca.org.br
                                       <br>© Copyright 2018 - OTCA
                                     </p>
                                     <p>SÍGUENOS</p>
+                                    <a class="txt-color-white " href="http://www.otca-oficial.info/" target="_blank">http://www.otca-oficial.info/</a> <br>
                                     <a class="ic_sociales" href="https://www.facebook.com/otcaoficial" target="_blank"><img src="{$_layoutParams.ruta_img}frontend/ic_fb.png"></a>
                                     <a class="ic_sociales" href="https://twitter.com/OTCAnews" target="_blank"><img src="{$_layoutParams.ruta_img}frontend/ic_tw.png"></a>
                                     <a class="ic_sociales" href="https://www.youtube.com/user/OTCAvideo/videos?shelf_id=0&amp;sort=dd&amp;view=0" target="_blank"><img src="{$_layoutParams.ruta_img}frontend/ic_yt.png"></a>
@@ -213,14 +214,14 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col col-md-4 col-sm-4 col-xs-12  verde enlaces-footer">
-                        <h3 >Línks de Interés</h3>
-                        <a href="https://www.cbd.int/" target="_blank">Secretaría del CDB.</a> 
-                        <a href="http://www.itto.int/es/" target="_blank">La OIMT .</a> 
-                        <a href="http://tmfo.org/index.html" target="_blank">El Observatorio de Bosques Manejados Tropicales.</a> 
-                        <a href="https://www.cites.org/" target="_blank">CITES.</a> 
-                        <a href="http://www.fao.org/forestry/en/" target="_blank">FAO-Bosques.</a> 
-                        <a href="http://www.un.org/sustainabledevelopment/" target="_blank">Metas de Desarrollo Sostenible .</a> 
+                    <div class="col col-md-4 col-sm-4 col-xs-12  verde enlaces-footer" style="position:relative">
+                        <h3 >Links de Interés</h3>  <a href="#" class="mas_cifras"> +</a>
+                        <a class="enlace" href="https://www.cbd.int/" target="_blank">Secretaría del CDB.</a> 
+                        <a class="enlace" href="http://www.itto.int/es/" target="_blank">La OIMT .</a> 
+                        <a class="enlace" href="http://tmfo.org/index.html" target="_blank">El Observatorio de Bosques Manejados Tropicales.</a> 
+                        <a class="enlace" href="https://www.cites.org/" target="_blank">CITES.</a> 
+                        <a class="enlace" href="http://www.fao.org/forestry/en/" target="_blank">FAO-Bosques.</a> 
+                        <a class="enlace" href="http://www.un.org/sustainabledevelopment/" target="_blank">Metas de Desarrollo Sostenible .</a> 
                     </div>
                 </div>
             </div>

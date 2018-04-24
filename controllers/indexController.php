@@ -21,7 +21,14 @@ class indexController extends Controller
         {
             // $this->_view->getLenguaje("template_frontend");
             // Cookie::set('idioma', 1);
+            
             $this->_view->setTemplate(LAYOUT_FRONTEND);
+             $this->_view->setJs(array(
+                  "jsoft",
+            array('https://maps.googleapis.com/maps/api/js?key=AIzaSyBM7aMHbWEPvofhwPQuKPnijDmQ0_AAkrI&callback=initMap', true)     
+           
+        ));
+            
             $this->_view->assign('titulo', 'Bienvenido a la PRIC');
             $this->_view->renderizar('inicio', 'inicio');
         } 
