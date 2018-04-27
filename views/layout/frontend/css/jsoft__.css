@@ -1,0 +1,244 @@
+body{
+	background:#d8d7d7; 
+}
+header{
+	/*background-image: url(../images/bg-header.png); */
+	background: #FFF;
+	background-size: cover;
+	background-position: bottom;
+	background-repeat: repeat-x;
+	border-top: 4px solid #7f7f7f;
+}
+
+
+
+.js-nav-head{
+	/* background-color: rgb(27, 28, 32); */
+	/* border-radius: 0 0 1em 1em; */
+}
+.nav-main{
+	/*background-color: #565656;*/
+}
+.buscador form{
+	    background: #fff;
+    border: 2px solid #336b78;
+}
+.buscador form input{
+	width: 89%;
+	    border: 0;
+}
+.buscador form button{
+	width: 9.5%;
+	background: transparent;border: 0;color: #22454e;
+}
+
+.tit-float-left-top {
+    position: absolute;
+    left: 0;
+    top: 0;
+    padding: 10px 15px;
+    background: #525252;
+    border-left: 10px solid #8BC34A;
+    color: #fff;
+    font-size: 1.1em;
+    /* border-radius: 0 0 .5em .5em; */
+    box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.38);
+    z-index: 1;
+}
+.cont-recursos{
+	position: relative;
+	background: #fff;
+	/* padding: 1em; */
+	padding-top: 50px;
+	/*border: 1px solid #e6e6e6;*/
+	width: 100%;
+	margin: 0 0 10px 0;
+}
+.cont-recursos .img-responsive{
+	/*max-width: 110px;*/
+
+}
+.cont-recursos .img-responsive:hover{
+	box-shadow: 1px 1px 10px 0px rgb(77, 142, 37);
+    border-radius: 10em;
+}
+.cont-recursos h6{
+	font-weight:bold;
+	font-size:20px;
+}
+.mas_cifras{
+    position:absolute;
+    top: 10px;
+    right:10px;
+    padding: 0px 9px;
+    background: #4b4b4d;
+    color: #fff;
+    box-shadow: 3px 3px 3px rgba(66, 66, 66, 0.5);
+    font-size: 23px;
+}
+.mas_cifras:hover{
+	background:#fff;
+	text-decoration: none;
+	}
+	#map {
+  width: 100%;
+  height:100%;
+  position: absolute;
+}            
+
+.nav-tabs>li>a{
+	color: #386c77;
+    
+}
+
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus{
+	background-color: #525252;
+	color: #fff;
+	border-radius: 0;
+	border-left: 10px solid #8BC34A;
+	/* text-transform: uppercase; */
+	font-size:  1em;
+}
+    .jsoft_card {
+         background: #fff;
+      display: inline-block;
+      border: 1px solid #ddd;
+      margin-top: -6px;
+      padding-left: 5px;
+    }
+
+    .jsoft_card .image {
+      float: left;
+      /* background: #000; */
+      width: 25%;
+      padding-top: 10px;
+    }
+
+
+    .jsoft_card .content {
+      float: left;
+      width: 73%;
+      overflow: hidden;
+      padding: 5px;
+    }
+.jsoft_card .content p{
+	font-size:12px;
+}
+    .jsoft_card .content h4 {
+      margin: 5px 0;
+    }
+    .jsoft-tab-pane{
+  	height: 60vh;
+    	overflow-y: auto;
+    	/* padding: .5em; */
+    	background: #e4e4e4;
+    }
+
+.fecha_evento{
+	
+text-align: center;
+	
+font-size: 10px;
+	
+background:#efa30b;
+	
+margin:.25em;
+	
+color:#fff;
+	
+margin-top: 1em;
+}
+.fecha_evento h2{
+	font-size:50px;
+	margin:0;
+}
+footer{
+	margin-top: 10px;
+	border-top: 4px solid #373941;
+	min-height: 20vh;
+	background: #FFF;
+}
+.footer-enlaces{
+	background: #373941;
+	position: relative;
+	min-height: 35vh;
+}
+.ic_sociales{
+	max-width: 30px !important;
+	display: inline-block;
+}
+.text-footer{
+	font-size: 12px;
+}
+.footer-enlaces .list-group{
+	padding:0;
+	margin:0;
+}
+.footer-enlaces .list-group .list-group-item-heading{
+	color:#fff;
+	font-size:12px;
+	font-weight:bold;
+}
+.footer-enlaces .list-group .list-group-item{
+
+background: transparent;
+
+color:#fff;
+
+font-size:11px;
+
+border: 0;
+
+border-bottom: 1px dashed #1e525d;
+
+padding: 5px 0;
+}
+.btn-mas{
+	display: block;
+	width: 100%;
+	box-shadow: 0px 0px 4px 0px rgba(0,0,0,.7);
+	border: 0;
+	background: #c3c3c3;
+	font-weight: bold;
+	color: #eaeaea !important;
+	text-shadow: 1px 1px 1px rgba(0,0,0,.5);
+}
+.btn-mas:hover{
+	background:#386c77;
+	color:#fff !important;
+	text-shadow: 1px 1px 1px rgba(0,0,0,.5);
+}
+.amazingslider-bullet-image-1 img{
+	max-height: 50px !important;
+}
+.jsoft-bloque{
+	background: #fff;
+	padding-top: 10px;
+}
+.cont-cifra{
+	
+position: absolute;
+    top: 40%;
+    left: 25%;
+    font-weight: bold;
+    text-align: center;
+}
+.categoria_slider{
+	background: rgba(0,0,0,0.6) !important;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    color: #fff;
+    padding: 1em !important;
+}
+.btn-jsoft{
+	
+border: 0;
+	
+border-radius: 0;
+	
+display: block;
+	
+background: #797979;
+}
