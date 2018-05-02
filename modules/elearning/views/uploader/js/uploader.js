@@ -1,3 +1,11 @@
+function validate(data, validator){
+  console.log(data.length);
+  /*$.each(data.get(), function(row){
+    console.log(row);
+  });*/
+  return false;
+}
+
 function InitUploader(post, params){
   var CONTENEDOR = $('.box');
   var INPUT = CONTENEDOR.find('.box__file');
@@ -64,6 +72,17 @@ function InitUploader(post, params){
         Mensaje("Seleccione un archivo", null);
         return;
       }
+      params.validator = { mensaje : "Estamos en mantenimientos, por favor inténtelo más tarde" };
+      if( params.validator != null){ 
+        var validator = params.validator;
+
+        if( !validate(ajaxData, validator) ){
+          var mensaje = params.validator.mensajeError || "";
+          Mensaje(mensaje, null);
+          return;
+        }
+      }
+
       $(".box__input").hide();
       $(".box__uploading").show();
       $.ajax({

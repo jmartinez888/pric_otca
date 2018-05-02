@@ -394,7 +394,7 @@
         <script src="{$_layoutParams.ruta_js}bootstrap.min.js" type="text/javascript"></script>
         <!-- <script src="{$_layoutParams.ruta_js}bootstrap.min.js" type="text/javascript"></script> -->
         <script src="{$_layoutParams.ruta_js}app.min.js" type="text/javascript"></script>
-        <script type="text/javascript" src="{$_layoutParams.root_clear}public/js/Validator.js"></script>
+        <script type="text/javascript" src="{$_layoutParams.root_clear}public/js/validator.js"></script>
         <script type="text/javascript" src="{$_layoutParams.root_clear}public/js/login.js"></script>
         <script type="text/javascript" src="{$_layoutParams.root_clear}public/js/util.js"></script>
         <!-- <script src="{$_layoutParams.ruta_js}jquery-3.2.1.slim.min.js" type="text/javascript"></script> -->
