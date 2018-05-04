@@ -403,6 +403,7 @@
         <script type="text/javascript" src="{$_layoutParams.ruta_js}bootstrap-datepicker.js"></script>
         <script type="text/javascript" src="{$_layoutParams.ruta_js}bootstrap-select.min.js"></script>
         <script type="text/javascript" src="{$_layoutParams.ruta_js}bootstrapValidator.js"></script>
+        <script type="text/javascript" src="{$_layoutParams.ruta_js}js.js"></script>
         <script type="text/javascript" src="{$_layoutParams.root_clear}public/js/highcharts.js"></script>
         <script type="text/javascript" src="{$_layoutParams.root_clear}public/ckeditor/ckeditor.js"></script>
 
