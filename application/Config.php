@@ -11,11 +11,11 @@
  * @jmartinez | Jhon Martinez
  */
 
-define('BASE_URL', 'http://'.$_SERVER['SERVER_NAME'].'/pric-otca-git/');
+define('BASE_URL', 'http://'.$_SERVER['SERVER_NAME'].'/pric_otca/');
 define('DEFAULT_CONTROLLER', 'index');
 define('DEFAULT_LAYOUT', 'backend');
 define('LAYOUT_FRONTEND', 'frontend');
-define('ROOT_ARCHIVO_FISICO',$_SERVER['DOCUMENT_ROOT'].'/pric-otca-git/files/');
+define('ROOT_ARCHIVO_FISICO',$_SERVER['DOCUMENT_ROOT'].'/pric_otca/files/');
 define('URL_ARCHIVO_FISICO',BASE_URL.'files/');
 define('LENGUAJE', 'es');
 define('CANT_REG_PAG', 50);#Indica la cantidad de fila que se listaran al cargar un arreglo
@@ -52,7 +52,7 @@ define('HASH_KEY', '4f6a6d832be79');
 
 define('DB_HOST', 'localhost');
 define('DB_USER', 'root');
-define('DB_PASS', '');
+define('DB_PASS', 'pric');
 define('DB_NAME', 'pric_otca');
 define('DB_CHAR', 'utf8');
 
