@@ -525,7 +525,7 @@ padding: 5px 0;
 	background: #fff;
 }*/
 #publicacion_relevante, #publicacion_reciente,#evento_interes,#dato_interes, #agenda{
-	max-height: 385px; 
+	max-height: 420px; 
 	overflow-y: auto;
 	background: #fff;
 	padding-top: 0px;
