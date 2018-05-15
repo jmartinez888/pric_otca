@@ -317,17 +317,17 @@ var infowindow4 = new google.maps.InfoWindow({
   content: contentString4
 });
 
-map.data.loadGeoJson('http://local.github/pric_otca/public/img/Area_estudio_Amz.geojson');
+// map.data.loadGeoJson('http://local.github/pric_otca/public/img/Area_estudio_Amz.geojson');
 
-// map.data.loadGeoJson('http://35.198.13.96/pric_otca/public/img/Area_estudio_Amz.geojson');
+map.data.loadGeoJson('http://35.198.13.96/pric_otca/public/img/Area_estudio_Amz.geojson');
   map.data.setStyle({
     fillColor: 'green',
     strokeColor: '#ffffff',
     strokeWeight: 2
   });
 
-var iconBase = 'http://local.github/pric_otca/views/layout/frontend/img/frontend/';
-// var iconBase = 'http://35.198.13.96/pric_otca/views/layout/frontend/img/frontend/';
+// var iconBase = 'http://local.github/pric_otca/views/layout/frontend/img/frontend/';
+var iconBase = 'http://35.198.13.96/pric_otca/views/layout/frontend/img/frontend/';
 // var iconBase = 'http://localhost/iiap/pricv2/images/';
 var marker = new google.maps.Marker({
     position: new google.maps.LatLng(-8.485893, -62.000737),

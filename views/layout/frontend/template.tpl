@@ -27,7 +27,9 @@
         <link href="{$_layoutParams.ruta_css}customAdminLTE.css" rel="stylesheet" type="text/css" />
 
         <link href="{$_layoutParams.ruta_css}jsoft.css" rel="stylesheet" type="text/css">
+        <link href="{$_layoutParams.ruta_css}jsoft.config.css" rel="stylesheet" type="text/css">
         <link href="{$_layoutParams.ruta_css}jsoft.responsive.css" rel="stylesheet" type="text/css">
+        <link href="{$_layoutParams.ruta_css}wwfslider.css" rel="stylesheet" type="text/css" />
         <!-- <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet"> -->
          
         {if isset($_layoutParams.css) && count($_layoutParams.css)}
@@ -178,7 +180,7 @@
         <!-- CONTENIDO CENTRAL DE LA PAGINA -->
 
         <!-- FOOTER -->
-        <footer >
+        <!-- <footer >
             <div class="container " style="float: inherit; padding-left: 0; padding-right: 0;">
                 <div class="row" style="margin:0 !important ">
                     <div class="col col-md-8 col-sm-8 col-xs-12" style=" padding-top: 20px; padding-bottom:  20px; background: #4B4B4D; color:  #fff;">
@@ -225,8 +227,90 @@
                     </div>
                 </div>
             </div>
-        </footer>
+        </footer> -->
         <!-- FOOTER -->
+        <footer>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-9">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h5 class="text-bold">FINANCIADO POR:</h5>
+                                <div class="display-block margin-t-10">
+                                  <a href="#" class="display-inline">
+                                      <img class="img-responsive max-height-60" src="{$_layoutParams.ruta_img}frontend/bg_int_itto.png">
+
+                                   </a>
+                                   
+                                </div>
+                                <h5 class="text-bold">CON EL APOYO DE:</h5>
+                                <div class="display-block margin-t-10">
+                                  
+                                    <a href="#" class="display-inline">
+                                      <img class="img-responsive max-height-60" src="{$_layoutParams.ruta_img}frontend/bg_int_gef.png">
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-md-6 text-align-r">
+                                <h5 class="text-bold">CONTACTO</h5>
+                                <div class="text-footer">
+                                    SHIS - Ql 05. Conjunto 16, casa 21  <br>
+                                    Lago Sul - Brasília - DF - Brasil  <br>
+                                    CEP: 71615-160 <br>
+                                    Teléfono: +55 61 3248-4119  <br>
+                                    contato@otca.org.br <br>
+                                    © Copyright 2018 - OTCA <br>
+                                </div>
+                                <h5 class="text-bold">SÍGUENOS</h5>
+                                <div class="text-footer">                                   
+                                     <a class="display-block" href="http://www.otca-oficial.info/ ">http://www.otca-oficial.info/ </a>
+                                     <a class="ic_sociales" href="https://www.facebook.com/otcaoficial" target="_blank"><img class="img-responsive" src="{$_layoutParams.ruta_img}frontend/ic_fb.png"></a>
+                                     <a class="ic_sociales" href="https://twitter.com/OTCAnews" target="_blank"><img class="img-responsive" src="{$_layoutParams.ruta_img}frontend/ic_tw.png"></a>
+                                     <a class="ic_sociales" href="https://www.youtube.com/user/OTCAvideo/videos?shelf_id=0&amp;sort=dd&amp;view=0" target="_blank"><img class="img-responsive" src="{$_layoutParams.ruta_img}frontend/ic_yt.png"></a>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="footer-enlaces col-md-3">
+                        <h5 class="text-bold text-color-white">LINKS DE INTERES</h5>
+                        <div class="list-group">
+                          <a href="#" class="list-group-item">
+                            <h4 class="list-group-item-heading">Secretaría del CDB.</h4>
+                            <!-- <p class="list-group-item-text">Breve descripcion del enlace</p> -->
+                          </a>
+                           <a href="#" class="list-group-item">
+                            <h4 class="list-group-item-heading">La OIMT</h4>
+                            <!-- <p class="list-group-item-text">Breve descripcion del enlace</p> -->
+                          </a>
+                           <a href="#" class="list-group-item">
+                            <h4 class="list-group-item-heading">El Observatorio de Bosques Manejados Tropicales</h4>
+                            <!-- <p class="list-group-item-text">Breve descripcion del enlace</p> -->
+                          </a>
+                           <a href="#" class="list-group-item">
+                            <h4 class="list-group-item-heading">CITES</h4>
+                            <!-- <p class="list-group-item-text">Breve descripcion del enlace</p> -->
+                          </a>
+                           <a href="#" class="list-group-item">
+                            <h4 class="list-group-item-heading">FAO-Bosques</h4>
+                            <!-- <p class="list-group-item-text">Breve descripcion del enlace</p> -->
+                          </a>
+                           <a href="#" class="list-group-item">
+                            <h4 class="list-group-item-heading">Metas de Desarrollo Sostenible</h4>
+                            <!-- <p class="list-group-item-text">Breve descripcion del enlace</p> -->
+                          </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
         <div id="cargando">   
             <div class="cargando"></div>   
         </div>
@@ -386,36 +470,105 @@
             });
         });
         </script>
-        <!-- <script src="//code.jquery.com/jquery-1.11.2.min.js"></script> -->
-        <!-- <script src="{$_layoutParams.ruta_js}bootstrap.min.js" type="text/javascript"></script> -->
-        <!-- Nuevo estilo -->
         
-        <!-- <script src="{$_layoutParams.ruta_js}popper.min.js" type="text/javascript"></script> -->
-        <script src="{$_layoutParams.ruta_js}bootstrap.min.js" type="text/javascript"></script>
-        <!-- <script src="{$_layoutParams.ruta_js}bootstrap.min.js" type="text/javascript"></script> -->
-        <script src="{$_layoutParams.ruta_js}app.min.js" type="text/javascript"></script>
-        <script type="text/javascript" src="{$_layoutParams.root_clear}public/js/validator.js"></script>
-        <script type="text/javascript" src="{$_layoutParams.root_clear}public/js/login.js"></script>
-        <script type="text/javascript" src="{$_layoutParams.root_clear}public/js/util.js"></script>
-        <!-- <script src="{$_layoutParams.ruta_js}jquery-3.2.1.slim.min.js" type="text/javascript"></script> -->
-        <script type="text/javascript" src="{$_layoutParams.root_clear}public/js/jquery.slimscroll.min.js"></script>
-
-        <script type="text/javascript" src="{$_layoutParams.ruta_js}bootstrap-datepicker.js"></script>
-        <script type="text/javascript" src="{$_layoutParams.ruta_js}bootstrap-select.min.js"></script>
-        <script type="text/javascript" src="{$_layoutParams.ruta_js}bootstrapValidator.js"></script>
-        <script type="text/javascript" src="{$_layoutParams.ruta_js}js.js"></script>
-        <script type="text/javascript" src="{$_layoutParams.root_clear}public/js/highcharts.js"></script>
-        <script type="text/javascript" src="{$_layoutParams.root_clear}public/ckeditor/ckeditor.js"></script>
-
-        <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
-
-
         <script type="text/javascript">
             var _root_ = '{$_layoutParams.root_clear}';
             var _root_lang = '{$_layoutParams.root}';
             var _root_archivo_fisico = '{$_layoutParams.root_archivo_fisico}';
             $('.mitooltip').tooltip();
         </script>
+        <!-- <script src="//code.jquery.com/jquery-1.11.2.min.js"></script> -->        
+        <!-- <script src="{$_layoutParams.ruta_js}jquery-3.2.1.slim.min.js" type="text/javascript"></script> -->
+        <!-- <script src="{$_layoutParams.ruta_js}bootstrap.min.js" type="text/javascript"></script> -->
+        <!-- Nuevo estilo -->
+        
+        <!-- <script src="{$_layoutParams.ruta_js}popper.min.js" type="text/javascript"></script> -->
+        
+        <!-- <script src="{$_layoutParams.ruta_js}bootstrap.min.js" type="text/javascript"></script> -->
+        <script type="text/javascript" src="{$_layoutParams.ruta_js}app.min.js" ></script>
+        <script type="text/javascript" src="{$_layoutParams.root_clear}public/js/validator.js"></script>
+        <script type="text/javascript" src="{$_layoutParams.root_clear}public/js/login.js"></script>
+        <script type="text/javascript" src="{$_layoutParams.root_clear}public/js/util.js"></script>
+        <script type="text/javascript" src="{$_layoutParams.root_clear}public/js/jquery.slimscroll.min.js"></script>
+        <script type="text/javascript" src="{$_layoutParams.ruta_js}bootstrap.min.js" ></script>
+        <script type="text/javascript" src="{$_layoutParams.ruta_js}bootstrap-datepicker.js"></script>
+        <script type="text/javascript" src="{$_layoutParams.ruta_js}bootstrap-select.min.js"></script>
+        <script type="text/javascript" src="{$_layoutParams.ruta_js}bootstrapValidator.js"></script>
+        <script type="text/javascript" src="{$_layoutParams.root_clear}public/js/highcharts.js"></script>
+        <script type="text/javascript" src="{$_layoutParams.root_clear}public/ckeditor/ckeditor.js"></script>
+
+        <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
+        <!-- JavaScript -->
+        <!-- <script type="text/javascript" src="{$_layoutParams.ruta_js}global.js" ></script> -->
+        <!-- <script type="text/javascript" src="{$_layoutParams.ruta_js}js.js"></script> -->
+        <!-- JavaScript -->
+        <script src="{$_layoutParams.ruta_js}global.js" type="text/javascript"></script>
+
+        <script type="text/javascript">
+            /* <![CDATA[ */
+            /* this JSON copied from current, live site for the sake of testing. In production it would be populated dynamically.*/
+            $('.mainstage').wwfMainstage([{
+                
+                'backgroundImage': '{$_layoutParams.ruta_img}slider_noticias/noticia1.JPG',
+                'thumbnail': '{$_layoutParams.ruta_img}slider_noticias/thumbnail/noticia1.JPG',
+                'credit':'©  OTCA | foto ceremonia: Marcos Corrêa/PR',      
+                'categoria': 'NOTICIA',
+                'headline': 'Secretaria General es condecorada con Orden de Rio Branco.',
+                // 'headline2': 'Urgen compromisos para su conservación',
+                
+                'href': 'http://www.otca-oficial.info/news/details/341',
+                'storyTitle': 'La Secretaria General de la OTCA, Embajadora María Jacqueline Mendoza, ...'
+            }, 
+            {
+                
+                'backgroundImage': '{$_layoutParams.ruta_img}slider_noticias/noticia2.jpg',
+                'thumbnail': '{$_layoutParams.ruta_img}slider_noticias/thumbnail/noticia2.jpg',
+                'credit':'© OTCA',      
+                'categoria': 'COMUNICADO',
+                'headline': 'OTCA celebra el Día Mundial del Agua con varias actividades en el 8º Foro Mundial de Agua.',
+                // 'headline2': 'WWF lanza Premio Periodístico en el Perú',
+                
+                'href': 'http://www.otca-oficial.info/news/details/333',
+                'storyTitle': 'OTCA celebra el Día Mundial del Agua con varias actividades en el 8º Foro...'
+            }, 
+            {
+                
+                'backgroundImage': '{$_layoutParams.ruta_img}slider_noticias/noticia3.jpg',
+                'thumbnail': '{$_layoutParams.ruta_img}slider_noticias/thumbnail/noticia3.jpg',
+                'credit':'© OTCA',      
+                'categoria': 'EVENTO',
+                'headline': '22 de abril: Día Internacional de la Madre Tierra.',
+                // 'headline2': 'Iniciativa logra recuperar y reforestar suelos degradados',
+                
+                'href': 'http://www.otca-oficial.info/news/details/338',
+                'storyTitle': 'Hoy 22 de abril, se conmemora mundialmente el Día Internacional de la Madre Tierra, ...'
+            }, 
+            {
+                
+                'backgroundImage': '{$_layoutParams.ruta_img}slider_noticias/noticia4.jpg',
+                'thumbnail': '{$_layoutParams.ruta_img}slider_noticias/thumbnail/noticia4.jpg',
+                'credit':'© CAF | OTCA',        
+                'categoria': 'INVESTIGACIÓN',
+                'headline': 'OTCA y CAF firman acuerdo para la promoción de la conservación ambiental.',
+                // 'headline2': 'Promoviendo su conservación en el litoral peruano',
+                
+                'href': 'http://www.otca-oficial.info/news/details/328',
+                'storyTitle': 'Fue firmado hoy, 19 de marzo, un Acuerdo Marco de Cooperación entre la Organización del Tratado de Cooperación Amazónica ...'
+            }]);
+                       
+        </script>   
+
+        <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBM7aMHbWEPvofhwPQuKPnijDmQ0_AAkrI&callback=initMap" async defer></script> -->
+        <!-- <script type="text/javascript" src="js/js.js"></script> -->
+        <script type="text/javascript">
+            $('#myTabsPublicaciones li a,#myTabsAgenda li a,#myTabsEventos li a').click(function (e) {
+                  e.preventDefault()
+                  $(this).tab('show')
+                });
+        </script>
+
+        
+        
         {if isset($_layoutParams.js_plugin) && count($_layoutParams.js_plugin)}
             {foreach item=plg from=$_layoutParams.js_plugin}
                 <script src="{$plg}" type="text/javascript" defer></script>

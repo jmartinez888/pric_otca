@@ -1,69 +1,90 @@
 <!-- NOTICIAS -->
-<div id="TB" class="jsoft-bloque padding-t-10">
-    <div id="page col-md-12">       
-        <div id="banner col-md-12">
-            <objtemplate objtemplate_id="517" objtemplate_filename="getunik.pandaorg3.h-spotlight"></objtemplate>
-        
-            <objtemplate objtemplate_id="517" objtemplate_filename="getunik.pandaorg3.h-spotlight">
-                <div class="row">
-                    <div class="main-column">
-                        <div class="container col12">
-                            <div class="mainstage col12">
-                                <a class="main_story" href="http://www.otca-oficial.info/news/details/341" style="background-image: url({$_layoutParams.ruta_img}slider_noticias/noticia1.JPG); background-color: #000000;">
-                                    <p class="alt">Cinco de las siete especies de tortugas marinas que existen en la costa peruana y todas ...</p>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>      
-            </objtemplate>
+<div class="row padding-10">
+    <div class="col col-md-8 col-sm-8 col-xs-8">
+        <div class="tab-content" id="v-pills-tabContent">
+            <div class="tab-pane fade active in" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
+                <div class="cont-noticia-main cont-img-zoom" >
+                    <h5 class="noticia-fecha">NOTICIAS</h3>
+                    <img class="img-fluid img-zoom" alt="Responsive image" src="{$_layoutParams.ruta_img}frontend/not11.jpg">    
+                    <h2 class="noticia-title jsoft-title-back">Daño pulmonar provocado por incendios agrícolas</h2>   
+                </div>                      
+            </div>
+            <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+                <div class="cont-noticia-main cont-img-zoom" >
+                    <h5 class="noticia-fecha ">EVENTOS</h3>
+                    <img class="img-fluid img-zoom" alt="Responsive image" src="{$_layoutParams.ruta_img}frontend/qwer.jpg">    
+                    <h2 class="noticia-title jsoft-title-back">Daño pulmonar provocado por incendios agrícolas</h2>   
+                </div>
+            </div>
+            <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
+                <div class="cont-noticia-main cont-img-zoom" >
+                    <h5 class="noticia-fecha "> NOTICIAS</h3>
+                    <img class="img-fluid img-zoom" alt="Responsive image" src="{$_layoutParams.ruta_img}frontend/bg-noticia.jpg">    
+                    <h2 class="noticia-title jsoft-title-back">Daño pulmonar provocado por incendios agrícolas</h2>   
+                </div>
+            </div>
+           
         </div>
     </div>
+    <div class="col col-md-4 col-sm-4 col-xs-4 cont-otras-noticias">
+        <div class="nav flex-column nav-pills scroll list-noticias" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+            <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">
+                <div class="item-otra-noticia">
+                    <h3 class="f-z-19">El inventario revisa la lista de especies de árboles del Amazonas</h3>
+                  <p>Publicado: 02/03/2018</p>
+                </div>
+            </a>
+            <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">
+                 <div class="item-otra-noticia">
+                    <h3 class="f-z-19">El inventario revisa la lista de especies de árboles del Amazonas</h3>
+                  <p>Publicado: 02/03/2018</p>
+                </div>
+            </a>
+            <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">
+                 <div class="item-otra-noticia">
+                    <h3 class="f-z-19">El inventario revisa la lista de especies de árboles del Amazonas</h3>
+                  <p>Publicado: 02/03/2018</p>
+                </div>
+            </a>           
+         
+        </div>
+        <a href="#" class="mas-jsoft">Ver más noticias</a>  
+    </div>
 </div>
-
 
                     <hr>
 <!-- SERVICIOS Y MAPA DE DATOS Y CIFRAS-->
 <div class="row padding-10">
     <div class="col col-md-8 col-sm-12 col-xs-12 ">
-        <div class="cont-recursos row">
+        <div class="contain-jsoft back-color-white padding-10 margin-0 padding-t-50 min-height-vh-12" >
             <div class="tit-float-left-top">
                 Servicios PRIC
             </div>
-            <div class="col-sm-6 col-md-4">
-                <div class="thumbnail">
-                    <img  src="{$_layoutParams.ruta_img}m_cursos.png">
-                    <div class="caption">
-                    <h3>Cursos</h3>
-                    <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id.</p>
-                    <p><a href="#" class="btn-jsoft btn btn-primary" role="button">ver más</a></p>
-                    </div>
-                </div>
+            <div class="item">
+                <a href="#">
+                    <img src="{$_layoutParams.ruta_img}frontend/m_cursos.png">
+                    <span>54+</span>
+                </a>
+                <h3>Cursos</h3>
             </div>
-            <div class="col-sm-6 col-md-4">
-                <div class="thumbnail">
-                    <img  src="{$_layoutParams.ruta_img}m_discusiones.png">
-                    <div class="caption">
-                    <h3>Discusiones</h3>
-                    <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id.</p>
-                    <p><a href="#" class="btn-jsoft btn btn-primary" role="button">ver más</a></p>
-                    </div>
-                </div>
+            <div class="item">
+                <a href="#">
+                    <img src="{$_layoutParams.ruta_img}frontend/m_discusiones.png">
+                    <span>15+</span>
+                </a>
+                <h3>Discusiones</h3>
             </div>
-            <div class="col-sm-6 col-md-4">
-                <div class="thumbnail">
-                    <img  src="{$_layoutParams.ruta_img}m_documentos.png">
-                    <div class="caption">
-                    <h3>Documentos</h3>
-                    <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id.</p>
-                    <p><a href="#" class="btn-jsoft btn btn-primary" role="button">ver más</a></p>
-                    </div>
-                </div>
+            <div class="item">
+                <a href="#">
+                    <img src="{$_layoutParams.ruta_img}frontend/m_documentos.png">
+                    <span>203+</span>
+                </a>
+                <h3>Documentos</h3>
             </div>
         </div>
     </div>
  <!-- EVENTOS E INTERESES -->
- <div class="col col-md-4 col-sm-12 col-xs-12 back-color-white" style="border-left: 1px solid #ebeaea; padding-left: 10px;">
+ <div class="col col-md-4 col-sm-12 col-xs-12 back-color-white" style="border-left: 1px solid #ebeaea;">
         <ul class="nav nav-tabs jsoft-tabs bg-verde">
             <li class="active" ><a class=""  data-toggle="tab" href="#evento_interes">Eventos de Interés</a></li>
             <li><a data-toggle="tab" href="#dato_interes">Datos de Interés</a></li>
@@ -183,7 +204,6 @@
         </div>
     </div>
 </div>
-
 
 
 

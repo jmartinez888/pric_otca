@@ -318,7 +318,7 @@ var infowindow4 = new google.maps.InfoWindow({
 });
 
 
-map.data.loadGeoJson('http://191.232.182.250/pric_otca/public/img/Area_estudio_Amz.geojson');
+map.data.loadGeoJson(_root_ + 'public/img/Area_estudio_Amz.geojson');
   map.data.setStyle({
     fillColor: 'green',
     strokeColor: '#ffffff',
@@ -327,7 +327,7 @@ map.data.loadGeoJson('http://191.232.182.250/pric_otca/public/img/Area_estudio_A
 
 
 
-var iconBase = 'http://191.232.182.250/pric_otca/views/layout/frontend/img/frontend/';
+var iconBase = _root_ + 'views/layout/frontend/img/frontend/';
 // var iconBase = 'http://localhost/iiap/pricv2/images/';
 var marker = new google.maps.Marker({
     position: new google.maps.LatLng(-8.485893, -62.000737),

@@ -352,19 +352,66 @@ nav.navbar .container-fluid {padding-left: 0px;padding-right: 0px;margin-left: 0
 	color:#000
 	;
 }
+
+
 footer{
-	display: block;
-	text-align: center;
-	background: #4b4b4d;
-	/*margin-top: 10px;*/
-	border-top: 4px solid #8BC34A;
+	margin-top: 10px;
+	border-top: 4px solid #373941;
+	min-height: 20vh;
+	background: #FFF;
 }
+.footer-enlaces{
+	background: #373941;
+	position: relative;
+	min-height: 35vh;
+}
+.ic_sociales{
+	max-width: 30px !important;
+	display: inline-block;
+}
+.text-footer{
+	font-size: 12px;
+}
+.footer-enlaces .list-group{
+	padding:0;
+	margin:0;
+}
+.footer-enlaces .list-group .list-group-item-heading{
+	color:#fff;
+	font-size:12px;
+	font-weight:bold;
+}
+.footer-enlaces .list-group .list-group-item{
+
+background: transparent;
+
+color:#fff;
+
+font-size:11px;
+
+border: 0;
+
+border-bottom: 1px dashed #1e525d;
+
+padding: 5px 0;
+}
+
 .f-inst{
 	display: inline-block;
 	max-width: 420px;
 }
 .containt-p{
 	margin-top: 20px;
+}
+
+.categoria_slider {
+    background: rgba(0,0,0,0.6) !important;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    color: #fff;
+    padding: 1em !important;
 }
 
 .noticia-fecha{
@@ -478,7 +525,7 @@ footer{
 	background: #fff;
 }*/
 #publicacion_relevante, #publicacion_reciente,#evento_interes,#dato_interes, #agenda{
-	 max-height: 260px; 
+	max-height: 385px; 
 	overflow-y: auto;
 	background: #fff;
 	padding-top: 0px;
@@ -511,7 +558,7 @@ footer{
 }
 
 .bg-verde li a{
-	font-size: 1.2em;
+	font-size: 1.1em;
 	padding-right: 15px;
 	padding-left: 15px;
 	padding-bottom:  5px;
@@ -673,17 +720,17 @@ a.mas-jsoft {
 	width:100%;
     height:100%;
 }
-.tit-float-left-top{
+.tit-float-left-top {
     position: absolute;
     left: 0;
-    top: 5px;
-    padding: .3em .5em;
-    background: #373941;
-    border-left: 7px solid #8BC34A !important;
+    top: 0;
+    padding: 10px 15px;
+    background: #525252;
+    border-left: 10px solid #8BC34A;
     color: #fff;
-    font-size: 1.4em;
+    font-size: 1.1em;
     /* border-radius: 0 0 .5em .5em; */
-    box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.38); 
+    box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.38);
     z-index: 1;
 }
 
@@ -1011,4 +1058,20 @@ a.mas-jsoft {
     max-height: 305px;
 }
 
+
+.btn-jsoft {
+    border: 0;
+    border-radius: 0;
+    display: block;
+    background: #797979;
+}
+.cont-recursos {
+    position: relative;
+    background: #fff;
+    /* padding: 1em; */
+    padding-top: 50px;
+    /* border: 1px solid #e6e6e6; */
+    width: 100%;
+    margin: 0 0 10px 0;
+}
 

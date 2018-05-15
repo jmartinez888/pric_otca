@@ -1,6 +1,5 @@
 var url = $("#url").val();
-$(document).on('ready', function () {
-	
+$(document).on('ready', function () {	
 	$("body").on('click', "#login-form-link", function (e) {
 		$("#login-form").delay(100).fadeIn(100);
  		$("#register-form").fadeOut(100);
@@ -78,7 +77,7 @@ $(document).on('ready', function () {
         gapi.auth2.getAuthInstance().signOut().then(function () {
             console.log('User signed out.');
         });
-	})
+	});
 
     $("body").on('click', "#show-pass", function () { 
         if ($('#passwordLogin').attr('type') === 'password') {

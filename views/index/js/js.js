@@ -1,26 +1,26 @@
 // $(window).scroll( function(){
 
-// 	if ($(this).scrollTop() > 250 ) {
+//  if ($(this).scrollTop() > 250 ) {
 
-// 		$('#menuleft').addClass("fixed").fadeIn();
-// 		$('.cuerpo').addClass("fixed").fadeIn();
-// 	}
-// 	else{
-// 		$('#menuleft').removeClass("fixed");
-// 		$('.cuerpo').removeClass("fixed");
-// 	}
+//    $('#menuleft').addClass("fixed").fadeIn();
+//    $('.cuerpo').addClass("fixed").fadeIn();
+//  }
+//  else{
+//    $('#menuleft').removeClass("fixed");
+//    $('.cuerpo').removeClass("fixed");
+//  }
 // }
-// 	);
+//  );
 
 
 function initMap() {
      
- var myLatlng = new google.maps.LatLng(-10.5106611,-60.8686626);
+ var myLatlng = new google.maps.LatLng(-11.5106611,-60.8686626);
      
   // Create a map object and specify the DOM element for display.
   var map = new google.maps.Map(document.getElementById('map'), {
-    center: {lat:-10.413054, lng: -60.443913},
-    zoom: 5,
+    center: {lat:-11.413054, lng: -60.443913},
+    zoom: 3,
      disableDefaultUI: true,
     styles:[
   {
@@ -252,7 +252,7 @@ function initMap() {
     "elementType": "geometry.fill",
     "stylers": [
       {
-        "color": "#7171ff"
+        "color": "#28488d"
       },
       {
         "visibility": "on"
@@ -281,7 +281,7 @@ var contentString = '<div>'+
 
 var contentString2 = '<div>'+
     
-    '<h4 id="firstHeading" class="firstHeading">Ãreas Protegidas</h4>'+
+    '<h4 id="firstHeading" class="firstHeading">Áreas Protegidas</h4>'+
     '<div id="bodyContent">'+
     '<p><b>+340000</b></p>'+            
     '</div>'+
@@ -289,14 +289,14 @@ var contentString2 = '<div>'+
 
 var contentString3 = '<div>'+
     
-    '<h4 id="firstHeading" class="firstHeading">Carga HÃ­drica de Cauce</h4>'+
+    '<h4 id="firstHeading" class="firstHeading">Carga Hídrica de Cauce</h4>'+
     '<div id="bodyContent">'+
     '<p><b>+323320</b></p>'+            
     '</div>'+
     '</div>';
 var contentString4 = '<div>'+
     
-    '<h4 id="firstHeading" class="firstHeading">Pueblos IndÃ­genas</h4>'+
+    '<h4 id="firstHeading" class="firstHeading">Pueblos Indígenas</h4>'+
     '<div id="bodyContent">'+
     '<p><b>+75345</b></p>'+            
     '</div>'+
@@ -317,8 +317,21 @@ var infowindow4 = new google.maps.InfoWindow({
   content: contentString4
 });
 
-// var iconBase = 'http://191.232.182.250/pric_otca/views/layout/frontend/img/frontend/';
-var iconBase = 'http://localhost/iiap/pricv2/images/';
+// map.data.loadGeoJson('http://local.github/pric_otca/public/img/Area_estudio_Amz.geojson');
+
+// map.data.loadGeoJson('http://35.198.13.96/pric_otca/public/img/Area_estudio_Amz.geojson');
+map.data.loadGeoJson(_root_ + 'public/img/Area_estudio_Amz.geojson');
+map.data.setStyle({
+  fillColor: 'green',
+  strokeColor: '#ffffff',
+  strokeWeight: 2
+});
+
+// var iconBase = 'http://local.github/pric_otca/views/layout/frontend/img/frontend/';
+// var iconBase = 'http://35.198.13.96/pric_otca/views/layout/frontend/img/frontend/';
+// var iconBase = 'http://localhost/iiap/pricv2/images/';
+
+var iconBase = _root_ + 'views/layout/frontend/img/frontend/';
 var marker = new google.maps.Marker({
     position: new google.maps.LatLng(-8.485893, -62.000737),
     title:"Cobertura de Bosques",
@@ -327,19 +340,19 @@ var marker = new google.maps.Marker({
 
 var marker2 = new google.maps.Marker({
     position: new google.maps.LatLng(-1.1999344,-59.7486991),
-    title:"Areas Protegidas",
+    title:"Áreas Protegidas",
     icon: iconBase + 'ic-marker-2.png'
 });
 
 var marker3 = new google.maps.Marker({
     position: new google.maps.LatLng(-3.4246604,-68.5244404),
-    title:"Carga HÃ­drica",
+    title:"Carga Hídrica",
     icon: iconBase + 'ic-marker-3.png'
 });
 
 var marker4 = new google.maps.Marker({
     position: new google.maps.LatLng(-10.485893, -56.000737),
-    title:"Pueblos IndÃ­genas",
+    title:"Pueblos Indígenas",
     icon: iconBase + 'ic-marker-4.png'
 });
 
@@ -349,38 +362,176 @@ marker2.setMap(map);
 marker3.setMap(map);
 marker4.setMap(map);  
 
-marker.addListener('click', function() {
-  infowindow.open(map, marker);
+// Carga hidrica
+marker.addListener('click', function(event) {
+  // infowindow.open(map, marker);
+
+    map.setZoom(4);
+    map.setCenter(marker.getPosition());
+    map.data.revertStyle();
+    // map.data.overrideStyle({strokeWeight: 8});
+    map.data.setStyle({
+      fillColor: 'green',
+      strokeColor: '#008000',
+      strokeWeight: 4
+    });
+});
+marker.addListener('mouseover', function(event) {
+  // infowindow.open(map, marker);
+
+    map.data.setStyle({
+      fillColor: 'green',
+      strokeColor: '#008000',
+      strokeWeight: 4
+    });
+});
+marker.addListener('mouseout', function(event) {
+  // infowindow.open(map, marker);
+
+    map.data.setStyle({
+      fillColor: 'green',
+      strokeColor: '#ffffff',
+      strokeWeight: 2
+    });
 });
 
-marker2.addListener('click', function() {
-  infowindow2.open(map, marker2);
+
+
+// Areas protegidos
+marker2.addListener('click', function(event) {
+  // infowindow2.open(map, marker2);
+
+  map.setZoom(4);
+    map.setCenter(marker2.getPosition());
+    map.data.revertStyle();
+    // map.data.overrideStyle({strokeWeight: 8});
+    map.data.setStyle({
+      fillColor: 'green',
+      strokeColor: '#13b731',
+      strokeWeight: 4
+    });
+});
+marker2.addListener('mouseover', function(event) {
+  // infowindow2.open(map, marker2);
+
+    map.data.setStyle({
+      fillColor: 'green',
+      strokeColor: '#13b731',
+      strokeWeight: 4
+    });
+});
+marker2.addListener('mouseout', function(event) {
+  // infowindow.open(map, marker);
+
+    map.data.setStyle({
+      fillColor: 'green',
+      strokeColor: '#ffffff',
+      strokeWeight: 2
+    });
 });
 
-marker3.addListener('click', function() {
-  infowindow3.open(map, marker3);
+
+// Cobertura de Bosques
+marker3.addListener('click', function(event) {
+  // infowindow3.open(map, marker3);
+
+  map.setZoom(4);
+    map.setCenter(marker3.getPosition());
+    map.data.revertStyle();
+    // map.data.overrideStyle({strokeWeight: 8});
+    map.data.setStyle({
+      fillColor: 'green',
+      strokeColor: '#428bca',
+      strokeWeight: 4
+    });
+});
+marker3.addListener('mouseover', function(event) {
+  // infowindow3.open(map, marker3);
+
+    map.data.setStyle({
+      fillColor: 'green',
+      strokeColor: '#428bca',
+      strokeWeight: 4
+    });
+});
+marker3.addListener('mouseout', function(event) {
+  // infowindow.open(map, marker);
+
+    map.data.setStyle({
+      fillColor: 'green',
+      strokeColor: '#ffffff',
+      strokeWeight: 2
+    });
 });
 
-marker4.addListener('click', function() {
-  infowindow4.open(map, marker4);
+
+// Pueblos Indigenas
+marker4.addListener('click', function(event) {
+  // infowindow4.open(map, marker4);
+
+  map.setZoom(4);
+    map.setCenter(marker4.getPosition());
+    map.data.revertStyle();
+    // map.data.overrideStyle({strokeWeight: 8});
+    map.data.setStyle({
+      fillColor: 'green',
+      strokeColor: '#efa30b',
+      strokeWeight: 4
+    });
+});
+marker4.addListener('mouseover', function(event) {
+  // infowindow4.open(map, marker4);
+
+    map.data.setStyle({
+      fillColor: 'green',
+      strokeColor: '#efa30b',
+      strokeWeight: 4
+    });
+});
+marker4.addListener('mouseout', function(event) {
+  // infowindow.open(map, marker);
+
+    map.data.setStyle({
+      fillColor: 'green',
+      strokeColor: '#ffffff',
+      strokeWeight: 2
+    });
 });
 
-var ctaLayer = new google.maps.KmlLayer({
-  url: 'http://191.232.182.250/pric_otca/public/img/Limite_biogeografico_Amz.kml',
-  map: map
-});
+// var ctaLayer = new google.maps.KmlLayer({
+//   url: 'http://191.232.182.250/pric_otca/public/img/Limite_biogeografico_Amz.kml',
+//   map: map
+// });
 
-  map.addListener('center_changed', function() {
-    // 3 seconds after the center of the map has changed, pan back to the
-    // marker.
-    window.setTimeout(function() {
-      map.panTo(myLatlng);
-    }, 3000);
-  });
+//   map.addListener('center_changed', function() {
+//     // 3 seconds after the center of the map has changed, pan back to the
+//     // marker.
+//     window.setTimeout(function() {
+//       map.panTo(myLatlng);
+//     }, 3000);
+//   });
 
-  ctaLayer.addListener('click', function() {
-    map.setZoom(6);
-    map.setCenter(myLatlng);
-  });
+//   ctaLayer.addListener('click', function() {
+//     map.setZoom(6);
+//     map.setCenter(myLatlng);
+//   });
+
+  
+
+  // map.data.addListener('mouseover', function(event) {
+  //   map.data.revertStyle();
+  //   map.data.overrideStyle(event.feature, {strokeWeight: 4});
+  // });
+  // map.data.addListener('mouseout', function(event) {
+  //     map.data.revertStyle();
+  // });
+
+
+  // marker.addListener('click', function() {
+  //   map.setZoom(4);
+  //   map.setCenter(marker.getPosition());
+  //   map.data.revertStyle();
+  //   map.data.overrideStyle(event.feature, {strokeWeight: 4});
+  // });
 
 }
