@@ -375,6 +375,7 @@ marker.addListener('click', function(event) {
       strokeColor: '#008000',
       strokeWeight: 4
     });
+    infowindow.open(map, marker);
 });
 marker.addListener('mouseover', function(event) {
   // infowindow.open(map, marker);
@@ -399,9 +400,9 @@ marker.addListener('mouseout', function(event) {
 
 // Areas protegidos
 marker2.addListener('click', function(event) {
-  // infowindow2.open(map, marker2);
+    // infowindow2.open(map, marker2);
 
-  map.setZoom(4);
+    map.setZoom(4);
     map.setCenter(marker2.getPosition());
     map.data.revertStyle();
     // map.data.overrideStyle({strokeWeight: 8});
@@ -410,6 +411,7 @@ marker2.addListener('click', function(event) {
       strokeColor: '#13b731',
       strokeWeight: 4
     });
+    infowindow2.open(map, marker2);
 });
 marker2.addListener('mouseover', function(event) {
   // infowindow2.open(map, marker2);
@@ -433,9 +435,9 @@ marker2.addListener('mouseout', function(event) {
 
 // Cobertura de Bosques
 marker3.addListener('click', function(event) {
-  // infowindow3.open(map, marker3);
+    // infowindow3.open(map, marker3);
 
-  map.setZoom(4);
+    map.setZoom(4);
     map.setCenter(marker3.getPosition());
     map.data.revertStyle();
     // map.data.overrideStyle({strokeWeight: 8});
@@ -444,6 +446,7 @@ marker3.addListener('click', function(event) {
       strokeColor: '#428bca',
       strokeWeight: 4
     });
+    infowindow3.open(map, marker3);
 });
 marker3.addListener('mouseover', function(event) {
   // infowindow3.open(map, marker3);
@@ -467,9 +470,9 @@ marker3.addListener('mouseout', function(event) {
 
 // Pueblos Indigenas
 marker4.addListener('click', function(event) {
-  // infowindow4.open(map, marker4);
+    // infowindow4.open(map, marker4);
 
-  map.setZoom(4);
+    map.setZoom(4);
     map.setCenter(marker4.getPosition());
     map.data.revertStyle();
     // map.data.overrideStyle({strokeWeight: 8});
@@ -478,6 +481,7 @@ marker4.addListener('click', function(event) {
       strokeColor: '#efa30b',
       strokeWeight: 4
     });
+    infowindow4.open(map, marker4);
 });
 marker4.addListener('mouseover', function(event) {
   // infowindow4.open(map, marker4);
