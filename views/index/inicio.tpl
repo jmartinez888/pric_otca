@@ -188,5 +188,58 @@
 
 
 
+<script src="{$_layoutParams.ruta_js}global.js" type="text/javascript"></script>
 
-    
+<script type="text/javascript">
+    /* <![CDATA[ */
+    /* this JSON copied from current, live site for the sake of testing. In production it would be populated dynamically.*/
+    $('.mainstage').wwfMainstage([{
+        
+        'backgroundImage': '{$_layoutParams.ruta_img}slider_noticias/noticia1.JPG',
+        'thumbnail': '{$_layoutParams.ruta_img}slider_noticias/thumbnail/noticia1.JPG',
+        'credit':'©  OTCA | foto ceremonia: Marcos Corrêa/PR',      
+        'categoria': 'NOTICIA',
+        'headline': 'Secretaria General es condecorada con Orden de Rio Branco.',
+        // 'headline2': 'Urgen compromisos para su conservación',
+        
+        'href': 'http://www.otca-oficial.info/news/details/341',
+        'storyTitle': 'La Secretaria General de la OTCA, Embajadora María Jacqueline Mendoza, ...'
+    }, 
+    {
+        
+        'backgroundImage': '{$_layoutParams.ruta_img}slider_noticias/noticia2.jpg',
+        'thumbnail': '{$_layoutParams.ruta_img}slider_noticias/thumbnail/noticia2.jpg',
+        'credit':'© OTCA',      
+        'categoria': 'COMUNICADO',
+        'headline': 'OTCA celebra el Día Mundial del Agua con varias actividades en el 8º Foro Mundial de Agua.',
+        // 'headline2': 'WWF lanza Premio Periodístico en el Perú',
+        
+        'href': 'http://www.otca-oficial.info/news/details/333',
+        'storyTitle': 'OTCA celebra el Día Mundial del Agua con varias actividades en el 8º Foro...'
+    }, 
+    {
+        
+        'backgroundImage': '{$_layoutParams.ruta_img}slider_noticias/noticia3.jpg',
+        'thumbnail': '{$_layoutParams.ruta_img}slider_noticias/thumbnail/noticia3.jpg',
+        'credit':'© OTCA',      
+        'categoria': 'EVENTO',
+        'headline': '22 de abril: Día Internacional de la Madre Tierra.',
+        // 'headline2': 'Iniciativa logra recuperar y reforestar suelos degradados',
+        
+        'href': 'http://www.otca-oficial.info/news/details/338',
+        'storyTitle': 'Hoy 22 de abril, se conmemora mundialmente el Día Internacional de la Madre Tierra, ...'
+    }, 
+    {
+        
+        'backgroundImage': '{$_layoutParams.ruta_img}slider_noticias/noticia4.jpg',
+        'thumbnail': '{$_layoutParams.ruta_img}slider_noticias/thumbnail/noticia4.jpg',
+        'credit':'© CAF | OTCA',        
+        'categoria': 'INVESTIGACIÓN',
+        'headline': 'OTCA y CAF firman acuerdo para la promoción de la conservación ambiental.',
+        // 'headline2': 'Promoviendo su conservación en el litoral peruano',
+        
+        'href': 'http://www.otca-oficial.info/news/details/328',
+        'storyTitle': 'Fue firmado hoy, 19 de marzo, un Acuerdo Marco de Cooperación entre la Organización del Tratado de Cooperación Amazónica ...'
+    }]);
+               
+</script>  
