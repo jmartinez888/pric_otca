@@ -138,7 +138,7 @@ function initMap() {
     "elementType": "geometry",
     "stylers": [
       {
-        "color": "#ffffff"
+        "color": "#efa30b"
       }
     ]
   },
@@ -323,8 +323,8 @@ var infowindow4 = new google.maps.InfoWindow({
 map.data.loadGeoJson(_root_ + 'public/img/Area_estudio_Amz.geojson');
 map.data.setStyle({
   fillColor: 'green',
-  strokeColor: '#ffffff',
-  strokeWeight: 2
+  strokeColor: '#efa30b',
+  strokeWeight: 1
 });
 
 // var iconBase = 'http://local.github/pric_otca/views/layout/frontend/img/frontend/';
@@ -376,6 +376,7 @@ marker.addListener('click', function(event) {
       strokeWeight: 4
     });
     infowindow.open(map, marker);
+    animacionMarker(marker);
 });
 marker.addListener('mouseover', function(event) {
   // infowindow.open(map, marker);
@@ -383,17 +384,20 @@ marker.addListener('mouseover', function(event) {
     map.data.setStyle({
       fillColor: 'green',
       strokeColor: '#008000',
-      strokeWeight: 4
+      strokeWeight: 2
     });
+    animacionMarker(marker);
+    // marker.setIcon(iconBase + 'ic-marker-4.png');
 });
 marker.addListener('mouseout', function(event) {
   // infowindow.open(map, marker);
 
     map.data.setStyle({
       fillColor: 'green',
-      strokeColor: '#ffffff',
-      strokeWeight: 2
+      strokeColor: '#efa30b',
+      strokeWeight: 1
     });
+    marker.setAnimation(null);
 });
 
 
@@ -408,28 +412,32 @@ marker2.addListener('click', function(event) {
     // map.data.overrideStyle({strokeWeight: 8});
     map.data.setStyle({
       fillColor: 'green',
-      strokeColor: '#13b731',
+      strokeColor: '#ffed00',
       strokeWeight: 4
     });
     infowindow2.open(map, marker2);
+    animacionMarker(marker2);
+
 });
 marker2.addListener('mouseover', function(event) {
   // infowindow2.open(map, marker2);
 
     map.data.setStyle({
       fillColor: 'green',
-      strokeColor: '#13b731',
-      strokeWeight: 4
+      strokeColor: '#ffed00',
+      strokeWeight: 2
     });
+    animacionMarker(marker2);
 });
 marker2.addListener('mouseout', function(event) {
   // infowindow.open(map, marker);
 
     map.data.setStyle({
       fillColor: 'green',
-      strokeColor: '#ffffff',
-      strokeWeight: 2
+      strokeColor: '#efa30b',
+      strokeWeight: 1
     });
+    marker2.setAnimation(null);
 });
 
 
@@ -447,6 +455,7 @@ marker3.addListener('click', function(event) {
       strokeWeight: 4
     });
     infowindow3.open(map, marker3);
+    animacionMarker(marker3);
 });
 marker3.addListener('mouseover', function(event) {
   // infowindow3.open(map, marker3);
@@ -454,17 +463,19 @@ marker3.addListener('mouseover', function(event) {
     map.data.setStyle({
       fillColor: 'green',
       strokeColor: '#428bca',
-      strokeWeight: 4
+      strokeWeight: 2
     });
+    animacionMarker(marker3);
 });
 marker3.addListener('mouseout', function(event) {
   // infowindow.open(map, marker);
 
     map.data.setStyle({
       fillColor: 'green',
-      strokeColor: '#ffffff',
-      strokeWeight: 2
+      strokeColor: '#efa30b',
+      strokeWeight: 1
     });
+    marker3.setAnimation(null);
 });
 
 
@@ -482,6 +493,7 @@ marker4.addListener('click', function(event) {
       strokeWeight: 4
     });
     infowindow4.open(map, marker4);
+    animacionMarker(marker4);
 });
 marker4.addListener('mouseover', function(event) {
   // infowindow4.open(map, marker4);
@@ -489,19 +501,28 @@ marker4.addListener('mouseover', function(event) {
     map.data.setStyle({
       fillColor: 'green',
       strokeColor: '#efa30b',
-      strokeWeight: 4
+      strokeWeight: 2
     });
+    animacionMarker(marker4);
 });
 marker4.addListener('mouseout', function(event) {
   // infowindow.open(map, marker);
 
     map.data.setStyle({
       fillColor: 'green',
-      strokeColor: '#ffffff',
-      strokeWeight: 2
+      strokeColor: '#efa30b',
+      strokeWeight: 1
     });
+    marker4.setAnimation(null);
 });
 
+var animacionMarker = function(markerAnimar){
+    if (markerAnimar.getAnimation() !== null) {
+        markerAnimar.setAnimation(null);
+    } else {
+        markerAnimar.setAnimation(google.maps.Animation.BOUNCE);
+    }
+};
 // var ctaLayer = new google.maps.KmlLayer({
 //   url: 'http://191.232.182.250/pric_otca/public/img/Limite_biogeografico_Amz.kml',
 //   map: map
@@ -539,3 +560,6 @@ marker4.addListener('mouseout', function(event) {
   // });
 
 }
+
+
+

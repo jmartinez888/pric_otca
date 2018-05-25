@@ -8,6 +8,9 @@ $(document).on('ready', function () {
 
     }
     });
+    $('#tablas').dataTable( {
+        responsive: true
+    } );
     // $('.mitooltip').tooltip();
     // $(function() {
     //     $("[data-toggle='tooltip']").tooltip();

@@ -499,10 +499,10 @@
 
         <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
         <!-- JavaScript -->
-        <!-- <script type="text/javascript" src="{$_layoutParams.ruta_js}global.js" ></script> -->
+        <script type="text/javascript" src="{$_layoutParams.ruta_js}global.js" ></script>
         <!-- <script type="text/javascript" src="{$_layoutParams.ruta_js}js.js"></script> -->
         <!-- JavaScript -->
-        <script src="{$_layoutParams.ruta_js}global.js" type="text/javascript"></script>
+        <!-- <script src="{$_layoutParams.ruta_js}global.js" type="text/javascript"></script> -->
 
         <script type="text/javascript">
             /* <![CDATA[ */
