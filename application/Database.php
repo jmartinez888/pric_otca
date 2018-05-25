@@ -18,11 +18,10 @@ class Database extends PDO
                 DB_USER, 
                 DB_PASS, 
                 array(
-                    PDO::MYSQL_ATTR_INIT_COMMAND => ' SET NAMES ' . DB_CHAR
-                    )
-            );
-                
+                    PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES ' . DB_CHAR. ', sql_mode="NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION" '
+                    ));
+        }
     }
-}
+    
 
 ?>
