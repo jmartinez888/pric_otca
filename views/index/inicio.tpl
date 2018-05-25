@@ -83,7 +83,7 @@
                 </a>
                 <a href="http://www.otca-oficial.info/news/details/343" class="col-md-12 col-sm-12 col-xs-12  link-tabs-jsoft">
                     <div class="col-md-4 col-sm-4 col-xs-4  py-3 px-2">
-                        <img src="{$_layoutParams.ruta_img}img-noti2.JPG" class="w-100">
+                        <img src="{$_layoutParams.ruta_img}img-noti2.jpg" class="w-100">
                     </div>
                     <div class="col-md-8 col-sm-8 col-xs-8">
                         <div class="card-block ">
