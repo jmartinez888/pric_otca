@@ -26,7 +26,7 @@ class documentosModel extends Model{
             INNER JOIN tema_dublin ted ON dub.Ted_IdTemaDublin = ted.Ted_IdTemaDublin 
             INNER JOIN dublincore_autor dua ON dub.Dub_IdDublinCore = dua.Dub_IdDublinCore 
             INNER JOIN autor aut ON dua.Aut_IdAutor = aut.Aut_IdAutor  
-            INNER JOIN archivo_fisico arf ON dub.Arf_IdArchivoFisico = arf.Arf_IdArchivoFisico 
+            LEFT JOIN archivo_fisico arf ON dub.Arf_IdArchivoFisico = arf.Arf_IdArchivoFisico 
             INNER JOIN tipo_dublin tid ON dub.Tid_IdTipoDublin = tid.Tid_IdTipoDublin
             INNER JOIN documentos_relacionados dor ON dub.Dub_IdDublinCore = dor.Dub_IdDublinCore
             INNER JOIN pais pai ON dor.Pai_IdPais = pai.Pai_IdPais
@@ -44,7 +44,7 @@ class documentosModel extends Model{
                 FROM 
                 (SELECT dor.Dub_IdDublinCore FROM documentos_relacionados dor             
                 INNER JOIN dublincore dub ON dor.Dub_IdDublinCore = dub.Dub_IdDublinCore
-                INNER JOIN archivo_fisico arf ON dub.Arf_IdArchivoFisico = arf.Arf_IdArchivoFisico
+                LEFT JOIN archivo_fisico arf ON dub.Arf_IdArchivoFisico = arf.Arf_IdArchivoFisico
                 INNER JOIN tema_dublin ted ON dub.Ted_IdTemaDublin = ted.Ted_IdTemaDublin
                 INNER JOIN dublincore_autor dua ON dub.Dub_IdDublinCore = dua.Dub_IdDublinCore
                 INNER JOIN autor aut ON dua.Aut_IdAutor = aut.Aut_IdAutor
@@ -76,7 +76,7 @@ GROUP BY(dub.Ted_IdTemaDublin) ) AS sub ON sub.Ted_IdTemaDublin = ted.Ted_IdTema
             "SELECT COUNT(d.Dub_IdDublinCore) AS cantidad,t.Taf_Descripcion FROM 
             (SELECT dor.Dub_IdDublinCore,taf.Taf_Descripcion, taf.Taf_IdTipoArchivoFisico FROM documentos_relacionados dor 
             INNER JOIN dublincore dub ON dor.Dub_IdDublinCore = dub.Dub_IdDublinCore
-            INNER JOIN archivo_fisico arf ON dub.Arf_IdArchivoFisico = arf.Arf_IdArchivoFisico
+            LEFT JOIN archivo_fisico arf ON dub.Arf_IdArchivoFisico = arf.Arf_IdArchivoFisico
             INNER JOIN tema_dublin ted ON dub.Ted_IdTemaDublin = ted.Ted_IdTemaDublin
             INNER JOIN dublincore_autor dua ON dub.Dub_IdDublinCore = dua.Dub_IdDublinCore
             INNER JOIN autor aut ON dua.Aut_IdAutor = aut.Aut_IdAutor
@@ -95,7 +95,7 @@ GROUP BY(dub.Ted_IdTemaDublin) ) AS sub ON sub.Ted_IdTemaDublin = ted.Ted_IdTema
             "SELECT COUNT(d.Dub_IdDublinCore) AS cantidad,a.Aut_Nombre FROM 
             (SELECT dor.Dub_IdDublinCore,aut.Aut_Nombre, aut.Aut_IdAutor FROM documentos_relacionados dor 
             INNER JOIN dublincore dub ON dor.Dub_IdDublinCore = dub.Dub_IdDublinCore
-            INNER JOIN archivo_fisico arf ON dub.Arf_IdArchivoFisico = arf.Arf_IdArchivoFisico
+            LEFT JOIN archivo_fisico arf ON dub.Arf_IdArchivoFisico = arf.Arf_IdArchivoFisico
             INNER JOIN tema_dublin ted ON dub.Ted_IdTemaDublin = ted.Ted_IdTemaDublin
             INNER JOIN dublincore_autor dua ON dub.Dub_IdDublinCore = dua.Dub_IdDublinCore
             INNER JOIN autor aut ON dua.Aut_IdAutor = aut.Aut_IdAutor
@@ -114,7 +114,7 @@ GROUP BY(dub.Ted_IdTemaDublin) ) AS sub ON sub.Ted_IdTemaDublin = ted.Ted_IdTema
             "SELECT COUNT(d.Dub_IdDublinCore) AS cantidad,tidm.Tid_Descripcion FROM 
             (SELECT dor.Dub_IdDublinCore,tid.Tid_Descripcion, tid.Tid_IdTipoDublin FROM documentos_relacionados dor 
             INNER JOIN dublincore dub ON dor.Dub_IdDublinCore = dub.Dub_IdDublinCore
-            INNER JOIN archivo_fisico arf ON dub.Arf_IdArchivoFisico = arf.Arf_IdArchivoFisico
+            LEFT JOIN archivo_fisico arf ON dub.Arf_IdArchivoFisico = arf.Arf_IdArchivoFisico
             INNER JOIN tema_dublin ted ON dub.Ted_IdTemaDublin = ted.Ted_IdTemaDublin
             INNER JOIN dublincore_autor dua ON dub.Dub_IdDublinCore = dua.Dub_IdDublinCore
             INNER JOIN autor aut ON dua.Aut_IdAutor = aut.Aut_IdAutor
@@ -133,7 +133,7 @@ GROUP BY(dub.Ted_IdTemaDublin) ) AS sub ON sub.Ted_IdTemaDublin = ted.Ted_IdTema
         "SELECT COUNT(d.Dub_IdDublinCore) AS cantidad,tedm.Ted_Descripcion FROM 
             (SELECT dor.Dub_IdDublinCore,ted.Ted_Descripcion, ted.Ted_IdTemaDublin FROM documentos_relacionados dor 
             INNER JOIN dublincore dub ON dor.Dub_IdDublinCore = dub.Dub_IdDublinCore
-            INNER JOIN archivo_fisico arf ON dub.Arf_IdArchivoFisico = arf.Arf_IdArchivoFisico
+            LEFT JOIN archivo_fisico arf ON dub.Arf_IdArchivoFisico = arf.Arf_IdArchivoFisico
             INNER JOIN tema_dublin ted ON dub.Ted_IdTemaDublin = ted.Ted_IdTemaDublin
             INNER JOIN dublincore_autor dua ON dub.Dub_IdDublinCore = dua.Dub_IdDublinCore
             INNER JOIN autor aut ON dua.Aut_IdAutor = aut.Aut_IdAutor
@@ -197,7 +197,7 @@ ORDER BY ted.Ted_Descripcion ASC ");
                 fn_devolverIdioma('dublincore',dub.Dub_IdDublinCore,'$Idi_IdIdioma',dub.Idi_IdIdioma) Idi_IdIdioma,
                 arf.Arf_PosicionFisica,ted.Ted_Descripcion,aut.*,tid.Tid_Descripcion ,taf.* FROM documentos_relacionados dor
                 INNER JOIN dublincore dub ON dor.Dub_IdDublinCore = dub.Dub_IdDublinCore
-                INNER JOIN archivo_fisico arf ON dub.Arf_IdArchivoFisico = arf.Arf_IdArchivoFisico
+                LEFT JOIN archivo_fisico arf ON dub.Arf_IdArchivoFisico = arf.Arf_IdArchivoFisico
                 INNER JOIN tema_dublin ted ON dub.Ted_IdTemaDublin = ted.Ted_IdTemaDublin
                 INNER JOIN dublincore_autor dua ON dub.Dub_IdDublinCore = dua.Dub_IdDublinCore
                 INNER JOIN autor aut ON dua.Aut_IdAutor = aut.Aut_IdAutor
@@ -214,7 +214,7 @@ ORDER BY ted.Ted_Descripcion ASC ");
         $post = $this->_db->query(
                 " SELECT COUNT(c.Dub_IdDublinCore) AS CantidadRegistros FROM (SELECT dor.Dub_IdDublinCore  FROM documentos_relacionados dor
                 INNER JOIN dublincore dub ON dor.Dub_IdDublinCore = dub.Dub_IdDublinCore
-                INNER JOIN archivo_fisico arf ON dub.Arf_IdArchivoFisico = arf.Arf_IdArchivoFisico
+                LEFT JOIN archivo_fisico arf ON dub.Arf_IdArchivoFisico = arf.Arf_IdArchivoFisico
                 INNER JOIN tema_dublin ted ON dub.Ted_IdTemaDublin = ted.Ted_IdTemaDublin
                 INNER JOIN dublincore_autor dua ON dub.Dub_IdDublinCore = dua.Dub_IdDublinCore
                 INNER JOIN autor aut ON dua.Aut_IdAutor = aut.Aut_IdAutor
@@ -241,7 +241,7 @@ ORDER BY ted.Ted_Descripcion ASC ");
                 arf.Arf_PosicionFisica,ted.Ted_Descripcion,aut.*,tid.Tid_Descripcion ,taf.*    
                 FROM documentos_relacionados dor
                 INNER JOIN dublincore dub ON dor.Dub_IdDublinCore = dub.Dub_IdDublinCore
-                INNER JOIN archivo_fisico arf ON dub.Arf_IdArchivoFisico = arf.Arf_IdArchivoFisico
+                LEFT JOIN archivo_fisico arf ON dub.Arf_IdArchivoFisico = arf.Arf_IdArchivoFisico
                 INNER JOIN tema_dublin ted ON dub.Ted_IdTemaDublin = ted.Ted_IdTemaDublin
                 INNER JOIN dublincore_autor dua ON dub.Dub_IdDublinCore = dua.Dub_IdDublinCore
                 INNER JOIN autor aut ON dua.Aut_IdAutor = aut.Aut_IdAutor
@@ -260,7 +260,7 @@ ORDER BY ted.Ted_Descripcion ASC ");
                     SELECT dor.Dor_IdDocumentoRelacionado, pai.Pai_Nombre, pai.Pai_IdPais
                     FROM documentos_relacionados dor
                     INNER JOIN dublincore dub ON dor.Dub_IdDublinCore = dub.Dub_IdDublinCore
-                    INNER JOIN archivo_fisico arf ON dub.Arf_IdArchivoFisico = arf.Arf_IdArchivoFisico
+                    LEFT JOIN archivo_fisico arf ON dub.Arf_IdArchivoFisico = arf.Arf_IdArchivoFisico
                     INNER JOIN tema_dublin ted ON dub.Ted_IdTemaDublin = ted.Ted_IdTemaDublin
                     INNER JOIN dublincore_autor dua ON dub.Dub_IdDublinCore = dua.Dub_IdDublinCore
                     INNER JOIN autor aut ON dua.Aut_IdAutor = aut.Aut_IdAutor
@@ -281,7 +281,7 @@ ORDER BY ted.Ted_Descripcion ASC ");
                     SELECT dor.Dor_IdDocumentoRelacionado, pai.Pai_Nombre, pai.Pai_IdPais
                     FROM documentos_relacionados dor
                     INNER JOIN dublincore dub ON dor.Dub_IdDublinCore = dub.Dub_IdDublinCore
-                    INNER JOIN archivo_fisico arf ON dub.Arf_IdArchivoFisico = arf.Arf_IdArchivoFisico
+                    LEFT JOIN archivo_fisico arf ON dub.Arf_IdArchivoFisico = arf.Arf_IdArchivoFisico
                     INNER JOIN tema_dublin ted ON dub.Ted_IdTemaDublin = ted.Ted_IdTemaDublin
                     INNER JOIN dublincore_autor dua ON dub.Dub_IdDublinCore = dua.Dub_IdDublinCore
                     INNER JOIN autor aut ON dua.Aut_IdAutor = aut.Aut_IdAutor
@@ -305,7 +305,7 @@ dub.Ted_IdTemaDublin, dub.Rec_IdRecurso, dub.Usu_IdUsuario,
 fn_devolverIdioma('dublincore',dub.Dub_IdDublinCore,'$Idi_IdIdioma',dub.Idi_IdIdioma) Idi_IdIdioma
 ,pai.Pai_Nombre,arf.Arf_PosicionFisica,ted.Ted_Descripcion,aut.*,tid.Tid_Descripcion ,taf.* FROM documentos_relacionados dor
 INNER JOIN dublincore dub ON dor.Dub_IdDublinCore = dub.Dub_IdDublinCore
-INNER JOIN archivo_fisico arf ON dub.Arf_IdArchivoFisico = arf.Arf_IdArchivoFisico
+LEFT JOIN archivo_fisico arf ON dub.Arf_IdArchivoFisico = arf.Arf_IdArchivoFisico
 INNER JOIN tema_dublin ted ON dub.Ted_IdTemaDublin = ted.Ted_IdTemaDublin
 INNER JOIN dublincore_autor dua ON dub.Dub_IdDublinCore = dua.Dub_IdDublinCore
 INNER JOIN autor aut ON dua.Aut_IdAutor = aut.Aut_IdAutor
@@ -328,7 +328,7 @@ dub.Ted_IdTemaDublin, dub.Rec_IdRecurso, dub.Usu_IdUsuario,
 fn_devolverIdioma('dublincore',dub.Dub_IdDublinCore,'$Idi_IdIdioma',dub.Idi_IdIdioma) Idi_IdIdioma
 ,pai.Pai_Nombre,arf.Arf_PosicionFisica,ted.Ted_Descripcion,aut.*,tid.Tid_Descripcion ,taf.* FROM documentos_relacionados dor
 INNER JOIN dublincore dub ON dor.Dub_IdDublinCore = dub.Dub_IdDublinCore
-INNER JOIN archivo_fisico arf ON dub.Arf_IdArchivoFisico = arf.Arf_IdArchivoFisico
+LEFT JOIN archivo_fisico arf ON dub.Arf_IdArchivoFisico = arf.Arf_IdArchivoFisico
 INNER JOIN tema_dublin ted ON dub.Ted_IdTemaDublin = ted.Ted_IdTemaDublin
 INNER JOIN dublincore_autor dua ON dub.Dub_IdDublinCore = dua.Dub_IdDublinCore
 INNER JOIN autor aut ON dua.Aut_IdAutor = aut.Aut_IdAutor
