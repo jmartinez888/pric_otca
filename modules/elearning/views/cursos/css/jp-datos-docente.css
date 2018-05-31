@@ -1,0 +1,40 @@
+.img-perfil{
+	width: 250px;
+	height: 250px;
+	display: inline-block;
+	border-radius: 5px;
+	border:none;
+}
+.font-inst{
+	color: #3c8dbc;
+}
+.cabecera-titulo{
+	color: white !important;
+	background: #355D3A !important;
+}
+.font-docente{
+	color: #505050;
+	font-family: "Gill Sans MT";
+}
+.perfil{
+	padding-top: 15px;
+	text-align: justify;
+}
+.btn-regresar{
+    background-color: #007cbe;
+    color: #FFF;
+    position: relative;
+}
+.btn-regresar:active{
+    background-color: #007cbe;
+    color: #FFF;
+    position: relative;
+    -moz-box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.6);
+    -webkit-box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.6);
+    box-shadow: 3px 3px 10px rgba(100, 100, 100, 0.6);
+}
+.btn-regresar:hover{
+    background-color: #00496f;
+    color: #FFF;
+    position: relative;
+}

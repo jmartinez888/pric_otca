@@ -6,8 +6,7 @@
 }
 
 .ficha-mod{
-  background: #607D8B;
-  height: 128px;
+  background: #00838F;
   border-radius: 2px;
   color: #ECEFF1;
   position: relative;
@@ -15,30 +14,32 @@
 }
 
 .ficha-mod-title{
-  position: absolute;
-  top: 10px;
-  left: 50px;
+  padding-left: 0px;
+  padding-top: 10px;
   font-size: 18px;
 }
 
 .ficha-mod-desc{
-  position: absolute;
-  top: 35px;
-  left: 50px;
+  float: right;
+  text-align: justify;
   font-size: 14px;
+  padding-left: 0px;
 }
 
 .ficha-mod-icon{
-  padding: 20px 0 0 12px;
-  font-size: 30px;
+  padding-right: 0px;
+  padding-top: 20px;
+  font-size: 50px;
 }
 
 
 .tag-lms{
-  background-color: #EF5350;
-  color: white;
+  background-color: #cbffc1;
+  border-color: #74ff59;
+  border-style: solid;
+  border-width: 1px;
   border-radius: 2px;
-  width: 300px;
+  float: right;
   padding: 10px;
 }
 
@@ -46,14 +47,15 @@
   background-color: #0097A7;
   color: white;
   border-radius: 2px;
-  width: 200px;
   padding: 10px;
+  float: left;
+  margin-bottom: 10px;
 }
 
 .btn-modulo{
   position: absolute;
-  left: 25px;
-  bottom: 10px;
+  bottom: 15px;
+  right: 15px;
   width: 200px;
   opacity: 0.9 !important;
   color: white;

@@ -4,11 +4,41 @@
       height: 80px;
   }
   .sidebar-left {
-      padding-top: 40px;
+      padding-top: 20px;
       width: 100%;
       padding-right: 0px;
   }
-  .side-menu li {
+  .side-menu {
+      list-style: none;
+      border-color: #D5D5D5;
+      color: #222;
+      padding: 10px 20px;
+      cursor: pointer;
+      background-color: #ffffff;
+      font-size: 15px;
+      text-align: left;
+      border-color: #D5D5D5; 
+      border-style: solid;
+      border-width: 1px;
+
+    -moz-box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.6);
+    -webkit-box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.6);
+    box-shadow: 3px 3px 10px rgba(100, 100, 100, 0.6);
+  }
+
+  .side-menu2{
+    border-left: 5px solid #355D3A;
+  }
+  .side-menu2:hover{
+    border-left: 5px solid #355D3A;
+    -moz-box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.6);
+    -webkit-box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.6);
+    box-shadow: 3px 3px 10px rgba(100, 100, 100, 0.6);
+  }
+
+
+  .side-menus li {
+      color: #222;
       padding: 10px 20px;
       cursor: pointer;
       background-color: #ffffff;
@@ -196,24 +226,30 @@
 </style>
   <div class="col-lg-2" style="padding-left: 0px !important">
     <div class="sidebar-left">
-      <div class="side-menu">
+
         <ul>
           <a href="{BASE_URL}elearning/cursos/" class="nounderline">
-            <li style="position: relative"><span> Cursos</span></li>
+          <div class="side-menu2"><li class="side-menu sombra-est" style="position: relative">
+          <i class="glyphicon glyphicon-book"></i>
+          <span> Cursos</span></li></div>
           </a>
         </ul>
         {if Session::get('id_usuario')}
         <ul>
           <a href="{BASE_URL}elearning/cursos/miscursos" class="nounderline">
-            <li style="position: relative"><span> Mis cursos</span></li>
+            <div class="side-menu2"><li class="side-menu sombra-est2" style="position: relative">
+            <i class="glyphicon glyphicon-book"></i>
+            <span> Mis Cursos</span></li></div>
           </a>
         </ul>
         <ul>
           <a href="{BASE_URL}elearning/gestion/_inicio" class="nounderline">
-            <li style="position: relative"><span> Mis cursos (Docente)</span></li>
+            <div class="side-menu2"><li class="side-menu sombra-est3" style="position: relative">
+            <i class="glyphicon glyphicon-book"></i>
+            <span> Mis Cursos (Docente)</span></li></div>
           </a>
         </ul>
         {/if}
-      </div>
+
     </div>
   </div>

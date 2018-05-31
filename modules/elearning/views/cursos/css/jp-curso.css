@@ -1,0 +1,147 @@
+.img-curso{
+	padding-top: 20px;
+	width: 200px;
+}
+.im_sociales{
+    color: #fff;
+    display: inline-block;
+    margin-right: 5px;
+    padding: 10px;
+}
+#im_sociales{
+    font-size: 16px;
+}
+#im_sociales:hover{
+    font-size: 16px;
+    color: #fff;
+    -moz-box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.6);
+    -webkit-box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.6);
+    box-shadow: 3px 3px 5px rgba(100, 100, 100, 0.6);
+}
+.ic-sociales{
+	padding-top: 10px;
+	padding-left: 40px;
+}
+.text-curso{
+    padding-top: 10px;
+    text-align: justify;
+    font-size: 16px;
+}
+.info-curso{
+    background: #BBDEFB;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    border-radius: 10px; 
+}
+.list-objetivos{
+    margin-left: 35px;
+}
+.btn-ini-sesion{
+    background-color: red;
+    color: #FFF;
+    position: relative;
+    padding: 10px 40px;
+    margin: 20px auto;
+    left: 35%;
+}
+.btn-ini-sesion:active{
+    background-color: red;
+    color: #FFF;
+    position: relative;
+    padding: 10px 40px;
+    margin: 20px auto;
+    left: 35%;
+    -moz-box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.6);
+    -webkit-box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.6);
+    box-shadow: 3px 3px 10px rgba(100, 100, 100, 0.6);
+}
+.btn-ini-sesion:hover{
+    background-color: #C20000;
+    color: #FFF;
+    position: relative;
+    padding: 10px 40px;
+    margin: 20px auto;
+    left: 35%;
+}
+.anuncio{
+    border-radius: 5px 5px 5px 5px;
+    -moz-border-radius: 5px 5px 5px 5px;
+    -webkit-border-radius: 5px 5px 5px 5px;
+    border: 0px solid #000000;
+    background: #8fdff9;
+    padding: 10px 15px;
+    font-size: 16px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+.anuncio2{
+    border-radius: 5px 5px 5px 5px;
+    -moz-border-radius: 5px 5px 5px 5px;
+    -webkit-border-radius: 5px 5px 5px 5px;
+    border: 0px solid #000000;
+    background: #f98f8f;
+    padding: 10px 15px;
+    font-size: 16px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+.btn-inscribir{
+    background-color: #007cbe;
+    color: #FFF;
+    position: relative;
+    padding: 10px 40px;
+    margin: 20px auto;
+    margin-left: 20px;
+}
+.btn-inscribir:active{
+    background-color: #007cbe;
+    color: #FFF;
+    position: relative;
+    padding: 10px 40px;
+    margin: 20px auto;
+    margin-left: 20px;
+    -moz-box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.6);
+    -webkit-box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.6);
+    box-shadow: 3px 3px 10px rgba(100, 100, 100, 0.6);
+}
+.btn-inscribir:hover{
+    background-color: #00496f;
+    color: #FFF;
+    position: relative;
+    padding: 10px 40px;
+    margin: 20px auto;
+    margin-left: 20px;
+}
+.progress-estilo{
+    margin-top: 20px;
+    height: 25px;
+}
+.progress-porcentaje{
+    font-size:15px;
+    padding-top: 3px;
+}
+
+.circular-progress{
+    width: 12rem;
+    height: 12rem;
+    background: linear-gradient(0deg, #fff 50%, rgba(#fff,.2) 50%) !important;
+    border-radius: 50%;
+    margin: auto;
+}
+
+.referencia-curso-total{
+    color: #4D4D4D;
+    color: #444;
+    font-size: 16px;
+}
+.referencia-curso{
+    color: #4D4D4D;
+    color: #444;
+    font-size: 16px;
+}
+.referencia-curso:hover{
+    color: #4D4D4D;
+    color: #444;
+    font-size: 16px;
+    text-decoration: underline;
+}
