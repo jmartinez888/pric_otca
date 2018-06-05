@@ -6,26 +6,68 @@
   <div class="col-lg-10" style="margin-top: 20px">
     <div class="col-lg-12">
       <div class="panel panel-default">
-        
-        <div class="panel-body" style="background: #E3F2FD">
-          <div class="col-lg-3 img-curso">
-            <img src="{BASE_URL}modules/elearning/views/cursos/img/portada/{$curso.Cur_UrlBanner}" />
+        <div class="panel-body">
+          <div class="col-lg-12" style="padding-left: 0px; padding-right: 0px;">
+            <div class="col-lg-3 img-curso">
+              <img src="{BASE_URL}modules/elearning/views/cursos/img/portada/{$curso.Cur_UrlBanner}" />
+            </div>
+            <div class="col-lg-6">
+            <br>
+            <br>
+            <h3 style="text-align: center; font-size: 35px;">
+              <strong>{$curso.Cur_Titulo}</strong>
+            </h3>
+            <br>
+            </div>
+            <div class="col-lg-3 row ic-sociales">
+            <br>
+            <br>
+                <a class="btn fa fa-facebook im_sociales" id="im_sociales" style="background: #3B5998" href="#"></a>
+                <a class="btn fa fa-twitter im_sociales" id="im_sociales" style="background: #55ACEE" href="#"></a>
+                <a class="btn fa fa-google-plus im_sociales" id="im_sociales" style="background: #C03A2A" href="#"></a>
+            </div>
           </div>
-          <div class="col-lg-6">
-          <br>
-          <br>
-          <h3 style="text-align: center; font-size: 35px;">
-            <strong>{$curso.Cur_Titulo}</strong>
-          </h3>
-          <br>
+
+          <div class="col-lg-12">
+            <hr class="cursos-hr">
           </div>
-          <div class="col-lg-3 row ic-sociales">
-          <br>
-          <br>
-              <a class="btn fa fa-facebook im_sociales" id="im_sociales" style="background: #3B5998" href="#"></a>
-              <a class="btn fa fa-twitter im_sociales" id="im_sociales" style="background: #55ACEE" href="#"></a>
-              <a class="btn fa fa-google-plus im_sociales" id="im_sociales" style="background: #C03A2A" href="#"></a>
+
+          <div class="col-lg-8">
+            <iframe class="video-intro" width="100%" height="300" src="https://www.youtube.com/embed/eBVvD85Ml2c" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
           </div>
+
+          <div class="col-lg-4">
+            <center class="panel panel-default col-lg-10 info-curso">
+
+              <div class="col-lg-12">
+                <i class="glyphicon glyphicon-time" style="color: #16B8AD; font-size: 25px"></i>
+                <br>
+                <strong style="color: #393939; font-size: 16px">{$curso.Cur_Duracion|default: $duracion}</strong>
+                <br><br>
+              </div>
+
+              <div class="col-lg-12" style="border-top: #ddd solid 2px; border-bottom: #ddd solid 2px;">
+                <br>
+                <i class="glyphicon glyphicon-user" style="color: #31A3BB; font-size: 25px"></i>
+                <br>
+                <strong style="color: #393939; font-size: 16px">{$inscritos}</strong>
+                <br>
+                <strong style="color: #393939; font-size: 16px">Alumnos</strong>
+                <br><br>
+              </div>
+              
+              <div class="col-lg-12">
+                <br>
+                <i class="glyphicon glyphicon-star" style="color: #E9BA46; font-size: 25px"></i>
+                <br>
+                <strong style="color: #393939; font-size: 16px">4.5/5</strong>
+                <br>
+                <strong style="color: #393939; font-size: 16px">Valoración media</strong>
+              </div>
+
+            </center>
+          </div>
+
           <div class="col-lg-12 text-curso">
             <div>{$curso.Cur_Descripcion}</div> <br/>   
           </div>
@@ -48,7 +90,7 @@
             <br/>
           </div>
 
-          <div class="col-lg-5">
+          <div class="col-lg-4" style="max-width: 100%">
           <!--<div  style="font-size: 16px;">
             <div><strong><i class="glyphicon glyphicon-time"></i>
             Duración curso</strong></div>
@@ -66,8 +108,8 @@
             <div style="padding-left: 25px">{$curso.Cur_Metodologia|default:"---"}</div> <br/>
           </div>
           <div  style="font-size: 16px;">
-            <div><strong><i class="glyphicon glyphicon-comment"></i>
-            &nbsp;Contacto</strong></div>
+            <div><strong><i class="glyphicon glyphicon-user"></i>
+            &nbsp;Docente</strong></div>
             <div style="padding-left: 25px">
               {$curso.Cur_Contacto|default:"---"}
               <a href="{BASE_URL}elearning/cursos/ficha/{$curso.Cur_IdCurso}" style="display: inline-block;">
@@ -78,36 +120,6 @@
               </a>
             </div> <br/>
           </div>
-          </div>
-
-          <div class="col-lg-7">
-            <center class="col-lg-10 info-curso">
-
-              <div class="col-lg-4" style="border-right: #90CAF9 solid 2px; height: 100px;">
-                <i class="glyphicon glyphicon-user" style="color: #16B8AD; font-size: 25px"></i>
-                <br>
-                <strong style="color: #393939; font-size: 16px">{$inscritos}</strong>
-                <br>
-                <strong style="color: #393939; font-size: 16px">Alumnos</strong>
-                <br><br>
-              </div>
-
-              <div class="col-lg-4" style="border-right: #90CAF9 solid 2px; height: 100px;">
-                <i class="glyphicon glyphicon-time" style="color: #31A3BB; font-size: 25px"></i>
-                <br>
-                <strong style="color: #393939; font-size: 16px">{$curso.Cur_Duracion|default: $duracion}</strong>
-                <br><br>
-              </div>
-              
-              <div class="col-lg-4">
-                <i class="glyphicon glyphicon-star" style="color: #E9BA46; font-size: 25px"></i>
-                <br>
-                <strong style="color: #393939; font-size: 16px">4.5/5</strong>
-                <br>
-                <strong style="color: #393939; font-size: 16px">Valoración media</strong>
-              </div>
-
-            </center>
           </div>
 
           
@@ -138,10 +150,10 @@
               {/if}
             {else}
               <div class="col-lg-12 anuncio"> 
-              <strong>¡Atención!</strong>
+              <strong><i class="glyphicon glyphicon-warning-sign" style="font-size: 20px;"> </i>&nbsp; ¡Atención!</strong>
               Para inscribirte en el curso necesitas una cuenta.</div>
               <div class="col-lg-12">
-                <button data-toggle="modal" data-target="#modal-login" class="btn btn-group btn-ini-sesion">
+                <button data-toggle="modal" data-target="#modal-login" class="btn btn-group btn-success ini-sesion">
                 <strong>Iniciar Sesión</strong>
                 <i class="glyphicon glyphicon-log-in"></i>
               </button>
@@ -172,20 +184,25 @@
 
           {if $session==1 && count($modulo)>0 }
             <div class="col-lg-12">
-              <div><h4><strong>Módulos del curso</strong></h4></div>
+              <div><h3 style="font-family: 'Gill Sans MT';">Módulos del curso</h3></div>
+              <hr class="cursos-hr">
+              <br>
             </div>
             <div class="col-lg-12" style="padding-left: 0px !important">
               {$index = 1} 
               {foreach from=$modulo item=o}
               <div class="col-lg-12">
                 <div class="ficha-mod col-lg-12">
-
-                  <div class="col-lg-3 ficha-mod-icon"><span class="glyphicon glyphicon-th"/>{$index}</div>
-                  <div class="col-lg-9 ficha-mod-title"> {$o.Mod_Titulo}</div>
-                  <div class="col-lg-9 ficha-mod-desc">{substr($o.Mod_Descripcion, 0, 70)}...</div>
+                  <div class="col-lg-2">
+                    <img class="img-modulo" src="{BASE_URL}modules/elearning/views/cursos/img/contador-modulo-{$index}.png"/>
+                    <strong class="ficha-mod-icon"></strong>
+                  </div>
+                  <div class="col-lg-10 ficha-mod-title"> <strong>{$o.Mod_Titulo}</strong> </div>
+                  <div class="col-lg-10 ficha-mod-desc">{$o.Mod_Descripcion}</div>
                   {if ($o.Disponible==1 && isset($inscripcion) && count($inscripcion)>0) || ($curso.Usu_IdUsuario == Session::get('id_usuario') && $o.Disponible==1)}
+                  <div class="col-lg-12">
                     <a href="{BASE_URL}elearning/cursos/modulo/{$curso.Cur_IdCurso}/{$o.Mod_IdModulo}/{$o.PrimerLeccion}">
-                      <button class="btn btn-success btn-modulo">
+                      <button class="btn btn-success btn-modulo pull-right">
                       {if $o.Completo == 0}
                       Iniciar - {$o.Porcentaje}% completado
                       {else}
@@ -193,8 +210,11 @@
                       {/if}
                       </button>
                     </a>
+                  </div>
                   {else}
-                  <button class="btn btn-modulo" disabled=disabled>No disponible</button>
+                  <div class="col-lg-12">
+                    <button class="btn btn-modulo pull-right" style="color: #393939;" disabled=disabled>No disponible</button>
+                  </div>
                   {/if}
                 </div>
 

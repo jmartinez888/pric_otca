@@ -15,7 +15,7 @@
     max-height: 530px !important;
     padding-right: 0px;
     overflow-y: auto;
-    background: #263238;
+    background: #a0a0a0;
     margin-bottom: 20px;
     padding-bottom: 0px;
 }
@@ -27,7 +27,7 @@
 .side-menu li {
     padding: 10px 20px;
     cursor: pointer;
-    background-color: #455A64;
+    background-color: rgb(55, 57, 65);
     font-weight: bold;
     margin-bottom: 2px;
     font-size: 15px;
@@ -216,7 +216,7 @@ ul{
 }
 
 .item-active{
-  background-color: #37474F !important;
+  background-color: #386c77 !important;
   color: #fff !important;
 }
 

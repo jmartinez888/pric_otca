@@ -2,12 +2,12 @@
 	color: #4A4A4A;
 }
 .btn-regresar{
-    background-color: green;
+    background-color: #618c2f;
     color: #FFF;
     position: relative;
 }
 .btn-regresar:active{
-    background-color: green;
+    background-color: #618c2f;
     color: #FFF;
     position: relative;
     -moz-box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.6);
@@ -40,43 +40,41 @@
 }
 
 .cabecera-titulo{
-	color: white !important;
-	background: #37474F !important;
+	color: #fff !important;
+	background: #a0a0a0!important;
 }
 .contenedor-clase{
 	overflow-y: auto;
     height: 490px;
 	max-height: 490px;
-    background: #E3F2FD;
 }
 .gradiente{
-	background: #607d8b;
 	padding-bottom: 20px;
 }
 
 
 .nav-tabs{
-  	background-color:#337AB7;
+  	background-color:#fff;
 }
 .tab-content{
     background-color:#fff;
     color:#000;
 }
 .nav-tabs > li > a{
-	color: #fff;
+	color: #393939;
 	font-weight: bold;
  	border: medium none;
 }
 .nav-tabs > li > a:hover{
-  	background-color: #ccc !important;
+  	background-color: #51758d !important;
     border: medium none;
     border-radius: 0;
-    color:#000;
+    color:#fff;
 }
 .leccion-container{
-    padding-left: 0px;
-    padding-right: 0px;
-    background: #607d8b;
     height: 550px;
-    margin-bottom: 20px;
+}
+.active .active-tab{
+    color: #fff !important;
+    background-color: #51758d !important;
 }

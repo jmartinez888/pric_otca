@@ -58,7 +58,7 @@ class claseController extends elearningController {
     $this->_view->assign("leccion", $OLeccion);
     $this->_view->assign("referencias", $Lmodel->getReferencias($OLeccion["Lec_IdLeccion"]));
     $this->_view->assign("materiales", $Lmodel->getMateriales($OLeccion["Lec_IdLeccion"]));
-    $this->_view->setCss(array("colorPicker", "modulo", "pizarra", "chat"));
+    $this->_view->setCss(array("colorPicker", "modulo", "pizarra", "chat", "jp-modulo",));
 
     if($DT_ACTUAL < $DT_DESDE){
       $this->_view->renderizar("clase_falta");

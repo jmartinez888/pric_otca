@@ -1,18 +1,18 @@
       <div class="col-lg-12" style="padding-left:0px; padding-right:0px;">  
-      <div class="panel panel-default">
+      <div class="">
           <ul class="nav nav-tabs">
               {if strlen($leccion["Lec_Descripcion"]) > 0 }
-              <li class="active"><a data-toggle="tab" href="#inf_curso">Información de la Lección</a></li>
+              <li class="active"><a class="active-tab" data-toggle="tab" href="#inf_curso">Información de la Lección</a></li>
              {/if}
              {if isset($materiales) && count($materiales) > 0 }
-              <li><a data-toggle="tab" href="#mat_ditac">Material didáctico</a></li>
+              <li><a class="active-tab" data-toggle="tab" href="#mat_ditac">Material didáctico</a></li>
              {/if}
              {if isset($referencias) && count($referencias) > 0 }
-              <li><a data-toggle="tab" href="#ref_mat">Referencias</a></li>
+              <li><a class="active-tab" data-toggle="tab" href="#ref_mat">Referencias</a></li>
               {/if}
         </ul>
         {if strlen($leccion["Lec_Descripcion"]) > 0 }
-        <div class="panel-body" style=" margin: 0px 25px">
+        <div class="panel panel-default panel-body">
           <div class="tab-content">
             {if strlen($leccion["Lec_Descripcion"]) > 0 }
           <div id="inf_curso" class="tab-pane fade in active">

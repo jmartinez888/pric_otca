@@ -10,7 +10,6 @@
   }
   .side-menu {
       list-style: none;
-      border-color: #D5D5D5;
       color: #222;
       padding: 10px 20px;
       cursor: pointer;

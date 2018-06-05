@@ -1,67 +1,68 @@
 <input value="{BASE_URL}" id="hiddenURL" hidden="hidden" />
 <input value="{$modulo.Cur_IdCurso}" id="hiddenCurso" hidden="hidden" />
-<div class="row gradiente">
-    <br>
-    <div class="col-lg-5 titulo-modulo" style="color: #eceff1">
-       <h4><strong> Módulo {$mod_datos.INDEX}: {$modulo["Mod_Titulo"]}</strong></h4>
-    </div>
-    <div class="col-lg-5 derecha" style="margin-top: 5px !important">
-        <span style="color: #fff">Lección {$leccion["Index"]} de {count($lecciones)}</span>
-        {if $leccion["Index"] > 1 }
-        <form method="post" action="{BASE_URL}elearning/cursos/_previous_leccion/" style="display: inline-block">
-          <input value="{$curso}" name="curso" hidden="hidden"/>
-          <input value="{$leccion.Lec_IdLeccion}" name="leccion" hidden="hidden"/>
-          <button class="course-students-amount btn btn-next-previous"> 
-            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>  
-            Anterior
-          </button>
-        </form>
-        {else}
-        <button class="course-students-amount btn btn-default" disabled="disabled"> 
-            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>  
-            Anterior
-        </button>
-        {/if}
-        {if $leccion["Index"] < {count($lecciones)} }
-        <form method="post" action="{BASE_URL}elearning/cursos/_next_leccion/" style="display: inline-block">
-          <input value="{$curso}" name="curso" hidden="hidden"/>
-          <input value="{$leccion.Lec_IdLeccion}" name="leccion" hidden="hidden"/>
-          <button class="course-students-amount btn btn-next-previous"> 
-            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-            Siguiente
-          </button>
-        </form>
-        {else}
-          <a href="{BASE_URL}elearning/cursos/curso/{$curso}">
-            <button class="course-students-amount btn-regresar btn btn-group"> 
-              <span class="glyphicon glyphicon-hand-left" aria-hidden="true"></span>
-              Ir al curso
+<div class="col-lg-12 panel panel-default" style="margin-top:20px;">
+  <div class="row gradiente">
+      <br>
+      <div class="col-lg-5 titulo-modulo">
+         <h4><strong> Módulo {$mod_datos.INDEX}: {$modulo["Mod_Titulo"]}</strong></h4>
+      </div>
+      <div class="col-lg-5 derecha" style="margin-top: 5px !important">
+          <span>Lección {$leccion["Index"]} de {count($lecciones)}</span>
+          {if $leccion["Index"] > 1 }
+          <form method="post" action="{BASE_URL}elearning/cursos/_previous_leccion/" style="display: inline-block">
+            <input value="{$curso}" name="curso" hidden="hidden"/>
+            <input value="{$leccion.Lec_IdLeccion}" name="leccion" hidden="hidden"/>
+            <button class="course-students-amount btn btn-next-previous"> 
+              <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>  
+              Anterior
             </button>
-          </a>
-        {/if}
-    </div>
-    <div class="col-lg-2" style="margin-top: 5px !important">
-      <a href="{BASE_URL}elearning/cursos/curso/{$curso}">
-      <button class="course-students-amount btn-regresar btn btn-group"> 
-        <span class="glyphicon glyphicon-hand-left" aria-hidden="true"></span>
-        Volver al curso
-      </button>
-    </a>
-    </div>
-</div>
+          </form>
+          {else}
+          <button class="course-students-amount btn btn-default" disabled="disabled"> 
+              <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>  
+              Anterior
+          </button>
+          {/if}
+          {if $leccion["Index"] < {count($lecciones)} }
+          <form method="post" action="{BASE_URL}elearning/cursos/_next_leccion/" style="display: inline-block">
+            <input value="{$curso}" name="curso" hidden="hidden"/>
+            <input value="{$leccion.Lec_IdLeccion}" name="leccion" hidden="hidden"/>
+            <button class="course-students-amount btn btn-next-previous"> 
+              <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+              Siguiente
+            </button>
+          </form>
+          {else}
+            <a href="{BASE_URL}elearning/cursos/curso/{$curso}">
+              <button class="course-students-amount btn-regresar btn btn-group"> 
+                <span class="glyphicon glyphicon-hand-left" aria-hidden="true"></span>
+                Ir al curso
+              </button>
+            </a>
+          {/if}
+      </div>
+      <div class="col-lg-2" style="margin-top: 5px !important">
+        <a href="{BASE_URL}elearning/cursos/curso/{$curso}">
+        <button class="course-students-amount btn-regresar btn btn-group"> 
+          <span class="glyphicon glyphicon-hand-left" aria-hidden="true"></span>
+          Volver al curso
+        </button>
+      </a>
+      </div>
+  </div>
 
 <div class="row">
   <div class="col-lg-12 leccion-container">
-  <div class="col-lg-3" style="padding-right: 0px">
+  <div class="col-lg-3" style="padding-left:0px; padding-right: 0px;">
     
     {include file='modules/elearning/views/cursos/menu/lecciones.tpl'}
   </div>
-  <div class="col-lg-9" style="padding-left:0px;"> 
+  <div class="col-lg-9" style="padding-left:0px; padding-right: 0px;"> 
 
 
     {if $leccion["Lec_Tipo"]==1}
     <div class="col-lg-12" style="padding-left:0px; padding-right:0px;">
-      <div class="panel panel-default" style="border: none !important;">
+      <div class="panel panel-default">
          <div class="panel-heading cabecera-titulo">
           <h3 class="panel-title">
             
@@ -83,7 +84,7 @@
 
     {if $leccion["Lec_Tipo"]==2}
     <div class="col-lg-12" style="padding-left:0px; padding-right:0px;">
-      <div class="panel panel-default" style="border: none !important;">
+      <div class="panel panel-default">
          <div class="panel-heading cabecera-titulo">
           <h3 class="panel-title">
             
@@ -107,7 +108,7 @@
     {if $leccion["Lec_Tipo"]==3}
     {include file='modules/elearning/views/cursos/examen.tpl'}
     <div class="col-lg-12" id="leccion-contenido" style="padding-left:0px; padding-right:0px;">
-      <div class="panel panel-default" style="border: none !important;">
+      <div class="panel panel-default">
           <div class="panel-heading cabecera-titulo">
           <h3 class="panel-title">
             
@@ -265,11 +266,11 @@
     {/if}
   </div>
   </div>
+</div>
+</div>
 
-      <div class="col-lg-12">
+      <div class="col-lg-12" style="padding-left:0px; padding-right: 0px;">
       {include file='modules/elearning/views/cursos/menu/info_leccion.tpl'}
       </div>
-
-</div>
 
 <script type="text/javascript" src="{BASE_URL}modules/elearning/views/gestion/js/core/util.js"></script>

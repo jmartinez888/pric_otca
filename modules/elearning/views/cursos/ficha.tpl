@@ -9,7 +9,7 @@
 		            <strong>{$curso.Cur_Titulo}</strong>
 		          </h3>
 		        </div>
-		        <div class="panel-body" style="background: #E3F2FD">
+		        <div class="panel-body">
 		        	<div class="col-lg-9">
 			        		<h2 class="font-docente" style="margin-top: 0px">{$usuario.Usu_Nombre} {$usuario.Usu_Apellidos}</h2>
 			        </div>

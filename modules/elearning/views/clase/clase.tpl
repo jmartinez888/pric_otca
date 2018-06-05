@@ -29,7 +29,7 @@
 <input value="{BASE_URL}elearning/" id="hidden_url" hidden="hidden" />
 <input value="{$modulo.Cur_IdCurso}" id="hiddenCurso" hidden="hidden" />
 <input value="{$leccion.Lec_IdLeccion}" id="hiddenLeccion" hidden="hidden" />
-<div class="row">
+<div class="row gradiente">
   <div class="col-lg-5 tittle-modulo ">
      <h4><strong> Módulo {$modulo.Index}: {$modulo["Mod_Titulo"]}</strong></h4>
   </div>
