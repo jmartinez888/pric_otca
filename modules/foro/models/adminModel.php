@@ -8,7 +8,6 @@ class adminModel extends Model {
 
     public function insertarForo($iFor_Titulo, $iFor_Resumen, $iFor_Descripcion, $iFor_Palabras, $iFor_FechaCreacion, $iFor_FechaCierre, $iFor_Funcion, $iFor_Tipo, $iFor_Estado, $iFor_IdPadre, $iLit_IdLineaTematica, $iUsu_IdUsuario, $iEnt_IdEntidad, $iRec_IdRecurso, $iIdi_IdIdioma) {
         try {
-
             if (trim($iFor_FechaCreacion) == "") {
                 $iFor_FechaCreacion = date('Y-m-d H:m');
             } else {
@@ -47,6 +46,50 @@ class adminModel extends Model {
             return $result->fetch();
         } catch (PDOException $exception) {           
             $this->registrarBitacora("foro(adminModel)", "insertarForo", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
+    public function actualizarForo($iFor_IdForo,$iFor_Titulo, $iFor_Resumen, $iFor_Descripcion, $iFor_Palabras, $iFor_FechaCreacion, $iFor_FechaCierre, $iFor_Funcion, $iFor_Tipo, $iFor_Estado, $iFor_IdPadre, $iLit_IdLineaTematica, $iUsu_IdUsuario, $iEnt_IdEntidad, $iRec_IdRecurso, $iIdi_IdIdioma) {
+        try {
+            if (trim($iFor_FechaCreacion) == "") {
+                $iFor_FechaCreacion = date('Y-m-d H:m');
+            } else {
+                $iFor_FechaCreacion = date('Y-m-d H:m', strtotime($iFor_FechaCreacion));
+            }
+            
+            if (trim($iFor_FechaCierre) != "") {
+                $iFor_FechaCierre = date('Y-m-d H:m', strtotime($iFor_FechaCierre));
+            } else {
+                $iFor_FechaCierre = null;
+            }
+
+            if ($iFor_IdPadre == 0) {
+                $iFor_IdPadre = null;
+            }
+                        
+            $sql = "call s_u_foro(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            $result = $this->_db->prepare($sql);
+            $result->bindParam(1, $iFor_IdForo, PDO::PARAM_INT);
+            $result->bindParam(2, $iFor_Titulo, PDO::PARAM_STR);
+            $result->bindParam(3, $iFor_Resumen, PDO::PARAM_STR);
+            $result->bindParam(4, $iFor_Descripcion, PDO::PARAM_STR);
+            $result->bindParam(5, $iFor_Palabras, PDO::PARAM_STR);
+            $result->bindParam(6, $iFor_FechaCreacion, PDO::PARAM_STR);
+            $result->bindParam(7, $iFor_FechaCierre, PDO::PARAM_NULL | PDO::PARAM_STR);
+            $result->bindParam(8, $iFor_Funcion, PDO::PARAM_STR);
+            $result->bindParam(9, $iFor_Tipo, PDO::PARAM_INT);
+            $result->bindParam(10, $iFor_Estado, PDO::PARAM_INT);
+            $result->bindParam(11, $iFor_IdPadre, PDO::PARAM_NULL | PDO::PARAM_INT);
+            $result->bindParam(12, $iLit_IdLineaTematica, PDO::PARAM_INT);
+            $result->bindParam(13, $iUsu_IdUsuario, PDO::PARAM_INT);
+            $result->bindParam(14, $iEnt_IdEntidad, PDO::PARAM_INT);
+            $result->bindParam(15, $iRec_IdRecurso, PDO::PARAM_INT);
+            $result->bindParam(16, $iIdi_IdIdioma, PDO::PARAM_STR);
+
+            $result->execute();
+            return $result->fetch();
+        } catch (PDOException $exception) {           
+            $this->registrarBitacora("foro(adminModel)", "actualizarForo", "Error Model", $exception);
             return $exception->getTraceAsString();
         }
     }
@@ -90,6 +133,20 @@ class adminModel extends Model {
             return $result->fetch();
         } catch (PDOException $exception) {
             $this->registrarBitacora("foro(adminModel)", "getForos_x_Id", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
+    public function getForosComplit_x_Id($iFor_IdForo) {
+        try {
+            $sql = " call s_s_foro_complit_x_id(?)";
+            $result = $this->_db->prepare($sql);
+            ;
+            $result->bindParam(1, $iFor_IdForo, PDO::PARAM_INT);
+
+            $result->execute();
+            return $result->fetch();
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("foro(adminModel)", "getForosComplit_x_Id", "Error Model", $exception);
             return $exception->getTraceAsString();
         }
     }
@@ -265,6 +322,21 @@ class adminModel extends Model {
         } catch (PDOException $exception) {
 
             $this->registrarBitacora("foro(indexModel)", "insertarFileForo", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
+    
+    
+    public function deleteFileForo($iFor_IdForo) {
+        try {
+
+            $sql = "call s_d_file_foro_x_id(?)";
+            $result = $this->_db->prepare($sql);           
+            $result->bindParam(1, $iFor_IdForo, PDO::PARAM_INT);           
+            $result->execute();
+            return $result->fetch();
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("foro(indexModel)", "deleteFileForo", "Error Model", $exception);
             return $exception->getTraceAsString();
         }
     }

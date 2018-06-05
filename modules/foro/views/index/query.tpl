@@ -1,7 +1,8 @@
 <div  class="col-md-12 col-xs-12 col-sm-12 col-lg-12">
     {include file='modules/foro/views/index/menu/lateral.tpl'}
     <div  class="col-md-10 col-xs-12 col-sm-8 col-lg-10" style="margin-top: 10px;">       
-        <h3 class="titulo-view"><strong>Consultas</strong> </h3>        
+        <h3 class="titulo-view"><strong>Consultas</strong> </h3>   
+        <a type="button" href="{$_layoutParams.root}foro/admin/form/new/query" class="btn btn-default btn-sm pull-right" title="Nuevo Sub FOro">Nuevo</a>
         <div class="row">
             <div class="col-md-12">
                 <div class="row">                   

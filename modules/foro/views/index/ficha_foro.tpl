@@ -60,12 +60,9 @@
                                 </div>
 
                             </div>
-
-
                         {/if}                    
                     </div>
-                </div>
-                 {if $foro.For_Funcion=="forum"}
+                </div>                 
                 <div class="row">
                     <hr>
                     <h4>Comentarios:</h4>
@@ -176,7 +173,7 @@
                         </div>                
                     {/foreach}
                 </div>
-                {/if}
+                
             </div>
             <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
                 <div class="addon">

@@ -87,15 +87,13 @@ class indexController extends foroController {
         $foro = $this->_model->getForo_x_idforo($iFor_IdForo);
         $this->_view->assign('titulo', $lenguaje["foro_ficha_titulo"] . " " . $foro["For_Titulo"]);
         $foro["Archivos"] = $this->_model->getArchivos_x_idforo($iFor_IdForo);
+        $foro["For_Comentarios"] = $this->_model->getComentarios_x_idforo($iFor_IdForo);
+       
         if ($foro["For_Funcion"] == "forum") {
-            $foro["Sub_Foros"] = $this->_model->getSubForo_x_idforo($iFor_IdForo);
-            $foro["For_Comentarios"] = $this->_model->getComentarios_x_idforo($iFor_IdForo);
+            $foro["Sub_Foros"] = $this->_model->getSubForo_x_idforo($iFor_IdForo);            
         } else {
-            $foro["Sub_Foros"] = array();
-            $foro["For_Comentarios"] = array();
+            $foro["Sub_Foros"] = array();           
         }
-
-
 
         for ($index = 0; $index < count($foro["For_Comentarios"]); $index++) {
             $foro["For_Comentarios"][$index]["Hijo_Comentarios"] = $this->_model->getComentarios_x_idcomentario($foro["For_Comentarios"][$index]["Com_IdComentario"]);
@@ -106,6 +104,7 @@ class indexController extends foroController {
         }
         $this->_view->assign('facilitadores', $this->_model->getFacilitadores($iFor_IdForo));
         $this->_view->assign('comentar_foro', $this->_permiso($iFor_IdForo, "comentar_foro"));
+               
         $this->_view->assign('foro', $foro);
         $this->_view->renderizar('ficha_foro');
     }

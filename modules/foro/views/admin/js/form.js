@@ -1,5 +1,9 @@
 var _post = null;
 $(document).on('ready', function () {
+    $("#start_time").val(startDate);
+    $("#end_time").val(endDate);
+    set_input_hdd_files_form();
+    
     $(".cb_select_fecha").attr('checked',false);
     $('textarea#text_descripcion').ckeditor();
     $('body').on('change', '.files_form', function () {
@@ -48,6 +52,9 @@ $(document).on('ready', function () {
             }
         }
     });
+    $('body').on('change', '#start_time', function () {
+        //alert($(this).val())        
+    });
     $("#start_time").datetimepicker({
         dateFormat: 'dd-mm-yy',
         timeFormat: 'H:mm',
@@ -67,7 +74,8 @@ function load_files_form(file, div_conte) {
     $(div_conte).addClass("d-block");
     var add_div = $(div_conte).html();
     jQuery.each(file, function (i, file) {
-        id = 'file-' + i;
+        nfiles=get_count_file()+i;
+        id = 'file-' +nfiles ;
         formData.append(id, file);
         str_size = "";
         fileSizeInBytes = file["size"]
@@ -124,4 +132,10 @@ function set_input_hdd_files_form() {
     att_files = JSON.stringify(files);
     $("#hd_file_form").val(att_files);
 }
+
+function get_count_file() {
+    return  $("[name=attach_form]").length;
+}
+
+
 

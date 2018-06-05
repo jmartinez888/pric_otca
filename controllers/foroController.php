@@ -21,7 +21,6 @@ class foroController extends Controller
             if ($this->_acl->rol($_rol["Rol_IdRol"])) {
                 $_permiso_habiltado = $this->_acl->permiso($clave_permiso);
                 $_permiso_deshabilitado = $this->_model_index->getPermisos_desh_Foro(Session::get('id_usuario'), $iFor_IdForo, $clave_permiso);
-
                 if ($_permiso_habiltado && empty($_permiso_deshabilitado)) {
                     return true;
                 } else {
