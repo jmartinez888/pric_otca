@@ -1,12 +1,11 @@
 .ficha-leccion{
-  background-color: white;
+  background-color: #aac0ff;
   margin-top: 5px;
-  border: 1px solid #ECEFF1;
   border-radius: 5px;
-  padding: 5px;
-  color: #000000;
+  padding: 15px;
+  color: #393939;
   position: relative;
-  height: 50px;
+
 }
 
 .lec-lms-activo{
@@ -15,15 +14,39 @@
 }
 
 .tag-terminado{
-  width: 120px;
-  height: 27px;
+  padding: 5px 15px;
   background: #EF5350;
   position: absolute;
-  top: 10px;
-  right: 10px;
+  top: 20px;
+  right: 20px;
+  display: inline-block;
   color: white;
   border-radius: 5px;
-  padding-top: 3px;
+}
+
+.tag-terminado:hover{
+  padding: 5px 15px;
+  background: #bb403e;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  display: inline-block;
+  color: white;
+  border-radius: 5px;
+}
+
+.tag-terminado:active{
+  padding: 5px 15px;
+  background: #bb403e;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  display: inline-block;
+  color: white;
+  border-radius: 5px;
+  -moz-box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.6);
+  -webkit-box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.6);
+    box-shadow: 3px 3px 10px rgba(100, 100, 100, 0.6);
 }
 
 .pendiente{

@@ -1,0 +1,80 @@
+.titulo-modulo{
+	color: #4A4A4A;
+}
+.btn-regresar{
+    background-color: #618c2f;
+    color: #FFF;
+    position: relative;
+}
+.btn-regresar:active{
+    background-color: #618c2f;
+    color: #FFF;
+    position: relative;
+    -moz-box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.6);
+    -webkit-box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.6);
+    box-shadow: 3px 3px 10px rgba(100, 100, 100, 0.6);
+}
+.btn-regresar:hover{
+    background-color: #A8CF45;
+    color: #000;
+    position: relative;
+}
+
+.btn-next-previous{
+    background-color: #007cbe;
+    color: #FFF;
+    position: relative;
+}
+.btn-next-previous:active{
+    background-color: #007cbe;
+    color: #FFF;
+    position: relative;
+    -moz-box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.6);
+    -webkit-box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.6);
+    box-shadow: 3px 3px 10px rgba(100, 100, 100, 0.6);
+}
+.btn-next-previous:hover{
+    background-color: #00496f;
+    color: #FFF;
+    position: relative;
+}
+
+.cabecera-titulo{
+	color: #fff !important;
+	background: #a0a0a0!important;
+}
+.contenedor-clase{
+	overflow-y: auto;
+    height: 490px;
+	max-height: 490px;
+}
+.gradiente{
+	padding-bottom: 20px;
+}
+
+
+.nav-tabs{
+  	background-color:#fff;
+}
+.tab-content{
+    background-color:#fff;
+    color:#000;
+}
+.nav-tabs > li > a{
+	color: #393939;
+	font-weight: bold;
+ 	border: medium none;
+}
+.nav-tabs > li > a:hover{
+  	background-color: #51758d !important;
+    border: medium none;
+    border-radius: 0;
+    color:#fff;
+}
+.leccion-container{
+    height: 550px;
+}
+.active .active-tab{
+    color: #fff !important;
+    background-color: #51758d !important;
+}

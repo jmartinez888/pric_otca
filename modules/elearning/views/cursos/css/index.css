@@ -1,5 +1,5 @@
 .curso-item{
-  height: 450px;
+  height: 500px;
   background-color: #f7f7f9;
   border: 1px solid #e1e1e8;
   border-radius: 4px;
@@ -20,19 +20,19 @@
 
 .curso-item-title{
   /* position: absolute; */
-  bottom: 170px;
+  /*bottom: 170px;
   left: 10px;
   width: 80%;
   padding: 0 0 0 10px;
-  font-weight: 560;
+  font-weight: 560;*/
+  color: #393939;
 }
 
 .curso-item-desc{
   /* position: absolute; */
   /* top: 288px; */
-  padding: 0 10px 10px;
-  left: 0px;
-  width: 100%;
+  color: #393939;
+  text-align: justify;
 }
 
 .curso-item-img{
@@ -41,25 +41,26 @@
 }
 
 .curso-item-mod{
-  position: absolute;
-  bottom: 160px;
+
   padding: 10px;
-  right: 10px;
   color: white;
-  border-radius: 4px;
+  border-radius: 0px 0px 0px 20px;
 }
 
 .mooc{
   background: #EF5350;
+
 }
 
 .lms{
   background: #2196F3;
+
 }
 
 .curso-item-lms-tab{
   /* position: absolute; */
   /* top: 370px; */
   /* left: 10px; */
-  margin: -6px 0 10px 10px;
+  color: #393939;
+  padding-top: 10px;
 }

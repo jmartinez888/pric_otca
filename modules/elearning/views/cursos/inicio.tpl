@@ -1,63 +1,98 @@
 <div class="col-lg-12">
-  {include file='modules/elearning/views/cursos/menu/lateral.tpl'}
-  <div class="col-lg-10" style="padding: 10px 0 20px 0">
-    <div class="col-lg-12" style="padding-bottom: 20px">
+  <div class="col-lg-12" style="padding-bottom: 20px; padding-top: 20px">
       <form method="post" action="{BASE_URL}elearning/index/_busqueda_curso">
         <div class="input-group">
           <input class="form-control" name="busqueda" placeholder="Buscar curso" value="{$busqueda}">
           <span class="input-group-btn">
-            <button class="btn btn-default" type="submit">Buscar Cursos</button>
+            <button class="btn btn-group btn-buscar" type="submit">Buscar Cursos</button>
           </span>
         </div><!-- /input-group -->           
       </form>
-    </div> 
+    </div>
+  {include file='modules/elearning/views/cursos/menu/lateral.tpl'}
+  <div class="col-lg-10" style="padding: 10px 0 20px 0">
+     
     {if isset($curso) && count($curso) > 0}
       {foreach from=$curso item=o}
-      <div class="col-lg-4" style="margin-bottom: 10px">
-        <div class="curso-item">
+      <a href="{BASE_URL}elearning/cursos/curso/{$o.Cur_IdCurso}">
+      <div class="col-lg-4" style="margin-bottom: 20px;">
+        
+        <div class="curso-item curso-sombra">
+          <form>
+            <div class="clasificacion">
+                <input id="radio1" name="estrellas" value="5" type="radio">
+                <label for="radio1"><i class="glyphicon glyphicon-star efecto"></i></label>
+                <input id="radio2" name="estrellas" value="4" type="radio">
+                <label for="radio2"><i class="glyphicon glyphicon-star efecto"></i></label>
+                <input id="radio3" name="estrellas" value="3" type="radio">
+                <label for="radio3"><i class="glyphicon glyphicon-star efecto"></i></label>
+                <input id="radio4" name="estrellas" value="2" type="radio">
+                <label for="radio4"><i class="glyphicon glyphicon-star efecto"></i></label>
+                <input id="radio5" name="estrellas" value="1" type="radio">
+                <label for="radio5"><i class="glyphicon glyphicon-star efecto"></i></label>
+                <span class="contador">&nbsp; 8</span>
+            </div>
+          </form>
+
+          <!--<span class="glyphicon glyphicon-bookmark ic-decoration"></span>-->
           {if strlen($o.Cur_UrlBanner) >0 }
           <img class="curso-item-img" src="{BASE_URL}modules/elearning/views/cursos/img/portada/{$o.Cur_UrlBanner}" />
           {else}
           <img class="curso-item-img" src="{BASE_URL}modules/elearning/views/cursos/img/portada/default.png" />
           {/if}
-          <div class="curso-item-mod {if $o.Mod_IdModCurso==1} mooc {else} lms {/if}">{$o.Modalidad}</div>
-          <h4 class="curso-item-title">
-          	   <a href="{BASE_URL}elearning/cursos/curso/{$o.Cur_IdCurso}">
-          {$o.Cur_Titulo}
-           </a>
-      	  </h4>
+          <div class="col-md-12">
+            <div class="row">
+            <h4 class="col-md-9 curso-item-title">
+               <strong>{$o.Cur_Titulo}</strong>
+            </h4>
+            <div class="col-md-3 curso-item-mod {if $o.Mod_IdModCurso==1} mooc {else} lms {/if}">{$o.Modalidad}</div>
+            
+            <!--<h4 class="curso-item-title">
+               <a href="{BASE_URL}elearning/cursos/curso/{$o.Cur_IdCurso}">
+               <strong>{$o.Cur_Titulo}</strong>
+              </a>
+            </h4>-->
+            
+            </div>
+            <hr class="cursos-hr">
 
           {if $o.Mod_IdModCurso==1}
-            <br/>
+            <br>
+            <div class="curso-item-desc">
+              {substr($o.Cur_Descripcion, 0, 250)}...
+            </div>
+          {else} 
+            <br>           
             <div class="curso-item-desc">
               {substr($o.Cur_Descripcion, 0, 100)}...
             </div>
-          {else}            
-            <div class="curso-item-desc">
-              {substr($o.Cur_Descripcion, 0, 100)}...
-            </div>
+            <br> 
+              <hr class="cursos-hr">
             <div class="curso-item-lms-tab">
-              <div><strong>Inicio:</strong> {substr($o.Cur_FechaDesde, 0, 10)}</div>
-              <div><strong>Vacantes:</strong> {$o.Cur_Vacantes}/{$o.Detalle.Matriculados} <strong>Matriculados</strong></div>
-              <div><strong>Docente:</strong> {$o.Detalle.Docente}</div>
+              <div><span class="glyphicon glyphicon-calendar"></span>
+              <strong>&nbsp;Inicio:</strong> {substr($o.Cur_FechaDesde, 0, 10)}</div>
+              <div><span class="glyphicon glyphicon-file"></span>
+              <strong>&nbsp;Vacantes:</strong> {$o.Cur_Vacantes}/{$o.Detalle.Matriculados} <strong>Matriculados</strong></div>
+              <div><span class="glyphicon glyphicon-user"></span>
+              <strong>&nbsp;Docente:</strong> {$o.Detalle.Docente}</div>
             </div>
           {/if}
 
-          <a href="{BASE_URL}elearning/cursos/curso/{$o.Cur_IdCurso}">
-            <button class="btn btn-success btn-ficha">Ver ficha</button>
-          </a>
           {if $o.Usu_IdUsuario == Session::get("id_usuario")}
           <a href="{BASE_URL}elearning/gestion/matriculados/{$o.Cur_IdCurso}">
             <button class="btn btn-default btn-gestion">Gestión</button>
           </a>
           {/if}
+          </div>
         </div>
+
       </div>
+      </a>
       {/foreach}
     {else}
     <div class="col-lg-10" style="padding: 10px 0 0 0">
       {if strlen($busqueda) >0 }
-        <div class="col-lg-12" >No hay resultados para la busqueda: {$busqueda}</div>
+        <div class="col-lg-12" >No hay resultados para la busqueda: <strong>{$busqueda}</strong></div>
       {else}
         {if isset($usu_curso) && strlen($usu_curso) >0 }
           <div>{$usu_curso} aun no te has matriculado en ningun curso</div>
