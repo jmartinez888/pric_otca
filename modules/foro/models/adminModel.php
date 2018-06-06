@@ -90,6 +90,8 @@ class adminModel extends Model {
             return $result->fetch();
         } catch (PDOException $exception) {           
             $this->registrarBitacora("foro(adminModel)", "actualizarForo", "Error Model", $exception);
+            var_dump($exception);
+            exit();
             return $exception->getTraceAsString();
         }
     }
