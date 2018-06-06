@@ -89,9 +89,7 @@ class adminModel extends Model {
             $result->execute();
             return $result->rowCount(PDO::FETCH_ASSOC); 
         } catch (PDOException $exception) {           
-            $this->registrarBitacora("foro(adminModel)", "actualizarForo", "Error Model", $exception);
-            var_dump($exception);
-            exit();
+            $this->registrarBitacora("foro(adminModel)", "actualizarForo", "Error Model", $exception);           
             return $exception->getTraceAsString();
         }
     }
