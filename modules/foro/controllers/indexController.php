@@ -162,7 +162,7 @@ class indexController extends foroController {
         $file = $_FILES;
         $src = ROOT_ARCHIVO_FISICO;
         if (!is_dir($src))
-            mkdir($src, 0777);
+            mkdir($src, 0777,true);
 
         $result = array();
         foreach ($file as $key => $value) {
