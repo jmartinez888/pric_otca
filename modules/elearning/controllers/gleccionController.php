@@ -123,15 +123,18 @@ class gleccionController extends elearningController {
     Session::set("learn_param_leccion", $leccion);
     Session::set("learn_url_tmp", "gleccion/_view_leccion");
 
+    $Tmodel = $this->loadModel("trabajo"); //RODRIGO 20180605
     $Cmodel = $this->loadModel("_gestionCurso");
     $Mmodel = $this->loadModel("_gestionModulo");
     $model = $this->loadModel("_gestionLeccion");
-
+    
     $curso = $Cmodel->getCursoXId($curso);
     $modulo = $Mmodel->getModuloId($modulo);
     $leccion = $model->getLeccionId($leccion);
     $referencias = $model->getReferenciaLeccion($leccion["Lec_IdLeccion"]);
     $material = $model->getMaterialLeccion($leccion["Lec_IdLeccion"]);
+    $trabajo = $Tmodel->getTrabajoUsuario($leccion["Lec_IdLeccion"]); //RODRIGO 20180605
+    $tipo_trabajo = $Tmodel->getConstanteTrabajo(); //RODRIGO 20180605
 
     $view = "";
     $this->_view->assign("curso", $curso);
@@ -139,6 +142,8 @@ class gleccionController extends elearningController {
     $this->_view->assign("leccion", $leccion);
     $this->_view->assign("referencias", $referencias);
     $this->_view->assign("material", $material);
+    $this->_view->assign("trabajo", $trabajo); //RODRIGO 20180605
+    $this->_view->assign("tipo_trabajo", $tipo_trabajo); //RODRIGO 20180605
     switch ($leccion["Lec_Tipo"]) {
       case 1:
         $contenido = $model->getContenidoLeccion($leccion["Lec_IdLeccion"]);

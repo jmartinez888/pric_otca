@@ -5,37 +5,124 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="row">
-                    <div class="col-md-12">
-                        <div class="row">
-                            {if count($lista_foros)>0}
-                                <div class="panel panel-default" >
-                                    <div class="panel-heading">
-                                        <h3 class="panel-title">
-                                            <i class="glyphicon glyphicon-list-alt"></i>&nbsp;&nbsp;
-                                            <strong>Actividad de Foro</strong>
-                                        </h3>
-                                    </div>
-                                    <ul class="list-group panel-body  col-md-8">
-                                        <li class="list-group-item">Cras justo odio</li>
-                                        <li class="list-group-item">Dapibus ac facilisis in</li>
-                                        <li class="list-group-item">Morbi leo risus</li>
-                                        <li class="list-group-item">Porta ac consectetur ac</li>
-                                        <li class="list-group-item">Vestibulum at eros</li>
-                                    </ul>
-
-                                    <div class="panel-body col-md-4">
-                                        Torta
+                    <div class="col-md-3">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-xs-2">
+                                        <i class="fa fa-users fa-4x"></i>                                    
+                                    </div>    
+                                    <div class="col-xs-10 text-right">
+                                        <div class="stat-count">+233</div>
+                                        <div class="stat-title-min">Miembros</div>
                                     </div>
                                 </div>
-                            {else}
-                                <h4>No se encontraron Resultados</h4>
-                            {/if}
+                            </div>                           
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-xs-2">
+                                        <i class="fa fa-file-text fa-4x"></i>                                    
+                                    </div>    
+                                    <div class="col-xs-10 text-right">
+                                        <div class="stat-count">+560</div>
+                                        <div class="stat-title-min">Temas</div>
+                                    </div>
+                                </div>
+                            </div>                           
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-xs-2">
+                                        <i class="fa fa-comments fa-4x"></i>                                    
+                                    </div>    
+                                    <div class="col-xs-10 text-right">
+                                        <div class="stat-count">+790</div>
+                                        <div class="stat-title-min">Comentarios</div>
+                                    </div>
+                                </div>
+                            </div>                           
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-xs-2">
+                                        <i class="fa fa-eye fa-4x"></i>                                    
+                                    </div>    
+                                    <div class="col-xs-10 text-right">
+                                        <div class="stat-count">+790</div>
+                                        <div class="stat-title-min">Visitas</div>
+                                    </div>
+                                </div>
+                            </div>                           
                         </div>
                     </div>
 
+                </div>                
+            </div>
+            <div class="col-md-7">
+                <h4><i class="fa fa-bar-chart-o fa-fw"></i>Comentarios por mes</h4>
+                <div>
+                    char
+                </div>
+            </div>   
+            <div class="col-md-5">             
+                <h4><i class="fa fa-folder-o fa-fw"></i>Temáticas</h4>              
+                <div class="list-group">
+                    <a href="#" class="list-group-item">
+                        <i class="fa fa-comment fa-fw"></i> New Comment
+                        <span class="pull-right text-muted small"><em>4 minutes ago</em>
+                        </span>
+                    </a>
+                    <a href="#" class="list-group-item">
+                        <i class="fa fa-twitter fa-fw"></i> 3 New Followers
+                        <span class="pull-right text-muted small"><em>12 minutes ago</em>
+                        </span>
+                    </a>
+                    <a href="#" class="list-group-item">
+                        <i class="fa fa-envelope fa-fw"></i> Message Sent
+                        <span class="pull-right text-muted small"><em>27 minutes ago</em>
+                        </span>
+                    </a>            
+                </div>
+                <h4><i class="fa fa-folder-o fa-fw"></i>Actividades</h4>  
+                <div class="list-group">
+                    <a href="#" class="list-group-item">
+                        <i class="fa fa-upload fa-fw"></i> Server Rebooted
+                        <span class="pull-right text-muted small"><em>11:32 AM</em>
+                        </span>
+                    </a>
+                    <a href="#" class="list-group-item">
+                        <i class="fa fa-bolt fa-fw"></i> Server Crashed!
+                        <span class="pull-right text-muted small"><em>11:13 AM</em>
+                        </span>
+                    </a>
+                    <a href="#" class="list-group-item">
+                        <i class="fa fa-warning fa-fw"></i> Server Not Responding
+                        <span class="pull-right text-muted small"><em>10:57 AM</em>
+                        </span>
+                    </a>
+                    <a href="#" class="list-group-item">
+                        <i class="fa fa-shopping-cart fa-fw"></i> New Order Placed
+                        <span class="pull-right text-muted small"><em>9:49 AM</em>
+                        </span>
+                    </a>                   
+                </div>
+            </div>  
+            <div class="col-md-12">
+                <h4><i class="fa fa-map-o fa-fw"></i>Ubicación de los miembros</h4>  
+                <div class="row">    
+                    Map
                 </div>
             </div>
-
 
         </div>
 

@@ -475,16 +475,16 @@ class loginController extends Controller {
                 // $mail->AddAddress($Usuario['Usu_Email'], $Usuario['Usu_Usuario']);
                 // // $mail->AddReplyTo('phoenixd110@gmail.com', 'Information');
 
-                $Subject = 'Resuperar Cuenta PRIC';
+                $Subject = 'Recuperar Cuenta PRIC';
                 $contenido = 'Estimado usuario <b>'.$Usuario['Usu_Usuario'].'</b>, para cambiar su contraseña en la PRIC hacer click en el siguiente enlace: <br><a href="'. BASE_URL .'usuarios/login/recuperarPass/'.$Usuario['Usu_Codigo'].'/'.$Usuario['Usu_Email'].'">'. BASE_URL .'usuarios/login/recuperarPass/'.$Usuario['Usu_Codigo'].'/'.$Usuario['Usu_Email'].'</a>';
-                $fromName = 'PRIC - Recuperar de Contraseña';
+                $fromName = 'PRIC - Recuperar Clave';
 
                 // Parametro ($forEmail, $forName, $Subject, $contenido, $fromName = "Proyecto PRIC")
                 $Correo = new Correo();
                 $SendCorreo = $Correo->enviar($Usuario['Usu_Email'], $Usuario['Usu_Usuario'], $Subject, $contenido, $fromName);
                 // echo($SendCorreo);
 
-                if($mail->send()) {
+                if($SendCorreo) {
                     // echo 'Correo Enviado';
                     $this->_usuarios->recuperarPass($Usuario["Usu_IdUsuario"],1);
                 } else {
