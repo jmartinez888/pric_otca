@@ -14,8 +14,8 @@ class Correo
         $this->mail->SMTPDebug = 0;
         // Log del debug SMTP en formato HTML 
         $this->mail->Debugoutput = 'html';
-        $this->mail->Host = 'email-smtp.us-west-2.amazonaws.com';
-        // $this->mail->Host = 'smtp.gmail.com';
+        // $this->mail->Host = 'email-smtp.us-west-2.amazonaws.com';
+        $this->mail->Host = 'smtp.gmail.com';
         $this->mail->SMTPAuth = true;
         // $this->mail->Username = 'AKIAJ4CISRDL4GEUDMXA';
         $this->mail->Username = 'pruebanombrea@gmail.com';
