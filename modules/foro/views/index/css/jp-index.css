@@ -1,0 +1,27 @@
+.titulo-foro{
+	margin-top: 10px !important;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	font-family: 'Lucida Sans';
+	background-color: #f2f2f2;
+}
+.link-foro{
+	color: #222;
+}
+.link-foro:hover{
+	color: #222;
+	text-decoration: underline;
+}
+.cursos-hr{
+    background: #ddd;
+    margin-top: 0px;
+    padding: 0.2px;
+}
+.descripcion-foro{
+	font-size: 15px;
+	padding-top: 10px;
+	margin-bottom: 15px;
+}
+.subtitle-foro{
+	font-family: 'Gill Sans MT';
+}

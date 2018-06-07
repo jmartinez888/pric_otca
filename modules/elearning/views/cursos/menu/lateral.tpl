@@ -90,7 +90,7 @@
 
   .contenido {
       padding-top: 40px;
-  background-color: rgba( 0,0,0, .2);
+      background-color: rgba( 0,0,0, .2);
   }
 
 
@@ -228,7 +228,7 @@
 
         <ul>
           <a href="{BASE_URL}elearning/cursos/" class="nounderline">
-          <div class="side-menu2"><li class="side-menu sombra-est" style="position: relative">
+          <div class="side-menu2"><li class="side-menu" style="position: relative">
           <i class="glyphicon glyphicon-book"></i>
           <span> Cursos</span></li></div>
           </a>
@@ -236,14 +236,14 @@
         {if Session::get('id_usuario')}
         <ul>
           <a href="{BASE_URL}elearning/cursos/miscursos" class="nounderline">
-            <div class="side-menu2"><li class="side-menu sombra-est2" style="position: relative">
+            <div class="side-menu2"><li class="side-menu" style="position: relative">
             <i class="glyphicon glyphicon-book"></i>
             <span> Mis Cursos</span></li></div>
           </a>
         </ul>
         <ul>
           <a href="{BASE_URL}elearning/gestion/_inicio" class="nounderline">
-            <div class="side-menu2"><li class="side-menu sombra-est3" style="position: relative">
+            <div class="side-menu2"><li class="side-menu" style="position: relative">
             <i class="glyphicon glyphicon-book"></i>
             <span> Mis Cursos (Docente)</span></li></div>
           </a>

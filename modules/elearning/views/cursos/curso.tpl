@@ -33,7 +33,7 @@
           </div>
 
           <div class="col-lg-8">
-            <iframe class="video-intro" width="100%" height="300" src="https://www.youtube.com/embed/eBVvD85Ml2c" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+            <iframe class="video-intro" width="100%" height="310" src="https://www.youtube.com/embed/eBVvD85Ml2c" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
           </div>
 
           <div class="col-lg-4">
@@ -46,7 +46,7 @@
                 <br><br>
               </div>
 
-              <div class="col-lg-12" style="border-top: #ddd solid 2px; border-bottom: #ddd solid 2px;">
+              <div class="col-lg-12" style="border-top: #ddd solid 0.2px; border-bottom: #ddd solid 0.2px;">
                 <br>
                 <i class="glyphicon glyphicon-user" style="color: #31A3BB; font-size: 25px"></i>
                 <br>
