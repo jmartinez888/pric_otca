@@ -1,9 +1,36 @@
 function validate(data, validator){
-  console.log(data.length);
-  /*$.each(data.get(), function(row){
-    console.log(row);
-  });*/
-  return false;
+  var validate = true;
+  var formats = (validator.format || "").toUpperCase().split(",");
+  var files = validator.files || 1;
+  var maxSize = validator.maxSize || 1;
+  var maxByteSize = maxSize*1024*1024;
+  var archivos = [];
+  for(var item of data.entries()){
+    if(item[0]!="route"){
+      archivos.push(item[1]);
+    }
+  }
+  if(files < archivos.length){
+    validator.error = "Solo puedes subir " + files.toString() + " archivo(s)";
+    validate = false;
+  }
+  archivos.forEach(function(file){
+    if( parseInt(maxByteSize) < parseInt(file.size)){
+      validator.error = "El peso máximo de los <br/> archivos es " + maxSize.toString() + " MB(s)";
+      validate = false;
+    }else{
+      var tmp_name = file.name.split(".");
+      tmp_name = tmp_name[tmp_name.length - 1].toUpperCase();
+      if(formats.length>0 && formats[0].length > 0){
+        if(!formats.includes(tmp_name)){
+          var msn = (validator.format || "").replace(/,/g, ", ");
+          validator.error = "Los archivos deben tener formato: " + msn;
+          validate = false;
+        }
+      }  
+    }    
+  });
+  return validate;
 }
 
 function InitUploader(post, params){
@@ -72,12 +99,10 @@ function InitUploader(post, params){
         Mensaje("Seleccione un archivo", null);
         return;
       }
-      params.validator = { mensaje : "Estamos en mantenimientos, por favor inténtelo más tarde" };
-      if( params.validator != null){ 
-        var validator = params.validator;
 
-        if( !validate(ajaxData, validator) ){
-          var mensaje = params.validator.mensajeError || "";
+      if( params.validator != null){
+        if( !validate(ajaxData, params.validator) ){
+          var mensaje = params.validator.error || "Los datos no cumplen los parametros establecidos";
           Mensaje(mensaje, null);
           return;
         }
