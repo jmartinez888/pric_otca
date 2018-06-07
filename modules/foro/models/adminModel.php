@@ -163,7 +163,7 @@ class adminModel extends Model {
                         "UPDATE foro SET For_Estado = 0 where For_IdForo = $iFor_IdForo"
                 );
             }
-
+            
             return $foro->rowCount(PDO::FETCH_ASSOC);
         } catch (PDOException $exception) {
             $this->registrarBitacora("foro(adminModel)", "cambiarEstadoForo", "Error Model", $exception);
@@ -181,6 +181,19 @@ class adminModel extends Model {
             return $foro->rowCount(PDO::FETCH_ASSOC);
         } catch (PDOException $exception) {
             $this->registrarBitacora("foro(adminModel)", "estadoRowForo", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
+    public function cerrarForo($iFor_IdForo) {
+        try {
+
+            $foro = $this->_db->query(
+                    "UPDATE foro SET For_FechaCierre = NOW() where For_IdForo = $iFor_IdForo"
+            );
+            
+            return $foro->rowCount(PDO::FETCH_ASSOC);
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("foro(adminModel)", "cerrarForo", "Error Model", $exception);
             return $exception->getTraceAsString();
         }
     }
