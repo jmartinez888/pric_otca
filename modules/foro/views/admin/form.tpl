@@ -36,7 +36,9 @@
                 <div class="panel panel-default">
                     <div class="panel-heading"><label>Publicar</label> </div>
                     <div class="panel-body">
-                        <button class="btn btn-default pull-left">Vista Previa</button>
+                        {if !empty($foro)}
+                        <a target="_blank" href="{$_layoutParams.root}foro/index/ficha/{$foro.For_IdForo}" class="btn btn-default pull-left">Vista Previa</a>
+                        {/if}
                         <button id="bt_guardar" name="bt_guardar" type="submit" class="btn btn-primary pull-right">Guardar</button>
                     </div>
                     <div class="panel-heading">

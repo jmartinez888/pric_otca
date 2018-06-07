@@ -86,6 +86,13 @@ class adminController extends foroController {
 
         $this->_paginacion_listarForo();
     }
+    public function _cerrarForo() {
+        $id_foro = $this->getInt('id_foro');
+
+        $this->_model->cerrarForo($id_foro);
+
+        $this->_paginacion_listarForo();
+    }
 
     public function form($tipo = "", $funcion = "forum", $id_foro = 0) {
 

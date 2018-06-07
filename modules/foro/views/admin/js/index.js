@@ -24,7 +24,10 @@ $(document).on('ready', function () {
         $("#cargando").show();
         buscarForo($("#text_busqueda").val());
     });
-    
+    $('body').on('click', '.cerrar_foro', function () {
+        $("#cargando").show();        
+        cerrarForo($(this).attr('id_foro'),$("#text_busqueda").val(),$(".pagination li.active span").html(),$(".pagination li a.pagina").attr("total_registros"));
+    });
     $('body').on('click', '.cambiar_estado', function () {
         $("#cargando").show();        
         cambiarEstadoForo($(this).attr('id_foro'),$(this).attr('estado'),$("#text_busqueda").val(),$(".pagination li.active span").html(),$(".pagination li a.pagina").attr("total_registros"));
@@ -33,11 +36,27 @@ $(document).on('ready', function () {
         $("#cargando").show();        
         eliminarForo($(this).attr('id_foro'),$("#text_busqueda").val(),$(".pagination li.active span").html(),$(".pagination li a.pagina").attr("total_registros"));
     });
+    
 });
 function buscarForo(criterio) {
     $.post(_root_ + 'foro/admin/_buscarForo',
     {
         filtro:criterio
+        
+    }, function (data) {
+        $("#listarForo").html('');
+        $("#cargando").hide();
+        $("#listarForo").html(data);
+    });
+}
+function cerrarForo(id_foro,criterio,pagina,total_registros) {
+    $.post(_root_ + 'foro/admin/_cerrarForo',
+    {
+        id_foro:id_foro,
+        filtro:criterio,
+        pagina:pagina,
+        filas:$("#s_filas_listarForo").val(),
+        total_registros:total_registros
         
     }, function (data) {
         $("#listarForo").html('');
