@@ -69,7 +69,7 @@ class indexController extends foroController {
     }
     public function statistics() {
         $this->_view->setTemplate(LAYOUT_FRONTEND);
-        $this->_view->setCss(array("historico"));
+        $this->_view->setCss(array("statistics"));
         $this->_view->assign('lista_foros', $this->_model->getHistorico());
         $this->_view->renderizar('statistics');
     }

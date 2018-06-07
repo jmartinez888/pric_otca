@@ -232,7 +232,7 @@ class indexModel extends Model {
                     (SELECT COUNT(*) FROM usuario_foro uf WHERE uf.For_IdForo=f.For_IdForo) AS For_TParticipantes
                     FROM foro f 
                     INNER JOIN usuario u ON u.Usu_IdUsuario = f.Usu_IdUsuario 
-                    WHERE f.For_FechaCierre<NOW() AND f.For_Estado=2 AND f.Row_Estado=1 
+                    WHERE f.For_FechaCierre < TIMESTAMP(NOW()) AND f.For_Estado=2 AND f.Row_Estado=1 
                     ORDER BY f.For_FechaCierre DESC ");
             return $post->fetchAll();
         } catch (PDOException $exception) {

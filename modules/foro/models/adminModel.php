@@ -188,7 +188,7 @@ class adminModel extends Model {
         try {
 
             $foro = $this->_db->query(
-                    "UPDATE foro SET For_FechaCierre = NOW() where For_IdForo = $iFor_IdForo"
+                    "UPDATE foro SET For_FechaCierre = NOW(),For_Estado=2 where For_IdForo = $iFor_IdForo"
             );
             
             return $foro->rowCount(PDO::FETCH_ASSOC);
