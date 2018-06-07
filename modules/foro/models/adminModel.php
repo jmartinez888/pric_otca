@@ -340,7 +340,30 @@ class adminModel extends Model {
             return $exception->getTraceAsString();
         }
     }
+    public function actualizarActividadForo($Acf_IdActividadForo,$iAcf_Titulo, $iAct_Resumen, $iAct_FechaInicio, $iAct_FechaFin, $iFor_IdForo, $iAct_Estado, $iIdi_Idioma) {
+        try {
+            $iAct_FechaInicio = date('Y-m-d H:m', strtotime($iAct_FechaInicio));
+            $iAct_FechaFin = date('Y-m-d H:m', strtotime($iAct_FechaFin));
+            
+            $sql = " call s_u_actividad_foro(?,?,?,?,?,?,?,?)";
+            $result = $this->_db->prepare($sql);
+            $result->bindParam(1, $Acf_IdActividadForo, PDO::PARAM_INT);
+            $result->bindParam(2, $iAcf_Titulo, PDO::PARAM_STR);
+            $result->bindParam(3, $iAct_Resumen, PDO::PARAM_STR);
+            $result->bindParam(4, $iAct_FechaInicio, PDO::PARAM_STR);
+            $result->bindParam(5, $iAct_FechaFin, PDO::PARAM_STR);
+            $result->bindParam(6, $iFor_IdForo, PDO::PARAM_INT);
+            $result->bindParam(7, $iAct_Estado, PDO::PARAM_INT);
+            $result->bindParam(8, $iIdi_Idioma, PDO::PARAM_STR);         
 
+            $result->execute();
+            return $result->rowCount(PDO::FETCH_ASSOC); 
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("foro(adminModel)", "actualizarActividadForo", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
+    
     public function insertarActividadForo($iAcf_Titulo, $iAct_Resumen, $iAct_FechaInicio, $iAct_FechaFin, $iFor_IdForo, $iAct_Estado, $iIdi_Idioma) {
         try {
             $iAct_FechaInicio = date('Y-m-d H:m', strtotime($iAct_FechaInicio));
