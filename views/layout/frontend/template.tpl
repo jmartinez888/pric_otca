@@ -46,19 +46,14 @@
 
         <!--RODRIGO-->
         <script type="text/javascript" src="{$_layoutParams.root_clear}public/js/jquery-1.11.2.min.js"></script>
+        <!-- <script type="text/javascript">
+            var jQuery_1_11_2 = $.noConflict(true);
+        </script> -->
         <script type="text/javascript" src="{$_layoutParams.root_clear}public/js/socket.io/socket.io.js"></script>
         <script type="text/javascript" src="{$_layoutParams.root_clear}public/js/socket.io/socket.client.js"></script>
         <!--RODRIGO-->
         
         
-        <script type="text/javascript" src="{$_layoutParams.root_clear}public/js/util.js"></script>
-        <script type="text/javascript" src="{$_layoutParams.root_clear}public/js/jquery.slimscroll.min.js"></script>
-        <script type="text/javascript" src="{$_layoutParams.ruta_js}bootstrap.min.js" ></script>
-        <script type="text/javascript" src="{$_layoutParams.ruta_js}bootstrap-datepicker.js"></script>
-        <script type="text/javascript" src="{$_layoutParams.ruta_js}bootstrap-select.min.js"></script>
-        <script type="text/javascript" src="{$_layoutParams.ruta_js}bootstrapValidator.js"></script>
-        <script type="text/javascript" src="{$_layoutParams.root_clear}public/js/highcharts.js"></script>
-        <script type="text/javascript" src="{$_layoutParams.root_clear}public/ckeditor/ckeditor.js"></script>
 
     </head>
 
@@ -498,6 +493,14 @@
 
         <!-- <script type="text/javascript" src="{$_layoutParams.ruta_js}app.min.js" ></script> -->
         
+        <script type="text/javascript" src="{$_layoutParams.root_clear}public/js/util.js"></script>
+        <script type="text/javascript" src="{$_layoutParams.root_clear}public/js/jquery.slimscroll.min.js"></script>
+        <script type="text/javascript" src="{$_layoutParams.ruta_js}bootstrap.min.js" ></script>
+        <script type="text/javascript" src="{$_layoutParams.ruta_js}bootstrap-datepicker.js"></script>
+        <script type="text/javascript" src="{$_layoutParams.ruta_js}bootstrap-select.min.js"></script>
+        <script type="text/javascript" src="{$_layoutParams.ruta_js}bootstrapValidator.js"></script>
+        <script type="text/javascript" src="{$_layoutParams.root_clear}public/js/highcharts.js"></script>
+        <script type="text/javascript" src="{$_layoutParams.root_clear}public/ckeditor/ckeditor.js"></script>
         
         <script type="text/javascript" src="{$_layoutParams.root_clear}public/js/validator.js"></script>
         <script type="text/javascript" src="{$_layoutParams.root_clear}public/js/login.js"></script>
