@@ -257,8 +257,9 @@ class adminController extends foroController {
         if ($this->botonPress("bt_guardar")) {
             $this->_registrarActividad($id_foro);
         }
+        
         if ($this->botonPress("bt_editar")) {
-            $this->_registrarActividad($id_foro);
+            $this->_editarActividad($id_foro);
         }
         if ($this->botonPress("bt_eliminar")) {
             $this->_eliminarrActividad($id_foro);
@@ -291,7 +292,7 @@ class adminController extends foroController {
         $iAcf_FechaInicio = $this->getTexto('start_time');
         $iAcf_FechaFin = $this->getTexto('end_time');
 
-        $resul = $this->_model->insertarActividadForo($iAcf_Titulo, $iAcf_Resumen, $iAcf_FechaInicio, $iAcf_FechaFin, $iFor_IdForo, 1, "es");
+        $resul = $this->_model->actualizarActividadForo($iAcf_IdActividadForo,$iAcf_Titulo, $iAcf_Resumen, $iAcf_FechaInicio, $iAcf_FechaFin, $iFor_IdForo, 1, "es");
 
         $this->redireccionar("foro/admin/actividad/$id_foro");
     }
