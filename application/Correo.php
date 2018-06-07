@@ -14,10 +14,13 @@ class Correo
         $this->mail->SMTPDebug = 0;
         // Log del debug SMTP en formato HTML 
         $this->mail->Debugoutput = 'html';
-        $this->mail->Host = 'smtp.gmail.com';
+        $this->mail->Host = 'email-smtp.us-west-2.amazonaws.com';
+        // $this->mail->Host = 'smtp.gmail.com';
         $this->mail->SMTPAuth = true;
-        $this->mail->Username = 'pruebanombrea@gmail.com';
-        $this->mail->Password = '1357902468@pna';
+        $this->mail->Username = 'AKIAJ4CISRDL4GEUDMXA';
+        // $this->mail->Username = 'pruebanombrea@gmail.com';
+        $this->mail->Password = 'AqP5InJ8BqxcNu9yMvO02yOwiwpbr61aaRbV0h99PXxX';
+        // $this->mail->Password = '1357902468@pna';
         $this->mail->SMTPSecure = 'tls'; //tls or ssl
         $this->mail->Port = 587; //587 or 465
     }

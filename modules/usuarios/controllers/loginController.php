@@ -247,39 +247,48 @@ class loginController extends Controller {
                         // Session::set('id_usuario', $UsuarioLogeado["Usu_IdUsuario"]);
                         // Session::set('tiempo', time());
 
-                        $mail = new PHPMailer();
-                        $mail->IsSMTP();
-                        // $mail->CharSet="UTF-8";
-                        // Activamos / Desactivamos el "debug" de SMTP 
-                        // 0 = Apagado 
-                        // 1 = Mensaje de Cliente 
-                        // 2 = Mensaje de Cliente y Servidor 
-                        $mail->SMTPDebug = 0;
-                        // Log del debug SMTP en formato HTML 
-                        $mail->Debugoutput = 'html';
-                        $mail->Host = 'smtp.gmail.com';
-                        $mail->SMTPAuth = true;
-                        $mail->Username = 'pruebanombrea@gmail.com';
-                        $mail->Password = '1357902468@pna';
-                        $mail->SMTPSecure = 'tls'; //tls or ssl
-                        $mail->Port = 587; //587 or 465
+                        // $mail = new PHPMailer();
+                        // $mail->IsSMTP();
+                        // // $mail->CharSet="UTF-8";
+                        // // Activamos / Desactivamos el "debug" de SMTP 
+                        // // 0 = Apagado 
+                        // // 1 = Mensaje de Cliente 
+                        // // 2 = Mensaje de Cliente y Servidor 
+                        // $mail->SMTPDebug = 0;
+                        // // Log del debug SMTP en formato HTML 
+                        // $mail->Debugoutput = 'html';
+                        // $mail->Host = 'smtp.gmail.com';
+                        // $mail->SMTPAuth = true;
+                        // $mail->Username = 'pruebanombrea@gmail.com';
+                        // $mail->Password = '1357902468@pna';
+                        // $mail->SMTPSecure = 'tls'; //tls or ssl
+                        // $mail->Port = 587; //587 or 465
 
-                        $mail->Subject = 'Activar Cuenta PRIC';
+                        // $mail->Subject = 'Activar Cuenta PRIC';
 
-                        $mail->IsHTML(true);
-                        $mail->Body    = 'Para activar su cuenta en la PRIC hacer click en el siguiente enlace: <br><a href="'. BASE_URL .'usuarios/login/activarCuenta/'.$Usu_Codigo.'/'.$Usu_Email.'">'. BASE_URL .'usuarios/login/activarCuenta/'.$Usu_Codigo.'/'.$Usu_Email.'</a>';
+                        // $mail->IsHTML(true);
+                        // $mail->Body    = 'Para activar su cuenta en la PRIC hacer click en el siguiente enlace: <br><a href="'. BASE_URL .'usuarios/login/activarCuenta/'.$Usu_Codigo.'/'.$Usu_Email.'">'. BASE_URL .'usuarios/login/activarCuenta/'.$Usu_Codigo.'/'.$Usu_Email.'</a>';
                         
-                        $mail->SetFrom('jhonmartinez888@gmail.com', 'PRIC - Emisor');
-                        // $mail->FromName = 'Jhon Martinez - PRIC';
-                        $mail->AddAddress($Usu_Email, $Usu_Usuario);
-                        // $mail->AddReplyTo('phoenixd110@gmail.com', 'Information');
-                        // $mail->AltBody    = "AltBody - Poner tituloS";
-                        $mail->send();
-                        // if($mail->send()) {
-                        //     echo 'Correo Enviado';
-                        //     } else {
-                        //     echo 'Error al enviar correo' . $mail->ErrorInfo;
-                        // }
+                        // $mail->SetFrom('jhonmartinez888@gmail.com', 'PRIC - Emisor');
+                        // // $mail->FromName = 'Jhon Martinez - PRIC';
+                        // $mail->AddAddress($Usu_Email, $Usu_Usuario);
+                        // // $mail->AddReplyTo('phoenixd110@gmail.com', 'Information');
+                        // // $mail->AltBody    = "AltBody - Poner tituloS";
+                        // $mail->send();
+                        // // if($mail->send()) {
+                        // //     echo 'Correo Enviado';
+                        // //     } else {
+                        // //     echo 'Error al enviar correo' . $mail->ErrorInfo;
+                        // // }
+
+                        $Subject = 'Activar Cuenta PRIC';
+                        $contenido = 'Para activar su cuenta en la PRIC hacer click en el siguiente enlace: <br><a href="'. BASE_URL .'usuarios/login/activarCuenta/'.$Usu_Codigo.'/'.$Usu_Email.'">'. BASE_URL .'usuarios/login/activarCuenta/'.$Usu_Codigo.'/'.$Usu_Email.'</a>';
+                        $fromName = 'PRIC - Creación de Usuario';
+
+                        // Parametro ($forEmail, $forName, $Subject, $contenido, $fromName = "Proyecto PRIC")
+                        $Correo = new Correo();
+                        $SendCorreo = $Correo->enviar($Usu_Email, $Usu_Usuario, $Subject, $contenido, $fromName);
+                        // echo($SendCorreo);
 
                     } else {
                         $UsuarioLogeado = $this->_usuarios->getUsuario($idUsuario[0]);
