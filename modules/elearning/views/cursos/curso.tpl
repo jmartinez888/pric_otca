@@ -94,17 +94,17 @@
           <div class="col-lg-12" style="font-size: 16px;">
             <div><strong><i class="glyphicon glyphicon-globe"></i>
             &nbsp;Público objetivo</strong></div>
-            <div>{$curso.Cur_PublicoObjetivo|default:"---"}</div> <br/>
+            <div style="padding-left: 25px">{$curso.Cur_PublicoObjetivo|default:"---"}</div> <br/>
           </div>
           <div class="col-lg-12" style="font-size: 16px;">
             <div><strong><i class="glyphicon glyphicon-cog"></i>
             &nbsp;Metodología</strong></div>
-            <div>{$curso.Cur_Metodologia|default:"---"}</div> <br/>
+            <div style="padding-left: 25px">{$curso.Cur_Metodologia|default:"---"}</div> <br/>
           </div>
           <div class="col-lg-12" style="font-size: 16px;">
             <div><strong><i class="glyphicon glyphicon-user"></i>
             &nbsp;Contacto</strong></div>
-            <div>
+            <div style="padding-left: 25px">
               {$curso.Cur_Contacto|default:"---"}
               <a href="{BASE_URL}elearning/cursos/ficha/{$curso.Cur_IdCurso}" style="display: inline-block;">
                 Detalle
@@ -218,23 +218,24 @@
 
           {if $session==1}
           <div class="col-lg-12"> <!-- RODRIGO 20180607 -->
-            <label>Calificar curso</label>
-            <textarea class="form-control" rows="4" id="txCComentario" maxlength="450"></textarea>
+            <label style="margin-top: 10px; font-size:16px">Calificar curso</label>
+            <hr class="cursos-hr">
+            <textarea class="form-control estilo-textarea" rows="4" id="txCComentario" maxlength="450" placeholder="Escriba su comentario aquí."></textarea>
             <input type="text" id="inCUsuario" value="{$curso.Cur_IdCurso}" hidden="hidden">
             <input type="text" id="inCCurso" value="{Session::get('id_usuario')}" hidden="hidden">
           </div>
           <div class="col-lg-8">
             <div class="corazones no-selecionable" style="padding-top: 10px">
-              <span class="glyphicon glyphicon-heart item-calificar" tag="1"></span>
-              <span class="glyphicon glyphicon-heart item-calificar" tag="2"></span>
-              <span class="glyphicon glyphicon-heart item-calificar" tag="3"></span>
-              <span class="glyphicon glyphicon-heart item-calificar" tag="4"></span>
-              <span class="glyphicon glyphicon-heart item-calificar" tag="5"></span>
+              <span class="glyphicon glyphicon-star item-calificar" tag="1"></span>
+              <span class="glyphicon glyphicon-star item-calificar" tag="2"></span>
+              <span class="glyphicon glyphicon-star item-calificar" tag="3"></span>
+              <span class="glyphicon glyphicon-star item-calificar" tag="4"></span>
+              <span class="glyphicon glyphicon-star item-calificar" tag="5"></span>
             </div>            
           </div>
           <div class="col-lg-4">
-            <button class="btn btn-default pull-right" style="margin-top: 10px" id="btnCalificar">
-              <span class="glyphicon glyphicon-heart"></span> Calificar
+            <button class="btn btn-default pull-right btn-calificar" id="btnCalificar">
+              <strong><span class="glyphicon glyphicon-star"></span>&nbsp; Calificar</strong>
             </button>
           </div> 
           {/if}

@@ -77,7 +77,7 @@
 }
 
 .item-calificar:hover{
-  color: black;
+  color: #e9ba46;
 }
 
 .no-selecionable{
@@ -86,16 +86,14 @@
 
 .mini-item-calificar{
   color: gray;
-  cursor: pointer;
 }
 
 .active-mic{
-  color: #EC898D !important;
+  color: #e9ba46 !important;
 }
 
 .item-comentario{
   background: white;
-  margin-top: 10px;
   padding-bottom: 5px;
   border-radius: 4px;
 }

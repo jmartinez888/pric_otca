@@ -14,7 +14,7 @@ $(document).ready(function(){
 			if(OtherTag > Contador){
 				$(".item-calificar").eq(i).css("color", "gray");
 			}else{
-				$(".item-calificar").eq(i).css("color", "black");
+				$(".item-calificar").eq(i).css("color", "#e9ba46");
 			}
 		}
 	});
@@ -24,7 +24,7 @@ $(document).ready(function(){
 			if(OtherTag > CALIFICACION){
 				$(".item-calificar").eq(i).css("color", "gray");
 			}else{
-				$(".item-calificar").eq(i).css("color", "black");
+				$(".item-calificar").eq(i).css("color", "#e9ba46");
 			}
 		}
 	});
@@ -118,16 +118,18 @@ $(document).ready(function(){
 
 	function ItemCalificacion(valor, comentario, usuario){
 		var text = "<div class='row item-comentario'>";
-		text += "<div class='col-lg-12' style='margin-top: 15px; font-size: 15px'>\"" + comentario + "\"</div>";
-		text += "<div class='col-lg-3' style='margin-top: 7px'>";
-		text += 	"<span class='glyphicon glyphicon-heart mini-item-calificar " + (valor>0? "active-mic": "") + "'></span>";
-		text += 	"<span class='glyphicon glyphicon-heart mini-item-calificar " + (valor>1? "active-mic": "") + "'></span>";
-		text += 	"<span class='glyphicon glyphicon-heart mini-item-calificar " + (valor>2? "active-mic": "") + "'></span>";
-		text += 	"<span class='glyphicon glyphicon-heart mini-item-calificar " + (valor>3? "active-mic": "") + "'></span>";
-		text += 	"<span class='glyphicon glyphicon-heart mini-item-calificar " + (valor>4? "active-mic": "") + "'></span>";
+		text += "<div class='col-lg-12' style='margin-top: 7px; font-weight: bold'>" + usuario + "</div>";
+		text += "<div class='col-lg-12' style='margin-top: 7px'>";
+		text += 	"<span class='glyphicon glyphicon-star mini-item-calificar " + (valor>0? "active-mic": "") + "'></span>";
+		text += 	"<span class='glyphicon glyphicon-star mini-item-calificar " + (valor>1? "active-mic": "") + "'></span>";
+		text += 	"<span class='glyphicon glyphicon-star mini-item-calificar " + (valor>2? "active-mic": "") + "'></span>";
+		text += 	"<span class='glyphicon glyphicon-star mini-item-calificar " + (valor>3? "active-mic": "") + "'></span>";
+		text += 	"<span class='glyphicon glyphicon-star mini-item-calificar " + (valor>4? "active-mic": "") + "'></span>";
 		text += "</div>";
-		text += "<div class='col-lg-9' style='margin-top: 7px'>" + usuario + "</div>";
+		text += "<div class='col-lg-12' style='font-size: 15px; text-align: justify;'>\"" + comentario + "\"</div>";
 		text += "</div>";
+        text += "<hr class='cursos-hr'>";
+
 		return text;
 	}
 
