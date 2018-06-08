@@ -1,0 +1,78 @@
+.curso-item{
+  background-color: #f7f7f9;
+  border: 1px solid #e1e1e8;
+  border-radius: 4px;
+  position: relative;
+}
+
+.ficha-mod{
+  background: #f2f2f2;
+  border-radius: 2px;
+  color: #393939;
+  position: relative;
+  margin-bottom: 10px;
+}
+
+.ficha-mod-title{
+  padding-left: 0px;
+  padding-top: 10px;
+  font-size: 20px;
+  border-left: #999 solid 1px;
+  padding-left: 40px;
+  margin-top: 15px;
+}
+
+.ficha-mod-desc{
+  text-align: justify;
+  font-size: 14px;
+  border-left: #999 solid 1px;
+  padding-left: 40px;
+  padding-bottom: 40px;
+  margin-bottom: 15px;
+}
+
+.ficha-mod-icon{
+  position: absolute;
+  top: 20px;
+  left: 40px;
+  padding-right: 0px;
+  padding-top: 0px;
+  font-size: 50px;
+  -webkit-text-fill-color: white;
+  -webkit-text-stroke: 2px  #444;
+}
+
+
+.tag-lms{
+  background-color: #cbffc1;
+  border-color: #74ff59;
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 2px;
+  float: right;
+  padding: 10px;
+}
+
+.tag-inscrito{
+  background-color: #0097A7;
+  color: white;
+  border-radius: 2px;
+  padding: 10px;
+  float: left;
+  margin-bottom: 10px;
+}
+
+.btn-modulo{
+  margin-bottom: 15px;
+  width: 200px;
+  opacity: 0.9 !important;
+  color: white;
+}
+
+.img-certificado{
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 100px;
+  height: 100px;
+}
