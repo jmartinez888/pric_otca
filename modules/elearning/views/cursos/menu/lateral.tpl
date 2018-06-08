@@ -4,40 +4,11 @@
       height: 80px;
   }
   .sidebar-left {
-      padding-top: 20px;
+      padding-top: 40px;
       width: 100%;
       padding-right: 0px;
   }
-  .side-menu {
-      list-style: none;
-      color: #222;
-      padding: 10px 20px;
-      cursor: pointer;
-      background-color: #ffffff;
-      font-size: 15px;
-      text-align: left;
-      border-color: #D5D5D5; 
-      border-style: solid;
-      border-width: 1px;
-
-    -moz-box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.6);
-    -webkit-box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.6);
-    box-shadow: 3px 3px 10px rgba(100, 100, 100, 0.6);
-  }
-
-  .side-menu2{
-    border-left: 5px solid #355D3A;
-  }
-  .side-menu2:hover{
-    border-left: 5px solid #355D3A;
-    -moz-box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.6);
-    -webkit-box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.6);
-    box-shadow: 3px 3px 10px rgba(100, 100, 100, 0.6);
-  }
-
-
-  .side-menus li {
-      color: #222;
+  .side-menu li {
       padding: 10px 20px;
       cursor: pointer;
       background-color: #ffffff;
@@ -225,30 +196,47 @@
 </style>
   <div class="col-lg-2" style="padding-left: 0px !important">
     <div class="sidebar-left">
-
+      <div class="side-menu">
         <ul>
           <a href="{BASE_URL}elearning/cursos/" class="nounderline">
+<<<<<<< HEAD
+            <li style="position: relative"><span> Cursos</span></li>
+=======
           <div class="side-menu2"><li class="side-menu" style="position: relative">
           <i class="glyphicon glyphicon-book"></i>
           <span> Cursos</span></li></div>
+>>>>>>> a6522c2515c35f0438b639ba27d4092b77c55751
           </a>
         </ul>
         {if Session::get('id_usuario')}
         <ul>
           <a href="{BASE_URL}elearning/cursos/miscursos" class="nounderline">
+<<<<<<< HEAD
+            <li style="position: relative"><span> Mis cursos</span></li>
+=======
             <div class="side-menu2"><li class="side-menu" style="position: relative">
             <i class="glyphicon glyphicon-book"></i>
             <span> Mis Cursos</span></li></div>
+>>>>>>> a6522c2515c35f0438b639ba27d4092b77c55751
           </a>
         </ul>
         <ul>
           <a href="{BASE_URL}elearning/gestion/_inicio" class="nounderline">
+<<<<<<< HEAD
+            <li style="position: relative"><span> Mis cursos (Docente)</span></li>
+=======
             <div class="side-menu2"><li class="side-menu" style="position: relative">
             <i class="glyphicon glyphicon-book"></i>
             <span> Mis Cursos (Docente)</span></li></div>
+>>>>>>> a6522c2515c35f0438b639ba27d4092b77c55751
           </a>
         </ul>
         {/if}
-
+        <ul>
+          <a href="{BASE_URL}elearning/certificado/menu" class="nounderline">
+            <li style="position: relative"><span> Certificados</span></li>
+          </a>
+        </ul>        
+      </div>
     </div>
   </div>
