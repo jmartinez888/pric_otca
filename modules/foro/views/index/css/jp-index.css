@@ -3,7 +3,7 @@
 	padding-top: 10px;
 	padding-bottom: 10px;
 	font-family: 'Lucida Sans';
-	background-color: #f2f2f2;
+	background-color: #a8cf45;
 }
 .link-foro{
 	color: #222;
@@ -21,7 +21,40 @@
 	font-size: 15px;
 	padding-top: 10px;
 	margin-bottom: 15px;
+	text-align: justify;
 }
 .subtitle-foro{
 	font-family: 'Gill Sans MT';
+	margin-top: 10px;
+}
+.contenedor-link-agenda{
+	border-bottom: 1px solid #ddd;
+	padding: 10px 10px 10px 20px;
+}
+.contenedor-link-agenda:hover{
+	background-color: #f2f2f2;
+	margin-left: 0px;
+}
+.link-tabs-jsoft{
+	border-bottom: none;
+	padding: 0px;
+	padding-top: 0px !important;
+}
+.agenda-container{
+	overflow-y: auto;
+	overflow-x: hidden;
+	max-height: 500px;
+	border-left: 1px solid #ddd;
+	border-top: 1px solid #ddd;
+	border-bottom: 1px solid #ddd;
+}
+.agenda-container:hover{
+	
+}
+.fecha-agenda{
+	padding-left: 10px;
+	padding-right: 10px;
+	text-align: center;
+	background-color: #a8cf45;
+	color: #fff;
 }

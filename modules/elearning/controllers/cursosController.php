@@ -26,6 +26,7 @@ class cursosController extends elearningController {
     $cursos = $model->getCursosUsuario($usuario[0]["Usu_IdUsuario"]);
 
     $this->_view->setTemplate(LAYOUT_FRONTEND);
+    $this->_view->setCss(array("jp-datos-docente"));
     $this->_view->assign("curso",$curso[0]);
     $this->_view->assign("cursos",$cursos);
     $this->_view->assign("usuario",$usuario[0]);
@@ -43,7 +44,7 @@ class cursosController extends elearningController {
       $cursos = $model->getCursoBusqueda($busqueda);
     }
     $this->_view->setTemplate(LAYOUT_FRONTEND);
-    $this->_view->setCss(array("modulo", "index"));
+    $this->_view->setCss(array("modulo", "index", "jp-index", "jp-detalle-lateral"));
     $this->_view->assign("busqueda",$busqueda);
     $this->_view->assign("curso",$cursos);
     $this->_view->renderizar('inicio');
@@ -56,7 +57,7 @@ class cursosController extends elearningController {
     $cursos = $model->getCursoUsuario(Session::get("id_usuario"));
 
     $this->_view->setTemplate(LAYOUT_FRONTEND);
-    $this->_view->setCss(array("index"));
+    $this->_view->setCss(array("index","jp-index", "jp-detalle-lateral2"));
     $this->_view->assign("busqueda","");
     $this->_view->assign("usu_curso",Session::get("usuario"));
     $this->_view->assign("curso",$cursos);
@@ -97,7 +98,7 @@ class cursosController extends elearningController {
     $certificado = $mCert->getCertificadoUsuarioCurso(Session::get("id_usuario"), $id);
 
     $this->_view->setTemplate(LAYOUT_FRONTEND);
-    $this->_view->setCss(array("curso"));
+    $this->_view->setCss(array("curso", "jp-curso"));
     $this->_view->setJs(array(array(BASE_URL . 'modules/elearning/views/gestion/js/core/util.js'), "curso"));
     $this->_view->assign("inscritos", $inscritos);
     $this->_view->assign("curso", $curso);
@@ -135,7 +136,7 @@ class cursosController extends elearningController {
     $certificado = $mCert->getCertificadoUsuarioCurso(Session::get("id_usuario"), $id);
 
     $this->_view->setTemplate(LAYOUT_FRONTEND);
-    $this->_view->setCss(array("curso", "cursolms"));
+    $this->_view->setCss(array("curso", "cursolms", "jp-curso"));
     $this->_view->setJs(array(array(BASE_URL . 'modules/elearning/views/gestion/js/core/util.js'), "curso"));
     $this->_view->assign("curso", $curso);
     $this->_view->assign("inscritos", $inscritos);
@@ -220,7 +221,7 @@ class cursosController extends elearningController {
     $this->_view->assign("referencias", $Lmodel->getReferencias($OLeccion["Lec_IdLeccion"]));
     $this->_view->assign("materiales", $Lmodel->getMateriales($OLeccion["Lec_IdLeccion"]));
     $this->_view->assign("curso", $curso);
-    $this->_view->setCss(array('modulo'));
+    $this->_view->setCss(array('modulo', 'jp-modulo'));
     $this->_view->setJs(array(array(BASE_URL . 'modules/elearning/views/gestion/js/core/util.js'), 'modulo'));
     $this->_view->renderizar('modulo');
   }

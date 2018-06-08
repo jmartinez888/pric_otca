@@ -95,17 +95,17 @@
                         <hr class="cursos-hr">
                     </div>
                     <div class="col-md-12">
-                        <div id="agenda" class="tab-pane fade in active show" style="max-height: 500px;">
+                        <div class="tab-pane fade in active show agenda-container">
                              {foreach from=$lista_agenda item=agenda}
-                            <div class="container py-3">
-                                <a href="#" class="link-tabs-jsoft" style="padding-top: 31px;">
+                            <div class="contenedor-link-agenda">
+                                <a href="#" class="link-tabs-jsoft" style="padding-top: 30px;">
                                     <div class="row ">
-                                        <div class="col col-md-3" style="text-align: center;">
-                                            <span class="text-uppercase">{($agenda.For_FechaCreacion|date_format:"%A"|utf8_encode)|substr:0:4}</span>    
-                                            <h2 class="fecha-agenda">29</h2>
-                                            <span class="text-uppercase">{$agenda.For_FechaCreacion|date_format:"%B %Y"}</span>
+                                        <div class="col-md-4 fecha-agenda">
+                                            <div class="text-uppercase" style="font-size: 15px;">{($agenda.For_FechaCreacion|date_format:"%A"|utf8_encode)|substr:0:4}</div>    
+                                            <div style="font-size: 35px;"><strong>29</strong></div>
+                                            <div class="text-uppercase" style="font-size: 15px;">{$agenda.For_FechaCreacion|date_format:"%B %Y"}</div>
                                         </div>
-                                        <div class="col-md-9">
+                                        <div class="col-md-8">
                                             <div class="card-block px-3">
                                                 <h4 class="card-title" style="font-size: 17px;">{$agenda.For_Titulo|truncate:50:"..."}</h4>
                                                 <p class="card-text" style="font-size: 13px;">Hora: {$agenda.For_FechaCreacion|date_format:"%H:%M"}</p>
