@@ -1,41 +1,10 @@
 <input type="text" id="inHiddenCurso" value="{$curso.Cur_IdCurso}" hidden="hidden"> <!-- RODRIGO 20180607 -->
 <div class="col-lg-12">
+  <div class="col-lg-12 referencia-curso-total" style="padding-top:20px;">
+    <strong><a class="referencia-curso" href="{BASE_URL}elearning/cursos/">Cursos</a>  /  {$curso.Cur_Titulo}</strong>
+  </div>
   {include file='modules/elearning/views/cursos/menu/lateral.tpl'}
   <div class="col-lg-10" style="margin-top: 20px">
-<<<<<<< HEAD
-    <div class="col-lg-12 curso-item">
-      <div class="col-lg-12">
-        <h3><div>{$curso.Cur_Titulo}</div></h3>
-      </div>
-      <div class="col-lg-4">
-        <img class="img-banner" src="{BASE_URL}modules/elearning/views/cursos/img/portada/{$curso.Cur_UrlBanner}" />
-      </div>
-      <div class="col-lg-8">
-        <div><strong>Descripción del curso</strong></div>
-        <div>{$curso.Cur_Descripcion}</div> <br/>
-        <div class="col-lg-6">
-          <div><strong>Duración curso</strong></div>
-          <div>{$curso.Cur_Duracion|default: $duracion}</div> <br/>
-        </div>
-        <div class="col-lg-6">
-          <div><strong>Público objetivo</strong></div>
-          <div>{$curso.Cur_PublicoObjetivo}</div> <br/>
-        </div>
-        <div class="col-lg-6">
-          <div><strong>Metodología</strong></div>
-          <div>{$curso.Cur_Metodologia}</div> <br/>
-        </div>
-        <div class="col-lg-6">
-          <div><strong>Contacto</strong></div>
-          <div>
-            {$curso.Cur_Contacto}
-            <a href="{BASE_URL}elearning/cursos/ficha/{$curso.Cur_IdCurso}" style="display: inline-block;">
-                Detalle
-                <!--button class="btn btn-success">
-                  <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-                </button-->
-              </a>
-=======
     <div class="col-lg-12">
       <div class="panel panel-default">
         <div class="panel-body">
@@ -102,7 +71,6 @@
           
           <div class="col-lg-12 text-curso">
             <div>{$curso.Cur_Descripcion}</div> <br/>
->>>>>>> a6522c2515c35f0438b639ba27d4092b77c55751
           </div>
         </div>
       </div>

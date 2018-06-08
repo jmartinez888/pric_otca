@@ -16,7 +16,7 @@
       background-color: #ffffff;
       font-size: 15px;
       text-align: left;
-      border-color: #D5D5D5; 
+      border-color: #D5D5D5;
       border-style: solid;
       border-width: 1px;
 

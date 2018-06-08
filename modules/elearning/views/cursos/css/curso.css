@@ -6,42 +6,29 @@
 }
 
 .ficha-mod{
-  background: #607D8B;
-  height: 128px;
+  background: #f2f2f2;
   border-radius: 2px;
-  color: #ECEFF1;
+  color: #393939;
   position: relative;
   margin-bottom: 10px;
 }
 
 .ficha-mod-title{
-<<<<<<< HEAD
-  position: absolute;
-  top: 10px;
-  left: 50px;
-  font-size: 18px;
-=======
   padding-left: 0px;
   padding-top: 10px;
   font-size: 20px;
   border-left: #999 solid 0.2px;
   padding-left: 40px;
   margin-top: 15px;
->>>>>>> a6522c2515c35f0438b639ba27d4092b77c55751
 }
 
 .ficha-mod-desc{
-  position: absolute;
-  top: 35px;
-  left: 50px;
+  text-align: justify;
   font-size: 14px;
-<<<<<<< HEAD
-=======
   border-left: #999 solid 0.2px;
   padding-left: 40px;
   padding-bottom: 40px;
   margin-bottom: 15px;
->>>>>>> a6522c2515c35f0438b639ba27d4092b77c55751
 }
 
 .ficha-mod-icon{
@@ -62,14 +49,13 @@
   background-color: #0097A7;
   color: white;
   border-radius: 2px;
-  width: 200px;
   padding: 10px;
+  float: left;
+  margin-bottom: 10px;
 }
 
 .btn-modulo{
-  position: absolute;
-  left: 25px;
-  bottom: 10px;
+  margin-bottom: 15px;
   width: 200px;
   opacity: 0.9 !important;
   color: white;
