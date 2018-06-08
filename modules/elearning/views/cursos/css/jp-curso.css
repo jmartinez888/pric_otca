@@ -123,6 +123,7 @@
 .progress-estilo{
     margin-top: 20px;
     height: 25px;
+    border: 0.5px solid #ddd;
 }
 .progress-porcentaje{
     font-size:15px;
@@ -165,11 +166,12 @@
     display: inline-block;
 }
 .cursos-hr{
-    background: #cdcdcd;
+    background: #ddd;
     margin-top: 0px;
-    padding: 0.5px;
+    padding: 0.2px;
 }
 
 .video-intro{
     background: #f2f2f2;
+    border: 0.2px solid #ddd;
 }

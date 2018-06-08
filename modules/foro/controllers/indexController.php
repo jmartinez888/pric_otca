@@ -14,7 +14,7 @@ class indexController extends foroController {
         $this->_view->setTemplate(LAYOUT_FRONTEND);
 
         $this->_view->getLenguaje("foro_index_index");
-        $this->_view->setCss(array("index"));
+        $this->_view->setCss(array("index", "jp-index"));
 
 
         $lenguaje = Session::get("fileLenguaje");

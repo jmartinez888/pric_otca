@@ -9,6 +9,7 @@
         padding-right: 0px;
     }
     .side-menu li {
+        color: #222;
         padding: 10px 20px;
         cursor: pointer;
         background-color: #ffffff;
@@ -17,8 +18,15 @@
         text-align: left;
         height: auto;
         overflow: hidden;
-        border-left: 4px solid #000000;
-        box-shadow: 0 0 15px 1px #9e9e9e;
+        border-left: 5px solid #355D3A;
+        -moz-box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.6);
+        -webkit-box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.6);
+        box-shadow: 3px 3px 10px rgba(100, 100, 100, 0.6);
+    }
+    .side-menu2:hover{
+        -moz-box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.6);
+        -webkit-box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.6);
+        box-shadow: 3px 3px 10px rgba(100, 100, 100, 0.6);
     }
     .contenedor {
         padding-top: 10px ;
@@ -44,42 +52,58 @@
         <div class="side-menu">
             <ul>
                 <a href="{BASE_URL}foro/" class="nounderline">
-                    <li style="position: relative"><span>Home</span></li>
+                    <div class="side-menu2">
+                        <li style="position: relative"><span>Home</span></li>
+                    </div>
                 </a>
             </ul>
             <ul>
                 <a href="{BASE_URL}foro/index/discussions" class="nounderline">
-                    <li style="position: relative"><span>Discusiones</span></li>
+                    <div class="side-menu2">
+                        <li style="position: relative"><span>Discusiones</span></li>
+                    </div>
                 </a>
             </ul>
             <ul>
                 <a href="{BASE_URL}foro/index/query" class="nounderline">
-                    <li style="position: relative"><span>Consultas</span></li>
+                    <div class="side-menu2">
+                        <li style="position: relative"><span>Consultas</span></li>
+                    </div>
                 </a>
             </ul>
             <ul>
                 <a href="{BASE_URL}foro/index/webinar" class="nounderline">
-                    <li style="position: relative"><span>Webinars</span></li>
+                    <div class="side-menu2">
+                        <li style="position: relative"><span>Webinars</span></li>
+                    </div>
                 </a>
             </ul>
             <ul>
                 <a href="{BASE_URL}foro/index/workshop" class="nounderline">
-                    <li style="position: relative"><span>Workshop</span></li>
+                    <div class="side-menu2">
+                        <li style="position: relative"><span>Workshop</span></li>
+                    </div>
                 </a>
             </ul>  
             <ul>
                 <a href="{BASE_URL}foro/index/agenda" class="nounderline">
-                    <li style="position: relative"><span>Agenda</span></li>
+                    <div class="side-menu2">
+                        <li style="position: relative"><span>Agenda</span></li>
+                    </div>
                 </a>
             </ul>
             <ul>
                 <a href="{BASE_URL}foro/index/historico" class="nounderline">
-                    <li style="position: relative"><span>Histórico</span></li>
+                    <div class="side-menu2">
+                        <li style="position: relative"><span>Histórico</span></li>
+                    </div>
                 </a>
             </ul>
             <ul>
                 <a href="{BASE_URL}foro/index/statistics" class="nounderline">
-                    <li style="position: relative"><span>Estadisticas</span></li>
+                    <div class="side-menu2">
+                        <li style="position: relative"><span>Estadisticas</span></li>
+                    </div>
                 </a>
             </ul>
 

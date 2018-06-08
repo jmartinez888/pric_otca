@@ -3,6 +3,7 @@
   {include file='modules/elearning/views/cursos/menu/lateral.tpl'}
   <div class="col-lg-10" style="margin-top: 20px">
     <div class="col-lg-12">
+<<<<<<< HEAD
       <div class="panel panel-default margin-top-10">
         <div class="panel-heading">
           <h3 class="panel-title">
@@ -13,6 +14,73 @@
         <div class="panel-body" style=" margin: 5px 0px 5px 0px">
           <div class="col-lg-6">
             <img src="{BASE_URL}modules/elearning/views/cursos/img/portada/{$curso.Cur_UrlBanner}" />
+=======
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <div class="col-lg-12" style="padding-left: 0px; padding-right: 0px;">
+            <div class="col-lg-3 img-curso">
+              <img src="{BASE_URL}modules/elearning/views/cursos/img/portada/{$curso.Cur_UrlBanner}" />
+            </div>
+            <div class="col-lg-6">
+            <br>
+            <br>
+            <h3 style="text-align: center; font-size: 35px;">
+              <strong>{$curso.Cur_Titulo}</strong>
+            </h3>
+            <br>
+            </div>
+            <div class="col-lg-3 row ic-sociales">
+            <br>
+            <br>
+                <a class="btn fa fa-facebook im_sociales" id="im_sociales" style="background: #3B5998" href="#"></a>
+                <a class="btn fa fa-twitter im_sociales" id="im_sociales" style="background: #55ACEE" href="#"></a>
+                <a class="btn fa fa-google-plus im_sociales" id="im_sociales" style="background: #C03A2A" href="#"></a>
+            </div>
+          </div>
+
+          <div class="col-lg-12">
+            <hr class="cursos-hr">
+          </div>
+
+          <div class="col-lg-8">
+            <iframe class="video-intro" width="100%" height="310" src="https://www.youtube.com/embed/eBVvD85Ml2c" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+          </div>
+
+          <div class="col-lg-4">
+            <center class="panel panel-default col-lg-10 info-curso">
+
+              <div class="col-lg-12">
+                <i class="glyphicon glyphicon-time" style="color: #16B8AD; font-size: 25px"></i>
+                <br>
+                <strong style="color: #393939; font-size: 16px">{$curso.Cur_Duracion|default: $duracion}</strong>
+                <br><br>
+              </div>
+
+              <div class="col-lg-12" style="border-top: #ddd solid 0.2px; border-bottom: #ddd solid 0.2px;">
+                <br>
+                <i class="glyphicon glyphicon-user" style="color: #31A3BB; font-size: 25px"></i>
+                <br>
+                <strong style="color: #393939; font-size: 16px">{$inscritos}</strong>
+                <br>
+                <strong style="color: #393939; font-size: 16px">Alumnos</strong>
+                <br><br>
+              </div>
+              
+              <div class="col-lg-12">
+                <br>
+                <i class="glyphicon glyphicon-star" style="color: #E9BA46; font-size: 25px"></i>
+                <br>
+                <strong style="color: #393939; font-size: 16px">4.5/5</strong>
+                <br>
+                <strong style="color: #393939; font-size: 16px">Valoración media</strong>
+              </div>
+
+            </center>
+          </div>
+
+          <div class="col-lg-12 text-curso">
+            <div>{$curso.Cur_Descripcion}</div> <br/>   
+>>>>>>> a6522c2515c35f0438b639ba27d4092b77c55751
           </div>
           <div class="col-lg-6">
             <div><strong>Descripción del curso</strong></div>

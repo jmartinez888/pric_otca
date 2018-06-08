@@ -2,27 +2,37 @@
     {include file='modules/foro/views/index/menu/lateral.tpl'}
 
     <div  class="col-md-10 col-xs-12 col-sm-8 col-lg-10" style="margin-top: 10px;">       
-        <h3 class="titulo-view"><strong>{$lenguaje.foro_index_label_titulo}</strong> </h3>
-        <p style="font-size: 15px;">{$lenguaje.foro_index_label_descripcion}</p>   
+        <h3 class="titulo-view titulo-foro"><strong>{$lenguaje.foro_index_label_titulo}</strong> </h3>
+        <p class="descripcion-foro">{$lenguaje.foro_index_label_descripcion}</p>   
+        
         <div class="row">
+            <div class="col-lg-12">
+                <hr class="cursos-hr">
+            </div>
             <div class="col-md-9">
                 <div class="row">
                     <div class="col-md-12">
-                        <h4> <strong>Foros Recientes </strong></h4>
+                        <h3 class="subtitle-foro">Foros Recientes</h3>
+                    </div>
+                    <div class="col-lg-12">
+                        <hr class="cursos-hr">
                     </div>
                     <div class="col-md-12">
                         <div class="row">
                             {foreach from=$lista_foros item=foro}
-                                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                     <div class="foro-item">
                                         <div class="page-header">
-                                            <a href="{$_layoutParams.root}foro/index/ficha/{$foro.For_IdForo}">               
+                                            <a class="link-foro" href="{$_layoutParams.root}foro/index/ficha/{$foro.For_IdForo}">               
                                                 <h4>{$foro.For_Titulo}</h4>                               
                                             </a>
                                         </div>
                                         <div class="body-item">                          
                                             <p>{$foro.For_Resumen|truncate:120:"..."}</p>
-                                        </div>        
+                                        </div>  
+                                        <!--<div class="body-item">                          
+                                            <p>{$foro.For_Resumen|truncate:120:"..."}</p>
+                                        </div>-->        
                                         <div class="footer-item row">
                                             <div class="col-md-6">
                                                 {$end_date=($foro.For_FechaCierre|date_format:"%d-%m-%Y")}
@@ -40,15 +50,18 @@
                     </div>      
                     {if count($lista_webinars)>0}
                         <div class="col-md-12">
-                            <h4> <strong>Webinars Recientes </strong></h4>
+                            <h3 class="subtitle-foro"> Webinars Recientes </h3>
+                        </div>
+                        <div class="col-lg-12">
+                            <hr class="cursos-hr">
                         </div>
                         <div class="col-md-12">
                             <div class="row">
                                 {foreach from=$lista_webinars item=foro}
-                                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                         <div class="foro-item">
                                             <div class="page-header">
-                                                <a href="{$_layoutParams.root}foro/index/ficha/{$foro.For_IdForo}">               
+                                                <a class="link-foro" href="{$_layoutParams.root}foro/index/ficha/{$foro.For_IdForo}">               
                                                     <h4>{$foro.For_Titulo}</h4>                               
                                                 </a>
                                             </div>
@@ -76,7 +89,10 @@
             <div class="col-md-3">
                 <div class="row">
                     <div class="col-md-12">
-                        <h4> <strong>Agenda</strong></h4>
+                        <h3 class="subtitle-foro">Agenda</h3>
+                    </div>
+                    <div class="col-lg-12">
+                        <hr class="cursos-hr">
                     </div>
                     <div class="col-md-12">
                         <div id="agenda" class="tab-pane fade in active show" style="max-height: 500px;">

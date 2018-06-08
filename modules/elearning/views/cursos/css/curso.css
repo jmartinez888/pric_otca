@@ -15,10 +15,19 @@
 }
 
 .ficha-mod-title{
+<<<<<<< HEAD
   position: absolute;
   top: 10px;
   left: 50px;
   font-size: 18px;
+=======
+  padding-left: 0px;
+  padding-top: 10px;
+  font-size: 20px;
+  border-left: #999 solid 0.2px;
+  padding-left: 40px;
+  margin-top: 15px;
+>>>>>>> a6522c2515c35f0438b639ba27d4092b77c55751
 }
 
 .ficha-mod-desc{
@@ -26,6 +35,13 @@
   top: 35px;
   left: 50px;
   font-size: 14px;
+<<<<<<< HEAD
+=======
+  border-left: #999 solid 0.2px;
+  padding-left: 40px;
+  padding-bottom: 40px;
+  margin-bottom: 15px;
+>>>>>>> a6522c2515c35f0438b639ba27d4092b77c55751
 }
 
 .ficha-mod-icon{
