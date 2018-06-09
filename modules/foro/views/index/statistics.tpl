@@ -124,4 +124,5 @@
 </div>
 <script>
     data_char = JSON.parse('{$StdCharComentarios}');
+    data_members=JSON.parse('{$StdMapsMembers}');
 </script>
