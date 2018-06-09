@@ -265,7 +265,22 @@ class indexModel extends Model {
                         ");
             return $post->fetchAll();
         } catch (PDOException $exception) {
-            $this->registrarBitacora("foro(indexModel)", "getHistorico", "Error Model", $exception);
+            $this->registrarBitacora("foro(indexModel)", "getComentario_x_Mes", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
+    
+    public function getCantidaFuncionForo() {
+        try {
+            $post = $this->_db->query(
+                    "SELECT For_Funcion,COUNT(For_IdForo) For_CantidadForo FROM foro 
+                        WHERE For_Estado!=0 AND Row_Estado=1
+                        GROUP BY For_Funcion 
+                        ORDER BY For_Funcion 
+                        ");
+            return $post->fetchAll();
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("foro(indexModel)", "getCantidaFuncionForo", "Error Model", $exception);
             return $exception->getTraceAsString();
         }
     }

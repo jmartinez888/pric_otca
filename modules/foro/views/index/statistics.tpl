@@ -69,56 +69,52 @@
                 </div>                
             </div>
             <div class="col-md-7">
-                <h4><i class="fa fa-bar-chart-o fa-fw"></i>Comentarios por mes</h4>
+                <h4><i class="fa fa-bar-chart-o fa-fw"></i> Comentarios por mes</h4>
                 <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto">
                     
                 </div>
             </div>   
             <div class="col-md-5">             
-                <h4><i class="fa fa-folder-o fa-fw"></i>Temáticas</h4>              
+                <h4><i class="fa fa-folder-o fa-fw"></i> Temáticas</h4>              
                 <div class="list-group">
                     <a href="#" class="list-group-item">
-                        <i class="fa fa-comment fa-fw"></i> New Comment
-                        <span class="pull-right text-muted small"><em>4 minutes ago</em>
+                        <i class="fa fa-folder fa-fw"></i> Recursos Forestales 
+                        <span class="pull-right text-muted text-medium"> <strong> <em>36</em></strong>
                         </span>
                     </a>
                     <a href="#" class="list-group-item">
-                        <i class="fa fa-twitter fa-fw"></i> 3 New Followers
-                        <span class="pull-right text-muted small"><em>12 minutes ago</em>
+                        <i class="fa fa-folder fa-fw"></i> Cites y su uso
+                        <span class="pull-right text-muted "><strong> <em>65</em></strong>
                         </span>
                     </a>
                     <a href="#" class="list-group-item">
-                        <i class="fa fa-envelope fa-fw"></i> Message Sent
-                        <span class="pull-right text-muted small"><em>27 minutes ago</em>
+                        <i class="fa fa-folder fa-fw"></i> Bosques
+                        <span class="pull-right text-muted text-medium"><strong> <em>23</em></strong>
                         </span>
                     </a>            
                 </div>
-                <h4><i class="fa fa-folder-o fa-fw"></i>Actividades</h4>  
-                <div class="list-group">
-                    <a href="#" class="list-group-item">
-                        <i class="fa fa-upload fa-fw"></i> Server Rebooted
-                        <span class="pull-right text-muted small"><em>11:32 AM</em>
+                <h4><i class="fa fa-folder-o fa-fw"></i> Actividades</h4>  
+                  <div class="list-group">
+                {foreach from=$StdActividades item=actividad}
+                    <a href="{$_layoutParams.root}foro/index/{$actividad.For_Funcion}" class="list-group-item">
+                        <i class="fa fa-folder fa-fw"></i>
+                        {if $actividad.For_Funcion=="forum"}
+                        Discusiones
+                        {else if $actividad.For_Funcion=="query"}
+                        Consultas
+                        {else if $actividad.For_Funcion=="webinar"}
+                        Webinar
+                        {else if $actividad.For_Funcion=="workshop"}
+                        Workshop
+                        {/if}
+                        <span class="pull-right text-muted text-medium"><strong> <em>{$actividad.For_CantidadForo|default:0}</em></strong>
                         </span>
                     </a>
-                    <a href="#" class="list-group-item">
-                        <i class="fa fa-bolt fa-fw"></i> Server Crashed!
-                        <span class="pull-right text-muted small"><em>11:13 AM</em>
-                        </span>
-                    </a>
-                    <a href="#" class="list-group-item">
-                        <i class="fa fa-warning fa-fw"></i> Server Not Responding
-                        <span class="pull-right text-muted small"><em>10:57 AM</em>
-                        </span>
-                    </a>
-                    <a href="#" class="list-group-item">
-                        <i class="fa fa-shopping-cart fa-fw"></i> New Order Placed
-                        <span class="pull-right text-muted small"><em>9:49 AM</em>
-                        </span>
-                    </a>                   
-                </div>
+                {/foreach}
+                 </div>
             </div>  
             <div class="col-md-12">
-                <h4><i class="fa fa-map-o fa-fw"></i>Miembros por país</h4>  
+                <h4><i class="fa fa-map-o fa-fw"></i> Miembros por pais
                 <div id="container_map"></div>
             </div>
 

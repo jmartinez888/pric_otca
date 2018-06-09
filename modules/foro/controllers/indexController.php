@@ -84,7 +84,8 @@ class indexController extends foroController {
         ));
         
         $this->_view->assign('StdGeneral', $this->_model->getEstadistcaGeneral());
-         $this->_view->assign('StdCharComentarios',json_encode($this->_model->getComentario_x_Mes()));
+        $this->_view->assign('StdCharComentarios',json_encode($this->_model->getComentario_x_Mes()));
+        $this->_view->assign('StdActividades',$this->_model->getCantidaFuncionForo());
         $this->_view->renderizar('statistics');
     }
 
