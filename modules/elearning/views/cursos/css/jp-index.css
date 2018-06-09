@@ -39,6 +39,7 @@ input[type="radio"] {
 
 label{
   color: grey;
+  cursor: pointer;
 }
 
 .contador{
@@ -57,7 +58,11 @@ label{
 	direction: rtl;
 	unicode-bidi: bidi-override;
 }
+.active {
+	color: orange;
+}
 
+/*................................*
 label:hover,
 label:hover ~ label {
   color: orange;

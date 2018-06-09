@@ -62,7 +62,7 @@
                 <br>
                 <i class="glyphicon glyphicon-star" style="color: #E9BA46; font-size: 25px"></i>
                 <br>
-                <strong style="color: #393939; font-size: 16px">4.5/5</strong>
+                <strong style="color: #393939; font-size: 16px">4/5</strong>
                 <br>
                 <strong style="color: #393939; font-size: 16px">Valoración media</strong>
               </div>

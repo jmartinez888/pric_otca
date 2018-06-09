@@ -32,7 +32,7 @@ $(document).ready(function(){
 		var texto = $("#txCComentario").val();
 		if(CALIFICACION==0){
 			$.fn.Mensaje({ 
-				mensaje: "Seleccione una número (<span class='glyphicon glyphicon-heart'></span>)<br/> para su calificación" ,
+				mensaje: "Seleccione una número (<span class='glyphicon glyphicon-star'></span>)<br/> para su calificación" ,
 				tamano: "sm", 
 				funcionCerrar: function(){
 					SELECTED = false;
