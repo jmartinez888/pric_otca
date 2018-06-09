@@ -13,7 +13,7 @@
                                         <i class="fa fa-users fa-4x"></i>                                    
                                     </div>    
                                     <div class="col-xs-10 text-right">
-                                        <div class="stat-count">+233</div>
+                                        <div class="stat-count">{$StdGeneral.Est_CantidadMiembros|default:0}</div>
                                         <div class="stat-title-min">Miembros</div>
                                     </div>
                                 </div>
@@ -28,7 +28,7 @@
                                         <i class="fa fa-file-text fa-4x"></i>                                    
                                     </div>    
                                     <div class="col-xs-10 text-right">
-                                        <div class="stat-count">+560</div>
+                                        <div class="stat-count">{$StdGeneral.Est_CantidadForo|default:0}</div>
                                         <div class="stat-title-min">Temas</div>
                                     </div>
                                 </div>
@@ -43,7 +43,7 @@
                                         <i class="fa fa-comments fa-4x"></i>                                    
                                     </div>    
                                     <div class="col-xs-10 text-right">
-                                        <div class="stat-count">+790</div>
+                                        <div class="stat-count">{$StdGeneral.Est_CantidadComentario|default:0}</div>
                                         <div class="stat-title-min">Comentarios</div>
                                     </div>
                                 </div>
@@ -58,7 +58,7 @@
                                         <i class="fa fa-eye fa-4x"></i>                                    
                                     </div>    
                                     <div class="col-xs-10 text-right">
-                                        <div class="stat-count">+790</div>
+                                        <div class="stat-count">{$StdGeneral.Est_CantidadVisita|default:0}</div>
                                         <div class="stat-title-min">Visitas</div>
                                     </div>
                                 </div>
@@ -70,8 +70,8 @@
             </div>
             <div class="col-md-7">
                 <h4><i class="fa fa-bar-chart-o fa-fw"></i>Comentarios por mes</h4>
-                <div>
-                    char
+                <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto">
+                    
                 </div>
             </div>   
             <div class="col-md-5">             
@@ -118,13 +118,14 @@
                 </div>
             </div>  
             <div class="col-md-12">
-                <h4><i class="fa fa-map-o fa-fw"></i>Ubicación de los miembros</h4>  
-                <div class="row">    
-                    Map
-                </div>
+                <h4><i class="fa fa-map-o fa-fw"></i>Miembros por país</h4>  
+                <div id="container_map"></div>
             </div>
 
         </div>
 
     </div>
 </div>
+<script>
+    data_char = JSON.parse('{$StdCharComentarios}');
+</script>

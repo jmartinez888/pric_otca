@@ -69,8 +69,22 @@ class indexController extends foroController {
     }
     public function statistics() {
         $this->_view->setTemplate(LAYOUT_FRONTEND);
-        $this->_view->setCss(array("statistics"));
-        $this->_view->assign('lista_foros', $this->_model->getHistorico());
+        $this->_view->setCss(array(
+            array('//github.com/downloads/lafeber/world-flags-sprite/flags32.css',true),
+            "statistics"));
+        $this->_view->setJs(array(
+           //array('http://code.highcharts.com/highcharts.js', false), //agregado
+           //array('http://code.highcharts.com/modules/exporting.js', false), //agregado
+           //array('http://code.highcharts.com/modules/export-data.js', false), //agregado
+            array('http://code.highcharts.com/maps/highmaps.js', false), //agregado
+            array('http://code.highcharts.com/maps/modules/data.js', false), //agregado
+            array('http://code.highcharts.com/maps/modules/offline-exporting.js', false), //agregado
+            array('http://code.highcharts.com/mapdata/custom/world.js', false), //agregado
+            "statistics"
+        ));
+        
+        $this->_view->assign('StdGeneral', $this->_model->getEstadistcaGeneral());
+         $this->_view->assign('StdCharComentarios',json_encode($this->_model->getComentario_x_Mes()));
         $this->_view->renderizar('statistics');
     }
 

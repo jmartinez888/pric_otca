@@ -99,7 +99,7 @@ class indexModel extends Model {
             return $result->fetch();
         } catch (PDOException $exception) {
 
-            $this->registrarBitacora("consejeria(adminModel)", "registrarComentario", "Error Model", $exception);
+            $this->registrarBitacora("foro(indexModel)", "registrarComentario", "Error Model", $exception);
             return $exception->getTraceAsString();
         }
     }
@@ -240,6 +240,36 @@ class indexModel extends Model {
             return $exception->getTraceAsString();
         }
     }
+    
+    public function getEstadistcaGeneral(){
+        try {
+           
+            $sql = "call s_s_foro_estadisticas_general()";
+            $result = $this->_db->prepare($sql);
+            $result->execute();
+            return $result->fetch();
+        } catch (PDOException $exception) {
+
+            $this->registrarBitacora("foro(indexModel)", "getEstadistcaGeneral", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
+    
+     public function getComentario_x_Mes() {
+        try {
+            $post = $this->_db->query(
+                    "SELECT CONCAT(YEAR(Com_Fecha),MONTH(Com_Fecha),'-',MONTHNAME(Com_Fecha)) AS Com_FechaM,COUNT(Com_IdComentario) Com_CantidadComentario FROM comentarios 
+                        WHERE Com_Estado=1 AND Row_Estado=1
+                        GROUP BY Com_FechaM 
+                        ORDER BY Com_FechaM 
+                        ");
+            return $post->fetchAll();
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("foro(indexModel)", "getHistorico", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
+    
 
 }
 
