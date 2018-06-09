@@ -4,22 +4,38 @@
       height: 80px;
   }
   .sidebar-left {
-      padding-top: 40px;
+      padding-top: 20px;
       width: 100%;
       padding-right: 0px;
   }
-  .side-menu li {
+  .side-menu {
+      list-style: none;
+      color: #222;
       padding: 10px 20px;
       cursor: pointer;
       background-color: #ffffff;
-      margin-bottom: 5px;
       font-size: 15px;
       text-align: left;
-      height: auto;
-      overflow: hidden;
-      border-left: 4px solid #000000;
-      box-shadow: 0 0 15px 1px #9e9e9e;
+      border-color: #D5D5D5;
+      border-style: solid;
+      border-width: 1px;
+
+    -moz-box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.6);
+    -webkit-box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.6);
+    box-shadow: 3px 3px 10px rgba(100, 100, 100, 0.6);
   }
+
+  .side-menu2{
+    border-left: 5px solid #355D3A;
+  }
+
+  .side-menu2:hover{
+    border-left: 5px solid #355D3A;
+    -moz-box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.6);
+    -webkit-box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.6);
+    box-shadow: 3px 3px 10px rgba(100, 100, 100, 0.6);
+  }
+  
   .contenedor {
       padding-top: 10px ;
       background-color: #ffffff;
@@ -196,7 +212,7 @@
 </style>
   <div class="col-lg-2" style="padding-left: 0px !important">
     <div class="sidebar-left">
-      <div class="side-menu">
+
         <ul>
           <a href="{BASE_URL}elearning/cursos/" class="nounderline">
           <div class="side-menu2"><li class="side-menu" style="position: relative">
@@ -222,9 +238,11 @@
         {/if}
         <ul>
           <a href="{BASE_URL}elearning/certificado/menu" class="nounderline">
-            <li style="position: relative"><span> Certificados</span></li>
+            <div class="side-menu2"><li class="side-menu" style="position: relative">
+            <i class="glyphicon glyphicon-education"></i>
+            <span> Certificados</span></li></div>
           </a>
         </ul>        
-      </div>
+
     </div>
   </div>

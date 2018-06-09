@@ -20,16 +20,16 @@
         <div class="curso-item curso-sombra">
           <form>
             <div class="clasificacion">
-                <input id="radio1" name="estrellas" value="5" type="radio">
-                <label for="radio1"><i class="glyphicon glyphicon-star efecto"></i></label>
-                <input id="radio2" name="estrellas" value="4" type="radio">
-                <label for="radio2"><i class="glyphicon glyphicon-star efecto"></i></label>
-                <input id="radio3" name="estrellas" value="3" type="radio">
-                <label for="radio3"><i class="glyphicon glyphicon-star efecto"></i></label>
-                <input id="radio4" name="estrellas" value="2" type="radio">
-                <label for="radio4"><i class="glyphicon glyphicon-star efecto"></i></label>
-                <input id="radio5" name="estrellas" value="1" type="radio">
-                <label for="radio5"><i class="glyphicon glyphicon-star efecto"></i></label>
+                
+                <label><i class="glyphicon glyphicon-star"></i></label>
+                
+                <label><i class="glyphicon glyphicon-star active"></i></label>
+                
+                <label><i class="glyphicon glyphicon-star active"></i></label>
+                
+                <label><i class="glyphicon glyphicon-star active"></i></label>
+                
+                <label><i class="glyphicon glyphicon-star active"></i></label>
                 <span class="contador">&nbsp; 8</span>
             </div>
           </form>

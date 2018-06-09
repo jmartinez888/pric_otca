@@ -100,6 +100,7 @@
     padding: 10px 40px;
     margin: 20px auto;
     margin-left: 20px;
+    font-weight: bold;
 }
 .btn-inscribir:active{
     background-color: #007cbe;
@@ -108,6 +109,7 @@
     padding: 10px 40px;
     margin: 20px auto;
     margin-left: 20px;
+    font-weight: bold;
     -moz-box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.6);
     -webkit-box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.6);
     box-shadow: 3px 3px 10px rgba(100, 100, 100, 0.6);
@@ -119,6 +121,7 @@
     padding: 10px 40px;
     margin: 20px auto;
     margin-left: 20px;
+    font-weight: bold;
 }
 .progress-estilo{
     margin-top: 20px;
@@ -174,4 +177,24 @@
 .video-intro{
     background: #f2f2f2;
     border: 0.2px solid #ddd;
+}
+.btn-certificado{
+    float: right;
+}
+.estilo-textarea{
+    resize: vertical;
+    max-height: 150px;
+    min-height: 100px;
+}
+.btn-calificar{
+    margin-top: 10px;
+    color: #fff;
+    background-color: #e9ba46;
+    border-color: #fff;
+}
+.btn-calificar:hover{
+    margin-top: 10px;
+    color: #e9ba46;
+    background-color: #fff !important;
+    border-color: #e9ba46;
 }

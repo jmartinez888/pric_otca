@@ -9,7 +9,7 @@
             <div class="col-lg-12">
                 <hr class="cursos-hr">
             </div>
-            <div class="col-md-9">
+            <div class="col-md-8">
                 <div class="row">
                     <div class="col-md-12">
                         <h3 class="subtitle-foro">Foros Recientes</h3>
@@ -86,7 +86,7 @@
                     {/if}
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <div class="row">
                     <div class="col-md-12">
                         <h3 class="subtitle-foro">Agenda</h3>
@@ -108,7 +108,9 @@
                                         <div class="col-md-8">
                                             <div class="card-block px-3">
                                                 <h4 class="card-title" style="font-size: 17px;">{$agenda.For_Titulo|truncate:50:"..."}</h4>
-                                                <p class="card-text" style="font-size: 13px;">Hora: {$agenda.For_FechaCreacion|date_format:"%H:%M"}</p>
+                                                <p class="card-text" style="font-size: 13px;">
+                                                <i class="glyphicon glyphicon-time"></i>
+                                                Hora: {$agenda.For_FechaCreacion|date_format:"%H:%M"}</p>
                                             </div>
                                         </div>
                                     </div>
