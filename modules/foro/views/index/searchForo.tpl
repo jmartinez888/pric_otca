@@ -19,7 +19,7 @@
                                 <table class="table table-striped">
                                     <thead>
                                         <tr>
-                                            <th>Detalles de histórico de Foro</th>
+                                            <th>Detalles de resultado</th>
                                             <th>Fechas</th>
                                         </tr>
                                     </thead>  
@@ -40,7 +40,7 @@
                                                     <a href="#" target="_blank">{$foro.For_Titulo}</a>                                                    
                                                     <br/>
                                                     <small>
-                                                        <strong>Iniciado por:</strong> {$foro.Usu_Nombre} {$foro.Usu_Apellidos}
+                                                        <strong>Iniciado por:</strong> {$foro.Usu_Usuario} 
                                                     </small>
                                                     <br>
                                                     <small class="pull-left">
@@ -52,11 +52,19 @@
                                                 </td>
                                                 <td>
                                                     <small>
-                                                        <strong>Finalizado:</strong>
+                                                        <strong>Iniciado:</strong>
                                                     </small>
-                                                    {$foro.For_FechaCierre}
                                                     <br>
-                                                    <a href="#">Descargar Reporte</a>
+                                                    {$foro.For_FechaCreacion}
+                                                    <br>
+                                                    {if !empty($foro.For_FechaCierre) && $foro.For_FechaCierre!=""}
+                                                     <small>
+                                                        <strong>Finaliazo:</strong>
+                                                    </small>
+                                                     <br>
+                                                     {$foro.For_FechaCierre}
+                                                     {/if}
+                                                    
                                                 </td>
                                             </tr>
                                             <!--washington-->
