@@ -64,9 +64,16 @@ class indexModel extends Model {
     public function getForosRecientes($iFor_Funcion) {
         try {
             $post = $this->_db->query(
+<<<<<<< HEAD
                     "SELECT f.*,(SELECT COUNT(Com_IdComentario) FROM comentarios c WHERE c.For_IdForo=f.For_IdForo) AS For_NComentarios,(SELECT COUNT(*) FROM usuario_foro uf WHERE uf.For_IdForo=f.For_IdForo AND uf.Row_Estado=1) as For_TParticipantes  FROM foro f WHERE f.For_Funcion LIKE '%$iFor_Funcion%' AND Row_Estado=1
+=======
+                    "SELECT f.*,u.Usu_Usuario,(SELECT COUNT(Com_IdComentario) FROM comentarios c WHERE c.For_IdForo=f.For_IdForo) AS For_TComentarios,(SELECT COUNT(*) FROM usuario_foro uf WHERE uf.For_IdForo=f.For_IdForo AND uf.Row_Estado=1) AS For_TParticipantes  
+                    FROM foro f 
+                    INNER JOIN usuario u ON u.Usu_IdUsuario=f.Usu_IdUsuario
+                    WHERE f.For_Funcion LIKE '%$iFor_Funcion%' AND f.Row_Estado=1
+>>>>>>> e7c3eb6cf3ef6705d8116cd533893ba0806ec6b1
                     ORDER BY f.For_FechaCreacion DESC 
-                    LIMIT 4");
+                    LIMIT 5");
             return $post->fetchAll();
         } catch (PDOException $exception) {
             $this->registrarBitacora("foro(indexModel)", "getForos", "Error Model", $exception);
@@ -309,10 +316,79 @@ class indexModel extends Model {
                         ");
             return $post->fetchAll();
         } catch (PDOException $exception) {
-            $this->registrarBitacora("foro(indexModel)", "getHistorico", "Error Model", $exception);
+            $this->registrarBitacora("foro(indexModel)", "getComentario_x_Mes", "Error Model", $exception);
             return $exception->getTraceAsString();
         }
     }
+    
+    public function getCantidaFuncionForo() {
+        try {
+            $post = $this->_db->query(
+                    "SELECT For_Funcion,COUNT(For_IdForo) For_CantidadForo FROM foro 
+                        WHERE For_Estado!=0 AND Row_Estado=1
+                        GROUP BY For_Funcion 
+                        ORDER BY For_Funcion 
+                        ");
+            return $post->fetchAll();
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("foro(indexModel)", "getCantidaFuncionForo", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
+    
+    public function getMiembrosPais() {
+        try {
+            $post = $this->_db->query(
+                    "SELECT p.Pai_Siglas,p.Pai_Nombre,COUNT(DISTINCT(u.Usu_IdUsuario)) Pai_CantidadUsuarios FROM usuario_foro uf
+                        INNER JOIN usuario u ON u.Usu_IdUsuario = uf.Usu_IdUsuario
+                        INNER JOIN pais p ON p.Pai_IdPais = u.Pai_IdPais
+                        WHERE Usf_Estado = 1 AND uf.Row_Estado=1 AND u.Row_Estado=1
+                        GROUP BY p.Pai_Nombre
+                        ");
+            return $post->fetchAll();
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("foro(indexModel)", "getCantidaFuncionForo", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
+    
+    public function getResumenLineTematica() {
+        try {
+            $post = $this->_db->query(
+                    "SELECT lt.Lit_IdLineaTematica,lt.Lit_Nombre,
+(SELECT COUNT(For_IdForo) 
+FROM foro f
+WHERE f.For_Funcion = 'forum' AND Lit_IdLineaTematica =lt.Lit_IdLineaTematica AND f.For_Estado!=0 AND f.Row_Estado=1 
+GROUP BY f.For_Funcion) Lit_Discussions,
+(SELECT COUNT(For_IdForo) 
+FROM foro f
+WHERE f.For_Funcion = 'query' AND Lit_IdLineaTematica =lt.Lit_IdLineaTematica AND f.For_Estado!=0 AND f.Row_Estado=1 
+GROUP BY f.For_Funcion) Lit_Query,
+(SELECT COUNT(For_IdForo) 
+FROM foro f
+WHERE f.For_Funcion = 'webinar' AND Lit_IdLineaTematica =lt.Lit_IdLineaTematica AND f.For_Estado!=0 AND f.Row_Estado=1 
+GROUP BY f.For_Funcion) Lit_Webinar,
+(SELECT COUNT(For_IdForo) 
+FROM foro f
+WHERE f.For_Funcion = 'workshop' AND Lit_IdLineaTematica =lt.Lit_IdLineaTematica AND f.For_Estado!=0 AND f.Row_Estado=1 
+GROUP BY f.For_Funcion) Lit_Workshop,
+(SELECT COUNT(DISTINCT(uf.Usu_IdUsuario)) FROM usuario_foro uf
+INNER JOIN foro f ON f.Usu_IdUsuario = uf.Usu_IdUsuario
+WHERE f.Lit_IdLineaTematica=lt.Lit_IdLineaTematica AND uf.Usf_Estado = 1 AND uf.Row_Estado=1 AND f.For_Estado!=0 AND f.Row_Estado=1
+GROUP BY f.Lit_IdLineaTematica) Lit_Members,
+(SELECT COUNT(c.Com_IdComentario) FROM  comentarios c 
+INNER JOIN foro f ON f.For_IdForo = c.For_IdForo
+WHERE f.Lit_IdLineaTematica=lt.Lit_IdLineaTematica AND c.Com_Estado=1 AND c.Row_Estado=1 AND f.For_Estado!=0 AND f.Row_Estado=1
+GROUP BY f.Lit_IdLineaTematica) Lit_Comentarios
+FROM linea_tematica lt
+WHERE lt.Lit_Estado =1 AND lt.Row_Estado = 1");
+            return $post->fetchAll();
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("foro(indexModel)", "getLineTematica", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
+    
     
 
 }

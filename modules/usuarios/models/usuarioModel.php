@@ -56,13 +56,26 @@ class usuarioModel extends Model
         }        
     }
 
+    public function getRolesxUsuario($Usu_IdUsuario = '')
+    {
+        try{
+            $rol = $this->_db->query(
+                " SELECT Rol_IdRol FROM usuario_rol WHERE Usu_IdUsuario= $Usu_IdUsuario"
+            );           
+            return $rol->fetchAll();            
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("usuario(indexModel)", "getUsuariosRoles", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }        
+    }
+
 
     public function getUsuarios($condicion = '')
     {
         try{
             $usuarios = $this->_db->query(
-                "select u.*,r.Rol_Nombre from usuario u, rol r ".
-                "where u.Rol_IdRol = r.Rol_IdRol $condicion"
+                "select u.*,r.Rol_Nombre from usuario u,usuario_rol ur, rol r".
+                " where u.Usu_IdUsuario = ur.Usu_IdUsuario and ur.Rol_IdRol = r.Rol_IdRol $condicion"
             );           
             return $usuarios->fetchAll();            
         } catch (PDOException $exception) {
@@ -70,6 +83,37 @@ class usuarioModel extends Model
             return $exception->getTraceAsString();
         }        
     }
+
+    public function getUsuariosCondicion($pagina, $registrosXPagina, $condicion = "")
+    {
+        try{
+            $registroInicio = 0;
+            if ($pagina > 0) {
+                $registroInicio = ($pagina - 1) * $registrosXPagina;                
+            }
+
+            $listaUsuarios = $this->_db->query(
+                " SELECT u.* from usuario u $condicion  LIMIT $registroInicio, $registrosXPagina"
+            );           
+            $listaUsuarios = $listaUsuarios->fetchAll(PDO::FETCH_ASSOC);
+
+            for ($i = 0; $i < count($listaUsuarios); $i++) 
+            {
+
+                if (!empty($listaUsuarios[$i]['Usu_IdUsuario'])) 
+                {
+                    $listaUsuarios[$i]['Roles'] = $this->getUsuariosRoles($listaUsuarios[$i]['Usu_IdUsuario']);
+                }
+            }
+
+            return $listaUsuarios;
+
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("acl(indexModel)", "getRolesCondicion", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
+
     //util JM
     public function getUsuario($usuarioID)
     {
@@ -83,14 +127,17 @@ class usuarioModel extends Model
             return $exception->getTraceAsString();
         }
     }
-    public function eliminarUsuario($Usu_IdUsuario){
+
+    public function eliminarHabilitarUsuario($Usu_IdUsuario = 0,$Row_Estado = 0)
+    {
         try{
-            $usu = $this->_db->query(
-                "delete from usuario where Usu_IdUsuario = $Usu_IdUsuario "
-            );
-            return $usu->rowCount(PDO::FETCH_ASSOC);
+
+            $permiso = $this->_db->query(
+                " UPDATE usuario SET Row_Estado = $Row_Estado WHERE Usu_IdUsuario = $Usu_IdUsuario "               
+                );
+            return $permiso->rowCount(PDO::FETCH_ASSOC);
         } catch (PDOException $exception) {
-            $this->registrarBitacora("usuario(indexModel)", "eliminarUsuario", "Error Model", $exception);
+            $this->registrarBitacora("usuario(indexModel)", "eliminarHabilitarUsuario", "Error Model", $exception);
             return $exception->getTraceAsString();
         }
     }
@@ -319,23 +366,17 @@ class usuarioModel extends Model
     public function editarUsuario($iUsu_Nombre, $iUsu_Apellidos, $iUsu_DocumentoIdentidad, $iUsu_Direccion, $iUsu_Telefono, $iUsu_InstitucionLaboral, $iUsu_Cargo, $iUsu_Email, $iUsu_IdUsuario )
     {
         try {            
-            $sql = "call s_u_usuario(?,?,?,?,?,?,?,?,?)";
+            $sql = "UPDATE usuario u SET u.Usu_Nombre=:iUsu_Nombre,u.Usu_Apellidos=:iUsu_Apellidos,u.Usu_DocumentoIdentidad=:iUsu_DocumentoIdentidad,u.Usu_Direccion=:iUsu_Direccion,u.Usu_Telefono=:iUsu_Telefono,u.Usu_InstitucionLaboral=:iUsu_InstitucionLaboral,u.Usu_Cargo=:iUsu_Cargo,u.Usu_Email=:iUsu_Email WHERE u.Usu_IdUsuario=:iUsu_IdUsuario";
             $result = $this->_db->prepare($sql);
-            $result->bindParam(1, $iUsu_Nombre, PDO::PARAM_STR);
-            $result->bindParam(2, $iUsu_Apellidos, PDO::PARAM_STR);
-            $result->bindParam(3, $iUsu_DocumentoIdentidad, PDO::PARAM_INT);
-            $result->bindParam(4, $iUsu_Direccion, PDO::PARAM_STR); 
-            $result->bindParam(5, $iUsu_Telefono, PDO::PARAM_STR);
-            $result->bindParam(6, $iUsu_InstitucionLaboral, PDO::PARAM_STR);
-            $result->bindParam(7, $iUsu_Cargo, PDO::PARAM_STR);
-//            $result->bindParam(8, $iUsu_Usuario, PDO::PARAM_STR);
-//            $result->bindParam(9, $iUsu_Password, PDO::PARAM_STR);
-            $result->bindParam(8, $iUsu_Email, PDO::PARAM_STR);
-            // $result->bindParam(9, $iRol_IdRol, PDO::PARAM_INT);
-//            $result->bindParam(12, $iUsu_Fecha, PDO::PARAM_STR);
-//            $result->bindParam(12, $iUsu_Estado, PDO::PARAM_INT);
-            //$result->bindParam(13, $iUsu_Codigo, PDO::PARAM_STR);
-            $result->bindParam(9, $iUsu_IdUsuario, PDO::PARAM_INT);
+            $result->bindParam(':iUsu_Nombre', $iUsu_Nombre, PDO::PARAM_STR);
+            $result->bindParam(':iUsu_Apellidos', $iUsu_Apellidos, PDO::PARAM_STR);
+            $result->bindParam(':iUsu_DocumentoIdentidad', $iUsu_DocumentoIdentidad, PDO::PARAM_INT);
+            $result->bindParam(':iUsu_Direccion', $iUsu_Direccion, PDO::PARAM_STR); 
+            $result->bindParam(':iUsu_Telefono', $iUsu_Telefono, PDO::PARAM_STR);
+            $result->bindParam(':iUsu_InstitucionLaboral', $iUsu_InstitucionLaboral, PDO::PARAM_STR);
+            $result->bindParam(':iUsu_Cargo', $iUsu_Cargo, PDO::PARAM_STR);
+            $result->bindParam(':iUsu_Email', $iUsu_Email, PDO::PARAM_STR);
+            $result->bindParam(':iUsu_IdUsuario', $iUsu_IdUsuario, PDO::PARAM_INT);
             
             $result->execute();
             return $result->rowCount(PDO::FETCH_ASSOC);
@@ -343,6 +384,19 @@ class usuarioModel extends Model
             $this->registrarBitacora("usuario(indexModel)", "editarUsuario", "Error Model", $exception);
             return $exception->getTraceAsString();
         }         
+    }
+
+    public function eliminarRol_usuario($usuarioID)
+    {
+        try{
+            $per = $this->_db->query(
+                " DELETE FROM usuario_rol WHERE Usu_IdUsuario = $usuarioID"
+            );
+            return $per->rowCount(PDO::FETCH_ASSOC);
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("usuario(indexModel)", "eliminarPermiso", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
     }
     
     public function editarUsuarioClave($Usu_Password, $Usu_IdUsuario)
@@ -399,16 +453,30 @@ class usuarioModel extends Model
         return $usuario->fetch();
     }
     
-    public function insertarRol($iRol_role, $iIdi_IdIdioma="", $iRol_Estado=1)
+    public function insertarRol($iRol_role, $iIdi_IdIdioma="es", $iRol_Estado=1)
     {
         try {            
             $sql = "call s_i_rol(?,?,?)";
             $result = $this->_db->prepare($sql);
             $result->bindParam(1, $iRol_role, PDO::PARAM_STR);
-            $result->bindParam(2, empty($iIdi_IdIdioma) ? null : $iIdi_IdIdioma, PDO::PARAM_NULL | PDO::PARAM_STR);
+            $result->bindParam(2, $iIdi_IdIdioma, PDO::PARAM_STR);
             $result->bindParam(3, $iRol_Estado, PDO::PARAM_INT);
             $result->execute();
             return $result->fetch();
+        } catch (Exception $exc) {
+            return $exc->getTraceAsString();
+        }
+    }
+
+    public function insertarRol_Usuario($Usu_IdUsuario, $Rol_IdRol="")
+    {
+        try {            
+            $sql = "INSERT INTO usuario_rol VALUES(:Usu_IdUsuario,:Rol_IdRol,1)";
+            $result = $this->_db->prepare($sql);
+            $result->bindParam(':Usu_IdUsuario', $Usu_IdUsuario, PDO::PARAM_STR);
+            $result->bindParam(':Rol_IdRol', $Rol_IdRol, PDO::PARAM_STR);
+            $result->execute();
+            return $result->rowCount(PDO::FETCH_ASSOC);
         } catch (Exception $exc) {
             return $exc->getTraceAsString();
         }

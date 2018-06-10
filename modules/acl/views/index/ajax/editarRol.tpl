@@ -28,6 +28,28 @@
                             <input class="form-control"  value="{$datos.Rol_Nombre}" id="Rol_Nombre"  type="text" name="Rol_Nombre" placeholder="{$lenguaje.label_rol}" required="" />
                         </div>
                     </div>
+                     <div class="form-group">
+                            <label class="col-lg-2 control-label">{$lenguaje.label_clave} (*): </label>
+                            <div class="col-lg-10">
+                                <input  class="form-control" type="text" name="key_" id="key_" placeholder="{$lenguaje.label_clave}" required="" value="{$datos.Rol_Ckey}"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">{$lenguaje.label_modulo} : </label>
+                            <div class="col-lg-4">
+                                <select class="form-control" name="modulo_" id="modulo_">
+                                    <option value="0" >{$lenguaje.select_option_seleccione}</option>
+                                    {if isset($modulos) && count($modulos)}
+                                    {foreach item=m from=$modulos}
+                                        <option value="{$m.Mod_IdModulo}" {if $m.Mod_IdModulo==$datos.Mod_IdModulo}selected{/if}>{$m.Mod_Nombre}</option>
+                                    {/foreach}
+                                    {/if}
+                                </select>
+                            </div>
+<!--                             <div class="col-lg-1">
+                                <button class="btn btn-success" type="button" id="bt_agregarModulo" name="bt_agregarModulo" data-toggle="tooltip" data-placement="bottom" title="{$lenguaje.label_crear_modulo}"><i class="glyphicon glyphicon-plus-sign"> </i></button>
+                            </div> -->
+                        </div>
                     <div class="form-group">
                         <div class="col-xs-6 col-sm-2 col-lg-offset-2 col-lg-2">
                             <button class="btn btn-success" type="submit" id="bt_editarRol" name="bt_editarRol" ><i class="glyphicon glyphicon-floppy-disk"> </i>&nbsp; {$lenguaje.button_ok}</button>

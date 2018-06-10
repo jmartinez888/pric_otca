@@ -21,12 +21,14 @@ class indexController extends foroController {
         $lenguaje = Session::get("fileLenguaje");
         $this->_view->assign('titulo', $lenguaje["foro_index_titulo"]);
 
-        $lista_foros = $this->_model->getForosRecientes("forum");
-        $lista_webinars = $this->_model->getForosRecientes("webinar");
+        $lista_foros = $this->_model->getForosRecientes("%");
+        $lista_tematica = $this->_model->getResumenLineTematica();
         $lista_agenda = $this->_model->getAgendaIndex();
-        $this->_view->assign('lista_foros', $lista_foros);
-        $this->_view->assign('lista_webinars', $lista_webinars);
+        $this->_view->assign('lista_foros', $lista_foros);      
+        $this->_view->assign('lista_tematica', $lista_tematica);  
         $this->_view->assign('lista_agenda', $lista_agenda);
+        
+        
         $this->_view->renderizar('index');
     }
     public function searchForo($filtro = "") {
@@ -52,24 +54,28 @@ class indexController extends foroController {
 
     public function discussions() {
         $this->_view->setTemplate(LAYOUT_FRONTEND);
+        $this->_view->setCss(array("jp-index"));
         $this->_view->assign('lista_foros', $this->_model->getForos("forum"));
         $this->_view->renderizar('discussions');
     }
 
     public function query() {
         $this->_view->setTemplate(LAYOUT_FRONTEND);
+        $this->_view->setCss(array("jp-index"));
         $this->_view->assign('lista_foros', $this->_model->getForos("query"));
         $this->_view->renderizar('query');
     }
 
     public function webinar() {
         $this->_view->setTemplate(LAYOUT_FRONTEND);
+        $this->_view->setCss(array("jp-index"));
         $this->_view->assign('lista_foros', $this->_model->getForos("webinar"));
         $this->_view->renderizar('webinar');
     }
 
     public function workshop() {
         $this->_view->setTemplate(LAYOUT_FRONTEND);
+        $this->_view->setCss(array("jp-index"));
         $this->_view->assign('lista_foros', $this->_model->getForos("workshop"));
         $this->_view->renderizar('workshop');
     }
@@ -77,14 +83,14 @@ class indexController extends foroController {
     public function agenda() {
         $this->_view->setTemplate(LAYOUT_FRONTEND);
         $this->_view->setJs(array('agenda', array(BASE_URL . 'public/js/fullcalendar/moment.min.js'), array(BASE_URL . 'public/js/fullcalendar/fullcalendar.min.js'), array(BASE_URL . 'public/js/fullcalendar/locale/es.js')));
-        $this->_view->setCss(array('agenda', array(BASE_URL . "public/css/fullcalendar/fullcalendar.min.css")));
+        $this->_view->setCss(array('agenda', 'jp-agenda', array(BASE_URL . "public/css/fullcalendar/fullcalendar.min.css")));
 
         $this->_view->assign('agenda',json_encode($this->_model->getAgenda()));
         $this->_view->renderizar('agenda');
     }
     public function historico() {
         $this->_view->setTemplate(LAYOUT_FRONTEND);
-        $this->_view->setCss(array("historico"));
+        $this->_view->setCss(array("historico", "jp-historico"));
         $this->_view->assign('lista_foros', $this->_model->getHistorico());
         $this->_view->renderizar('historico');
     }
@@ -92,7 +98,7 @@ class indexController extends foroController {
         $this->_view->setTemplate(LAYOUT_FRONTEND);
         $this->_view->setCss(array(
             array('//github.com/downloads/lafeber/world-flags-sprite/flags32.css',true),
-            "statistics"));
+            "statistics", "jp-statistics"));
         $this->_view->setJs(array(
            //array('http://code.highcharts.com/highcharts.js', false), //agregado
            //array('http://code.highcharts.com/modules/exporting.js', false), //agregado
@@ -105,7 +111,9 @@ class indexController extends foroController {
         ));
         
         $this->_view->assign('StdGeneral', $this->_model->getEstadistcaGeneral());
-         $this->_view->assign('StdCharComentarios',json_encode($this->_model->getComentario_x_Mes()));
+        $this->_view->assign('StdCharComentarios',json_encode($this->_model->getComentario_x_Mes()));
+        $this->_view->assign('StdActividades',$this->_model->getCantidaFuncionForo());
+        $this->_view->assign('StdMapsMembers',json_encode($this->_model->getMiembrosPais()));
         $this->_view->renderizar('statistics');
     }
 
@@ -211,6 +219,7 @@ class indexController extends foroController {
         echo json_encode($result);
         //comprobamos si existe un directorio para subir el archivo
     }
+    
 
 }
 

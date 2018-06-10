@@ -49,6 +49,7 @@ class registrarController extends Controller {
                 $archivo_fisico = $this->_dublincore->getArchivoFisico($nombre_archivo);
             } else {
                 $nombre_archivo = '';
+                $archivo_fisico = "";
             }
             if (!empty($this->getSql('Arf_URL'))) {
                 $url_archivo = $this->getSql('Arf_URL');
@@ -70,7 +71,8 @@ class registrarController extends Controller {
                     $archivo_fisico = $this->_dublincore->registrarArchivoFisico(
                             $this->getSql('Dub_Titulo'), $formato[0], $_FILES['Arf_IdArchivoFisico']['type'], $_FILES['Arf_IdArchivoFisico']['size'], $nombre_archivo, $this->getSql('Dub_FechaDocumento'), $url_archivo, 1, $this->getSql('Dub_Idioma')
                     );
-
+                    // echo $archivo_fisico;
+                    // print_r($archivo_fisico);
                     $archivo_fisico = $archivo_fisico[0];
 
                 } else {
@@ -102,6 +104,9 @@ class registrarController extends Controller {
 
                 $dublin = $this->_dublincore->registrarDublinCore(
                         $this->getSql('Dub_Titulo'), $this->getSql('Dub_Descripcion'), $this->getSql('Dub_Editor'), $this->getSql('Dub_Colabrorador'), $this->getSql('Dub_FechaDocumento'), $this->getSql('Dub_Formato'), $this->getSql('Dub_Identificador'), $this->getSql('Dub_Fuente'), $this->getSql('Dub_Idioma'), $this->getSql('Dub_Relacion'), $this->getSql('Dub_Cobertura'), $this->getSql('Dub_Derechos'), $this->getSql('Dub_PalabraClave'), $tipo_dublin[0], $archivo_fisico, $this->getSql('Idi_IdIdioma'), $tema_dublin[0], $this->filtrarInt($recurso));
+
+                // echo($dublin); 
+                // print_r($dublin);
 
                 if ($dublin) {
                     $dublin_autor = $this->_dublincore->getDublinAutor($dublin[0], $autor[0]);

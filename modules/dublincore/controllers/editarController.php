@@ -39,20 +39,7 @@ class editarController extends Controller {
                 $valor_paises = $valor_paises . ', ' . $pais[0];
             }
         }
-        //Cargar Datos de Recurso
-        $bdrecurso_model = $this->loadModel('bdrecursos', true);
-        $metadatarecurso = $bdrecurso_model->getRecursoCompletoXid($datos['Rec_IdRecurso']);
-        $this->_view->assign('recurso', $metadatarecurso);
-
-        $idestandar = $this->_registrar->getEstandarRecurso($this->filtrarInt($datos['Rec_IdRecurso']));
-        $this->_view->assign('ficha', $this->_registrar->getFichaLegislacion($idestandar[0][0], Cookie::lenguaje()));
-        $this->_view->assign('idiomas', $this->_registrar->getIdiomas());
-        $this->_view->assign('autores', $this->_registrar->getAutores());
-        $this->_view->assign('palabraclave', $this->_registrar->getPalabrasClaves(Cookie::lenguaje()));
-        $this->_view->assign('tipodublin', $this->_registrar->getTiposDublin(Cookie::lenguaje()));
-        $this->_view->assign('temadublin', $this->_registrar->getTemasDublin(Cookie::lenguaje()));
-        $this->_view->assign('formatos_archivos', $this->_registrar->getFormatoArchivo());
-        $this->_view->assign('paises', $valor_paises);
+        
         $this->_view->assign('datos', $datos);
 
         $this->_view->assign('titulo', 'Editar Registro');

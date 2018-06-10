@@ -46,9 +46,9 @@
                                     {/if}
                                 </select>
                             </div>
-                            <div class="col-xs-2">
+<!--                             <div class="col-xs-2">
                                 <button class="btn btn-success" type="button" id="bt_agregarModulo" name="bt_agregarModulo" data-toggle="tooltip" data-placement="bottom" title="{$lenguaje.label_crear_modulo}"><i class="glyphicon glyphicon-plus-sign"> </i></button>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                     <div class="form-group">
