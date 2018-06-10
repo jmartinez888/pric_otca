@@ -1,4 +1,4 @@
-.titulo-foro{
+.titulo{
 	margin-top: 10px !important;
 	padding-top: 10px;
 	padding-bottom: 10px;
@@ -58,4 +58,25 @@
 	text-align: center;
 	background-color: #386c77;
 	color: #fff;
+}
+.tematica-foro{
+	
+}
+.detalles-tematica{
+	padding-bottom: 10px;
+	font-size: 12px;
+	border-bottom: 0.2px solid #ddd;
+}
+.detalles-act-reciente{
+	padding-bottom: 10px;
+	font-size: 12px;
+	border-bottom: 0.2px solid #ddd;
+}
+.discusion{
+	border-bottom: 0.2px solid #ddd;
+}
+.cabecera-discusion{}
+.detalles-discusion{
+	padding-bottom: 10px;
+	font-size: 12px;
 }

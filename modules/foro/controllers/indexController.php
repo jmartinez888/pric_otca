@@ -31,6 +31,7 @@ class indexController extends foroController {
 
     public function discussions() {
         $this->_view->setTemplate(LAYOUT_FRONTEND);
+        $this->_view->setCss(array("jp-index"));
         $this->_view->assign('lista_foros', $this->_model->getForos("forum"));
         $this->_view->renderizar('discussions');
     }
