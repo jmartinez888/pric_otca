@@ -17,10 +17,54 @@ class indexModel extends Model {
         }
     }
 
+    public function getForosSearch($Condicion = "") {
+        try {
+            $post = $this->_db->query(
+                    "
+
+
+                    SELECT f.For_IdForo,f.For_Titulo,f.For_Resumen,f.For_Funcion,f.For_FechaCreacion,f.For_FechaCierre,f.For_Update,(SELECT COUNT(*) FROM comentarios c WHERE c.For_IdForo =f.For_IdForo) AS For_NComentarios ,
+                        (SELECT COUNT(uf.Usu_IdUsuario) FROM usuario_foro uf WHERE uf.For_IdForo = f.For_IdForo AND Usf_Estado=1 AND Row_Estado=1) AS For_NParticipantes, u.Usu_Usuario, u.Usu_Nombre, u.Usu_Apellidos, f.For_Estado 
+                    FROM foro f 
+                    INNER JOIN usuario u ON u.Usu_IdUsuario = f.Usu_IdUsuario $Condicion ");
+            return $post->fetchAll();
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("foro(indexModel)", "getForos", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
+
+    public function getForosPaginado($iFor_Filtros = "", $iPagina = 1, $iRegistrosXPagina = CANT_REG_PAG) {
+        try {
+            $sql = " call s_s_foro_admin(?,?,?)";
+            $result = $this->_db->prepare($sql);
+            $result->bindParam(1, $iFor_Filtros, PDO::PARAM_STR);
+            $result->bindParam(2, $iPagina, PDO::PARAM_STR);
+            $result->bindParam(3, $iRegistrosXPagina, PDO::PARAM_INT);
+
+            $result->execute();
+            return $result->fetchAll();
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("foro(adminModel)", "getForos", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
+    public function getRowForos($iFor_Filtros = "") {
+        try {
+            $post = $this->_db->query(
+                    "SELECT COUNT(*) as For_NRow from foro f WHERE f.For_Titulo LIKE '%$iFor_Filtros%' OR f.For_Resumen LIKE '%$iFor_Filtros%' OR f.For_Descripcion LIKE '%$iFor_Filtros%' OR f.For_PalabrasClaves LIKE '%$iFor_Filtros%'");
+
+            return $post->fetch();
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("foro(adminModel)", "getRowForos", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
+
     public function getForosRecientes($iFor_Funcion) {
         try {
             $post = $this->_db->query(
-                    "SELECT f.*,(SELECT COUNT(Com_IdComentario) FROM comentarios c WHERE c.For_IdForo=f.For_IdForo) AS For_TComentarios,(SELECT COUNT(*) FROM usuario_foro uf WHERE uf.For_IdForo=f.For_IdForo AND uf.Row_Estado=1) as For_TParticipantes  FROM foro f WHERE f.For_Funcion LIKE '%$iFor_Funcion%' AND Row_Estado=1
+                    "SELECT f.*,(SELECT COUNT(Com_IdComentario) FROM comentarios c WHERE c.For_IdForo=f.For_IdForo) AS For_NComentarios,(SELECT COUNT(*) FROM usuario_foro uf WHERE uf.For_IdForo=f.For_IdForo AND uf.Row_Estado=1) as For_TParticipantes  FROM foro f WHERE f.For_Funcion LIKE '%$iFor_Funcion%' AND Row_Estado=1
                     ORDER BY f.For_FechaCreacion DESC 
                     LIMIT 4");
             return $post->fetchAll();

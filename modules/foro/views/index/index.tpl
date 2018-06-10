@@ -11,53 +11,25 @@
             </div>
             <div class="col-md-8">
                 <div class="row">
-                    <div class="col-md-12">
-                        <h3 class="subtitle-foro">Foros Recientes</h3>
+                    <div class="col-sm-12">
+                        <div class="input-group">
+                            <input type ="text" class="form-control"  data-toggle="tooltip" data-original-title="Buscar Foro" placeholder="Buscar Foro" name="text_busqueda" id="text_busqueda" onkeypress="tecla_enter_foro(event)" value="{$palabrabuscada|default:''}">                  
+                            <span class="input-group-btn">
+                                <button class="btn  btn-success btn-buscador" type="button" id="buscar_foro"><i class="glyphicon glyphicon-search"></i></button>
+                            </span>
+                        </div><!-- /input-group -->
                     </div>
-                    <div class="col-lg-12">
-                        <hr class="cursos-hr">
-                    </div>
-                    <div class="col-md-12">
-                        <div class="row">
-                            {foreach from=$lista_foros item=foro}
-                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                    <div class="foro-item">
-                                        <div class="page-header">
-                                            <a class="link-foro" href="{$_layoutParams.root}foro/index/ficha/{$foro.For_IdForo}">               
-                                                <h4>{$foro.For_Titulo}</h4>                               
-                                            </a>
-                                        </div>
-                                        <div class="body-item">                          
-                                            <p>{$foro.For_Resumen|truncate:120:"..."}</p>
-                                        </div>  
-                                        <!--<div class="body-item">                          
-                                            <p>{$foro.For_Resumen|truncate:120:"..."}</p>
-                                        </div>-->        
-                                        <div class="footer-item row">
-                                            <div class="col-md-6">
-                                                {$end_date=($foro.For_FechaCierre|date_format:"%d-%m-%Y")}
-                                                <span class="date">{$foro.For_FechaCreacion|date_format:"%d-%m-%Y"} {if ($foro.For_FechaCierre|date_format:"%d-%m-%Y")!=""} / {($foro.For_FechaCierre|date_format:"%d-%m-%Y")}{/if}</span>
-                                            </div>
-                                            <div class="col-md-6 text-right">
-                                                Colaboraciones <span class="badge">{$foro.For_TComentarios}</span> 
-                                            </div>
-                                        </div>               
-                                    </div>
+                    <div id="listarForos">
 
-                                </div>
-                            {/foreach}
-                        </div>
-                    </div>      
-                    {if count($lista_webinars)>0}
                         <div class="col-md-12">
-                            <h3 class="subtitle-foro"> Webinars Recientes </h3>
+                            <h3 class="subtitle-foro">Foros Recientes</h3>
                         </div>
                         <div class="col-lg-12">
                             <hr class="cursos-hr">
                         </div>
                         <div class="col-md-12">
                             <div class="row">
-                                {foreach from=$lista_webinars item=foro}
+                                {foreach from=$lista_foros item=foro}
                                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                         <div class="foro-item">
                                             <div class="page-header">
@@ -67,14 +39,17 @@
                                             </div>
                                             <div class="body-item">                          
                                                 <p>{$foro.For_Resumen|truncate:120:"..."}</p>
-                                            </div>        
+                                            </div>  
+                                            <!--<div class="body-item">                          
+                                                <p>{$foro.For_Resumen|truncate:120:"..."}</p>
+                                            </div>-->        
                                             <div class="footer-item row">
                                                 <div class="col-md-6">
                                                     {$end_date=($foro.For_FechaCierre|date_format:"%d-%m-%Y")}
                                                     <span class="date">{$foro.For_FechaCreacion|date_format:"%d-%m-%Y"} {if ($foro.For_FechaCierre|date_format:"%d-%m-%Y")!=""} / {($foro.For_FechaCierre|date_format:"%d-%m-%Y")}{/if}</span>
                                                 </div>
                                                 <div class="col-md-6 text-right">
-                                                    Participantes <span class="badge">{$foro.For_TParticipantes}</span> 
+                                                    Colaboraciones <span class="badge">{$foro.For_NComentarios}</span> 
                                                 </div>
                                             </div>               
                                         </div>
@@ -82,8 +57,46 @@
                                     </div>
                                 {/foreach}
                             </div>
-                        </div>  
-                    {/if}
+                        </div>      
+                        {if count($lista_webinars)>0}
+                            <div class="col-md-12">
+                                <h3 class="subtitle-foro"> Webinars Recientes </h3>
+                            </div>
+                            <div class="col-lg-12">
+                                <hr class="cursos-hr">
+                            </div>
+                            <div class="col-md-12">
+                                <div class="row">
+                                    {foreach from=$lista_webinars item=foro}
+                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                            <div class="foro-item">
+                                                <div class="page-header">
+                                                    <a class="link-foro" href="{$_layoutParams.root}foro/index/ficha/{$foro.For_IdForo}">               
+                                                        <h4>{$foro.For_Titulo}</h4>                               
+                                                    </a>
+                                                </div>
+                                                <div class="body-item">                          
+                                                    <p>{$foro.For_Resumen|truncate:120:"..."}</p>
+                                                </div>        
+                                                <div class="footer-item row">
+                                                    <div class="col-md-6">
+                                                        {$end_date=($foro.For_FechaCierre|date_format:"%d-%m-%Y")}
+                                                        <span class="date">{$foro.For_FechaCreacion|date_format:"%d-%m-%Y"} {if ($foro.For_FechaCierre|date_format:"%d-%m-%Y")!=""} / {($foro.For_FechaCierre|date_format:"%d-%m-%Y")}{/if}</span>
+                                                    </div>
+                                                    <div class="col-md-6 text-right">
+                                                        Participantes <span class="badge">{$foro.For_TParticipantes}</span> 
+                                                    </div>
+                                                </div>               
+                                            </div>
+
+                                        </div>
+                                    {/foreach}
+                                </div>
+                            </div>  
+                        {/if}
+
+                    </div>
+                    
                 </div>
             </div>
             <div class="col-md-4">

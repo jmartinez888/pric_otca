@@ -480,7 +480,7 @@
             var _root_ = '{$_layoutParams.root_clear}';
             var _root_lang = '{$_layoutParams.root}';
             var _root_archivo_fisico = '{$_layoutParams.root_archivo_fisico}';
-            $('.mitooltip').tooltip();
+            // $('.mitooltip').tooltip();
         </script>
         <!-- <script src="//code.jquery.com/jquery-1.11.2.min.js"></script> -->        
         <!-- <script src="{$_layoutParams.ruta_js}jquery-3.2.1.slim.min.js" type="text/javascript"></script> -->

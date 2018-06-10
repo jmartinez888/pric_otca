@@ -15,6 +15,7 @@ class indexController extends foroController {
 
         $this->_view->getLenguaje("foro_index_index");
         $this->_view->setCss(array("index", "jp-index"));
+        $this->_view->setJs(array('index'));
 
 
         $lenguaje = Session::get("fileLenguaje");
@@ -27,6 +28,26 @@ class indexController extends foroController {
         $this->_view->assign('lista_webinars', $lista_webinars);
         $this->_view->assign('lista_agenda', $lista_agenda);
         $this->_view->renderizar('index');
+    }
+    public function searchForo($filtro = "") {
+        $this->_view->setTemplate(LAYOUT_FRONTEND);
+        $filtro = $this->filtrarTexto($filtro);
+        $this->_view->setJs(array('index'));
+
+        $paginador = new Paginador();
+
+        $lista_foros = $this->_model->getForosPaginado($filtro);
+        $totalRegistros = $this->_model->getRowForos($filtro);
+
+        $paginador->paginar($totalRegistros["For_NRow"], "listarForo", $filtro, $pagina = 0, CANT_REG_PAG, true);
+
+        $this->_view->assign('lista_foros', $lista_foros);
+
+        $this->_view->assign('palabrabuscada', $filtro);
+        $this->_view->assign('numeropagina', $paginador->getNumeroPagina());
+        //$this->_view->assign('cantidadporpagina',$registros);
+        $this->_view->assign('paginacion', $paginador->getView('paginacion_ajax_s_filas'));
+        $this->_view->renderizar('searchForo');
     }
 
     public function discussions() {
