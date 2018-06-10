@@ -19,6 +19,8 @@
                                         {foreach from=$lista_foros item=foro}
                                             <tr>
                                                 <td>
+                                                     <a href="#" target="_blank">{$foro.For_Titulo}</a>                                                    
+                                                    <br/>
                                                     {if $foro.For_Funcion=="forum"}
                                                         Discusión
                                                     {else if  $foro.For_Funcion=="webinar"}
@@ -28,9 +30,7 @@
                                                     {else if  $foro.For_Funcion=="query"}
                                                         Consulta                                                        
                                                     {/if}
-                                                    <br>
-                                                    <a href="#" target="_blank">{$foro.For_Titulo}</a>                                                    
-                                                    <br/>
+                                                    <br>                                                   
                                                     <small>
                                                         <strong>Iniciado por:</strong> {$foro.Usu_Nombre} {$foro.Usu_Apellidos}
                                                     </small>

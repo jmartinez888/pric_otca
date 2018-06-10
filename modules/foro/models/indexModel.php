@@ -288,7 +288,7 @@ class indexModel extends Model {
     public function getMiembrosPais() {
         try {
             $post = $this->_db->query(
-                    "SELECT P.Pai_Siglas,p.Pai_Nombre,COUNT(DISTINCT(u.Usu_IdUsuario)) Pai_CantidadUsuarios FROM usuario_foro uf
+                    "SELECT p.Pai_Siglas,p.Pai_Nombre,COUNT(DISTINCT(u.Usu_IdUsuario)) Pai_CantidadUsuarios FROM usuario_foro uf
                         INNER JOIN usuario u ON u.Usu_IdUsuario = uf.Usu_IdUsuario
                         INNER JOIN pais p ON p.Pai_IdPais = u.Pai_IdPais
                         WHERE Usf_Estado = 1 AND uf.Row_Estado=1 AND u.Row_Estado=1
