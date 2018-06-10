@@ -32,6 +32,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         -->
         <link href="{$_layoutParams.ruta_css}/skins/skin-green.min.css" rel="stylesheet" type="text/css" />
         <link href="{$_layoutParams.ruta_css}/jm-backend.css" rel="stylesheet" type="text/css" />
+        <link href="{$_layoutParams.ruta_css}/responsive.bootstrap.min.css" rel="stylesheet" type="text/css" />
         <!-- <link href="{$_layoutParams.ruta_css}/jsoft-backend.css" rel="stylesheet" type="text/css" /> -->
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -284,6 +285,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <script type="text/javascript" src="{$_layoutParams.ruta_js}bootstrap-datepicker.js"></script>
         <script type="text/javascript" src="{$_layoutParams.ruta_js}bootstrap-select.min.js"></script>
         <script type="text/javascript" src="{$_layoutParams.ruta_js}bootstrapValidator.js"></script>
+        <script type="text/javascript" src="{$_layoutParams.ruta_js}responsive.bootstrap.min.js"></script>
+        <script type="text/javascript" src="{$_layoutParams.ruta_js}dataTables.responsive.min.js"></script>
 
         <script type="text/javascript" src="{$_layoutParams.root_clear}public/js/highcharts.js"></script>
         <script type="text/javascript" src="{$_layoutParams.root_clear}public/js/exporting.js"></script>     
