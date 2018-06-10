@@ -64,14 +64,10 @@ class indexModel extends Model {
     public function getForosRecientes($iFor_Funcion) {
         try {
             $post = $this->_db->query(
-<<<<<<< HEAD
-                    "SELECT f.*,(SELECT COUNT(Com_IdComentario) FROM comentarios c WHERE c.For_IdForo=f.For_IdForo) AS For_NComentarios,(SELECT COUNT(*) FROM usuario_foro uf WHERE uf.For_IdForo=f.For_IdForo AND uf.Row_Estado=1) as For_TParticipantes  FROM foro f WHERE f.For_Funcion LIKE '%$iFor_Funcion%' AND Row_Estado=1
-=======
                     "SELECT f.*,u.Usu_Usuario,(SELECT COUNT(Com_IdComentario) FROM comentarios c WHERE c.For_IdForo=f.For_IdForo) AS For_TComentarios,(SELECT COUNT(*) FROM usuario_foro uf WHERE uf.For_IdForo=f.For_IdForo AND uf.Row_Estado=1) AS For_TParticipantes  
                     FROM foro f 
                     INNER JOIN usuario u ON u.Usu_IdUsuario=f.Usu_IdUsuario
-                    WHERE f.For_Funcion LIKE '%$iFor_Funcion%' AND f.Row_Estado=1
->>>>>>> e7c3eb6cf3ef6705d8116cd533893ba0806ec6b1
+                    WHERE f.For_Funcion LIKE '%$iFor_Funcion%' AND f.Row_Estado=1   
                     ORDER BY f.For_FechaCreacion DESC 
                     LIMIT 5");
             return $post->fetchAll();
