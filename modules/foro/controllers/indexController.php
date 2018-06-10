@@ -20,12 +20,14 @@ class indexController extends foroController {
         $lenguaje = Session::get("fileLenguaje");
         $this->_view->assign('titulo', $lenguaje["foro_index_titulo"]);
 
-        $lista_foros = $this->_model->getForosRecientes("forum");
-        $lista_webinars = $this->_model->getForosRecientes("webinar");
+        $lista_foros = $this->_model->getForosRecientes("%");
+        $lista_tematica = $this->_model->getResumenLineTematica();
         $lista_agenda = $this->_model->getAgendaIndex();
-        $this->_view->assign('lista_foros', $lista_foros);
-        $this->_view->assign('lista_webinars', $lista_webinars);
+        $this->_view->assign('lista_foros', $lista_foros);      
+        $this->_view->assign('lista_tematica', $lista_tematica);  
         $this->_view->assign('lista_agenda', $lista_agenda);
+        
+        
         $this->_view->renderizar('index');
     }
 

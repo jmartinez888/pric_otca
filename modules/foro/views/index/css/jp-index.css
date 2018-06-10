@@ -64,8 +64,23 @@
 }
 .detalles-tematica{
 	padding-bottom: 10px;
+        padding-right: 15px;
+        margin-right: 0px;
 	font-size: 12px;
 	border-bottom: 0.2px solid #ddd;
+}
+.detalles-tematica .col-md-4 + .col-md-6:before{
+    content: "\2022";
+    font-size: 10px;
+    margin: 0 20px;
+}
+.tem_titulo{
+   padding-right: 15px;
+}
+.item-tematica{
+    padding-left: 0px;
+    padding-right: 0px;
+    padding-bottom: 5px
 }
 .detalles-act-reciente{
 	padding-bottom: 10px;
