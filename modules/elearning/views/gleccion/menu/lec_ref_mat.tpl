@@ -285,7 +285,7 @@
           <div class="col-lg-12" style="margin-top: 10px">
             <label>Archivos adjuntos: </label>
             <div id="divArcAdjTrabajo"></div>
-            <button class="btn btn-default" id="btnAgregarArchivoTrabajo">Adjuntar archivo<</button>
+            <button class="btn btn-default" id="btnAgregarArchivoTrabajo">Adjuntar archivo</button>
           </div>
           <div class="col-lg-12 margin-top-10">
             <button class="btn btn-success" id="btn_actualizar_trabajo">Actualizar</button>
@@ -555,22 +555,22 @@
     $.fn.Mensaje({ mensaje: "¿Desea registrar la tarea?", tipo: "SiNo", tamano: "sm",
       funcionSi: function(){
         SubmitForm($("#frm_registro_trabajo"), $(this), function(data, e){
-          Mensaje("Se registró la tarea con éxito", 
+          Mensaje("Se registró la tarea con éxito",
             function(){
               CargarPagina("gleccion/_view_leccion", {
                 curso: $("#hidden_curso").val(),
                 modulo : $("#hidden_modulo").val(),
                 leccion : $("#hidden_leccion").val()
-              }, false, false);    
-          });          
+              }, false, false);
+          });
         });
       }
     });
-  });  
+  });
   $(".btnEditarTrabajo").click(function(){
     var Trabajo = $(this).parent().find(".Hidden_IdTrabajo").val();
     AsincTaks(
-      "gtrabajo/_get_trabajo", { id: Trabajo }, 
+      "gtrabajo/_get_trabajo", { id: Trabajo },
       function(a){
         var data = JSON.parse(a);
         if(data.estado==1){
@@ -586,7 +586,7 @@
           $("#slUpdTipoTra").val(data.data.Tra_Tipo);
           $("#inUpdDesdeTraDate").val(data.data.Tra_FechaDesde);
           $("#inUpdHastaTraDate").val(data.data.Tra_FechaHasta);
-          
+
 
           var Archivos = data.data.Archivos;
           if(Archivos!=null){
@@ -597,12 +597,12 @@
             $(".btnElimArcAdj").unbind("click").click(function(e){
               e.preventDefault();
               var Id = $(this).parent().find(".inIdArcAdj").val();
-              $.fn.Mensaje({ 
+              $.fn.Mensaje({
                 mensaje: "¿Desea eliminar el archivo?",
                 tipo: "SiNo", tamano: "sm",
-                funcionSi: function(){  
+                funcionSi: function(){
                   AsincTaks(
-                    "gtrabajo/_eliminar_archivo", { id: Id }, 
+                    "gtrabajo/_eliminar_archivo", { id: Id },
                     function(a){
                       Mensaje("Archivo eliminado", function(){
                         CargarPagina("gleccion/_view_leccion", {
@@ -611,11 +611,11 @@
                           leccion : $("#hidden_leccion").val()
                         }, false, false);
                       });
-                    }, 
+                    },
                     false, false
                   );
                 }
-              });              
+              });
             });
           }
 
@@ -624,7 +624,7 @@
         }else{
           Mensaje("Existe un problema con la tarea seleccionada", null);
         }
-      }, 
+      },
       false, false
     );
   });
@@ -633,32 +633,32 @@
     var Estado = $(this).parent().find(".Hidden_Estado").val();
     Estado = Estado == "1" ? "0" : "1";
     AsincTaks(
-      "gtrabajo/_actualizar_estado_trabajo", { id: Trabajo, estado: Estado }, 
+      "gtrabajo/_actualizar_estado_trabajo", { id: Trabajo, estado: Estado },
       function(a){
         CargarPagina("gleccion/_view_leccion", {
           curso: $("#hidden_curso").val(),
           modulo : $("#hidden_modulo").val(),
           leccion : $("#hidden_leccion").val()
-        }, false, false); 
-      }, 
+        }, false, false);
+      },
       false, false
     );
   });
   $("#btn_actualizar_trabajo").click(function(e){
     e.preventDefault();
 
-    $.fn.Mensaje({ 
+    $.fn.Mensaje({
       tipo: "SiNo", tamano: "sm",
       mensaje: "¿Desea actualizar esta tarea?",
       funcionSi: function(){
         SubmitForm($("#frm_actualizar_trabajo"), $(this), function(data, e){
-          Mensaje("Se actualizó la tarea con éxito", 
+          Mensaje("Se actualizó la tarea con éxito",
             function(){
               CargarPagina("gleccion/_view_leccion", {
                 curso: $("#hidden_curso").val(),
                 modulo : $("#hidden_modulo").val(),
                 leccion : $("#hidden_leccion").val()
-              }, false, false);    
+              }, false, false);
           });
         });
       }
@@ -667,19 +667,19 @@
   $(".btnEliminarTrabajo").click(function(){
     var Trabajo = $(this).parent().find(".Hidden_IdTrabajo").val();
 
-    $.fn.Mensaje({ 
+    $.fn.Mensaje({
       tipo: "SiNo", tamano: "sm",
       mensaje: "¿Desea eliminar esta tarea?",
       funcionSi: function(){
         AsincTaks(
-          "gtrabajo/_eliminar_trabajo", { id: Trabajo }, 
+          "gtrabajo/_eliminar_trabajo", { id: Trabajo },
           function(a){
             CargarPagina("gleccion/_view_leccion", {
               curso: $("#hidden_curso").val(),
               modulo : $("#hidden_modulo").val(),
               leccion : $("#hidden_leccion").val()
-            }, false, false); 
-          }, 
+            }, false, false);
+          },
           false, false
         );
       }
@@ -701,24 +701,24 @@
         validator: {
           files: 3 - Archs,
           maxSize: 10,
-          formats: ""  
+          formats: ""
         }
       };
 
       InitUploader(function(a){
         var DATA = JSON.parse(a);
 
-        AsincTaks("gtrabajo/_registrar_archivo", 
-          { id: $("#inUpdIdTrabajo").val(), archivos: JSON.stringify(DATA.data) }, 
+        AsincTaks("gtrabajo/_registrar_archivo",
+          { id: $("#inUpdIdTrabajo").val(), archivos: JSON.stringify(DATA.data) },
           function(result){
             Mensaje("Se agregó el(los) archivo(s) adjunto(s) a la tarea", function(){
               CargarPagina("gleccion/_view_leccion", {
                 curso: $("#hidden_curso").val(),
                 modulo : $("#hidden_modulo").val(),
                 leccion : $("#hidden_leccion").val()
-              }, false, false); 
+              }, false, false);
             });
-          }, 
+          },
           false, false
         );
 
@@ -727,8 +727,8 @@
   });
 
   function ValidarFechas(fecha1, fecha2){
-    if(fecha1==null){ 
-      fecha1 = new Date(); 
+    if(fecha1==null){
+      fecha1 = new Date();
     }else{
       fecha1 = new Date(Date.parse(fecha1 + ":00"));
     }
