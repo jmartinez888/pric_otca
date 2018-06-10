@@ -57,38 +57,60 @@ class indexController extends usuariosController {
         $this->_view->renderizar('index','usuarios');
     }
 
-    public function _paginacion_listaregistros($nombre = false) {
+    public function _paginacion_listaregistros($txtBuscar = false) {
+
         //$this->validarUrlIdioma();
+        $idRol = $this->getInt('idrol');        
         $pagina = $this->getInt('pagina');
-        //$registros = $this->getInt('registros');
+        $filas=$this->getInt('filas');        
+        $totalRegistros = $this->getInt('total_registros');
 
-        $condicion = "";
-        //$nombre = $this->getSql('nombre');
-        if ($nombre) {
-            $condicion .= " AND Usu_Usuario liKe '%$nombre%' ";
-        }
-
-        //Filtro por Activos/Eliminados
-        $condicion = " ORDER BY u.Row_Estado DESC ";
         $soloActivos = 0;
-        if (!$this->_acl->permiso('ver_eliminados')) {
-            $soloActivos = 1;
-            $condicion = " WHERE u.Row_Estado = $soloActivos ";
-        }
-        //Filtro por Activos/Eliminados
-        $condicion .= " LIMIT 0," . CANT_REG_PAG . " ";
-        // echo $condicion; exit;
-        $arrayRowCount = $this->_usuarios->getUsuariosRowCount($condicion);
-        // print_r($arrayRowCount);
-        $totalRegistros = $arrayRowCount['CantidadRegistros'];
+        $condicion = "";
+        if ($txtBuscar && $idRol) 
+        {
+            $condicion = " INNER JOIN usuario_rol ur on u.Usu_IdUsuario=ur.Usu_IdUsuario WHERE Usu_Usuario liKe '%$txtBuscar%' and ur.Rol_IdRol=$idRol ";
+            if (!$this->_acl->permiso('ver_eliminados'))  {
+                $soloActivos = 1;
+                $condicion .= " AND u.Row_Estado = $soloActivos ";
+            }
+            $condicion .= " ORDER BY u.Row_Estado DESC  ";
+        } 
+
+        else if ($txtBuscar) 
+        {
+            $condicion = " WHERE Usu_Usuario liKe '%$txtBuscar%' ";
+            if (!$this->_acl->permiso('ver_eliminados')) {
+                $soloActivos = 1;
+                $condicion .= " AND u.Row_Estado = $soloActivos ";
+            }
+            $condicion .= " ORDER BY u.Row_Estado DESC  ";
+        } 
+
+        else if ($idRol) 
+        {
+            $condicion = " INNER JOIN usuario_rol ur on u.Usu_IdUsuario=ur.Usu_IdUsuario WHERE  ur.Rol_IdRol=$idRol ";
+            if (!$this->_acl->permiso('ver_eliminados')) {
+                $soloActivos = 1;
+                $condicion .= " AND u.Row_Estado = $soloActivos ";
+            }
+            $condicion .= " ORDER BY u.Row_Estado DESC  ";
+        } 
+
+        else {
+            //Filtro por Activos/Eliminados     
+            $condicion = " ORDER BY u.Row_Estado DESC ";   
+            if (!$this->_acl->permiso('ver_eliminados')) {
+                $soloActivos = 1;
+                $condicion = " WHERE u.Row_Estado = $soloActivos  ";
+            }
+        }        
 
         $paginador = new Paginador();
 
-        $this->_view->assign('usuarios', $this->_usuarios->getUsuariosPaginado($condicion));
+        $paginador->paginar( $totalRegistros,"listaregistros", "$txtBuscar", $pagina, $filas, true);
 
-        $paginador->paginar( $totalRegistros,"listaregistros", "", $pagina, CANT_REG_PAG, true);
-
-        // $this->_view->assign('usuarios', $paginador->paginar($this->_usuarios->getUsuarios(), "listaregistros", "$nombre", $pagina, 25));
+        $this->_view->assign('usuarios', $this->_usuarios->getUsuariosCondicion($pagina,$filas, $condicion));
 
         $this->_view->assign('numeropagina', $paginador->getNumeroPagina());
         //$this->_view->assign('cantidadporpagina',$registros);
@@ -98,26 +120,67 @@ class indexController extends usuariosController {
 
     public function _buscarUsuario() {
         //$this->validarUrlIdioma();
-        $nombre = $this->getSql('palabra');
+       $txtBuscar = $this->getSql('palabra');
+
         $idRol = $this->getInt('idrol');
+        $pagina = $this->getInt('pagina');
         //echo $idRol."/".$nombre;exit;
         $condicion = "";
 
-        if ($nombre) {
-            $condicion .= " AND Usu_Usuario liKe '%$nombre%' ";
-        }
-        if ($idRol>0) {
-            $condicion .= " AND u.Rol_IdRol = $idRol ";
-        }
-       // echo $condicion;exit;
-      // print_r($this->_usuarios->getUsuarios($condicion));exit;
+        $soloActivos = 0;
+        // $nombre = $this->getSql('palabra');
+        if ($txtBuscar && $idRol) 
+        {
+            $condicion = " INNER JOIN usuario_rol ur on u.Usu_IdUsuario=ur.Usu_IdUsuario WHERE Usu_Usuario liKe '%$txtBuscar%' and ur.Rol_IdRol=$idRol ";
+            if (!$this->_acl->permiso('ver_eliminados'))  {
+                $soloActivos = 1;
+                $condicion .= " AND u.Row_Estado = $soloActivos ";
+            }
+            $condicion .= " ORDER BY u.Row_Estado DESC  ";
+        } 
+
+        else if ($txtBuscar) 
+        {
+            $condicion = " WHERE Usu_Usuario liKe '%$txtBuscar%' ";
+            if (!$this->_acl->permiso('ver_eliminados')) {
+                $soloActivos = 1;
+                $condicion .= " AND u.Row_Estado = $soloActivos ";
+            }
+            $condicion .= " ORDER BY u.Row_Estado DESC  ";
+        } 
+
+        else if ($idRol) 
+        {
+            $condicion = " INNER JOIN usuario_rol ur on u.Usu_IdUsuario=ur.Usu_IdUsuario WHERE  ur.Rol_IdRol=$idRol ";
+            if (!$this->_acl->permiso('ver_eliminados')) {
+                $soloActivos = 1;
+                $condicion .= " AND u.Row_Estado = $soloActivos ";
+            }
+            $condicion .= " ORDER BY u.Row_Estado DESC  ";
+        } 
+
+        else {
+            //Filtro por Activos/Eliminados     
+            $condicion = " ORDER BY u.Row_Estado DESC ";   
+            if (!$this->_acl->permiso('ver_eliminados')) {
+                $soloActivos = 1;
+                $condicion = " WHERE u.Row_Estado = $soloActivos  ";
+            }
+        }        
+
+
         $paginador = new Paginador();
 
-        $this->_view->assign('usuarios', $paginador->paginar($this->_usuarios->getUsuarios($condicion), "listaregistros", "$nombre", false, 25));
+        $arrayRowCount = $this->_usuarios->getUsuariosRowCount($condicion);
+        $totalRegistros = $arrayRowCount['CantidadRegistros'];
+        // echo($totalRegistros);
+        // print_r($arrayRowCount); echo($condicion);exit;
+        $this->_view->assign('usuarios', $this->_usuarios->getUsuariosCondicion($pagina,CANT_REG_PAG, $condicion));
+
+        $paginador->paginar( $totalRegistros ,"listaregistros", "$txtBuscar", $pagina, CANT_REG_PAG, true);
 
         $this->_view->assign('numeropagina', $paginador->getNumeroPagina());
-        //$this->_view->assign('cantidadporpagina',$registros);
-        $this->_view->assign('paginacion', $paginador->getView('paginacion_ajax'));
+        $this->_view->assign('paginacion', $paginador->getView('paginacion_ajax_s_filas'));
         $this->_view->renderizar('ajax/listaregistros', false, true);
     }
 
@@ -143,7 +206,7 @@ class indexController extends usuariosController {
 //        $mail = new PHPMailer();
         if($i==0)
         {
-            $random = rand(1782598471, 9999999999);
+            $random = rand(1782598471, mt_getrandmax());
             $idUsuario = $this->_usuarios->registrarUsuario(
                 $this->getSql('nombre'),
                 $this->getSql('apellidos'),
@@ -184,12 +247,17 @@ class indexController extends usuariosController {
         $this->_usuarios->cambiarEstadoUsuario($this->filtrarInt($idUsusario), $this->filtrarInt($estado));
         $this->redireccionar('usuarios');
     }
-    public function _eliminarUsuario($Usu_IdUsuario = false) {
+    public function _eliminarUsuario($Usu_IdUsuario = false, $Usu_RowEstado=false) {
         if(!$this->filtrarInt($Usu_IdUsuario)){            
             $this->_view->assign('_error', 'Error parametro ID ..!!');
             $this->_view->renderizar('index'); exit;
         }else{
-            $this->_usuarios->eliminarUsuario($this->filtrarInt($Usu_IdUsuario));
+
+            if($this->filtrarInt($Usu_RowEstado)==0)
+                $this->_usuarios->eliminarHabilitarUsuario($this->filtrarInt($Usu_IdUsuario), 1);
+
+            else
+                $this->_usuarios->eliminarHabilitarUsuario($this->filtrarInt($Usu_IdUsuario), 0);
         }
         $this->redireccionar('usuarios');
     }
@@ -202,6 +270,8 @@ class indexController extends usuariosController {
     }
     
     public function rol($usuarioID, $nuevoRol=false) {
+
+        $this->_view->setJs(array('index'));
         
         if($nuevoRol){
             $rolID = $this->_usuarios->insertarRol($nuevoRol,'',1);            
@@ -211,6 +281,8 @@ class indexController extends usuariosController {
                 } else {
                     $this->_view->assign('_error', 'Error al registrar el Rol');
                 }
+
+                // $this->redireccionar("usuarios/index/rol/".$usuarioID."/".false);
             } else {
                $this->_view->assign('_error', 'Ocurrio un error al Registrar los datos');
             }
@@ -239,6 +311,7 @@ class indexController extends usuariosController {
         //print_r($usu);
         //$this->_view->assign('rol', $rolUsuario['Rol_role']);
         $this->_view->assign('roles', $this->_usuarios->getRoles());
+        $this->_view->assign('rolesUsuario', $this->_usuarios->getRolesxUsuario($id));
         if($nuevoRol){
             $this->_view->renderizar('ajax/rol_usuario', false, true);
         }else{
@@ -358,11 +431,24 @@ class indexController extends usuariosController {
                     $this->getSql('institucion'),
                     $this->getSql('cargo'),
                     $this->getSql('email'),
-                    $this->getInt('Rol_IdRol'), 
                     $this->getInt('idusuario')
                 );
+
+                $idUsuarioRol = false;
+
+                $this->_usuarios->eliminarRol_usuario($this->getInt('idusuario'));
+
+                     $roles=$_POST['roles'];
+
+                     if(count($roles)!=0){
+
+                         for($i=0;$i<count($roles);$i++){
+                            $idUsuarioRol = $this->_usuarios->insertarRol_usuario($this->getInt('idusuario'),$roles[$i]);
+                         }
+                    }
                         
-                if ($idUsuario ) {
+                if ($idUsuario || $idUsuarioRol) {
+
                     $this->_view->assign('_mensaje', 'Edición del Usuario <b style="font-size: 1.15em;">'.$this->getAlphaNum('usuario').'</b> completado..!!');
                 } else {
                     $this->_view->assign('_error', 'Error al editar el Usuario');
@@ -372,6 +458,7 @@ class indexController extends usuariosController {
             }
         }
     }
+
 }
 
 ?>

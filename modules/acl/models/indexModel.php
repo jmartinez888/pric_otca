@@ -245,8 +245,8 @@ class indexModel extends Model
             $result = $this->_db->prepare($sql);
             $result->bindParam(1, $iPer_Nombre, PDO::PARAM_STR);
             $result->bindParam(2, $iPer_Ckey, PDO::PARAM_STR);
-            $result->bindParam(3, empty($iMod_Modulo) ? NULL : $iMod_Modulo,  PDO::PARAM_INT);            
-            $result->bindParam(4, empty($iIdi_IdIdioma) ? NULL : $iIdi_IdIdioma,  PDO::PARAM_STR);
+            $result->bindParam(3, $iMod_Modulo,  PDO::PARAM_INT);            
+            $result->bindParam(4, $iIdi_IdIdioma,  PDO::PARAM_STR);
            
             $result->execute();
             return $result->fetch();
@@ -280,7 +280,8 @@ class indexModel extends Model
             $permiso = $this->_db->query(
                 " SELECT r.* FROM rol r $condicion "               
                 );
-            return $permiso->rowCount(PDO::FETCH_ASSOC);
+            $permiso->execute();
+            return $permiso->fetchAll(PDO::FETCH_ASSOC);
 
             // $sql = "call s_s_listar_roles_completo()";
             // $result = $this->_db->prepare($sql);
@@ -366,12 +367,14 @@ class indexModel extends Model
         }
     }
     //Util_Rol Jhon Martinez
-    public function editarRol($Rol_IdRol, $Rol_Nombre) {
+    public function editarRol($Rol_IdRol, $Rol_Nombre,$iRol_Ckey,$iMod_IdModulo) {
         try{
-            $sql = "call s_u_cambiar_nombre_rol(?,?)";
+            $sql = "call s_u_cambiar_nombre_rol(?,?,?,?)";
             $result = $this->_db->prepare($sql);
             $result->bindParam(1, $Rol_IdRol, PDO::PARAM_INT);
             $result->bindParam(2, $Rol_Nombre, PDO::PARAM_STR);
+            $result->bindParam(3, $iRol_Ckey, PDO::PARAM_STR);
+            $result->bindParam(4, $iMod_IdModulo, PDO::PARAM_STR);
             $result->execute();
 
             return $result->rowCount(PDO::FETCH_ASSOC);  
@@ -588,14 +591,16 @@ class indexModel extends Model
         }
     }
     
-    public function insertarRol($iRol_Nombre, $iIdi_IdIdioma="", $iRol_Estado=1)
+    public function insertarRol($iRol_Nombre,$iRol_Ckey,$iMod_IdModulo, $iIdi_IdIdioma="", $iRol_Estado=1)
     {
         try {            
-            $sql = "call s_i_rol(?,?,?)";
+            $sql = "call s_i_rol(?,?,?,?,?)";
             $result = $this->_db->prepare($sql);
             $result->bindParam(1, $iRol_Nombre, PDO::PARAM_STR);
-            $result->bindParam(2, empty($iIdi_IdIdioma) ?  null: $iIdi_IdIdioma, PDO::PARAM_NULL | PDO::PARAM_STR);
-            $result->bindParam(3, $iRol_Estado, PDO::PARAM_INT);
+            $result->bindParam(2, $iRol_Ckey, PDO::PARAM_STR);
+            $result->bindParam(3, $iMod_IdModulo, PDO::PARAM_STR);
+            $result->bindParam(4, $iIdi_IdIdioma, PDO::PARAM_STR);
+            $result->bindParam(5, $iRol_Estado, PDO::PARAM_INT);
             $result->execute();
             return $result->fetch();
         } catch (PDOException $exception) {
@@ -638,6 +643,182 @@ class indexModel extends Model
             return $idiomas->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $exception) {
             $this->registrarBitacora("acl(indexModel)", "getIdiomas", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
+
+
+    public function getModulosAll($pagina = 1, $registrosXPagina = 1, $activos = 1)
+    {
+        try{
+            $sql = "call s_s_listar_modulos_All(?,?,?)";
+            $result = $this->_db->prepare($sql);
+            $result->bindParam(1, $pagina, PDO::PARAM_INT);
+            $result->bindParam(2, $registrosXPagina, PDO::PARAM_INT);
+            $result->bindParam(3, $activos, PDO::PARAM_INT);
+            $result->execute();
+            return $result->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("acl(indexModel)", "getModulosAll", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
+
+
+    public function getModulosRowCount($condicion = "")
+    {
+        try{
+            $sql = " SELECT COUNT(Mod_IdModulo) AS CantidadRegistros FROM modulo $condicion ";
+            $result = $this->_db->prepare($sql);
+            $result->execute();
+            return $result->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("acl(indexModel)", "getModulosRowCount", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
+
+
+    public function getModulosCondicion($pagina,$registrosXPagina,$condicion = "")
+    {
+        try{
+            $registroInicio = 0;
+            if ($pagina > 0) {
+                $registroInicio = ($pagina - 1) * $registrosXPagina;                
+            }
+            $sql = " SELECT * FROM modulo m $condicion 
+                LIMIT $registroInicio, $registrosXPagina ";
+            $result = $this->_db->query($sql);
+            return $result->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("acl(indexModel)", "getModulosCondicion", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
+
+    public function verificarModulo($modulo)
+    {
+        try{
+            $permiso = $this->_db->query("SELECT * FROM modulo WHERE Mod_Nombre = '$modulo'");
+            return $permiso->fetch();
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("acl(indexModel)", "verificarModulo", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
+
+    public function insertarModulo($Mod_Nombre = "", $Mod_Codigo = "", $Mod_Descripcion = "",$Mod_Estado=1)
+    {
+        try{
+            $sql = "call s_i_modulos(?,?,?,?)";
+            $result = $this->_db->prepare($sql);
+            $result->bindParam(1, $Mod_Nombre, PDO::PARAM_STR);
+            $result->bindParam(2, $Mod_Codigo, PDO::PARAM_STR);
+            $result->bindParam(3, $Mod_Descripcion, PDO::PARAM_STR);
+            $result->bindParam(4, $Mod_Estado, PDO::PARAM_INT);
+            $result->execute();
+            return $result->fetch();
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("acl(indexModel)", "insertarModulo", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
+
+
+    //Util_Permiso Jhon Martinez
+    public function cambiarEstadomodulos($Mod_IdModulo, $Mod_Estado)
+    {
+        try{
+            if($Mod_Estado==0)
+            {
+
+                $sql = "call s_u_cambiar_estado_modulo(?,1)";
+                $result = $this->_db->prepare($sql);
+                $result->bindParam(1, $Mod_IdModulo, PDO::PARAM_INT);
+                $result->execute();
+
+                return $result->rowCount(PDO::FETCH_ASSOC);                
+            }
+            if($Mod_Estado==1)
+            {
+
+                $sql = "call s_u_cambiar_estado_modulo(?,0)";
+                $result = $this->_db->prepare($sql);
+                $result->bindParam(1, $Mod_IdModulo, PDO::PARAM_INT);
+                $result->execute();
+
+                return $result->rowCount(PDO::FETCH_ASSOC);
+            }
+
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("acl(indexModel)", "cambiarEstadomodulos", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
+
+     public function getModulo($Mod_IdModulo)
+    {
+        try{
+            $Mod_IdModulo = (int) $Mod_IdModulo;
+            $key = $this->_db->query(
+                    "SELECT * FROM modulo WHERE Mod_IdModulo = $Mod_IdModulo"
+                    );
+            return $key->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("acl(indexModel)", "getModulo", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
+
+
+     public function editarModulo($Mod_Nombre = "", $Mod_Codigo = "", $Mod_Descripcion = "", $Mod_IdModulo) {
+        try{
+            $permiso = $this->_db->query(
+                " UPDATE modulo SET Mod_Nombre = '$Mod_Nombre', Mod_Codigo = '$Mod_Codigo', Mod_Descripcion = '$Mod_Descripcion' WHERE Mod_IdModulo = $Mod_IdModulo"
+            );
+            return $permiso->rowCount(PDO::FETCH_ASSOC);
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("acl(indexModel)", "editarModulo", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
+
+
+    public function verificarmoduloPermiso($Mod_IdModulo)
+    {
+        try{
+            $permiso = $this->_db->query("SELECT * FROM permisos WHERE Mod_IdModulo = $Mod_IdModulo");
+            return $permiso->fetchAll();
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("acl(indexModel)", "verificarmoduloPermiso", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
+
+    public function verificarmoduloRol($Mod_IdModulo)
+    {
+        try{
+            $permiso = $this->_db->query("SELECT * FROM rol WHERE Mod_IdModulo = $Mod_IdModulo");
+            return $permiso->fetchAll();
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("acl(indexModel)", "verificarmoduloRol", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
+
+    public function eliminarHabilitarModulo($iMod_IdModulo = 0, $iRow_Estado = 0)
+    {
+        try{
+            $sql = "call s_u_habilitar_deshabilitar_modulo(?,?)";
+            $result = $this->_db->prepare($sql);
+            $result->bindParam(1, $iMod_IdModulo, PDO::PARAM_INT);
+            $result->bindParam(2, $iRow_Estado, PDO::PARAM_INT);
+            $result->execute();
+            
+            return $result->rowCount(PDO::FETCH_ASSOC); 
+
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("acl(indexModel)", "eliminarHabilitarRol", "Error Model", $exception);
             return $exception->getTraceAsString();
         }
     }

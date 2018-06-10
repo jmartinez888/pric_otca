@@ -78,9 +78,10 @@ class indexController extends aclController
             $this->_view->assign('_error', 'El rol <b style="font-size: 1.15em;">'.$this->getSql('nuevoRol').'</b> ya existe');
         }
         else
-        {            
+        {   
+    
             $idRol = $this->_aclm->insertarRol(
-                $this->getSql('nuevoRol'),'',1                
+                $this->getSql('nuevoRol'),$this->getSql('key_'),$this->getSql('modulo_'),'es',1                
             );  
             if (is_array($idRol)) 
             {
@@ -99,10 +100,10 @@ class indexController extends aclController
             }
         } 
 
-        if($usu)
-        {
-            $this->_view->renderizar('ajax/nuevo_rol', false, true);
-        }
+        // if($usu)
+        // {
+        //     $this->_view->renderizar('ajax/nuevo_rol', false, true);
+        // }
     }
     //Modificado por Jhon Martinez
     public function _cambiarEstadoRol()
@@ -300,7 +301,7 @@ class indexController extends aclController
         {            
             if($this->getSql('idIdiomaSeleccionado') == $rol['Idi_IdIdioma'])
             {
-                $id = $this->_aclm->editarRol($this->filtrarInt($Rol_IdRol), $this->getSql('Rol_Nombre'));
+                $id = $this->_aclm->editarRol($this->filtrarInt($Rol_IdRol), $this->getSql('Rol_Nombre'),$this->getSql('key_'),$this->getSql('modulo_'));
                 if($id)
                 {
                     $this->_view->assign('_mensaje', 'Rol editado Correctamente');
@@ -324,6 +325,7 @@ class indexController extends aclController
             //$this->redireccionar('acl/index/roles');
             //exit;
         }        
+        $this->_view->assign('modulos', $this->_aclm->getModulos(0,0));
         $this->_view->assign('idiomas',$this->_aclm->getIdiomas());        
         $this->_view->assign('datos',$rol);
         $this->_view->renderizar('ajax/editarRol','editarRol');
@@ -967,6 +969,497 @@ class indexController extends aclController
         $this->_view->assign('role', $row);
         $this->_view->assign('permisos', $this->_aclm->getPermisosRol($Rol_IdRol));
         $this->_view->renderizar('permisos_role');
+    }
+
+
+
+
+    /*modulos*/
+    //Modificado por Jhon Martinez
+    public function modulos($error = "")
+    {
+        $this->_acl->acceso('listar_usuarios');
+        $this->validarUrlIdioma();
+        $this->_view->getLenguaje("index_inicio");
+        $this->_view->setJs(array('index'));
+
+        $pagina = $this->getInt('pagina');
+
+        //Filtro por Activos/Eliminados
+        $condicion = " ORDER BY Row_Estado DESC ";
+        $soloActivos = 0;
+        if (!$this->_acl->permiso('ver_eliminados')) {
+            $soloActivos = 1;
+            $condicion = " WHERE Row_Estado = $soloActivos ";
+        }
+        //Filtro por Activos/Eliminados
+
+        $paginador = new Paginador();
+        
+        if ($this->botonPress("bt_guardarModulo")) 
+        {
+              $this->nuevo_modulo();                
+        }
+
+        $arrayRowCount = $this->_aclm->getModulosRowCount($condicion);
+        $this->_view->assign('modulos', $this->_aclm->getModulosAll($pagina,CANT_REG_PAG,$soloActivos));
+
+        $paginador->paginar( $arrayRowCount['CantidadRegistros'],"listarmodulos", "", $pagina, CANT_REG_PAG, true);
+
+        $this->_view->assign('numeropagina', $paginador->getNumeroPagina());
+        $this->_view->assign('paginacionmodulos', $paginador->getView('paginacion_ajax_s_filas'));
+        
+        $this->_view->assign('titulo', 'Administracion de modulos');
+        $this->_view->renderizar('modulos', 'acl');
+    }    
+    //Modificado por Jhon Martinez
+    public function _cambiarEstadomodulos(){
+        $this->_acl->acceso('agregar_rol');
+        // $this->_view->setJs(array(array(BASE_URL . 'public/js/util.js',true)));
+
+        //Para Mensajes
+        $resultado = array();
+        $mensaje = "error";
+        $contenido = "";
+        //Para mensajes
+
+        $txtBuscar = $this->getSql('palabra');
+        $pagina = $this->getInt('pagina');
+        $filas=$this->getInt('filas');
+        $Mod_IdModulo = $this->getInt('_Mod_IdModulo');
+        $Mod_Estado = $this->getInt('_Mod_Estado');
+        // echo $Per_Estado."//".$Per_Idmodulo; exit;
+
+        if(!$Mod_IdModulo){            
+            $contenido = 'Error parametro ID ..!!'; 
+            $mensaje = "error";
+            array_push($resultado, array(0 => $mensaje, 1 => $contenido));            
+        } else {
+            $rowCountEstado = $this->_aclm->cambiarEstadomodulos($Mod_IdModulo, $Mod_Estado);
+            if ($rowCountEstado > 0) {
+                if ($Mod_Estado == 1) {
+                    $contenido = ' Se cambio de estado correctamente a <b>Deshabilitado</b> <i data-toggle="tooltip" data-placement="bottom" class="glyphicon glyphicon-remove-sign" title="Deshabilitado" style="background: #FFF; color: #DD4B39; padding: 2px;"/> ...!! ';              
+                }
+                if ($Mod_Estado == 0) {
+                     $contenido = ' Se cambio de estado correctamente a <b>Habilitado</b> <i data-toggle="tooltip" data-placement="bottom" class="glyphicon glyphicon-ok-sign" title="Habilitado" style=" background: #FFF;  color: #088A08; padding: 2px;"/> ...!! ';
+                }     
+                $mensaje = "ok";
+                array_push($resultado, array(0 => $mensaje, 1 => $contenido));       
+            } else {
+                $contenido = 'Error de variable(s) en consulta..!!'; 
+                $mensaje = "error";
+                array_push($resultado, array(0 => $mensaje, 1 => $contenido)); 
+            }        
+
+        }
+        $mensaje_json = json_encode($resultado);
+        // echo($mensaje_json); exit();
+        $this->_view->assign('_mensaje_json', $mensaje_json);
+
+        $soloActivos = 0;
+        $condicion = "";
+        if ($txtBuscar) 
+        {
+            $condicion = " WHERE Mod_Nombre liKe '%$txtBuscar%' ";
+            if (!$this->_acl->permiso('ver_eliminados')) {
+                $soloActivos = 1;
+                $condicion .= " AND Row_Estado = $soloActivos ";
+            }
+            $condicion .= " ORDER BY Row_Estado DESC  ";
+        } else {
+            //Filtro por Activos/Eliminados     
+            $condicion = " ORDER BY Row_Estado DESC ";   
+            if (!$this->_acl->permiso('ver_eliminados')) {
+                $soloActivos = 1;
+                $condicion = " WHERE Row_Estado = $soloActivos  ";
+            }
+
+            //Filtro por Activos/Eliminados
+        }  
+
+        $paginador = new Paginador();
+
+        $arrayRowCount = $this->_aclm->getModulosRowCount($condicion);
+        $totalRegistros = $arrayRowCount['CantidadRegistros'];
+        // echo($totalRegistros);
+        // print_r($arrayRowCount); echo($condicion);exit;
+        $this->_view->assign('modulos', $this->_aclm->getModulosCondicion($pagina,$filas, $condicion));
+
+        $paginador->paginar( $totalRegistros ,"listarmodulos", "$txtBuscar", $pagina, $filas, true);
+
+        $this->_view->assign('numeropagina', $paginador->getNumeroPagina());
+        $this->_view->assign('paginacionmodulos', $paginador->getView('paginacion_ajax_s_filas'));
+        $this->_view->renderizar('ajax/listarmodulos', false, true);
+    }
+    //Modificado por Jhon Martinez
+    public function editarmodulo($Mod_IdModulo = false){
+        $this->_acl->acceso('agregar_rol');
+        $this->validarUrlIdioma();
+        $this->_view->getLenguaje("index_inicio");
+        $this->_view->setJs(array('index'));
+        if ($this->botonPress("bt_editarmodulo")) {
+            $id = $this->_aclm->editarModulo( $this->getSql('modulo_'), $this->getSql('codigo_'), $this->getSql('descripcion_'),$this->filtrarInt($Mod_IdModulo));
+            if($id){
+                $this->_view->assign('_mensaje', 'modulo <b>'.$this->getSql('modulo_').'</b> editado Correctamente...');
+            }  else {
+                $this->_view->assign('_error', 'Error al editar modulo');
+            }            
+            // $this->redireccionar('acl/index/modulos');
+            // exit;
+        }
+        if ($this->botonPress("bt_cancelarEditarmodulo")) {
+            $this->redireccionar('acl/index/modulos');
+        }
+        
+        $modulo = $this->_aclm->getModulo($this->filtrarInt($Mod_IdModulo)); 
+        
+        $this->_view->assign('datos',$modulo);
+        $this->_view->renderizar('ajax/editarModulo');
+    }
+    
+    public function gestion_idiomas_modulos() {
+        $this->_view->getLenguaje('template_backend');
+        $Idi_IdIdioma =  $this->getPostParam('idIdioma');        
+        $Per_Idmodulo = $this->getPostParam('idmodulos');
+                   
+        $datos = $this->_aclm->getmoduloTraducido($Per_Idmodulo, $Idi_IdIdioma);
+        print_r($datos);
+        $this->_view->assign('idiomas',$this->_aclm->getIdiomas());
+        if ($datos["Idi_IdIdioma"]==$Idi_IdIdioma) {
+            $this->_view->assign('datos',$datos);    
+        }else{
+            $datos["Per_modulo"]="";
+            $datos["Per_Ckey"]="";
+            $datos["Idi_IdIdioma"]=$Idi_IdIdioma;
+            $this->_view->assign('datos',$datos);  
+        }            
+        //$this->_view->assign('IdiomaOriginal',$this->getPostParam('idIdiomaOriginal'));        
+        $this->_view->renderizar('ajax/gestion_idiomas_modulos', false, true);
+    }
+    //Modificado por Jhon Martinez
+    public function _paginacion_listarmodulos($txtBuscar = false) 
+    {
+        //$this->validarUrlIdioma();
+        $pagina = $this->getInt('pagina');
+        $filas=$this->getInt('filas');
+        $totalRegistros = $this->getInt('total_registros');
+
+        $condicion = " ";
+        $soloActivos = 0;
+        // $nombre = $this->getSql('palabra');
+        if ($txtBuscar) 
+        {
+            $condicion = " WHERE Mod_Nombre liKe '%$txtBuscar%' ";
+            //Filtro por Activos/Eliminados
+            if (!$this->_acl->permiso('ver_eliminados')) {
+                $soloActivos = 1;
+                $condicion .= " AND Row_Estado = $soloActivos ";
+            } else {
+                $condicion .= " ORDER BY Row_Estado DESC  ";
+            }
+        } else {
+            //Filtro por Activos/Eliminados     
+            $condicion = " ORDER BY Row_Estado DESC ";   
+            if (!$this->_acl->permiso('ver_eliminados')) {
+                $soloActivos = 1;
+                $condicion = " WHERE Row_Estado = $soloActivos  ";
+            }
+        }         
+
+
+        $paginador = new Paginador();
+        // $arrayRowCount = $this->_aclm->getmodulosRowCount$arrayRowCount = 0,($condicion);
+
+        $paginador->paginar( $totalRegistros,"listarmodulos", "$txtBuscar", $pagina, $filas, true);
+
+        $this->_view->assign('modulos', $this->_aclm->getModulosCondicion($pagina,$filas, $condicion));
+        $this->_view->assign('numeropagina', $paginador->getNumeroPagina());
+        //$this->_view->assign('cantidadporpagina',$registros);
+        $this->_view->assign('paginacionmodulos', $paginador->getView('paginacion_ajax_s_filas'));
+        $this->_view->renderizar('ajax/listarmodulos', false, true);
+    }
+    //Modificado por Jhon Martinez
+    public function _buscarmodulo() 
+    {
+        $txtBuscar = $this->getSql('palabra');
+        $pagina = $this->getInt('pagina');
+        $condicion = "";
+
+        $soloActivos = 0;
+        // $nombre = $this->getSql('palabra');
+        if ($txtBuscar) 
+        {
+            $condicion = " WHERE Mod_Nombre liKe '%$txtBuscar%' ";
+            if (!$this->_acl->permiso('ver_eliminados')) {
+                $soloActivos = 1;
+                $condicion .= " AND Row_Estado = $soloActivos ";
+            }
+            $condicion .= " ORDER BY Row_Estado DESC  ";
+        } else {
+            //Filtro por Activos/Eliminados     
+            $condicion = " ORDER BY Row_Estado DESC ";   
+            if (!$this->_acl->permiso('ver_eliminados')) {
+                $soloActivos = 1;
+                $condicion = " WHERE Row_Estado = $soloActivos  ";
+            }
+
+            //Filtro por Activos/Eliminados
+        }        
+
+
+        $paginador = new Paginador();
+
+        $arrayRowCount = $this->_aclm->getModulosRowCount($condicion);
+        $totalRegistros = $arrayRowCount['CantidadRegistros'];
+        // echo($totalRegistros);
+        // print_r($arrayRowCount); echo($condicion);exit;
+        $this->_view->assign('modulos', $this->_aclm->getModulosCondicion($pagina,CANT_REG_PAG, $condicion));
+
+        $paginador->paginar( $totalRegistros ,"listarmodulos", "$txtBuscar", $pagina, CANT_REG_PAG, true);
+
+        $this->_view->assign('numeropagina', $paginador->getNumeroPagina());
+        $this->_view->assign('paginacionmodulos', $paginador->getView('paginacion_ajax_s_filas'));
+        $this->_view->renderizar('ajax/listarmodulos', false, true);
+    }
+
+
+    //Modificado por Jhon Martinez
+    public function nuevo_modulo()
+    {
+
+        $this->_acl->acceso('agregar_rol');
+        $i=0;
+        $error = ""; $error1 = ""; $error2 = "";
+        
+        if($this->_aclm->verificarModulo($this->getSql('modulo_')))
+        {
+            $error = ' modulo <b style="font-size: 1.15em;"> '. $this->getSql('modulo_').' </b> ya Existe.';
+            $i=1;
+        }
+        
+        if($i==0)
+        {
+            $idmodulo = $this->_aclm->insertarModulo(
+                $this->getSql('modulo_'), 
+                $this->getAlphaNum('codigo_'),
+                $this->getSql('descripcion_'), 1
+                );
+        }
+
+        if (is_array($idmodulo)) 
+        {
+
+            if ($idmodulo  [0] > 0) 
+            {
+                $this->_view->assign('_mensaje', 'Se registró correctamente el modulo <b style="font-size: 1.15em;">'. $this->getSql('modulo_').'</b> ');
+            } 
+            else 
+            {
+                $this->_view->assign('_error', 'Error al registrar el modulo');
+            }
+        }
+        else 
+        {
+            if($i!=0)
+            {
+                $this->_view->assign('_error', $error . $error1 );
+            }
+            else
+            {
+                $this->_view->assign('_error', 'Ocurrio un error al Registrar los datos');
+            }            
+        }            
+    }    
+    //Modificado por Jhon Martinez
+    public function _eliminar_modulo()
+    {
+        $this->_acl->acceso('agregar_rol');
+        //Variables Ajax_Javascript
+        $Mod_Idmodulo = $this->getInt('_Mod_IdModulo');
+        $Row_Estado = $this->getInt('_Row_Estado');
+        $txtBuscar = $this->getSql('palabra');
+        $pagina = $this->getInt('pagina');
+        $filas=$this->getInt('filas');        
+
+        //Para Mensajes
+        $resultado = array();
+        $mensaje = "error";
+        $contenido = "";
+        //Para mensajes
+
+        if ($Row_Estado == 0) {
+            if(!$Mod_Idmodulo)
+            {            
+                $contenido = 'Error parametro ID ..!!'; 
+                $mensaje = "error";
+                array_push($resultado, array(0 => $mensaje, 1 => $contenido));          
+            } else {
+
+                    $usuario = $this->_aclm->verificarmoduloPermiso($Mod_Idmodulo);
+                    if(!$usuario){
+
+                        $rol = $this->_aclm->verificarmoduloRol($Mod_Idmodulo);
+                        if(!$rol){
+                            $rowCount = $this->_aclm->eliminarHabilitarModulo($Mod_Idmodulo,$Row_Estado);
+                            if($rowCount)
+                            {
+                                $contenido = 'El modulo fue eliminado correctamente...!!!'; 
+                                $mensaje = "ok";
+                                array_push($resultado, array(0 => $mensaje, 1 => $contenido));
+                            } else {
+                                $contenido = 'No se pudo eliminar modulo error en consulta...!!!'; 
+                                $mensaje = "error";
+                                array_push($resultado, array(0 => $mensaje, 1 => $contenido));
+                            }
+                        } else {
+                            $contenido = 'No se pudo eliminar modulo asignado a rol...!!!'; 
+                            $mensaje = "error";
+                            array_push($resultado, array(0 => $mensaje, 1 => $contenido));
+                        }
+                    } else {
+                        $contenido = 'No se pudo eliminar modulo asignado a permiso...!!!'; 
+                        $mensaje = "error";
+                        array_push($resultado, array(0 => $mensaje, 1 => $contenido));
+                    }
+                           
+            }
+        } else {
+            $rowCount = $this->_aclm->eliminarHabilitarModulo($Mod_Idmodulo,$Row_Estado);
+            
+            if($rowCount)
+            {
+                $contenido = 'El modulo fue activado correctamente...!!!'; 
+                $mensaje = "ok";
+                array_push($resultado, array(0 => $mensaje, 1 => $contenido));
+            } else {
+                $contenido = 'No se pudo activar modulo, error en variable(s) de consulta...!!!'; 
+                $mensaje = "error";
+                array_push($resultado, array(0 => $mensaje, 1 => $contenido));
+            }
+        }
+
+        
+        $mensaje_json = json_encode($resultado);
+        // echo($mensaje_json); exit();
+        $this->_view->assign('_mensaje_json', $mensaje_json);
+
+        $soloActivos = 0;
+        $condicion = "";
+        if ($txtBuscar) 
+        {
+            $condicion = " WHERE Mod_Nombre liKe '%$txtBuscar%' ";
+            if (!$this->_acl->permiso('ver_eliminados')) {
+                $soloActivos = 1;
+                $condicion .= " AND Row_Estado = $soloActivos ";
+            }
+            $condicion .= " ORDER BY Row_Estado DESC  ";
+        } else {
+            //Filtro por Activos/Eliminados     
+            $condicion = " ORDER BY Row_Estado DESC ";   
+            if (!$this->_acl->permiso('ver_eliminados')) {
+                $soloActivos = 1;
+                $condicion = " WHERE Row_Estado = $soloActivos  ";
+            }
+
+            //Filtro por Activos/Eliminados
+        }  
+
+        $paginador = new Paginador();
+
+        $arrayRowCount = $this->_aclm->getmodulosRowCount($condicion);
+        $totalRegistros = $arrayRowCount['CantidadRegistros'];
+        // echo($totalRegistros);
+        // print_r($arrayRowCount); echo($condicion);exit;
+        $this->_view->assign('modulos', $this->_aclm->getmodulosCondicion($pagina,$filas, $condicion));
+
+        $paginador->paginar( $totalRegistros ,"listarmodulos", "$txtBuscar", $pagina, $filas, true);
+
+        $this->_view->assign('numeropagina', $paginador->getNumeroPagina());
+        $this->_view->assign('paginacionmodulos', $paginador->getView('paginacion_ajax_s_filas'));
+        $this->_view->renderizar('ajax/listarmodulos', false, true);
+        //$this->modulos($error);
+    }
+    //Modificado por Jhon Martinez
+    public function modulos_role($Rol_IdRol)
+    {
+        $this->_acl->acceso('agregar_rol');
+        $this->validarUrlIdioma();
+        $this->_view->getLenguaje("index_inicio");
+        $Rol_IdRol = $this->filtrarInt($Rol_IdRol);
+        
+        if(!$Rol_IdRol)
+        {
+            $this->redireccionar('acl/roles');
+        }        
+        $row = $this->_aclm->getRol($Rol_IdRol);        
+        if(!$row)
+        {
+            $this->redireccionar('acl/roles');
+        }
+        if ($this->botonPress("bt_cancelarEditarRol")) {
+            $this->redireccionar('acl/index/roles');
+        }
+        
+        $this->_view->assign('titulo', 'Administracion de modulos rol');
+        
+        if($this->getInt('guardar') == 1)
+        {
+            $values = array_keys($_POST);
+            $replace = array();
+            $eliminar = array();
+            
+            for($i = 0; $i < count($values); $i++)
+            {
+                if(substr($values[$i],0,5) == 'perm_')
+                {
+                    $modulo = (strlen($values[$i]) - 5);
+                    
+                    if($_POST[$values[$i]] == 'x')
+                    {
+                        $eliminar[] = array(
+                            'role' => $Rol_IdRol,
+                            'modulo' => substr($values[$i], -$modulo)
+                        );
+                    }
+                    else
+                    {
+                        if($_POST[$values[$i]] == 1)
+                        {
+                            $v = 1;
+                        }
+                        else
+                        {
+                            $v = 0;
+                        }
+                        
+                        $replace[] = array(
+                            'role' => $Rol_IdRol,
+                            'modulo' => substr($values[$i], -$modulo),
+                            'valor' => $v
+                        );
+                    }
+                }
+            }
+            
+            for($i = 0; $i < count($eliminar); $i++)
+            {
+                $this->_aclm->eliminarmoduloRol(
+                        $eliminar[$i]['role'],
+                        $eliminar[$i]['modulo']);
+            }
+            
+            for($i = 0; $i < count($replace); $i++)
+            {
+                $this->_aclm->editarmoduloRol(
+                        $replace[$i]['role'],
+                        $replace[$i]['modulo'],
+                        $replace[$i]['valor']);
+            }
+        }
+        
+        $this->_view->assign('role', $row);
+        $this->_view->assign('modulos', $this->_aclm->getmodulosRol($Rol_IdRol));
+        $this->_view->renderizar('modulos_role');
     }
 }
 ?>
