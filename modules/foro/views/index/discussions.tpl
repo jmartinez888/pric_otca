@@ -12,11 +12,11 @@
                         <div class="discusion">
                             <div class="cabecera-discusion">
                                 <a class="link-foro" href="{$_layoutParams.root}foro/index/ficha/{$foro.For_IdForo}">               
-                                    <h4>{$foro.For_Titulo}</h4>                               
+                                    <h4 style="text-align: justify;">{$foro.For_Titulo}</h4>                               
                                 </a>
                             </div>
                             <div style="padding-bottom: 10px;">                          
-                                <p>{$foro.For_Resumen|truncate:120:"..."}</p>
+                                <p style="text-align: justify;">{$foro.For_Resumen|truncate:120:"..."}</p>
                             </div>
                             <div class="detalles-act-reciente">Usuario &nbsp;&nbsp;-&nbsp;&nbsp; hace 1 mes &nbsp;&nbsp;-&nbsp;&nbsp; 3 votos &nbsp;&nbsp;-&nbsp;&nbsp; 5 comentarios</div>       
                             <!-- <div class="footer-item row">

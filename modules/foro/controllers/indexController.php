@@ -38,18 +38,21 @@ class indexController extends foroController {
 
     public function query() {
         $this->_view->setTemplate(LAYOUT_FRONTEND);
+        $this->_view->setCss(array("jp-index"));
         $this->_view->assign('lista_foros', $this->_model->getForos("query"));
         $this->_view->renderizar('query');
     }
 
     public function webinar() {
         $this->_view->setTemplate(LAYOUT_FRONTEND);
+        $this->_view->setCss(array("jp-index"));
         $this->_view->assign('lista_foros', $this->_model->getForos("webinar"));
         $this->_view->renderizar('webinar');
     }
 
     public function workshop() {
         $this->_view->setTemplate(LAYOUT_FRONTEND);
+        $this->_view->setCss(array("jp-index"));
         $this->_view->assign('lista_foros', $this->_model->getForos("workshop"));
         $this->_view->renderizar('workshop');
     }
@@ -57,7 +60,7 @@ class indexController extends foroController {
     public function agenda() {
         $this->_view->setTemplate(LAYOUT_FRONTEND);
         $this->_view->setJs(array('agenda', array(BASE_URL . 'public/js/fullcalendar/moment.min.js'), array(BASE_URL . 'public/js/fullcalendar/fullcalendar.min.js'), array(BASE_URL . 'public/js/fullcalendar/locale/es.js')));
-        $this->_view->setCss(array('agenda', array(BASE_URL . "public/css/fullcalendar/fullcalendar.min.css")));
+        $this->_view->setCss(array('agenda', 'jp-agenda', array(BASE_URL . "public/css/fullcalendar/fullcalendar.min.css")));
 
         $this->_view->assign('agenda',json_encode($this->_model->getAgenda()));
         $this->_view->renderizar('agenda');
