@@ -69,7 +69,7 @@ class indexController extends foroController {
     }
     public function historico() {
         $this->_view->setTemplate(LAYOUT_FRONTEND);
-        $this->_view->setCss(array("historico"));
+        $this->_view->setCss(array("historico", "jp-historico"));
         $this->_view->assign('lista_foros', $this->_model->getHistorico());
         $this->_view->renderizar('historico');
     }
@@ -77,7 +77,7 @@ class indexController extends foroController {
         $this->_view->setTemplate(LAYOUT_FRONTEND);
         $this->_view->setCss(array(
             array('//github.com/downloads/lafeber/world-flags-sprite/flags32.css',true),
-            "statistics"));
+            "statistics", "jp-statistics"));
         $this->_view->setJs(array(
            //array('http://code.highcharts.com/highcharts.js', false), //agregado
            //array('http://code.highcharts.com/modules/exporting.js', false), //agregado

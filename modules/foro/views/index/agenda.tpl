@@ -4,15 +4,10 @@
         <h3 class="titulo-view titulo"><strong>Agenda</strong> </h3>        
         <div class="row">
             <div class="col-md-12">
-                <div class="row">                   
-                    <div class="col-md-12">
-                        <div class="row">
-                            <div id="calendar" class="col-centered">
-                            </div>
-                        </div>
-                    </div>      
-
+                
+                <div id="calendar" class="col-centered">
                 </div>
+>
             </div>     
         </div>
 

@@ -11,7 +11,6 @@
             </div>
             <div class="col-md-8">
                 <div class="row">
-                <!--propuesta home-foro josepacaya INICIO-->
                     <div class="col-md-12">
                         <h3 class="subtitle-foro">Temáticas</h3>
                     </div>
@@ -57,10 +56,10 @@
                         {foreach from=$lista_foros item=foro}
                         <div class="row col-lg-12 tematica-foro">
                             <div><a class="link-foro"  href="{$_layoutParams.root}foro/index/ficha/{$foro.For_IdForo}">
-                                    <h4>{$foro.For_Titulo}</h4></a></div>
+                                    <h4 style="text-align: justify;">{$foro.For_Titulo}</h4></a></div>
                                     {if !empty($foro.For_Resumen) && $foro.For_Resumen!=""}
-                                    <div>
-                                         <p>{$foro.For_Resumen|truncate:120:"..."}</p>
+                                    <div style="padding-bottom: 10px;">
+                                         <p style="text-align: justify;">{$foro.For_Resumen|truncate:120:"..."}</p>
                                     </div>
                                     {/if}
                                     <div class="detalles-act-reciente">{$foro.Usu_Usuario} &nbsp;&nbsp;-&nbsp;&nbsp; hace 1 mes &nbsp;&nbsp;-&nbsp;&nbsp; 3 votos &nbsp;&nbsp;-&nbsp;&nbsp; {$foro.For_TParticipantes|default:0} miembro(s) &nbsp;&nbsp;-&nbsp;&nbsp;{$foro.For_TComentarios|default:0} comentario(s)</div>
