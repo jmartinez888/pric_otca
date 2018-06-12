@@ -1,6 +1,8 @@
 var url = $("#url").val();
-$(document).on('ready', function () {	
-	$("body").on('click', "#login-form-link", function (e) {
+$(document).on('ready', function () {
+// $(document).ready(function() {
+    $("body").on('click', "#login-form-link", function (e) {
+	// $("#login-form-link").click(function (e) {
 		$("#login-form").delay(100).fadeIn(100);
  		$("#register-form").fadeOut(100);
 		$('#register-form-link').removeClass('active');                
@@ -12,6 +14,7 @@ $(document).on('ready', function () {
 		e.preventDefault();
 	});
 	$("body").on('click', "#register-form-link", function (e) {
+    // $("#register-form-link").click(function (e) {
 		$("#register-form").delay(100).fadeIn(100);
  		$("#login-form").fadeOut(100);
 		$('#login-form-link').removeClass('active');                
@@ -24,12 +27,14 @@ $(document).on('ready', function () {
 	});
 
     $("body").on('click', "#showRecPass", function () {
+    // $("#showRecPass").click(function () {
         $("#emailRecPass").val("");                 
         $('#divRecuperar').removeClass('hidden');                 
         $('#divEnvioCorreo').removeClass('hidden');
     }); 
 
     $("body").on('click', "#btnRecPass", function () { 
+    // $("#btnRecPass").click(function () {
         $("#cargando").show();                      
         $('#divEnvioCorreo').addClass('hidden');
         $.post(_root_ + 'usuarios/login/recuperarPass',
@@ -43,12 +48,14 @@ $(document).on('ready', function () {
         
     }); 
 	$("body").on('click', "#logear", function () { 
+    // $("#logear").click(function () {
         $("#cargando").show();       
         // alert($("#usuarioLogin").val() + $("#passwordLogin").val() + $("#url").val());		
         logear($("#usuarioLogin").val(), $("#passwordLogin").val(), url, $("#hd_login_modulo").val());
         
     }); 
     $("body").on('click', "#registrar-login", function () { 
+    // $("#registrar-login").click(function () {
         $("#cargando").show();       
         // alert($("#usuarioLogin").val() + $("#passwordLogin").val() + $("#url").val());		
         registrarUsuarioLogin($("#nombreRegistrar").val(), $("#apellidosRegistrar").val(), 
@@ -59,6 +66,7 @@ $(document).on('ready', function () {
 
 
 	$('#modal-login').on('hidden.bs.modal', function (e) {
+    // $("#modal-login").hidden.bs.modal(function () {
 		// alert(url);
         var params_usu = $("#params_usu").val();
 		if (params_usu) {
@@ -80,6 +88,7 @@ $(document).on('ready', function () {
 	});
 
     $("body").on('click', "#show-pass", function () { 
+    // $("#show-pass").click(function () {
         if ($('#passwordLogin').attr('type') === 'password') {
             $('#passwordLogin').attr('type', 'text');
             $('#btn_ver_clave').removeClass('glyphicon-eye-open');
@@ -168,6 +177,7 @@ function renderButton() {
     });
 }
 $("body").on('click', "#CerrarSession", function () { 
+// $("#CerrarSession").click(function () {
         
   // alert($("#usuarioLogin").val() + $("#passwordLogin").val() + $("#url").val());   
       gapi.auth2.getAuthInstance().signOut().then(function () {

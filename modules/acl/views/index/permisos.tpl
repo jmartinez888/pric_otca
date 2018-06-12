@@ -34,9 +34,9 @@
                                     {/if}
                                 </select>
                             </div>
-                            <div class="col-lg-1">
+<!--                             <div class="col-lg-1">
                                 <button class="btn btn-success" type="button" id="bt_agregarModulo" name="bt_agregarModulo" data-toggle="tooltip" data-placement="bottom" title="{$lenguaje.label_crear_modulo}"><i class="glyphicon glyphicon-plus-sign"> </i></button>
-                            </div>
+                            </div> -->
                         </div>
                         <div class="form-group">
                             <div class="col-lg-offset-2 col-lg-10">
@@ -64,8 +64,8 @@
             </div>
             <div id="listarPermisos">
                 {if isset($permisos) && count($permisos)}
-                <div class="table-responsive">
-                    <table class="table" style="  margin: 20px auto">
+                <div class="table-responsivez">
+                    <table class="table dt-responsive " id="tablas" style="  margin: 20px auto">
                         <tr>
                             <th style=" text-align: center">{$lenguaje.label_n}</th>
                             <th >{$lenguaje.label_permiso} </th>

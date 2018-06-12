@@ -37,3 +37,7 @@ and open the template in the editor.
 .f32 .flag {
     vertical-align: middle !important;
 }
+
+.text-medium{
+    font-size:115%
+}

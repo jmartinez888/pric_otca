@@ -289,6 +289,11 @@ class loginController extends Controller {
                         $Correo = new Correo();
                         $SendCorreo = $Correo->enviar($Usu_Email, $Usu_Usuario, $Subject, $contenido, $fromName);
                         // echo($SendCorreo);
+                        // if($this->mail->send()) {
+                        //     echo 'Correo Enviado';
+                        //     } else {
+                        //     echo 'Error al enviar correo' . $this->mail->ErrorInfo;
+                        // }
 
                     } else {
                         $UsuarioLogeado = $this->_usuarios->getUsuario($idUsuario[0]);

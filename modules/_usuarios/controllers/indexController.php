@@ -15,7 +15,7 @@ class indexController extends usuariosController {
         $this->validarUrlIdioma();
         $this->_view->assign('titulo', 'Usuarios');
         $this->_view->getLenguaje("index_inicio");
-        $this->_view->setJs(array('index'));
+        $this->_view->setJs('index');
 
         $pagina = $this->getInt('pagina');
         //$registros = $this->getInt('registros');
@@ -57,38 +57,61 @@ class indexController extends usuariosController {
         $this->_view->renderizar('index','usuarios');
     }
 
-    public function _paginacion_listaregistros($nombre = false) {
+    public function _paginacion_listaregistros($txtBuscar = false, $idRol = false) {
         //$this->validarUrlIdioma();
         $pagina = $this->getInt('pagina');
-        //$registros = $this->getInt('registros');
+        $filas=$this->getInt('filas');        
+        $totalRegistros = $this->getInt('total_registros');
 
-        $condicion = "";
-        //$nombre = $this->getSql('nombre');
-        if ($nombre) {
-            $condicion .= " AND Usu_Usuario liKe '%$nombre%' ";
-        }
+        echo $txtBuscar, $idRol;
+        exit();
 
-        //Filtro por Activos/Eliminados
-        $condicion = " ORDER BY u.Row_Estado DESC ";
         $soloActivos = 0;
-        if (!$this->_acl->permiso('ver_eliminados')) {
-            $soloActivos = 1;
-            $condicion = " WHERE u.Row_Estado = $soloActivos ";
-        }
-        //Filtro por Activos/Eliminados
-        $condicion .= " LIMIT 0," . CANT_REG_PAG . " ";
-        // echo $condicion; exit;
-        $arrayRowCount = $this->_usuarios->getUsuariosRowCount($condicion);
-        // print_r($arrayRowCount);
-        $totalRegistros = $arrayRowCount['CantidadRegistros'];
+        $condicion = "";
+         if ($txtBuscar && $idRol) 
+        {
+            $condicion = " INNER JOIN usuario_rol ur on u.Usu_IdUsuario=ur.Usu_IdUsuario WHERE Usu_Usuario liKe '%$txtBuscar%' and ur.Rol_IdRol=$idRol ";
+            if (!$this->_acl->permiso('ver_eliminados'))  {
+                $soloActivos = 1;
+                $condicion .= " AND u.Row_Estado = $soloActivos ";
+            }
+            $condicion .= " ORDER BY u.Row_Estado DESC  ";
+        } 
+
+        else if ($txtBuscar) 
+        {
+            $condicion = " WHERE Usu_Usuario liKe '%$txtBuscar%' ";
+            if (!$this->_acl->permiso('ver_eliminados')) {
+                $soloActivos = 1;
+                $condicion .= " AND u.Row_Estado = $soloActivos ";
+            }
+            $condicion .= " ORDER BY u.Row_Estado DESC  ";
+        } 
+
+        else if ($idRol) 
+        {
+            $condicion = " INNER JOIN usuario_rol ur on u.Usu_IdUsuario=ur.Usu_IdUsuario WHERE  ur.Rol_IdRol=$idRol ";
+            if (!$this->_acl->permiso('ver_eliminados')) {
+                $soloActivos = 1;
+                $condicion .= " AND u.Row_Estado = $soloActivos ";
+            }
+            $condicion .= " ORDER BY u.Row_Estado DESC  ";
+        } 
+
+        else {
+            //Filtro por Activos/Eliminados     
+            $condicion = " ORDER BY u.Row_Estado DESC ";   
+            if (!$this->_acl->permiso('ver_eliminados')) {
+                $soloActivos = 1;
+                $condicion = " WHERE u.Row_Estado = $soloActivos  ";
+            }
+        }        
 
         $paginador = new Paginador();
 
-        $this->_view->assign('usuarios', $this->_usuarios->getUsuariosPaginado($condicion));
+        $paginador->paginar( $totalRegistros,"listaregistros", "$txtBuscar/$idRol", $pagina, $filas, true);
 
-        $paginador->paginar( $totalRegistros,"listaregistros", "", $pagina, CANT_REG_PAG, true);
-
-        // $this->_view->assign('usuarios', $paginador->paginar($this->_usuarios->getUsuarios(), "listaregistros", "$nombre", $pagina, 25));
+        $this->_view->assign('usuarios', $this->_usuarios->getUsuariosCondicion($pagina,$filas, $condicion));
 
         $this->_view->assign('numeropagina', $paginador->getNumeroPagina());
         //$this->_view->assign('cantidadporpagina',$registros);
@@ -98,26 +121,65 @@ class indexController extends usuariosController {
 
     public function _buscarUsuario() {
         //$this->validarUrlIdioma();
-        $nombre = $this->getSql('palabra');
+        $txtBuscar = $this->getSql('palabra');
         $idRol = $this->getInt('idrol');
         //echo $idRol."/".$nombre;exit;
         $condicion = "";
 
-        if ($nombre) {
-            $condicion .= " AND Usu_Usuario liKe '%$nombre%' ";
-        }
-        if ($idRol>0) {
-            $condicion .= " AND u.Rol_IdRol = $idRol ";
-        }
-       // echo $condicion;exit;
-      // print_r($this->_usuarios->getUsuarios($condicion));exit;
+        $soloActivos = 0;
+        // $nombre = $this->getSql('palabra');
+        if ($txtBuscar && $idRol) 
+        {
+            $condicion = " INNER JOIN usuario_rol ur on u.Usu_IdUsuario=ur.Usu_IdUsuario WHERE Usu_Usuario liKe '%$txtBuscar%' and ur.Rol_IdRol=$idRol ";
+            if (!$this->_acl->permiso('ver_eliminados'))  {
+                $soloActivos = 1;
+                $condicion .= " AND u.Row_Estado = $soloActivos ";
+            }
+            $condicion .= " ORDER BY u.Row_Estado DESC  ";
+        } 
+
+        else if ($txtBuscar) 
+        {
+            $condicion = " WHERE Usu_Usuario liKe '%$txtBuscar%' ";
+            if (!$this->_acl->permiso('ver_eliminados')) {
+                $soloActivos = 1;
+                $condicion .= " AND u.Row_Estado = $soloActivos ";
+            }
+            $condicion .= " ORDER BY u.Row_Estado DESC  ";
+        } 
+
+        else if ($idRol) 
+        {
+            $condicion = " INNER JOIN usuario_rol ur on u.Usu_IdUsuario=ur.Usu_IdUsuario WHERE  ur.Rol_IdRol=$idRol ";
+            if (!$this->_acl->permiso('ver_eliminados')) {
+                $soloActivos = 1;
+                $condicion .= " AND u.Row_Estado = $soloActivos ";
+            }
+            $condicion .= " ORDER BY u.Row_Estado DESC  ";
+        } 
+
+        else {
+            //Filtro por Activos/Eliminados     
+            $condicion = " ORDER BY u.Row_Estado DESC ";   
+            if (!$this->_acl->permiso('ver_eliminados')) {
+                $soloActivos = 1;
+                $condicion = " WHERE u.Row_Estado = $soloActivos  ";
+            }
+        }        
+
+
         $paginador = new Paginador();
 
-        $this->_view->assign('usuarios', $paginador->paginar($this->_usuarios->getUsuarios($condicion), "listaregistros", "$nombre", false, 25));
+        $arrayRowCount = $this->_usuarios->getUsuariosRowCount($condicion);
+        $totalRegistros = $arrayRowCount['CantidadRegistros'];
+        // echo($totalRegistros);
+        // print_r($arrayRowCount); echo($condicion);exit;
+        $this->_view->assign('usuarios', $this->_usuarios->getUsuariosCondicion($pagina,CANT_REG_PAG, $condicion));
+
+        $paginador->paginar( $totalRegistros ,"listaregistros", "$txtBuscar/$idRol", $pagina, CANT_REG_PAG, true);
 
         $this->_view->assign('numeropagina', $paginador->getNumeroPagina());
-        //$this->_view->assign('cantidadporpagina',$registros);
-        $this->_view->assign('paginacion', $paginador->getView('paginacion_ajax'));
+        $this->_view->assign('paginacion', $paginador->getView('paginacion_ajax_s_filas'));
         $this->_view->renderizar('ajax/listaregistros', false, true);
     }
 

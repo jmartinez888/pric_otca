@@ -35,19 +35,28 @@
                         <label class="col-lg-3 control-label">
                             <b>{$lenguaje.label_rol} :</b>
                         </label>
-                        <div class="col-lg-3">
+                        <div class="col-lg-6">
                         {if isset($roles) && count($roles)}
-                            <select class="form-control" name="Rol_IdRol" id="Rol_IdRol" >
+
+                            <select class="form-control js-example-basic-multiple" multiple= "multiple" name="roles[]" id="roles">                        
+                                        {for $i=0;$i<count($roles);$i++}
+                                            {$Rol_IdRol = $roles[$i]['Rol_IdRol']}
+                                            <option value="{$Rol_IdRol}" {foreach from=$rolesUsuario item=ru}{if $ru.Rol_IdRol==$Rol_IdRol}selected{/if}{/foreach}>{$roles[$i]['Rol_Nombre']
+                                             }</option>
+                                        {/for}
+                              </select>
+
+                            <!-- <select class="form-control" name="Rol_IdRol" id="Rol_IdRol" >
                                 {foreach item=r from=$roles}
                                     <option  value="{$r.Rol_IdRol|default:0}"  {if $r.Rol_Nombre == 1}selected="selected"{/if}>{$r.Rol_Nombre|default:"select"}</option>
                                 {/foreach}            
-                            </select>
+                            </select> -->
                         {/if}
                         </div>
                         {if $_acl->permiso("agregar_rol")}
-                        <div class="col-lg-2">
+<!--                         <div class="col-lg-2">
                             <button type="button" class="btn btn-facebook" id="btn_nuevoRol" name="btn_nuevoRol"><i class="glyphicon glyphicon-plus-sign"></i>&nbsp;&nbsp;{$lenguaje.roles_editar_label_nuevo}</button>
-                        </div>
+                        </div> -->
                         {/if}
                     </div>
                         

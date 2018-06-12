@@ -1,4 +1,7 @@
 $(document).on('ready', function () {    
+
+    $('.js-example-basic-multiple').select2();
+
     $('#form1').validator().on('submit', function (e) {
     if (e.isDefaultPrevented()) {
       // handle the invalid form...
@@ -28,9 +31,9 @@ $(document).on('ready', function () {
         paginacion($(this).attr("pagina"), $(this).attr("nombre"), $(this).attr("parametros"),$(this).attr("total_registros"));
     });
     var paginacion = function (pagina, nombrelista, datos,total_registros) {
-        var pagina = {'pagina':pagina,'filas':$("#s_filas_"+nombrelista).val(),'total_registros':total_registros};
+        var pagina = {'pagina':pagina,'idrol':$("#buscarRol").val(),'filas':$("#s_filas_"+nombrelista).val(),'total_registros':total_registros};
         
-        $.post(_root_ + 'acl/index/_paginacion_' + nombrelista + '/' + datos, pagina, function (data) {
+        $.post(_root_ + 'usuarios/index/_paginacion_' + nombrelista + '/' + datos, pagina, function (data) {
             $("#" + nombrelista).html('');
             $("#cargando").hide();
             $("#" + nombrelista).html(data);
@@ -102,5 +105,7 @@ function rol_usuario(idusuario, nuevo) {
         $("#rol_usuario").html('');
         $("#rol_usuario").html(data);
         $('form').validator();
+
+        $('.js-example-basic-multiple').select2();
     });
 }

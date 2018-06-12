@@ -4,9 +4,9 @@ class indexController extends Controller
 {
     //private $_inicio;
     private $_pagina;
-    private $_dublin;
-    private $_legal;
-    private $_recurso;
+    private $_dublinModel;
+    private $_foroModel;
+    private $_recursoModel;
     private $_jsonBusqueda;
 
     public function __construct($lang, $url) 
@@ -142,10 +142,11 @@ class indexController extends Controller
         $this->_view->getLenguaje("index_inicio");
         $this->_view->getLenguaje("index_buscador");
 
-        $tipoRegistro = $this->filtrarInt($tipoRegistro);
-        $this->_dublin = $this->loadModel('documentos', 'dublincore');
-        $this->_legal = $this->loadModel('legal', 'legislacion');
-        $this->_recurso = $this->loadModel('bdrecursos');
+        $tipoRegistro = $this->filtrarInt($tipoRegistro);        
+        $this->_dublinModel = $this->loadModel('documentos', 'dublincore');
+        $this->_foroModel = $this->loadModel('index', 'foro');
+        $this->_cursoModel = $this->loadModel('curso', 'elearning');
+        $this->_recursoModel = $this->loadModel('bdrecursos');
         $filtroTipo = "all";
 
         if ($palabraBuscada=='all') 
@@ -169,19 +170,20 @@ class indexController extends Controller
             $condicionDublinPais = "";        
             if ($numero == 1) { 
                 //SI SOLO HAY UNA PALABRA DE BUSQUEDA SE ESTABLECE UNA INSTRUCION CON LIKE 
-                $condicionPagina = " WHERE pa.Pag_Estado = 1 AND (pa.Pag_Nombre LIKE '%$palabraBuscada%' OR pa.Pag_Descripcion LIKE '%$palabraBuscada%' OR pa.Pag_Contenido LIKE '%$palabraBuscada%' )";
-                $condicionDublin = " WHERE Dub_Estado = 1 AND (Dub_Titulo LIKE '%$palabraBuscada%' OR Dub_Descripcion LIKE '%$palabraBuscada%' OR Dub_PalabraClave LIKE '%$palabraBuscada%' OR Aut_Nombre LIKE '%$palabraBuscada%')";
-                $condicionLegal = " WHERE Mal_Estado = 1 AND (Mal_Titulo LIKE '%$palabraBuscada%' OR Mal_PalabraClave LIKE '%$palabraBuscada%' OR Mal_ResumenLegislacion LIKE '%$palabraBuscada%' OR Mal_Entidad LIKE '%$palabraBuscada%') ";
+                $condicionForo = " WHERE f.For_Titulo LIKE '%".$palabraBuscada."%' OR f.For_Resumen LIKE '%".$palabraBuscada."%' OR f.For_Descripcion LIKE '%".$palabraBuscada."%' OR f.For_PalabrasClaves LIKE '%".$palabraBuscada."%' ";
+                $condicionDublin = " WHERE Dub_Estado = 1 AND (Dub_Titulo LIKE '%".$palabraBuscada."%' OR Dub_Descripcion LIKE '%".$palabraBuscada."%' OR Dub_PalabraClave LIKE '%".$palabraBuscada."%' OR Aut_Nombre LIKE '%".$palabraBuscada."%')";
+                // $condicionLegal = " WHERE Mal_Estado = 1 AND (Mal_Titulo LIKE '%$palabraBuscada%' OR Mal_PalabraClave LIKE '%$palabraBuscada%' OR Mal_ResumenLegislacion LIKE '%$palabraBuscada%' OR Mal_Entidad LIKE '%$palabraBuscada%') ";
                 $OrderByDublin = " ORDER BY dub.Dub_Titulo ";
-                $OrderByLegal = " ORDER BY MATCH(Mal_Titulo, Mal_PalabraClave, Mal_ResumenLegislacion, Mal_Entidad) AGAINST ('%".$palabraBuscada."%' IN BOOLEAN MODE) DESC ";
+                // $OrderByForo = " ORDER BY MATCH(Mal_Titulo, Mal_PalabraClave, Mal_ResumenLegislacion, Mal_Entidad) AGAINST ('%".$palabraBuscada."%' IN BOOLEAN MODE) DESC ";
             } elseif ($numero > 1) { 
                 //SI HAY UNA FRASE SE UTILIZA EL ALGORTIMO DE BUSQUEDA AVANZADO DE MATCH AGAINST 
                 //busqueda de frases con mas de una palabra y un algoritmo especializado 
-                $condicionPagina = " WHERE pa.Pag_Estado = 1 AND (MATCH(pa.Pag_Nombre, pa.Pag_Descripcion, pa.Pag_Contenido) AGAINST ('%".$palabraBuscada."%' IN BOOLEAN MODE)) ";
+                $condicionForo = " WHERE MATCH(f.For_Titulo, f.For_Resumen, f.For_Descripcion, f.For_PalabrasClaves) AGAINST ('%".$palabraBuscada."%' IN BOOLEAN MODE) ";
+
                 $condicionDublin = " WHERE Dub_Estado = 1 AND (MATCH(Dub_Titulo, Dub_Descripcion, Dub_PalabraClave) AGAINST ('%".$palabraBuscada."%' IN BOOLEAN MODE) OR MATCH(Aut_Nombre) AGAINST ('%".$palabraBuscada."%' IN BOOLEAN MODE)) ";
-                $condicionLegal = " WHERE Mal_Estado = 1 AND (MATCH(Mal_Titulo, Mal_PalabraClave, Mal_ResumenLegislacion, Mal_Entidad) AGAINST ('%".$palabraBuscada."%' IN BOOLEAN MODE)) ";
+                // $condicionLegal = " WHERE Mal_Estado = 1 AND (MATCH(Mal_Titulo, Mal_PalabraClave, Mal_ResumenLegislacion, Mal_Entidad) AGAINST ('%".$palabraBuscada."%' IN BOOLEAN MODE)) ";
                 $OrderByDublin = " ORDER BY MATCH(Dub_Titulo, Dub_Descripcion, Dub_PalabraClave) AGAINST ('%".$palabraBuscada."%' IN BOOLEAN MODE) OR MATCH(Aut_Nombre) AGAINST ('%".$palabraBuscada."%' IN BOOLEAN MODE) DESC";
-                $OrderByLegal = " ORDER BY MATCH(Mal_Titulo, Mal_PalabraClave, Mal_ResumenLegislacion, Mal_Entidad) AGAINST ('%".$palabraBuscada."%' IN BOOLEAN MODE) DESC ";
+                $OrderByForo = " ORDER BY  MATCH(f.For_Titulo, f.For_Resumen, f.For_Descripcion, f.For_PalabrasClaves) AGAINST ('%".$palabraBuscada."%' IN BOOLEAN MODE) DESC ";
             }             
             //$condicionDublin = " WHERE Dub_Estado = 1 AND (Dub_Titulo LIKE '%$palabraBuscada%' OR Dub_Descripcion LIKE '%$palabraBuscada%' OR Dub_PalabraClave LIKE '%$palabraBuscada%' OR Aut_Nombre LIKE '%$palabraBuscada%')";
             //$MatchDublin = ", MATCH(Dub_Titulo, Dub_Descripcion, Dub_PalabraClave, Aut_Nombre) AGAINST ('".$palabraBuscada."') AS Criterio ";
@@ -201,7 +203,7 @@ class indexController extends Controller
                 $condicionDublin = " WHERE Pai_Nombre = '$pais' AND Dub_Estado = 1 AND (MATCH(Dub_Titulo, Dub_Descripcion, Dub_PalabraClave) AGAINST ('%".$palabraBuscada."%' IN BOOLEAN MODE) OR MATCH(Aut_Nombre) AGAINST ('".$palabraBuscada."' IN BOOLEAN MODE)) ";
                 $condicionLegal = " WHERE Pai_Nombre = '$pais' AND Mal_Estado = 1 AND (MATCH(Mal_Titulo, Mal_PalabraClave, Mal_ResumenLegislacion, Mal_Entidad) AGAINST ('%".$palabraBuscada."%' IN BOOLEAN MODE)) ";
                 $OrderByDublin = " ORDER BY MATCH(Dub_Titulo, Dub_Descripcion, Dub_PalabraClave) AGAINST ('%".$palabraBuscada."%' IN BOOLEAN MODE) OR MATCH(Aut_Nombre) AGAINST ('%".$palabraBuscada."%' IN BOOLEAN MODE) DESC";
-                $OrderByLegal = " ORDER BY MATCH(Mal_Titulo, Mal_PalabraClave, Mal_ResumenLegislacion, Mal_Entidad) AGAINST ('%".$palabraBuscada."%' IN BOOLEAN MODE) DESC ";
+                $OrderByForo = " ORDER BY MATCH(Mal_Titulo, Mal_PalabraClave, Mal_ResumenLegislacion, Mal_Entidad) AGAINST ('%".$palabraBuscada."%' IN BOOLEAN MODE) DESC ";
             
             } 
             //echo $pais."/".$palabra;            
@@ -209,47 +211,48 @@ class indexController extends Controller
 
         $idioma = Cookie::lenguaje();
 
-        $listaPagina = $this->_pagina->getPaginas($condicionPagina, $idioma);
-        $listaDublin = $this->_dublin->getDocumentosPaises($condicionDublin, $idioma, $OrderByDublin);
-        $listaLegal = $this->_legal->getLegislaciones($condicionLegal, $idioma, $OrderByLegal);
-        $listaRecurso = $this->_recurso->getRecursoBusquedaTraducido($palabraBuscada, $idioma);
-        //print_r($listaLegalPaises);exit;
+        // $listaPagina = $this->_pagina->getPaginas($condicionPagina, $idioma);
+        $listaDublin = $this->_dublinModel->getDocumentosPaises($condicionDublin, $idioma, $OrderByDublin);
+        $listaForo = $this->_foroModel->getForosSearch($condicionForo.$OrderByForo);
+        $listaRecurso = $this->_recursoModel->getRecursoBusquedaTraducido($palabraBuscada, $idioma);
+        //print_r($listaForoPaises);exit;
         
         //Paises
-        $listaDublinPaises = $this->_dublin->getCantDocumentosPaises($condicionDublin,$idioma);
-        $listaLegalPaises = $this->_legal->getCantidadLegislacionPaisV2($condicionLegal,$idioma);
-        //$listaLegalPaises = $this->_legal->getCantLegislacionesPais($condicionLegal,$idioma);
-        //$listaLegalPaises = $this->_recurso->getCantidadDocumentosPaises($condicionDublin);
-       /* echo count($listaLegalPaises);
-        print_r($listaLegalPaises);
+        // $listaDublinPaises = $this->_dublinModel->getCantDocumentosPaises($condicionDublin,$idioma);
+        // $listaForoPaises = $this->_foroModel->getCantidadLegislacionPaisV2($condicionLegal,$idioma);
+        //$listaForoPaises = $this->_foroModel->getCantLegislacionesPais($condicionLegal,$idioma);
+        //$listaForoPaises = $this->_recursoModel->getCantidadDocumentosPaises($condicionDublin);
+       /* echo count($listaForoPaises);
+        print_r($listaForoPaises);
         print_r($listaDublinPaises);*/
-        $listaPaisTotales = array();
+
+        // $listaPaisTotales = array();
         
-        for ($i = 0; $i <= count($listaDublinPaises); $i++) 
-        {
-           // echo $i;echo $listaDublinPaises[$i]['cantidad'];
-            for ($j = 0; $j <= count($listaLegalPaises); $j++) 
-            {
-              //  echo $j;
-                if(isset($listaDublinPaises[$i]) && isset($listaLegalPaises[$j]) ) 
-                {
-                    if($listaDublinPaises[$i]['Pai_Nombre'] == $listaLegalPaises[$j]['Pai_Nombre'] )
-                    {
-                        $listaPaisTotales[$i]['cantidad'] = $listaDublinPaises[$i]['cantidad'] + $listaLegalPaises[$j]['cantidad'];
-                        $listaPaisTotales[$i]['Pai_Nombre'] = $listaDublinPaises[$i]['Pai_Nombre'];
-                   // echo $listaPaisTotales[$i]['cantidad'];
+        // for ($i = 0; $i <= count($listaDublinPaises); $i++) 
+        // {
+        //    // echo $i;echo $listaDublinPaises[$i]['cantidad'];
+        //     for ($j = 0; $j <= count($listaForoPaises); $j++) 
+        //     {
+        //       //  echo $j;
+        //         if(isset($listaDublinPaises[$i]) && isset($listaForoPaises[$j]) ) 
+        //         {
+        //             if($listaDublinPaises[$i]['Pai_Nombre'] == $listaForoPaises[$j]['Pai_Nombre'] )
+        //             {
+        //                 $listaPaisTotales[$i]['cantidad'] = $listaDublinPaises[$i]['cantidad'] + $listaForoPaises[$j]['cantidad'];
+        //                 $listaPaisTotales[$i]['Pai_Nombre'] = $listaDublinPaises[$i]['Pai_Nombre'];
+        //            // echo $listaPaisTotales[$i]['cantidad'];
                         
-                    }
-                }
+        //             }
+        //         }
                 
-            }
-        }
+        //     }
+        // }
 
         //Fin Paises
         
-        $cantPagina = count($listaPagina);
+        // $cantPagina = count($listaPagina);
         $cantDublin = count($listaDublin);
-        $cantLegal = count($listaLegal);
+        $cantForo = count($listaForo);
         $cantRecurso = count($listaRecurso);
         $listaBusqueda = array();
         $listaBus = array();        
@@ -258,13 +261,13 @@ class indexController extends Controller
         {
             if (!$json) 
             {
-                foreach ($listaPagina as $arra1) 
-                {
-                    // echo $arra['Pag_Nombre'];   exit;
-                    array_push($listaBusqueda, $arra1['Pag_IdPagina'], $arra1['Pag_Nombre'], substr($arra1['Pag_Descripcion'], 0, 200), 'index/index/', 1, '', '', '', $arra1['Idi_IdIdioma']);
-                    array_push($listaBus, $listaBusqueda);
-                    $listaBusqueda = array();
-                }            
+                // foreach ($listaPagina as $arra1) 
+                // {
+                //     // echo $arra['Pag_Nombre'];   exit;
+                //     array_push($listaBusqueda, $arra1['Pag_IdPagina'], $arra1['Pag_Nombre'], substr($arra1['Pag_Descripcion'], 0, 200), 'index/index/', 1, '', '', '', $arra1['Idi_IdIdioma']);
+                //     array_push($listaBus, $listaBusqueda);
+                //     $listaBusqueda = array();
+                // }            
             }
 
             foreach ($listaDublin as $arra2) 
@@ -274,10 +277,10 @@ class indexController extends Controller
                 array_push($listaBus, $listaBusqueda);
                 $listaBusqueda = array();
             }
-            foreach ($listaLegal as $arra3) 
+            foreach ($listaForo as $arra3) 
             {
                 // echo $arra['Pag_Nombre'];   exit;
-                array_push($listaBusqueda, $arra3['Mal_IdMatrizLegal'], $arra3['Mal_Titulo'], substr($arra3['Mal_ResumenLegislacion'], 0, 200), 'legislacion/legal/metadata/', 3, '', '', '', $arra3['Idi_IdIdioma']);
+                array_push($listaBusqueda, $arra3['For_IdForo'], $arra3['For_Titulo'], substr($arra3['For_Resumen'], 0, 200), 'foro/index/ficha/', 3, '', '', '', $arra3['Idi_IdIdioma']);
                 array_push($listaBus, $listaBusqueda);
                 $listaBusqueda = array();
             }
@@ -293,23 +296,23 @@ class indexController extends Controller
         {
             if ($tipoRegistro == 1) 
             {
-                foreach ($listaPagina as $arra1) 
-                {
-                    // echo $arra['Pag_Nombre'];   exit;
-                    array_push($listaBusqueda, $arra1['Pag_IdPagina'], $arra1['Pag_Nombre'], substr($arra1['Pag_Descripcion'], 0, 200), 'index/index/', 1, '', '', '', $arra1['Idi_IdIdioma']);
-                    array_push($listaBus, $listaBusqueda);
-                    $listaBusqueda = array();
-                }
+                // foreach ($listaPagina as $arra1) 
+                // {
+                //     // echo $arra['Pag_Nombre'];   exit;
+                //     array_push($listaBusqueda, $arra1['Pag_IdPagina'], $arra1['Pag_Nombre'], substr($arra1['Pag_Descripcion'], 0, 200), 'index/index/', 1, '', '', '', $arra1['Idi_IdIdioma']);
+                //     array_push($listaBus, $listaBusqueda);
+                //     $listaBusqueda = array();
+                // }
 
-                $filtroTipo = 'Arquitectura SII'; 
-                for ($j = 0; $j <= count($listaPaisTotales); $j++) 
-                {
-                  //  echo $j;
-                    if(isset($listaPaisTotales[$j])) 
-                    {                        
-                        $listaPaisTotales[$j]['cantidad'] = 0;
-                    }                    
-                }
+                // $filtroTipo = 'Arquitectura SII'; 
+                // for ($j = 0; $j <= count($listaPaisTotales); $j++) 
+                // {
+                //   //  echo $j;
+                //     if(isset($listaPaisTotales[$j])) 
+                //     {                        
+                //         $listaPaisTotales[$j]['cantidad'] = 0;
+                //     }                    
+                // }
             } 
             else 
             {
@@ -324,22 +327,22 @@ class indexController extends Controller
                     }
 
                     $filtroTipo = 'Base de Datos de Documentos';                    
-                    $listaPaisTotales = $listaDublinPaises;
+                    // $listaPaisTotales = $listaDublinPaises;
                 } 
                 else 
                 {
                     if ($tipoRegistro == 3) 
                     {
-                        foreach ($listaLegal as $arra3) 
+                        foreach ($listaForo as $arra3) 
                         {
                             // echo $arra['Pag_Nombre'];   exit;
-                            array_push($listaBusqueda, $arra3['Mal_IdMatrizLegal'], $arra3['Mal_Titulo'], substr($arra3['Mal_ResumenLegislacion'], 0, 200), 'legislacion/legal/metadata/', 3, '', '', '', $arra3['Idi_IdIdioma']);
+                            array_push($listaBusqueda, $arra3['For_IdForo'], $arra3['For_Titulo'], substr($arra3['For_Resumen'], 0, 200), 'foro/index/ficha/', 3, '', '', '', $arra3['Idi_IdIdioma']);
                             array_push($listaBus, $listaBusqueda);
                             $listaBusqueda = array();
                         }
 
-                        $filtroTipo = 'Base de Datos de Legislacion';                        
-                        $listaPaisTotales = $listaLegalPaises;
+                        $filtroTipo = 'Base de Datos Foro';                        
+                        // $listaPaisTotales = $listaForoPaises;
                     } 
                     else 
                     {
@@ -354,16 +357,15 @@ class indexController extends Controller
                             }
 
                             $filtroTipo = 'Base de Datos de Recursos';
-                            for ($j = 0; $j <= count($listaPaisTotales); $j++) 
-                            {
-                              //  echo $j;
-                                if(isset($listaPaisTotales[$j])) 
-                                {                        
-                                    $listaPaisTotales[$j]['cantidad'] = 0;
-                                }                    
-                            }
-                        } else 
-                        {
+                            // for ($j = 0; $j <= count($listaPaisTotales); $j++) 
+                            // {
+                            //   //  echo $j;
+                            //     if(isset($listaPaisTotales[$j])) 
+                            //     {                        
+                            //         $listaPaisTotales[$j]['cantidad'] = 0;
+                            //     }                    
+                            // }
+                        } else {
                             $filtroTipo = 'all';
                         }
                     }                    
@@ -403,11 +405,11 @@ class indexController extends Controller
             $this->_view->assign('filtroPais', $pais);
         }
 
-        $this->_view->assign('paises', $listaPaisTotales );
+        // $this->_view->assign('paises', $listaPaisTotales );
         $this->_view->assign('idiomas', $idiomas);
-        $this->_view->assign('cantPagina', $cantPagina);
+        // $this->_view->assign('cantPagina', $cantPagina);
         $this->_view->assign('cantDublin', $cantDublin);
-        $this->_view->assign('cantLegal', $cantLegal);
+        $this->_view->assign('cantForo', $cantForo);
         $this->_view->assign('cantRecurso', $cantRecurso);
         $this->_view->assign('titulo', 'Resultado de Búsqueda');
         
@@ -438,7 +440,7 @@ class indexController extends Controller
         $this->_view->assign('idiomas', $idiomas);
         $this->_view->assign('cantPagina', $cantPagina);
         $this->_view->assign('cantDublin', $cantDublin);
-        $this->_view->assign('cantLegal', $cantLegal);
+        $this->_view->assign('cantLegal', $cantForo);
         $this->_view->assign('cantRecurso', $cantRecurso);
         $this->_view->assign('titulo', 'Resultado de Búsqueda');
         $this->_view->renderizar('buscar');

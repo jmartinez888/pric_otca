@@ -8,9 +8,9 @@ $(document).on('ready', function () {
 
     }
     });
-    $('#tablas').dataTable( {
-        responsive: true
-    } );
+    // $('#tablas').dataTable( {
+    //     responsive: true
+    // } );
     // $('.mitooltip').tooltip();
     // $(function() {
     //     $("[data-toggle='tooltip']").tooltip();
@@ -251,6 +251,109 @@ $(document).on('ready', function () {
     });
 
 
+
+    //MODULOS
+    $("body").on('click', "#buscarModulo", function () { 
+        $("#cargando").show();       
+        buscarModulo($("#palabraModulo").val());
+    }); 
+
+     $("body").on('click', '.estado-modulo', function() {
+        $("#cargando").show();
+        if (_post && _post.readyState != 4) {
+            _post.abort();
+        }
+
+        _id_modulo = $(this).attr("id_modulo");
+        if (_id_modulo === undefined) {
+            _id_modulo = 0;
+        }
+        _estado = $(this).attr("estado");
+        if (_estado === undefined) {
+            _estado = 0;
+        }
+        if (!_estado) {
+            _estado = 0;
+        }
+
+        _post = $.post(_root_ + 'acl/index/_cambiarEstadoModulos',
+                {                    
+                    _Mod_IdModulo: _id_modulo,
+                    _Mod_Estado: _estado,
+                    pagina: $(".pagination .active span").html(),
+                    palabra: $("#palabraModulo").val(),
+                    filas:$("#s_filas_"+'listarmodulos').val()
+                },
+        function(data) {
+            $("#listarmodulos").html('');
+            $("#cargando").hide();
+            $("#listarmodulos").html(data);
+            // mensaje(JSON.parse(data));
+        });
+    });
+
+      $("body").on('click', '.confirmar-eliminar-modulo', function() {
+        
+        if (_post && _post.readyState != 4) {
+            _post.abort();
+        }
+
+        _id_modulo = $(this).attr("id_modulo");
+        if (_id_modulo === undefined) {
+            _id_modulo = 0;
+        }
+
+        _Mod_IdModulo_ = _id_modulo;
+        _Row_Estado_ = 0;
+    });
+
+
+       $("body").on('click', '.confirmar-habilitar-modulo', function() {
+        $("#cargando").show();
+        if (_post && _post.readyState != 4) {
+            _post.abort();
+        }
+
+        _id_modulo = $(this).attr("id_modulo");
+        if (_id_modulo === undefined) {
+            _id_modulo = 0;
+        }
+
+        _Mod_IdModulo_ = _id_modulo;
+        _Row_Estado_ = 1;
+        
+        _post = $.post(_root_ + 'acl/index/_eliminar_modulo',
+                {                    
+                    _Mod_IdModulo: _Mod_IdModulo_,
+                    _Row_Estado: _Row_Estado_,
+                    pagina: $(".pagination .active span").html(),
+                    palabra: $("#palabraModulo").val(),
+                    filas:$("#s_filas_"+'listarmodulos').val()
+                },
+        function(data) {
+            $("#listarmodulos").html('');
+            $("#cargando").hide();
+            $("#listarmodulos").html(data);
+        });
+    });
+
+     $("body").on('click', '.eliminar_modulo', function() {
+        $("#cargando").show();
+        // _Per_IdPermiso = _eliminar;
+        _post = $.post(_root_ + 'acl/index/_eliminar_modulo',
+                {                    
+                    _Mod_IdModulo: _Mod_IdModulo_,
+                    _Row_Estado: _Row_Estado_,
+                    pagina: $(".pagination .active span").html(),
+                    palabra: $("#palabraModulo").val(),
+                    filas:$("#s_filas_"+'listarmodulos').val()
+                },
+        function(data) {
+            $("#listarmodulos").html('');
+            $("#cargando").hide();
+            $("#listarmodulos").html(data);
+        });
+    });
 });
 function buscarRol(criterio) {
     $.post(_root_ + 'acl/index/_buscarRol',
@@ -258,7 +361,7 @@ function buscarRol(criterio) {
         palabra:criterio
         
     }, function (data) {
-        $("#listaregistros").html('');
+        $("#listarRoles").html('');
         $("#cargando").hide();
         $("#listarRoles").html(data);
     });
@@ -275,6 +378,20 @@ function buscarPermiso(criterio) {
         $("#listarPermisos").html(data);
     });
 }
+
+function buscarModulo(criterio) {
+    $("#cargando").show();
+    $.post(_root_ + 'acl/index/_buscarModulo',
+    {
+        palabra:criterio
+        
+    }, function (data) {
+        $("#listarmodulos").html('');
+        $("#cargando").hide();
+        $("#listarmodulos").html(data);
+    });
+}
+
 function gestionIdiomas(idrol, idIdiomaOriginal, idIdioma) {
     $("#cargando").show();
     $.post(_root_ + 'acl/index/gestion_idiomas_rol',

@@ -31,7 +31,7 @@
                             <div class="form-group">
                                 <label class="col-lg-3 control-label" >{$lenguaje.label_dni} : </label>
                                 <div class="col-lg-8">
-                                    <input  class="form-control" id ="dni" type="text" pattern="[0-9]+" data-minlength="8" name="dni" value="{$datos.dni|default:""}" placeholder="{$lenguaje.label_dni}" required=""/>
+                                    <input  class="form-control" id ="dni" type="text" pattern="[0-9]+" data-minlength="8" data-maxlength="8" name="dni" value="{$datos.dni|default:""}" placeholder="{$lenguaje.label_dni}" required=""/>
                                 </div>
                             </div>
                                 
@@ -135,7 +135,13 @@
                                         {/if}
                                     </tr>
                                     {foreach from=$usuarios item=us}
-                                        <tr>
+                                        <tr {if $us.Row_Estado==0}
+                                        {if $_acl->permiso("ver_eliminados")}
+                                            class="btn-danger"
+                                        {else}
+                                            hidden {$numeropagina = $numeropagina-1}
+                                        {/if}
+                                    {/if} >
                                             <td>{$numeropagina++}</td>
                                             <td>{$us.Usu_Usuario}</td>
 
@@ -165,7 +171,7 @@
                                                 {/if}{if $_acl->permiso("habilitar_deshabilitar_usuario")}
                                                 <a data-toggle="tooltip" data-placement="bottom" class="btn btn-default btn-sm glyphicon glyphicon-refresh" title="{$lenguaje.tabla_opcion_cambiar_est}" href="{$_layoutParams.root}usuarios/index/_cambiarEstado/{$us.Usu_IdUsuario}/{$us.Usu_Estado}"> </a>      
                                                 {/if}{if $_acl->permiso("eliminar_usuario")}
-                                                <a data-toggle="tooltip" data-placement="bottom" class="btn btn-default btn-sm glyphicon glyphicon-trash" title="{$lenguaje.label_eliminar}" href="{$_layoutParams.root}usuarios/index/_eliminarUsuario/{$us.Usu_IdUsuario}"> </a>
+                                                <a data-toggle="tooltip" data-placement="bottom" {if $us.Row_Estado==1} class="btn btn-default btn-sm glyphicon glyphicon-trash" title="{$lenguaje.label_eliminar}" {else} class="btn btn-default btn-sm glyphicon glyphicon-ok" title="{$lenguaje.label_habilitar}" {/if} href="{$_layoutParams.root}usuarios/index/_eliminarUsuario/{$us.Usu_IdUsuario}/{$us.Row_Estado}"> </a>
                                                 {/if}
                                             </td>                                            
                                         </tr>
