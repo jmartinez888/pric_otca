@@ -4,7 +4,6 @@
         <h3 class="titulo-view titulo"><strong>Histórico</strong> </h3>
         <div class="row">
             <div class="col-md-12">
-                                                    <br>                                                   
                 
                 {if count($lista_foros)>0}
                     <table class="table table-striped">
