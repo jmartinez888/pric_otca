@@ -14,7 +14,7 @@
     box-shadow: 3px 3px 10px rgba(100, 100, 100, 0.6);
 }
 .cursos-hr{
-	background: #cdcdcd;
+	border-top: 1px solid #cdcdcd;
 	margin: 0px;
 	padding: 0.3px;
 }

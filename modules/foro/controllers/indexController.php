@@ -123,7 +123,7 @@ class indexController extends foroController {
 
         $this->_view->setTemplate(LAYOUT_FRONTEND);
         $this->_view->getLenguaje("foro_index_ficha");
-        $this->_view->setCss(array("ficha_foro"));
+        $this->_view->setCss(array("ficha_foro", "jp-ficha_foro"));
         $this->_view->setJs(array("ficha_foro"));
 
         $lenguaje = Session::get("fileLenguaje");
