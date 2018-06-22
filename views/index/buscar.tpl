@@ -22,7 +22,7 @@
                         </a>
                     </li>
                     <li class="list-group-item {if $tipoRegistro == 3} active  {/if}">
-                        <span class="badge">{if isset($cantLegal)}{$cantLegal}{/if}</span>
+                        <span class="badge">{if isset($cantForo)}{$cantForo}{/if}</span>
                         <a class="" {if $tipoRegistro == 3} style="color:#ffffff"  {/if}  href="{$_layoutParams.root}index/buscarPalabra/{$palabra1}/3/{$filtroPais|default:'all'}">
                             {$lenguaje.buscador_tipo_registro3}
                         </a>

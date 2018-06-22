@@ -189,6 +189,9 @@
 
 
 <script src="{$_layoutParams.ruta_js}global.js" type="text/javascript"></script>
+<!-- <script type="text/javascript">
+    var jQuery_1_5_7 = $.noConflict(true);
+</script> -->
 
 <script type="text/javascript">
     /* <![CDATA[ */

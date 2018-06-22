@@ -13,7 +13,7 @@ class editarModel extends Model {
             INNER JOIN tema_dublin ted ON dub.Ted_IdTemaDublin = ted.Ted_IdTemaDublin 
             INNER JOIN dublincore_autor dua ON dub.Dub_IdDublinCore = dua.Dub_IdDublinCore 
             INNER JOIN autor aut ON dua.Aut_IdAutor = aut.Aut_IdAutor  
-            INNER JOIN archivo_fisico arf ON dub.Arf_IdArchivoFisico = arf.Arf_IdArchivoFisico 
+            LEFT JOIN archivo_fisico arf ON dub.Arf_IdArchivoFisico = arf.Arf_IdArchivoFisico 
             INNER JOIN tipo_dublin tid ON dub.Tid_IdTipoDublin = tid.Tid_IdTipoDublin 
             RIGHT JOIN tipo_archivo_fisico taf ON arf.Taf_IdTipoArchivoFisico = taf.Taf_IdTipoArchivoFisico  $condicion"
         );
@@ -176,7 +176,7 @@ class editarModel extends Model {
                 INNER JOIN tema_dublin ted ON dub.Ted_IdTemaDublin = ted.Ted_IdTemaDublin 
                 INNER JOIN dublincore_autor dua ON dub.Dub_IdDublinCore = dua.Dub_IdDublinCore 
                 INNER JOIN autor aut ON dua.Aut_IdAutor = aut.Aut_IdAutor  
-                INNER JOIN archivo_fisico arf ON dub.Arf_IdArchivoFisico = arf.Arf_IdArchivoFisico 
+                LEFT JOIN archivo_fisico arf ON dub.Arf_IdArchivoFisico = arf.Arf_IdArchivoFisico 
                 INNER JOIN tipo_dublin tid ON dub.Tid_IdTipoDublin = tid.Tid_IdTipoDublin 
                 RIGHT JOIN tipo_archivo_fisico taf ON arf.Taf_IdTipoArchivoFisico = taf.Taf_IdTipoArchivoFisico  $condicion"
         );

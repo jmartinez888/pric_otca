@@ -39,6 +39,7 @@ class View extends Smarty
 
         $modulo = $this->_request->getModulo();
         $controlador = $this->_request->getControlador();
+        $metodo = $this->_request->getMetodo();
 
         if ($modulo) 
         {
@@ -96,6 +97,9 @@ class View extends Smarty
             'css' => $css,
             'js_plugin' => $this->_jsPlugin,
             'root' =>  $ruta_base,
+            'modulo' => $this->_request->getModulo(),
+            'controlador' => $this->_request->getControlador(),
+            'metodo' => $this->_request->getMetodo(),
             'root_clear' => BASE_URL,
             'root_archivo_fisico' => URL_ARCHIVO_FISICO,
             'configs' => $this->getLangNameConfig($this->_lenguaje)

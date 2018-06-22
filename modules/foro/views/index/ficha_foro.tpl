@@ -2,9 +2,52 @@
     {include file='modules/foro/views/index/menu/lateral.tpl'}
     <div  class="col-md-10 col-xs-12 col-sm-8 col-lg-10">
         <div class="row ficha_foro">
+            
             <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
-                <div class="row">
-                    <div class="col-md-6">
+            <!-- ficha-foro-josepacaya -->
+                <div class="col-lg-12 p-rt-lt-0">
+                    <a class="regresar-tematica" href="#"> < NombreDeLaTemática</a>
+                </div>
+                <div class="col-lg-12 p-rt-lt-0">
+                    <h3 class="titulo-ficha">{$foro.For_Titulo}</h3>
+                </div>
+                <div class="col-lg-12 p-rt-lt-0" style="font-size: 12px;">
+                    <div class="col-lg-6 p-rt-lt-0">
+                    hace 1 mes por <strong>NombreDelUsuario</strong>
+                    </div>
+                    <div class="col-lg-6 p-rt-lt-0">
+                        <div class="pull-right">Comentarios: <strong>0</strong></div>
+                    </div>
+                </div>
+                <div class="col-lg-12 p-rt-lt-0">
+                    <hr class="cursos-hr">
+                </div>
+                <div class="col-lg-12 contenido">
+                    <p>{$foro.For_Descripcion|html_entity_decode}</p>
+                </div>
+                <div class="col-lg-12 p-rt-lt-0" style="font-size: 12px;">
+                    <div class="col-lg-6 p-rt-lt-0">
+                        <button class="btn btn-default btn-comentar">
+                            <i class="glyphicon glyphicon-comment"></i>
+                        &nbsp;Comentar</button>
+                        <button class="btn btn-default btn-like" id="btnCalificar">
+                            <i class="glyphicon glyphicon-thumbs-up"></i>
+                        &nbsp;Me gusta</button>
+                    </div>
+                    <div class="col-lg-6 p-rt-lt-0">
+                        <div class="participantes pull-right">Participantes: <strong>2</strong></div>
+                    </div>
+                </div>
+                <div class="col-lg-12 p-rt-lt-0">
+                    <hr class="cursos-hr">
+                </div>
+
+
+
+
+            <!-- fin ficha-foro-josepacaya-->
+
+                 <!--    <div class="col-md-6">
                         <span>{$foro.For_FechaCreacion|date_format:"%d-%m-%Y"} {if ($foro.For_FechaCierre|date_format:"%d-%m-%Y")!=""} / {($foro.For_FechaCierre|date_format:"%d-%m-%Y")}{/if}</span>
                     </div>
                     <div class="col-md-6 text-right">
@@ -14,15 +57,15 @@
                          Participantes <span class="badge">{$foro.For_TParticipantes}</span> 
                         {/if}
                     </div>
-                    <hr>
+                    <div class="col-lg-12"><hr class="cursos-hr"></div>
                     <div class="page-header">
                         <h3 class="titulo-view">{$foro.For_Titulo}</h3>
                     </div>
                     <div class="contenido">
                         {$foro.For_Descripcion|html_entity_decode}</p>
-                    </div>
+                    </div>    -->
 
-                    <div class="row col-md-12">
+                    <div class="col-md-12 p-rt-lt-0">
                         {if Session::get('autenticado')}               
                             {if $comentar_foro}
                                 <div class="widget-area no-padding blank">
@@ -42,30 +85,30 @@
                                     </div><!-- Status Upload  -->
                                 </div><!-- Widget Area -->
                             {else}
-                                 {if $foro.For_Funcion=="forum"}}
+                                 {if $foro.For_Funcion=="forum"}
                                 <button class="btn btn-primary btn-md inscribir_foro" id_foro="{$foro.For_IdForo}">Inscríbete para comentar<i class="fa fa-sign-in"></i></button>
                                 {else}
                                 <button class="btn btn-primary btn-md inscribir_foro" id_foro="{$foro.For_IdForo}">Inscríbete para participar en el Webinar<i class="fa fa-sign-in"></i></button>
                                 {/if}
                                 {/if}
                             {else}
-                            <div class="form-login">                            
-                                <h5>Cuelgue su contribución</h5>
-                                <div class="row">                                
-                                    <div class="col-md-4 wrapper">
-                                        <span class="group-btn">     
-                                            <button data-toggle="modal" data-target="#modal-login" id="login-form-link" class="btn btn-primary btn-md btn_login_user">Inicie Sesion <i class="fa fa-sign-in"></i></button>
-                                        </span>
+                            <div class="">
+                                <div class="col-lg-12 anuncio"> 
+                                  <p>Para colgar su contribución inicie sesión.</p>
+                                </div>                              
+                                    <div class="col-md-12 p-rt-lt-0">    
+                                        <button data-toggle="modal" data-target="#modal-login" id="login-form-link" class="btn btn-group btn-success ini-sesion">Inicie Sesion <i class="glyphicon glyphicon-log-in"></i></button>
                                     </div>
-                                </div>
 
                             </div>
                         {/if}                    
                     </div>
-                </div>                 
-                <div class="row">
-                    <hr>
+                 
+                <div class="col-lg-12 p-rt-lt-0">
                     <h4>Comentarios:</h4>
+                </div>
+                <div class="col-lg-12 p-rt-lt-0">
+                    <hr class="cursos-hr">
                 </div>
                 <div id="lista_comentarios" class="row">               
                     {foreach from=$foro.For_Comentarios item=comentarios} 
