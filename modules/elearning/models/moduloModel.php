@@ -152,4 +152,11 @@ class moduloModel extends Model {
       }
       return array("INDEX" => $indice, "FINAL" => $final);
     }
+
+
+    public function getModulosCurso_Id($id){
+        $sql = "SELECT * FROM modulo_curso WHERE Cur_IdCurso = {$id}
+                ORDER BY Mod_IdModulo";
+        return $this->getArray($sql);
+    }
 }

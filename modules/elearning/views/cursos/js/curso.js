@@ -28,6 +28,18 @@ $(document).ready(function(){
 			}
 		}
 	});
+	   $(".printer").bind("click",function()
+                {
+                    $(".PrintArea").printArea();
+                });
+
+	   $("#printButton").click(function(){
+        var mode = 'iframe'; //popup
+        var close = mode == "popup";
+        var options = { mode : mode, popClose : close};
+        $("div.printableArea").printArea( options );
+    });
+	   
 	$("#btnCalificar").click(function(){
 		var texto = $("#txCComentario").val();
 		if(CALIFICACION==0){

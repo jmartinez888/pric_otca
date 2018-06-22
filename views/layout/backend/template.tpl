@@ -271,6 +271,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         </div>
         <script type="text/javascript" src="{$_layoutParams.root_clear}public/js/jquery-1.11.2.min.js"></script>
         
+        
         <!--<script src="plugins/jQuery/jQuery-2.1.3.min.js"></script>--
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>-->
         <!--Exportar Tabla a Excel-->

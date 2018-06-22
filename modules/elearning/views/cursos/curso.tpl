@@ -127,7 +127,7 @@
                         <strong><span class="glyphicon glyphicon-list-alt"></span> &nbsp;Obtener certificado</strong>
                       </button>
                     {else}
-                      <a class="btn btn-success btn-certificado" style="margin-bottom: 10px" href="">
+                      <a target="_blank" class="btn btn-success btn-certificado" style="margin-bottom: 10px" href="{BASE_URL}elearning/cursos/obtenerCertificado/{$certificado[0]['Cer_IdCertificado']}">
                         <strong><span class="glyphicon glyphicon-list-alt"></span> &nbsp;Visualizar certificado</strong>
                       </a>
                     {/if}
