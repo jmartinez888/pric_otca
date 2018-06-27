@@ -98,15 +98,15 @@ class adminModel extends Model
         }
     }
 
-    public function getForos($iFor_Filtros = "", $iFor_Filtros2 = "", $iPagina = 1, $iRegistrosXPagina = CANT_REG_PAG)
+    public function getForos($iFor_Filtros = "", $iPagina = 1, $iRegistrosXPagina = CANT_REG_PAG, $iFor_Filtros2 = "")
     {
         try {
             $sql    = " call s_s_foro_admin(?,?,?,?)";
             $result = $this->_db->prepare($sql);
-            $result->bindParam(1, $iFor_Filtros, PDO::PARAM_STR);
-            $result->bindParam(2, $iFor_Filtros2, PDO::PARAM_STR);
-            $result->bindParam(3, $iPagina, PDO::PARAM_INT);
-            $result->bindParam(4, $iRegistrosXPagina, PDO::PARAM_INT);
+            $result->bindParam(1, $iFor_Filtros, PDO::PARAM_STR);            
+            $result->bindParam(2, $iPagina, PDO::PARAM_INT);
+            $result->bindParam(3, $iRegistrosXPagina, PDO::PARAM_INT);
+            $result->bindParam(4, $iFor_Filtros2, PDO::PARAM_STR);
 
             $result->execute();
             return $result->fetchAll();
