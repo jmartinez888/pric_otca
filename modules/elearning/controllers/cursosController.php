@@ -367,18 +367,18 @@ class cursosController extends elearningController {
     $mModulo = $this->loadModel("modulo");
     $mCert = $this->loadModel("certificado");
 
-//array taller hpc
-//     $certificado = array(" CARLOS ALBERTO PAREDES ROJAS  ",
-// " ANTHONY WILL SOLSOL SOPLIN  ",
-// " JOEL HURTADO HUERTAS  ",
-// " JOSE MARTIN NAVARRO FASANADO  ",
-// " BRAYAN KENYI SAAVEDRA VARGAS  ",
-// " ELDER ORLANDO CULQUI GUZMAN  ",
-// " ROMELIA JOSEFINA GARCIA RIOS  ",
-// " JAIR AGAPITO AREVALO  ",
-// " JHONY FERNANDEZ GOMEZ  ",
-// " PEDRO ANTONIO GONZALES SANCHEZ  ",
-// " ROYER ANDINO RIOS VALERA  ",
+// array taller hpc
+// $certificado = array(" CARLOS ALBERTO PAREDES ROJAS  ",
+// " ANTHONY WILL SOLSOL SOPLIN ",
+// " JOEL HURTADO HUERTAS ",
+// " JOSE MARTIN NAVARRO FASANADO ",
+// " BRAYAN KENYI SAAVEDRA VARGAS ",
+// " ELDER ORLANDO CULQUI GUZMAN ",
+// " ROMELIA JOSEFINA GARCIA RIOS ",
+// " JAIR AGAPITO AREVALO ",
+// " JHONY FERNANDEZ GOMEZ ",
+// " PEDRO ANTONIO GONZALES SANCHEZ ",
+// " ROYER ANDINO RIOS VALERA ",
 // " ERICK CRISTOFER GUEVARA ROJAS  ",
 // " JUAN CARLOS GARCIA CASTRO  ",
 // " CHRISTIAN JUNIOR ZAVALETA TANGOA  ",
@@ -394,47 +394,89 @@ class cursosController extends elearningController {
 // " TATIANA MILDRED UCAÑAY AYLLON  ");
 
 
-$certificado = array(" Hugo  Hernández Figueroa ",
-" Silvio  Sachetto Vitiello ",
-" Maicon Saul  Farias ",
-" Vicent  Blanqué  ",
-" Roberto  Sanchez Saravia ",
-" Luis  Campos Baca ",
-" Heiter  Valderrama Freyre ",
-" Ernesto  Cuadros Vargas ",
-" Alex  Cuadros Vargas ",
-" Cristian  López Del Alamo ",
-" Marco Paredes Riveros ",
-" Daniel  Díaz Ataucuri ",
-" Samuel Gustavo  Huamán Bustamante ",
-" Alan  Llacza Rodriguez  ",
-" José  Pasapera Gonzáles ",
-" Jorge  Abad Cueva ",
-" Lizardo  Fachin Malaverry ",
-" Isaac  Ocampo Yahuarcani ",
-" Rodolfo  Cárdenas Vigo ",
-" Alejandro  Reátegui Pezo ",
-" Jhon  Martínez Carranza ",
-" Erick  Gómez Nieto ",
-" Jorge  Poco Medina ",
-" Ivonne Montes Torres ",
-" Milton  Ríos Julcapoma ",
-" Monica   Araujo Costa ",
-" Pablo  Yanyachi Aco Cárdenas ",
-" Rosanna  Patrnogic Rengifo ",
-" Andrés  Yong Hurtado ",
-" Carlos Enrique  Ruiz Vásquez ",
-" James de Bari  Sanchez Perez ",);
+// $certificado = array(
+// " Erick  Gómez Nieto ",
+// " Jorge  Poco Medina ");
+
+// $certificado = array(
+// " Dr. JUAN JOSE JIMENEZ GARAVITO",
+// " Dr. EDGAR LEONARDO PEÑA CASAS ",
+// " MBA PACO MARQUEZ URBINA ",
+// " Ing. M. Sc. PEDRO ANTONIO GONZALES SÁNCHEZ ");
+
+// taller manati
+//     $certificado = array(" JUAN CARLOS GARCIA CASTRO ",
+// " CARLOS ARMANDO RIOS ",
+// " TATIANA MALDRID UCAÑAY AYLLON ");
 
 
-    // $mCert->getCertificado_Id($id);
-    // $modulo = $mModulo->getModulosCurso_Id($certificado[0]["Cur_IdCurso"]);
+//taller data
+// $certificado = array(" ANTHONY WILL SOLSOL SOPLIN ",
+// " BRAYAN KENYI SAAVEDRA VARAS ",
+// " CARLOS ALBERTO PAREDES ROJAS ",
+// " ELDER ORLANDO CULQUI GUZMAN ",
+// " JAIR AGAPITO AREVALO ",
+// " JERSON ALEJANDRO SOLSOL SAAVEDRA ",
+// " JOEL HURTADO HUERTAS ",
+// " JOSE MARTIN NAVARRO FASANANDO ",
+// " ROMELIA JOSEFINA GARCIA RIOS ",
+// " ROYER ANDINO RIOS VALERA ",
+// " JUAN CARLOS GARCIA CASTRO "
+// );
+
+
+//asistentes faltantes
+// $certificado = array(
+//" JORGE ANTONIO BAUTISTA SOTELO ",
+//" JOAO VALENTINNO PINHEIRO RODRIGUEZ ",
+//" ELISBAN FLORES QUENAYA ",
+//" ANIBAL FERNANDO FLORES GARCIA ",
+//" ERWIN PABLO PEÑA CASAS ",
+//" ENRIQUE MENDOZA CABALLERO ",
+//" PEDRO ANTONIO GONZALES SANCHEZ ",
+//" CARLOS ARMANDO RIOS LOPEZ "
+//);
+
+//tallercmas
+// $certificado = array(
+//" GONZALO MAURICIO DA SILVA TORRES ",
+//" JHOSELIN PIERINA LAULATE LAVINTO ",
+//" DALIA ESTHER RENGIFO PÉREZ ",
+//" ALEXIS YAICATE VELA ",
+//" JOSÉ CARLOS GONZÁLES PÉREZ",
+//" WILMAR ALEJANDRO CHU GONZALES ",
+//" PABLO LÓPEZ RAMÍREZ ",
+//" PATRICE RADEK ANTONY SIFUENTES RAMOS",
+//" DÁMASO CÉSAR DEL AGUILA VARGAS ",
+//" MIGUEL GUSTAVO CARMEN GUEVARA ",
+//" JERUSALÉN MILAGROS ZÁRATE ALBA ",
+//" ADHEMIR HAROLDO NASCIMENTO ESPINOZA "
+//);
+
+
+//tallergestiondatos
+// $certificado = array(
+//" RUBI MARISELA AHUANARI FERNÁNDEZ ",
+//" GIAN PIERRE PINEDO LINARES",
+//" JORGE ANTONIO BAUTISTA SOTELO "
+//);
+
+
+//tallerarduino
+// $certificado = array(
+// " LÍA IYNÉS ESMERALDA MARTÍNEZ TAPULLIMA ",
+// " EDUARDO OTONIEL MELENA RAMÍREZ ",
+// " ORLANDO ULISES AMIAS DAHUA ",
+// " ROY MARCELO SAQUIRAY BOCANEGRA",
+// );
+    $certificado =$mCert->getCertificado_Id($id);
+    $modulo = $mModulo->getModulosCurso_Id($certificado[0]["Cur_IdCurso"]);
 
     $this->_view->setTemplate(LAYOUT_FRONTEND);
     $this->_view->setCss(array("curso", "jp-curso"));
     $this->_view->setJs(array(array(BASE_URL . 'modules/elearning/views/gestion/js/core/util.js'), "curso"));
-    // $this->_view->assign("modulo", $modulo);
-    $this->_view->assign("certificado", $certificado[$id]);
+    $this->_view->assign("modulo", $modulo);
+    $this->_view->assign("certificado", $certificado);
     // $this->_view->assign("detalle", $model->getDetalleCurso($curso["Cur_IdCurso"]));
     $this->_view->assign("session",Session::get("autenticado"));
     $this->_view->renderizar('certificado_curso');
