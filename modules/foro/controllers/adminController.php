@@ -607,6 +607,7 @@ class adminController extends foroController
         // ini_set("smtp_port",25);
         // ini_set("sendmail_from","turemitente@gmail.com");
         $email = $Email[0];
+        echo "$email";exit;
         $mail = "Prueba de mensaje";
         // $correo2 = "julio.ce20@hotmail.com";
         $correo2 = "julyspaadomicilio@gmail.com";
@@ -614,15 +615,14 @@ class adminController extends foroController
         $titulo = "PRUEBA DE TITULO";
         //cabecera
 
-        $headers = "From: julio.ce20@hotmail.com" . '\r\n' .
-                    'Reply-To: julio.ce20@hotmail.com' . '\r\n' .
-                    'X-Mailer: PHP/' . phpversion();
-        // $headers = "MIME-Version: 1.0".'\r\n'; 
-        // $headers .= "Content-type: text/html; charset=iso-8859-1".'\r\n'; 
+        $headers = "MIME-Version: 1.0".'\r\n'; 
+        $headers .= "Content-type: text/html; charset=iso-8859-1".'\r\n'; 
+        //dirección del remitente 
+        $headers .= "From: Geeky Theory < ".$correo2." >".'\r\n'; 
         // //dirección del remitente 
         // $headers .= "From: Geeky Theory < ".$email." >".'\r\n';
         //Enviamos el mensaje a tu_dirección_email 
-        $bool = mail($email,$titulo,$mail,"FROM: $correo2");
+        $bool = mail($email,$titulo,$mail,$headers);
         if($bool){
             echo "Mensaje enviado";exit;
         }else{
