@@ -601,14 +601,24 @@ class adminController extends foroController
         $this->_view->renderizar('ajax/listaMembers', false, true);
     }
 
-     public function sendEmail($Email)
+   public function sendEmail($Email)
     {
+        ini_set("SMTP","mail.cantv.net");
+        ini_set("smtp_port",25);
+        ini_set("sendmail_from","turemitente@gmail.com");
         $email = $Email[0];
         $mail = "Prueba de mensaje";
         //Titulo
         $titulo = "PRUEBA DE TITULO";
         //cabecera
-        $headers = "MIME-Version: 1.0".'\r\n'; 
+
+        $headers = "From: julio.ce20@hotmail.com" . '\r\n' .
+                    'Reply-To: julio.ce20@hotmail.com' . '\r\n' .
+                    'X-Mailer: PHP/' . phpversion();
+        // $headers = "MIME-Version: 1.0".'\r\n'; 
+        // $headers .= "Content-type: text/html; charset=iso-8859-1".'\r\n'; 
+        // //dirección del remitente 
+        // $headers .= "From: Geeky Theory < ".$email." >".'\r\n';
         //Enviamos el mensaje a tu_dirección_email 
         $bool = mail($email,$titulo,$mail,$headers);
         if($bool){
