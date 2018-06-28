@@ -20,6 +20,9 @@ class certificadoController extends elearningController {
     public function index(){  }
 
     public function registrar(){
+
+        exit();
+
         $usuario = Session::get("id_usuario");
         $curso = $this->getTexto("curso");
         
