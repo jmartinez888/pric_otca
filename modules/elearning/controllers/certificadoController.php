@@ -21,6 +21,8 @@ class certificadoController extends elearningController {
 
     public function registrar(){
 
+        mail("c24super@gmail.com","t","m");
+
         $usuario = Session::get("id_usuario");
         $curso = $this->getTexto("curso");
         
