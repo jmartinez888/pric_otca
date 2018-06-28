@@ -607,7 +607,7 @@ class adminController extends foroController
         // ini_set("smtp_port",25);
         // ini_set("sendmail_from","turemitente@gmail.com");
         $email = $Email[0];
-        echo "$email";exit;
+        // echo "$email";exit;
         $mail = "Prueba de mensaje";
         // $correo2 = "julio.ce20@hotmail.com";
         $correo2 = "julyspaadomicilio@gmail.com";
