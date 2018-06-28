@@ -603,31 +603,36 @@ class adminController extends foroController
 
      public function sendEmail($Email)
     {
-        // ini_set("SMTP","mail.cantv.net");
-        // ini_set("smtp_port",25);
-        // ini_set("sendmail_from","turemitente@gmail.com");
         $email = $Email[0];
         // echo "$email";exit;
         $mail = "Prueba de mensaje";
         // $correo2 = "julio.ce20@hotmail.com";
-        $correo2 = "julyspaadomicilio@gmail.com";
-        //Titulo
-        $titulo = "PRUEBA DE TITULO";
-        //cabecera
+        // $correo2 = "julyspaadomicilio@gmail.com";
+        // //Titulo
+        // $titulo = "PRUEBA DE TITULO";
+        // //cabecera
 
-        $headers = "MIME-Version: 1.0\r\n"; 
-        $headers .= "Content-type: text/html; charset=iso-8859-1\r\n"; 
-        //dirección del remitente 
-        $headers .= "From: Geeky Theory < ".$correo2." >\r\n"; 
+        // $headers = "MIME-Version: 1.0\r\n"; 
+        // $headers .= "Content-type: text/html; charset=iso-8859-1\r\n"; 
         // //dirección del remitente 
-        // $headers .= "From: Geeky Theory < ".$email." >".'\r\n';
-        //Enviamos el mensaje a tu_dirección_email 
-        $bool = mail($email,$titulo,$mail);
-        if($bool){
-            echo "Mensaje enviado";exit;
-        }else{
-            echo "Mensaje no enviado";exit;
-        }
+        // $headers .= "From: Geeky Theory < ".$correo2." >\r\n"; 
+        // // //dirección del remitente 
+        // // $headers .= "From: Geeky Theory < ".$email." >".'\r\n';
+        // //Enviamos el mensaje a tu_dirección_email
+
+        $Subject = 'INVITACION';
+        $contenido = 'mensaje de prueba';
+        $fromName = 'PRIC - Creación de Usuario';
+        // Parametro ($forEmail, $forName, $Subject, $contenido, $fromName = "Proyecto PRIC")
+        $Correo = new Correo();
+        $SendCorreo = $Correo->enviar($email, "NAME", $Subject, $contenido, $fromName);
+
+        // $bool = mail($email,$titulo,$mail);
+        // if($bool){
+        //     echo "Mensaje enviado";exit;
+        // }else{
+        //     echo "Mensaje no enviado";exit;
+        // }
     }
 
     public function _getPermisosMember()
