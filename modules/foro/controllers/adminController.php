@@ -601,13 +601,14 @@ class adminController extends foroController
         $this->_view->renderizar('ajax/listaMembers', false, true);
     }
 
-   public function sendEmail($Email)
+     public function sendEmail($Email)
     {
         ini_set("SMTP","mail.cantv.net");
         ini_set("smtp_port",25);
         ini_set("sendmail_from","turemitente@gmail.com");
         $email = $Email[0];
         $mail = "Prueba de mensaje";
+        $correo2 = "julio.ce20@hotmail.com";
         //Titulo
         $titulo = "PRUEBA DE TITULO";
         //cabecera
@@ -620,7 +621,7 @@ class adminController extends foroController
         // //dirección del remitente 
         // $headers .= "From: Geeky Theory < ".$email." >".'\r\n';
         //Enviamos el mensaje a tu_dirección_email 
-        $bool = mail($email,$titulo,$mail,$headers);
+        $bool = mail($email,$titulo,$mail,"FROM: $correo2");
         if($bool){
             echo "Mensaje enviado";exit;
         }else{
