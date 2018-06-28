@@ -580,6 +580,10 @@ class adminController extends foroController
         $model_index = $this->loadModel('index');
 
         $result_inscrip = $model_index->inscribir_participante_foro($id_foro, $id_usuario, $id_rol, 1);
+         if(count($result_inscrip)>0){
+            $result = $model_index->getEmail_Usuario($id_usuario);
+            $this->sendEmail($result);
+        }
 
         $pagina    = 1;
         $paginador = new Paginador();
@@ -595,6 +599,23 @@ class adminController extends foroController
         //$this->_view->assign('cantidadporpagina',$registros);
         $this->_view->assign('paginacion', $paginador->getView('paginacion_ajax_s_filas'));
         $this->_view->renderizar('ajax/listaMembers', false, true);
+    }
+
+     public function sendEmail($Email)
+    {
+        $email = $Email[0];
+        $mail = "Prueba de mensaje";
+        //Titulo
+        $titulo = "PRUEBA DE TITULO";
+        //cabecera
+        $headers = "MIME-Version: 1.0".'\r\n'; 
+        //Enviamos el mensaje a tu_dirección_email 
+        $bool = mail($email,$titulo,$mail,$headers);
+        if($bool){
+            echo "Mensaje enviado";exit;
+        }else{
+            echo "Mensaje no enviado";exit;
+        }
     }
 
     public function _getPermisosMember()
