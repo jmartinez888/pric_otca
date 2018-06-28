@@ -7,6 +7,7 @@
             <!-- ficha-foro-josepacaya -->
                 <div class="col-lg-12 p-rt-lt-0">
                     <a class="regresar-tematica" href="#"> < NombreDeLaTemática</a>
+                    <div class="pull-right etiqueta">Discusión</div>
                 </div>
                 <div class="col-lg-12 p-rt-lt-0">
                     <h3 class="titulo-ficha">{$foro.For_Titulo}</h3>
@@ -26,17 +27,17 @@
                     <p>{$foro.For_Descripcion|html_entity_decode}</p>
                 </div>
                 <div class="col-lg-12 p-rt-lt-0" style="font-size: 12px;">
-                    <div class="col-lg-6 p-rt-lt-0">
+                    <div class="col-lg-8 p-rt-lt-0">
+                        <div class="participantes">Participantes: <strong>2</strong></div>
+                    </div>
+                    <div class="col-lg-4 p-rt-lt-0">
                         <button class="btn btn-default btn-comentar">
                             <i class="glyphicon glyphicon-comment"></i>
                         &nbsp;Comentar</button>
-                        <button class="btn btn-default btn-like" id="btnCalificar">
+                        <button class="btn btn-default btn-like pull-right" id="btnCalificar">
                             <i class="glyphicon glyphicon-thumbs-up"></i>
-                        &nbsp;Me gusta</button>
-                    </div>
-                    <div class="col-lg-6 p-rt-lt-0">
-                        <div class="participantes pull-right">Participantes: <strong>2</strong></div>
-                    </div>
+                        </button>
+                    </div> 
                 </div>
                 <div class="col-lg-12 p-rt-lt-0">
                     <hr class="cursos-hr">
@@ -70,7 +71,7 @@
                             {if $comentar_foro}
                                 <div class="widget-area no-padding blank">
                                     <div class="status-upload">
-                                        <textarea id="text_comentario_{$foro.For_IdForo}_0" placeholder="Ingrese su comentario" ></textarea>
+                                        <textarea class="estilo-textarea" id="text_comentario_{$foro.For_IdForo}_0" placeholder="Ingrese su comentario" ></textarea>
                                         <div id="div_loading_{$foro.For_IdForo}_0" id_padre="0" class="load_files d-none">
 
                                         </div>
@@ -86,9 +87,15 @@
                                 </div><!-- Widget Area -->
                             {else}
                                  {if $foro.For_Funcion=="forum"}
-                                <button class="btn btn-primary btn-md inscribir_foro" id_foro="{$foro.For_IdForo}">Inscríbete para comentar<i class="fa fa-sign-in"></i></button>
+                                 <div class="col-md-12 p-rt-lt-0">
+                                     <button class="btn btn-primary btn-md inscribir_foro" id_foro="{$foro.For_IdForo}">Inscríbete para comentar
+                                     <i class="glyphicon glyphicon-log-in"></i></button>
+                                 </div>
                                 {else}
-                                <button class="btn btn-primary btn-md inscribir_foro" id_foro="{$foro.For_IdForo}">Inscríbete para participar en el Webinar<i class="fa fa-sign-in"></i></button>
+                                <div>
+                                     <button class="btn btn-primary btn-md inscribir_foro" id_foro="{$foro.For_IdForo}">Inscríbete para participar en el Webinar
+                                     <i class="glyphicon glyphicon-log-in"></i></button>
+                                </div>
                                 {/if}
                                 {/if}
                             {else}
@@ -96,10 +103,9 @@
                                 <div class="col-lg-12 anuncio"> 
                                   <p>Para colgar su contribución inicie sesión.</p>
                                 </div>                              
-                                    <div class="col-md-12 p-rt-lt-0">    
-                                        <button data-toggle="modal" data-target="#modal-login" id="login-form-link" class="btn btn-group btn-success ini-sesion">Inicie Sesion <i class="glyphicon glyphicon-log-in"></i></button>
-                                    </div>
-
+                                <div class="col-md-12 p-rt-lt-0">    
+                                    <button data-toggle="modal" data-target="#modal-login" id="login-form-link" class="btn btn-group btn-success ini-sesion">Inicie Sesion <i class="glyphicon glyphicon-log-in"></i></button>
+                                </div>
                             </div>
                         {/if}                    
                     </div>
@@ -112,7 +118,7 @@
                 </div>
                 <div id="lista_comentarios" class="row">               
                     {foreach from=$foro.For_Comentarios item=comentarios} 
-                        <div class="media comment-box">
+                        <div class="comment-box">
                             <div class="col-md-1 media-left">
                                 <a href="#">
                                     <img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">

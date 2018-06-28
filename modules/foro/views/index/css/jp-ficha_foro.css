@@ -21,6 +21,8 @@
 	text-transform: uppercase;
 }
 .btn-comentar{
+	position: relative;
+	left: 40px;
 	background-color: #777;
 	color: white;
 	border-color: #777;
@@ -62,4 +64,13 @@
     padding: 10px 40px;
     margin: 20px auto;
     left: 35%;
+}
+.estilo-textarea{
+    resize: vertical;
+    max-height: 150px;
+    min-height: 100px;
+}
+.etiqueta{
+	font-family: 'Gill Sans MT';
+	font-size: 20px;
 }
