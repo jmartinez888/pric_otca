@@ -29,9 +29,9 @@
                         <div class="col-xs-3">                            
                             <input id="text_busqueda" name="text_busqueda" type="text" class="form-control">
                         </div>
-                        <!-- <div class="col-xs-1"> -->
+                        <div class="col-xs-1"> -->
                             <button id="buscar_foro" class=" btn btn-primary" type="button"><i class="glyphicon glyphicon-search"></i></button>
-                        <!-- </div> -->
+                        </div>
                     </div>
             </div>
         </form>            
