@@ -42,7 +42,7 @@
                 </div>
                     {$paginacioncertificados|default:""}
                 {else}
-                    {$lenguaje.no_registros}
+                    No hay registros
                 {/if}                
             </div>
         </div>
