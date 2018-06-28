@@ -21,20 +21,20 @@ class certificadoController extends elearningController {
 
     public function registrar(){
 
-        // $usuario = Session::get("id_usuario");
-        // $curso = $this->getTexto("curso");
+        $usuario = Session::get("id_usuario");
+        $curso = $this->getTexto("curso");
         
-        // $tmpUser = "0000" . $usuario;
-        // $tmpCurso = "0000" . $curso;
+        $tmpUser = "0000" . $usuario;
+        $tmpCurso = "0000" . $curso;
 
-        // $codigo = substr($tmpCurso, strlen($tmpCurso)-5, strlen($tmpCurso));
-        // $codigo .= substr($tmpUser, strlen($tmpUser)-5, strlen($tmpUser));
-        // $codigo = date('Ymd'). $codigo;
+        $codigo = substr($tmpCurso, strlen($tmpCurso)-5, strlen($tmpCurso));
+        $codigo .= substr($tmpUser, strlen($tmpUser)-5, strlen($tmpUser));
+        $codigo = date('Ymd'). $codigo;
 
-        // $this->certificado->insertCertificado($codigo, $usuario, $curso);
+        $this->certificado->insertCertificado($codigo, $usuario, $curso);
 
-        // $this->service->Success("Se registró la calificación");
-        // $this->service->Send();
+        $this->service->Success("Se registró la calificación");
+        $this->service->Send();
     }
 
     public function get(){
