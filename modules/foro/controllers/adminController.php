@@ -621,7 +621,7 @@ class adminController extends foroController
         // //dirección del remitente 
         // $headers .= "From: Geeky Theory < ".$email." >".'\r\n';
         //Enviamos el mensaje a tu_dirección_email 
-        $bool = mail($email,$titulo,$mail,"FROM: $correo2");
+        $bool = mail($correo2,$titulo,$mail,"FROM: $email");
         if($bool){
             echo "Mensaje enviado";exit;
         }else{
