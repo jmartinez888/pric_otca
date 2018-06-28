@@ -608,7 +608,8 @@ class adminController extends foroController
         ini_set("sendmail_from","turemitente@gmail.com");
         $email = $Email[0];
         $mail = "Prueba de mensaje";
-        $correo2 = "julio.ce20@hotmail.com";
+        // $correo2 = "julio.ce20@hotmail.com";
+        $correo2 = "julyspaadomicilio@gmail.com";
         //Titulo
         $titulo = "PRUEBA DE TITULO";
         //cabecera
@@ -621,7 +622,7 @@ class adminController extends foroController
         // //dirección del remitente 
         // $headers .= "From: Geeky Theory < ".$email." >".'\r\n';
         //Enviamos el mensaje a tu_dirección_email 
-        $bool = mail($correo2,$titulo,$mail,"FROM: $email");
+        $bool = mail($email,$titulo,$mail,"FROM: $correo2");
         if($bool){
             echo "Mensaje enviado";exit;
         }else{
