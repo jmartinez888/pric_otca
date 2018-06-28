@@ -603,9 +603,9 @@ class adminController extends foroController
 
      public function sendEmail($Email)
     {
-        ini_set("SMTP","mail.cantv.net");
-        ini_set("smtp_port",25);
-        ini_set("sendmail_from","turemitente@gmail.com");
+        // ini_set("SMTP","mail.cantv.net");
+        // ini_set("smtp_port",25);
+        // ini_set("sendmail_from","turemitente@gmail.com");
         $email = $Email[0];
         $mail = "Prueba de mensaje";
         // $correo2 = "julio.ce20@hotmail.com";
