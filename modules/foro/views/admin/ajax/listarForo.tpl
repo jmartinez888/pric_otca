@@ -36,5 +36,4 @@
         </tbody>
     </table>
 </div>
-
 {$paginacion|default:""}
