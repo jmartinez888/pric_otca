@@ -374,7 +374,6 @@ class cursosController extends elearningController {
     $this->_view->setCss(array("curso", "jp-curso"));
     $this->_view->setJs(array(array(BASE_URL . 'modules/elearning/views/gestion/js/core/util.js'), "curso"));
     
-    mail("c24super@gmail.com","t","m");
     $this->_view->assign("modulo", $modulo);
     $this->_view->assign("certificado", $certificado);
     // $this->_view->assign("detalle", $model->getDetalleCurso($curso["Cur_IdCurso"]));
