@@ -611,10 +611,9 @@ class adminController extends foroController
             $fromName = 'PRIC - Creación de Usuario';
             $Correo = new Correo();
             $SendCorreo = $Correo->enviar($email, "NAME", $Subject, $contenido, $fromName);
-        }catch{
-            
+        }catch(Exception $e){
+            echo "";
         }
-
     }
 
     public function _getPermisosMember()
