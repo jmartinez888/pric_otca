@@ -240,9 +240,15 @@
           <a href="{BASE_URL}elearning/certificado/menu" class="nounderline">
             <div class="side-menu2"><li class="side-menu" style="position: relative">
             <i class="glyphicon glyphicon-education"></i>
-            <span> Certificados</span></li></div>
+            <span>Mis Certificados</span></li></div>
           </a>
         </ul>        
-
+        <ul>
+          <a href="{BASE_URL}elearning/certificado/otros" class="nounderline">
+            <div class="side-menu2"><li class="side-menu" style="position: relative">
+            <i class="glyphicon glyphicon-education"></i>
+            <span>Verificar Certificados</span></li></div>
+          </a>
+        </ul>
     </div>
   </div>

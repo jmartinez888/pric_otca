@@ -500,6 +500,7 @@
         
         <script type="text/javascript" src="{$_layoutParams.root_clear}public/js/util.js"></script>
         <script type="text/javascript" src="{$_layoutParams.root_clear}public/js/jquery.slimscroll.min.js"></script>
+        <script type="text/javascript" src="{$_layoutParams.ruta_js}jquery.PrintArea.js"></script>
         <script type="text/javascript" src="{$_layoutParams.ruta_js}bootstrap.min.js" ></script>
         <script type="text/javascript" src="{$_layoutParams.ruta_js}app.min.js" ></script>
         <script type="text/javascript" src="{$_layoutParams.ruta_js}bootstrap-datepicker.js"></script>

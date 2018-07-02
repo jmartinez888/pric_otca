@@ -6,3 +6,20 @@
 	background-color: #525252;
 	color: #fff;
 }
+th{
+	font-size: 18px;
+	font-family: 'Lucida Sans';
+}
+.link-foro{
+	color: #222;
+}
+.link-foro:hover{
+	color: #222;
+	text-decoration: underline;
+}
+.reporte{
+	
+}
+.reporte:hover{
+	text-decoration: underline;
+}

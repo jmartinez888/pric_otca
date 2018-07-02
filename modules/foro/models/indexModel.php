@@ -189,6 +189,19 @@ class indexModel extends Model {
         }
     }
 
+    public function getEmail_Usuario($IdUsuario)
+    {
+        try {
+            $post = $this->_db->query(
+                "SELECT usu_email FROM usuario usu
+                  WHERE usu.Usu_IdUsuario = '$IdUsuario'");
+            return $post->fetch();
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("foro(indexModel)", "getEmail_Usuario", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
+
     public function insertarFileComentario($Fim_NombreFile, $Fim_TipoFile, $Fim_SizeFile, $Com_IdComentario, $Rec_IdComentario) {
         try {
 

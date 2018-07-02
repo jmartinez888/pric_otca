@@ -361,4 +361,24 @@ class cursosController extends elearningController {
     $json->Success("Exito al registrar el examen");
     $json->Send();
   }
+
+  public function obtenerCertificado($id=0){
+    $model = $this->loadModel("curso");
+    $mModulo = $this->loadModel("modulo");
+    $mCert = $this->loadModel("certificado");
+
+    $certificado =$mCert->getCertificado_Id($id);
+    $modulo = $mModulo->getModulosCurso_Id($certificado[0]["Cur_IdCurso"]);
+
+    $this->_view->setTemplate(LAYOUT_FRONTEND);
+    $this->_view->setCss(array("curso", "jp-curso"));
+    $this->_view->setJs(array(array(BASE_URL . 'modules/elearning/views/gestion/js/core/util.js'), "curso"));
+    
+    $this->_view->assign("modulo", $modulo);
+    $this->_view->assign("certificado", $certificado);
+    // $this->_view->assign("detalle", $model->getDetalleCurso($curso["Cur_IdCurso"]));
+    $this->_view->assign("session",Session::get("autenticado"));
+    $this->_view->renderizar('certificado_curso');
+  }
+
 }

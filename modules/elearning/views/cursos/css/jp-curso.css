@@ -142,19 +142,18 @@
 }
 
 .referencia-curso-total{
-    color: #4D4D4D;
-    color: #444;
+    padding: 5px 10px 5px 10px;
+    margin-top: 20px;
+    background-color: #225248;
+    color: #f2f2f2;
     font-size: 16px;
 }
 .referencia-curso{
-    color: #4D4D4D;
-    color: #444;
+    color: #f2f2f2;
     font-size: 16px;
 }
 .referencia-curso:hover{
-    color: #4D4D4D;
-    color: #444;
-    font-size: 16px;
+    color: #f2f2f2;
     text-decoration: underline;
 }
 .img-modulo{
@@ -169,7 +168,6 @@
     display: inline-block;
 }
 .cursos-hr{
-    background: #ddd;
     margin-top: 0px;
     padding: 0.2px;
 }
