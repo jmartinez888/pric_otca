@@ -1123,7 +1123,7 @@ class indexController extends aclController
         $Per_Idmodulo = $this->getPostParam('idmodulos');
                    
         $datos = $this->_aclm->getmoduloTraducido($Per_Idmodulo, $Idi_IdIdioma);
-        print_r($datos);
+        // print_r($datos);
         $this->_view->assign('idiomas',$this->_aclm->getIdiomas());
         if ($datos["Idi_IdIdioma"]==$Idi_IdIdioma) {
             $this->_view->assign('datos',$datos);    
