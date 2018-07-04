@@ -102,23 +102,32 @@
                     <i class="glyphicon glyphicon-list-alt"></i>&nbsp;&nbsp;<strong>{$lenguaje.usuarios_buscar_titulo}</strong>                       
                 </h3>
             </div>
-            <div class="panel-body">                          
-                <div class="form-group ">
-                    <div class="col-xs-offset-4 col-xs-4" >                        
-                        {if  isset($roles) && count($roles)}
-                            <select class="form-control" id="buscarRol" name="buscarRol">
-                                <option value="">{$lenguaje.label_todos_roles}</option>
-                            {foreach from=$roles item=r}
-                                <option value="{$r.Rol_IdRol}">{$r.Rol_Nombre}</option>    
-                            {/foreach}
-                            </select>
-                        {/if}
+            <div class="panel-body">   
+                <form method="POST">                       
+                    <div class="form-group ">
+                        <div class="well-sm col-sm-12">
+                            <div id="botones" class="btn-group pull-right">
+                                <button type="submit" id="export_data_excel" name="export_data_excel" class="btn btn-info">EXCEL</button>
+                                <button type="submit" id="export_data_csv" name="export_data_csv" class="btn btn-info">CSV</button>
+                                <button type="submit" id="export_data_pdf" name="export_data_pdf" class="btn btn-info">PDF</button>
+                            </div>
+                        </div>
+                        <div class="col-xs-offset-4 col-xs-4" >                        
+                            {if  isset($roles) && count($roles)}
+                                <select class="form-control" id="buscarRol" name="buscarRol">
+                                    <option value="">{$lenguaje.label_todos_roles}</option>
+                                {foreach from=$roles item=r}
+                                    <option value="{$r.Rol_IdRol}">{$r.Rol_Nombre}</option>    
+                                {/foreach}
+                                </select>
+                            {/if}
+                        </div>
+                        <div class="col-xs-3">
+                            <input class="form-control" placeholder="{$lenguaje.text_buscar_usuario}"  name="palabra" id="palabra">                        
+                        </div>
+                        <button class=" btn btn-primary" type="button" id="buscar"  ><i class="glyphicon glyphicon-search"></i></button>
                     </div>
-                    <div class="col-xs-3">
-                        <input class="form-control" placeholder="{$lenguaje.text_buscar_usuario}"  name="palabra" id="palabra">                        
-                    </div>
-                    <button class=" btn btn-primary" type="button" id="buscar"  ><i class="glyphicon glyphicon-search"></i></button>
-                </div>
+                </form>
                 <div style="margin: 15px 25px">
                 <h4 class="panel-title"> <b>{$lenguaje.usuarios_buscar_tabla_titulo}</b></h4>
                     <div id="listaregistros">
