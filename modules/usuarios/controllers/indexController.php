@@ -41,6 +41,18 @@ class indexController extends usuariosController {
 
         $paginador = new Paginador();
 
+        if ($this->botonPress("export_data_excel")) {
+            $this->_exportarDatos("excel");
+        }
+
+        if ($this->botonPress("export_data_pdf")) {
+            $this->_exportarDatos("pdf");
+        }
+
+        if ($this->botonPress("export_data_csv")) {
+            $this->_exportarDatos("csv");
+        }
+
         $this->_view->assign('usuarios', $this->_usuarios->getUsuariosPaginado($condicion));
 
         $paginador->paginar( $totalRegistros,"listaregistros", "", $pagina, CANT_REG_PAG, true);
@@ -120,11 +132,10 @@ class indexController extends usuariosController {
 
     public function _buscarUsuario() {
         //$this->validarUrlIdioma();
-       $txtBuscar = $this->getSql('palabra');
-
+        $txtBuscar = $this->getSql('palabra');
         $idRol = $this->getInt('idrol');
         $pagina = $this->getInt('pagina');
-        //echo $idRol."/".$nombre;exit;
+        // echo $txtBuscar. ' ' . $idRol; exit;
         $condicion = "";
 
         $soloActivos = 0;
@@ -168,13 +179,27 @@ class indexController extends usuariosController {
             }
         }        
 
-
         $paginador = new Paginador();
 
         $arrayRowCount = $this->_usuarios->getUsuariosRowCount($condicion);
         $totalRegistros = $arrayRowCount['CantidadRegistros'];
         // echo($totalRegistros);
         // print_r($arrayRowCount); echo($condicion);exit;
+
+         //EXPORTAR DATOS
+        if ($this->botonPress("export_data_excel")) {
+            $this->_exportarDatos("excel");
+        }
+
+        if ($this->botonPress("export_data_pdf")) {
+            $this->_exportarDatos("pdf");
+        }
+
+        if ($this->botonPress("export_data_csv")) {
+            $this->_exportarDatos("csv");
+        }
+        //
+
         $this->_view->assign('usuarios', $this->_usuarios->getUsuariosCondicion($pagina,CANT_REG_PAG, $condicion));
 
         $paginador->paginar( $totalRegistros ,"listaregistros", "$txtBuscar", $pagina, CANT_REG_PAG, true);
@@ -182,6 +207,200 @@ class indexController extends usuariosController {
         $this->_view->assign('numeropagina', $paginador->getNumeroPagina());
         $this->_view->assign('paginacion', $paginador->getView('paginacion_ajax_s_filas'));
         $this->_view->renderizar('ajax/listaregistros', false, true);
+    }
+
+     public function _exportarDatos($formatoP)
+    {   
+        $txtBuscar = $this->getSql('palabra');
+        $idRol = $this->getSql('buscarRol');
+        $pagina = $this->getInt('pagina');
+        // echo $txtBuscar . ' '. $idRol; exit();
+        $condicion = "";
+
+        if (empty($txtBuscar)) {
+            $txtBuscar  = "";
+        } 
+        if(empty($idRol)){
+            $idRol="";
+        }  
+
+        $soloActivos = 0;
+        // $nombre = $this->getSql('palabra');
+        if ($txtBuscar && $idRol) 
+        {
+            $condicion = " INNER JOIN usuario_rol ur on u.Usu_IdUsuario=ur.Usu_IdUsuario WHERE Usu_Usuario liKe '%$txtBuscar%' and ur.Rol_IdRol=$idRol ";
+            if (!$this->_acl->permiso('ver_eliminados'))  {
+                $soloActivos = 1;
+                $condicion .= " AND u.Row_Estado = $soloActivos ";
+            }
+            $condicion .= " ORDER BY u.Row_Estado DESC  ";
+        } 
+
+        else if ($txtBuscar) 
+        {
+            $condicion = " WHERE Usu_Usuario liKe '%$txtBuscar%' ";
+            if (!$this->_acl->permiso('ver_eliminados')) {
+                $soloActivos = 1;
+                $condicion .= " AND u.Row_Estado = $soloActivos ";
+            }
+            $condicion .= " ORDER BY u.Row_Estado DESC  ";
+        } 
+
+        else if ($idRol) 
+        {
+            $condicion = " INNER JOIN usuario_rol ur on u.Usu_IdUsuario=ur.Usu_IdUsuario WHERE  ur.Rol_IdRol=$idRol ";
+            if (!$this->_acl->permiso('ver_eliminados')) {
+                $soloActivos = 1;
+                $condicion .= " AND u.Row_Estado = $soloActivos ";
+            }
+            $condicion .= " ORDER BY u.Row_Estado DESC  ";
+        } 
+
+        else {
+            //Filtro por Activos/Eliminados     
+            $condicion = " ORDER BY u.Row_Estado DESC ";   
+            if (!$this->_acl->permiso('ver_eliminados')) {
+                $soloActivos = 1;
+                $condicion = " WHERE u.Row_Estado = $soloActivos  ";
+            }
+        }  
+
+        $lista_datos = $this->_usuarios->getUsuariosCondicion($pagina,CANT_REG_PAG, $condicion);
+        // print_r($lista_datos);exit;
+        // echo count($lista_datos); exit;
+        $formato  = $formatoP;
+        $roles ="";
+        
+        if ($formato == "csv") {
+            if (!empty($lista_datos)) {
+                error_reporting(0);
+                $objPHPExcel = new PHPExcel();
+
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(0, 1, 'Usuario');
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(1, 1, 'Roles');
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(2, 1, 'Estado');
+
+                for ($i = 2; $i <= (count($lista_datos) + 1); $i++) {
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(0, $i, $lista_datos[$i - 2]['Usu_Usuario']);
+                    foreach ($lista_datos[$i - 2]['Roles'] as $Roles) {
+                        // echo count($Roles) . 'hola'; exit;
+                        $roles .= $Roles['Rol_Nombre'] . ', ';
+                    }
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(1, $i, $roles);
+                    // $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(1, $i, $lista_datos[$i - 2]['Roles']);
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(2, $i, $lista_datos[$i - 2]['Usu_Estado']);
+                }
+                $objPHPExcel->getActiveSheet()->setTitle('ListaDeDescargas');
+                $objPHPExcel->setActiveSheetIndex(0);
+                ob_end_clean();
+                ob_start();
+                header('Content-Type: application/vnd.ms-excel');
+                header('Content-Disposition: attachment;filename="'.APP_NAME.'-OTCA_Descargas.txt"');
+                header('Cache-Control: max-age=0');
+                $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'CSV');
+                $objWriter->save('php://output');
+            }
+            exit;
+        }
+        if ($formato == "excel") {
+            if (!empty($lista_datos)) {
+                // echo "."; exit;
+                error_reporting(0);
+                $objPHPExcel = new PHPExcel();
+
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(0, 1, 'Usuario');
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(1, 1, 'Roles');
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(2, 1, 'Estado');
+
+                for ($i = 2; $i <= (count($lista_datos) + 1); $i++) {
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(0, $i, $lista_datos[$i - 2]['Usu_Usuario']);
+                    foreach ($lista_datos[$i - 2]['Roles'] as $Roles) {
+                        // echo count($Roles) . 'hola'; exit;
+                        $roles .= $Roles['Rol_Nombre'] . ', ';
+                    }
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(1, $i, $roles);
+                    // $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(1, $i, $lista_datos[$i - 2]['Roles']);
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(2, $i, $lista_datos[$i - 2]['Usu_Estado']);
+                }
+
+                $objPHPExcel->getActiveSheet()->setTitle('ListaDeDescargas');
+                $objPHPExcel->setActiveSheetIndex(0);
+                ob_end_clean();
+                ob_start();
+                //Session::destroy('encabezado');
+                // Session::destroy('Descargar');
+                header('Content-Type: application/vnd.ms-excel');
+                header('Content-Disposition: attachment;filename="'.APP_NAME.'-OTCA_Descargas.xls"');
+                header('Cache-Control: max-age=0');
+                $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
+                $objWriter->save('php://output');
+            }
+            else{
+                echo "lista vacia";exit;
+            }
+        }
+        if ($formato == "pdf") {
+            ob_start();
+            header("Content-Type: text/html;charset=utf-8");
+            
+            $a = "
+            <head>
+                <link href='views/layout/frontend/css/bootstrap.min.css' rel='stylesheet' type='text/css'>
+            </head>    
+            <body>                     
+            <div class='table-responsive'>
+            <h3 style='text-align: center; color:black; font-family: inherit;'>FOROS</h3>
+                    <table class='table'>
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Usuario</th>
+                                <th>Roles</th>
+                                <th>Estado</th>
+                            </tr>
+                        </thead>
+                        <tbody>";
+        $b = "";
+        $c="";
+        $d="";
+        $i=1;
+            foreach ($lista_datos as $item){      
+                $b .= 
+                "<tr>
+                    <th scope='row'>".$i++."</th>
+                    <td>" . utf8_decode($item['Usu_Usuario']) . "</td>
+                    <td>
+                        <ul> ";
+                                foreach ($item['Roles'] as $r){
+                                    $c .= "<li>" . utf8_decode($r['Rol_Nombre']) . "</li>";
+                                };
+                                
+                        $d .= "</ul> 
+                    </td>
+                    <td>" . utf8_decode($item['Usu_Estado']) . "</td>                  
+                </tr>";
+            };
+        $e =  
+                     "</tbody>
+                </table>
+            </div>
+            <script type='text/javascript' src='views/layout/frontend/js/bootstrap.min.js' ></script>
+        </body>";
+
+            echo $a.$b.$c.$d.$e;
+            require_once("libs/dompdf/dompdf_config.inc.php");
+            $error_level = error_reporting();
+            error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING);
+            // dompdf code
+            error_reporting($error_level);
+            $dompdf = new DOMPDF();
+            $dompdf->set_paper('letter', 'landscape'); //esta es una forma de ponerlo horizontal
+            $dompdf->load_html(ob_get_clean());
+            $dompdf->render();
+            $pdf      = $dompdf->output();
+            $filename = "'".APP_NAME.'-OTCA_Descargas.pdf';
+            $dompdf->stream($filename, array("atachment" => 0));
+        }
     }
 
     public function registrarUsuario()
