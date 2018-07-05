@@ -11,11 +11,11 @@
  * @jmartinez | Jhon Martinez
  */
 
-define('BASE_URL', 'http://' . $_SERVER['SERVER_NAME'] . ':8081/pric_otca/');
+define('BASE_URL', 'http://' . $_SERVER['SERVER_NAME'] . '/pric_otca/');
 define('DEFAULT_CONTROLLER', 'index');
 define('DEFAULT_LAYOUT', 'backend');
 define('LAYOUT_FRONTEND', 'frontend');
-define('ROOT_ARCHIVO_FISICO', $_SERVER['DOCUMENT_ROOT'] . ':8081/pric_otca/files/');
+define('ROOT_ARCHIVO_FISICO', $_SERVER['DOCUMENT_ROOT'] . '/pric_otca/files/');
 define('URL_ARCHIVO_FISICO', BASE_URL . 'files/');
 define('LENGUAJE', 'es');
 define('CANT_REG_PAG', 50); #Indica la cantidad de fila que se listaran al cargar un arreglo
