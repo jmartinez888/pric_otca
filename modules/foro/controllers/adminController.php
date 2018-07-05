@@ -233,7 +233,7 @@ class adminController extends foroController
         </body>";
 
             echo $a.$b.$c;
-            require_once("libs/dompdf/dompdf_config.inc.php");
+            require_once("libs/_dompdf/dompdf_config.inc.php");
             $dompdf = new DOMPDF();
             $dompdf->set_paper('letter', 'landscape'); //esta es una forma de ponerlo horizontal
             $dompdf->load_html(ob_get_clean());

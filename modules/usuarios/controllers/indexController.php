@@ -1,5 +1,9 @@
 <?php
 
+use Dompdf\Adapter\CPDF;
+use Dompdf\Dompdf;
+use Dompdf\Exception;
+
 class indexController extends usuariosController {
 
     private $_usuarios;
@@ -340,16 +344,27 @@ class indexController extends usuariosController {
             }
         }
         if ($formato == "pdf") {
-            ob_start();
-            header("Content-Type: text/html;charset=utf-8");
-            
-            $a = "
+            // ob_start();
+            //header("Content-Type: text/html;charset=utf-8");
+
+            //
+        $b = "";
+        $c= "";   
+        $d= "";
+        $cuerpo="";
+        $i=1;
+         $a = "
             <head>
                 <link href='views/layout/frontend/css/bootstrap.min.css' rel='stylesheet' type='text/css'>
+                <style type='text/css'>
+                    td {
+
+                    }
+                </style>
             </head>    
             <body>                     
             <div class='table-responsive'>
-            <h3 style='text-align: center; color:black; font-family: inherit;'>FOROS</h3>
+            <h3 style='text-align: center; color:black; font-family: inherit;'>USUARIOS</h3>
                     <table class='table'>
                         <thead>
                             <tr>
@@ -359,47 +374,42 @@ class indexController extends usuariosController {
                                 <th>Estado</th>
                             </tr>
                         </thead>
-                        <tbody>";
-        $b = "";
-        $c="";
-        $d="";
-        $i=1;
-            foreach ($lista_datos as $item){      
-                $b .= 
-                "<tr>
+                        <tbody>";        
+            foreach ($lista_datos as $item){ 
+                $b .= "<tr>
                     <th scope='row'>".$i++."</th>
                     <td>" . utf8_decode($item['Usu_Usuario']) . "</td>
                     <td>
-                        <ul> ";
-                                foreach ($item['Roles'] as $r){
-                                    $c .= "<li>" . utf8_decode($r['Rol_Nombre']) . "</li>";
-                                };
-                                
-                        $d .= "</ul> 
+                        <ul>";
+                            foreach ($item['Roles'] as $r){
+                               $c .= 
+                               "<li>".utf8_decode($r['Rol_Nombre']).
+                               "</li>";
+                            }
+                            $d.="
+                        </ul>
                     </td>
                     <td>" . utf8_decode($item['Usu_Estado']) . "</td>                  
                 </tr>";
-            };
+                $cuerpo.=$b.$c.$d; 
+                $b="";
+                $c="";
+                $d="";          
+            }
         $e =  
                      "</tbody>
                 </table>
             </div>
             <script type='text/javascript' src='views/layout/frontend/js/bootstrap.min.js' ></script>
-        </body>";
-
-            echo $a.$b.$c.$d.$e;
-            require_once("libs/dompdf/dompdf_config.inc.php");
-            $error_level = error_reporting();
-            error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING);
-            // dompdf code
-            error_reporting($error_level);
-            $dompdf = new DOMPDF();
-            $dompdf->set_paper('letter', 'landscape'); //esta es una forma de ponerlo horizontal
-            $dompdf->load_html(ob_get_clean());
+        </body>";               
+            
+            require_once("libs/autoload.inc.php");
+            $dompdf = new Dompdf(); 
+            $dompdf->set_paper('A4', 'landscape'); //esta es una forma de ponerlo horizontal
+            $dompdf->set_option('isHtml5ParserEnabled', true);
+            $dompdf->loadHtml("$a.$cuerpo.$e");
             $dompdf->render();
-            $pdf      = $dompdf->output();
-            $filename = "'".APP_NAME.'-OTCA_Descargas.pdf';
-            $dompdf->stream($filename, array("atachment" => 0));
+            $dompdf->stream("'".APP_NAME.'-OTCA_Descargas.pdf');
         }
     }
 
