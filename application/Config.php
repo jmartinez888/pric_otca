@@ -11,11 +11,7 @@
  * @jmartinez | Jhon Martinez
  */
 
-<<<<<<< HEAD
-define('BASE_URL', 'http://'.$_SERVER['SERVER_NAME'].':82/pric_otca/');
-=======
 define('BASE_URL', 'http://' . $_SERVER['SERVER_NAME'] . '/pric_otca/');
->>>>>>> f13055aaa47a8bc674aee67bc5bd2f8866a206d7
 define('DEFAULT_CONTROLLER', 'index');
 define('DEFAULT_LAYOUT', 'backend');
 define('LAYOUT_FRONTEND', 'frontend');
