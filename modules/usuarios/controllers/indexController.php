@@ -270,8 +270,6 @@ class indexController extends usuariosController {
         }  
 
         $lista_datos = $this->_usuarios->getUsuariosCondicion($pagina,CANT_REG_PAG, $condicion);
-        // print_r($lista_datos);exit;
-        // echo count($lista_datos); exit;
         $formato  = $formatoP;
         $roles ="";
         
@@ -280,9 +278,9 @@ class indexController extends usuariosController {
                 error_reporting(0);
                 $objPHPExcel = new PHPExcel();
 
-                $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(0, 1, 'Usuario');
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(0, 1, 'Usu_Usuario');
                 $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(1, 1, 'Roles');
-                $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(2, 1, 'Estado');
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(2, 1, 'Usu_Estado');
 
                 for ($i = 2; $i <= (count($lista_datos) + 1); $i++) {
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(0, $i, $lista_datos[$i - 2]['Usu_Usuario']);
@@ -298,8 +296,13 @@ class indexController extends usuariosController {
                 $objPHPExcel->setActiveSheetIndex(0);
                 ob_end_clean();
                 ob_start();
-                header('Content-Type: application/vnd.ms-excel');
-                header('Content-Disposition: attachment;filename="'.APP_NAME.'-OTCA_Descargas.txt"');
+                //
+                header("Content-type: application/vnd.ms-excel"); 
+                header("Content-Disposition: attachment; filename='".$file_name."'"); 
+                header("Pragma: no-cache"); header("Expires: 0"); 
+                echo "\xEF\xBB\xBF"; //UTF-8 BOM echo $out;
+                // 
+                header('Content-Disposition: attachment;filename="'.APP_NAME.'-OTCA_Descargas.csv"');
                 header('Cache-Control: max-age=0');
                 $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'CSV');
                 $objWriter->save('php://output');

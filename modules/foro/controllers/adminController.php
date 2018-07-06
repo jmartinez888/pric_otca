@@ -130,21 +130,31 @@ class adminController extends foroController
                 $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(5, 1, 'Fecha Cierre');
 
                 for ($i = 2; $i <= (count($lista_foros) + 1); $i++) {
-                    $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(0, $i, $lista_foros[$i - 2]['For_Titulo']);
+                    $fila11 = $lista_foros[$i - 2]['For_Titulo'];
+                    // $fila11 = mb_convert_encoding($fila11, 'UTF-16LE', 'UTF-8'); 
+                    // chr(255) . chr(254); 
+                    // echo $fila11; exit;
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(0, $i, $fila11);
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(1, $i, $lista_foros[$i - 2]['For_NParticipantes']);
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(2, $i, $lista_foros[$i - 2]['For_NComentarios']);
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(3, $i, $lista_foros[$i - 2]['Usu_Usuario']);
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(4, $i, $lista_foros[$i - 2]['For_FechaCreacion']);
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(5, $i, $lista_foros[$i - 2]['For_FechaCierre']);
+                    $fila11="";
                 }
                 $objPHPExcel->getActiveSheet()->setTitle('ListaDeDescargas');
                 $objPHPExcel->setActiveSheetIndex(0);
                 ob_end_clean();
                 ob_start();
-                header('Content-Type: application/vnd.ms-excel');
-                header('Content-Disposition: attachment;filename="'.APP_NAME.'-OTCA_Descargas.txt"');
-                header('Cache-Control: max-age=0');
+                //
+                header("Content-type: application/vnd.ms-excel"); 
+                header("Content-Disposition: attachment; filename='".$file_name."'"); 
+                header("Pragma: no-cache"); header("Expires: 0"); 
+                echo "\xEF\xBB\xBF"; //UTF-8 BOM echo $out;
+                // 
+                header('Content-Disposition: attachment;filename="'.APP_NAME.'-OTCA_Descargas.csv"');
                 $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'CSV');
+                $objWriter -> setDelimiter ( ',' ) ; 
                 $objWriter->save('php://output');
             }
             exit;
