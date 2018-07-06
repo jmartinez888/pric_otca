@@ -1,7 +1,11 @@
 .cursos-hr{
-    margin-top: 0px;
     padding: 0.2px;
     margin-top: 2px;
+}
+.cursos-hr2{
+    padding: 0.2px;
+    margin-top: 2px;
+    margin-bottom: 5px;
 }
 .regresar-tematica{
 	background-color: #777;
@@ -73,4 +77,21 @@
 .etiqueta{
 	font-family: 'Gill Sans MT';
 	font-size: 20px;
+}
+.tit-integrante{
+	padding: 5px 5px 5px 10px;
+	background: #777;
+	color: #fff;
+	border-left: 4px solid #8BC34A;
+	font-weight: normal;
+}
+.underline{
+	color: #000;
+}
+.underline:hover{
+	text-decoration: underline;
+	color: #000;
+}
+.file_titulo2{
+	color: #000;
 }
