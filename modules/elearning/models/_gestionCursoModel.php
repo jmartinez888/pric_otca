@@ -104,7 +104,16 @@ class _gestionCursoModel extends Model {
   }
 
   public function updateEstadoCurso($curso, $estado){
-    $this->execQuery("UPDATE curso SET Cur_Estado = '$estado' WHERE Cur_IdCurso = $curso");
+    // $this->execQuery("UPDATE curso SET Cur_Estado = '$estado' WHERE Cur_IdCurso = $curso");
+    try{
+            $permiso = $this->_db->query(
+                " UPDATE curso SET Cur_Estado = '$estado' WHERE Cur_IdCurso = $curso"
+            );
+            return $permiso->rowCount(PDO::FETCH_ASSOC);
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("elearning(_gestionCursoModel)", "updateEstadoCurso", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
   }
 
 
@@ -158,4 +167,168 @@ class _gestionCursoModel extends Model {
     $sql = "UPDATE curso SET Cur_UrlBanner = '{$banner}' WHERE Cur_IdCurso = '{$curso}'";
     $this->execQuery($sql);
   }
+
+
+  public function getAnuncios($curso){
+      $sql = "SELECT * FROM anuncio_curso
+              WHERE Cur_IdCurso = {$curso}";
+      return $this->getArray($sql);
+    }
+
+
+   public function getAnunciosRowCount($condicion = '')
+    {
+        try{
+            $anuncios = $this->_db->query(
+                " SELECT COUNT(anc.Anc_IdAnuncioCurso) AS CantidadRegistros from anuncio_curso anc $condicion "
+            );           
+            return $anuncios->fetch(PDO::FETCH_ASSOC);            
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("gestion(indexModel)", "getAnunciosRowCount", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }        
+    }
+
+  public function getAnunciosCondicion($pagina,$registrosXPagina,$condicion = "")
+    {
+        try{
+            $registroInicio = 0;
+            if ($pagina > 0) {
+                $registroInicio = ($pagina - 1) * $registrosXPagina;                
+            }
+            $sql = " SELECT * FROM anuncio_curso $condicion 
+                LIMIT $registroInicio, $registrosXPagina ";
+            $result = $this->_db->query($sql);
+            return $result->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("acl(indexModel)", "getPermisosCondicion", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
+
+  public function getAnuncio($anuncioID)
+    {
+        try{
+            $anuncio = $this->_db->query(
+                " SELECT * FROM anuncio_curso
+                WHERE Anc_IdAnuncioCurso = $anuncioID"
+            );
+            return $anuncio->fetch();
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("elearning(_gestionCursoModel)", "getAnuncio", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
+
+
+  public function registrarAnuncio($titulo, $descripcion, $idCurso){
+    $sql="INSERT INTO anuncio_curso(Anc_Titulo,Anc_Descripcion,Cur_IdCurso)
+      VALUES('$titulo', '$descripcion','$idCurso')";
+    return $this->getArray($sql);
+  }
+
+
+  public function editarAnuncio($idAnuncioCurso, $titulo, $descripcion)
+    {
+        try{
+            $per = $this->_db->query(
+                " UPDATE anuncio_curso SET Anc_Titulo = '$titulo', Anc_Descripcion = '$descripcion'  WHERE Anc_IdAnuncioCurso = $idAnuncioCurso"
+            );
+            return $per->rowCount(PDO::FETCH_ASSOC);
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("elearning(_gestionCursoModel)", "editarAnuncio", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
+
+
+    public function getMatriculadosCurso($curso)
+    {
+        try{
+            $alumnos = $this->_db->query(
+                " SELECT * FROM usuario U
+            INNER JOIN matricula_curso MC ON U.Usu_IdUsuario = MC.Usu_IdUsuario
+            WHERE Cur_IdCurso = $curso "
+            );           
+            return $alumnos->fetchAll(PDO::FETCH_ASSOC);            
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("elearning(_gestionCursoModel)", "getMatriculadosCurso", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }        
+    }
+
+
+    public function getEmailMatriculadosCurso($curso)
+    {
+        try{
+            $alumnos = $this->_db->query(
+                " SELECT U.Usu_Email FROM usuario U
+            INNER JOIN matricula_curso MC ON U.Usu_IdUsuario = MC.Usu_IdUsuario
+            WHERE Cur_IdCurso = $curso "
+            );           
+            return $alumnos->fetchAll(PDO::FETCH_ASSOC);            
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("elearning(_gestionCursoModel)", "getMatriculadosCurso", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }        
+    }
+
+    
+    public function getEmail_Usuario()
+    {
+        try {
+            $post = $this->_db->query(
+                "SELECT usu_email FROM usuario");
+            return $post->fetchAll();
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("elearning(usuarioModel)", "getEmail_Usuario", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
+
+
+    public function cambiarEstadoAnuncio($Per_IdPermiso, $Per_Estado)
+    {
+        try{
+            if($Per_Estado==0)
+            {
+
+                $sql = "call s_u_cambiar_estado_anuncio(?,1)";
+                $result = $this->_db->prepare($sql);
+                $result->bindParam(1, $Per_IdPermiso, PDO::PARAM_INT);
+                $result->execute();
+
+                return $result->rowCount(PDO::FETCH_ASSOC);                
+            }
+            if($Per_Estado==1)
+            {
+
+                $sql = "call s_u_cambiar_estado_anuncio(?,0)";
+                $result = $this->_db->prepare($sql);
+                $result->bindParam(1, $Per_IdPermiso, PDO::PARAM_INT);
+                $result->execute();
+
+                return $result->rowCount(PDO::FETCH_ASSOC);
+            }
+
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("elearning(_gestionCursoModel)", "cambiarEstadoAnuncio", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
+
+     public function eliminarHabilitarAnuncio($Per_IdPermiso = 0,$Row_Estado = 0)
+    {
+        try{
+
+            $permiso = $this->_db->query(
+                " UPDATE anuncio_curso SET Row_Estado = $Row_Estado WHERE Anc_IdAnuncioCurso = $Per_IdPermiso "               
+                );
+            return $permiso->rowCount(PDO::FETCH_ASSOC);
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("elearning(_gestionCursoModel)", "eliminarHabilitarAnuncio", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
+
 }
