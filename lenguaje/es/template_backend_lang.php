@@ -74,7 +74,7 @@ $lenguaje["tabla_opcion_editar_ROL"]="EDITAR ROL";
 $lenguaje["tabla_opcion_editar_permisos"]="Editar Permisos";
 $lenguaje["tabla_opcion_editar_PERMISO"]="EDITAR PERMISOS";
 
-$lenguaje["arquitectura_label_titulo"]="ARQUITECTURA DEL SISTEMA INTEGRADO";
+$lenguaje["arquitectura_label_titulo"]="ARQUITECTURA DEL SISTEMA";
 $lenguaje["arquitectura_nuevo_titulo"]="NUEVA WEB";
 $lenguaje["label_idioma"]="Idioma";
 $lenguaje["label_n"]="N°";
@@ -100,7 +100,7 @@ $lenguaje["arquitectura_buscar_opcion5"]="Dinámica";
 $lenguaje["arquitectura_buscar_tabla_titulo"]="LISTA DE PAGINAS WEB";
 $lenguaje["text_buscar_pagina"]="Buscar Pagina Web";
 
-$lenguaje["usuarios_label_titulo"]="USUARIOS DEL SISTEMA INTEGRADO";
+$lenguaje["usuarios_label_titulo"]="USUARIOS DEL SISTEMA";
 $lenguaje["usuarios_nuevo_titulo"]="NUEVO USUARIO";
 $lenguaje["label_nombre"]="Nombre";
 $lenguaje["label_apellidos"]="Apellidos";
@@ -124,7 +124,7 @@ $lenguaje["text_buscar_usuario"]="Buscar Usuario";
 $lenguaje["label_usuario"]="Usuario";
 $lenguaje["label_rol"]="Rol";
 
-$lenguaje["roles_label_titulo"]="ROLES DEL SISTEMA INTEGRADO";
+$lenguaje["roles_label_titulo"]="ROLES DEL SISTEMA";
 $lenguaje["roles_nuevo_titulo"]="NUEVO ROL";
 $lenguaje["label_nombre_rol"]="Nombre Rol";
 $lenguaje["roles_editar_titulo"]="EDITAR USUARIO";
@@ -137,7 +137,7 @@ $lenguaje["text_buscar_rol"]="Buscar Rol";
 $lenguaje["label_roles"]="Roles";
 $lenguaje["label_todos_roles"]="Todos los roles";
 
-$lenguaje["permisos_label_titulo"]="PERMISOS DEL SISTEMA INTEGRADO";
+$lenguaje["permisos_label_titulo"]="PERMISOS DEL SISTEMA";
 $lenguaje["permisos_nuevo_titulo"]="NUEVO PERMISO";
 $lenguaje["permisos_rol_titulo"]="PERMISOS DEL ROL";//J
 $lenguaje["permisos_usuarios_titulo"]="PERMISOS DE USUARIO";//J
@@ -159,7 +159,7 @@ $lenguaje["label_habilitar"]="Habilitar";
 
 
 
-$lenguaje["bitacora_label_titulo"]="BITACORA : ERRORES MÁS COMUNES DEL SISTEMA INTEGRADO";
+$lenguaje["bitacora_label_titulo"]="BITACORA : ERRORES MÁS COMUNES DEL SISTEMA";
 $lenguaje["bitacora_grafico_titulo"]="GRÁFICO";
 $lenguaje["bitacora_buscar_titulo"]="BITACORA";
 $lenguaje["bitacora_buscar_tabla_titulo"]="Lista de Errores más Comunes";
@@ -170,7 +170,7 @@ $lenguaje["label_fecha"]="Fecha";
 $lenguaje["bitacora_grafico_serie1"]="Páginas con más errores";
 $lenguaje["bitacora_grafico_serie2"]="Errores más comunes";
 
-$lenguaje["estadisticas_label_titulo"]="ESTADISTICAS DEL SISTEMA INTEGRADO";
+$lenguaje["estadisticas_label_titulo"]="ESTADISTICAS DEL SISTEMA";
 $lenguaje["estadisticas_pestana_gpmv"]="Paginas Mas Visitadas";
 $lenguaje["estadisticas_grafico_gpmv"]="GRÁFICO DE PAGINAS MAS VISITADAS";
 $lenguaje["estadisticas_buscar_gpmv"]="BUSCAR PAGÍNAS MAS VISITADAS";

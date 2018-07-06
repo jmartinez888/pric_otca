@@ -346,8 +346,9 @@ GROUP BY d.Dub_PalabraClave ");
                 "UPDATE dublincore SET Dub_Titulo = '$Dub_Titulo' , Dub_Descripcion = '$Dub_Descripcion' , Dub_FechaDocumento = '$Dub_FechaDocumento' , Dub_PalabraClave = '$Dub_PalabraClave' WHERE Dub_IdDublinCore = $Dub_IdDublinCore ");
     }
     
-    public function registrarDescarga($Esp_Ip,$Arf_IdArchivoFisico,$Esd_CantidadDescarga=1,$Esd_TipoAcceso='')
+    public function registrarDescarga($Esp_Ip="",$Arf_IdArchivoFisico,$Esd_CantidadDescarga=1,$Esd_TipoAcceso='')
 	{
+        // echo "$Esp_Ip";exit;
         try {                     
             $sql = "call s_i_estadistica_descarga(?,?,?,?)";
             $result = $this->_db->prepare($sql);

@@ -246,6 +246,13 @@
                     {if  isset($original) && count($original)}
                     <input type="hidden" value="{$original.Idi_IdIdioma}" id="idIdiomaOriginal" name="idIdiomaOriginal" />
                     {/if}
+                    <!-- <div class="well-sm col-sm-12">
+                        <div id="botones" class="btn-group pull-right">
+                                <button type="submit" id="export_data_excel" name="export_data_excel" class="btn btn-info">EXCEL</button>
+                                <button type="submit" id="export_data_csv" name="export_data_csv" class="btn btn-info">CSV</button>
+                                <button type="submit" id="export_data_pdf" name="export_data_pdf" class="btn btn-info">PDF</button>
+                        </div>
+                    </div> -->
                     <div class="row" style="text-align: right;padding-right: 2em; margin-top: 10px">
                         <input class="form-control" placeholder="{$lenguaje.text_buscar_pagina}"  name="palabra" id="palabra">
                         {if  isset($datos) && count($datos) && $datos.Pag_TipoPagina >0}
