@@ -81,17 +81,19 @@ class adminController extends foroController
 
         $paginador->paginar($totalRegistros["For_NRow"], "listarForo", $filtro, $pagina = 0, CANT_REG_PAG, true);
 
+        //EXPORTAR DATOS
         if ($this->botonPress("export_data_excel")) {
-            $this->_exportarDatos($lista_foros, "excel");
+            $this->_exportarDatos("excel");
         }
 
         if ($this->botonPress("export_data_pdf")) {
-            $this->_exportarDatos($lista_foros, "pdf");
+            $this->_exportarDatos("pdf");
         }
 
         if ($this->botonPress("export_data_csv")) {
-            $this->_exportarDatos($lista_foros, "csv");
+            $this->_exportarDatos("csv");
         }
+        //
 
         $this->_view->assign('lista_foros', $lista_foros);
 
@@ -231,7 +233,7 @@ class adminController extends foroController
         </body>";
 
             echo $a.$b.$c;
-            require_once("libs/dompdf/dompdf_config.inc.php");
+            require_once("libs/_dompdf/dompdf_config.inc.php");
             $dompdf = new DOMPDF();
             $dompdf->set_paper('letter', 'landscape'); //esta es una forma de ponerlo horizontal
             $dompdf->load_html(ob_get_clean());
@@ -604,35 +606,12 @@ class adminController extends foroController
      public function sendEmail($Email)
     {
         $email = $Email[0];
-        // echo "$email";exit;
         $mail = "Prueba de mensaje";
-        // $correo2 = "julio.ce20@hotmail.com";
-        // $correo2 = "julyspaadomicilio@gmail.com";
-        // //Titulo
-        // $titulo = "PRUEBA DE TITULO";
-        // //cabecera
-
-        // $headers = "MIME-Version: 1.0\r\n"; 
-        // $headers .= "Content-type: text/html; charset=iso-8859-1\r\n"; 
-        // //dirección del remitente 
-        // $headers .= "From: Geeky Theory < ".$correo2." >\r\n"; 
-        // // //dirección del remitente 
-        // // $headers .= "From: Geeky Theory < ".$email." >".'\r\n';
-        // //Enviamos el mensaje a tu_dirección_email
-
         $Subject = 'INVITACION';
         $contenido = 'mensaje de prueba';
         $fromName = 'PRIC - Creación de Usuario';
-        // Parametro ($forEmail, $forName, $Subject, $contenido, $fromName = "Proyecto PRIC")
         $Correo = new Correo();
         $SendCorreo = $Correo->enviar($email, "NAME", $Subject, $contenido, $fromName);
-
-        // $bool = mail($email,$titulo,$mail);
-        // if($bool){
-        //     echo "Mensaje enviado";exit;
-        // }else{
-        //     echo "Mensaje no enviado";exit;
-        // }
     }
 
     public function _getPermisosMember()

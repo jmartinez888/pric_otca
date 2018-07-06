@@ -51,6 +51,7 @@ class indexController extends descargaController {
             $mes=$imes;
         }
         $_SESSION['Descargar']=$this->_descarga->getListarDescarga($ano, $mes);
+        // print_r($_SESSION['Descargar']);
         $paginador = new Paginador();
         $this->_view->assign('descarga', $paginador->paginar($_SESSION['Descargar'], "divListarDescarga", "$iano/$imes", $pagina, 25));
         $this->_view->assign('numeropagina', $paginador->getNumeroPagina());
@@ -118,7 +119,7 @@ class indexController extends descargaController {
         $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(5,1, 'Esd_TipoAcceso');
         $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(6,1, 'Arf_PosicionFisica');
         $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(7,1, 'Taf_Descripcion');
-        
+        // print_r($_SESSION['Descargar']);exit;
         for ($i = 2; $i <= (count($_SESSION['Descargar'])+1); $i++) {
             for ($j = 0; $j < count($_SESSION['Descargar'][0]); $j++) {
                 $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow($j, $i, $_SESSION['Descargar'][$i-2][$j]);
@@ -130,10 +131,11 @@ class indexController extends descargaController {
         ob_start();
         //Session::destroy('encabezado');
         Session::destroy('Descargar');
+
         header('Content-Type: application/vnd.ms-excel');
-        header('Content-Disposition: attachment;filename="SIIGEF-OTCA_Descargas.xls"');
+        header('Content-Disposition: attachment;filename="'.APP_NAME.'_Estadisticas_Descargas.xlsx"');
         header('Cache-Control: max-age=0');
-        $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
+        $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
         $objWriter->save('php://output');
     }
 }

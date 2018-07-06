@@ -132,9 +132,9 @@ class indexController extends busquedaController {
         //Session::destroy('encabezado');
         Session::destroy('Busqueda');
         header('Content-Type: application/vnd.ms-excel');
-        header('Content-Disposition: attachment;filename="SIIGEF-OTCA_Busquedas.xls"');
+        header('Content-Disposition: attachment;filename="SIIGEF-OTCA_Busquedas.xlsx"');
         header('Cache-Control: max-age=0');
-        $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
+        $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel,'Excel2007');
         $objWriter->save('php://output');
     }
 }

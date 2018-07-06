@@ -32,12 +32,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
         -->
         <link href="{$_layoutParams.ruta_css}/skins/skin-green.min.css" rel="stylesheet" type="text/css" />
         <link href="{$_layoutParams.ruta_css}/jm-backend.css" rel="stylesheet" type="text/css" />
-<<<<<<< HEAD
+
         <link href="{$_layoutParams.ruta_css}/responsive.bootstrap.min.css" rel="stylesheet" type="text/css" />
-=======
+
          <link href="{$_layoutParams.ruta_css}/select2.min.css" rel="stylesheet" type="text/css" />
 
->>>>>>> e7c3eb6cf3ef6705d8116cd533893ba0806ec6b1
         <!-- <link href="{$_layoutParams.ruta_css}/jsoft-backend.css" rel="stylesheet" type="text/css" /> -->
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -177,7 +176,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 <ul class="treeview-menu">
                                     {if $_acl->permiso("listar_visita")}
                                     <li><a href="{$_layoutParams.root}visita">{$lenguaje.menu_izquierdo_1_5_1}</a></li>
-                                    {/if}                              
+                                    {/if}   
+                                    {if $_acl->permiso("listar_visita")}
+                                    <li><a href="{$_layoutParams.root}busqueda">{$lenguaje.menu_izquierdo_1_5_3}</a></li>
+                                    {/if} 
+                                    {if $_acl->permiso("listar_visita")}
+                                    <li><a href="{$_layoutParams.root}descarga">{$lenguaje.menu_izquierdo_1_5_2}</a></li>
+                                    {/if}                            
                                 </ul> 
                             </li>
                             {/if}

@@ -970,6 +970,7 @@ class documentosController extends Controller{
         if (is_readable(ROOT_ARCHIVO_FISICO.$archivo)){
            
             $registro = $this->_documentos->registrarDescarga($_SERVER['REMOTE_ADDR'],  $this->filtrarInt($idArchivo));
+            
             if (is_array($registro)) {
                 if ($registro  [0] > 0) {                    
                     header('Location:'.URL_ARCHIVO_FISICO.$archivo);

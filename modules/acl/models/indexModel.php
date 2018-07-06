@@ -239,7 +239,7 @@ class indexModel extends Model
     //Util_Permiso Jhon Martinez
     public function insertarPermiso($iPer_Nombre = "", $iPer_Ckey = "", $iMod_Modulo = "", $iIdi_IdIdioma="")
     {
-        echo " iPer_Nombre:" . $iPer_Nombre ." iPer_Ckey:". $iPer_Ckey . "iMod_Modulo:" . $iMod_Modulo . "iIdi_IdIdioma:" . $iIdi_IdIdioma;
+        // echo " iPer_Nombre:" . $iPer_Nombre ." iPer_Ckey:". $iPer_Ckey . "iMod_Modulo:" . $iMod_Modulo . "iIdi_IdIdioma:" . $iIdi_IdIdioma;
         try {             
             $sql = "call s_i_permisos(?,?,?,?)";
             $result = $this->_db->prepare($sql);
@@ -401,7 +401,7 @@ class indexModel extends Model
     //Util_Rol Jhon Martinez
     public function editarPermisoRol($Rol_IdRol = 0, $Per_IdPermiso = 0, $valor = 0)
     {
-        echo $Rol_IdRol.$Per_IdPermiso.$valor; 
+        // echo $Rol_IdRol.$Per_IdPermiso.$valor; 
         try{
             $sql = "call s_u_reemplazar_todo_permisos_rol(?,?,?)";
             $result = $this->_db->prepare($sql);

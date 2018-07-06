@@ -111,7 +111,7 @@ function fun_Descarga(cat_Descarga, dat_Descarga, titulo) {
             }]
         , exporting: {
             enabled: true,
-            filename: "SII GEF OTCA (Documentos mas descargados)"
+            filename: "(Documentos mas descargados)"
         }
     });
 }
