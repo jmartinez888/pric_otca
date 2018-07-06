@@ -11,7 +11,7 @@
  * @jmartinez | Jhon Martinez
  */
 
-define('BASE_URL', 'http://'.$_SERVER['SERVER_NAME'].'/pric_otca/');
+define('BASE_URL', 'http://'.$_SERVER['SERVER_NAME'].':82/pric_otca/');
 define('DEFAULT_CONTROLLER', 'index');
 define('DEFAULT_LAYOUT', 'backend');
 define('LAYOUT_FRONTEND', 'frontend');
@@ -52,7 +52,7 @@ define('HASH_KEY', '4f6a6d832be79');
 
 define('DB_HOST', 'localhost');
 define('DB_USER', 'root');
-define('DB_PASS', 'pric');
+define('DB_PASS', '');
 define('DB_NAME', 'pric_otca');
 define('DB_CHAR', 'utf8');
 
