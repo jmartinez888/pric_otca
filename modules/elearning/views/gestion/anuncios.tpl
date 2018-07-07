@@ -43,9 +43,6 @@
     {/if}
 
 
-
-
-
      <div class="panel-body" style=" margin: 15px">
              <div class="row" style="text-align:right">
                 <div style="display:inline-block;padding-right:2em">
@@ -93,6 +90,9 @@
                                         <a data-toggle="tooltip" data-placement="bottom" class="btn btn-default btn-sm glyphicon glyphicon-refresh estado-anuncio" title="{$lenguaje.tabla_opcion_cambiar_est}" id_anuncio="{$rl.Anc_IdAnuncioCurso}" estado="{$rl.Anc_Estado}"> </a>
                                         
                                         <a data-toggle="tooltip" data-placement="bottom" class="btn btn-default btn-sm glyphicon glyphicon-edit" title="Editar" href="{$_layoutParams.root}elearning/gestion/editarAnuncios/{$rl.Anc_IdAnuncioCurso}"></a>
+
+                                        <a data-toggle="tooltip" data-placement="bottom" class="btn btn-default btn-sm glyphicon glyphicon-envelope" title="Enviar email" href="{$_layoutParams.root}elearning/gestion/enviarEmailAnuncios/{$rl.Anc_IdAnuncioCurso}"></a>
+
 
                                         <a   
                                         {if $rl.Row_Estado==0}

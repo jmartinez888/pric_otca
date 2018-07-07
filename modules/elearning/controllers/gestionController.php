@@ -118,6 +118,7 @@ class gestionController extends elearningController {
         if (is_array($idUsuario)) {
             if ($idUsuario[0] > 0) {
                 $this->_view->assign('_mensaje', 'Anuncio registrado');
+                $this->redireccionar("elearning/gestion/anuncios/$id");
             } else {
                 $this->_view->assign('_error', 'Error al registrar el Anuncio');
             }
@@ -175,6 +176,8 @@ class gestionController extends elearningController {
     public function editarAnuncios($Anc_IdAnuncioCurso = false)
     {
         $this->_acl->acceso('editar_rol');
+        if(!Session::get("autenticado")){ $this->redireccionar("elearning/"); }
+    // if($id == "" || !is_numeric($id) ){ $this->redireccionar("elearning/"); }
         $this->validarUrlIdioma();
         $this->_view->getLenguaje("index_inicio");
         $this->_view->setJs(array('anuncios'));
@@ -199,9 +202,65 @@ class gestionController extends elearningController {
                 }
         }        
         // $this->_view->assign('idiomas',$this->_aclm->getIdiomas());        
+         $this->_view->setTemplate(LAYOUT_FRONTEND);
         $this->_view->assign('datos',$anuncio);
-        $this->_view->renderizar('ajax/editarAnuncio','editarAnuncio');
+        $this->_view->renderizar('ajax/editarAnuncio','anuncios');
     }
+
+
+    public function enviarEmailAnuncios($Anc_IdAnuncioCurso = false)
+    {
+        $this->_acl->acceso('editar_rol');
+        $this->validarUrlIdioma();
+        $this->_view->getLenguaje("index_inicio");
+        $this->_view->setJs(array('anuncios'));
+
+        $pagina = $this->getInt('pagina');
+        //$registros = $this->getInt('registros');
+        $nombre = $this->getSql('nombre');
+        $_model = $this->loadModel("_gestionCurso");
+        $anuncio = $_model->getAnuncio($this->filtrarInt($Anc_IdAnuncioCurso));
+        $usuarios = $_model->getEmailMatriculadosCurso($anuncio['Cur_IdCurso']);
+
+        if ($this->botonPress("bt_cancelarEditarAnuncio")) {
+            $this->redireccionar('elearning/gestion/anuncios/'.$anuncio['Cur_IdCurso']);
+        }
+
+        if ($this->botonPress("enviar")) 
+        {            
+            for($i=1; $i<=count($usuarios);$i++){
+                $variable='usu'.$i;
+                if(null !==$this->getSql($variable )){
+                    $this->sendEmail($this->getSql($variable ),$anuncio['Anc_Titulo'],$anuncio['Anc_Descripcion']);
+                }
+            }
+
+                // if($id)
+                // {
+                //     $this->_view->assign('_mensaje', 'Anuncio editado Correctamente');
+                //     $anuncio = $_model->getAnuncio($this->filtrarInt($Anc_IdAnuncioCurso));
+                // }  
+                // else 
+                // {
+                //     $this->_view->assign('_error', 'Error al editar anuncio');
+                // }
+        }        
+        // $this->_view->assign('idiomas',$this->_aclm->getIdiomas());        
+        $this->_view->assign('usuarios',$usuarios);
+        $this->_view->setTemplate(LAYOUT_FRONTEND);
+        $this->_view->assign('numeropagina', 1);
+        $this->_view->assign('datos',$anuncio);
+        $this->_view->renderizar('ajax/enviarEmailAnuncio','enviarEmailAnuncio');
+    }
+
+     public function sendEmail($Email,$Subject,$contenido)
+    {
+        $fromName = 'PRIC - Anuncio de Curso';
+        // Parametro ($forEmail, $forName, $Subject, $contenido, $fromName = "Proyecto PRIC")
+        $Correo = new Correo();
+        $SendCorreo = $Correo->enviar($Email, "NAME", $Subject, $contenido, $fromName);
+    }
+
 
     public function _buscarAnuncio() 
     {

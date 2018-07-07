@@ -221,11 +221,26 @@ class _gestionCursoModel extends Model {
     }
 
 
+  // public function registrarAnuncio($titulo, $descripcion, $idCurso){
+  //   $sql="INSERT INTO anuncio_curso(Anc_Titulo,Anc_Descripcion,Cur_IdCurso)
+  //     VALUES('$titulo', '$descripcion','$idCurso')";
+  //   return $this->getArray($sql);
+  // }
+
   public function registrarAnuncio($titulo, $descripcion, $idCurso){
-    $sql="INSERT INTO anuncio_curso(Anc_Titulo,Anc_Descripcion,Cur_IdCurso)
-      VALUES('$titulo', '$descripcion','$idCurso')";
-    return $this->getArray($sql);
-  }
+        try {             
+            $sql = "call s_i_anuncios(?,?,?)";
+            $result = $this->_db->prepare($sql);
+            $result->bindParam(1, $titulo, PDO::PARAM_STR);
+            $result->bindParam(2, $descripcion, PDO::PARAM_STR);
+            $result->bindParam(3, $idCurso,  PDO::PARAM_INT);                       
+            $result->execute();
+            return $result->fetch();
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("elearning(_gestionCursoModel)", "insertarPermiso", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
 
 
   public function editarAnuncio($idAnuncioCurso, $titulo, $descripcion)
@@ -262,7 +277,7 @@ class _gestionCursoModel extends Model {
     {
         try{
             $alumnos = $this->_db->query(
-                " SELECT U.Usu_Email FROM usuario U
+                " SELECT U.Usu_Nombre,U.Usu_Apellidos,U.Usu_DocumentoIdentidad,U.Usu_Email FROM usuario U
             INNER JOIN matricula_curso MC ON U.Usu_IdUsuario = MC.Usu_IdUsuario
             WHERE Cur_IdCurso = $curso "
             );           
@@ -273,7 +288,7 @@ class _gestionCursoModel extends Model {
         }        
     }
 
-    
+
     public function getEmail_Usuario()
     {
         try {
