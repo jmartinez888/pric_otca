@@ -252,6 +252,12 @@ abstract class Controller
         });
         return $array;
     }
+
+    public function itemView(){
+        include_once ROOT . 'modules' . DS . $this->_request->getModulo() 
+                . DS . 'views' . DS . $this->_request->getControlador() 
+                . DS . 'widget' . DS . $this->_request->getMetodo() . '.html';
+    }
 }
 
 ?>
