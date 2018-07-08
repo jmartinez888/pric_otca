@@ -99,7 +99,7 @@ $(document).ready(function(){
 			}
 		});
 	});
-	alert("hola");
+
 	$.ajax({
 		url: _root_ + "elearning/calificacion/get",
 		type: "POST",
@@ -108,8 +108,7 @@ $(document).ready(function(){
 			var DATA = JSON.parse(a);
 			if(DATA.data!=null && DATA.data.length>0){
 				DATA.data.forEach(function(item){
-					alert("a");
-					alert(JSON.stringify(item));
+					console.log(item);
 					$("#calificaciones").append(ItemCalificacion(item.Val_Valor, item.Val_Comentario, item.Usu_Usuario));
 				});
 			}else{
