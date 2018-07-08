@@ -1,13 +1,13 @@
 <?php
 
-$lenguaje["buscador_titulo"]="Buscador General del ORA";
+$lenguaje["buscador_titulo"]="Buscador General del PRIC";
 $lenguaje["buscador_resultado1"]="Se encontraron";
 $lenguaje["buscador_resultado2"]="resultados con la palabra";
 $lenguaje["buscador_listado_titulo"]="Listado de Búsqueda";
 $lenguaje["buscador_titulo_tipo_registro"]="Tipo de Registro";
-$lenguaje["buscador_tipo_registro1"]="Base de Datos Curso";
+$lenguaje["buscador_tipo_registro1"]="Base de Datos Cursos";
 $lenguaje["buscador_tipo_registro2"]="Base de Datos de Documentos";
-$lenguaje["buscador_tipo_registro3"]="Base de Datos de Foro";
+$lenguaje["buscador_tipo_registro3"]="Base de Datos de Foros";
 $lenguaje["buscador_tipo_registro4"]="Base de Datos de Recursos";
 $lenguaje["buscador_tabla_1"]="Titulo o Nombre";
 $lenguaje["buscador_tabla_2"]="Descripcion";

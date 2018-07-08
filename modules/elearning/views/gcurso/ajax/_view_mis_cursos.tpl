@@ -37,6 +37,7 @@
                         <td>
                           <input class="hidden_IdCurso estado" value="{$c.Cur_IdCurso}"/>
                           <button class="btnGestion"><i class="glyphicon glyphicon-signal"></i></button>
+                          <button class="btnAnuncios"><i class="glyphicon glyphicon-eye-open"></i></button>
                           <button class="btnFinalizarReg"><i class="glyphicon glyphicon-pencil"></i></button>
                           {if $c.Cur_Estado == 1 }
                           <button class="btnDeshabilitar"><i class="glyphicon glyphicon-remove"></i></button>

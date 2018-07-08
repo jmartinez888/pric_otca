@@ -150,6 +150,7 @@
                             </div>
                             {/foreach}
                         </div>
+<<<<<<< HEAD
                         {/if}
 
                             <div class="buscador">
@@ -160,6 +161,23 @@
                             </div>
 
                     </div>
+=======
+                        {/if}  
+                        
+                        <div class="buscador">
+                            <!-- <form style="background: #fff;border: 2px solid #336b78;">
+                                <input type="search" style="border: 0;">
+                                <button type="submit" style="background: transparent;border: 0;color: #22454e;"><i class="fa fa-search" style=""></i></button>
+                            </form> -->
+                            <form style="background: #fff;border: 2px solid #336b78;" class=" navbar-right form-horizontal " data-toggle="validator" id="form1" role="form" method="post" autocomplete="on">
+                                    <input style="border: 0;"  data-toggle="tooltip" data-placement="bottom" title="Busca en Base de Datos Documentos, Base de Datos Foros, Base de Datos Recursos, Base de datos Cursos" type="search" id="textBuscar" name="textBuscar" placeholder="{$lenguaje.text_buscador|default}" value="{$palabra|default:''}" required="required" onkeypress="tecla_enter(event)" >
+                                    <button style="background: transparent;border: 0;color: #22454e;max-width: 17%;padding: 0;" type="button" id="btnBuscar" name="btnBuscar" onclick="buscarPalabra('textBuscar')" value="" > <i class="glyphicon glyphicon-search"></i></button>
+                                                 
+                            </form>      
+                        </div>
+                        
+                    </div> 
+>>>>>>> 1a9c468016c1348dc03b23445e28d882a7f0bd8e
                 </nav>
             </div>
         </div>
@@ -498,7 +516,9 @@
 
         <script type="text/javascript" src="{$_layoutParams.root_clear}public/js/util.js"></script>
         <script type="text/javascript" src="{$_layoutParams.root_clear}public/js/jquery.slimscroll.min.js"></script>
+        <script type="text/javascript" src="{$_layoutParams.ruta_js}jquery.PrintArea.js"></script>
         <script type="text/javascript" src="{$_layoutParams.ruta_js}bootstrap.min.js" ></script>
+        <script type="text/javascript" src="{$_layoutParams.ruta_js}app.min.js" ></script>
         <script type="text/javascript" src="{$_layoutParams.ruta_js}bootstrap-datepicker.js"></script>
         <script type="text/javascript" src="{$_layoutParams.ruta_js}bootstrap-select.min.js"></script>
         <script type="text/javascript" src="{$_layoutParams.ruta_js}bootstrapValidator.js"></script>

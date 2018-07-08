@@ -22,7 +22,12 @@ $(document).on('ready', function () {
     
      $('body').on('click', '#buscar_foro', function () {
         $("#cargando").show();
-        buscarForo($("#text_busqueda").val());
+        buscarForo($("#text_busqueda").val(), $("#select_busqueda").val());
+    });
+
+     $('body').on('change', '#select_busqueda', function () {
+        $("#cargando").show();
+        buscarForo($("#text_busqueda").val(), $("#select_busqueda").val());
     });
     $('body').on('click', '.cerrar_foro', function () {
         $("#cargando").show();        
@@ -38,10 +43,11 @@ $(document).on('ready', function () {
     });
     
 });
-function buscarForo(criterio) {
+function buscarForo(criterio, criterio2) {
     $.post(_root_ + 'foro/admin/_buscarForo',
     {
-        filtro:criterio
+        filtro:criterio,
+        filtro2:criterio2
         
     }, function (data) {
         $("#listarForo").html('');
