@@ -23,9 +23,19 @@ class usuarioModel extends Model {
     }
 
     public function getUsuarioXId($id){
-        $sql = "SELECT * FROM usuario 
+        $sql = "SELECT * FROM usuario
                 WHERE Usu_IdUsuario = {$id}
                     AND Usu_Estado = 1 AND Row_Estado = 1";
-    	return $this->getArray($sql);
+    	  return $this->getArray($sql);
+    }
+
+    public function getBusqueda($query){
+        $sql = "SELECT
+                    Usu_IdUsuario, Usu_Nombre, Usu_Apellidos, Usu_Usuario
+                FROM usuario
+                WHERE (Usu_Nombre like '%{$query}%' OR
+                    Usu_Apellidos like '%{$query}%')
+                    AND Usu_Estado = 1 AND Row_Estado = 1";
+    	  return $this->getArray($sql);
     }
 }
