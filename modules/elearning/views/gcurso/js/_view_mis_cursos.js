@@ -30,6 +30,12 @@ $(".btnGestion").click(function(){
   location.href = Link;
 });
 
+$(".btnAnuncios").click(function(){
+  var Curso = $(this).parent().find(".hidden_IdCurso").val();
+  var Link = $("#hidden_url").val() + "gestion/anuncios/" + Curso;
+  location.href = Link;
+});
+
 $(".btnDeshabilitar").click(function(){
   var Curso = $(this).parent().find(".hidden_IdCurso").val();
   ToggleEstado(Curso, "0");

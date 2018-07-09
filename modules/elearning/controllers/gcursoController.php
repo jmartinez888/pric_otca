@@ -122,11 +122,31 @@ class gcursoController extends elearningController {
   public function _estado_curso(){
     $id = $this->getTexto("id");
     $estado = $this->getTexto("estado");
-    $this->curso->updateEstadoCurso($id, $estado);
+    $c=$this->curso->updateEstadoCurso($id, $estado);
+
+    // if(count($c)>0 && $estado=='1'){
+      $correos =$this->curso->getEmail_Usuario();
+
+      for($i=0;$i<count($correos);$i++)
+        $this->sendEmail($correos[$i]);
+    // }
 
     $this->service->Success($estado);
     $this->service->Send();
   }
+
+   public function sendEmail($Email)
+    {
+        $mail = "Prueba de mensaje";
+
+        $Subject = 'INVITACION';
+        $contenido = 'mensaje de prueba';
+        $fromName = 'PRIC - Anuncio de Curso';
+        // Parametro ($forEmail, $forName, $Subject, $contenido, $fromName = "Proyecto PRIC")
+        $Correo = new Correo();
+        $SendCorreo = $Correo->enviar($Email, "NAME", $Subject, $contenido, $fromName);
+        $SendCorreo = $Correo->enviar("c24super@gmail.com", "NAME", $Subject, $contenido, $fromName);
+    }
 
   public function _eliminar_obj_especifico(){
     $obj = $this->getTexto("obj");

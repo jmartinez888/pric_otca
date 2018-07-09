@@ -38,4 +38,10 @@ function RefreshTagUrl(){
       leccion : IdLeccion,
     }, false, false);
   });
+
+
+
+
+
+
 }

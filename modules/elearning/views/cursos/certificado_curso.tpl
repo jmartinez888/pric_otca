@@ -3,7 +3,7 @@
 <div class="col-lg-12 col-xs-12" style="padding:20px; text-align:center; border: 5px solid #787878"> -->
             <div class="col-lg-12 col-xs-12" style="position: relative; display: inline-block; text-align:center">
 
-               <img src="{$_layoutParams.ruta_img}frontend/pric.png">
+               <img src="{$_layoutParams.ruta_img}frontend/pricblanco.png">
                 <!-- <div class="col col-md-3 col-sm-2 col-xs-3 padding-10">
                     <img  class="width-250" src="{$_layoutParams.ruta_img}frontend/logo.png" alt="La ORA" title="ORA">
                 </div>
@@ -24,9 +24,9 @@
 
 <div class="col-xs-12  visible-xs" style="position: absolute; top:45%; left: 5%; transform: translate(-0%, -50%);"><span style="font-size:4vw"><b>{$certificado[0]['Cur_Titulo']}</b></span><br/></div>
 
-  <div class="col-lg-12 hidden-xs" style="position: absolute; top:51%; left: 12%; width:88%; transform: translate(0%, 50%)"><span style="font-size:23px"><b>{$cont=1} {foreach item=m from=$modulo}{$m.Mod_Titulo}{if $cont!=count($modulo)}, {else}.{/if}{$cont=$cont+1}{/foreach}</b></span><br/></div>
+  <div class="col-lg-12 hidden-xs" style="position: absolute; top:47%; left: 12%; width:88%; transform: translate(0%, 8%)"><p style="font-size:22px">de 40 horas de duración, superando con éxito los módulos de:</p><span style="font-size:23px"><b>{$cont=1} {foreach item=m from=$modulo}{$m.Mod_Titulo}.{if $cont!=count($modulo)}, {else}.{/if}{$cont=$cont+1}{/foreach}</b></span><br/><br/><p style="font-size:20px">Y para que así conste, hacemos entrega del siguiente certificado acreditativo.</p><br/></div>
 
-    <div class="col-xs-12  visible-xs" style="position: absolute; top:51%; left: 12%; width:88%; transform: translate(0%, 50%)"><span style="font-size:3vw"><b>{$cont=1} {foreach item=m from=$modulo}{$m.Mod_Titulo}{if $cont!=count($modulo)}, {else}.{/if}{$cont=$cont+1}{/foreach}</b></span><br/></div>
+    <div class="col-xs-12  visible-xs" style="position: absolute; top:51%; left: 12%; width:88%; transform: translate(0%, 15%)"><span style="font-size:3vw"><b>{$cont=1} {foreach item=m from=$modulo}{$m.Mod_Titulo}.{if $cont!=count($modulo)}, {else}.{/if}{$cont=$cont+1}{/foreach}</b></span><br/></div>
 
 <div class="col-lg-12 hidden-xs" style="position: absolute; top:68%; left:30%; "><span style="font-size:20px">{$certificado[0]['Fecha_completa']}</span><br/></div>   
 
