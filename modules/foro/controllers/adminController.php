@@ -81,20 +81,6 @@ class adminController extends foroController
 
         $paginador->paginar($totalRegistros["For_NRow"], "listarForo", $filtro, $pagina = 0, CANT_REG_PAG, true);
 
-        //EXPORTAR DATOS
-        if ($this->botonPress("export_data_excel")) {
-            $this->_exportarDatos("excel");
-        }
-
-        if ($this->botonPress("export_data_pdf")) {
-            $this->_exportarDatos("pdf");
-        }
-
-        if ($this->botonPress("export_data_csv")) {
-            $this->_exportarDatos("csv");
-        }
-        //
-
         $this->_view->assign('lista_foros', $lista_foros);
 
         $this->_view->assign('numeropagina', $paginador->getNumeroPagina());
@@ -122,25 +108,25 @@ class adminController extends foroController
                 error_reporting(0);
                 $objPHPExcel = new PHPExcel();
 
-                $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(0, 1, 'Foro');
-                $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(1, 1, 'Participantes');
-                $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(2, 1, 'Comentarios');
-                $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(3, 1, 'Creador');
-                $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(4, 1, 'Fecha Creacion');
-                $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(5, 1, 'Fecha Cierre');
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(0, 1, 'For_Titulo');
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(1, 1, 'For_NParticipantes');
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(2, 1, 'For_NComentarios');
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(3, 1, 'Usu_Usuario');
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(4, 1, 'For_FechaCreacion');
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(5, 1, 'For_FechaCierre');
 
                 for ($i = 2; $i <= (count($lista_foros) + 1); $i++) {
-                    $fila11 = $lista_foros[$i - 2]['For_Titulo'];
+                    // $fila11 = $lista_foros[$i - 2]['For_Titulo'];
                     // $fila11 = mb_convert_encoding($fila11, 'UTF-16LE', 'UTF-8'); 
                     // chr(255) . chr(254); 
                     // echo $fila11; exit;
-                    $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(0, $i, $fila11);
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(0, $i, $lista_foros[$i - 2]['For_Titulo']);
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(1, $i, $lista_foros[$i - 2]['For_NParticipantes']);
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(2, $i, $lista_foros[$i - 2]['For_NComentarios']);
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(3, $i, $lista_foros[$i - 2]['Usu_Usuario']);
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(4, $i, $lista_foros[$i - 2]['For_FechaCreacion']);
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(5, $i, $lista_foros[$i - 2]['For_FechaCierre']);
-                    $fila11="";
+                    // $fila11="";
                 }
                 $objPHPExcel->getActiveSheet()->setTitle('ListaDeDescargas');
                 $objPHPExcel->setActiveSheetIndex(0);
@@ -180,6 +166,7 @@ class adminController extends foroController
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(3, $i, $lista_foros[$i - 2]['Usu_Usuario']);
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(4, $i, $lista_foros[$i - 2]['For_FechaCreacion']);
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(5, $i, $lista_foros[$i - 2]['For_FechaCierre']);
+
                 }
 
                 $objPHPExcel->getActiveSheet()->setTitle('ListaDeDescargas');
@@ -232,7 +219,7 @@ class adminController extends foroController
                     <td>" . utf8_decode($foro['For_NComentarios']) . "</td>
                     <td>" . utf8_decode($foro['Usu_Usuario']) . "</td>
                     <td>" . utf8_decode($foro['For_FechaCreacion']) . "</td>
-                    <td>" . utf8_decode($foro['For_FechaCierre']) . "</td>                    
+                    <td>" . utf8_decode($foro['For_FechaCierre']) . "</td>                   
                 </tr>";
             };
         $c =  
