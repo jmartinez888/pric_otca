@@ -86,7 +86,7 @@
     </div>
   </div>
 
-  {if ($curso.Mod_IdModCurso==1)}
+  {if ($curso.Mod_IdModCurso==2)}
 
   <div class="panel panel-default margin-top-10">
     <div class="panel-heading">
