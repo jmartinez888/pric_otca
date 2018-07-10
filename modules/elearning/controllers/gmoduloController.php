@@ -32,6 +32,29 @@ class gmoduloController extends elearningController {
     $this->_view->renderizar('ajax/_view_modulos_curso', false, true);
   }
 
+  public function _view_tareas_curso(){
+    $id = $this->getTexto("id");
+    if(strlen($id)==0){ $id = Session::get("learn_param_curso"); }
+    if(strlen($id)==0){ exit; }
+    $Cmodel = $this->loadModel("_gestionCurso");
+    $Mmodel = $this->loadModel("_gestionModulo");
+    $Tmodel = $this->loadModel("trabajo");
+
+    $curso = $Cmodel->getCursoXId($id);
+    $modulos = $Mmodel->getModulos($id);
+
+    for ($i = 0; $i < count($modulos); $i++) {
+      $modulos[$i]["TAREAS"] = $Tmodel->getTrabajoXModulo($modulos[$i]["Mod_IdModulo"]);
+    }
+
+    Session::set("learn_url_tmp", "gmodulo/_view_tareas_curso");
+    Session::set("learn_param_curso", $id);
+
+    $this->_view->assign("curso", $curso);
+    $this->_view->assign("modulos", $modulos);
+    $this->_view->renderizar('ajax/_view_tareas_cursos', false, true);
+  }
+
   public function _registrar_modulo(){
     $id = $this->getTexto("id");
     $titulo = $this->getTexto("titulo");

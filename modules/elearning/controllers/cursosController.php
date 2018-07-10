@@ -213,9 +213,15 @@ class cursosController extends elearningController {
       exit;
     }
     $Tmodel = $this->loadModel("trabajo");
+    $TTmodel = $this->loadModel("tarea");
     $tareas = $Tmodel->getTrabajoXLeccion($OLeccion["Lec_IdLeccion"]);
 
-    print_r($tareas);
+    if($tareas != null && count($tareas)>0){
+      for($i=0; $i<count($tareas);$i++){
+        $tareas[$i]["Archivos"] = $Tmodel->getArchivos($tareas[$i]["Tra_IdTrabajo"]);
+      }
+    }
+
     $this->_view->setTemplate(LAYOUT_FRONTEND);
     $this->_view->assign("mod_datos", $datos_modulo);
     $this->_view->assign("modulo", $Mmodel->getModulo($modulo));
@@ -223,10 +229,11 @@ class cursosController extends elearningController {
     $this->_view->assign("leccion", $OLeccion);
     $this->_view->assign("referencias", $Lmodel->getReferencias($OLeccion["Lec_IdLeccion"]));
     $this->_view->assign("materiales", $Lmodel->getMateriales($OLeccion["Lec_IdLeccion"]));
-    $this->_view->assign("tareas", $Tmodel->getTrabajoXLeccion($OLeccion["Lec_IdLeccion"]));
+    $this->_view->assign("tareas", $tareas);
     $this->_view->assign("curso", $curso);
     $this->_view->setCss(array('modulo', 'jp-modulo'));
-    $this->_view->setJs(array(array(BASE_URL . 'modules/elearning/views/gestion/js/core/util.js'), 'modulo'));
+    $this->_view->setJs(array(//array(BASE_URL . 'modules/elearning/views/gestion/js/core/util.js'), 
+    'modulo'));
     $this->_view->renderizar('modulo');
   }
 

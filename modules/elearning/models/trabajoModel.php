@@ -4,13 +4,13 @@ class trabajoModel extends Model {
 
 
 	public function insertTrabajo($leccion, $tipo, $titulo, $descripcion, $desde, $hasta){ //'14/02/2017 23:38:12'
-		$sql = "INSERT INTO trabajo_leccion(Lec_IdLeccion, Tra_Tipo, Tra_Titulo, 
+		$sql = "INSERT INTO trabajo_leccion(Lec_IdLeccion, Tra_Tipo, Tra_Titulo,
 						Tra_Descripcion, Tra_FechaDesde, Tra_FechaHasta, Tra_Estado, Row_Estado)
-		        VALUES({$leccion}, {$tipo}, '{$titulo}', '{$descripcion}', 
+		        VALUES({$leccion}, {$tipo}, '{$titulo}', '{$descripcion}',
 		        	STR_TO_DATE('{$desde}', '%d/%m/%Y %T'), STR_TO_DATE('{$hasta}', '%d/%m/%Y %T'), 1, 1)";
 		$this->execQuery($sql);
-		
-		$sql = "SELECT * FROM trabajo_leccion T WHERE T.Lec_IdLeccion = {$leccion} 
+
+		$sql = "SELECT * FROM trabajo_leccion T WHERE T.Lec_IdLeccion = {$leccion}
 				ORDER BY Tra_FechaReg DESC LIMIT 1";
     	$datos = $this->getArray($sql);
     	if($datos != null && count($datos)>0){
@@ -20,7 +20,7 @@ class trabajoModel extends Model {
 	}
 
 	public function updateTrabajo($trabajo, $tipo, $titulo, $descripcion, $desde, $hasta){
-		$sql = "UPDATE trabajo_leccion SET 
+		$sql = "UPDATE trabajo_leccion SET
 					Tra_Tipo = {$tipo},
 					Tra_Titulo = '{$titulo}',
 					Tra_Descripcion = '{$descripcion}',
@@ -43,8 +43,23 @@ class trabajoModel extends Model {
 	}
 
 	public function getTrabajoXLeccion($leccion){
+			$sql = "SELECT
+							T.*,
+							(CASE WHEN NOW() BETWEEN Tra_FechaDesde AND Tra_FechaHasta THEN 1 ELSE 0 END) as Activo,
+							(CASE WHEN NOW() < Tra_FechaDesde THEN 1
+							ELSE (CASE WHEN NOW() > Tra_FechaHasta THEN 2 ELSE 0 END) END) as Condicion
+						FROM trabajo_leccion T
+            WHERE T.Row_Estado = 1 AND T.Tra_Estado = 1 AND T.Lec_IdLeccion = {$leccion}";
+			return $this->getArray($sql);
+	}
+
+	public function getTrabajoXModulo($modulo){
 		$sql = "SELECT * FROM trabajo_leccion T
-            	WHERE T.Row_Estado = 1 AND T.Tra_Estado = 1 AND T.Lec_IdLeccion = {$leccion}";
+						INNER JOIN leccion L ON L.Lec_IdLeccion = T.Lec_IdLeccion
+            	WHERE T.Row_Estado = 1 AND T.Tra_Estado = 1
+								AND L.Row_Estado = 1 AND L.Lec_Estado = 1
+								AND L.Mod_IdModulo = {$modulo}
+						ORDER BY T.Tra_FechaDesde";
     	return $this->getArray($sql);
 	}
 
@@ -65,15 +80,15 @@ class trabajoModel extends Model {
 
 
 	public function getConstanteTrabajo(){
-		$sql = "SELECT * FROM Constante 
-				WHERE Con_Codigo = 4000 
-					AND Con_Estado = 1 
+		$sql = "SELECT * FROM Constante
+				WHERE Con_Codigo = 4000
+					AND Con_Estado = 1
 					AND Row_Estado = 1
 					AND Con_Valor <> Con_Codigo";
     	return $this->getArray($sql);
 	}
 
-	
+
 
 	public function insertArchivo($trabajo, $descripcion, $ruta){
 		$sql = "INSERT INTO archivos_trabajo(Tra_IdTrabajo, Arc_Descripcion, Arc_Ruta, Arc_Estado, Row_Estado)
