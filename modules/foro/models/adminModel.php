@@ -222,14 +222,31 @@ class adminModel extends Model
         }
     }
 
-    public function getMembers_x_Foro($iFor_IdForo, $iRol_Ckey, $iPagina = 1, $iRegistrosXPagina = CANT_REG_PAG)
+    // public function getMembers_x_Foro($iFor_IdForo, $iRol_Ckey, $iPagina = 1, $iRegistrosXPagina = CANT_REG_PAG)
+    // {
+    //     try {
+    //         $registroInicio = ($iPagina - 1) * $iRegistrosXPagina;
+    //         $post           = $this->_db->query(
+    //             "SELECT uf.Usu_IdUsuario,uf.For_IdForo,uf.Rol_IdRol,us.Usu_Usuario,us.Usu_Nombre,us.Usu_Apellidos,uf.Usf_FechaRegistro,r.Rol_Nombre,uf.Usf_Estado,uf.Row_Estado FROM usuario_foro uf INNER JOIN usuario us ON us.Usu_IdUsuario = uf.Usu_IdUsuario INNER JOIN rol r ON r.Rol_IdRol = uf.Rol_IdRol WHERE uf.For_IdForo = $iFor_IdForo  AND r.Rol_Ckey='$iRol_Ckey' and uf.Row_Estado=1 order by us.Usu_Nombre LIMIT $registroInicio,$iRegistrosXPagina;"
+    //         );
+
+    //         return $post->fetchAll();
+    //     } catch (PDOException $exception) {
+    //         $this->registrarBitacora("foro(adminModel)", "getMembers_x_Foro", "Error Model", $exception);
+    //         return $exception->getTraceAsString();
+    //     }
+    // }
+
+    public function getMembers_x_Foro($iFor_IdForo, $iRol_Ckey, $iPagina = 1, $iRegistrosXPagina = CANT_REG_PAG, $filtro="")
     {
         try {
             $registroInicio = ($iPagina - 1) * $iRegistrosXPagina;
             $post           = $this->_db->query(
-                "SELECT uf.Usu_IdUsuario,uf.For_IdForo,uf.Rol_IdRol,us.Usu_Usuario,us.Usu_Nombre,us.Usu_Apellidos,uf.Usf_FechaRegistro,r.Rol_Nombre,uf.Usf_Estado,uf.Row_Estado FROM usuario_foro uf INNER JOIN usuario us ON us.Usu_IdUsuario = uf.Usu_IdUsuario INNER JOIN rol r ON r.Rol_IdRol = uf.Rol_IdRol WHERE uf.For_IdForo = $iFor_IdForo  AND r.Rol_Ckey='$iRol_Ckey' and uf.Row_Estado=1 order by us.Usu_Nombre LIMIT $registroInicio,$iRegistrosXPagina;"
+                "SELECT uf.Usu_IdUsuario,uf.For_IdForo,uf.Rol_IdRol,us.Usu_Usuario,us.Usu_Nombre,us.Usu_Apellidos,uf.Usf_FechaRegistro,r.Rol_Nombre,uf.Usf_Estado,uf.Row_Estado FROM usuario_foro uf INNER JOIN usuario us ON us.Usu_IdUsuario = uf.Usu_IdUsuario INNER JOIN rol r ON r.Rol_IdRol = uf.Rol_IdRol WHERE  uf.For_IdForo = $iFor_IdForo 
+                    AND r.Rol_Ckey='$iRol_Ckey' 
+                    AND uf.Row_Estado=1 
+                    AND (CONCAT(us.Usu_Usuario, us.Usu_Nombre, us.Usu_Apellidos) LIKE '%$filtro%') order by us.Usu_Nombre LIMIT $registroInicio,$iRegistrosXPagina;"
             );
-
             return $post->fetchAll();
         } catch (PDOException $exception) {
             $this->registrarBitacora("foro(adminModel)", "getMembers_x_Foro", "Error Model", $exception);

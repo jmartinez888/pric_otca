@@ -518,8 +518,13 @@ class adminController extends foroController
 
     public function _tab_members()
     {
+        // exit;
         $id_foro    = $this->getInt('id_foro');
         $rol_member = $this->getTexto('rol_member');
+        $_SESSION['id_foro'] = $id_foro;
+        $_SESSION['rol_member'] = $rol_member;
+        // $filtro = $this->getTexto('filtro');
+
         $pagina     = 1;
         $paginador  = new Paginador();
 
@@ -534,6 +539,32 @@ class adminController extends foroController
         //$this->_view->assign('cantidadporpagina',$registros);
         $this->_view->assign('paginacion', $paginador->getView('paginacion_ajax_s_filas'));
         $this->_view->renderizar('ajax/listaMembers', false, true);
+    }
+
+    public function _tab_members_buscar()
+    {        
+        $id_foro    = $_SESSION['id_foro'];
+        $rol_member = $_SESSION['rol_member'];
+        $filtro = $this->getTexto('filtro');
+
+        $pagina     = 1;
+        $paginador  = new Paginador();
+
+        $lista_members  = $this->_model->getMembers_x_Foro($id_foro, $rol_member, $pagina, CANT_REG_PAG, $filtro);
+        $totalRegistros = $this->_model->getRowMembers_x_Foro($id_foro, $rol_member);
+
+        $paginador->paginar($totalRegistros["Usf_RowMembers"], "listaMembers", "", $pagina, CANT_REG_PAG, true);
+
+        $this->_view->assign('lista_members', $lista_members);
+
+        $this->_view->assign('numeropagina', $paginador->getNumeroPagina());
+        //$this->_view->assign('cantidadporpagina',$registros);
+        $this->_view->assign('paginacion', $paginador->getView('paginacion_ajax_s_filas'));
+        $this->_view->renderizar('ajax/listaMembers', false, true);
+        
+        $this->_view->assign('text_busqueda_miembro', $filtro);
+        Session::destroy('id_foro');
+        Session::destroy('rol_member');
     }
 
     public function _cambiarEstadoMember()
@@ -577,11 +608,12 @@ class adminController extends foroController
         $id_rol      = $this->getInt('id_rol');
         $rol_member  = $this->getTexto('ckey_rol');
         $model_index = $this->loadModel('index');
+        $mensaje = $this->getTexto('mensaje');
 
         $result_inscrip = $model_index->inscribir_participante_foro($id_foro, $id_usuario, $id_rol, 1);
          if(count($result_inscrip)>0){
             $result = $model_index->getEmail_Usuario($id_usuario);
-            $this->sendEmail($result);
+            $this->sendEmail($result, $mensaje);
         }
 
         $pagina    = 1;
@@ -600,15 +632,20 @@ class adminController extends foroController
         $this->_view->renderizar('ajax/listaMembers', false, true);
     }
 
-     public function sendEmail($Email)
-    {
+     public function sendEmail($Email, $mensaje)
+    { 
+        $obj = new Request();
+        // echo $obj->getModulo();exit;
+
+        $url = BASE_URL.$obj->getModulo();
         $email = $Email[0];
         $mail = "Prueba de mensaje";
         $Subject = 'INVITACION';
-        $contenido = 'mensaje de prueba';
-        $fromName = 'PRIC - Creación de Usuario';
+        $contenido = $mensaje . ' ' . "<a href=" . $url .">" .$url. "</a>";
+        $fromName = '¡PRIC - BIENVENIDO NUEVO MIEMBRO!';
         $Correo = new Correo();
         $SendCorreo = $Correo->enviar($email, "NAME", $Subject, $contenido, $fromName);
+        $this->_view->assign('url', $url);
     }
 
     public function _getPermisosMember()

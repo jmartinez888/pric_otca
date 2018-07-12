@@ -1,4 +1,10 @@
 <div class="table-responsive">
+    <div class="col-xs-3">                     
+        <input id="text_busqueda_miembro" name="text_busqueda_miembro" type="text" class="form-control">
+    </div>
+    <!-- <div class="col-xs-1"> -->
+    <button id="buscar_miembro_foro" name="buscar_miembro_foro" class=" btn btn-primary" type="button"><i class="glyphicon glyphicon-search"></i></button>
+    <!-- </div> -->
     <table class="table">
         <thead>
             <tr>
