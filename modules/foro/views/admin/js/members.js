@@ -24,6 +24,11 @@ $(document).on('ready', function () {
         cargar_members_tab($(this).attr("id_foro"), $(this).attr("rol_member"));
     });
 
+    $('body').on('click', '#buscar_miembro_foro', function () {
+        $("#cargando").show();
+        buscar_miembro_foro();
+    });
+
     $('body').on('click', '.cambiar_estado', function () {
         $("#cargando").show();
         cambiarEstadoMember($(this).attr('id_usuario'), $(this).attr('id_foro'), $(this).attr('estado'), "", $(".pagination li.active span").html(), $("#s_filas_listaMembers").attr("total_registros"));
@@ -32,14 +37,15 @@ $(document).on('ready', function () {
         $("#cargando").show();
         eliminarMember($(this).attr('id_usuario'), $(this).attr('id_foro'), "", $(".pagination li.active span").html(), $("#s_filas_listaMembers").attr("total_registros"));
     });
- 
+
     $('body').on('click', '#bt_buscar_user_foro', function () {
         $("#cargando").show();
         buscar_user_foro($(this).attr('id_foro'));
     });
+
     $('body').on('click', '#bt_asignar_usuario', function () {
         $("#cargando").show();
-        asignar_user_to_member($("input[name='rd_member_select']:checked").val(), $(this).attr("id_foro"), $("#s_lista_rol_foro").val(), $("#s_lista_rol_foro option:selected").attr("ckey"));
+        asignar_user_to_member($("input[name='rd_member_select']:checked").val(), $(this).attr("id_foro"), $("#s_lista_rol_foro").val(), $("#s_lista_rol_foro option:selected").attr("ckey"), );
     });
     $('body').on('click', '.permisos_member', function () {
         $("#cargando").show();
@@ -61,7 +67,22 @@ $(document).on('ready', function () {
 
 function cargar_members_tab(id_foro, rol_member) {
     $.post(_root_ + 'foro/admin/_tab_members',
-            {'id_foro': id_foro, 'rol_member': rol_member},
+            {
+                'id_foro': id_foro, 
+                'rol_member': rol_member
+            },
+    function (data) {
+        $("#listaMembers").html('');
+        $("#cargando").hide();
+        $("#listaMembers").html(data);
+    });
+}
+
+function buscar_miembro_foro() {
+    $.post(_root_ + 'foro/admin/_tab_members_buscar',
+            {
+                'filtro': $("#text_busqueda_miembro").val()
+            },
     function (data) {
         $("#listaMembers").html('');
         $("#cargando").hide();
@@ -120,7 +141,13 @@ function buscar_user_foro(id_foro) {
 function asignar_user_to_member(id_usuario, id_foro, id_rol, ckey_rol) {
       $("#lista_member_select").html('');
     $.post(_root_ + 'foro/admin/_asignarUserMember',
-            {'id_usuario': id_usuario, 'id_foro': id_foro, 'id_rol': id_rol, 'ckey_rol': ckey_rol},
+            {
+                'id_usuario': id_usuario, 
+                'id_foro': id_foro, 
+                'id_rol': id_rol, 
+                'ckey_rol': ckey_rol,
+                'mensaje':$('#ta_mensaje_usuario').val()
+            },
     function (data) {
         $("#listaMembers").html('');
         $("#cargando").hide();

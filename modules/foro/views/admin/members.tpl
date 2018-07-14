@@ -1,4 +1,11 @@
-<div  class="container" >   
+<a href = ""  onclick = " window.open ('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent ('{$_layoutParams.root}{$_layoutParams.modulo}'),' facebook-share-dialog ',' width = 626, height = 436, left = 300, top = 150 '); return false; ">
+<img src = "{$_layoutParams.root}public/img/facebook.png" alt = " facebook" >
+</a >
+<!-- Este es el código de Twitter donde ponlo más te convenga-->
+<a  href = " https://twitter.com/share "  class = " twitter-share-button "  data-url = "asdf"  data-text = " Charolastra "  data-lang = " es "  data-size = " large " >
+Twitter
+</a >
+
     <h3 class="titulo-view">{$lenguaje.foro_admin__members_label_titulo}</h3>
     <div class="row">
         <div class="col-md-3">
@@ -50,53 +57,61 @@
         </div>
 
         <div class="col-md-9">
-            <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation" class="active"><a href="#tab_members" aria-controls="tab_members" role="tab" data-toggle="tab" class="tab_member" rol_member="lider_foro" id_foro="{$foro.For_IdForo|Default:0}">Lider</a></li>
-                <li role="presentation" ><a href="#tab_members" aria-controls="tab_members" role="tab" data-toggle="tab" class="tab_member" rol_member="moderador_foro" id_foro="{$foro.For_IdForo|Default:0}">Moderador</a></li>
-                <li role="presentation"><a href="#tab_members" aria-controls="tab_members" role="tab" data-toggle="tab" class="tab_member" rol_member="facilitador_foro" id_foro="{$foro.For_IdForo|Default:0}">Facilitador</a></li>
-                <li role="presentation"><a href="#tab_members" aria-controls="tab_members" role="tab" data-toggle="tab" class="tab_member" rol_member="participante_foro" id_foro="{$foro.For_IdForo|Default:0}">Participante</a></li>
-                <li class="pull-right"><a type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal-asignar-member" title="Asignar nuevo miembro al foro">Asignar</a></li>
-            </ul>
-            <!-- Tab panes -->
-            <div class="tab-content">  
-                <div role="tabpanel" class="tab-pane active" id="tab_members">
-                    <div id="listaMembers">
-                        <div class="table-responsive">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Usuario</th>
-                                        <th>Nombre</th>
-                                        <th>Apellido</th> 
-                                        <th>Registrado</th>     
-                                        <th>Estado</th> 
-                                        <th>Opciones</th>
-                                    </tr>
-                                </thead>
-                                <tbody> 
-                                    {foreach from=$lista_members item=member}            
+            <div class="panel panel-default">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li role="presentation" class="active"><a href="#tab_members" aria-controls="tab_members" role="tab" data-toggle="tab" class="tab_member" rol_member="lider_foro" id_foro="{$foro.For_IdForo|Default:0}">Lider</a></li>
+                    <li role="presentation" ><a href="#tab_members" aria-controls="tab_members" role="tab" data-toggle="tab" class="tab_member" rol_member="moderador_foro" id_foro="{$foro.For_IdForo|Default:0}">Moderador</a></li>
+                    <li role="presentation"><a href="#tab_members" aria-controls="tab_members" role="tab" data-toggle="tab" class="tab_member" rol_member="facilitador_foro" id_foro="{$foro.For_IdForo|Default:0}">Facilitador</a></li>
+                    <li role="presentation"><a href="#tab_members" aria-controls="tab_members" role="tab" data-toggle="tab" class="tab_member" rol_member="participante_foro" id_foro="{$foro.For_IdForo|Default:0}">Participante</a></li>
+                    <li class="pull-right"><a type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal-asignar-member" title="Asignar nuevo miembro al foro">Asignar</a></li>
+                </ul>
+                <!-- Tab panes -->
+                <div class="tab-content">  
+                    <div role="tabpanel" class="tab-pane active" id="tab_members">
+                        <div id="listaMembers">                            
+                            <div class="table-responsive">
+                                <div class="col-xs-3">     
+                                    <input id="text_busqueda_miembro" name="text_busqueda_miembro" type="text" class="form-control">
+                                </div>
+                                <!-- <div class="col-xs-1"> -->
+                                    <button id="buscar_miembro_foro" name="buscar_miembro_foro" class=" btn btn-primary" type="button"><i class="glyphicon glyphicon-search"></i></button>
+                                <!-- </div> -->
+                                <table class="table">
+                                    <thead>
                                         <tr>
-                                            <th scope="row">{$numeropagina++}</th>
-                                            <td>{$member.Usu_Usuario}</td>
-                                            <td>{$member.Usu_Nombre}</td>
-                                            <td>{$member.Usu_Apellidos}</td>
-                                            <td>{$member.Usf_FechaRegistro|date_format:"%d-%m-%Y"}</td>                               
-                                            <td>{$member.Usf_Estado}</td>
-                                            <td>
-                                                <a type="button" data-placement="bottom" class="btn btn-default btn-sm glyphicon glyphicon-list permisos_member" data-toggle="modal" data-target="#modal-permisos-member" data-original-title="Editar Permisos" id_usuario="{$member.Usu_IdUsuario}" id_foro="{$member.For_IdForo}" id_rol="{$member.Rol_IdRol}"></a>
-                                                <button data-toggle="tooltip" data-placement="bottom" class="btn btn-default btn-sm glyphicon glyphicon-refresh cambiar_estado" title="Cambiar Estado" id_usuario="{$member.Usu_IdUsuario}" id_foro="{$member.For_IdForo}" estado="{$member.Usf_Estado}" > </button>      
-                                                <button data-toggle="tooltip" data-placement="bottom" class="btn btn-default btn-sm glyphicon glyphicon-trash eliminar_miembro" title="Eliminar" id_usuario="{$member.Usu_IdUsuario}" id_foro="{$member.For_IdForo}" > </button>
-                                            </td>
-                                        </tr>  
-                                    {/foreach}
-                                </tbody>
-                            </table>
+                                            <th>#</th>
+                                            <th>Usuario</th>
+                                            <th>Nombre</th>
+                                            <th>Apellido</th> 
+                                            <th>Registrado</th>     
+                                            <th>Estado</th> 
+                                            <th>Opciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody> 
+                                        {foreach from=$lista_members item=member}            
+                                            <tr>
+                                                <th scope="row">{$numeropagina++}</th>
+                                                <td>{$member.Usu_Usuario}</td>
+                                                <td>{$member.Usu_Nombre}</td>
+                                                <td>{$member.Usu_Apellidos}</td>
+                                                <td>{$member.Usf_FechaRegistro|date_format:"%d-%m-%Y"}</td>                               
+                                                <td>{$member.Usf_Estado}</td>
+                                                <td>
+                                                    <a type="button" data-placement="bottom" class="btn btn-default btn-sm glyphicon glyphicon-list permisos_member" data-toggle="modal" data-target="#modal-permisos-member" data-original-title="Editar Permisos" id_usuario="{$member.Usu_IdUsuario}" id_foro="{$member.For_IdForo}" id_rol="{$member.Rol_IdRol}"></a>
+                                                    <button data-toggle="tooltip" data-placement="bottom" class="btn btn-default btn-sm glyphicon glyphicon-refresh cambiar_estado" title="Cambiar Estado" id_usuario="{$member.Usu_IdUsuario}" id_foro="{$member.For_IdForo}" estado="{$member.Usf_Estado}" > </button>      
+                                                    <button data-toggle="tooltip" data-placement="bottom" class="btn btn-default btn-sm glyphicon glyphicon-trash eliminar_miembro" title="Eliminar" id_usuario="{$member.Usu_IdUsuario}" id_foro="{$member.For_IdForo}" > </button>
+                                                </td>
+                                            </tr>  
+                                        {/foreach}
+                                    </tbody>
+                                </table>
+                            </div>
+                            {$paginacion|default:""}
                         </div>
-                        {$paginacion|default:""}
-                    </div>
 
-                </div>                
+                    </div>                
+                </div>
             </div>
         </div> 
 
@@ -157,7 +172,7 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label for="ta_mensaje_usuario">Mensaje</label>
-                                                <textarea  class="form-control"  id="ta_mensaje_usuario" name="ta_mensaje_usuario" >                                            
+                                                <textarea  class="form-control"  id="ta_mensaje_usuario" name="ta_mensaje_usuario" >              
                                                 </textarea>  
                                             </div>
 

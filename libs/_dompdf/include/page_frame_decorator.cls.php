@@ -415,7 +415,6 @@ class Page_Frame_Decorator extends Frame_Decorator {
   function check_page_break(Frame $frame) {
     // Do not split if we have already or if the frame was already 
     // pushed to the next page (prevents infinite loops)
-
     if ( $this->_page_full || $frame->_already_pushed ) {
       return false;
     }
@@ -437,7 +436,6 @@ class Page_Frame_Decorator extends Frame_Decorator {
       return false;
 
     // Determine the frame's maximum y value
-    $max_y = 0;
     $max_y = $frame->get_position("y") + $margin_height;
 
     // If a split is to occur here, then the bottom margins & paddings of all

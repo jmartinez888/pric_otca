@@ -50,6 +50,7 @@ class indexController extends descargaController {
         }else{
             $mes=$imes;
         }
+        session_start();
         $_SESSION['Descargar']=$this->_descarga->getListarDescarga($ano, $mes);
         // print_r($_SESSION['Descargar']);
         $paginador = new Paginador();

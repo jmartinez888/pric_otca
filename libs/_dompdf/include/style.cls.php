@@ -472,14 +472,10 @@ class Style {
         $ret += mb_substr($l, 0, $i);
         continue;
       }
-
-      // echo $ref_size; exit;
       
-      if(is_numeric($ref_size)){
-        if ( ($i = mb_strpos($l, "%"))  !== false ) {
-          $ret += mb_substr($l, 0, $i)/100 * $ref_size;
-          continue;
-        }
+      if ( ($i = mb_strpos($l, "%"))  !== false ) {
+        $ret += mb_substr($l, 0, $i)/100 * $ref_size;
+        continue;
       }
 
       if ( ($i = mb_strpos($l, "rem"))  !== false ) {
@@ -519,9 +515,7 @@ class Style {
       }
           
       // Bogus value
-      if(is_numeric($ref_size)){
-        $ret += $ref_size;
-      }
+      $ret += $ref_size;
     }
 
     return $cache[$key] = $ret;
@@ -1413,31 +1407,16 @@ class Style {
    * @link http://www.w3.org/TR/CSS21/colors.html#propdef-color
    * @param string $colour
    */
-  // function set_color($colour) {
-  //   $col = $this->munge_colour($colour);
+  function set_color($colour) {
+    $col = $this->munge_colour($colour);
 
-  //   if ( is_null($col) )
-  //     $col = self::$_defaults["color"];
+    if ( is_null($col) )
+      $col = self::$_defaults["color"];
 
-  //   //see __set and __get, on all assignments clear cache, not needed on direct set through __set
-  //   $this->_prop_cache["color"] = null;
-  //   $this->_props["color"] = $col["hex"];
-  // }
-
-  function set_color($color)
-    {
-        $col = $this->munge_color($color);
-
-        if (is_null($col) || !isset($col["hex"])) {
-            $color = "inherit";
-        } else {
-            $color = $col["hex"];
-        }
-
-        //see __set and __get, on all assignments clear cache, not needed on direct set through __set
-        $this->_prop_cache["color"] = null;
-        $this->_props["color"] = $color;
-    }
+    //see __set and __get, on all assignments clear cache, not needed on direct set through __set
+    $this->_prop_cache["color"] = null;
+    $this->_props["color"] = $col["hex"];
+  }
 
   /**
    * Sets the background colour
