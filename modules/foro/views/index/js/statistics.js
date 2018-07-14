@@ -95,3 +95,27 @@ Highcharts.mapChart('container_map', {
         }]
 });
 
+$(document).on('ready', function () {
+        regitrar_comentario();
+});
+
+function regitrar_comentario(id_foro, id_usuario, descripcion, id_padre) {
+    //$("#cargando").show();
+    var files={};
+    jQuery.each($("[name=attach_"+id_padre+"]"), function (i, file) {
+        files[$(file).attr("id")]={"name":$(file).val(),"size":$(file).attr("f-size"),"type":$(file).attr("f-type")};
+    })
+
+    $.post(_root_ + 'foro/index/_getEstadistcaGeneral',function (data) {
+        std_general=JSON.parse(data);
+        $("#sta-gnr-m").html(std_general.Est_CantidadMiembros);
+        $("#sta-gnr-t").html(std_general.Est_CantidadForo);
+        $("#sta-gnr-c").html(std_general.Est_CantidadComentario);
+        $("#sta-gnr-v").html(std_general.Est_CantidadVisita);
+        $(".d-stat-load").hide();
+        $(".d-stat-hide").removeClass("d-stat-hide");
+                
+        //$("#cargando").hide();                
+    });
+
+}
