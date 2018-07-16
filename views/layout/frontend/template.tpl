@@ -150,18 +150,7 @@
                             </div>
                             {/foreach}
                         </div>
-<<<<<<< HEAD
-                        {/if}
 
-                            <div class="buscador">
-                                <form style="background: #fff;border: 2px solid #336b78;">
-                                    <input type="search" style="border: 0;">
-                                    <button type="submit" style="background: transparent;border: 0;color: #22454e;"><i class="fa fa-search" style=""></i></button>
-                                </form>
-                            </div>
-
-                    </div>
-=======
                         {/if}  
                         
                         <div class="buscador">
@@ -177,7 +166,7 @@
                         </div>
                         
                     </div> 
->>>>>>> 1a9c468016c1348dc03b23445e28d882a7f0bd8e
+
                 </nav>
             </div>
         </div>
