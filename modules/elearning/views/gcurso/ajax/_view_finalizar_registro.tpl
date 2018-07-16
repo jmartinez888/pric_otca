@@ -21,13 +21,13 @@
 
 <div class="col-lg-12 margin-top-10">
   <div class="panel panel-default">
-    <div class="panel-heading">
+    <div class="panel-heading" tag="0" id="headerImg">
       <h3 class="panel-title">
         <i class="glyphicon glyphicon-list-alt"></i>&nbsp;&nbsp;
         <strong>CURSO</strong>
       </h3>
     </div>
-    <div class="panel-body" style=" margin: 15px 25px">
+    <div class="panel-body" style=" margin: 15px 25px; display: none" id="panelImg">
       {if strlen($curso.Cur_UrlBanner)>0}
         <img class="img-banner" src="{BASE_URL}modules/elearning/views/cursos/img/portada/{$curso.Cur_UrlBanner}" />
       {/if}
@@ -40,13 +40,13 @@
 
 <div class="col-lg-12">
   <div class="panel panel-default">
-    <div class="panel-heading">
+    <div class="panel-heading" tag="0" id="headerDetalle">
       <h3 class="panel-title">
         <i class="glyphicon glyphicon-list-alt"></i>&nbsp;&nbsp;
         <strong>FICHA DE CURSO</strong>
       </h3>
     </div>
-    <div class="panel-body" style=" margin: 15px 25px">
+    <div class="panel-body" style=" margin: 15px 15px; display: none" id="panelDetalle">
       <form method="post" action="gcurso/_modificar_curso" id="frm_registro">
       <input hidden="hidden" name="id" value="{$curso.Cur_IdCurso}"/>
       <div class="col-lg-12"><h5><strong>Título del Curso</strong></h5></div>
@@ -95,7 +95,34 @@
   </div>
 </div>
 
+
+
+<div class="col-lg-12">
+  <div class="panel panel-default">
+    <div class="panel-heading" tag="0" id="headerParametros">
+      <h3 class="panel-title">
+        <i class="glyphicon glyphicon-list-alt"></i>&nbsp;&nbsp;
+        <strong>CONFIGURAR PARAMETROS</strong>
+      </h3>
+    </div>
+    <div class="panel-body" style=" margin: 15px 25px; display: none" id="panelParametros">
+      <div class="col-lg-6">
+        <label>Nota Minima</label>
+        <input class="form-control" id="inParMinNota" type="number" value="{$parametros['Par_NotaMinima']}"/>
+      </div>
+      <div class="col-lg-6">
+        <label>Nota Máxima</label>
+        <input class="form-control" id="inParMaxNota" type="number" value="{$parametros['Par_NotaMaxima']}"/>
+      </div>
+      <div class="col-lg-12" style="margin-top: 10px">
+        <button class="btn btn-success pull-right" id="btnParams"> Registrar Datos</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
   $("#hidden_curso").val("{Session::get('learn_param_curso')}");
 </script>
 <script type="text/javascript" src="{$_url}gcurso/js/_view_finalizar_registro.js"></script>
+<script type="text/javascript" src="{$_url}gcurso/js/_view_finalizar_registro2.js"></script>

@@ -27,8 +27,8 @@ function validate(data, validator){
           validator.error = "Los archivos deben tener formato: " + msn;
           validate = false;
         }
-      }  
-    }    
+      }
+    }
   });
   return validate;
 }
@@ -96,14 +96,14 @@ function InitUploader(post, params){
       });
 
       if(!ARCHIVOS && $("#file").val().toString().length==0){
-        Mensaje("Seleccione un archivo", null);
+        $.fn.Mensaje({ mensaje: "Seleccione un archivo", tamano: "sm" });
         return;
       }
 
       if( params.validator != null){
         if( !validate(ajaxData, params.validator) ){
           var mensaje = params.validator.error || "Los datos no cumplen los parametros establecidos";
-          Mensaje(mensaje, null);
+          $.fn.Mensaje({ mensaje: mensaje, tamano: "sm" });
           return;
         }
       }

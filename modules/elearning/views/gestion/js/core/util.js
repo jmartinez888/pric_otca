@@ -126,5 +126,3 @@ window.onload = function(){
 })(jQuery);
 
 };
-
-

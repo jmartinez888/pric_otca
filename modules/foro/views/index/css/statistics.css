@@ -41,3 +41,11 @@ and open the template in the editor.
 .text-medium{
     font-size:115%
 }
+
+.d-stat-hide{
+    display: none;
+}
+
+.d-stat-load{
+    display: block;
+}

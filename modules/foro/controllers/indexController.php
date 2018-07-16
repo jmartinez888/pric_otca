@@ -110,7 +110,7 @@ class indexController extends foroController {
             "statistics"
         ));
         
-        $this->_view->assign('StdGeneral', $this->_model->getEstadistcaGeneral());
+        //$this->_view->assign('StdGeneral', $this->_model->getEstadistcaGeneral());
         $this->_view->assign('StdCharComentarios',json_encode($this->_model->getComentario_x_Mes()));
         $this->_view->assign('StdActividades',$this->_model->getCantidaFuncionForo());
         $this->_view->assign('StdMapsMembers',json_encode($this->_model->getMiembrosPais()));
@@ -220,7 +220,11 @@ class indexController extends foroController {
         //comprobamos si existe un directorio para subir el archivo
     }
     
-
+    public function _getEstadistcaGeneral(){
+        $sdt=$this->_model->getEstadistcaGeneral();
+        
+        echo json_encode($sdt);
+    }
 }
 
 ?>

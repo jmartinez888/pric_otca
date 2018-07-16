@@ -15,7 +15,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="row">
-                            {if count($lista_foros)>0}
+                            {if count($lista_foros)>0}                             
                                 <table class="table table-striped">
                                     <thead>
                                         <tr>
@@ -26,7 +26,7 @@
                                     <tbody>
                                         {foreach from=$lista_foros item=foro}
                                             <tr>
-                                                <td>
+                                                <td>                                                   
                                                     {if $foro.For_Funcion=="forum"}
                                                         Discusión
                                                     {else if  $foro.For_Funcion=="webinar"}

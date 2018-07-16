@@ -196,21 +196,42 @@
     padding-left: 0px !important;
   }
 </style>
-  <div class="col-lg-2" style="padding-left: 0px !important">
-    <div class="sidebar-left">
-      <div class="side-menu">
-        <ul id="item-lista-curso">
-            <li style="position: relative"><span> Mis Cursos (docente)</span></li>
-        </ul>
-        <ul id="item-ficha-curso">
-            <li style="position: relative"><span> Ficha Curso</span></li>
-        </ul>
-        <ul id="item-modulos-curso">
-          <li style="position: relative"><span> Mis modulos</span></li>
-        </ul>
-      </div>
-    </div>
+<div class="col-lg-2" style="padding-left: 0px !important">
+  <div class="sidebar-left">
+    <ul id="item-lista-curso">
+        <div class="side-menu2">
+          <li class="side-menu" style="position: relative">
+            <i class="glyphicon glyphicon-book"></i>
+            <span> Mis Cursos (docente)</span>
+          </li>
+        </div>
+    </ul>
+    <ul id="item-ficha-curso">
+        <div class="side-menu2">
+          <li class="side-menu" style="position: relative">
+            <i class="glyphicon glyphicon-list-alt"></i>
+            <span> Ficha Curso</span>
+          </li>
+        </div>
+    </ul>
+    <ul id="item-modulos-curso">
+        <div class="side-menu2">
+          <li class="side-menu" style="position: relative">
+            <i class="glyphicon glyphicon-th"></i>
+            <span> Mis modulos</span>
+          </li>
+        </div>
+    </ul>
+    <ul id="item-tareas-curso">
+        <div class="side-menu2">
+          <li class="side-menu" style="position: relative">
+            <i class="glyphicon glyphicon-blackboard"></i>
+            <span> Tareas Asignadas</span>
+          </li>
+        </div>
+    </ul>
   </div>
+</div>
 
 <script type="text/javascript">
   setTimeout(function(){
@@ -222,6 +243,9 @@
     });
     $("#item-modulos-curso").click(function(){
         CargarPagina("gmodulo/_view_modulos_curso", { id: $("#hidden_curso").val() }, false, $(this));
-    });  
+    });
+    $("#item-tareas-curso").click(function(){
+        CargarPagina("gmodulo/_view_tareas_curso", { id: $("#hidden_curso").val() }, false, $(this));
+    });
   }, 400);
 </script>

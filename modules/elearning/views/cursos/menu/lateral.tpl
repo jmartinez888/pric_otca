@@ -35,7 +35,7 @@
     -webkit-box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.6);
     box-shadow: 3px 3px 10px rgba(100, 100, 100, 0.6);
   }
-  
+
   .contenedor {
       padding-top: 10px ;
       background-color: #ffffff;
@@ -235,6 +235,13 @@
             <span> Mis Cursos (Docente)</span></li></div>
           </a>
         </ul>
+        <ul>
+          <a href="{BASE_URL}elearning/message/message" class="nounderline">
+            <div class="side-menu2"><li class="side-menu" style="position: relative">
+            <i class="glyphicon glyphicon-comment"></i>
+            <span> Bandeja de Entrada</span></li></div>
+          </a>
+        </ul>
         {/if}
         <ul>
           <a href="{BASE_URL}elearning/certificado/menu" class="nounderline">
@@ -242,7 +249,7 @@
             <i class="glyphicon glyphicon-education"></i>
             <span>Mis Certificados</span></li></div>
           </a>
-        </ul>        
+        </ul>
         <ul>
           <a href="{BASE_URL}elearning/certificado/otros" class="nounderline">
             <div class="side-menu2"><li class="side-menu" style="position: relative">
