@@ -27,6 +27,7 @@
                                         {foreach from=$lista_foros item=foro}
                                             <tr>
                                                 <td>
+                                                    {$foro[3]}
                                                     {if $foro.For_Funcion=="forum"}
                                                         Discusión
                                                     {else if  $foro.For_Funcion=="webinar"}
