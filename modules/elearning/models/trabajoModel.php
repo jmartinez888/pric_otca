@@ -107,7 +107,7 @@ class trabajoModel extends Model {
             	WHERE T.Row_Estado = 1 AND T.Arc_Estado = 1 AND T.Tra_IdTrabajo = {$trabajo}";
     	$datos = $this->getArray($sql);
     	if($datos!=null && count($datos)>0){
-    		return $datos;
+    		return $datos[0];
     	}
     	return null;
 	}

@@ -45,6 +45,13 @@ class tareaModel extends Model {
     	return $this->getArray($sql);
 	}
 
+	public function getTareaXTrabajoReporte($trabajo){
+		$sql = "SELECT T.*, U.Usu_Nombre, U.Usu_Apellidos FROM tarea_usuario T
+						iNNER JOIN usuario U ON U.Usu_IdUsuario = T.Usu_IdUsuario
+            WHERE T.Row_Estado = 1 AND T.Tar_Estado = 1 AND T.Tra_IdTrabajo = {$trabajo}";
+    	return $this->getArray($sql);
+	}
+
 	public function getTareaXTrabajoXUsuario($trabajo, $usuario){
 		$sql = "SELECT * FROM tarea_usuario T
             WHERE T.Row_Estado = 1 AND T.Tar_Estado = 1
