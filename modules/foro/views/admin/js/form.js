@@ -67,7 +67,33 @@ $(document).on('ready', function () {
         stepHour: 1,
         stepMinute: 5
     });   
+
+    $("body").on('click', ".idioma_s", function () {
+        var id = $(this).attr("id");
+        var idIdioma = $("#hd_" + id).val();
+        gestionIdiomas($("#idPadreIdiomas").val(), idIdioma);
+        // buscar($("#palabra").val(), $("#buscarTipo").val(), $("#idPadreIdiomas").val(),idIdioma);        
+    }); 
 });
+
+function gestionIdiomas(padre, idIdioma) {
+    $("#cargando").show();
+    $.post(_root_ + 'foro/admin/gestion_idiomas',
+            {
+                idIdioma: idIdioma,
+                padre: padre,
+                idIdiomaOriginal: $("#IdiomaOriginal").val(),
+                Form_Funcion : $('#Form_Funcion').val(),
+                idforo: $('#idForo').val()
+            }, function (data) {
+        $("#gestion_idiomas").html('');
+        $("#cargando").hide();
+        $("#gestion_idiomas").html(data);
+        $('textarea#text_descripcion').ckeditor();
+        $('form').validator();
+    });
+}
+
 function load_files_form(file, div_conte) {
     var formData = new FormData();
     $(div_conte).removeClass("d-none");
@@ -136,6 +162,7 @@ function set_input_hdd_files_form() {
 function get_count_file() {
     return  $("[name=attach_form]").length;
 }
+
 
 
 
