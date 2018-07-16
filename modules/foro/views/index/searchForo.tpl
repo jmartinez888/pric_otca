@@ -1,7 +1,7 @@
 <div  class="col-md-12 col-xs-12 col-sm-12 col-lg-12">
     {include file='modules/foro/views/index/menu/lateral.tpl'}
     <div  class="col-md-10 col-xs-12 col-sm-8 col-lg-10" style="margin-top: 10px;">
-        <h3 class="titulo-view"><strong>Búsqueda de Foros</strong> </h3>
+        <h3 class="titulo-view"><strong>Búsqueda de Foros sdfds</strong> </h3>
         <div class="row">
             <div class="col-sm-offset-6 col-sm-6">
                 <div class="input-group">
@@ -16,6 +16,7 @@
                     <div class="col-md-12">
                         <div class="row">
                             {if count($lista_foros)>0}
+                                {$lista_foros|@var_dump}
                                 <table class="table table-striped">
                                     <thead>
                                         <tr>
@@ -26,8 +27,7 @@
                                     <tbody>
                                         {foreach from=$lista_foros item=foro}
                                             <tr>
-                                                <td>
-                                                    {$foro[3]}
+                                                <td>                                                   
                                                     {if $foro.For_Funcion=="forum"}
                                                         Discusión
                                                     {else if  $foro.For_Funcion=="webinar"}
