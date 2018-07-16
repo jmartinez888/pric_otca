@@ -1,10 +1,10 @@
 
         <div class="row">            
             <form method="post" >
-                <input type="text" id="IdiomaOriginal" name="IdiomaOriginal" value="{$IdiomaOriginal}" />
-                <input type="text" id="idForo" name="idForo" value="{$idForo}" />
-                <input type="text" id="Form_Funcion" name="Form_Funcion" value="{$Form_Funcion}" />
-               <input type="text" id="Idiomaseleccionado" name="Idiomaseleccionado" value="{$Idiomaseleccionado}" />
+                <input type="hidden" id="IdiomaOriginal" name="IdiomaOriginal" value="{$IdiomaOriginal}" />
+                <input type="hidden" id="idForo" name="idForo" value="{$idForo}" />
+                <input type="hidden" id="Form_Funcion" name="Form_Funcion" value="{$Form_Funcion}" />
+               <input type="hidden" id="Idiomaseleccionado" name="Idiomaseleccionado" value="{$Idiomaseleccionado}" />
                 <div class="col-md-8">
                     <div style="margin-bottom: 25px;" class="form-group" >   
                         {if isset($foro) && count($foro)}                    

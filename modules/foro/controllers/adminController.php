@@ -461,7 +461,7 @@ class adminController extends foroController
   
         $_model_index     = $this->loadModel('index');
         $foro["Archivos"] = $_model_index->getArchivos_x_idforo($id);
-        // $this->_view->assign('foro', $foro);
+        $this->_view->assign('foro', $foro);
         $this->_view->assign('idiomas',$this->_model->getIdiomas());
         $this->_view->assign('idForo', $id);
         $this->_view->assign('Idiomaseleccionado', $Idi_IdIdioma);
