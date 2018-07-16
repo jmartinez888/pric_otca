@@ -1719,28 +1719,49 @@ class PHPMailer {
    * @return string
    */
   public function EncodeQ ($str, $position = 'text') {
-    // There should not be any EOL in the string
-    $encoded = preg_replace('/[\r\n]*/', '', $str);
+      // There should not be any EOL in the string
+      $encoded = preg_replace('/[\r\n]*/', '', $str);
 
-    switch (strtolower($position)) {
-      case 'phrase':
-        $encoded = preg_replace("/([^A-Za-z0-9!*+\/ -])/e", "'='.sprintf('%02X', ord('\\1'))", $encoded);
-        break;
-      case 'comment':
-        $encoded = preg_replace("/([\(\)\"])/e", "'='.sprintf('%02X', ord('\\1'))", $encoded);
-      case 'text':
-      default:
-        // Replace every high ascii, control =, ? and _ characters
-        //TODO using /e (equivalent to eval()) is probably not a good idea
-        $encoded = preg_replace('/([\000-\011\013\014\016-\037\075\077\137\177-\377])/e',
-              "'='.sprintf('%02X', ord('\\1'))", $encoded);
-        break;
-    }
+        switch (strtolower($position)) {
+          case 'phrase':
+            // $encoded = preg_replace("/([^A-Za-z0-9!*+\/ -])/e", "'='.sprintf('%02X', ord('\\1'))", $encoded);
+            $encoded = preg_replace_callback("/([^A-Za-z0-9!*+\/ -])/", 
+                                            function($matches) {
+                                              foreach($matches as $match) {
+                                                  return sprintf('%02X', ord('\\1'));
+                                              }
+                                            }, $encoded
+                                          );
+            break;
+          case 'comment':
+            // $encoded = preg_replace("/([\(\)\"])/e", "'='.sprintf('%02X', ord('\\1'))", $encoded);
+            $encoded = preg_replace_callback("/([\(\)\"])/", 
+                                            function($matches) {
+                                              foreach($matches as $match) {
+                                                  return sprintf('%02X', ord('\\1'));
+                                              }
+                                            }, $encoded
+                                          );
+          case 'text':
+          default:
+            // Replace every high ascii, control =, ? and _ characters
+            //TODO using /e (equivalent to eval()) is probably not a good idea
+            // $encoded = preg_replace('/([\000-\011\013\014\016-\037\075\077\137\177-\377])/e',
+            //       "'='.sprintf('%02X', ord('\\1'))", $encoded);
+            $encoded =  preg_replace_callback('/([\000-\011\013\014\016-\037\075\077\137\177-\377])/',
+                                            function($matches) {
+                                              foreach($matches as $match) {
+                                                  return sprintf('%02X', ord('\\1'));
+                                              }
+                                            }, $encoded
+                                          );
+            break;
+        }
 
-    // Replace every spaces to _ (more readable than =20)
-    $encoded = str_replace(' ', '_', $encoded);
+      // Replace every spaces to _ (more readable than =20)
+      $encoded = str_replace(' ', '_', $encoded);
 
-    return $encoded;
+      return $encoded;
   }
 
   /**

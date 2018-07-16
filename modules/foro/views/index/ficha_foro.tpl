@@ -2,9 +2,53 @@
     {include file='modules/foro/views/index/menu/lateral.tpl'}
     <div  class="col-md-10 col-xs-12 col-sm-8 col-lg-10">
         <div class="row ficha_foro">
+            
             <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
-                <div class="row">
-                    <div class="col-md-6">
+            <!-- ficha-foro-josepacaya -->
+                <div class="col-lg-12 p-rt-lt-0">
+                    <a class="regresar-tematica" href="#"> < NombreDeLaTemática</a>
+                    <div class="pull-right etiqueta">Discusión</div>
+                </div>
+                <div class="col-lg-12 p-rt-lt-0">
+                    <h3 class="titulo-ficha">{$foro.For_Titulo}</h3>
+                </div>
+                <div class="col-lg-12 p-rt-lt-0" style="font-size: 12px;">
+                    <div class="col-lg-6 p-rt-lt-0">
+                    hace 1 mes por <strong>NombreDelUsuario</strong>
+                    </div>
+                    <div class="col-lg-6 p-rt-lt-0">
+                        <div class="pull-right">Comentarios: <strong>0</strong></div>
+                    </div>
+                </div>
+                <div class="col-lg-12 p-rt-lt-0">
+                    <hr class="cursos-hr">
+                </div>
+                <div class="col-lg-12 contenido">
+                    <p>{$foro.For_Descripcion|html_entity_decode}</p>
+                </div>
+                <div class="col-lg-12 p-rt-lt-0" style="font-size: 12px;">
+                    <div class="col-lg-8 p-rt-lt-0">
+                        <div class="participantes">Participantes: <strong>2</strong></div>
+                    </div>
+                    <div class="col-lg-4 p-rt-lt-0">
+                        <button data-toggle="modal" data-target="#modal-login" id="login-form-link" class="btn btn-default btn-comentar">
+                            <i class="glyphicon glyphicon-comment"></i>
+                        &nbsp;Comentar</button>
+                        <button data-toggle="modal" data-target="#modal-login" id="login-form-link" class="btn btn-default btn-like pull-right" id="btnCalificar">
+                            <i class="glyphicon glyphicon-thumbs-up"></i>
+                        </button>
+                    </div> 
+                </div>
+                <div class="col-lg-12 p-rt-lt-0">
+                    <hr class="cursos-hr">
+                </div>
+
+
+
+
+            <!-- fin ficha-foro-josepacaya-->
+
+                 <!--    <div class="col-md-6">
                         <span>{$foro.For_FechaCreacion|date_format:"%d-%m-%Y"} {if ($foro.For_FechaCierre|date_format:"%d-%m-%Y")!=""} / {($foro.For_FechaCierre|date_format:"%d-%m-%Y")}{/if}</span>
                     </div>
                     <div class="col-md-6 text-right">
@@ -14,20 +58,20 @@
                          Participantes <span class="badge">{$foro.For_TParticipantes}</span> 
                         {/if}
                     </div>
-                    <hr>
+                    <div class="col-lg-12"><hr class="cursos-hr"></div>
                     <div class="page-header">
                         <h3 class="titulo-view">{$foro.For_Titulo}</h3>
                     </div>
                     <div class="contenido">
                         {$foro.For_Descripcion|html_entity_decode}</p>
-                    </div>
+                    </div>    -->
 
-                    <div class="row col-md-12">
+                    <div class="col-md-12 p-rt-lt-0">
                         {if Session::get('autenticado')}               
                             {if $comentar_foro}
                                 <div class="widget-area no-padding blank">
                                     <div class="status-upload">
-                                        <textarea id="text_comentario_{$foro.For_IdForo}_0" placeholder="Ingrese su comentario" ></textarea>
+                                        <textarea class="estilo-textarea" id="text_comentario_{$foro.For_IdForo}_0" placeholder="Ingrese su comentario" ></textarea>
                                         <div id="div_loading_{$foro.For_IdForo}_0" id_padre="0" class="load_files d-none">
 
                                         </div>
@@ -42,34 +86,39 @@
                                     </div><!-- Status Upload  -->
                                 </div><!-- Widget Area -->
                             {else}
-                                 {if $foro.For_Funcion=="forum"}}
-                                <button class="btn btn-primary btn-md inscribir_foro" id_foro="{$foro.For_IdForo}">Inscríbete para comentar<i class="fa fa-sign-in"></i></button>
+                                 {if $foro.For_Funcion=="forum"}
+                                 <div class="col-md-12 p-rt-lt-0">
+                                     <button class="btn btn-primary btn-md inscribir_foro" id_foro="{$foro.For_IdForo}">Inscríbete para comentar
+                                     <i class="glyphicon glyphicon-log-in"></i></button>
+                                 </div>
                                 {else}
-                                <button class="btn btn-primary btn-md inscribir_foro" id_foro="{$foro.For_IdForo}">Inscríbete para participar en el Webinar<i class="fa fa-sign-in"></i></button>
+                                <div>
+                                     <button class="btn btn-primary btn-md inscribir_foro" id_foro="{$foro.For_IdForo}">Inscríbete para participar en el Webinar
+                                     <i class="glyphicon glyphicon-log-in"></i></button>
+                                </div>
                                 {/if}
                                 {/if}
                             {else}
-                            <div class="form-login">                            
-                                <h5>Cuelgue su contribución</h5>
-                                <div class="row">                                
-                                    <div class="col-md-4 wrapper">
-                                        <span class="group-btn">     
-                                            <button data-toggle="modal" data-target="#modal-login" id="login-form-link" class="btn btn-primary btn-md btn_login_user">Inicie Sesion <i class="fa fa-sign-in"></i></button>
-                                        </span>
-                                    </div>
+                            <div class="">
+                                <div class="col-lg-12 anuncio"> 
+                                  <p>Para colgar su contribución inicie sesión.</p>
+                                </div>                              
+                                <div class="col-md-12 p-rt-lt-0">    
+                                    <button data-toggle="modal" data-target="#modal-login" id="login-form-link" class="btn btn-group btn-success ini-sesion">Inicie Sesion <i class="glyphicon glyphicon-log-in"></i></button>
                                 </div>
-
                             </div>
                         {/if}                    
                     </div>
-                </div>                 
-                <div class="row">
-                    <hr>
+                 
+                <div class="col-lg-12 p-rt-lt-0">
                     <h4>Comentarios:</h4>
+                </div>
+                <div class="col-lg-12 p-rt-lt-0">
+                    <hr class="cursos-hr">
                 </div>
                 <div id="lista_comentarios" class="row">               
                     {foreach from=$foro.For_Comentarios item=comentarios} 
-                        <div class="media comment-box">
+                        <div class="comment-box">
                             <div class="col-md-1 media-left">
                                 <a href="#">
                                     <img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">
@@ -79,7 +128,7 @@
                                 <h4 class="media-heading">{$comentarios.Usu_Nombre|upper}
                                     <span> | {$comentarios.Com_Fecha|date_format:"%d-%m-%Y"}</span>
                                     {if $comentar_foro}                                   
-                                        <span class="pull-right"> <button id_comentario="{$comentarios.Com_IdComentario}" class="btn btn-default btn-sm coment_coment">Comentar</button></span>
+                                        <span class="pull-right"> <button id_comentario="{$comentarios.Com_IdComentario}" class="btn btn-primary btn-sm coment_coment">Comentar</button></span>
                                     {/if}                                
                                 </h4>
                                 <p>{$comentarios.Com_Descripcion}</p>
@@ -101,15 +150,15 @@
                                             {$file.Fim_SizeFile=$file.Fim_SizeFile/1024}
                                             <div class="file_size">({if $file.Fim_SizeFile<1}{$file.Fim_SizeFile|string_format:"%.3f"} K {else} {$file.Fim_SizeFile=$file.Fim_SizeFile/1024} {$file.Fim_SizeFile|string_format:"%.3f"} M{/if})</div>
 
+                                            </div>
+                                        {/foreach}
                                         </div>
-                                    {/foreach}
-                                </div>
                                 {if $comentar_foro}
                                     <div id="comen_comen_{$comentarios.Com_IdComentario}" class="media" style="display: none">
                                         <div class="widget-area no-padding blank">
                                             <div class="status-upload">
 
-                                                <textarea id="text_comentario_{$foro.For_IdForo}_{$comentarios.Com_IdComentario}" placeholder="Ingrese su comentario" ></textarea>
+                                                <textarea class="estilo-textarea" id="text_comentario_{$foro.For_IdForo}_{$comentarios.Com_IdComentario}" placeholder="Ingrese su comentario" ></textarea>
                                                 <div id="div_loading_{$foro.For_IdForo}_{$comentarios.Com_IdComentario}" id_padre="{$comentarios.Com_IdComentario}" class="load_files d-none">
 
                                                 </div>
@@ -173,32 +222,38 @@
                         </div>                
                     {/foreach}
                 </div>
-                
+
             </div>
             <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
                 <div class="addon">
-                    <label>Facilitado Por</label>
+                    <label class="tit-integrante">Facilitado Por</label>
                     <ul>
                         {foreach from=$facilitadores item=facilitador} 
                             <li class="clearfix">
                                 <a href="#" target="_blank">
-                                    <img class="round" src="https://8share-production-my.s3.amazonaws.com/campaigns/4898/photos/profile/thumb_copy.png?1397732185">
-                                    <div class="legend-info">
-                                        <strong>{$facilitador.Usu_Nombre} {$facilitador.Usu_Apellidos}</strong>                                
-                                        {$facilitador.Rol_Nombre} <br>
-                                        {$facilitador.Usu_InstitucionLaboral}
+                                    <div class="col-lg-4">
+                                        <img class="round" src="https://8share-production-my.s3.amazonaws.com/campaigns/4898/photos/profile/thumb_copy.png?1397732185" alt="Perfil">
                                     </div>
                                 </a>
+                                <div class="col-lg-8 legend-info p-rt-lt-0">
+                                    <a href="#" target="_blank">
+                                        <strong class="underline">{$facilitador.Usu_Nombre} {$facilitador.Usu_Apellidos}</strong>
+                                    </a>
+                                        <hr class="cursos-hr2">                                
+                                        {$facilitador.Rol_Nombre} <br>
+                                        {$facilitador.Usu_InstitucionLaboral}
+                                </div>
+                                
                             </li> 
                         {/foreach}
                     </ul>
                 </div>
                 {if count($foro.Archivos)>0}
                     <div class="addon">
-                        <label>Recursos</label>
-                        <ul id="div_show_{$foro.For_IdForo}" class="show_files">
+                        <label class="tit-integrante">Recursos</label>
+                        <ul id="div_show_{$foro.For_IdForo}">
                             {foreach from=$foro.Archivos  item=file}
-                                <li class="files" tabindex="-1" id="">
+                                <li tabindex="-1" id="">
                                     {if $file.Fif_TipoFile|strstr:"video"}
                                         <i class="fa fa-video-camera"></i>
                                     {/if}
@@ -208,8 +263,8 @@
                                     {if $file.Fif_TipoFile|strstr:"application"}
                                         <i class="fa fa-file-o"></i>
                                     {/if}
-                                    <div class="file_titulo">
-                                        <a href="{$_layoutParams.root_archivo_fisico}{$file.Fif_NombreFile}"  title="Descargar" target="_blank">{$file.Fif_NombreFile}</a>                                                    
+                                    <div class="">
+                                        <a class="file_titulo2 underline" href="{$_layoutParams.root_archivo_fisico}{$file.Fif_NombreFile}"  title="Descargar" target="_blank">{substr($file.Fif_NombreFile, 0, 33)}...</a>                                              
                                     </div>
                                     {$file.Fif_SizeFile=$file.Fif_SizeFile/1024}
                                     <div class="file_size">({if $file.Fif_SizeFile<1}{$file.Fif_SizeFile|string_format:"%.3f"} K {else} {$file.Fif_SizeFile=$file.Fif_SizeFile/1024} {$file.Fif_SizeFile|string_format:"%.3f"} M{/if})</div>
@@ -220,9 +275,10 @@
                 {/if}
                 {if $foro.For_Funcion=="forum"}
                 <div class="addon">
-                    <label>Sub Foros
-                        <a type="button"  href="{$_layoutParams.root}foro/admin/form/new/forum/{$foro.For_IdForo}" class="btn btn-primary btn-sm pull-right" title="Nuevo Sub FOro">Nuevo</a>
-                    </label>
+                    <label class="tit-integrante">Sub Foros</label>
+                    <div style="padding: 10px">
+                        <a type="button"  href="{$_layoutParams.root}foro/admin/form/new/forum/{$foro.For_IdForo}" class="btn btn-primary btn-sm" title="Nuevo Sub FOro">Nuevo</a>
+                    </div>
                     {if count($foro.Sub_Foros)>0}
                         <ul>
                             {foreach from=$foro.Sub_Foros  item=sub_foro}
@@ -266,20 +322,18 @@
                             {else}
                             <h5>Iniciar sesión para participar</h5>  
                             {/if}
-                            <div class="wrapper">
-                                <span class="group-btn">     
-                                    <button data-toggle="modal" data-target="#modal-login" id="login-form-link" class="btn btn-primary btn-md btn_login_user">login<i class="fa fa-sign-in"></i></button>
-                                </span>
+                            <div>
+                                <button data-toggle="modal" data-target="#modal-login" id="login-form-link" class="btn btn-group btn-success">Inicie Sesion <i class="glyphicon glyphicon-log-in"></i></button>
                             </div>
                         </div>
                     </div>
                     <hr>
-                    <div class="card">
+                    <!-- <div class="card">
                         <h5>Nuevo Usuario?</h5>
                         <span class="group-btn">     
                             <a href="#" class="btn btn-primary btn-md btn_registro_user" data-toggle="modal" data-target="#modal-login"  id="register-form-link" >Registrate <i class="fa fa-sign-in"></i></a>
                         </span>
-                    </div>
+                    </div> -->
                 {/if}
 
             </div>

@@ -55,11 +55,21 @@
         </div>
         <div class="panel-body" style=" margin: 15px">
             <div class="row" style="text-align:right">
-                <div style="display:inline-block;padding-right:2em">
-                    <input class="form-control" placeholder="{$lenguaje.text_buscar_rol}" style="width: 150px; float: left; margin: 0px 10px;" name="palabraRol" id="palabraRol">
-                    <button class="btn btn-success" style=" float: left" type="button" id="buscar"  ><i class="glyphicon glyphicon-search"></i></button>
-                </div>
-            <!-- <p style="direction: rtl"><a class="btn btn-primary" href="{$_layoutParams.root}acl/index/nuevo_role"><i class="glyphicon glyphicon-plus-sign"></i> Agregar</a> </p> -->
+                <form method="POST">
+                    <div class="well-sm col-sm-12">
+                        <div id="botones" class="btn-group pull-right">
+                            <button type="submit" id="export_data_excel" name="export_data_excel" class="btn btn-info">EXCEL</button>
+                            <button type="submit" id="export_data_csv" name="export_data_csv" class="btn btn-info">CSV</button>
+                            <button type="submit" id="export_data_pdf" name="export_data_pdf" class="btn btn-info">PDF</button>
+                        </div>
+                    </div>
+                    <div style="display:inline-block;padding-right:2em">
+                        <input class="form-control" placeholder="{$lenguaje.text_buscar_rol}" style="width: 150px; float: left; margin: 0px 10px;" name="palabraRol" id="palabraRol">
+                        <button class="btn btn-success" style=" float: left" type="button" id="buscar"  ><i class="glyphicon glyphicon-search"></i></button>
+                    </div>
+
+                    <!-- <p style="direction: rtl"><a class="btn btn-primary" href="{$_layoutParams.root}acl/index/nuevo_role"><i class="glyphicon glyphicon-plus-sign"></i> Agregar</a> </p> -->
+                </form>
             </div>
             <h4 class="panel-title"> <b>{$lenguaje.roles_buscar_tabla_titulo}</b></h4>
             <div id="listarRoles" >

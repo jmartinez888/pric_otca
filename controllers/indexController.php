@@ -12,7 +12,7 @@ class indexController extends Controller
     public function __construct($lang, $url) 
     {
         parent::__construct($lang, $url);
-        $this->_pagina = $this->loadModel('index', 'arquitectura');
+        // $this->_pagina = $this->loadModel('index', 'arquitectura');
     } 
     
     public function index($idPagina = 5) 
@@ -160,7 +160,7 @@ class indexController extends Controller
         }
 
         $ip = $_SERVER['REMOTE_ADDR'];
-        $r = $this->_pagina->registrarBusqueda($palabra, $ip, '');
+        $r = $this->_recursoModel->registrarBusqueda($palabra, $ip, '');
         //CUENTA EL NUMERO DE PALABRAS 
         $trozosPalabra = explode(" ",$palabraBuscada); 
         $numero = count($trozosPalabra); 
@@ -170,17 +170,23 @@ class indexController extends Controller
             $condicionDublinPais = "";        
             if ($numero == 1) { 
                 //SI SOLO HAY UNA PALABRA DE BUSQUEDA SE ESTABLECE UNA INSTRUCION CON LIKE 
-                $condicionForo = " WHERE f.For_Titulo LIKE '%".$palabraBuscada."%' OR f.For_Resumen LIKE '%".$palabraBuscada."%' OR f.For_Descripcion LIKE '%".$palabraBuscada."%' OR f.For_PalabrasClaves LIKE '%".$palabraBuscada."%' ";
+                $listaCurso = $this->_cursoModel->getCursoBusqueda($palabraBuscada);
                 $condicionDublin = " WHERE Dub_Estado = 1 AND (Dub_Titulo LIKE '%".$palabraBuscada."%' OR Dub_Descripcion LIKE '%".$palabraBuscada."%' OR Dub_PalabraClave LIKE '%".$palabraBuscada."%' OR Aut_Nombre LIKE '%".$palabraBuscada."%')";
+                $condicionForo = " WHERE f.For_Titulo LIKE '%".$palabraBuscada."%' OR f.For_Resumen LIKE '%".$palabraBuscada."%' OR f.For_Descripcion LIKE '%".$palabraBuscada."%' OR f.For_PalabrasClaves LIKE '%".$palabraBuscada."%' ";
+                
                 // $condicionLegal = " WHERE Mal_Estado = 1 AND (Mal_Titulo LIKE '%$palabraBuscada%' OR Mal_PalabraClave LIKE '%$palabraBuscada%' OR Mal_ResumenLegislacion LIKE '%$palabraBuscada%' OR Mal_Entidad LIKE '%$palabraBuscada%') ";
                 $OrderByDublin = " ORDER BY dub.Dub_Titulo ";
+                $OrderByForo = " ORDER BY f.For_Titulo ASC ";
                 // $OrderByForo = " ORDER BY MATCH(Mal_Titulo, Mal_PalabraClave, Mal_ResumenLegislacion, Mal_Entidad) AGAINST ('%".$palabraBuscada."%' IN BOOLEAN MODE) DESC ";
             } elseif ($numero > 1) { 
                 //SI HAY UNA FRASE SE UTILIZA EL ALGORTIMO DE BUSQUEDA AVANZADO DE MATCH AGAINST 
                 //busqueda de frases con mas de una palabra y un algoritmo especializado 
-                $condicionForo = " WHERE MATCH(f.For_Titulo, f.For_Resumen, f.For_Descripcion, f.For_PalabrasClaves) AGAINST ('%".$palabraBuscada."%' IN BOOLEAN MODE) ";
+                
+
+                $listaCurso = $this->_cursoModel->getCursoBusquedaMath($palabraBuscada);
 
                 $condicionDublin = " WHERE Dub_Estado = 1 AND (MATCH(Dub_Titulo, Dub_Descripcion, Dub_PalabraClave) AGAINST ('%".$palabraBuscada."%' IN BOOLEAN MODE) OR MATCH(Aut_Nombre) AGAINST ('%".$palabraBuscada."%' IN BOOLEAN MODE)) ";
+                $condicionForo = " WHERE MATCH(f.For_Titulo, f.For_Resumen, f.For_Descripcion, f.For_PalabrasClaves) AGAINST ('%".$palabraBuscada."%' IN BOOLEAN MODE) ";
                 // $condicionLegal = " WHERE Mal_Estado = 1 AND (MATCH(Mal_Titulo, Mal_PalabraClave, Mal_ResumenLegislacion, Mal_Entidad) AGAINST ('%".$palabraBuscada."%' IN BOOLEAN MODE)) ";
                 $OrderByDublin = " ORDER BY MATCH(Dub_Titulo, Dub_Descripcion, Dub_PalabraClave) AGAINST ('%".$palabraBuscada."%' IN BOOLEAN MODE) OR MATCH(Aut_Nombre) AGAINST ('%".$palabraBuscada."%' IN BOOLEAN MODE) DESC";
                 $OrderByForo = " ORDER BY  MATCH(f.For_Titulo, f.For_Resumen, f.For_Descripcion, f.For_PalabrasClaves) AGAINST ('%".$palabraBuscada."%' IN BOOLEAN MODE) DESC ";
@@ -211,7 +217,6 @@ class indexController extends Controller
 
         $idioma = Cookie::lenguaje();
 
-        // $listaPagina = $this->_pagina->getPaginas($condicionPagina, $idioma);
         $listaDublin = $this->_dublinModel->getDocumentosPaises($condicionDublin, $idioma, $OrderByDublin);
         $listaForo = $this->_foroModel->getForosSearch($condicionForo.$OrderByForo);
         $listaRecurso = $this->_recursoModel->getRecursoBusquedaTraducido($palabraBuscada, $idioma);
@@ -250,7 +255,7 @@ class indexController extends Controller
 
         //Fin Paises
         
-        // $cantPagina = count($listaPagina);
+        $cantPagina = count($listaCurso);
         $cantDublin = count($listaDublin);
         $cantForo = count($listaForo);
         $cantRecurso = count($listaRecurso);
@@ -261,13 +266,13 @@ class indexController extends Controller
         {
             if (!$json) 
             {
-                // foreach ($listaPagina as $arra1) 
-                // {
-                //     // echo $arra['Pag_Nombre'];   exit;
-                //     array_push($listaBusqueda, $arra1['Pag_IdPagina'], $arra1['Pag_Nombre'], substr($arra1['Pag_Descripcion'], 0, 200), 'index/index/', 1, '', '', '', $arra1['Idi_IdIdioma']);
-                //     array_push($listaBus, $listaBusqueda);
-                //     $listaBusqueda = array();
-                // }            
+                foreach ($listaCurso as $arra1) 
+                {
+                    // echo $arra['Pag_Nombre'];   exit;
+                    array_push($listaBusqueda, $arra1['Cur_IdCurso'], $arra1['Cur_Titulo'], substr($arra1['Cur_Descripcion'], 0, 200), 'elearning/cursos/curso/', 1, '', '', '', $arra1['Idi_IdIdioma']);
+                    array_push($listaBus, $listaBusqueda);
+                    $listaBusqueda = array();
+                }            
             }
 
             foreach ($listaDublin as $arra2) 
@@ -296,15 +301,15 @@ class indexController extends Controller
         {
             if ($tipoRegistro == 1) 
             {
-                // foreach ($listaPagina as $arra1) 
-                // {
-                //     // echo $arra['Pag_Nombre'];   exit;
-                //     array_push($listaBusqueda, $arra1['Pag_IdPagina'], $arra1['Pag_Nombre'], substr($arra1['Pag_Descripcion'], 0, 200), 'index/index/', 1, '', '', '', $arra1['Idi_IdIdioma']);
-                //     array_push($listaBus, $listaBusqueda);
-                //     $listaBusqueda = array();
-                // }
+                foreach ($listaCurso as $arra1) 
+                {
+                    // echo $arra['Pag_Nombre'];   exit;
+                    array_push($listaBusqueda, $arra1['Cur_IdCurso'], $arra1['Cur_Titulo'], substr($arra1['Cur_Descripcion'], 0, 200), 'elearning/cursos/curso/', 1, '', '', '', $arra1['Idi_IdIdioma']);
+                    array_push($listaBus, $listaBusqueda);
+                    $listaBusqueda = array();
+                }
 
-                // $filtroTipo = 'Arquitectura SII'; 
+                $filtroTipo = 'Base de Datos Cursos'; 
                 // for ($j = 0; $j <= count($listaPaisTotales); $j++) 
                 // {
                 //   //  echo $j;
@@ -373,7 +378,7 @@ class indexController extends Controller
             }
         }
 
-        $idiomas = $this->_pagina->getIdiomas();
+        $idiomas = $this->_dublinModel->getIdiomas();
         //echo $listaBus[0][0].'////55555555';
         // print_r($listaBus);  // exit;
         $cantTotal = count($listaBus);
@@ -407,7 +412,7 @@ class indexController extends Controller
 
         // $this->_view->assign('paises', $listaPaisTotales );
         $this->_view->assign('idiomas', $idiomas);
-        // $this->_view->assign('cantPagina', $cantPagina);
+        $this->_view->assign('cantPagina', $cantPagina);
         $this->_view->assign('cantDublin', $cantDublin);
         $this->_view->assign('cantForo', $cantForo);
         $this->_view->assign('cantRecurso', $cantRecurso);
@@ -453,7 +458,7 @@ class indexController extends Controller
         $this->_view->getLenguaje("index_buscador");
         $registros = $this->getInt('registros');
         $pagina = $this->getPostParam('pagina');
-        $idiomas = $this->_pagina->getIdiomas();
+        $idiomas = $this->_dublinModel->getIdiomas();
         //echo $pagina;
         $this->_view->assign('resultadoBusqueda', $paginador->paginar($_SESSION['resultado'], "ResultadoBusqueda", "", $pagina, 25));
         $this->_view->assign('idiomas', $idiomas);
@@ -476,7 +481,7 @@ class indexController extends Controller
     {
         header('content-type: application/json; charset=utf-8');
         header("access-control-allow-origin: *");
-        $idiomas = $this->_pagina->getIdiomas();
+        $idiomas = $this->_dublinModel->getIdiomas();
         //$resultado = $this->_jsonBusqueda;
         
         echo json_encode($this->utf8_converter_array($idiomas));        

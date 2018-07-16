@@ -19,10 +19,10 @@ $(document).on('ready', function() {
     {
         $("#cargando").show();
 
-        _tipo = $(".active2 span").attr("recurso");
+        _tipo = $(".active2 span").attr("recurso");       
         if (_tipo === undefined) {
             _tipo = "";
-        }
+        }      
 
         if (_post && _post.readyState != 4) {
             _post.abort();
@@ -93,7 +93,7 @@ $(document).on('ready', function() {
         if (_tipo === undefined) {
             _tipo = "";
         }
-
+        
         _post = $.post(_root_ + 'bdrecursos/index/_filtroRecursos',
                 {
                     tipo: _tipo,
@@ -109,6 +109,7 @@ $(document).on('ready', function() {
             $("#lista_recursos").html(data);
         });
     }
+    
     //Registrar/Importar Datos
     $("body").on('click', "#sl_recurso", function() {
         $("#cargando").show();

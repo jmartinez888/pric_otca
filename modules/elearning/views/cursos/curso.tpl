@@ -1,7 +1,7 @@
 <input type="text" id="inHiddenCurso" value="{$curso.Cur_IdCurso}" hidden="hidden"> <!-- RODRIGO 20180607 -->
 <div class="col-lg-12">
-  <div class="col-lg-12 referencia-curso-total" style="padding-top:20px;">
-    <strong><a class="referencia-curso" href="{BASE_URL}elearning/cursos/">Cursos</a>  /  {$curso.Cur_Titulo}</strong>
+  <div class="col-lg-12 referencia-curso-total">
+    <a class="referencia-curso" href="{BASE_URL}elearning/cursos/">Cursos</a>  /  {$curso.Cur_Titulo}
   </div>
   {include file='modules/elearning/views/cursos/menu/lateral.tpl'}
   <div class="col-lg-10" style="margin-top: 20px">
@@ -127,7 +127,7 @@
                         <strong><span class="glyphicon glyphicon-list-alt"></span> &nbsp;Obtener certificado</strong>
                       </button>
                     {else}
-                      <a class="btn btn-success btn-certificado" style="margin-bottom: 10px" href="">
+                      <a target="_blank" class="btn btn-success btn-certificado" style="margin-bottom: 10px" href="{BASE_URL}elearning/cursos/obtenerCertificado/{$certificado[0]['Cer_IdCertificado']}">
                         <strong><span class="glyphicon glyphicon-list-alt"></span> &nbsp;Visualizar certificado</strong>
                       </a>
                     {/if}

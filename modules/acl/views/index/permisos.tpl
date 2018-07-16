@@ -56,12 +56,21 @@
             </h3>
         </div>
         <div class="panel-body" style=" margin: 15px">
-             <div class="row" style="text-align:right">
-                <div style="display:inline-block;padding-right:2em">
-                    <input class="form-control" placeholder="{$lenguaje.text_buscar_permisos}" style="width: 150px; float: left; margin: 0px 10px;" name="palabraPermiso" id="palabraPermiso">
-                    <button class="btn btn-success" style=" float: left" type="button" id="buscarPermiso"  ><i class="glyphicon glyphicon-search"></i></button>
+            <form method="POST">
+                <div class="row" style="text-align:right">
+                    <div class="well-sm col-sm-12">
+                        <div id="botones" class="btn-group pull-right">
+                            <button type="submit" id="export_data_excel" name="export_data_excel" class="btn btn-info">EXCEL</button>
+                            <button type="submit" id="export_data_csv" name="export_data_csv" class="btn btn-info">CSV</button>
+                            <button type="submit" id="export_data_pdf" name="export_data_pdf" class="btn btn-info">PDF</button>
+                        </div>
+                    </div>
+                    <div style="display:inline-block;padding-right:2em">
+                        <input class="form-control" placeholder="{$lenguaje.text_buscar_permisos}" style="width: 150px; float: left; margin: 0px 10px;" name="palabraPermiso" id="palabraPermiso">
+                        <button class="btn btn-success" style=" float: left" type="button" id="buscarPermiso"  ><i class="glyphicon glyphicon-search"></i></button>
+                    </div>
                 </div>
-            </div>
+            </form>
             <div id="listarPermisos">
                 {if isset($permisos) && count($permisos)}
                 <div class="table-responsivez">

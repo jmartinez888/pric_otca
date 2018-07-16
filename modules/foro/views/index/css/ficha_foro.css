@@ -9,11 +9,14 @@ and open the template in the editor.
 */
 .ficha_foro{
     margin-bottom: 60px;
-    margin-top: 30px;
+    margin-top: 35px;
 }
 .contenido{
-    margin: 5px 0 10px 0;
+    margin: 0px 0 20px 0;
     text-align: justify;
+    font-size: 16px;
+    padding-right: 10px;
+    padding-left: 10px;
 }
 /* CSS Test begin */
 
@@ -35,12 +38,13 @@ and open the template in the editor.
     border: 1px solid #ddd;
     padding: 10px;
     margin-top: 0px;
+    margin-bottom: 5px;
 }
 .comment-box .media-body {
     width: 90% !important;
 }
 .comment-box .media-body .media p {
-    margin-bottom: 0;
+    margin-bottom: 5px;
 }
 .comment-box .media-heading {
     background-color: #f5f5f5;
@@ -94,6 +98,7 @@ and open the template in the editor.
 .status-upload{
     float: left;
     width: 100%;
+    margin-bottom: 5px;
 }
 .status-upload textarea {
     background: none repeat scroll 0 0 #fff;
@@ -327,11 +332,11 @@ and open the template in the editor.
 }
 
 .form-login {
-    background-color: #EDEDED;
+    background-color: #F2F2F2;
     padding-top: 10px;
     padding-bottom: 20px;
-    padding-left: 5px;
-    padding-right: 5px;
+    padding-left: 15px;
+    padding-right: 15px;
     /* border-radius: 15px; */
     border-color:#d2d2d2;
     border-width: 5px;
@@ -401,7 +406,6 @@ and open the template in the editor.
 }
 
 .addon label {
-     padding: 0px 11px;
      margin: 0;
      display: block;
      -webkit-margin-before: 1em;
@@ -412,8 +416,8 @@ and open the template in the editor.
 
 .addon li .legend-info {
     float: left;
-    margin-left: 10px;
     width: 155px;
+    color: #000;
 }
 
 .addon strong {

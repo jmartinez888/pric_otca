@@ -1,8 +1,14 @@
 <?php
+
+// use Dompdf\Adapter\CPDF;
+// use Dompdf\Dompdf;
+// use Dompdf\Exception;
+
 class indexController extends bdrecursosController
 {
     private $_bdrecursos;    
     private $_import;
+    private $_lista_datos= array();
 
     public function __construct($lang, $url) 
     {
@@ -147,7 +153,6 @@ class indexController extends bdrecursosController
                 $this->redireccionar("bdrecursos");
             }
         } 
-        
 
         $bdarquitectura = $this->loadModel('index', 'arquitectura');
         $this->_view->assign('idioma', Cookie::lenguaje());
@@ -157,6 +162,18 @@ class indexController extends bdrecursosController
 
         $bdherramienta = $this->loadModel('herramienta', true);
         $this->_view->assign('registros', $paginador->paginar($recursosCompleto, "lista_recursos", "", false, 25));
+
+        if ($this->botonPress("export_data_excel")) {
+            $this->_exportarDatosRecursos("excel");
+        }
+
+        if ($this->botonPress("export_data_pdf")) {
+            $this->_exportarDatosRecursos("pdf");
+        }
+
+        if ($this->botonPress("export_data_csv")) {
+            $this->_exportarDatosRecursos("csv");
+        }
         $this->_view->assign('recursosCompletos', $recursosCompleto);
         $this->_view->assign('tiporecurso', $this->_bdrecursos->getTipoRecurso());
         $this->_view->assign('origenrecurso', $this->_bdrecursos->getOrigenRecurso());
@@ -191,10 +208,11 @@ class indexController extends bdrecursosController
 
     public function _filtroRecursos() 
     {
+        // exit;
         $this->_view->getLenguaje("bdrecursos_index");
         $paginador = new Paginador();
 
-        $tipo = $this->getTexto('tipo');
+        $tipo = $this->getTexto('tipo'); 
         $nombre = $this->getSql('nombre');
         $estandar = $this->getInt('estandar');
         $fuente = $this->getTexto('fuente');
@@ -210,6 +228,9 @@ class indexController extends bdrecursosController
         $bdherramienta = $this->loadModel('herramienta', true);
 
         $this->_view->assign('registros', $paginador->paginar($this->_bdrecursos->getRecursosCompleto($tipo, $nombre, $estandar, $fuente, $origen, $herramienta), "lista_recursos", "", false, 25));
+        $this->_lista_datos = $paginador->paginar($this->_bdrecursos->getRecursosCompleto($tipo, $nombre, $estandar, $fuente, $origen, $herramienta), "lista_recursos", "", false, 25);
+        // echo count($this->_lista_datos); exit;
+
         $this->_view->assign('tiporecurso', $this->_bdrecursos->getTipoRecurso());
         $this->_view->assign('origenrecurso', $this->_bdrecursos->getOrigenRecurso());
         $this->_view->assign('fuente', $this->_bdrecursos->getFuente());
@@ -219,8 +240,211 @@ class indexController extends bdrecursosController
         $this->_view->assign('control_paginacion', $paginador->getControlPaginaion());
         $this->_view->assign('numeropagina', $paginador->getNumeroPagina());
 
+        // $this->_view->assign('tiporecursoInput', $tipo);
+        // echo $tipo; exit;
+
         $this->_view->renderizar('ajax/lista_recursos', false, true);
     }
+
+    public function _exportarDatosRecursos($formatoP)
+    {      
+        $this->_view->getLenguaje("bdrecursos_index");
+        $paginador = new Paginador();
+
+        $tipo = $_SESSION['tipoRecdescarga'];
+        $nombre = $this->getSql('tb_nombre_filter');
+        $estandar = $this->getSql('sl_estandar_recurso_filtro');
+        $fuente = $this->getSql('sl_fuente_filtro');
+        $origen = $this->getSql('sl_origen_filtro');
+        $herramienta = $this->getSql('sl_herramienta_filtro');
+        $formato = $formatoP;
+
+        $lista_datos = $paginador->paginar($this->_bdrecursos->getRecursosCompleto($tipo, $nombre, $estandar, $fuente, $origen, $herramienta), "lista_recursos", "", false, 25);
+        
+        $herramientas = "";
+        if ($formato == "csv") {
+            if (!empty($lista_datos)) {
+                error_reporting(0);
+                $objPHPExcel = new PHPExcel();
+
+                 $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(0, 1, 'Rec_Nombre');
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(1, 1, 'Tir_Nombre');
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(2, 1, 'Esr_Nombre');
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(3, 1, 'Rec_Fuente');
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(4, 1, 'Rec_CantidadRegistros');  
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(5, 1, 'herramientas');
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(6, 1, 'Rec_FechaRegistro');
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(7, 1, 'Rec_Estado');
+
+                for ($i = 2; $i <= (count($lista_datos) + 1); $i++) {
+                    // $fila11 = mb_convert_encoding($fila11, 'UTF-16LE', 'UTF-8'); 
+                    // chr(255) . chr(254); 
+                    // echo $fila11; exit;
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(0, $i, $lista_datos[$i - 2]['Rec_Nombre']);
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(1, $i, $lista_datos[$i - 2]['Tir_Nombre']);
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(2, $i, $lista_datos[$i - 2]['Esr_Nombre']);
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(3, $i, $lista_datos[$i - 2]['Rec_Fuente']);
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(4, $i, $lista_datos[$i - 2]['Rec_CantidadRegistros']);
+                    foreach ($lista_datos[$i - 2]['herramientas'] as $items) {
+                        // echo count($Roles) . 'hola'; exit;
+                        $herramientas .= $items['Her_Nombre'] . ', ';
+                    }
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(5, $i, $herramientas);
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(6, $i, $lista_datos[$i - 2]['Rec_FechaRegistro']);
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(7, $i, $lista_datos[$i - 2]['Rec_Estado']);
+                    $herramientas = "";
+                }
+                $objPHPExcel->getActiveSheet()->setTitle('ListaDeDescargas');
+                $objPHPExcel->setActiveSheetIndex(0);
+                ob_end_clean();
+                ob_start();
+                //
+                header("Content-type: application/vnd.ms-excel"); 
+                header('Content-Disposition: attachment;filename="'.APP_NAME.'-OTCA_Descargas.csv"');
+                header("Pragma: no-cache"); header("Expires: 0"); 
+                echo "\xEF\xBB\xBF"; //UTF-8 BOM echo $out;
+                //                 
+                $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'CSV');
+                $objWriter -> setDelimiter ( ',' ) ; 
+                $objWriter->save('php://output');
+            }
+            exit;
+        }
+        if ($formato == "excel") {
+            if (!empty($lista_datos)) {
+                // echo "."; exit;
+                error_reporting(0);
+                $objPHPExcel = new PHPExcel();
+
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(0, 1, 'Rec_Nombre');
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(1, 1, 'Tir_Nombre');
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(2, 1, 'Esr_Nombre');
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(3, 1, 'Rec_Fuente');
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(4, 1, 'Rec_CantidadRegistros');  
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(5, 1, 'herramientas');
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(6, 1, 'Rec_FechaRegistro');
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(7, 1, 'Rec_Estado');
+
+                for ($i = 2; $i <= (count($lista_datos) + 1); $i++) {
+                    // $fila11 = mb_convert_encoding($fila11, 'UTF-16LE', 'UTF-8'); 
+                    // chr(255) . chr(254); 
+                    // echo $fila11; exit;
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(0, $i, $lista_datos[$i - 2]['Rec_Nombre']);
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(1, $i, $lista_datos[$i - 2]['Tir_Nombre']);
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(2, $i, $lista_datos[$i - 2]['Esr_Nombre']);
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(3, $i, $lista_datos[$i - 2]['Rec_Fuente']);
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(4, $i, $lista_datos[$i - 2]['Rec_CantidadRegistros']);
+                    foreach ($lista_datos[$i - 2]['herramientas'] as $items) {
+                        // echo count($Roles) . 'hola'; exit;
+                        $herramientas .= $items['Her_Nombre'] . ', ';
+                    }
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(5, $i, $herramientas);
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(6, $i, $lista_datos[$i - 2]['Rec_FechaRegistro']);
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(7, $i, $lista_datos[$i - 2]['Rec_Estado']);
+                    $herramientas = "";
+                }
+
+                $objPHPExcel->getActiveSheet()->setTitle('ListaDeDescargas');
+                $objPHPExcel->setActiveSheetIndex(0);
+                ob_end_clean();
+                ob_start();
+                header('Content-Type: application/vnd.ms-excel');
+                header('Content-Disposition: attachment;filename="'.APP_NAME.'-OTCA_Descargas.xls"');
+                header('Cache-Control: max-age=0');
+                $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
+                $objWriter->save('php://output');
+            }
+            else{
+                echo "lista vacia";exit;
+            }
+        }
+        if ($formato == "pdf") {
+            ob_start();
+            header("Content-Type: text/html;charset=utf-8");
+            
+            $a = "
+            <head>
+                <link href='views/layout/frontend/css/bootstrap.min.css' rel='stylesheet' type='text/css'>
+            </head>    
+            <body>                     
+            <div class='table-responsive'>
+            <h3 style='text-align: center; color:black; font-family: inherit;'>BANCO DE RECURSOS</h3>
+                    <table class='table'>
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Nombres</th>
+                                <th>Tipo</th>
+                                <th>".utf8_decode('Estándar')."</th>
+                                <th>Fuente</th>
+                                <th>Registros</th>
+                                <th>Herramienta</th>
+                                <th>Registro</th>
+                                <th>Estado</th>
+                            </tr>
+                        </thead>
+                        <tbody>";
+        $b = "";
+        $c="";
+        $d="";
+        $cuerpo="";
+        $i=1;
+            foreach ($lista_datos as $item){  
+                $b .= 
+                "<tr>
+                    <th scope='row'>".$i++."</th>
+                    <td>" . utf8_decode($item['Rec_Nombre']) . "</td>
+                    <td>" . utf8_decode($item['Tir_Nombre']) . "</td>
+                    <td>" . utf8_decode($item['Esr_Nombre']) . "</td>
+                    <td>" . utf8_decode($item['Rec_Fuente']) . "</td>
+                    <td>" . utf8_decode($item['Rec_CantidadRegistros']) . "</td>       
+                    <td>
+                        <ul>";
+                            foreach ($item['herramientas'] as $r){
+                               $c .= 
+                               "<li>".utf8_decode($r['Her_Nombre']).
+                               "</li>";
+                            }
+                            $d.="
+                        </ul>
+                    </td>
+                    <td style='text-align: center'>" . utf8_decode($item['Rec_FechaRegistro']) . "</td> 
+                    <td style='text-align: center'>" . utf8_decode($item['Rec_Estado']) . "</td> 
+                </tr>";
+                $cuerpo.=$b.$c.$d; 
+                $b="";
+                $c="";
+                $d="";
+            }
+        $e =  
+                     "</tbody>
+                </table>
+            </div>
+            <script type='text/javascript' src='views/layout/frontend/js/bootstrap.min.js' ></script>
+        </body>";
+
+            echo $a.$cuerpo.$e;
+            require_once("libs/_dompdf/dompdf_config.inc.php");
+            $dompdf = new DOMPDF();
+            $dompdf->set_paper('A4', 'landscape'); //esta es una forma de ponerlo horizontal
+            $dompdf->load_html(ob_get_clean());
+            $dompdf->render();
+            $pdf      = $dompdf->output();
+            $filename = "'".APP_NAME.'-OTCA_Descargas.pdf';
+            $dompdf->stream($filename, array("atachment" => 0));
+            
+            // require_once("libs/autoload.inc.php");
+            // $dompdf = new Dompdf(); 
+            // $dompdf->set_paper('A4', 'landscape'); //esta es una forma de ponerlo horizontal
+            // $dompdf->set_option('isHtml5ParserEnabled', true);
+            // $dompdf->loadHtml("$a.$cuerpo.$e");
+            // $dompdf->render();
+            // $dompdf->stream("'".APP_NAME.'-OTCA_Descargas.pdf');
+            
+        } 
+        Session::destroy('tipoRecdescarga');       
+    }
+
 
     public function _filtroRecursosDublin($tipoServicio = false) 
     {
@@ -354,6 +578,7 @@ class indexController extends bdrecursosController
         $paginador = new Paginador();
 
         $tipo = $this->getTexto('tipo');
+        $_SESSION['tipoRecdescarga'] = $tipo;
         $nombre = $this->getSql('nombre');
         $estandar = $this->getInt('estandar');
         $fuente = $this->getTexto('fuente');

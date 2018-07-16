@@ -1,5 +1,9 @@
 <?php
 
+// use Dompdf\Adapter\CPDF;
+// use Dompdf\Dompdf;
+// use Dompdf\Exception;
+
 class indexController extends aclController
 {
     private $_aclm;
@@ -50,6 +54,18 @@ class indexController extends aclController
         $totalRegistros = $arrayRowCount['CantidadRegistros'];
 
         // $this->_view->assign('roles', $paginador->paginar($this->_aclm->getRoles(), "listarRoles", "$nombre", $pagina, 25));
+
+        if ($this->botonPress("export_data_excel")) {
+            $this->_exportarDatosRoles("excel");
+        }
+
+        if ($this->botonPress("export_data_pdf")) {
+            $this->_exportarDatosRoles("pdf");
+        }
+
+        if ($this->botonPress("export_data_csv")) {
+            $this->_exportarDatosRoles("csv");
+        }
 
         $this->_view->assign('modulos', $this->_aclm->getModulos(0,0));
         $this->_view->assign('roles', $this->_aclm->getRolesPaginado($pagina,CANT_REG_PAG,$soloActivos));
@@ -284,6 +300,193 @@ class indexController extends aclController
         $this->_view->assign('paginacion', $paginador->getView('paginacion_ajax_s_filas'));
         $this->_view->renderizar('ajax/listarRoles', false, true);
     }
+
+    public function _exportarDatosRoles($formatoP)
+    {       
+        $txtBuscar = $this->getSql('palabraRol');   
+        // echo $txtBuscar; exit;
+        $soloActivos = 0; 
+        $pagina = $this->getInt('pagina');
+        // $filtro2 = $this->getSql('select_busqueda');
+        $formato  = $formatoP;
+
+        if (empty($filtro)) {
+            $filtro  = "";
+        } 
+        // if(empty($filtro2)){
+        //     $filtro2="";
+        // }        
+
+        $condicion = "";
+        if ($txtBuscar) 
+        {
+            $condicion = " WHERE Rol_Nombre liKe '%$txtBuscar%' ";
+            //Filtro por Activos/Eliminados
+            if (!$this->_acl->permiso('ver_eliminados')) {
+                $soloActivos = 1;
+                $condicion .= " AND r.Row_Estado = $soloActivos ";
+            } else {
+                $condicion .= " ORDER BY r.Row_Estado DESC ";
+            }
+            
+        } else {
+            $condicion = " ORDER BY r.Row_Estado DESC ";
+            //Filtro por Activos/Eliminados  
+            if (!$this->_acl->permiso('ver_eliminados')) {
+                $soloActivos = 1;
+                $condicion = " WHERE r.Row_Estado = $soloActivos  ";
+            }
+        }
+
+        $lista_datos = $this->_aclm->getRolesCondicion($pagina,CANT_REG_PAG, $condicion);
+        
+        if ($formato == "csv") {
+            if (!empty($lista_datos)) {
+                error_reporting(0);
+                $objPHPExcel = new PHPExcel();
+
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(0, 1, 'Rol_Nombre');
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(1, 1, 'Mod_Nombre');
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(2, 1, 'Rol_Estado');
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(3, 1, 'Row_Estado');
+
+                for ($i = 2; $i <= (count($lista_datos) + 1); $i++) {
+                    // $fila11 = mb_convert_encoding($fila11, 'UTF-16LE', 'UTF-8'); 
+                    // chr(255) . chr(254); 
+                    // echo $fila11; exit;
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(0, $i, $lista_datos[$i - 2]['Rol_Nombre']);
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(1, $i, $lista_datos[$i - 2]['Mod_Nombre']);
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(2, $i, $lista_datos[$i - 2]['Rol_Estado']);
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(3, $i, $lista_datos[$i - 2]['Row_Estado']);
+                }
+                $objPHPExcel->getActiveSheet()->setTitle('ListaDeDescargas');
+                $objPHPExcel->setActiveSheetIndex(0);
+                ob_end_clean();
+                ob_start();
+                //
+                header("Content-type: application/vnd.ms-excel"); 
+                header('Content-Disposition: attachment;filename="'.APP_NAME.'-OTCA_Descargas.csv"');
+                header("Pragma: no-cache"); header("Expires: 0"); 
+                echo "\xEF\xBB\xBF"; //UTF-8 BOM echo $out;
+                //                 
+                $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'CSV');
+                $objWriter -> setDelimiter ( ',' ) ; 
+                $objWriter->save('php://output');
+            }
+            exit;
+        }
+        if ($formato == "excel") {
+            if (!empty($lista_datos)) {
+                // echo "."; exit;
+                error_reporting(0);
+                $objPHPExcel = new PHPExcel();
+
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(0, 1, 'Rol_Nombre');
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(1, 1, 'Mod_Nombre');
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(2, 1, 'Rol_Estado');
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(3, 1, 'Row_Estado');
+
+                for ($i = 2; $i <= (count($lista_datos) + 1); $i++) {
+                    // $fila11 = mb_convert_encoding($fila11, 'UTF-16LE', 'UTF-8'); 
+                    // chr(255) . chr(254); 
+                    // echo $fila11; exit;
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(0, $i, $lista_datos[$i - 2]['Rol_Nombre']);
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(1, $i, $lista_datos[$i - 2]['Mod_Nombre']);
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(2, $i, $lista_datos[$i - 2]['Rol_Estado']);
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(3, $i, $lista_datos[$i - 2]['Row_Estado']);
+                }
+
+                $objPHPExcel->getActiveSheet()->setTitle('ListaDeDescargas');
+                $objPHPExcel->setActiveSheetIndex(0);
+                ob_end_clean();
+                ob_start();
+                //Session::destroy('encabezado');
+                // Session::destroy('Descargar');
+                header('Content-Type: application/vnd.ms-excel');
+                header('Content-Disposition: attachment;filename="'.APP_NAME.'-OTCA_Descargas.xls"');
+                header('Cache-Control: max-age=0');
+                $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
+                $objWriter->save('php://output');
+            }
+            else{
+                echo "lista vacia";exit;
+            }
+        }
+        if ($formato == "pdf") {
+            ob_start();
+            header("Content-Type: text/html;charset=utf-8");
+            
+            $a = "
+            <head>
+                <link href='views/layout/frontend/css/bootstrap.min.css' rel='stylesheet' type='text/css'>
+            </head>    
+            <body>                     
+            <div class='table-responsive'>
+            <h3 style='text-align: center; color:black; font-family: inherit;'>ROLES DEL SISTEMA</h3>
+                    <table class='table'>
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Rol</th>
+                                <th>".utf8_decode('Módulo')."</th>
+                                <th>Estado</th>
+                                <th>Row_Estado</th>
+                            </tr>
+                        </thead>
+                        <tbody>";
+        $b = "";
+        $c="";
+        $d="";
+        $cuerpo="";
+        $i=1;
+            foreach ($lista_datos as $item){  
+                $b .= "<tr>
+                    <th scope='row'>".$i++."</th>
+                    <td>" . utf8_decode($item['Rol_Nombre']) . "</td>
+                    <td>";
+                        if(!empty($item['Mod_Nombre'])){
+                            $c.= utf8_decode($item['Mod_Nombre']);
+                        }
+                        if(empty($item['Mod_Nombre'])){
+                            $c.="-";
+                        } 
+                    $d.=
+                    "</td>
+                    <td style='text-align: center'>" . utf8_decode($item['Rol_Estado']) . "</td>    
+                    <td style='text-align: center'>" . utf8_decode($item['Row_Estado']) . "</td>        
+                </tr>";
+                $cuerpo.=$b.$c.$d; 
+                $b="";
+                $c="";
+                $d="";
+            }
+        $e =  
+                     "</tbody>
+                </table>
+            </div>
+            <script type='text/javascript' src='views/layout/frontend/js/bootstrap.min.js' ></script>
+        </body>";
+
+            echo $a.$cuerpo.$e;
+            require_once("libs/_dompdf/dompdf_config.inc.php");
+            $dompdf = new DOMPDF();
+            $dompdf->set_paper('A4', 'landscape'); //esta es una forma de ponerlo horizontal
+            $dompdf->load_html(ob_get_clean());
+            $dompdf->render();
+            $pdf      = $dompdf->output();
+            $filename = "'".APP_NAME.'-OTCA_Descargas.pdf';
+            $dompdf->stream($filename, array("atachment" => 0));
+
+            // require_once("libs/autoload.inc.php");
+            // $dompdf = new Dompdf(); 
+            // $dompdf->set_paper('A4', 'landscape'); //esta es una forma de ponerlo horizontal
+            // $dompdf->set_option('isHtml5ParserEnabled', true);
+            // $dompdf->loadHtml("$a.$cuerpo.$e");
+            // $dompdf->render();
+            // $dompdf->stream("'".APP_NAME.'-OTCA_Descargas.pdf');
+        }
+    }
+
     //Modificado por Jhon Martinez
     public function editarRol($Rol_IdRol = false)
     {
@@ -330,7 +533,6 @@ class indexController extends aclController
         $this->_view->assign('datos',$rol);
         $this->_view->renderizar('ajax/editarRol','editarRol');
     }
-
     
     public function gestion_idiomas_rol() 
     {
@@ -496,6 +698,18 @@ class indexController extends aclController
         if ($this->botonPress("bt_guardarPermiso")) 
         {
               $this->nuevo_permiso();                
+        }
+
+        if ($this->botonPress("export_data_excel")) {
+            $this->_exportarDatosPermisos("excel");
+        }
+
+        if ($this->botonPress("export_data_pdf")) {
+            $this->_exportarDatosPermisos("pdf");
+        }
+
+        if ($this->botonPress("export_data_csv")) {
+            $this->_exportarDatosPermisos("csv");
         }
 
         $arrayRowCount = $this->_aclm->getPermisosRowCount($condicion);
@@ -720,6 +934,196 @@ class indexController extends aclController
         $this->_view->assign('paginacionPermisos', $paginador->getView('paginacion_ajax_s_filas'));
         $this->_view->renderizar('ajax/listarPermisos', false, true);
     }
+
+    public function _exportarDatosPermisos($formatoP)
+    {       
+        $txtBuscar = $this->getSql('palabraPermiso');   
+        // echo $txtBuscar; exit;
+        $soloActivos = 0; 
+        $pagina = $this->getInt('pagina');
+        // $filtro2 = $this->getSql('select_busqueda');
+        $formato  = $formatoP;
+
+        if (empty($filtro)) {
+            $filtro  = "";
+        } 
+        // if(empty($filtro2)){
+        //     $filtro2="";
+        // }        
+
+        $condicion = "";
+        if ($txtBuscar) 
+        {
+            $condicion = " WHERE Per_Nombre liKe '%$txtBuscar%' ";
+            if (!$this->_acl->permiso('ver_eliminados')) {
+                $soloActivos = 1;
+                $condicion .= " AND p.Row_Estado = $soloActivos ";
+            }
+            $condicion .= " ORDER BY p.Row_Estado DESC  ";
+        } else {
+            //Filtro por Activos/Eliminados     
+            $condicion = " ORDER BY p.Row_Estado DESC ";   
+            if (!$this->_acl->permiso('ver_eliminados')) {
+                $soloActivos = 1;
+                $condicion = " WHERE p.Row_Estado = $soloActivos  ";
+            }
+        }    
+
+        $lista_datos = $this->_aclm->getPermisosCondicion($pagina,CANT_REG_PAG, $condicion);
+        
+        if ($formato == "csv") {
+            if (!empty($lista_datos)) {
+                error_reporting(0);
+                $objPHPExcel = new PHPExcel();
+
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(0, 1, 'Per_Nombre');
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(1, 1, 'Mod_Nombre');
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(2, 1, 'Per_Ckey');
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(3, 1, 'Per_Estado');
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(4, 1, 'Row_Estado');
+
+                for ($i = 2; $i <= (count($lista_datos) + 1); $i++) {
+                    // $fila11 = mb_convert_encoding($fila11, 'UTF-16LE', 'UTF-8'); 
+                    // chr(255) . chr(254); 
+                    // echo $fila11; exit;
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(0, $i, $lista_datos[$i - 2]['Per_Nombre']);
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(1, $i, $lista_datos[$i - 2]['Mod_Nombre']);
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(2, $i, $lista_datos[$i - 2]['Per_Ckey']);
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(3, $i, $lista_datos[$i - 2]['Per_Estado']);
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(4, $i, $lista_datos[$i - 2]['Row_Estado']);
+                }
+                $objPHPExcel->getActiveSheet()->setTitle('ListaDeDescargas');
+                $objPHPExcel->setActiveSheetIndex(0);
+                ob_end_clean();
+                ob_start();
+                //
+                header("Content-type: application/vnd.ms-excel"); 
+                header('Content-Disposition: attachment;filename="'.APP_NAME.'-OTCA_Descargas.csv"');
+                header("Pragma: no-cache"); header("Expires: 0"); 
+                echo "\xEF\xBB\xBF"; //UTF-8 BOM echo $out;
+                //                 
+                $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'CSV');
+                $objWriter -> setDelimiter ( ',' ) ; 
+                $objWriter->save('php://output');
+            }
+            exit;
+        }
+        if ($formato == "excel") {
+            if (!empty($lista_datos)) {
+                // echo "."; exit;
+                error_reporting(0);
+                $objPHPExcel = new PHPExcel();
+
+                 $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(0, 1, 'Per_Nombre');
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(1, 1, 'Mod_Nombre');
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(2, 1, 'Per_Ckey');
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(3, 1, 'Per_Estado');
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(4, 1, 'Row_Estado');
+
+                for ($i = 2; $i <= (count($lista_datos) + 1); $i++) {
+                    // $fila11 = mb_convert_encoding($fila11, 'UTF-16LE', 'UTF-8'); 
+                    // chr(255) . chr(254); 
+                    // echo $fila11; exit;
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(0, $i, $lista_datos[$i - 2]['Per_Nombre']);
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(1, $i, $lista_datos[$i - 2]['Mod_Nombre']);
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(2, $i, $lista_datos[$i - 2]['Per_Ckey']);
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(3, $i, $lista_datos[$i - 2]['Per_Estado']);
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(4, $i, $lista_datos[$i - 2]['Row_Estado']);
+                }
+
+                $objPHPExcel->getActiveSheet()->setTitle('ListaDeDescargas');
+                $objPHPExcel->setActiveSheetIndex(0);
+                ob_end_clean();
+                ob_start();
+                //Session::destroy('encabezado');
+                // Session::destroy('Descargar');
+                header('Content-Type: application/vnd.ms-excel');
+                header('Content-Disposition: attachment;filename="'.APP_NAME.'-OTCA_Descargas.xls"');
+                header('Cache-Control: max-age=0');
+                $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
+                $objWriter->save('php://output');
+            }
+            else{
+                echo "lista vacia";exit;
+            }
+        }
+        if ($formato == "pdf") {
+            ob_start();
+            header("Content-Type: text/html;charset=utf-8");
+            
+            $a = "
+            <head>
+                <link href='views/layout/frontend/css/bootstrap.min.css' rel='stylesheet' type='text/css'>
+            </head>    
+            <body>                     
+            <div class='table-responsive'>
+            <h3 style='text-align: center; color:black; font-family: inherit;'>PERMISOS DEL SISTEMA</h3>
+                    <table class='table'>
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Rol</th>
+                                <th>".utf8_decode('Módulo')."</th>
+                                <th>Clave</th>
+                                <th>Estado</th>
+                                <th>Row_Estado</th>
+                            </tr>
+                        </thead>
+                        <tbody>";
+        $b = "";
+        $c="";
+        $d="";
+        $cuerpo="";
+        $i=1;
+            foreach ($lista_datos as $item){  
+                $b .= "<tr>
+                    <th scope='row'>".$i++."</th>
+                    <td>" . utf8_decode($item['Per_Nombre']) . "</td>
+                    <td>";
+                        if(!empty($item['Mod_Nombre'])){
+                            $c.= utf8_decode($item['Mod_Nombre']);
+                        }
+                        if(empty($item['Mod_Nombre'])){
+                            $c.="-";
+                        } 
+                    $d.=
+                    "</td>
+                    <td>" . utf8_decode($item['Per_Ckey']) . "</td> 
+                    <td style='text-align: center'>" . utf8_decode($item['Per_Estado']) . "</td>  
+                    <td style='text-align: center'>" . utf8_decode($item['Row_Estado']) . "</td>        
+                </tr>";
+                $cuerpo.=$b.$c.$d; 
+                $b="";
+                $c="";
+                $d="";
+            }
+        $e =  
+                     "</tbody>
+                </table>
+            </div>
+            <script type='text/javascript' src='views/layout/frontend/js/bootstrap.min.js' ></script>
+        </body>";
+
+            echo $a.$cuerpo.$e;
+            require_once("libs/_dompdf/dompdf_config.inc.php");
+            $dompdf = new DOMPDF();
+            $dompdf->set_paper('A4', 'landscape'); //esta es una forma de ponerlo horizontal
+            $dompdf->load_html(ob_get_clean());
+            $dompdf->render();
+            $pdf      = $dompdf->output();
+            $filename = "'".APP_NAME.'-OTCA_Descargas.pdf';
+            $dompdf->stream($filename, array("atachment" => 0));
+            
+            // require_once("libs/autoload.inc.php");
+            // $dompdf = new Dompdf(); 
+            // $dompdf->set_paper('A4', 'landscape'); //esta es una forma de ponerlo horizontal
+            // $dompdf->set_option('isHtml5ParserEnabled', true);
+            // $dompdf->loadHtml("$a.$cuerpo.$e");
+            // $dompdf->render();
+            // $dompdf->stream("'".APP_NAME.'-OTCA_Descargas.pdf');
+        }
+    }
+
     //Modificado por Jhon Martinez
     public function nuevo_permiso()
     {
@@ -1001,6 +1405,18 @@ class indexController extends aclController
               $this->nuevo_modulo();                
         }
 
+        if ($this->botonPress("export_data_excel")) {
+            $this->_exportarDatosModulo("excel");
+        }
+
+        if ($this->botonPress("export_data_pdf")) {
+            $this->_exportarDatosModulo("pdf");
+        }
+
+        if ($this->botonPress("export_data_csv")) {
+            $this->_exportarDatosModulo("csv");
+        }
+
         $arrayRowCount = $this->_aclm->getModulosRowCount($condicion);
         $this->_view->assign('modulos', $this->_aclm->getModulosAll($pagina,CANT_REG_PAG,$soloActivos));
 
@@ -1123,7 +1539,7 @@ class indexController extends aclController
         $Per_Idmodulo = $this->getPostParam('idmodulos');
                    
         $datos = $this->_aclm->getmoduloTraducido($Per_Idmodulo, $Idi_IdIdioma);
-        print_r($datos);
+        // print_r($datos);
         $this->_view->assign('idiomas',$this->_aclm->getIdiomas());
         if ($datos["Idi_IdIdioma"]==$Idi_IdIdioma) {
             $this->_view->assign('datos',$datos);    
@@ -1222,6 +1638,196 @@ class indexController extends aclController
         $this->_view->renderizar('ajax/listarmodulos', false, true);
     }
 
+    public function _exportarDatosModulo($formatoP)
+    {       
+        $txtBuscar = $this->getSql('palabraModulo');   
+        // echo $txtBuscar; exit;
+        $soloActivos = 0; 
+        $pagina = $this->getInt('pagina');
+        // $filtro2 = $this->getSql('select_busqueda');
+        $formato  = $formatoP;
+
+        if (empty($filtro)) {
+            $filtro  = "";
+        } 
+        // if(empty($filtro2)){
+        //     $filtro2="";
+        // }        
+
+        $condicion = "";
+        if ($txtBuscar) 
+        {
+            $condicion = " WHERE Mod_Nombre liKe '%$txtBuscar%' ";
+            if (!$this->_acl->permiso('ver_eliminados')) {
+                $soloActivos = 1;
+                $condicion .= " AND Row_Estado = $soloActivos ";
+            }
+            $condicion .= " ORDER BY Row_Estado DESC  ";
+        } else {
+            //Filtro por Activos/Eliminados     
+            $condicion = " ORDER BY Row_Estado DESC ";   
+            if (!$this->_acl->permiso('ver_eliminados')) {
+                $soloActivos = 1;
+                $condicion = " WHERE Row_Estado = $soloActivos  ";
+            }
+
+            //Filtro por Activos/Eliminados
+        }    
+
+        $lista_datos = $this->_aclm->getModulosCondicion($pagina,CANT_REG_PAG, $condicion);
+        
+        if ($formato == "csv") {
+            if (!empty($lista_datos)) {
+                error_reporting(0);
+                $objPHPExcel = new PHPExcel();
+
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(0, 1, 'Mod_Nombre');
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(1, 1, 'Mod_Codigo');
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(2, 1, 'Mod_Descripcion');
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(3, 1, 'Mod_Estado');
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(4, 1, 'Row_Estado');
+
+                for ($i = 2; $i <= (count($lista_datos) + 1); $i++) {
+                    // $fila11 = mb_convert_encoding($fila11, 'UTF-16LE', 'UTF-8'); 
+                    // chr(255) . chr(254); 
+                    // echo $fila11; exit;
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(0, $i, $lista_datos[$i - 2]['Mod_Nombre']);
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(1, $i, $lista_datos[$i - 2]['Mod_Codigo']);
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(2, $i, $lista_datos[$i - 2]['Mod_Descripcion']);
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(3, $i, $lista_datos[$i - 2]['Mod_Estado']);
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(4, $i, $lista_datos[$i - 2]['Row_Estado']);
+                }
+                $objPHPExcel->getActiveSheet()->setTitle('ListaDeDescargas');
+                $objPHPExcel->setActiveSheetIndex(0);
+                ob_end_clean();
+                ob_start();
+                //
+                header("Content-type: application/vnd.ms-excel"); 
+                header('Content-Disposition: attachment;filename="'.APP_NAME.'-OTCA_Descargas.csv"');
+                header("Pragma: no-cache"); header("Expires: 0"); 
+                echo "\xEF\xBB\xBF"; //UTF-8 BOM echo $out;
+                //                 
+                $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'CSV');
+                $objWriter -> setDelimiter ( ',' ) ; 
+                $objWriter->save('php://output');
+            }
+            exit;
+        }
+        if ($formato == "excel") {
+            if (!empty($lista_datos)) {
+                // echo "."; exit;
+                error_reporting(0);
+                $objPHPExcel = new PHPExcel();
+
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(0, 1, 'Mod_Nombre');
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(1, 1, 'Mod_Codigo');
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(2, 1, 'Mod_Descripcion');
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(3, 1, 'Mod_Estado');
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(4, 1, 'Row_Estado');
+
+                for ($i = 2; $i <= (count($lista_datos) + 1); $i++) {
+                    // $fila11 = mb_convert_encoding($fila11, 'UTF-16LE', 'UTF-8'); 
+                    // chr(255) . chr(254); 
+                    // echo $fila11; exit;
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(0, $i, $lista_datos[$i - 2]['Mod_Nombre']);
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(1, $i, $lista_datos[$i - 2]['Mod_Codigo']);
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(2, $i, $lista_datos[$i - 2]['Mod_Descripcion']);
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(3, $i, $lista_datos[$i - 2]['Mod_Estado']);
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(4, $i, $lista_datos[$i - 2]['Row_Estado']);
+                }
+
+                $objPHPExcel->getActiveSheet()->setTitle('ListaDeDescargas');
+                $objPHPExcel->setActiveSheetIndex(0);
+                ob_end_clean();
+                ob_start();
+                //Session::destroy('encabezado');
+                // Session::destroy('Descargar');
+                header('Content-Type: application/vnd.ms-excel');
+                header('Content-Disposition: attachment;filename="'.APP_NAME.'-OTCA_Descargas.xls"');
+                header('Cache-Control: max-age=0');
+                $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
+                $objWriter->save('php://output');
+            }
+            else{
+                echo "lista vacia";exit;
+            }
+        }
+        if ($formato == "pdf") {
+            ob_start();
+            header("Content-Type: text/html;charset=utf-8");
+            
+            $a = "
+            <head>
+                <link href='views/layout/frontend/css/bootstrap.min.css' rel='stylesheet' type='text/css'>
+            </head>    
+            <body>                     
+            <div class='table-responsive'>
+            <h3 style='text-align: center; color:black; font-family: inherit;'>ADMINISTRACIÓN DE MÓDULOS</h3>
+                    <table class='table'>
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>".utf8_decode('Módulo')."</th>
+                                <th>".utf8_decode('Código')."</th>
+                                <th>".utf8_decode('Descripción')."</th>
+                                <th>Estado</th>
+                                <th>Row_Estado</th>
+                            </tr>
+                        </thead>
+                        <tbody>";
+        $b = "";
+        $c="";
+        $d="";
+        $cuerpo="";
+        $i=1;
+            foreach ($lista_datos as $item){  
+                $b .= "<tr>
+                    <th scope='row'>".$i++."</th>
+                    <td>" . utf8_decode($item['Mod_Nombre']) . "</td>
+                    <td>" . utf8_decode($item['Mod_Codigo']) . "</td>
+                    <td>";
+                        if(!empty($item['Mod_Descripcion'])){
+                            $c.= utf8_decode($item['Mod_Descripcion']);
+                        }
+                        if(empty($item['Mod_Descripcion'])){
+                            $c.="-";
+                        } 
+                    $d.=
+                    "</td>
+                    <td style='text-align: center'>" . utf8_decode($item['Mod_Estado']) . "</td>  
+                    <td style='text-align: center'>" . utf8_decode($item['Row_Estado']) . "</td>        
+                </tr>";
+                $cuerpo.=$b.$c.$d; 
+                $b="";
+                $c="";
+                $d="";
+            }
+        $e =  
+                     "</tbody>
+                </table>
+            </div>
+            <script type='text/javascript' src='views/layout/frontend/js/bootstrap.min.js' ></script>
+        </body>";
+
+            echo $a.$cuerpo.$e;
+            require_once("libs/_dompdf/dompdf_config.inc.php");
+            $dompdf = new DOMPDF();
+            $dompdf->set_paper('A4', 'landscape'); //esta es una forma de ponerlo horizontal
+            $dompdf->load_html(ob_get_clean());
+            $dompdf->render();
+            $pdf      = $dompdf->output();
+            $filename = "'".APP_NAME.'-OTCA_Descargas.pdf';
+            $dompdf->stream($filename, array("atachment" => 0));
+            
+            // require_once("libs/autoload.inc.php");
+            // $dompdf = new Dompdf(); 
+            // $dompdf->set_paper('A4', 'landscape'); //esta es una forma de ponerlo horizontal
+            // $dompdf->set_option('isHtml5ParserEnabled', true);
+            // $dompdf->loadHtml("$a.$cuerpo.$e");
+            // $dompdf->render();
+            // $dompdf->stream("'".APP_NAME.'-OTCA_Descargas.pdf');
+        }
+    }
 
     //Modificado por Jhon Martinez
     public function nuevo_modulo()

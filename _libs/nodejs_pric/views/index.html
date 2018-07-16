@@ -1,0 +1,32 @@
+<html>
+  <head>
+    <title>Hola</title>
+    <script src="/script/jquery.js"></script>
+    <script src="/script/bootstrap.js"></script>
+    <script src="/script/socket.io.js"></script>
+  </head>
+  <body>
+    Caja maynas S.A.
+    <script src="/cliente.js"></script>
+    <script>
+      var objeto = { id : 1, tipo: 1, curso: 1 }
+      InitSocket(objeto);
+
+      var SOCKET_MENSAJE = SocketInstance("MSN", function(){ //CONNECT
+        console.log("conectado");
+      }, function(){      //DISCONNECT
+        console.log("desconectado");
+      }, function(msg){   //RECEIVE
+        console.log("recibiendo");
+      }, function(){      //RECONNECT
+        console.log("reconectando");
+      });
+
+      var Mensaje = { autor: "", msn: "Holi", fecha: new Date().toString() };
+      SOCKET_MENSAJE.send(Mensaje);
+
+      AddSocketInstance(SOCKET_MENSAJE);
+      StartServer();
+    </script>
+  </body>
+</html>

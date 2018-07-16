@@ -18,7 +18,7 @@ $(document).on('ready', function () {
         $("#cargando").show();
         var pagina = 'pagina=' + pagina;
 
-        $.post(_root_ + 'index/index/_paginacion_' + nombrelista + '/' + datos, pagina, function (data) {
+        $.post(_root_ + 'index/_paginacion_' + nombrelista + '/' + datos, pagina, function (data) {
             $("#" + nombrelista).html(''); 
             $("#cargando").hide();
             $("#" + nombrelista).html(data);

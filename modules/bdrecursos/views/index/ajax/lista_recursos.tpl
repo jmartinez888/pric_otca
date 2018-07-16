@@ -5,38 +5,47 @@
             <strong>{$lenguaje["lista_recursos_bdrecursos"]}</strong>  <span class="badge  pull-right">{$control_paginacion}</span></h3>
     </div>
     <div class=" row panel-body">
-        <div class="col-md-12 pull-right form-inline text-right">
-            <div class=" input-group">
-                <input id="tb_nombre_filter" type="text" class="form-control"  placeholder="{$lenguaje["nombre_bdrecursos"]}" value="{$nombre|default}" />
-                <span class="input-group-btn">
-                    <button id="bt_buscar_filter" class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
-                </span>
+        <form method="POST">
+            <div class="col-md-12 pull-right form-inline text-right">
+                <div class="well-sm col-sm-12">
+                    <div id="botones" class="btn-group pull-right">
+                        <button type="submit" id="export_data_excel" name="export_data_excel" class="btn btn-info">EXCEL</button>
+                        <button type="submit" id="export_data_csv" name="export_data_csv" class="btn btn-info">CSV</button>
+                        <button type="submit" id="export_data_pdf" name="export_data_pdf" class="btn btn-info">PDF</button>
+                    </div>
+                </div>
+                <div class=" input-group">
+                    <input id="tb_nombre_filter" name="tb_nombre_filter" type="text" class="form-control"  placeholder="{$lenguaje["nombre_bdrecursos"]}" value="{$nombre|default}" />
+                    <span class="input-group-btn">
+                        <button id="bt_buscar_filter" class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
+                    </span>
+                </div>
+                <select name="sl_estandar_recurso_filtro"  class="select-recurso-filter form-control" id="sl_estandar_recurso_filtro" >
+                    <option value="0">{$lenguaje["todos_estandares_bdrecursos"]}</option>
+                    {foreach item=datos from=$estandar}
+                        <option value='{$datos.Esr_IdEstandarRecurso}' {if isset($sl_estandar) && $sl_estandar==$datos.Esr_IdEstandarRecurso}selected{/if}> {$datos.Esr_Nombre}</option>
+                    {/foreach}
+                </select>
+                <select name="sl_fuente_filtro"  class="form-control select-recurso-filter" id="sl_fuente_filtro" >
+                    <option value="0">{$lenguaje["todas_fuentes_bdrecursos"]}</option>
+                    {foreach item=datos from=$fuente}
+                        <option value='{$datos.Rec_Fuente}' {if isset($sl_fuente) && $sl_fuente==$datos.Rec_Fuente}selected{/if}> {$datos.Rec_Fuente}</option>
+                    {/foreach}
+                </select>
+                <select name="sl_origen_filtro"  class="form-control select-recurso-filter" id="sl_origen_filtro" >
+                    <option value="0">{$lenguaje["todos_origenes_bdrecursos"]}</option>
+                    {foreach item=datos from=$origenrecurso}
+                        <option value='{$datos.Rec_Origen}' {if isset($sl_origen) && $sl_origen==$datos.Rec_Origen}selected{/if}> {$datos.Rec_Origen}</option>
+                    {/foreach}
+                </select>
+                <select name="sl_herramienta_filtro"  class="form-control select-recurso-filter" id="sl_herramienta_filtro"  >
+                    <option value="0">{$lenguaje["todas_herramientas_bdrecursos"]}</option>
+                    {foreach item=datos from=$herramientas}
+                        <option value='{$datos.Her_IdHerramientaSii}'  {if isset($sl_herramienta) && $sl_herramienta==$datos.Her_IdHerramientaSii}selected{/if}> {$datos.Her_Nombre}</option>
+                    {/foreach}
+                </select>
             </div>
-            <select name="sl_estandar_recurso_filtro"  class="select-recurso-filter form-control" id="sl_estandar_recurso_filtro" >
-                <option value="0">{$lenguaje["todos_estandares_bdrecursos"]}</option>
-                {foreach item=datos from=$estandar}
-                    <option value='{$datos.Esr_IdEstandarRecurso}' {if isset($sl_estandar) && $sl_estandar==$datos.Esr_IdEstandarRecurso}selected{/if}> {$datos.Esr_Nombre}</option>
-                {/foreach}
-            </select>
-            <select name="sl_fuente_filtro"  class="form-control select-recurso-filter" id="sl_fuente_filtro" >
-                <option value="0">{$lenguaje["todas_fuentes_bdrecursos"]}</option>
-                {foreach item=datos from=$fuente}
-                    <option value='{$datos.Rec_Fuente}' {if isset($sl_fuente) && $sl_fuente==$datos.Rec_Fuente}selected{/if}> {$datos.Rec_Fuente}</option>
-                {/foreach}
-            </select>
-            <select name="sl_origen_filtro"  class="form-control select-recurso-filter" id="sl_origen_filtro" >
-                <option value="0">{$lenguaje["todos_origenes_bdrecursos"]}</option>
-                {foreach item=datos from=$origenrecurso}
-                    <option value='{$datos.Rec_Origen}' {if isset($sl_origen) && $sl_origen==$datos.Rec_Origen}selected{/if}> {$datos.Rec_Origen}</option>
-                {/foreach}
-            </select>
-            <select name="sl_herramienta_filtro"  class="form-control select-recurso-filter" id="sl_herramienta_filtro"  >
-                <option value="0">{$lenguaje["todas_herramientas_bdrecursos"]}</option>
-                {foreach item=datos from=$herramientas}
-                    <option value='{$datos.Her_IdHerramientaSii}'  {if isset($sl_herramienta) && $sl_herramienta==$datos.Her_IdHerramientaSii}selected{/if}> {$datos.Her_Nombre}</option>
-                {/foreach}
-            </select>
-        </div>
+        </form>
     </div>
     {if isset($registros) && count($registros)}
         <div class="table-responsive">

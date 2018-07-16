@@ -46,6 +46,22 @@ class cursoModel extends Model {
         }
         return $resultado;
     }
+    public function getCursoBusquedaMath($texto){
+        $sql = "SELECT C.*, CC.Con_Descripcion as Modalidad FROM curso C
+                INNER JOIN constante CC ON CC.Con_Valor = C.Mod_IdModCurso AND CC.Con_Codigo = 1000
+                WHERE (C.Cur_Titulo like '%{$texto}%'
+                  OR C.Cur_Descripcion like '%{$texto}%')
+                  AND C.Row_Estado = 1";
+        $curso = $this->getArray($sql);
+        $resultado = array();
+        foreach ($curso as $c) {
+          if($c["Mod_IdModCurso"]==2){
+            $c["Detalle"] = $this->DetalleLMS($c["Cur_IdCurso"]);
+          }
+          array_push($resultado, $c);
+        }
+        return $resultado;
+    }
 
     public function getCursoUsuario($usuario){
         $sql = "SELECT C.*, CC.Con_Descripcion as Modalidad FROM curso C
