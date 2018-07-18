@@ -1,4 +1,5 @@
 <input value="{BASE_URL}" id="hiddenURL" hidden="hidden" />
+<input value="{BASE_URL}elearning/" id="hidden_url" hidden="hidden" />
 <input value="{$modulo.Cur_IdCurso}" id="hiddenCurso" hidden="hidden" />
 <div class="col-lg-12 panel panel-default" style="margin-top:20px;">
   <div class="row gradiente">
@@ -12,14 +13,14 @@
           <form method="post" action="{BASE_URL}elearning/cursos/_previous_leccion/" style="display: inline-block">
             <input value="{$curso}" name="curso" hidden="hidden"/>
             <input value="{$leccion.Lec_IdLeccion}" name="leccion" hidden="hidden"/>
-            <button class="course-students-amount btn btn-next-previous"> 
-              <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>  
+            <button class="course-students-amount btn btn-next-previous">
+              <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
               Anterior
             </button>
           </form>
           {else}
-          <button class="course-students-amount btn btn-default" disabled="disabled"> 
-              <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>  
+          <button class="course-students-amount btn btn-default" disabled="disabled">
+              <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
               Anterior
           </button>
           {/if}
@@ -27,14 +28,14 @@
           <form method="post" action="{BASE_URL}elearning/cursos/_next_leccion/" style="display: inline-block">
             <input value="{$curso}" name="curso" hidden="hidden"/>
             <input value="{$leccion.Lec_IdLeccion}" name="leccion" hidden="hidden"/>
-            <button class="course-students-amount btn btn-next-previous"> 
+            <button class="course-students-amount btn btn-next-previous">
               <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
               Siguiente
             </button>
           </form>
           {else}
             <a href="{BASE_URL}elearning/cursos/curso/{$curso}">
-              <button class="course-students-amount btn-regresar btn btn-group"> 
+              <button class="course-students-amount btn-regresar btn btn-group">
                 <span class="glyphicon glyphicon-hand-left" aria-hidden="true"></span>
                 Ir al curso
               </button>
@@ -43,7 +44,7 @@
       </div>
       <div class="col-lg-2" style="margin-top: 5px !important">
         <a href="{BASE_URL}elearning/cursos/curso/{$curso}">
-        <button class="course-students-amount btn-regresar btn btn-group"> 
+        <button class="course-students-amount btn-regresar btn btn-group">
           <span class="glyphicon glyphicon-hand-left" aria-hidden="true"></span>
           Volver al curso
         </button>
@@ -54,10 +55,10 @@
 <div class="row">
   <div class="col-lg-12 leccion-container">
   <div class="col-lg-3" style="padding-left:0px; padding-right: 0px;">
-    
+
     {include file='modules/elearning/views/cursos/menu/lecciones.tpl'}
   </div>
-  <div class="col-lg-9" style="padding-left:0px; padding-right: 0px;"> 
+  <div class="col-lg-9" style="padding-left:0px; padding-right: 0px;">
 
 
     {if $leccion["Lec_Tipo"]==1}
@@ -65,14 +66,14 @@
       <div class="panel panel-default">
          <div class="panel-heading cabecera-titulo">
           <h3 class="panel-title">
-            
+
             <strong>{$leccion["Lec_Titulo"]}</strong>
           </h3>
         </div>
         <div class="panel-body contenedor-clase">
             {if isset($cont_html) && count($cont_html)>0}
-              {foreach from=$cont_html item=h}        
-                <div class="col-lg-12" style="text-align: justify;">{html_entity_decode($h.CL_Descripcion)}</div>          
+              {foreach from=$cont_html item=h}
+                <div class="col-lg-12" style="text-align: justify;">{html_entity_decode($h.CL_Descripcion)}</div>
               {/foreach}
             {/if}
         </div>
@@ -87,21 +88,21 @@
       <div class="panel panel-default">
          <div class="panel-heading cabecera-titulo">
           <h3 class="panel-title">
-            
+
             <strong>{$leccion["Lec_Titulo"]}</strong>
           </h3>
         </div>
         <div class="panel-body contenedor-clase">
           {if isset($html) && count($html) > 0 }
             <div class="video" id="video" >
-              <iframe width="100%" src="{$html.CL_Descripcion}" frameborder="0" 
+              <iframe width="100%" src="{$html.CL_Descripcion}" frameborder="0"
               allow="autoplay; encrypted-media" id="frame-video" allowfullscreen> </iframe>
             </div>
           {/if}
         </div>
       </div>
     </div>
-    {/if} 
+    {/if}
 
 
 
@@ -111,12 +112,12 @@
       <div class="panel panel-default">
           <div class="panel-heading cabecera-titulo">
           <h3 class="panel-title">
-            
+
             <strong>{$leccion["Lec_Titulo"]}</strong>
           </h3>
         </div>
         <div class="panel-body contenedor-clase">
-     
+
           {if $leccion["Progreso"]==1}
           <div class="row">
             <div class="col-lg-12">
@@ -126,25 +127,30 @@
                   </small>
                   <h3></h3>
               </div>
+<<<<<<< HEAD
             </div> 
             <div class="col-lg-12 circulo">
+=======
+            </div>
+            <div class="col-lg-3 circulo">
+>>>>>>> 55433e7f28f6bfc7762bf169aad348895e66c1a9
               <div class="progress" data-toggle="tooltip" data-placement="top" title="" data-original-title="Your progress">
                 <div class="clip-1">
-                  <div class="slice-1" style="-webkit-transform:rotate({$ang_1}deg);-moz-transform:rotate({$ang_1}deg);-o-transform:rotate({$ang_1}deg);transform:rotate({$ang_1}deg);">                  
+                  <div class="slice-1" style="-webkit-transform:rotate({$ang_1}deg);-moz-transform:rotate({$ang_1}deg);-o-transform:rotate({$ang_1}deg);transform:rotate({$ang_1}deg);">
                   </div>
                 </div>
                 <div class="clip-2">
-                  <div class="slice-2" style="-webkit-transform:rotate({$ang_2}deg);-moz-transform:rotate({$ang_2}deg);-o-transform:rotate({$ang_2}deg);transform:rotate({$ang_2}deg);">                      
+                  <div class="slice-2" style="-webkit-transform:rotate({$ang_2}deg);-moz-transform:rotate({$ang_2}deg);-o-transform:rotate({$ang_2}deg);transform:rotate({$ang_2}deg);">
                   </div>
                 </div>
                 <div class="label">
                 {$resultados.CORRECTAS*100/($resultados.CORRECTAS + $resultados.INCORRECTAS)}%
                 </div>
-              </div> 
+              </div>
             </div>
             {if isset($resultados) }
             <div class="col-lg-12">
-              <label>Informe de Resultados: </label>              
+              <label>Informe de Resultados: </label>
             </div>
             <div class="col-lg-12">
               <div class="progress">
@@ -178,7 +184,7 @@
               </a>
             </div>
           </div>
-          {else} 
+          {else}
 
             {if $intentos == 0}
             <div class="col-lg-12"><!--id="leccion-contenido"-->
@@ -186,7 +192,7 @@
                 <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
                 Iniciar exámen
               </button>
-            </div>   
+            </div>
             {else}
 
 
@@ -197,25 +203,30 @@
                   <small>Obtuviste {$resultados.CORRECTAS*100/($resultados.CORRECTAS + $resultados.INCORRECTAS)}% de aciertos en tu última evaluación. El procentaje mínimo de preguntas correctas para superar el exámen es {$examen.Exa_Porcentaje}%</small>
                   <h3></h3>
               </div>
+<<<<<<< HEAD
             </div> 
             <div class="col-lg-12 circulo">
+=======
+            </div>
+            <div class="col-lg-3 circulo">
+>>>>>>> 55433e7f28f6bfc7762bf169aad348895e66c1a9
               <div class="progress" data-toggle="tooltip" data-placement="top" title="" data-original-title="Your progress">
                 <div class="clip-1">
-                  <div class="slice-1" style="-webkit-transform:rotate({$ang_1}deg);-moz-transform:rotate({$ang_1}deg);-o-transform:rotate({$ang_1}deg);transform:rotate({$ang_1}deg);">                  
+                  <div class="slice-1" style="-webkit-transform:rotate({$ang_1}deg);-moz-transform:rotate({$ang_1}deg);-o-transform:rotate({$ang_1}deg);transform:rotate({$ang_1}deg);">
                   </div>
                 </div>
                 <div class="clip-2">
-                  <div class="slice-2" style="-webkit-transform:rotate({$ang_2}deg);-moz-transform:rotate({$ang_2}deg);-o-transform:rotate({$ang_2}deg);transform:rotate({$ang_2}deg);">                      
+                  <div class="slice-2" style="-webkit-transform:rotate({$ang_2}deg);-moz-transform:rotate({$ang_2}deg);-o-transform:rotate({$ang_2}deg);transform:rotate({$ang_2}deg);">
                   </div>
                 </div>
                 <div class="label">
                 {$resultados.CORRECTAS*100/($resultados.CORRECTAS + $resultados.INCORRECTAS)}%
                 </div>
-              </div> 
+              </div>
             </div>
             {if isset($resultados) }
             <div class="col-lg-12">
-              <label>Informe de Resultados: </label>              
+              <label>Informe de Resultados: </label>
             </div>
             <div class="col-lg-12">
               <div class="progress">
@@ -251,9 +262,9 @@
 
 
 
-            <!-- {if ($examen["Exa_Intentos"]==0 || ($examen["Exa_Intentos"] != 0 
+            <!-- {if ($examen["Exa_Intentos"]==0 || ($examen["Exa_Intentos"] != 0
             && $examen["Exa_Intentos"] >= $intentos))}
-                 
+
             {/if} -->
 
 

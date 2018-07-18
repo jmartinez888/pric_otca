@@ -26,7 +26,7 @@ class gcursoController extends elearningController {
     $id = Session::get("id_usuario");
     $busqueda = $this->getTexto('busqueda');
     $cursos = $this->curso->getCursoXDocente($id, $busqueda);
-    
+
     //print_r($cursos); exit;
     Session::set("learn_url_tmp", "gcurso/_view_mis_cursos");
     $this->_view->getLenguaje("learn");
@@ -51,11 +51,13 @@ class gcursoController extends elearningController {
     if(!is_numeric($id) && strlen($id)==0){ $id = Session::get("learn_param_curso"); }
     if(strlen($id)==0){ exit; }
     $datos = $this->curso->getCursoXId($id);
+    $parametros = $this->curso->getParametros($id);
 
     Session::set("learn_param_curso", $id);
     Session::set("learn_url_tmp", "gcurso/_view_finalizar_registro");
 
     $this->_view->assign('curso', $datos);
+    $this->_view->assign('parametros', $parametros);
     $this->_view->renderizar('ajax/_view_finalizar_registro', false, true);
   }
 
@@ -188,6 +190,17 @@ class gcursoController extends elearningController {
     $this->curso->updateBannerCurso($curso, $img);
 
     $this->service->Success("Se actualizó el banner");
+    $this->service->Send();
+  }
+
+  public function _reg_parametros(){
+    $curso = $this->getInt("curso");
+    $min = $this->getInt("min");
+    $max = $this->getInt("max");
+
+    $this->curso->insertParametros($curso, $min, $max);
+
+    $this->service->Success("exito");
     $this->service->Send();
   }
 }
