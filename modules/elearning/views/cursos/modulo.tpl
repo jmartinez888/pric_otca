@@ -127,13 +127,9 @@
                   </small>
                   <h3></h3>
               </div>
-<<<<<<< HEAD
+
             </div> 
             <div class="col-lg-12 circulo">
-=======
-            </div>
-            <div class="col-lg-3 circulo">
->>>>>>> 55433e7f28f6bfc7762bf169aad348895e66c1a9
               <div class="progress" data-toggle="tooltip" data-placement="top" title="" data-original-title="Your progress">
                 <div class="clip-1">
                   <div class="slice-1" style="-webkit-transform:rotate({$ang_1}deg);-moz-transform:rotate({$ang_1}deg);-o-transform:rotate({$ang_1}deg);transform:rotate({$ang_1}deg);">
@@ -203,13 +199,8 @@
                   <small>Obtuviste {$resultados.CORRECTAS*100/($resultados.CORRECTAS + $resultados.INCORRECTAS)}% de aciertos en tu última evaluación. El procentaje mínimo de preguntas correctas para superar el exámen es {$examen.Exa_Porcentaje}%</small>
                   <h3></h3>
               </div>
-<<<<<<< HEAD
             </div> 
             <div class="col-lg-12 circulo">
-=======
-            </div>
-            <div class="col-lg-3 circulo">
->>>>>>> 55433e7f28f6bfc7762bf169aad348895e66c1a9
               <div class="progress" data-toggle="tooltip" data-placement="top" title="" data-original-title="Your progress">
                 <div class="clip-1">
                   <div class="slice-1" style="-webkit-transform:rotate({$ang_1}deg);-moz-transform:rotate({$ang_1}deg);-o-transform:rotate({$ang_1}deg);transform:rotate({$ang_1}deg);">
