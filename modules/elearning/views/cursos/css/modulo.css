@@ -231,6 +231,7 @@ ul{
     -o-border-radius: 50%;
     border-radius: 50%;
     background-color: #dedede;
+    margin: auto;
 }
 .circulo .clip-1, .circulo .clip-2, .circulo .slice-1, .circulo .slice-2 {
     position:absolute;
