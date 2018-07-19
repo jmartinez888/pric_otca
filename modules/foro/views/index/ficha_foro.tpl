@@ -124,17 +124,42 @@
                                     <img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">
                                 </a>
                             </div>
-                            <div class="col-md-11 media-body">
-                                <h4 class="media-heading">{$comentarios.Usu_Nombre|upper}
+                            <div class="col-md-11 media-body ">
+                               <!--  <input type="hidden" name="id_comentario_capa" id="id_comentario_capa" value="{$comentarios.Com_IdComentario}"> -->
+                                <h4 class="col-xs-12 media-heading">{$comentarios.Usu_Nombre|upper}
                                     <span> | {$comentarios.Com_Fecha|date_format:"%d-%m-%Y"}</span>
                                     {if $comentar_foro}                                   
-                                        <span class="pull-right"> <button id_comentario="{$comentarios.Com_IdComentario}" class="btn btn-primary btn-sm coment_coment">Comentar</button></span>
+                                        <span class="pull-right" style="font-size: 15px"> <button id_comentario="{$comentarios.Com_IdComentario}" class="btn btn-success btn-sm fa fa-comment-o coment_coment"> Responder</button></span>
                                     {/if}                                
                                 </h4>
-                                <p>{$comentarios.Com_Descripcion}</p>
+                                <div class="col-xs-12 capa" id_comentario_capa="{$comentarios.Com_IdComentario}">
+                                    <span class="col-xs-11">
+                                        {$comentarios.Com_Descripcion}
+                                    </span>
+                                    {if $Rol_Ckey=="administrador_foro" || $_acl->Usu_IdUsuario() == $comentarios.Usu_IdUsuario}
+                                    <div class="btn-group col-xs-1">
+                                        <button title="Editar o Eliminar" class=" btn btn-default glyphicon glyphicon-option-horizontal dropdown-toggle opciones_comentario_{$comentarios.Com_IdComentario}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="right: 70%; display: none;">
+                                        </button >
+                                        {if $Rol_Ckey=="administrador_foro"}
+                                        <ul class="dropdown-menu" style="left: -400%; z-index: 100 !important; top: -10%;">
+                                            <li><a href="#">Editar</a></li>
+                                            <li><a href="#">Eliminar</a></li>
+                                            <li><a href="#">Reportar</a></li>
+                                            <li><a href="#">Bloquear</a></li>
+                                        </ul>
+                                        {/if}
+                                        {if $Rol_Ckey=="participante_foro"}
+                                        <ul class="dropdown-menu" style="left: -400%; z-index: 100 !important; top: -10%;">
+                                            <li><a href="#">Editar</a></li>
+                                            <li><a href="#">Eliminar</a></li>
+                                        </ul>
+                                        {/if}
+                                    </div>
+                                    {/if}
+                                </div>
                                 <div id="div_show_{$foro.For_IdForo}_{$comentarios.Com_IdComentario}" id_padre="{$comentarios.Com_IdComentario}" class="show_files">
                                     {foreach from=$comentarios.Archivos  item=file}
-                                        <div class="files" tabindex="-1" id="">
+                                        <div class="col-xs-12 files" tabindex="-1" id="">
                                             {if $file.Fim_TipoFile|strstr:"video"}
                                                 <i class="fa fa-video-camera"></i>
                                             {/if}
@@ -154,7 +179,7 @@
                                         {/foreach}
                                         </div>
                                 {if $comentar_foro}
-                                    <div id="comen_comen_{$comentarios.Com_IdComentario}" class="media" style="display: none">
+                                    <div id="comen_comen_{$comentarios.Com_IdComentario}" class="col-xs-12 media" style="display: none">
                                         <div class="widget-area no-padding blank">
                                             <div class="status-upload">
 
@@ -176,17 +201,45 @@
                                     </div>
                                 {/if}
                                 {foreach from=$comentarios.Hijo_Comentarios item=hijo_comentarios}
-                                    <div class="media">
+                                    <div class="col-xs-12 media">
                                         <div class="col-md-1 media-left">
                                             <a href="#">
                                                 <img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">
                                             </a>
                                         </div>
-                                        <div class="col-md-11 media-body">
-                                            <h4 class="media-heading">{$hijo_comentarios.Usu_Nombre|upper}
+                                        <div class="col-md-12 media-body">
+                                            <h4 class="col-xs-12 media-heading">{$hijo_comentarios.Usu_Nombre|upper}
                                                 <span> | {$hijo_comentarios.Com_Fecha|date_format:"%d-%m-%Y"}</span>
                                             </h4>
-                                            <p>{$hijo_comentarios.Com_Descripcion}</p>
+                                            <!-- <p class="col-xs-12">{$hijo_comentarios.Com_Descripcion}
+                                                <span title="Editar o Eliminar" style="top: 0; cursor: pointer; display: none;" class="glyphicon glyphicon-option-horizontal pull-right col-xs-1 opciones_comentario" aria-hidden="true">
+                                                </span>
+                                            </p> -->
+                                            <div class="col-xs-12 capa" id_comentario_capa="{$hijo_comentarios.Com_IdComentario}">
+                                                <span class="col-xs-11">
+                                                    {$hijo_comentarios.Com_Descripcion}
+                                                </span>
+                                                {if $Rol_Ckey=="administrador_foro" || $_acl->Usu_IdUsuario() == $hijo_comentarios.Usu_IdUsuario}
+                                                <div class="btn-group col-xs-1">
+                                                    <button title="Editar o Eliminar" class=" btn btn-default glyphicon glyphicon-option-horizontal dropdown-toggle opciones_comentario_{$hijo_comentarios.Com_IdComentario}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="right: 25px; display: none;">
+                                                    </button >
+                                                    {if $Rol_Ckey=="administrador_foro"}
+                                                    <ul class="dropdown-menu" style="left: -400%; z-index: 100 !important; top: -10%;">
+                                                        <li><a href="#">Editar</a></li>
+                                                        <li><a href="#">Eliminar</a></li>
+                                                        <li><a href="#">Reportar</a></li>
+                                                        <li><a href="#">Bloquear</a></li>
+                                                    </ul>
+                                                    {/if}
+                                                    {if $Rol_Ckey=="participante_foro"}
+                                                    <ul class="dropdown-menu" style="left: -400%; z-index: 100 !important; top: -10%;">
+                                                        <li><a href="#">Editar</a></li>
+                                                        <li><a href="#">Eliminar</a></li>
+                                                    </ul>
+                                                    {/if}
+                                                </div>
+                                                {/if}
+                                            </div>
                                             <div id="div_show_{$foro.For_IdForo}_{$hijo_comentarios.Com_IdComentario}" id_padre="{$comentarios.Com_IdComentario}" class="show_files">
                                                 {foreach from=$hijo_comentarios.Archivos  item=file}
                                                     <div class="files" tabindex="-1" id="">

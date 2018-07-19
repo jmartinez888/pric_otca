@@ -118,9 +118,12 @@ class indexController extends foroController {
     }
 
     public function ficha($iFor_IdForo) {
-
         $this->validarUrlIdioma();
-
+        $Rol_Ckey = $this->_model->getRolForo(Session::get('id_usuario'), $iFor_IdForo); 
+        //print_r($usuario_foro); 
+        // echo $Rol_Ckey["Rol_Ckey"];
+        // exit;
+              
         $this->_view->setTemplate(LAYOUT_FRONTEND);
         $this->_view->getLenguaje("foro_index_ficha");
         $this->_view->setCss(array("ficha_foro", "jp-ficha_foro"));
@@ -145,6 +148,8 @@ class indexController extends foroController {
                 $foro["For_Comentarios"][$index]["Hijo_Comentarios"][$j]["Archivos"] = $this->_model->getArchivos_x_idcomentario($foro["For_Comentarios"][$index]["Hijo_Comentarios"][$j]["Com_IdComentario"]);
             }
         }
+
+        $this->_view->assign('Rol_Ckey', $Rol_Ckey["Rol_Ckey"]);
         $this->_view->assign('facilitadores', $this->_model->getFacilitadores($iFor_IdForo));
         $this->_view->assign('comentar_foro', $this->_permiso($iFor_IdForo, "comentar_foro"));
                
@@ -153,12 +158,14 @@ class indexController extends foroController {
     }
 
     public function _registro_comentario() {
+        
         header("access-control-allow-origin: *");
         #$this->_acl->acceso('registro_actividad_tarea');            
         $iFor_IdForo = $this->getInt('id_foro');
         $iUsu_IdUsuario = $this->getInt('id_usuario');
         $iCom_Descripcion = $this->getTexto('descripcion');
         $iCom_IdPadre = $this->getInt('id_padre');
+        $Rol_Ckey = $this->_model->getRolForo(Session::get('id_usuario'), $iFor_IdForo);
         $iFim_Files = html_entity_decode($this->getTexto('att_files'));
 
         $aFim_Files = json_decode($iFim_Files, true);
@@ -183,7 +190,8 @@ class indexController extends foroController {
                 $foro["For_Comentarios"][$index]["Hijo_Comentarios"][$j]["Archivos"] = $this->_model->getArchivos_x_idcomentario($foro["For_Comentarios"][$index]["Hijo_Comentarios"][$j]["Com_IdComentario"]);
             }
         }
-
+          // $this->_view->setJs(array("ficha_foro"));
+        $this->_view->assign('Rol_Ckey', $Rol_Ckey["Rol_Ckey"]);
         $this->_view->assign('comentar_foro', $this->_permiso($iFor_IdForo, "comentar_foro"));
         $this->_view->assign('foro', $foro);
         $this->_view->renderizar('ajax/lista_comentarios', false, true);

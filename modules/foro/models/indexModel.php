@@ -99,7 +99,7 @@ class indexModel extends Model {
     public function getComentarios_x_idforo($iFor_IdForo) {
         try {
             $post = $this->_db->query(
-                    "SELECT c.Com_IdComentario,c.Com_Descripcion,c.Com_Fecha,c.Com_Estado,c.For_IdForo,c.Idi_IdIdioma,c.Row_Estado,u.Usu_Nombre,u.Usu_Apellidos FROM comentarios c INNER JOIN usuario u ON u.Usu_IdUsuario=c.Usu_IdUsuario WHERE c.For_IdForo={$iFor_IdForo} and Com_IdPadre IS NULL ORDER BY c.Com_Fecha DESC");
+                    "SELECT c.Com_IdComentario,c.Com_Descripcion,c.Com_Fecha,c.Com_Estado,c.For_IdForo,c.Idi_IdIdioma,c.Row_Estado,u.Usu_Nombre,u.Usu_Apellidos, u.Usu_IdUsuario FROM comentarios c INNER JOIN usuario u ON u.Usu_IdUsuario=c.Usu_IdUsuario WHERE c.For_IdForo={$iFor_IdForo} and Com_IdPadre IS NULL ORDER BY c.Com_Fecha DESC");
             return $post->fetchAll();
         } catch (PDOException $exception) {
             $this->registrarBitacora("foro(indexModel)", "getComentarios_x_idforo", "Error Model", $exception);
@@ -110,7 +110,7 @@ class indexModel extends Model {
     public function getComentarios_x_idcomentario($iCom_IdComentario) {
         try {
             $post = $this->_db->query(
-                    "SELECT c.Com_IdComentario,c.Com_Descripcion,c.Com_Fecha,c.Com_Estado,c.For_IdForo,c.Idi_IdIdioma,c.Row_Estado,u.Usu_Nombre,u.Usu_Apellidos FROM comentarios c INNER JOIN usuario u ON u.Usu_IdUsuario=c.Usu_IdUsuario WHERE c.Com_IdPadre={$iCom_IdComentario} ORDER BY c.Com_Fecha DESC");
+                    "SELECT c.Com_IdComentario,c.Com_Descripcion,c.Com_Fecha,c.Com_Estado,c.For_IdForo,c.Idi_IdIdioma,c.Row_Estado,u.Usu_IdUsuario, u.Usu_Nombre,u.Usu_Apellidos FROM comentarios c INNER JOIN usuario u ON u.Usu_IdUsuario=c.Usu_IdUsuario WHERE c.Com_IdPadre={$iCom_IdComentario} ORDER BY c.Com_Fecha DESC");
             return $post->fetchAll();
         } catch (PDOException $exception) {
             $this->registrarBitacora("foro(indexModel)", "getComentarios_x_idcomentario", "Error Model", $exception);
@@ -151,7 +151,9 @@ class indexModel extends Model {
     public function getRolForo($iUsu_IdUsuario, $iFor_IdForo) {
         try {
             $post = $this->_db->query(
-                    "SELECT * FROM usuario_foro WHERE Usu_IdUsuario = {$iUsu_IdUsuario} AND For_IdForo = {$iFor_IdForo}");
+                    "SELECT uf.*, r.Rol_Ckey FROM usuario_foro uf
+                    INNER JOIN rol r ON uf.Rol_IdRol = r.Rol_IdRol 
+                    WHERE uf.Usu_IdUsuario = {$iUsu_IdUsuario} AND uf.For_IdForo = {$iFor_IdForo}");
             return $post->fetch();
         } catch (PDOException $exception) {
             $this->registrarBitacora("foro(indexModel)", "getRolForo", "Error Model", $exception);
