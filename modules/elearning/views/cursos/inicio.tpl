@@ -36,9 +36,9 @@
 
           <!--<span class="glyphicon glyphicon-bookmark ic-decoration"></span>-->
           {if strlen($o.Cur_UrlBanner) >0 }
-          <img class="curso-item-img" src="{BASE_URL}modules/elearning/views/cursos/img/portada/{$o.Cur_UrlBanner}" />
+          <img class="curso-item-img" alt="Imagen" src="{BASE_URL}modules/elearning/views/cursos/img/portada/{$o.Cur_UrlBanner}" />
           {else}
-          <img class="curso-item-img" src="{BASE_URL}modules/elearning/views/cursos/img/portada/default.png" />
+          <img class="curso-item-img" alt="Imagen" src="{BASE_URL}modules/elearning/views/cursos/img/portada/default.png" />
           {/if}
           <div class="col-md-12">
             <div class="row">

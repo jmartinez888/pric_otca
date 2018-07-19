@@ -120,15 +120,16 @@
 
           {if $leccion["Progreso"]==1}
           <div class="row">
-            <div class="col-lg-9">
+            <div class="col-lg-12">
               <div class="alert alert-success" role="alert">
-                  <h3>!Enhorabuena¡ !Usted ya aprobó su exámen¡</h3>
+                  <h3>¡Enhorabuena! ¡Usted ya aprobó su exámen!</h3>
                   <small>Superaste el {$examen.Exa_Porcentaje}% de preguntas correctas, puedes continuar con el siguiente módulo.
                   </small>
                   <h3></h3>
               </div>
-            </div>
-            <div class="col-lg-3 circulo">
+
+            </div> 
+            <div class="col-lg-12 circulo">
               <div class="progress" data-toggle="tooltip" data-placement="top" title="" data-original-title="Your progress">
                 <div class="clip-1">
                   <div class="slice-1" style="-webkit-transform:rotate({$ang_1}deg);-moz-transform:rotate({$ang_1}deg);-o-transform:rotate({$ang_1}deg);transform:rotate({$ang_1}deg);">
@@ -165,13 +166,12 @@
             <div class="col-lg-12"><label>¿Y ahora qué?, puedes:</label></div>
             <div class="col-lg-12">
               <a href="{BASE_URL}elearning/cursos/curso/{$curso}">
-                <button class="btn btn-success">
+                <button class="btn btn-success" style="margin-right: 10px">
                   <span class="glyphicon glyphicon-book" aria-hidden="true"></span>
                   Volver al índice del curso
                 </button>
               </a>
-            </div>
-            <div class="col-lg-12" style="margin-top: 5px">
+
               <a href="{BASE_URL}elearning/cursos/modulo/{$curso}/{$next_mod[0].Mod_IdModulo}/{$next_mod[0].Leccion}">
                 <button class="btn btn-success">
                   <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
@@ -193,14 +193,14 @@
 
 
 
-            <div class="col-lg-9">
+            <div class="col-lg-12">
               <div class="alert alert-danger" role="alert">
                   <h3>Lo sentimos, no has superado el exámen.</h3>
                   <small>Obtuviste {$resultados.CORRECTAS*100/($resultados.CORRECTAS + $resultados.INCORRECTAS)}% de aciertos en tu última evaluación. El procentaje mínimo de preguntas correctas para superar el exámen es {$examen.Exa_Porcentaje}%</small>
                   <h3></h3>
               </div>
-            </div>
-            <div class="col-lg-3 circulo">
+            </div> 
+            <div class="col-lg-12 circulo">
               <div class="progress" data-toggle="tooltip" data-placement="top" title="" data-original-title="Your progress">
                 <div class="clip-1">
                   <div class="slice-1" style="-webkit-transform:rotate({$ang_1}deg);-moz-transform:rotate({$ang_1}deg);-o-transform:rotate({$ang_1}deg);transform:rotate({$ang_1}deg);">
@@ -236,13 +236,12 @@
             {/if}
 
             <div class="col-lg-12"><label>¿Y ahora qué?, puedes:</label></div>
-            <div class="col-lg-12">
-              <button id="btnExamen" class="btn btn-danger">
+            <div class="col-lg-6">
+              <button id="btnExamen" class="btn btn-danger" style="margin-right: 10px">
                 <span class="glyphicon glyphicon-repeat" aria-hidden="true"></span>
                 Volver a intentar el exámen
               </button>
-            </div>
-            <div class="col-lg-12" style="margin-top: 5px">
+
               <a href="{BASE_URL}elearning/cursos/curso/{$curso}">
                 <button class="btn btn-danger">
                   <span class="glyphicon glyphicon-repeat" aria-hidden="true"></span>
