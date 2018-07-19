@@ -162,7 +162,7 @@ function renderButton() {
       'height': 40,
       'longtitle': true,
       'theme': 'dark',
-      'onsuccess': onSuccess,
+      'onsuccess': onSuccessRegistrar,
       'onfailure': onFailure
     });
 
@@ -172,7 +172,7 @@ function renderButton() {
       'height': 40,
       'longtitle': true,
       'theme': 'dark',
-      'onsuccess': onSuccess,
+      'onsuccess': onSuccessRegistrar,
       'onfailure': onFailure
     });
 }
@@ -185,7 +185,7 @@ $("body").on('click', "#CerrarSession", function () {
       });
       window.location = _root_ + 'usuarios/login/cerrar';
 });
-function onSuccess(googleUser) {
+function onSuccessRegistrar(googleUser) {
 // alert(_email);
     var profile = googleUser.getBasicProfile();
     registrarUsuarioLogin(profile.getGivenName(), profile.getFamilyName(), 
@@ -193,6 +193,17 @@ function onSuccess(googleUser) {
             url, $("#hd_login_modulo").val(),profile.getId());
 
 }
+// function onSuccessLogin(googleUser) {
+// // alert(_email);
+//     var profile = googleUser.getBasicProfile();
+//     $("#cargando").show();       
+//         // alert($("#usuarioLogin").val() + $("#passwordLogin").val() + $("#url").val());       
+//         logear($("#usuarioLogin").val(), $("#passwordLogin").val(), url, $("#hd_login_modulo").val());
+//         logear(profile.getGivenName(), profile.getFamilyName(), 
+//                 profile.getEmail(), profile.getEmail(), "",
+//                 url, $("#hd_login_modulo").val(),profile.getId());
+
+// }
 function onFailure(error) {
     console.log(error);
 }
