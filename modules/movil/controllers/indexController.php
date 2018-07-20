@@ -12,28 +12,18 @@ class indexController extends movilController {
     public function getCursos() {                
         $cursos = $this->_model->getCursos();            
         $this->retornar($cursos,"cursos");                       
-    }  
-    /*  
-    public function getCursos($Mod_IdModCurso,$Usu_IdUsuario=0) {                
-        if ($Usu_IdUsuario==0) {                            
-            $cursos = $this->_model->getCursos($Mod_IdModCurso);            
-        }else{                
-            $cursos = $this->_model->getCursosUsuario($Mod_IdModCurso,$Usu_IdUsuario);
-        }   
-        $this->retornar($cursos,"cursos");                       
-    } 
-    */   
+    }       
     public function getForos() {                
         $foros = $this->_model->getForos();            
         $this->retornar($foros,"foros");                  
     }
-    public function getLecciones($Mod_IdModulo) {        
-        $lecciones = $this->_model->getLecciones($Mod_IdModulo);
+    public function getLecciones() {        
+        $lecciones = $this->_model->getLecciones();
         $this->retornar($lecciones,"lecciones");                  
     }
-    public function getModulos($Cur_IdCurso) {        
-        $modulos = $this->_model->getModulos($Cur_IdCurso);
-        $this->retornar($modulos,"modulos");                  
+    public function getModulos() {        
+        $modulos_cursos = $this->_model->getModulos();
+        $this->retornar($modulos_cursos,"modulos_cursos");                  
     }
     public function getUsuarioExistente($Usu_usuario,$Usu_DocumentoIdentidad) {        
         $usuario = $this->_model->getUsuarioPorUsuarioDni($Usu_usuario,$Usu_DocumentoIdentidad);
@@ -53,6 +43,10 @@ class indexController extends movilController {
             );
         }
     }
+    public function getUsuario($Usu_IdUsuario) {                
+        $usuario = $this->_model->getUsuarioPorId($Usu_IdUsuario);            
+        $this->retornar($usuario,"usuarios");                       
+    } 
     public function getUsuariosCursos($Usu_IdUsuario) {                
         $usuarios_cursos = $this->_model->getUsuariosCursos($Usu_IdUsuario);            
         $this->retornar($usuarios_cursos,"usuarios_cursos");                       
