@@ -18,14 +18,14 @@
         var params = {
           link: "cursos/data_calendario",
           params: {  },
-          docente: 1,
+          docente: 0,
           viewDocente: function(div, params){
-            div.css({ "background-color": "red" });
-              console.log(params);
+            //console.log(params);
           }
         };
         var botones = {
-          anterior: function(mes, anio){ /*alert("holi");*/ }
+          anterior: function(mes, anio){ },
+          siguiente: function(mes, anio){ }
         };
         var view = {
           titulo: "",
