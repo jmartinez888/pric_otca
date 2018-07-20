@@ -232,7 +232,7 @@ class cursosController extends elearningController {
     $this->_view->assign("tareas", $tareas);
     $this->_view->assign("curso", $curso);
     $this->_view->setCss(array('modulo', 'jp-modulo'));
-    $this->_view->setJs(array(//array(BASE_URL . 'modules/elearning/views/gestion/js/core/util.js'), 
+    $this->_view->setJs(array(//array(BASE_URL . 'modules/elearning/views/gestion/js/core/util.js'),
     'modulo'));
     $this->_view->renderizar('modulo');
   }
@@ -392,4 +392,26 @@ class cursosController extends elearningController {
     $this->_view->renderizar('certificado_curso');
   }
 
+
+  public function calendario(){
+    $this->_view->setTemplate(LAYOUT_FRONTEND);
+    $this->_view->renderizar('calendario');
+  }
+
+  public function data_calendario(){
+    $anio = $this->getTexto("anio");
+    $mes = $this->getTexto("mes");
+    $model = $this->loadModel("curso");
+    $ini_cursos = $model->cursos_x_calendario($anio, $mes);
+    $resultado = array();
+
+    foreach ($ini_cursos as $item) {
+      $evento1 = array("ID" => $item["ID"], "D" => "01", "M" => $mes, "A" => $anio
+      , "H" => $item["HORA"], "DET" => $item["DET"], "ESTADO" => $item["ESTADO"]
+      , "FECHA" => $item["FECHA"]);
+      array_push($resultado, $evento1);
+    }
+
+    echo json_encode($resultado);
+  }
 }
