@@ -52,6 +52,161 @@ class adminModel extends Model
             return $exception->getTraceAsString();
         }
     }
+
+    public function getIdiomas() {
+        try{
+            $idiomas = $this->_db->query(
+                    "select * from idioma where Idi_Estado = 1"
+            );
+            return $idiomas->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("foro(adminModel)", "getfoginas", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
+
+    public function getPaginaTraducida($condicion, $Idi_IdIdioma) {
+        try{
+            $paginas = $this->_db->query(
+                    "SELECT 
+                    fo.For_IdForo,
+                    fn_TraducirContenido('foro','For_Titulo', fo.For_IdForo,'$Idi_IdIdioma',fo.For_Titulo) For_Titulo,
+                    fn_TraducirContenido('foro','For_Resumen', fo.For_IdForo,'$Idi_IdIdioma',fo.For_Resumen) For_Resumen,
+                    fn_TraducirContenido('foro','For_Descripcion', fo.For_IdForo,'$Idi_IdIdioma',fo.For_Descripcion) For_Descripcion,
+                    fn_TraducirContenido('foro','For_PalabrasClaves', fo.For_IdForo,'$Idi_IdIdioma',fo.For_PalabrasClaves) For_PalabrasClaves,
+                    fo.For_FechaCreacion,
+                    fo.For_FechaCierre,
+                    fo.For_Update,
+                    fo.For_Funcion,
+                    fo.For_Tipo,
+                    fo.For_Estado,
+                    fo.For_IdPadre,
+                    fo.Lit_IdLineaTematica,
+                    fo.Usu_IdUsuario,
+                    fo.Ent_Id_Entidad,
+                    fn_devolverIdioma('foro',fo.For_IdForo,'$Idi_IdIdioma',fo.Idi_IdIdioma) Idi_IdIdioma,
+                    fo.Rec_IdRecurso,
+                    fo.Row_Estado
+                    FROM foro fo $condicion"
+            );
+
+            return $paginas->fetch();
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("foro(adminModel)", "getForos", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
+
+    public function verificarNombreForo($For_IdForo, $For_Titulo, $For_Resumen, $For_Descripcion, $For_PalabrasClaves) {
+        try{  
+            $post = $this->_db->query(
+                        "SELECT For_IdForo, For_Titulo FROM foro WHERE For_IdForo = $For_IdForo AND For_Titulo = '$For_Titulo' AND For_Resumen = '$For_Resumen' AND For_Descripcion = '$For_Descripcion' AND For_PalabrasClaves = '$For_PalabrasClaves' ");
+        return $post->fetch();
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("foro(adminModel)", "verificarNombreForo", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
+
+    public function verificarIdioma($For_IdForo, $Idi_IdIdioma) {
+        try{
+            $post = $this->_db->query(
+                    "SELECT For_IdForo, For_Titulo FROM foro WHERE For_IdForo = $For_IdForo AND Idi_IdIdioma = '$Idi_IdIdioma' ");
+            return $post->fetch();
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("foro(adminModel)", "verificarIdioma", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
+
+    public function editarTraduccion($For_Titulo, $For_Resumen, $For_Descripcion, $For_PalabrasClaves, $For_IdForo, $Idi_IdIdioma) {
+
+        $ContTradTitulo = $this->buscarCampoTraducido('foro', $For_IdForo, 'For_Titulo', $Idi_IdIdioma);
+        $ContTradResumen = $this->buscarCampoTraducido('foro', $For_IdForo, 'For_Resumen', $Idi_IdIdioma);
+        $ContTradDescripcion = $this->buscarCampoTraducido('foro', $For_IdForo, 'For_Descripcion', $Idi_IdIdioma);
+        $ContTradPalabrasClaves = $this->buscarCampoTraducido('foro', $For_IdForo, 'For_PalabrasClaves', $Idi_IdIdioma);
+
+        $idContTradTitulo = $ContTradTitulo['Cot_IdContenidoTraducido'];
+        $idContTradResumen = $ContTradResumen['Cot_IdContenidoTraducido'];
+        $idContTradDescripcion = $ContTradDescripcion['Cot_IdContenidoTraducido'];
+        $idContTradPalabrasClaves = $ContTradPalabrasClaves['Cot_IdContenidoTraducido'];
+
+        if (isset($idContTradTitulo)) {
+            $this->_db->query(
+                    "UPDATE contenido_traducido SET Cot_Traduccion = '$For_Titulo' WHERE Cot_IdContenidoTraducido = $idContTradTitulo"
+            );
+        } else {
+
+            $this->_db->prepare(
+                            "INSERT INTO contenido_traducido VALUES (null, 'foro', :Cot_IdRegistro, 'For_Titulo' , :Idi_IdIdioma, :Cot_Traduccion)"
+                    )
+                    ->execute(array(
+                        ':Cot_IdRegistro' => $For_IdForo,
+                        ':Idi_IdIdioma' => $Idi_IdIdioma,
+                        ':Cot_Traduccion' => $For_Titulo
+            ));
+        }
+
+        if (isset($idContTradResumen)) {
+            $this->_db->query(
+                    "UPDATE contenido_traducido SET Cot_Traduccion = '$For_Resumen' WHERE Cot_IdContenidoTraducido = $idContTradResumen"
+            );
+        } else {
+
+            $this->_db->prepare(
+                            "INSERT INTO contenido_traducido VALUES (null, 'foro', :Cot_IdRegistro, 'For_Resumen' , :Idi_IdIdioma, :Cot_Traduccion)"
+                    )
+                    ->execute(array(
+                        ':Cot_IdRegistro' => $For_IdForo,
+                        ':Idi_IdIdioma' => $Idi_IdIdioma,
+                        ':Cot_Traduccion' => $For_Resumen
+            ));
+        }
+
+        if (isset($idContTradDescripcion)) {
+            $this->_db->query(
+                    "UPDATE contenido_traducido SET Cot_Traduccion = '$For_Descripcion' WHERE Cot_IdContenidoTraducido = $idContTradDescripcion"
+            );
+        } else {
+
+            $this->_db->prepare(
+                            "INSERT INTO contenido_traducido VALUES (null, 'foro', :Cot_IdRegistro, 'For_Descripcion' , :Idi_IdIdioma, :Cot_Traduccion)"
+                    )
+                    ->execute(array(
+                        ':Cot_IdRegistro' => $For_IdForo,
+                        ':Idi_IdIdioma' => $Idi_IdIdioma,
+                        ':Cot_Traduccion' => $For_Descripcion
+            ));
+        }
+
+        if (isset($idContTradPalabrasClaves)) {
+            $this->_db->query(
+                    "UPDATE contenido_traducido SET Cot_Traduccion = '$Pag_Descripcion' WHERE Cot_IdContenidoTraducido = $idContTradPalabrasClaves"
+            );
+        } else {
+
+            $this->_db->prepare(
+                            "INSERT INTO contenido_traducido VALUES (null, 'foro', :Cot_IdRegistro, 'For_PalabrasClaves' , :Idi_IdIdioma, :Cot_Traduccion)"
+                    )
+                    ->execute(array(
+                        ':Cot_IdRegistro' => $For_IdForo,
+                        ':Idi_IdIdioma' => $Idi_IdIdioma,
+                        ':Cot_Traduccion' => $For_PalabrasClaves
+            ));
+        }
+    }
+
+    public function buscarCampoTraducido($tabla, $For_IdForo, $columna, $Idi_IdIdioma) {
+        try{
+            $post = $this->_db->query(
+                    "SELECT * FROM contenido_traducido WHERE Cot_Tabla = '$tabla' AND Cot_IdRegistro =  $For_IdForo AND  Cot_Columna = '$columna' AND Idi_IdIdioma= '$Idi_IdIdioma'");
+            return $post->fetch();
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("foro(adminModel)", "buscarCampoTraducido", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
+
     public function actualizarForo($iFor_IdForo, $iFor_Titulo, $iFor_Resumen, $iFor_Descripcion, $iFor_Palabras, $iFor_FechaCreacion, $iFor_FechaCierre, $iFor_Funcion, $iFor_Tipo, $iFor_Estado, $iFor_IdPadre, $iLit_IdLineaTematica, $iUsu_IdUsuario, $iEnt_IdEntidad, $iRec_IdRecurso, $iIdi_IdIdioma)
     {
         try {

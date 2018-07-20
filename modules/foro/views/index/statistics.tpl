@@ -12,9 +12,24 @@
                                     <div class="col-xs-2">
                                         <i class="fa fa-users fa-4x"></i>                                    
                                     </div>    
-                                    <div class="col-xs-10 text-right">
-                                        <div class="stat-count">{$StdGeneral.Est_CantidadMiembros|default:0}</div>
+                                    <div class="col-xs-10 text-right d-stat-hide">
+                                        <div id="sta-gnr-m" class="stat-count">{$StdGeneral.Est_CantidadMiembros|default:0}</div>
                                         <div class="stat-title-min">Miembros</div>
+                                    </div>
+                                        <!-- Loanding -->
+                                    <div class="col-xs-10 text-right d-stat-load">
+                                        <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                             width="40px" height="40px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+                                            <path fill="#000" d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z">
+                                                <animateTransform attributeType="xml"
+                                                                  attributeName="transform"
+                                                                  type="rotate"
+                                                                  from="0 25 25"
+                                                                  to="360 25 25"
+                                                                  dur="0.6s"
+                                                                  repeatCount="indefinite"/>
+                                            </path>
+                                        </svg>
                                     </div>
                                 </div>
                             </div>                           
@@ -27,10 +42,26 @@
                                     <div class="col-xs-2">
                                         <i class="fa fa-file-text fa-4x"></i>                                    
                                     </div>    
-                                    <div class="col-xs-10 text-right">
-                                        <div class="stat-count">{$StdGeneral.Est_CantidadForo|default:0}</div>
+                                    <div class="col-xs-10 text-right d-stat-hide">                                       
+                                        <div id="sta-gnr-t" class="stat-count">{$StdGeneral.Est_CantidadForo|default:0}</div>
                                         <div class="stat-title-min">Temas</div>
                                     </div>
+                                    <!-- Loanding -->
+                                    <div class="col-xs-10 text-right d-stat-load">
+                                        <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                             width="40px" height="40px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+                                            <path fill="#000" d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z">
+                                                <animateTransform attributeType="xml"
+                                                                  attributeName="transform"
+                                                                  type="rotate"
+                                                                  from="0 25 25"
+                                                                  to="360 25 25"
+                                                                  dur="0.6s"
+                                                                  repeatCount="indefinite"/>
+                                            </path>
+                                        </svg>
+                                    </div>
+
                                 </div>
                             </div>                           
                         </div>
@@ -42,9 +73,23 @@
                                     <div class="col-xs-2">
                                         <i class="fa fa-comments fa-4x"></i>                                    
                                     </div>    
-                                    <div class="col-xs-10 text-right">
-                                        <div class="stat-count">{$StdGeneral.Est_CantidadComentario|default:0}</div>
+                                    <div class="col-xs-10 text-right d-stat-hide">
+                                        <div id="sta-gnr-c" class="stat-count">{$StdGeneral.Est_CantidadComentario|default:0}</div>
                                         <div class="stat-title-min">Comentarios</div>
+                                    </div>
+                                    <div class="col-xs-10 text-right d-stat-load">
+                                        <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                             width="40px" height="40px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+                                            <path fill="#000" d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z">
+                                                <animateTransform attributeType="xml"
+                                                                  attributeName="transform"
+                                                                  type="rotate"
+                                                                  from="0 25 25"
+                                                                  to="360 25 25"
+                                                                  dur="0.6s"
+                                                                  repeatCount="indefinite"/>
+                                            </path>
+                                        </svg>
                                     </div>
                                 </div>
                             </div>                           
@@ -57,9 +102,23 @@
                                     <div class="col-xs-2">
                                         <i class="fa fa-eye fa-4x"></i>                                    
                                     </div>    
-                                    <div class="col-xs-10 text-right">
-                                        <div class="stat-count">{$StdGeneral.Est_CantidadVisita|default:0}</div>
+                                    <div class="col-xs-10 text-right d-stat-hide">
+                                        <div  id="sta-gnr-v" class="stat-count">{$StdGeneral.Est_CantidadVisita|default:0}</div>
                                         <div class="stat-title-min">Visitas</div>
+                                    </div>
+                                    <div class="col-xs-10 text-right d-stat-load">
+                                        <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                             width="40px" height="40px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+                                            <path fill="#000" d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z">
+                                                <animateTransform attributeType="xml"
+                                                                  attributeName="transform"
+                                                                  type="rotate"
+                                                                  from="0 25 25"
+                                                                  to="360 25 25"
+                                                                  dur="0.6s"
+                                                                  repeatCount="indefinite"/>
+                                            </path>
+                                        </svg>
                                     </div>
                                 </div>
                             </div>                           

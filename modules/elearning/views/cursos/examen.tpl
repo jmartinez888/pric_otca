@@ -1,16 +1,15 @@
 {if $leccion["Lec_Tipo"]==3 }
   {if $examen["Exa_Intentos"]==0 || ($examen["Exa_Intentos"]!=0 && $examen["Exa_Intentos"] >= $intentos)}
-  <div class="col-lg-12" id="panel-contenedor-pregunta" style="display: none">
-    <div class="panel panel-default margin-top-10">
-      <div class="panel-heading">
+  <div class="col-lg-12 p-rt-lt-0" id="panel-contenedor-pregunta" style="display: none">
+    <div class="panel panel-default">
+      <div class="panel-heading cabecera-titulo">
         <h3 class="panel-title">
-          <i class="glyphicon glyphicon-list-alt"></i>&nbsp;&nbsp;
           <strong id="titulo_examen">{$examen["Exa_Descripcion"]}</strong>
         </h3>
       </div>
       {if strlen($leccion["Lec_Descripcion"]) > 0 }
-      <div class="panel-body" style=" margin: 15px 25px">          
-        <div  class="col-lg-12" style="padding-bottom: 10px; display: none"  id="examen-contenido">
+      <div class="panel-body contenedor-clase">          
+        <div class="col-lg-12" style="padding-bottom: 30px; display: none"  id="examen-contenido">
 
           <div class="col-lg-12" style="font-weight: bolt; color:red;margin-bottom: 20px !important">
             {if $intentos == 0 && $examen.Exa_Intentos!=0}

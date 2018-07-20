@@ -270,8 +270,10 @@ class adminController extends foroController
 
     public function form($tipo = "", $funcion = "forum", $id_foro = 0)
     {
-
         $this->validarUrlIdioma();
+        $this->_view->getLenguaje("foro_admin_index");
+        $foro = $this->_model->getForosComplit_x_Id($id_foro);
+        $IdiomaOriginal = $foro['Idi_IdIdioma'];
 
         if ($tipo != "new" && $tipo != "edit") {
             $this->redireccionar("foro/admin");
@@ -284,7 +286,7 @@ class adminController extends foroController
             $this->_view->setTemplate(LAYOUT_FRONTEND);
         }
 
-        if ($this->botonPress("bt_guardar")) {
+        if ($this->botonPress("bt_guardar")) { 
             $iFor_Titulo          = $this->getTexto('text_titulo');
             $iFor_Descripcion     = $this->getTexto('text_descripcion');
             $iLit_IdLineaTematica = $this->getInt('s_lista_tematica');
@@ -315,8 +317,7 @@ class adminController extends foroController
                 $Rol_ckey = "lider_foro";
 
             }
-
-            $iIdi_IdIdioma = 'es';
+           
             $iFor_IdPadre  = $this->getInt('hd_id_padre');
             $iFile_foro    = html_entity_decode($this->getTexto('hd_file_form'));
             $aFile_foro    = json_decode($iFile_foro, true);
@@ -326,7 +327,7 @@ class adminController extends foroController
 
             $model_recurso = $this->loadModel('indexbd', 'bdrecursos');
             if ($tipo == "new") {
-
+                $iIdi_IdIdioma = $this->getSql('idiomaRadio');
                 $result_rec  = $model_recurso->insertarRecurso("Base de datos de documentos del foro " . $iFor_Titulo, "Proyecto PRIC/OTCA", 1, 1, 3, "Proyecto PRIC/OTCA", "", $iIdi_IdIdioma);
                 $id_recurso  = $result_rec[0];
                 $result_foro = $this->_model->insertarForo($iFor_Titulo, $iFor_Resumen, $iFor_Descripcion, $iFor_Palabras, $iFor_FechaCreacion, $iFor_FechaCierre, $iFor_Funcion, $iFor_Tipo, $iFor_Estado, $iFor_IdPadre, $iLit_IdLineaTematica, $iUsu_IdUsuario, $iEnt_IdEntidad, $id_recurso, $iIdi_IdIdioma);
@@ -340,8 +341,31 @@ class adminController extends foroController
 
                 $id_recurso = $this->getInt('hd_id_recurso');
                 $this->_model->deleteFileForo($id_foro);
-                $this->_model->actualizarForo($id_foro, $iFor_Titulo, $iFor_Resumen, $iFor_Descripcion, $iFor_Palabras, $iFor_FechaCreacion, $iFor_FechaCierre, $iFor_Funcion, $iFor_Tipo, $iFor_Estado, $iFor_IdPadre, $iLit_IdLineaTematica, $iUsu_IdUsuario, $iEnt_IdEntidad, $id_recurso, $iIdi_IdIdioma);
 
+                $i=0;
+                $error = "";
+
+                if($this->_model->verificarNombreForo($id_foro, $iFor_Titulo, $iFor_Resumen,$iFor_Descripcion, $iFor_Palabras)){
+                    $error = ' El Nombre <b style="font-size: 1.15em;">'. $iFor_Titulo .'</b> de Foro ya Existe.';
+                    $i=1;
+                }
+                if($i==0){
+                    $Idi_IdIdiomaselect =  $this->getSql('Idiomaseleccionado'); //idioma seleccionado en el nav
+                    // echo $this->_model->verificarIdiomCa($id_foro, $Idi_IdIdiomaselect); exit;
+                    // echo $Idi_IdIdiomaselect; exit;
+                    // echo $IdiomaOriginal; exit;
+                    if($this->_model->verificarIdioma($id_foro, $Idi_IdIdiomaselect))
+                    {
+                        $this->_model->actualizarForo($id_foro, $iFor_Titulo, $iFor_Resumen, $iFor_Descripcion, $iFor_Palabras, $iFor_FechaCreacion, $iFor_FechaCierre, $iFor_Funcion, $iFor_Tipo, $iFor_Estado, $iFor_IdPadre, $iLit_IdLineaTematica, $iUsu_IdUsuario, $iEnt_IdEntidad, $id_recurso, $IdiomaOriginal);
+                    }
+                    else {
+                        $this->_model->editarTraduccion($iFor_Titulo, $iFor_Resumen,$iFor_Descripcion, $iFor_Palabras, $id_foro, $Idi_IdIdiomaselect);
+                        $this->_view->assign('_mensaje', 'Edición Traducción Completado..!!');
+                    }
+                }
+                else{
+                    $this->_view->assign('_error', $error);
+                }
             }
 
             if (count($aFile_foro)) {
@@ -363,12 +387,19 @@ class adminController extends foroController
         $this->_view->getLenguaje("foro_admin_index");
         $lenguaje = Session::get("fileLenguaje");
 
-        if ($tipo == "edit") {
-            $this->_view->assign('titulo', "Foro: Editar Foro");
-            $foro = $this->_model->getForosComplit_x_Id($id_foro);
+        if ($tipo == "edit") {   
+            // exit;
+            $this->_view->assign('permiso', "editar_foro");
+            $this->_view->assign('titulo', "Foro: Editar Foro");  
+            $this->_view->assign('idForo', $id_foro);
+            // echo $foro['Idi_IdIdioma']; exit;
+            
             if (!empty($foro)) {
                 $_model_index     = $this->loadModel('index');
                 $foro["Archivos"] = $_model_index->getArchivos_x_idforo($id_foro);
+                
+                $this->_view->assign('IdiomaOriginal', $IdiomaOriginal);
+                $this->_view->assign('Idiomaseleccionado', $IdiomaOriginal);
                 $this->_view->assign('foro', $foro);
                 $this->_view->assign('start_date', date('d-m-Y H:m', strtotime($foro["For_FechaCreacion"])));
                 if (!empty($foro["For_FechaCierre"])) {
@@ -382,6 +413,7 @@ class adminController extends foroController
             }
 
         } else {
+            $this->_view->assign('permiso', "nuevo_foro");  
             $this->_view->assign('titulo', $lenguaje["foro_admin_form_titulo"]);
             $this->_view->assign('start_date', date('d-m-Y H:m'));
             $this->_view->assign('end_date', date('d-m-Y H:m', strtotime('+1 day')));
@@ -394,7 +426,48 @@ class adminController extends foroController
         if ($tipo == "new" && $id_foro != 0) {
             $this->_view->assign('iFor_IdPadre', $id_foro);
         }
+        $this->_view->assign('idiomas',$this->_model->getIdiomas());
+        $Idi_IdIdioma = Cookie::lenguaje();
+        $this->_view->assign('idiomaUrl',$Idi_IdIdioma);
         $this->_view->renderizar('form');
+    }
+
+    public function gestion_idiomas() {
+        //   
+        // exit;        
+        $this->_view->getLenguaje('template_backend');
+        $condicion1 ='';
+        $Idi_IdIdioma =  $this->getPostParam('idIdioma'); //idioma seleccionado en el nav
+        $IdiomaOriginal = $this->getTexto('idIdiomaOriginal'); //idioma original en input
+        // echo $Idi_IdIdioma; exit;
+        $Form_Funcion = $this->getPostParam('Form_Funcion');
+        // echo $Form_Funcion; exit;
+        $id = $this->getPostParam('idforo');
+        // echo $id; exit;
+        $condicion1 .= " WHERE fo.For_IdForo = $id ";            
+        $foro = $this->_model->getPaginaTraducida($condicion1, $Idi_IdIdioma);
+        // echo count($foro); exit;
+        if ($foro["Idi_IdIdioma"]==$Idi_IdIdioma) {
+            $this->_view->assign('foro',$foro);    
+            // $this->_view->assign('contenido',$datos);
+        }else{
+            $foro["For_Titulo"]="";
+            $foro["For_Resumen"]="";
+            $foro["For_Descripcion"]="";
+            $foro["For_PalabrasClaves"]=""; 
+            $foro["Idi_IdIdioma"]=$Idi_IdIdioma;
+            $this->_view->assign('foro',$foro);    
+        }        
+  
+        $_model_index     = $this->loadModel('index');
+        $foro["Archivos"] = $_model_index->getArchivos_x_idforo($id);
+        $this->_view->assign('foro', $foro);
+        $this->_view->assign('idiomas',$this->_model->getIdiomas());
+        $this->_view->assign('idForo', $id);
+        $this->_view->assign('Idiomaseleccionado', $Idi_IdIdioma);
+        $this->_view->assign('IdiomaOriginal', $IdiomaOriginal);
+        $this->_view->assign('Form_Funcion', $Form_Funcion);
+        $this->_view->renderizar('ajax/gestion_idiomas', false, true);
     }
 
     public function members($id_foro = 0)
@@ -420,13 +493,14 @@ class adminController extends foroController
                 $this->_view->assign('lista_members', $lista_members);
                 $this->_view->assign('foro', $foro);
                 $this->_view->assign('lista_rol_foro', $this->_model->getRolForo());
+                $this->_view->assign('text_busqueda_miembro', '');
                 $this->_view->renderizar('members');
             } else {
                 return $this->redireccionar("foro/admin");
             }
         } else {
             return $this->redireccionar("foro/admin");
-        }
+        }        
     }
 
     public function actividad($id_foro = 0)
@@ -538,14 +612,19 @@ class adminController extends foroController
         $this->_view->assign('numeropagina', $paginador->getNumeroPagina());
         //$this->_view->assign('cantidadporpagina',$registros);
         $this->_view->assign('paginacion', $paginador->getView('paginacion_ajax_s_filas'));
+        $this->_view->assign('text_busqueda_miembro', '');
         $this->_view->renderizar('ajax/listaMembers', false, true);
     }
 
     public function _tab_members_buscar()
     {        
         $id_foro    = $_SESSION['id_foro'];
-        $rol_member = $_SESSION['rol_member'];
+        $rol_member = $_SESSION['rol_member'];       
         $filtro = $this->getTexto('filtro');
+        if(empty($filtro)){
+            $filtro ="";
+        }
+        // echo $filtro; exit;
 
         $pagina     = 1;
         $paginador  = new Paginador();
@@ -560,11 +639,12 @@ class adminController extends foroController
         $this->_view->assign('numeropagina', $paginador->getNumeroPagina());
         //$this->_view->assign('cantidadporpagina',$registros);
         $this->_view->assign('paginacion', $paginador->getView('paginacion_ajax_s_filas'));
-        $this->_view->renderizar('ajax/listaMembers', false, true);
+        
         
         $this->_view->assign('text_busqueda_miembro', $filtro);
-        Session::destroy('id_foro');
-        Session::destroy('rol_member');
+        // Session::destroy('id_foro');
+        // Session::destroy('rol_member');
+        $this->_view->renderizar('ajax/listaMembers', false, true); 
     }
 
     public function _cambiarEstadoMember()
