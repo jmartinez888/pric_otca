@@ -54,7 +54,7 @@ class messageModel extends Model {
                                 (CASE WHEN X.Usu_IdUsuRecibe = {$usuario} THEN '' ELSE X.Usu_IdUsuRecibe END)) as Usuario
                               FROM (
                                   SELECT Usu_IdUsuEnvia, Usu_IdUsuRecibe FROM conversacion
-                                  WHERE Usu_IdUsuEnvia = {$usuario} OR Usu_IdUsuRecibe = {$usuario}
+                                  WHERE (Usu_IdUsuEnvia = {$usuario} OR Usu_IdUsuRecibe = {$usuario})
                                       AND Con_Estado = 1 AND Row_Estado = 1
                                       AND Con_IdConversacion NOT IN (SELECT Men_Codigo FROM mensaje_reciclado
                                         WHERE Usu_IdUsuario = {$usuario} AND Men_Tipo = 2) /*MENSAJE ELIMINADOS*/
