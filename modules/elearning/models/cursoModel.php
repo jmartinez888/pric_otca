@@ -190,7 +190,6 @@ class cursoModel extends Model {
                 (SELECT l.Lec_IdLeccion FROM leccion l INNER JOIN modulo_curso mc ON l.Mod_IdModulo = mc.Mod_IdModulo
                 WHERE mc.Cur_IdCurso = C.Cur_IdCurso AND mc.Mod_Estado = 1 AND mc.Row_Estado = 1 AND
                   l.Lec_Estado = 1 AND l.Row_Estado = 1 AND l.Lec_FechaDesde IS NOT NULL AND l.Lec_FechaHasta IS NOT NULL
-                  AND MONTH(l.Lec_FechaDesde) = '{$mes}' AND YEAR(l.Lec_FechaDesde) = '{$anio}'
                 ORDER BY l.Lec_FechaDesde ASC LIMIT 1) as MiLeccion
               FROM curso C
               WHERE C.Cur_Estado = 1 AND C.Row_Estado = 1)
@@ -208,10 +207,10 @@ class cursoModel extends Model {
                 (SELECT l.Lec_IdLeccion FROM leccion l INNER JOIN modulo_curso mc ON l.Mod_IdModulo = mc.Mod_IdModulo
                 WHERE mc.Cur_IdCurso = C.Cur_IdCurso AND mc.Mod_Estado = 1 AND mc.Row_Estado = 1 AND
                   l.Lec_Estado = 1 AND l.Row_Estado = 1 AND l.Lec_FechaDesde IS NOT NULL AND l.Lec_FechaHasta IS NOT NULL
-                  AND MONTH(l.Lec_FechaHasta) = '{$mes}' AND YEAR(l.Lec_FechaHasta) = '{$anio}'
                 ORDER BY l.Lec_FechaHasta DESC LIMIT 1) as MiLeccion
               FROM curso C
               WHERE C.Cur_Estado = 1 AND C.Row_Estado = 1))X
+              WHERE MONTH(X.FECHA) = '{$mes}' AND YEAR(X.FECHA) = '{$anio}'
               ORDER BY X.FECHA";
       return $this->getArray($sql);
     }
