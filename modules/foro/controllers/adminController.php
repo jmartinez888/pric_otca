@@ -493,13 +493,14 @@ class adminController extends foroController
                 $this->_view->assign('lista_members', $lista_members);
                 $this->_view->assign('foro', $foro);
                 $this->_view->assign('lista_rol_foro', $this->_model->getRolForo());
+                $this->_view->assign('text_busqueda_miembro', '');
                 $this->_view->renderizar('members');
             } else {
                 return $this->redireccionar("foro/admin");
             }
         } else {
             return $this->redireccionar("foro/admin");
-        }
+        }        
     }
 
     public function actividad($id_foro = 0)
@@ -611,14 +612,19 @@ class adminController extends foroController
         $this->_view->assign('numeropagina', $paginador->getNumeroPagina());
         //$this->_view->assign('cantidadporpagina',$registros);
         $this->_view->assign('paginacion', $paginador->getView('paginacion_ajax_s_filas'));
+        $this->_view->assign('text_busqueda_miembro', '');
         $this->_view->renderizar('ajax/listaMembers', false, true);
     }
 
     public function _tab_members_buscar()
     {        
         $id_foro    = $_SESSION['id_foro'];
-        $rol_member = $_SESSION['rol_member'];
+        $rol_member = $_SESSION['rol_member'];       
         $filtro = $this->getTexto('filtro');
+        if(empty($filtro)){
+            $filtro ="";
+        }
+        // echo $filtro; exit;
 
         $pagina     = 1;
         $paginador  = new Paginador();
@@ -633,11 +639,12 @@ class adminController extends foroController
         $this->_view->assign('numeropagina', $paginador->getNumeroPagina());
         //$this->_view->assign('cantidadporpagina',$registros);
         $this->_view->assign('paginacion', $paginador->getView('paginacion_ajax_s_filas'));
-        $this->_view->renderizar('ajax/listaMembers', false, true);
+        
         
         $this->_view->assign('text_busqueda_miembro', $filtro);
-        Session::destroy('id_foro');
-        Session::destroy('rol_member');
+        // Session::destroy('id_foro');
+        // Session::destroy('rol_member');
+        $this->_view->renderizar('ajax/listaMembers', false, true); 
     }
 
     public function _cambiarEstadoMember()

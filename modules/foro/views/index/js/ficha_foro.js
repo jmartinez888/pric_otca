@@ -12,7 +12,7 @@ $(document).on('ready', function () {
         $("#div_loading_" + $(this).attr("id_foro") + "_" + $(this).attr("id_padre")).html("");
         $("#div_loading_" + $(this).attr("id_foro") + "_" + $(this).attr("id_padre")).removeClass("d-block");
         $("#div_loading_" + $(this).attr("id_foro") + "_" + $(this).attr("id_padre")).addClass("d-none");
-
+        
     });
     $('body').on('click', '.coment_coment', function () {
 
@@ -43,6 +43,8 @@ $(document).on('ready', function () {
     });
 
     $("#hd_login_modulo").val("foro");
+
+    js_option();
 });
 function regitrar_comentario(id_foro, id_usuario, descripcion, id_padre) {
     $("#cargando").show();
@@ -120,6 +122,17 @@ function load_files_coment(file, div_conte) {
         }
     });
 
+}
+function js_option() {
+    // body...
+    $(".capa").hover(function(){
+
+        // $(".dropdown-menu").show();
+        $(".opciones_comentario_"+$(this).attr("id_comentario_capa")).show();
+    }, function(){
+        // $(".dropdown-menu").hide();
+        $(".opciones_comentario_"+$(this).attr("id_comentario_capa")).hide();
+    });
 }
 
 function div_file(titulo, peso, id,id_padre) {

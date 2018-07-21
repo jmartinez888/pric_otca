@@ -146,6 +146,7 @@ $(document).ready(function(){
 		$("#inNuevoMensaje").prop("disabled", true);
 		$("#btnEnviarMensaje").prop("disabled", true);
 		var data = { id1: ID1, id2: ID2, tipo: TIPO, mensaje: MENSAJE };
+
 		$.ajax({
 			url: _root_ + "elearning/message/save",
 			type: "POST",
@@ -263,12 +264,28 @@ $(document).ready(function(){
 						contenedor.append(oItem);
 					});
 
-					CHATS.click(function(){
-						alert("hola");
+					var _CHATS = $(".chat_conv_container .item-chat");
+					_CHATS.click(function(){
 						var ID1 = $(this).attr("tag");
 						var ID2 = $(this).attr("retag");
 						var TIPO = $(this).attr("tipo");
-						CHATS.removeClass("seleccionado");
+						var TITULO = $(this).attr("titulo");
+						var SUBTITULO = $(this).attr("subtitulo");
+
+
+						$(".chat_content__active__header__text").html(TITULO);
+						$(".chat_content__active__header__subtext").html(SUBTITULO);
+
+						if(TIPO==2){
+							$(".chat_content__active__header__text").css({
+								"margin-top": "9px", "font-size": "18px"
+							});
+						}else{
+							$(".chat_content__active__header__text").css({
+								"margin-top": "0px", "font-size":"15px"
+							});
+						}
+						_CHATS.removeClass("seleccionado");
 
 						$(this).addClass("seleccionado");
 
@@ -282,6 +299,8 @@ $(document).ready(function(){
 						$("#inID1Chat").val(ID1);
 						$("#inID2Chat").val(ID2);
 						$("#inTipoChat").val(TIPO);
+
+						VerChat(TIPO, ID1, ID2, 0, 200);
 					});
 				}
 			}

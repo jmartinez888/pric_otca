@@ -171,7 +171,6 @@ class loginController extends Controller {
             Session::set('id_usuario', $ArrayUsuario["Usu_IdUsuario"]);
             Session::set('tiempo', time());
 
-
             $this->_view->assign('usuario', $Usu_Usuario);
             $this->_view->assign('params_usu', $rol);
         } else {

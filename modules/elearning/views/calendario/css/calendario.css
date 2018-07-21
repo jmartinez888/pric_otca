@@ -2,6 +2,7 @@
 .panel-calendario-header{
   background: #00a65a;
   color: white;
+  padding: 1px !important;
 }
 
 #panel-calendario-titulo{
