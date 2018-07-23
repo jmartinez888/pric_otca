@@ -42,7 +42,7 @@ class calendarioController extends elearningController {
     $titulo = $this->NombreMes($mes) . " del " . $anio;
 
     $calendario = $this->MesCalendario($anio, $mes);
-    var_dump($calendario);
+    var_dump($evento);
     
     $calendario = $this->AddEventos($calendario, $evento);
 exit();
