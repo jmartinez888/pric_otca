@@ -306,3 +306,280 @@
 </div>
 {/if}
 
+
+{if $id_noticia == 343}
+<div class="col-lg-8">
+	<div class="row category-caption">
+		<div class="col-lg-12">
+			<h2 class="pull-left main-caption">Noticias</h2>
+			<h2 class="pull-left">Noticias</h2>
+		</div>
+	</div>
+	<div class="row">
+		<article class="col-lg-12 col-md-12">
+			<div class="gallery-carousel owl-carousel owl-theme" style="opacity: 1; display: block;">
+				<div class="owl-item" style="width: 750px;"><div class="picture"><div class="category-image"><img src="http://www.otca-oficial.info/assets/images/media/20180507/c895f1b2d8036168a136df6c77c712f7.JPG" class="img-responsive"></div></div></div>
+				
+			</div>
+
+			<div class="detail ">
+				<div class="info">
+					<span class="date">
+						<i class="fa fa-calendar-o"></i> 24 de Abril, 2018
+					</span>
+				</div>
+			</div>
+
+			<div class="caption">Impulsar la Agenda Regional de Salud fue tema de reunión de trabajo entre OTCA e OPS/OMS</div>
+
+			<div class="text">
+				<p>
+					<b>Washington, 23/04/2017.-</b>
+					La Secretaria General de la OTCA, Embajadora María Jacqueline Mendoza Ortega se reunió con la Directora de la Organización Panamericana de Salud (PAHO), Doctora Carissa Faustina Etienne en la Oficina Sanitaria Panamericana en Washington DC, los días 17 y 18 de Abril para presentar las actividades que desarrolla la Secretaria Permanente en los temas de Salud Pública, Salud Ambiental, Salud indígena y Gestión del Conocimiento en la Región Amazónica.&nbsp;
+					<br>
+				</p>
+				<p>Durante la visita también se trabajó junto a las diferentes direcciones de la OPS/OMS el Plan de Trabajo OTCA-OPS/OMS dentro del Acuerdo Marco de Cooperación que existe entre las dos instituciones desde 2015 y que fue renovado en julio del año pasado.&nbsp;</p>
+
+				<p>Participaron de la visita también el Doctor Luis Francisco Sánchez Otero (Coordinador de Salud) y la Licenciada Sharon Austin (Coordinadora de Asuntos Indígenas) quienes junto a la Secretaria General presentaron el panorama actual de la Salud en la Amazonía.</p>
+
+				<p>En las diferentes reuniones de trabajo realizadas se establecieron temas de trabajo entre las dos instituciones y se resaltó la necesidad de impulsar la Agenda Regional de Salud de la OTCA y de fortalecer el trabajo en los temas de salud indígena e intercultural, así como el trabajo en los temas de Enfermedades Transmisibles y No Transmisibles, Enfermedades Tropicales Desatendidas, Desarrollo de los Objetivos de Desarrollo Sostenible y apoyo a comunidades minoritarias, vulnerables y en situación de migración. Además, se propusieron actividades de trabajo para los temas de salud en fronteras, género, la gestión de información demográfica y de Salud Pública en la región y la cooperación subregional entre países.</p>
+
+				<p>Esta actividad se desarrolló con el apoyo de la Oficina para la Cooperación Suramericana de la OPS/OMS, con quienes se continuará el desarrollo del plan interinstitucional de trabajo.&nbsp;</p>
+			</div>
+
+			<hr>
+
+			<div class="source">
+				<b>Fuente</b>: OTCA  <a href="http://www.otca-oficial.info/news/details/343" class="btn btn-primary " target="_blank">Ir a Noticia</a></div>
+			<hr>
+				</article>
+	</div>
+</div>
+{/if}
+
+{if $id_noticia == 344}
+<div class="col-lg-8">
+	<div class="row category-caption">
+		<div class="col-lg-12">
+			<h2 class="pull-left main-caption">Noticias</h2>
+			<h2 class="pull-left">Noticias</h2>
+		</div>
+	</div>
+
+	<div class="row">
+		<article class="col-lg-12 col-md-12">
+			<div class="picture">
+				<div class="category-image">
+					<img src="http://www.otca-oficial.info/assets/images/media/20180510/4f3e115730e5a85147a03689e8e4a4c7.jpg" class="img-responsive">
+				</div>
+			</div>
+
+			<div class="detail ">
+				<div class="info">
+					<span class="date">
+						<i class="fa fa-calendar-o"></i> 10 de Mayo, 2018
+					</span>
+					<span class="likes pull-right">
+					<i class="fa fa-heart-o btn-like" title="Gustar" page="2" registry="344"></i>
+					<span>0</span>
+					</span>
+					<a class="btn-print pull-right" title="Impresión">
+						<i class="fa fa-print"></i> Impresión
+					</a>
+				</div>
+			</div>
+			<div class="caption">Los 40 años del Tratado y su incidencia en el desarrollo en la región es destaque en seminario</div>
+			<div class="text">
+				<p>
+					<b>Manaos, 10/05/2018.-</b>
+					La Secretara General de la SP/OTCA, Embajadora María Jacqueline Mendoza, realizó hoy, 10/05, una exposición durante el seminario Pan-Amazónico "40 años de firma del Tratado de Cooperación Amazónica (TCA), un debate sobre la Amazonía”, organizado por la Asociación Pan-Amazonia.&nbsp;
+					<br>
+				</p>
+
+				<p>Durante su presentación, María Jacqueline Mendoza enfatizó los avances y las acciones que viene desarrollando la Secretaría Permanente, en el marco de la Agenda Estratégica de Cooperación Amazónica (AECA) que define el marco de acción de la OTCA, así como los desafíos y futuros proyectos previstos y priorizados por los Países Miembros. De igual manera, resaltó la importancia de la firma del Tratado de Cooperación Amazónica y su incidencia en el desarrollo de la región en los 40 años de su vigencia.&nbsp;</p>
+				<p>La Secretaria General compartió el panel con el Embajador Rubens Ricupero, ex Secretario General de la Conferencia de las Naciones Unidas sobre Comercio y Desarrollo (UNCTAD), con Rosalía Arteaga, ex Secretaria General de la SP/OTCA y con el Ministro Paulo Roberto de Almeida, Director del Instituto Brasilero de Relaciones Internacionales (IPRI) del Ministerio de Relaciones Exteriores de Brasil.</p>
+				<p>El seminario será realizado hasta mañana y aún están previstas presentaciones y debatidos sobre desarrollo y cooperación regional.</p>
+			</div>
+
+			<hr>
+
+			<div class="source">
+				<b>Fuente</b>: OTCA  <a href="http://www.otca-oficial.info/news/details/344" class="btn btn-primary " target="_blank">Ir a Noticia</a>
+			</div>
+			<hr>
+		</article>
+	</div>
+</div>
+{/if}
+
+{if $id_noticia == 290}
+<div class="col-lg-8">
+	<div class="row category-caption">
+		<div class="col-lg-12">
+			<h2 class="pull-left main-caption">Noticias</h2>
+			<h2 class="pull-left">Calendario</h2>
+		</div>
+	</div>
+
+	<div class="row">
+		<article class="col-lg-12 col-md-12">
+			<div class="picture">
+				<div class="category-image">
+					<img src="http://www.otca-oficial.info/assets/images/media/20171031/1db95364764d697732748e35fe35aafc.JPG" class="img-responsive">
+				</div>
+			</div>
+
+			<div class="detail ">
+				<div class="info">
+					<span class="date">
+						<i class="fa fa-calendar-o"></i> 08 de Noviembre, 2017
+					</span>
+				</div>
+			</div>
+			<div class="caption">Reunión Técnica de Atención a la Salud en la Región de Frontera entre Brasil, Guyana y Suriname (9 y 10 noviembre)</div>
+			<div class="text">
+				<p>La Reunión Técnica de Atención de Salud en la Región de Frontera entre Brasil, Guyana y Suriname se llevará a cabo en la ciudad de Lethem, Guyana, los días 9 al 10 de noviembre de 2017. Este encuentro trinacional tiene entre sus objetivos la elaboración de un diagnóstico epidemiológico, demográfico; la definición de criterios comunes entre estos países y la evaluación de las capacidades en la región para atender situaciones de emergencia.</p>
+
+				<p>Este encuentro hace parte del Programa Marco Estratégico para la Elaboración de una Agenda&nbsp; Regional para la Protección de los Pueblos Indígenas en Aislamiento Voluntario y Contacto Inicial, fase II: “Proyecto Pueblos Indígenas en Regiones de Frontera de la OTCA”.&nbsp;</p>
+			</div>
+
+			<hr>
+
+			<div class="source"><b>Fuente</b>: OTCA   <a href="http://www.otca-oficial.info/news/details/290" class="btn btn-primary " target="_blank">Ir a Noticia</a>
+			</div>
+			<hr>
+			
+		</article>
+	</div>
+</div>
+{/if}
+
+
+{if $id_noticia == 301}
+<div class="col-lg-8">
+	<div class="row category-caption">
+		<div class="col-lg-12">
+			<h2 class="pull-left main-caption">Noticias</h2>
+			<h2 class="pull-left">Calendario</h2>
+		</div>
+	</div>
+	<div class="row">
+		<article class="col-lg-12 col-md-12">
+			<div class="picture">
+				<div class="category-image">
+					<img src="http://www.otca-oficial.info/assets/images/media/20170705/8210a572018d6cb3cec1f17979b06692.JPG" class="img-responsive">
+				</div>
+			</div>
+			<div class="detail ">
+				<div class="info">
+					<span class="date">
+						<i class="fa fa-calendar-o"></i> 28 de Noviembre, 2017
+					</span>
+				</div>
+			</div>
+
+			<div class="caption">Tercer Seminario Regional sobre Incendios en la Región Amazónica (29 y 30 de noviembre)</div>
+			<div class="text">
+				<p>Este seminario regional se llevará a cabo para intercambiar experiencias a nivel regional sobre el Manejo Integral del Fuego (MIF). Asimismo, conocer las actividades de las Salas de Observación (SdO) respecto al tema como también identificar oportunidades de cooperación regional y de fortalecimiento de capacidades nacionales.&nbsp;<br>
+				</p>
+
+				<p>El encuentro será realizado los días 29 y 30 de noviembre en la ciudad de Santa Cruz de la Sierra, en Bolivia. En el primer día se abordará el estado del MIF en los Países; así como diversas experiencias de Bolivia relacionadas con el tema. En el segundo día se harán presentaciones, mesas de trabajo para discutir la gestión de riesgos forestales, entre otros asuntos.&nbsp;&nbsp;</p>
+			</div>
+			<hr>
+
+			<div class="source"><b>Fuente</b>: OTCA   <a href="http://www.otca-oficial.info/news/details/301" class="btn btn-primary " target="_blank">Ir a Noticia</a> </div>
+			<hr>
+		</article>
+	</div>
+</div>
+{/if}
+
+
+{if $id_noticia == 322}
+<div class="col-lg-8">
+	<div class="row category-caption">
+		<div class="col-lg-12">
+			<h2 class="pull-left main-caption">Noticias</h2>
+			<h2 class="pull-left">Calendario</h2>
+		</div>
+	</div>
+
+	<div class="row">
+		<article class="col-lg-12 col-md-12">
+			<div class="picture">
+				<div class="category-image">
+					<img src="http://www.otca-oficial.info/assets/images/media/20160702/92f0565e70557b6cf78d1ca2e3cf55d7.JPG" class="img-responsive">
+				</div>
+			</div>
+
+			<div class="detail ">
+				<div class="info">
+					<span class="date">
+						<i class="fa fa-calendar-o"></i> 26 de Febrero, 2018
+					</span>
+				</div>
+			</div>
+
+			<div class="caption">7ª Reunión Regionalde Asuntos Indígenas (27 y 28 de febrero)</div>
+			<div class="text">
+				<p>La 7ª Reunión Regional de Altas Autoridades Gubernamentales de Asuntos Indígenas se llevará a cabo en la ciudad de El Coca, Ecuador, los días 27 y 28 de febrero.&nbsp;<br></p>
+
+				<p>Está reunión tiene por objetivo presentar un informe de progreso sobre la implementación de la Agenda Estratégica de Cooperación Amazónica (AECA) actual, con la finalidad de obtener insumos de los Países Miembros para orientar la actualización de la Agenda sobre Asuntos Indígenas.&nbsp;</p>
+				<div>
+					<br>
+				</div>
+			</div>
+
+			<div class="source"><b>Fuente</b>: OTCA <a href="http://www.otca-oficial.info/news/details/322" class="btn btn-primary " target="_blank">Ir a Noticia</a>
+			</div>
+			<hr>
+		</article>
+	</div>
+</div>
+{/if}
+
+{if $id_noticia == 303}
+<div class="col-lg-8">
+	<div class="row category-caption">
+		<div class="col-lg-12">
+			<h2 class="pull-left main-caption">Noticias</h2>
+			<h2 class="pull-left">Noticias</h2>
+		</div>
+	</div>
+
+	<div class="row">
+		<article class="col-lg-12 col-md-12">
+			<div class="picture">
+				<div class="category-image">
+					<img src="http://www.otca-oficial.info/assets/images/media/20171129/c32925528627440fc9521f72a6b0e9f5.jpg" class="img-responsive">
+				</div>
+			</div>
+
+			<div class="detail ">
+				<div class="info">
+					<span class="date">
+						<i class="fa fa-calendar-o"></i> 29 de Noviembre, 2017
+					</span>
+				</div>
+			</div>
+
+			<div class="caption">Empieza la Reunión del Consejo de Cooperación Amazónica</div>
+			<div class="text">
+				<p>
+				<b>Brasilia, 29/11/2017.-</b>
+				Con la participación de delegados de los Países Miembros de la Organización del Tratado de Cooperación Amazónica (OTCA) está siendo realizada en la ciudad de Tena, Ecuador, la vigésima Reunión del Consejo de Cooperación Amazónica (CCA).<br></p><p>En la reunión serán presentados el informe de gestión de la Secretaría Permanente; la actualización de la Agenda Estratégica de Cooperación Amazónica; la iniciativa amazónica, entre otros asuntos.</p>
+
+				<p>Los resultados de las deliberaciones tomadas en esta reunión del CCA serán presentados a los Cancilleres, en su décima tercera Reunión de Ministros de Relaciones Exteriores de los Países Miembros de la OTCA, que se llevará a cabo el día 1 de diciembre, en Tena.</p>
+			</div>
+
+			<div class="source"><b>Fuente</b>: OTCA   <a href="http://www.otca-oficial.info/news/details/303" class="btn btn-primary " target="_blank">Ir a Noticia</a>
+			</div>
+
+			<hr>
+		</article>
+	</div>
+</div>
+{/if}
+
+
+<!--    <a href="http://www.otca-oficial.info/news/details/343" class="btn btn-primary " target="_blank">Ir a Noticia</a>    -->
