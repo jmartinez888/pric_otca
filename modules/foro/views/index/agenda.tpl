@@ -26,7 +26,7 @@
     }
     var today = yyyy + '-' + mm + '-' + dd;
     defaultDateCalendar = today;
-    eventos = JSON.parse(JSON.stringify('{$agenda}'));
+    eventos = JSON.parse(JSON.stringify({$agenda}));
 </script>
 
 
