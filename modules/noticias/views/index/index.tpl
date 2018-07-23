@@ -585,7 +585,7 @@
 <!--    <a href="http://www.otca-oficial.info/news/details/343" class="btn btn-primary " target="_blank">Ir a Noticia</a>    -->
 
 <!-- Final Resumenes -->
-<div class="col col-md-4 col-sm-12 col-xs-12 back-color-white" style="border-left: 1px solid #ebeaea; padding-left: 10px;">
+<div class="col col-md-4 col-sm-12 col-xs-12 back-color-white" style="padding-top: 15px; border-left: 1px solid #ebeaea; padding-left: 10px;">
     <ul class="nav nav-tabs jsoft-tabs bg-verde">
         <li class="active" ><a class=""  data-toggle="tab" href="#evento_interes">Eventos de Interés</a></li>
         <li><a data-toggle="tab" href="#dato_interes">Datos de Interés</a></li>
