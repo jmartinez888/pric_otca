@@ -250,13 +250,13 @@
             </a>
         </ul>
         {/if}
-        <ul>
+        <!--ul>
           <a href="{BASE_URL}elearning/cursos/calendario" class="nounderline">
             <div class="side-menu2"><li class="side-menu" style="position: relative">
             <i class="glyphicon glyphicon-calendar"></i>
             <span> Calendario de Cursos</span></li></div>
           </a>
-        </ul>
+        </ul-->
    
         <ul>
           <a href="{BASE_URL}elearning/certificado/verificar" class="nounderline">
