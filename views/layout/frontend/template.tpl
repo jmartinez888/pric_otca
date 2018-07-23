@@ -280,7 +280,7 @@
                                 </div>
                                 <h5 class="text-bold">SÍGUENOS</h5>
                                 <div class="text-footer">
-                                     <a class="display-block" href="http://www.otca-oficial.info/ ">http://www.otca-oficial.info/ </a>
+                                     <a class="display-block" href="http://www.otca-oficial.info/ " target="_blank">http://www.otca-oficial.info/ </a>
                                      <a class="ic_sociales" href="https://www.facebook.com/otcaoficial" target="_blank"><img class="img-responsive" src="{$_layoutParams.ruta_img}frontend/ic_fb.png"></a>
                                      <a class="ic_sociales" href="https://twitter.com/OTCAnews" target="_blank"><img class="img-responsive" src="{$_layoutParams.ruta_img}frontend/ic_tw.png"></a>
                                      <a class="ic_sociales" href="https://www.youtube.com/user/OTCAvideo/videos?shelf_id=0&amp;sort=dd&amp;view=0" target="_blank"><img class="img-responsive" src="{$_layoutParams.ruta_img}frontend/ic_yt.png"></a>
@@ -292,27 +292,27 @@
                     <div class="footer-enlaces col-md-3">
                         <h5 class="text-bold text-color-white">LINKS DE INTERES</h5>
                         <div class="list-group">
-                          <a href="#" class="list-group-item">
+                          <a href="https://www.cbd.int/" class="list-group-item" target="_blank">
                             <h4 class="list-group-item-heading">Secretaría del CDB.</h4>
                             <!-- <p class="list-group-item-text">Breve descripcion del enlace</p> -->
                           </a>
-                           <a href="#" class="list-group-item">
+                           <a href="http://www.itto.int/es/" class="list-group-item" target="_blank">
                             <h4 class="list-group-item-heading">La OIMT</h4>
                             <!-- <p class="list-group-item-text">Breve descripcion del enlace</p> -->
                           </a>
-                           <a href="#" class="list-group-item">
+                           <a href="http://tmfo.org/index.html" class="list-group-item" target="_blank">
                             <h4 class="list-group-item-heading">El Observatorio de Bosques Manejados Tropicales</h4>
                             <!-- <p class="list-group-item-text">Breve descripcion del enlace</p> -->
                           </a>
-                           <a href="#" class="list-group-item">
+                           <a href="https://www.cites.org/" class="list-group-item" target="_blank">
                             <h4 class="list-group-item-heading">CITES</h4>
                             <!-- <p class="list-group-item-text">Breve descripcion del enlace</p> -->
                           </a>
-                           <a href="#" class="list-group-item">
+                           <a href="http://www.fao.org/forestry/en/" class="list-group-item" target="_blank">
                             <h4 class="list-group-item-heading">FAO-Bosques</h4>
                             <!-- <p class="list-group-item-text">Breve descripcion del enlace</p> -->
                           </a>
-                           <a href="#" class="list-group-item">
+                           <a href="http://www.un.org/sustainabledevelopment/" class="list-group-item" target="_blank">
                             <h4 class="list-group-item-heading">Metas de Desarrollo Sostenible</h4>
                             <!-- <p class="list-group-item-text">Breve descripcion del enlace</p> -->
                           </a>

@@ -219,7 +219,8 @@
         'headline': 'OTCA celebra el Día Mundial del Agua con varias actividades en el 8º Foro Mundial de Agua.',
         // 'headline2': 'WWF lanza Premio Periodístico en el Perú',
         
-        'href': 'http://www.otca-oficial.info/news/details/333',
+        //'href': 'http://www.otca-oficial.info/news/details/333',
+        'href': '{$_layoutParams.root}noticias/index/index/333',
         'storyTitle': 'OTCA celebra el Día Mundial del Agua con varias actividades en el 8º Foro...'
     }, 
     {
@@ -231,7 +232,8 @@
         'headline': '22 de abril: Día Internacional de la Madre Tierra.',
         // 'headline2': 'Iniciativa logra recuperar y reforestar suelos degradados',
         
-        'href': 'http://www.otca-oficial.info/news/details/338',
+        //'href': 'http://www.otca-oficial.info/news/details/338',
+        'href': '{$_layoutParams.root}noticias/index/index/338',
         'storyTitle': 'Hoy 22 de abril, se conmemora mundialmente el Día Internacional de la Madre Tierra, ...'
     }, 
     {
