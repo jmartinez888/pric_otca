@@ -54,6 +54,8 @@ class indexController extends foroController {
 
     public function discussions() {
         $this->_view->setTemplate(LAYOUT_FRONTEND);
+        
+        $this->_view->assign('titulo', "Discusiones");
         $this->_view->setCss(array("jp-index"));
         $this->_view->assign('lista_foros', $this->_model->getForos("forum"));
         $this->_view->renderizar('discussions');
@@ -61,6 +63,8 @@ class indexController extends foroController {
 
     public function query() {
         $this->_view->setTemplate(LAYOUT_FRONTEND);
+        
+        $this->_view->assign('titulo', "Consultas");
         $this->_view->setCss(array("jp-index"));
         $this->_view->assign('lista_foros', $this->_model->getForos("query"));
         $this->_view->renderizar('query');
@@ -75,6 +79,7 @@ class indexController extends foroController {
 
     public function workshop() {
         $this->_view->setTemplate(LAYOUT_FRONTEND);
+        $this->_view->assign('titulo', "Workshop");
         $this->_view->setCss(array("jp-index"));
         $this->_view->assign('lista_foros', $this->_model->getForos("workshop"));
         $this->_view->renderizar('workshop');
@@ -85,12 +90,13 @@ class indexController extends foroController {
         $this->_view->setTemplate(LAYOUT_FRONTEND);
         $this->_view->setJs(array('agenda', array(BASE_URL . 'public/js/fullcalendar/moment.min.js'), array(BASE_URL . 'public/js/fullcalendar/fullcalendar.min.js'), array(BASE_URL . 'public/js/fullcalendar/locale/es.js')));
         $this->_view->setCss(array('agenda', 'jp-agenda', array(BASE_URL . "public/css/fullcalendar/fullcalendar.min.css")));
-
+        $this->_view->assign('titulo', "Agenda");
         $this->_view->assign('agenda',json_encode($this->utf8_converter_array($this->_model->getAgenda())));
         $this->_view->renderizar('agenda');
     }
     public function historico() {
         $this->_view->setTemplate(LAYOUT_FRONTEND);
+        $this->_view->assign('titulo', "Historico");
         $this->_view->setCss(array("historico", "jp-historico"));
         $this->_view->assign('lista_foros', $this->_model->getHistorico());
         $this->_view->renderizar('historico');
@@ -110,7 +116,7 @@ class indexController extends foroController {
             array('http://code.highcharts.com/mapdata/custom/world.js', false), //agregado
             "statistics"
         ));
-        
+        $this->_view->assign('titulo', "Estadisticas Foro");
         //$this->_view->assign('StdGeneral', $this->_model->getEstadistcaGeneral());
         $this->_view->assign('StdCharComentarios',json_encode($this->_model->getComentario_x_Mes()));
         $this->_view->assign('StdActividades',$this->_model->getCantidaFuncionForo());
