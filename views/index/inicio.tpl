@@ -205,8 +205,10 @@
         'headline': 'Secretaria General es condecorada con Orden de Rio Branco.',
         // 'headline2': 'Urgen compromisos para su conservación',
         
-        'href': '{$_layoutParams.root}noticias/index/341',
+        'href': '{$_layoutParams.root}noticias/index/index/341',
         'storyTitle': 'La Secretaria General de la OTCA, Embajadora María Jacqueline Mendoza, ...'
+
+
     }, 
     {
         
@@ -241,7 +243,8 @@
         'headline': 'OTCA y CAF firman acuerdo para la promoción de la conservación ambiental.',
         // 'headline2': 'Promoviendo su conservación en el litoral peruano',
         
-        'href': 'http://www.otca-oficial.info/news/details/328',
+        //'href': 'http://www.otca-oficial.info/news/details/328',
+        'href': '{$_layoutParams.root}noticias/index/index/328',
         'storyTitle': 'Fue firmado hoy, 19 de marzo, un Acuerdo Marco de Cooperación entre la Organización del Tratado de Cooperación Amazónica ...'
     }]);
                
