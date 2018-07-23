@@ -44,8 +44,8 @@
 			<div class="source"><b>Fuente</b>: OTCA | foto ceremonia:  Marcos Corrêa/PR. <a href="http://www.otca-oficial.info/news/details/341" class="btn btn-primary " target="_blank">Ir a Noticia</a></div>
 			
 			<hr>
-			<div class="no-print">
-				<!-- <ul class="via">
+			<!--<div class="no-print">
+				 <ul class="via">
 					<li>Etiquetas</li>
 					<li><a href="http://www.otca-oficial.info/search/?tag=Orden de Rio Branco">Orden de Rio Branco</a></li>
 					<li><a href="http://www.otca-oficial.info/search/?tag=Secretaria General">Secretaria General</a></li>
@@ -87,9 +87,9 @@
 					</div>
 				</div>
 
-				<hr> -->
+				<hr> 
 				<div class="controls back"><a href="javascript:history.back(1)" class="btn btn-primary greyish-blue">Volver</a>
-				</div>
+				</div>-->
 
 			</article>
 		</div>
@@ -188,8 +188,12 @@
 				</p>
 			</div>
 
+			<hr>
+
 			<div class="source"> <b>Fuente</b>: CAF | OTCA <a href="http://www.otca-oficial.info/news/details/328" class="btn btn-primary " target="_blank">Ir a Noticia</a>
 			</div>
+
+			<hr>
 
 
 			
@@ -197,3 +201,108 @@
 	</div>
 </div>
 {/if}
+
+
+{if $id_noticia == 338}
+<div class="col-lg-8">
+	<div class="row category-caption">
+		<div class="col-lg-12">
+			<h2 class="pull-left main-caption">Noticias</h2>
+			<h2 class="pull-left">Noticias</h2>
+		</div>
+	</div>
+
+	<div class="row">
+		<article class="col-lg-12 col-md-12">
+			<div class="picture">
+				<div class="category-image">
+					<img src="http://www.otca-oficial.info/assets/images/media/20160702/330bc5df3994c7da231dc77855ecf623.jpg" class="img-responsive">
+				</div>
+			</div>
+
+			<div class="detail ">
+				<div class="info">
+					<span class="date">
+						<i class="fa fa-calendar-o"></i> 20 de Abril, 2018
+					</span>
+				</div>
+			</div>
+
+			<div class="caption">22 de abril: Día Internacional de la Madre Tierra</div>
+
+				<div class="text">
+					<p style="text-align: center; ">
+						<b>Comunicado</b>
+					</p>
+
+					<p>Hoy 22 de abril, se conmemora mundialmente el Día Internacional de la Madre Tierra, fecha en la cual tenemos la oportunidad de reconocer la interdependencia que existe entre los seres humanos, las demás especies vivas y el planeta que todos habitamos que es nuestra Casa Grande, la “Madre Tierra”.</p>
+					<p>El año 2009, la Asamblea General de las Naciones Unidas, ha reconocido que “Madre Tierra” es una expresión común utilizada para referirse al planeta en diversos países y regiones, y observamos que algunos países reconocen los derechos de la naturaleza en el contexto de la promoción del desarrollo sostenible, por lo que decidió proclamar el 22 de abril como “Día Internacional de la Madre Tierra”, a través de la Resolución A/RES/63/278.</p>
+					<p>Asimismo, el año 2012, la conferencia de las Naciones Unidas sobre el Desarrollo Sostenible (Rio+20), reconoció que el planeta Tierra y sus ecosistemas son nuestro hogar y que “Madre Tierra”, es una expresión común en muchos países y regiones.</p>
+					<p>Posteriormente, el Acuerdo de Paris adoptado en 2015, observa la importancia de garantizar la integridad de todos los ecosistemas, incluidos los océanos y la protección de la biodiversidad reconocida por algunas culturas como la “Madre Tierra”.</p>
+					<p>En ese contexto, la Organización del Tratado de Cooperación Amazónica (OTCA), conformado por Bolivia, Brasil, Colombia, Ecuador, Guyana, Perú, Suriname y Venezuela, por intermedio de su Secretaría Permanente reconoce la importancia de conmemorar este día y comunica que seguirá trabajando en la región amazónica promoviendo la conservación, protección y aprovechamiento sostenible/sustentable de los recursos que nos brinda nuestra Madre Tierra y generando espacios de diálogo y discusión abordando visiones holísticas e integrales con el objetivo de contribuir al desarrollo integral y modos de vida sustentables y el mantenimiento de un ambiente limpio y saludable, resaltando el aporte que desde la OTCA realizamos por la armonía entre el hombre y la naturaleza a fin de heredar un mundo habitable a nuestras futuras generaciones.</p>
+				</div>
+
+			<hr>
+
+			<div class="source"><b>Fuente</b>: OTCA <a href="http://www.otca-oficial.info/news/details/338" class="btn btn-primary " target="_blank">Ir a Noticia</a>
+			</div>
+			<hr>
+		</article>
+	</div>
+</div>
+{/if}
+
+
+{if $id_noticia == 333}
+<div class="col-lg-8">
+	<div class="row category-caption">
+		<div class="col-lg-12">
+			<h2 class="pull-left main-caption">Noticias</h2>
+			<h2 class="pull-left">Noticias</h2>
+		</div>
+	</div>
+
+	<div class="row">
+		<article class="col-lg-12 col-md-12">
+			<div class="picture">
+				<div class="category-image">
+					<img src="http://www.otca-oficial.info/assets/images/media/20160702/c5ce3b17dad192008ba0496e170cb70e.jpg" class="img-responsive">
+				</div>
+			</div>
+
+			<div class="detail ">
+				<div class="info">
+					<span class="date">
+						<i class="fa fa-calendar-o"></i> 22 de Marzo, 2018
+					</span>
+				</div>
+			</div>
+
+			<div class="caption">OTCA celebra el Día Mundial del Agua con varias actividades en el 8º Foro Mundial de Agua</div>
+			<div class="text">
+				<p>
+					<span style="font-weight: 700;">Brasilia, 22/03/2018.-</span>
+					<span style="font-weight: 700;">&nbsp;</span>
+					Hoy, 22 de marzo, se conmemora el Día Mundial del Agua y este año, la celebración se centra en explorar cómo la naturaleza puede ayudarnos a superar los desafíos que plantea el agua en el siglo XXI.
+					<br>
+				</p>
+
+				<p>La Amazonía es una de las regiones del mundo que posee la mayor cantidad de agua dulce, por lo que es fundamental realizar acciones transfronterizas de conservación. En ese contexto, la Organización del Tratado de Cooperación Amazónica (OTCA) ejecuta dos importantes iniciativas que fueron presentadas en el 8º Foro Mundial del Agua, que está siendo realizado en Brasilia, Brasil.</p>
+
+				<p>En este foro se constituyó un espacio para que los países presentaran iniciativas exitosas relacionadas a la gestión de los recursos hídricos, como por ejemplo, gestión transfronteriza, sistemas de alerta, monitoreo y sistemas de información, en el marco del Proyecto Amazonas: Acción Regional en el Área de Recursos Hídricos. Asimismo, se presentaron las iniciativas y resultados del proyecto GEF Amazonas. En la oportunidad fue lanzado una edición especial de la publicación “Aguas Amazónicas”, que trae 10 investigaciones sobre la cuenca hidrográficas: agua subterráneos para el suministro urbano; cooperación transfronteriza para la gestión sustentable del agua, entre otros estudios.</p>
+
+				<p>El "Proyecto OTCA/PNUMA/GEF- Manejo integrado y sostenible de los recursos hídricos transfronterizos de la cuenca del río Amazonas considerando la variabilidad y el cambio climático”, es una iniciativa regional exitosa involucrando a los ocho Países Miembros de la OTCA, un buen ejemplo de los beneficios de la cooperación regional a nivel de la cuenca.</p>
+
+				<p>El “Proyecto Amazonas: Acción Regional en el Área de Recursos Hídricos” fue creado en el contexto de la Cooperación Sur-Sur para fortalecer la gestión de los recursos hídricos, promover la integración y la cooperación técnica entre los países. Además, esta articulación institucional busca una mayor nivelación en las capacidades instaladas de las entidades involucradas con los recursos hídricos amazónicos, mediante el apoyo a la instalación de una Red Hidrometeorológica de la Cuenca Amazónica.</p>
+			</div>
+			<hr>
+
+			<div class="source"><b>Fuente</b>: OTCA <a href="http://www.otca-oficial.info/news/details/333" class="btn btn-primary " target="_blank">Ir a Noticia</a>
+			</div>
+			<hr>
+
+		</article>
+	</div>
+</div>
+{/if}
+
