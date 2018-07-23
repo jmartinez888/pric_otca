@@ -46,12 +46,14 @@ class View extends Smarty
             $this->_rutas['view'] = ROOT . 'modules' . DS . $modulo . DS . 'views' . DS . $controlador . DS;
             $this->_rutas['js'] = BASE_URL . 'modules/' . $modulo . '/views/' . $controlador . '/js/';
             $this->_rutas['css'] = BASE_URL . 'modules/' . $modulo . '/views/' . $controlador . '/css/';
+            $this->_rutas['img'] = BASE_URL . 'modules/' . $modulo . '/views/' . $controlador . '/img/';
         } 
         else 
         {
             $this->_rutas['view'] = ROOT . 'views' . DS . $controlador . DS;
             $this->_rutas['js'] = BASE_URL . 'views/' . $controlador . '/js/';
             $this->_rutas['css'] = BASE_URL . 'views/' . $controlador . '/css/';
+            $this->_rutas['img'] = BASE_URL . 'views/' . $controlador . '/img/';
         }
     }
 
@@ -95,6 +97,7 @@ class View extends Smarty
             'ruta_js' => BASE_URL . 'views/layout/' . $this->_template . '/js/',
             'js' => $js,
             'css' => $css,
+            'img' => $this->_rutas['img'],
             'js_plugin' => $this->_jsPlugin,
             'root' =>  $ruta_base,
             'modulo' => $this->_request->getModulo(),
