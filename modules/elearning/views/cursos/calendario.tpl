@@ -1,14 +1,16 @@
 <input id="hidden_url" value="{BASE_URL}elearning/" hidden="hidden"/>
-<div class="col-lg-12">
-  	{include file='modules/elearning/views/cursos/menu/lateral.tpl'}
-  	<div class="col-lg-10" style="margin-top: 20px">
-      <div class="col-lg-12">
-        <center><h4>Calendario de Cursos</h4></center>
-      </div>
-      <div class="col-lg-12" style="margin-top: 20px">
-        <div id="calendario"></div>
-      </div>
+{include file='modules/elearning/views/cursos/menu/lateral.tpl'}
+<div class="col-lg-10">  
+    <div class="row">
+        <div class="col-lg-12">
+            <h3>Calendario de Cursos</h3>
+            <hr class="cursos-hr">
+        </div>
+        <div class="col-lg-12" style="margin-top: 20px">
+                <div id="calendario"></div>
+        </div>
     </div>
+
 </div>
 
 <script type="text/javascript" src="{BASE_URL}/modules/elearning/views/gestion/js/core/controller.js"></script>

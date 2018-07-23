@@ -242,6 +242,13 @@
             <span> Bandeja de Entrada</span></li></div>
           </a>
         </ul>
+        <ul>
+            <a href="{BASE_URL}elearning/certificado/menu" class="nounderline">
+                <div class="side-menu2"><li class="side-menu" style="position: relative">
+                        <i class="glyphicon glyphicon-education"></i>
+                        <span>Mis Certificados</span></li></div>
+            </a>
+        </ul>
         {/if}
         <ul>
           <a href="{BASE_URL}elearning/cursos/calendario" class="nounderline">
@@ -250,13 +257,7 @@
             <span> Calendario de Cursos</span></li></div>
           </a>
         </ul>
-        <ul>
-          <a href="{BASE_URL}elearning/certificado/menu" class="nounderline">
-            <div class="side-menu2"><li class="side-menu" style="position: relative">
-            <i class="glyphicon glyphicon-education"></i>
-            <span>Mis Certificados</span></li></div>
-          </a>
-        </ul>
+   
         <ul>
           <a href="{BASE_URL}elearning/certificado/verificar" class="nounderline">
             <div class="side-menu2"><li class="side-menu" style="position: relative">
