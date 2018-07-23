@@ -12,7 +12,7 @@ class indexController extends noticiasController
         $this->_not = $this->loadModel('index');        
     }
     
-    public function index($id_noticia=1)
+    public function index($id_noticia=0)
     {       
         // $this->_acl->autenticado();
         $this->validarUrlIdioma();
