@@ -7,7 +7,6 @@
                 
                 <div id="calendar" class="col-centered">
                 </div>
->
             </div>     
         </div>
 

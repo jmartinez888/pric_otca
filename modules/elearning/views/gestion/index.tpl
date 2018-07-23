@@ -6,11 +6,10 @@
 <input class="estado" id="hidden_curso" value="{Session::get('learn_param_curso')}" />
 <input class="estado" id="hidden_modulo" value="{Session::get('learn_param_modulo')}" />
 <input class="estado" id="hidden_leccion" value="{Session::get('learn_param_leccion')}" />
-
-<div class="col-lg-12" style="padding-top: 20px">
-    <div id="menu_docente">{include file='modules/elearning/views/cursos/menu/lateral.tpl'}</div>
-    <div id="menu_curso" style="display: none">{include file='modules/elearning/views/gestion/menu/menu.tpl'}</div>
-  <div class="col-lg-10">
-    <div id="learn_content_main"></div>
-  </div>
+<div id="menu_docente">{include file='modules/elearning/views/cursos/menu/lateral.tpl'}</div>
+<div id="menu_curso" style="display: none">{include file='modules/elearning/views/gestion/menu/menu.tpl'}</div>
+<div class="col-lg-10" style="padding-top: 20px">
+    <div class="col-lg-12">
+        <div id="learn_content_main"></div>
+    </div>
 </div>

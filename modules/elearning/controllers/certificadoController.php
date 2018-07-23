@@ -46,9 +46,9 @@ class certificadoController extends elearningController {
         $this->service->Send();        
     }
 
-    public function menu(){
+    public function miscertificados(){
         // $codigo = $this->getTexto("certificado");
-        
+        $this->_view->setCss(array("verificar"));
         $this->_view->setTemplate(LAYOUT_FRONTEND);
         // $this->_view->assign("certificado", $codigo);
         // $this->_view->assign("resultados", $this->certificado->getCertificado($codigo));
@@ -84,8 +84,8 @@ class certificadoController extends elearningController {
         $this->_view->assign('numeropagina', $paginador->getNumeroPagina());
         $this->_view->assign('paginacioncertificados', $paginador->getView('paginacion_ajax_s_filas'));
         
-        $this->_view->assign('titulo', 'Certficados del Curso');
-        $this->_view->renderizar('menu');
+        $this->_view->assign('titulo', 'Mis Certficados');
+        $this->_view->renderizar('miscertificados');
     }
 
 
