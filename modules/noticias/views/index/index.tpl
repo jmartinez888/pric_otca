@@ -24,12 +24,7 @@
 						</div> -->
 					</div>
 				</div>
-				<div class="owl-controls clickable">
-					<div class="owl-buttons">
-						<div class="owl-prev"><i class="fa fa-angle-left"></i></div>
-						<div class="owl-next"><i class="fa fa-angle-right"></i></div>
-					</div>
-				</div>
+				
 			</div>
 			<div class="detail ">
 				<div class="info">
@@ -571,6 +566,7 @@
 
 				<p>Los resultados de las deliberaciones tomadas en esta reunión del CCA serán presentados a los Cancilleres, en su décima tercera Reunión de Ministros de Relaciones Exteriores de los Países Miembros de la OTCA, que se llevará a cabo el día 1 de diciembre, en Tena.</p>
 			</div>
+			<hr>
 
 			<div class="source"><b>Fuente</b>: OTCA   <a href="http://www.otca-oficial.info/news/details/303" class="btn btn-primary " target="_blank">Ir a Noticia</a>
 			</div>
