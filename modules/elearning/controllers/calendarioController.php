@@ -43,9 +43,9 @@ class calendarioController extends elearningController {
 
     $calendario = $this->MesCalendario($anio, $mes);
     var_dump($calendario);
-    exit();
+    
     $calendario = $this->AddEventos($calendario, $evento);
-
+exit();
     $this->_view->assign("anterior", $this->MesAnterior($fecha));
     $this->_view->assign("siguiente", $this->MesSiguiente($fecha));
     $this->_view->assign("calendario", $calendario);
