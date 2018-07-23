@@ -179,7 +179,7 @@ class certificadoController extends elearningController {
 
 
 
-    public function otros(){
+    public function verificar(){
         // $codigo = $this->getTexto("certificado");
         
         $this->_view->setTemplate(LAYOUT_FRONTEND);
@@ -187,8 +187,7 @@ class certificadoController extends elearningController {
         // $this->_view->assign("resultados", $this->certificado->getCertificado($codigo));
         // $this->_view->renderizar("menu");
         $this->_view->setJs(array(array(BASE_URL . 'modules/elearning/views/gestion/js/core/util.js'), "index"));
-
-
+        $this->_view->setCss(array("verificar"));
         // $this->_view->setJs(array('index'));
 
         $pagina = $this->getInt('pagina');
@@ -203,21 +202,18 @@ class certificadoController extends elearningController {
         //Filtro por Activos/Eliminados
 
         $paginador = new Paginador();
-
-        
+      
         $arrayRowCount = $this->certificado->getCertificadoRowCount(" ");
 
         $this->_view->assign('certificados', $this->certificado->getCertificadosCondicion($pagina,CANT_REG_PAG," "));
-
-
 
         $paginador->paginar( $arrayRowCount[0]['CantidadRegistros'],"listarcertificadosotros", "", $pagina, CANT_REG_PAG, true);
 
         $this->_view->assign('numeropagina', $paginador->getNumeroPagina());
         $this->_view->assign('paginacioncertificados', $paginador->getView('paginacion_ajax_s_filas'));
         
-        $this->_view->assign('titulo', 'Certficados del Curso');
-        $this->_view->renderizar('otros');
+        $this->_view->assign('titulo', 'Verificacion de Certificados');
+        $this->_view->renderizar('verificar');
     }
 
 

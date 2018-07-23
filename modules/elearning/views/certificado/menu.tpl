@@ -1,13 +1,6 @@
 <div class="col-lg-12">
   {include file='modules/elearning/views/cursos/menu/lateral.tpl'}
   <div class="col-lg-10" style="margin-top: 20px">
-<<<<<<< HEAD
-    <div class="col-lg-12">
-      <label>Buscar certificado: </label>
-    </div>
-=======
-
-
      <div class="panel-body" style=" margin: 15px">
              <div class="row" style="text-align:right">
                 <div style="display:inline-block;padding-right:2em">
@@ -51,9 +44,8 @@
                 {/if}                
             </div>
         </div>
-
   	<!-- <label>Buscar certificado: </label>
->>>>>>> 1a9c468016c1348dc03b23445e28d882a7f0bd8e
+
   	<form method="post" action="#">
   		<div class="col-lg-8">
   			<input class="form-control" type="text" name="certificado">
@@ -67,25 +59,6 @@
   	</form>
 
   	{if count($resultados)>0}
-<<<<<<< HEAD
-      <div class="col-lg-12" style="margin-top: 20px">
-    		<label>Resultado: </label>
-    		{foreach from=$resultados item=c}
-    			<div class="col-lg-12" style="margin-top: 10px; border-radius: 4px; border: 1px solid gray; position: relative ">
-    				<div style="font-size: 16px"><label>Codigo</label>: {$c.Cer_Codigo}</div>
-    				<div><label>Curso</label>: {$c.Cur_Titulo}</div>
-    				<div><label>Alumno</label>: {$c.Usu_Nombre},  {$c.Usu_Apellidos}</div>
-    				<div><label>Fecha emisión</label>: {substr($c.Cer_FechaReg ,0, 10)}</div>
-            <button class="btn btn-success" style="position: absolute; top: 30px; right: 20px">Visualizar</button>
-    			</div>
-    		{/foreach}
-      </div>
-    {else}
-      <div class="col-lg-12" style="margin-top: 50px">
-        <center>Ingrese el código de certificado que deseé verificar</center>
-      </div>
-  	{/if}
-=======
 
   		<label>Resultado: </label>
 
@@ -98,6 +71,5 @@
   			</div>
   		{/foreach}
   	{/if} -->
->>>>>>> 1a9c468016c1348dc03b23445e28d882a7f0bd8e
   </div>
 </div>

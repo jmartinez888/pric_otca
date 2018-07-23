@@ -258,7 +258,7 @@
           </a>
         </ul>
         <ul>
-          <a href="{BASE_URL}elearning/certificado/otros" class="nounderline">
+          <a href="{BASE_URL}elearning/certificado/verificar" class="nounderline">
             <div class="side-menu2"><li class="side-menu" style="position: relative">
             <i class="glyphicon glyphicon-education"></i>
             <span>Verificar Certificados</span></li></div>
