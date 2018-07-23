@@ -70,7 +70,7 @@
         </ul>
         <div class="tab-content">
             <div id="evento_interes" class="tab-pane fade  active in scroll">
-                <a href="../pric_otca/es/noticias/index/index/333" class="col-md-12 col-sm-12 col-xs-12  link-tabs-jsoft">
+                <a href="{$_layoutParams.root}noticias/index/index/333" class="col-md-12 col-sm-12 col-xs-12  link-tabs-jsoft">
                     <div class="col-md-4 col-sm-4 col-xs-4  py-3 px-2">
                         <img src="{$_layoutParams.ruta_img}img-noti1.jpg" class="w-100">
                     </div>
@@ -81,7 +81,7 @@
                         </div>
                     </div>
                 </a>
-                <a href="../pric_otca/es/noticias/index/index/343" class="col-md-12 col-sm-12 col-xs-12  link-tabs-jsoft">
+                <a href="{$_layoutParams.root}noticias/index/index/343" class="col-md-12 col-sm-12 col-xs-12  link-tabs-jsoft">
                     <div class="col-md-4 col-sm-4 col-xs-4  py-3 px-2">
                         <img src="{$_layoutParams.ruta_img}img-noti2.jpg" class="w-100">
                     </div>
@@ -92,7 +92,7 @@
                         </div>
                     </div>
                 </a>
-                <a href="../pric_otca/es/noticias/index/index/344" class="col-md-12 col-sm-12 col-xs-12  link-tabs-jsoft">
+                <a href="{$_layoutParams.root}noticias/index/index/344" class="col-md-12 col-sm-12 col-xs-12  link-tabs-jsoft">
                     <div class="col-md-4 col-sm-4 col-xs-4  py-3 px-2">
                         <img src="{$_layoutParams.ruta_img}img-noti3.jpg" class="w-100">
                     </div>
@@ -103,7 +103,7 @@
                         </div>
                     </div>
                 </a>
-                <a href="../pric_otca/es/noticias/index/index/290" class="col-md-12 col-sm-12 col-xs-12  link-tabs-jsoft">
+                <a href="{$_layoutParams.root}noticias/index/index/290" class="col-md-12 col-sm-12 col-xs-12  link-tabs-jsoft">
                     <div class="col-md-4 col-sm-4 col-xs-4  py-3 px-2">
                         <img src="{$_layoutParams.ruta_img}img-noti4.JPG" class="w-100">
                     </div>
@@ -117,7 +117,7 @@
                 <a href="#" class="col-md-12 col-sm-12 col-xs-12 mas-jsoft">VER MÁS</a>
             </div>
             <div id="dato_interes" class="tab-pane fade scroll">
-                <a href="../pric_otca/es/noticias/index/index/301" class="col-md-12 col-sm-12 col-xs-12  link-tabs-jsoft">
+                <a href="{$_layoutParams.root}noticias/index/index/301" class="col-md-12 col-sm-12 col-xs-12  link-tabs-jsoft">
                     <div class="col-md-4 col-sm-4 col-xs-4  py-3 px-2">
                         <img src="{$_layoutParams.ruta_img}img-noti5.JPG" class="w-100">
                     </div>
@@ -128,7 +128,7 @@
                         </div>
                     </div>
                 </a>
-                <a href="../pric_otca/es/noticias/index/index/322" class="col-md-12 col-sm-12 col-xs-12  link-tabs-jsoft">
+                <a href="{$_layoutParams.root}noticias/index/index/322" class="col-md-12 col-sm-12 col-xs-12  link-tabs-jsoft">
                     <div class="col-md-4 col-sm-4 col-xs-4  py-3 px-2">
                         <img src="{$_layoutParams.ruta_img}img-noti6.JPG" class="w-100">
                     </div>
@@ -139,7 +139,7 @@
                         </div>
                     </div>
                 </a>
-                <a href="../pric_otca/es/noticias/index/index/303" class="col-md-12 col-sm-12 col-xs-12  link-tabs-jsoft">
+                <a href="{$_layoutParams.root}noticias/index/index/303" class="col-md-12 col-sm-12 col-xs-12  link-tabs-jsoft">
                     <div class="col-md-4 col-sm-4 col-xs-4  py-3 px-2">
                         <img src="{$_layoutParams.ruta_img}img-noti7.jpg" class="w-100">
                     </div>
@@ -150,7 +150,7 @@
                         </div>
                     </div>
                 </a>
-                <a href="../pric_otca/es/noticias/index/index/344" class="col-md-12 col-sm-12 col-xs-12  link-tabs-jsoft">
+                <a href="{$_layoutParams.root}noticias/index/index/344" class="col-md-12 col-sm-12 col-xs-12  link-tabs-jsoft">
                     <div class="col-md-4 col-sm-4 col-xs-4  py-3 px-2">
                         <img src="{$_layoutParams.ruta_img}img-noti3.jpg" class="w-100">
                     </div>
