@@ -7,7 +7,6 @@
                 
                 <div id="calendar" class="col-centered">
                 </div>
->
             </div>     
         </div>
 
@@ -27,7 +26,7 @@
     }
     var today = yyyy + '-' + mm + '-' + dd;
     defaultDateCalendar = today;
-    eventos = JSON.parse('{$agenda}');
+    eventos = JSON.parse(JSON.stringify({$agenda}));
 </script>
 
 

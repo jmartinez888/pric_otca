@@ -50,6 +50,21 @@ class certificadoModel extends Model {
             return $exception->getTraceAsString();
         }
     }
+    public function getCertificadoCodigo($codigo)
+    {
+          
+        try {
+            $sql = "SELECT v.*, u.Usu_Nombre, u.Usu_Apellidos, c.Cur_Titulo,c.Cur_FechaDesde,c.Cur_FechaHasta FROM certificado_curso v 
+                INNER JOIN usuario u ON u.Usu_IdUsuario = v.Usu_IdUsuario
+                INNER JOIN curso c ON c.Cur_IdCurso = v.Cur_IdCurso
+                 WHERE v.Cer_Codigo like '$codigo'";
+            $post = $this->_db->query($sql);
+            return $post->fetch();
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("elearning(certificadoModel)", "getCertificadoCodigo", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
 
 
     public function getCertificado_Id($codigo){

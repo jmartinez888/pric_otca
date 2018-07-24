@@ -10,6 +10,7 @@ $lenguaje["foro_admin_label_titulo"]="Foros";
 $lenguaje["foro_admin_label_descripcion"]="Encuentre los foros creados por usted,";
 $lenguaje["foro_admin_form_titulo"]="Admin: Crear Nuevo Foro";
 $lenguaje["foro_admin_form_label_titulo"]="Crear Nuevo Foro";
+$lenguaje["label_idioma"]="Idioma";
 
 
 

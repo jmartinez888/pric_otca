@@ -46,9 +46,9 @@ class certificadoController extends elearningController {
         $this->service->Send();        
     }
 
-    public function menu(){
+    public function miscertificados(){
         // $codigo = $this->getTexto("certificado");
-        
+        $this->_view->setCss(array("verificar"));
         $this->_view->setTemplate(LAYOUT_FRONTEND);
         // $this->_view->assign("certificado", $codigo);
         // $this->_view->assign("resultados", $this->certificado->getCertificado($codigo));
@@ -84,8 +84,8 @@ class certificadoController extends elearningController {
         $this->_view->assign('numeropagina', $paginador->getNumeroPagina());
         $this->_view->assign('paginacioncertificados', $paginador->getView('paginacion_ajax_s_filas'));
         
-        $this->_view->assign('titulo', 'Certficados del Curso');
-        $this->_view->renderizar('menu');
+        $this->_view->assign('titulo', 'Mis Certficados');
+        $this->_view->renderizar('miscertificados');
     }
 
 
@@ -179,49 +179,25 @@ class certificadoController extends elearningController {
 
 
 
-    public function otros(){
-        // $codigo = $this->getTexto("certificado");
-        
+    #metodo Otros reeditador por @vicercavi, ahora se llama verificar
+    public function verificar($codigo = false) {
+
         $this->_view->setTemplate(LAYOUT_FRONTEND);
-        // $this->_view->assign("certificado", $codigo);
-        // $this->_view->assign("resultados", $this->certificado->getCertificado($codigo));
-        // $this->_view->renderizar("menu");
-        $this->_view->setJs(array(array(BASE_URL . 'modules/elearning/views/gestion/js/core/util.js'), "index"));
-
-
-        // $this->_view->setJs(array('index'));
-
-        $pagina = $this->getInt('pagina');
-
-        //Filtro por Activos/Eliminados
-        // $condicion = " ORDER BY Row_Estado DESC ";
-        // $soloActivos = 0;
-        // if (!$this->_acl->permiso('ver_eliminados')) {
-        //     $soloActivos = 1;
-        //     $condicion = " WHERE Row_Estado = $soloActivos ";
-        // }
-        //Filtro por Activos/Eliminados
-
-        $paginador = new Paginador();
-
         
-        $arrayRowCount = $this->certificado->getCertificadoRowCount(" ");
+        $this->_view->setJs(array("verificar"));
+        $this->_view->setCss(array("verificar"));
 
-        $this->_view->assign('certificados', $this->certificado->getCertificadosCondicion($pagina,CANT_REG_PAG," "));
+        if ($codigo) {
+            $certificado = $this->certificado->getCertificadoCodigo($codigo);
+            $this->_view->assign('certicado', $certificado);
+            $this->_view->assign('codigo', $codigo);
+        }
 
-
-
-        $paginador->paginar( $arrayRowCount[0]['CantidadRegistros'],"listarcertificadosotros", "", $pagina, CANT_REG_PAG, true);
-
-        $this->_view->assign('numeropagina', $paginador->getNumeroPagina());
-        $this->_view->assign('paginacioncertificados', $paginador->getView('paginacion_ajax_s_filas'));
-        
-        $this->_view->assign('titulo', 'Certficados del Curso');
-        $this->_view->renderizar('otros');
+        $this->_view->assign('titulo', 'Verificacion de Certificados');
+        $this->_view->renderizar('verificar');
     }
 
-
-     public function _paginacion_listarcertificadosotros($txtBuscar = false) 
+    public function _paginacion_listarcertificadosotros($txtBuscar = false) 
     {
         //$this->validarUrlIdioma();
         $pagina = $this->getInt('pagina');
@@ -263,49 +239,5 @@ class certificadoController extends elearningController {
         $this->_view->assign('paginacioncertificados', $paginador->getView('paginacion_ajax_s_filas'));
         $this->_view->renderizar('ajax/listarcertificadosotros', false, true);
     }
-    //Modificado por Jhon Martinez
-    public function _buscarcertificadootros() 
-    {
-        $txtBuscar = $this->getSql('palabra');
-        $pagina = $this->getInt('pagina');
-        $condicion = "";
-         $usuario = Session::get("id_usuario");
-
-        $soloActivos = 1;
-        // $nombre = $this->getSql('palabra');
-        if ($txtBuscar) 
-        {
-            $condicion = " WHERE v.Cer_Codigo liKe '%$txtBuscar%' ";
-            // if (!$this->_acl->permiso('ver_eliminados')) {
-            //     $soloActivos = 1;
-            //     $condicion .= " AND Row_Estado = $soloActivos ";
-            // }
-            // $condicion .= " ORDER BY Row_Estado DESC  ";
-        } else {
-            //Filtro por Activos/Eliminados     
-            // $condicion = " ORDER BY Row_Estado DESC ";   
-            // if (!$this->_acl->permiso('ver_eliminados')) {
-            //     $soloActivos = 1;
-                $condicion = " ";
-            // }
-
-            //Filtro por Activos/Eliminados
-        }        
-
-
-        $paginador = new Paginador();
-
-
-        $arrayRowCount = $this->certificado->getCertificadoRowCount($condicion);
-        $totalRegistros = $arrayRowCount[0]['CantidadRegistros'];
-        // echo($totalRegistros);
-        // print_r($arrayRowCount); echo($condicion);exit;
-        $this->_view->assign('certificados', $this->certificado->getCertificadosCondicion($pagina,CANT_REG_PAG, $condicion));
-
-        $paginador->paginar( $totalRegistros ,"listarcertificadosotros", "$txtBuscar", $pagina, CANT_REG_PAG, true);
-
-        $this->_view->assign('numeropagina', $paginador->getNumeroPagina());
-        $this->_view->assign('paginacioncertificados', $paginador->getView('paginacion_ajax_s_filas'));
-        $this->_view->renderizar('ajax/listarcertificadosotros', false, true);
-    }
+   
 }

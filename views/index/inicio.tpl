@@ -70,7 +70,7 @@
         </ul>
         <div class="tab-content">
             <div id="evento_interes" class="tab-pane fade  active in scroll">
-                <a href="http://www.otca-oficial.info/news/details/333" class="col-md-12 col-sm-12 col-xs-12  link-tabs-jsoft">
+                <a href="{$_layoutParams.root}noticias/index/index/333" class="col-md-12 col-sm-12 col-xs-12  link-tabs-jsoft">
                     <div class="col-md-4 col-sm-4 col-xs-4  py-3 px-2">
                         <img src="{$_layoutParams.ruta_img}img-noti1.jpg" class="w-100">
                     </div>
@@ -81,7 +81,7 @@
                         </div>
                     </div>
                 </a>
-                <a href="http://www.otca-oficial.info/news/details/343" class="col-md-12 col-sm-12 col-xs-12  link-tabs-jsoft">
+                <a href="{$_layoutParams.root}noticias/index/index/343" class="col-md-12 col-sm-12 col-xs-12  link-tabs-jsoft">
                     <div class="col-md-4 col-sm-4 col-xs-4  py-3 px-2">
                         <img src="{$_layoutParams.ruta_img}img-noti2.jpg" class="w-100">
                     </div>
@@ -92,7 +92,7 @@
                         </div>
                     </div>
                 </a>
-                <a href="http://www.otca-oficial.info/news/details/344" class="col-md-12 col-sm-12 col-xs-12  link-tabs-jsoft">
+                <a href="{$_layoutParams.root}noticias/index/index/344" class="col-md-12 col-sm-12 col-xs-12  link-tabs-jsoft">
                     <div class="col-md-4 col-sm-4 col-xs-4  py-3 px-2">
                         <img src="{$_layoutParams.ruta_img}img-noti3.jpg" class="w-100">
                     </div>
@@ -103,7 +103,7 @@
                         </div>
                     </div>
                 </a>
-                <a href="http://www.otca-oficial.info/news/details/290" class="col-md-12 col-sm-12 col-xs-12  link-tabs-jsoft">
+                <a href="{$_layoutParams.root}noticias/index/index/290" class="col-md-12 col-sm-12 col-xs-12  link-tabs-jsoft">
                     <div class="col-md-4 col-sm-4 col-xs-4  py-3 px-2">
                         <img src="{$_layoutParams.ruta_img}img-noti4.JPG" class="w-100">
                     </div>
@@ -117,7 +117,7 @@
                 <a href="#" class="col-md-12 col-sm-12 col-xs-12 mas-jsoft">VER MÁS</a>
             </div>
             <div id="dato_interes" class="tab-pane fade scroll">
-                <a href="http://www.otca-oficial.info/news/details/301" class="col-md-12 col-sm-12 col-xs-12  link-tabs-jsoft">
+                <a href="{$_layoutParams.root}noticias/index/index/301" class="col-md-12 col-sm-12 col-xs-12  link-tabs-jsoft">
                     <div class="col-md-4 col-sm-4 col-xs-4  py-3 px-2">
                         <img src="{$_layoutParams.ruta_img}img-noti5.JPG" class="w-100">
                     </div>
@@ -128,7 +128,7 @@
                         </div>
                     </div>
                 </a>
-                <a href="http://www.otca-oficial.info/news/details/322" class="col-md-12 col-sm-12 col-xs-12  link-tabs-jsoft">
+                <a href="{$_layoutParams.root}noticias/index/index/322" class="col-md-12 col-sm-12 col-xs-12  link-tabs-jsoft">
                     <div class="col-md-4 col-sm-4 col-xs-4  py-3 px-2">
                         <img src="{$_layoutParams.ruta_img}img-noti6.JPG" class="w-100">
                     </div>
@@ -139,7 +139,7 @@
                         </div>
                     </div>
                 </a>
-                <a href="http://www.otca-oficial.info/news/details/303" class="col-md-12 col-sm-12 col-xs-12  link-tabs-jsoft">
+                <a href="{$_layoutParams.root}noticias/index/index/303" class="col-md-12 col-sm-12 col-xs-12  link-tabs-jsoft">
                     <div class="col-md-4 col-sm-4 col-xs-4  py-3 px-2">
                         <img src="{$_layoutParams.ruta_img}img-noti7.jpg" class="w-100">
                     </div>
@@ -150,7 +150,7 @@
                         </div>
                     </div>
                 </a>
-                <a href="http://www.otca-oficial.info/news/details/344" class="col-md-12 col-sm-12 col-xs-12  link-tabs-jsoft">
+                <a href="{$_layoutParams.root}noticias/index/index/344" class="col-md-12 col-sm-12 col-xs-12  link-tabs-jsoft">
                     <div class="col-md-4 col-sm-4 col-xs-4  py-3 px-2">
                         <img src="{$_layoutParams.ruta_img}img-noti3.jpg" class="w-100">
                     </div>
@@ -205,8 +205,10 @@
         'headline': 'Secretaria General es condecorada con Orden de Rio Branco.',
         // 'headline2': 'Urgen compromisos para su conservación',
         
-        'href': '{$_layoutParams.root}noticias/index/341',
+        'href': '{$_layoutParams.root}noticias/index/index/341',
         'storyTitle': 'La Secretaria General de la OTCA, Embajadora María Jacqueline Mendoza, ...'
+
+
     }, 
     {
         
@@ -217,7 +219,8 @@
         'headline': 'OTCA celebra el Día Mundial del Agua con varias actividades en el 8º Foro Mundial de Agua.',
         // 'headline2': 'WWF lanza Premio Periodístico en el Perú',
         
-        'href': 'http://www.otca-oficial.info/news/details/333',
+        //'href': 'http://www.otca-oficial.info/news/details/333',
+        'href': '{$_layoutParams.root}noticias/index/index/333',
         'storyTitle': 'OTCA celebra el Día Mundial del Agua con varias actividades en el 8º Foro...'
     }, 
     {
@@ -229,7 +232,8 @@
         'headline': '22 de abril: Día Internacional de la Madre Tierra.',
         // 'headline2': 'Iniciativa logra recuperar y reforestar suelos degradados',
         
-        'href': 'http://www.otca-oficial.info/news/details/338',
+        //'href': 'http://www.otca-oficial.info/news/details/338',
+        'href': '{$_layoutParams.root}noticias/index/index/338',
         'storyTitle': 'Hoy 22 de abril, se conmemora mundialmente el Día Internacional de la Madre Tierra, ...'
     }, 
     {
@@ -241,8 +245,13 @@
         'headline': 'OTCA y CAF firman acuerdo para la promoción de la conservación ambiental.',
         // 'headline2': 'Promoviendo su conservación en el litoral peruano',
         
-        'href': 'http://www.otca-oficial.info/news/details/328',
+        //'href': 'http://www.otca-oficial.info/news/details/328',
+        'href': '{$_layoutParams.root}noticias/index/index/328',
         'storyTitle': 'Fue firmado hoy, 19 de marzo, un Acuerdo Marco de Cooperación entre la Organización del Tratado de Cooperación Amazónica ...'
-    }]);
+    },
+
+    
+
+    ]);
                
 </script>  

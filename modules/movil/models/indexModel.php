@@ -3,11 +3,12 @@ class indexModel extends Model {
     public function __construct() {
         parent::__construct();
     }    
-    public function getCursos(){        
+    public function getCursos(){  
         $sql = $this->_db->query(
-            "SELECT cur.*,COUNT(mat.Cur_IdCurso) as Inscritos
+            "SELECT cur.*,COUNT(mat.Cur_IdCurso) as Inscritos,COUNT(moc.Cur_IdCurso) as Total
             FROM curso cur LEFT JOIN matricula_curso mat ON cur.Cur_IdCurso=mat.Cur_IdCurso
-            WHERE Cur_Estado=1 AND Row_Estado=1 GROUP BY mat.Cur_IdCurso"
+            LEFT JOIN modulo_curso moc ON cur.Cur_IdCurso=moc.Cur_IdCurso
+            WHERE cur.Cur_Estado=1 AND cur.Row_Estado=1 GROUP BY mat.Cur_IdCurso"
         );              
         return $sql->fetchAll();
     }
