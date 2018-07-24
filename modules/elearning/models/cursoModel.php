@@ -215,6 +215,24 @@ class cursoModel extends Model {
       return $this->getArray($sql);
     }
 
+    public function calendario_curso_id($curso, $anio, $mes){
+      $sql = "SELECT
+                l.Lec_IdLeccion AS ID,
+                DATE(l.Lec_FechaDesde) as FECHA,
+                DAY(l.Lec_FechaDesde) as DIA,
+                HOUR(l.Lec_FechaDesde) as HORA,
+                l.Lec_Titulo as DET,
+                1 as ESTADO
+              FROM leccion L
+              INNER JOIN modulo_curso mc ON l.Mod_IdModulo = mc.Mod_IdModulo
+              WHERE mc.Cur_IdCurso = '{$curso}'
+                AND mc.Mod_Estado = 1 AND mc.Row_Estado = 1
+                AND l.Lec_Estado = 1 AND l.Row_Estado = 1
+                AND MONTH(l.Lec_FechaDesde) = '{$mes}' AND YEAR(l.Lec_FechaDesde) = '{$anio}'
+              ORDER BY l.Lec_FechaDesde ASC";
+      return $this->getArray($sql);
+    }
+
     public function getDuracionCurso($curso){
       $sql = "SELECT COUNT(*) as Total FROM leccion
               WHERE Mod_IdModulo IN

@@ -237,6 +237,38 @@ class cursosController extends elearningController {
     $this->_view->renderizar('modulo');
   }
 
+  public function calendario_curso($id = ""){
+    if(strlen($id)==0){ $this->redireccionar("elearning/"); }
+    if(!Session::get("autenticado")){ $this->redireccionar("elearning/"); }
+    if(!is_numeric($id)){ $this->redireccionar("elearning/"); }
+
+    $model = $this->loadModel("curso");
+    $curso = $model->getCursoID($id);
+    if(count($curso)==0){ $this->redireccionar("elearning/"); }
+
+    $this->_view->setTemplate(LAYOUT_FRONTEND);
+    $this->_view->assign("curso", $curso[0]);
+    $this->_view->renderizar('curso_calendario');
+  }
+
+  public function calendario_curso_data(){
+    $anio = $this->getTexto("anio");
+    $mes = $this->getTexto("mes");
+    $curso = $this->getTexto("curso");
+    $model = $this->loadModel("curso");
+    $ini_cursos = $model->calendario_curso_id($curso, $anio, $mes);
+    $resultado = array();
+
+    foreach ($ini_cursos as $item) {
+      $evento1 = array("ID" => $item["ID"], "D" => $item["DIA"], "M" => $mes, "A" => $anio
+      , "H" => $item["HORA"], "DET" => $item["DET"], "ESTADO" => $item["ESTADO"]
+      , "FECHA" => $item["FECHA"]);
+      array_push($resultado, $evento1);
+    }
+
+    echo json_encode($resultado);
+  }
+
   public function _inscripcion($mod = "", $curso = ""){
     if ($mod=="" || $curso=="" || !is_numeric($mod) || !is_numeric($mod)){ $this->redireccionar("elearning/"); }
     if (!Session::get("autenticado")){ $this->redireccionar("elearning/"); }

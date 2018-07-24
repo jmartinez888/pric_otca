@@ -56,7 +56,7 @@
                 <strong style="color: #393939; font-size: 16px">Alumnos</strong>
                 <br><br>
               </div>
-              
+
               <div class="col-lg-12">
                 <br>
                 <i class="glyphicon glyphicon-star" style="color: #E9BA46; font-size: 25px"></i>
@@ -68,11 +68,17 @@
 
             </center>
           </div>
-          
-          <div class="col-lg-12 text-curso">
-            <div>{$curso.Cur_Descripcion}</div> <br/>
-          </div>
-        
+
+      <div class="col-lg-12 text-curso">
+        <div>{$curso.Cur_Descripcion}</div> <br/>
+      </div>
+
+      <div class="col-lg-12 text-curso">
+        <a href="{BASE_URL}elearning/cursos/calendario_curso/{$curso.Cur_IdCurso}" class="btn btn-success">
+          <span class="glyphicon glyphicon-calendar"></span> Ver Calendario
+        </a>
+      </div>
+
       <div class="col-lg-12" style="padding-top: 10px; position: relative">
         {if $session==1}
           {if isset($inscripcion) && count($inscripcion)>0}
@@ -101,17 +107,17 @@
             {/if}
           {else}
             {if $curso.Usu_IdUsuario != Session::get("id_usuario")}
-            <a href="{BASE_URL}elearning/cursos/_inscripcion/{$curso.Mod_IdModCurso}/{$curso.Cur_IdCurso}">
-              <button class="btn btn-group btn-inscribir">Inscribirme</button>
-            </a>
+              <a href="{BASE_URL}elearning/cursos/_inscripcion/{$curso.Mod_IdModCurso}/{$curso.Cur_IdCurso}">
+                <button class="btn btn-group btn-inscribir">Inscribirme</button>
+              </a>
             {else}
-            <a href="{BASE_URL}elearning/gestion/matriculados/{$curso.Cur_IdCurso}">
-              <button class="btn btn-default btn-gestion">Gestión de Curso</button>
-            </a>
+              <a href="{BASE_URL}elearning/gestion/matriculados/{$curso.Cur_IdCurso}">
+                <button class="btn btn-default btn-gestion">Gestión de Curso</button>
+              </a>
             {/if}
           {/if}
         {else}
-        <div class="col-lg-12 anuncio"> 
+        <div class="col-lg-12 anuncio">
               <strong><i class="glyphicon glyphicon-warning-sign" style="font-size: 20px;"> </i>&nbsp; ¡Atención!</strong>
               Para inscribirte en el curso necesitas una cuenta.</div>
         <!-- <a href="{BASE_URL}login/login/elearning!cursos!curso_dirigido!{$curso.Cur_IdCurso}">
@@ -220,17 +226,17 @@
           <span class="glyphicon glyphicon-star item-calificar" tag="3"></span>
           <span class="glyphicon glyphicon-star item-calificar" tag="4"></span>
           <span class="glyphicon glyphicon-star item-calificar" tag="5"></span>
-        </div>            
+        </div>
       </div>
       <div class="col-lg-4">
         <button class="btn btn-default pull-right btn-calificar" id="btnCalificar">
           <strong><span class="glyphicon glyphicon-star"></span>&nbsp; Calificar</strong>
         </button>
-      </div> 
+      </div>
       {/if}
       <div class="col-lg-12" style="margin-top: 10px; font-size:16px">
         <label>Valoraciones del curso: </label>
-      </div> 
+      </div>
       <div class="col-lg-12">
         <hr class="cursos-hr">
       </div>
@@ -244,7 +250,7 @@
           </div>
 
         </div>
-      
+
       </div>
 
     </div>
