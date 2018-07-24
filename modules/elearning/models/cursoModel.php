@@ -212,6 +212,7 @@ class cursoModel extends Model {
               WHERE C.Cur_Estado = 1 AND C.Row_Estado = 1))X
               WHERE MONTH(X.FECHA) = '{$mes}' AND YEAR(X.FECHA) = '{$anio}'
               ORDER BY X.FECHA";
+      echo $sql; exit;
       return $this->getArray($sql);
     }
 
