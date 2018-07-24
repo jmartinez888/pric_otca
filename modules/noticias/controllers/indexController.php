@@ -35,15 +35,25 @@ class indexController extends noticiasController
         $this->_view->setCss(array('base'));
         // echo "546546546";exit;
 
+        if ($this->botonPress("bt_registrarNoticia")) 
+        {
+            $this->registrarNoticia();
+        }
+
         $paginador = new Paginador();
         // $this->_view->assign('id_noticia', $id_noticia);
-        // $this->_view->setTemplate(LAYOUT_FRONTEND);
+        // $this->_view->setTemplate(LAYOUT_FRONTEND);        
         $this->_view->assign('tipos_noticia',$this->_not->getTiposNoticias());
         $this->_view->assign('idiomas',$this->_not->getIdiomas());
         $this->_view->assign('numeropagina', $paginador->getNumeroPagina());
         $this->_view->assign('cantidadporpagina',$registros);
         $this->_view->assign('paginacion', $paginador->getView('paginacion_ajax'));
         $this->_view->renderizar('admin');
+    }
+
+    public function registrarNoticia()
+    {
+        
     }
 
     
