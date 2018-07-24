@@ -1,4 +1,4 @@
-<div id="texto" class="col-xs-12 font-tahoma11cinza-escuro" style="padding-top: 20px;padding-bottom: 20px">
+<div id="texto" class="col-xs-8 font-tahoma11cinza-escuro" style="padding-top: 20px;padding-bottom: 20px">
 	<br>
 	<img src="http://otca.info/portal/images-es/titulo-otca_03.png">
 	<br><br><br>

@@ -1,4 +1,4 @@
-<div id="texto" class="col-xs-12 font-tahoma11cinza-escuro" style="padding-top: 20px;padding-bottom: 20px">
+<div id="texto" class="col-xs-8 font-tahoma11cinza-escuro" style="padding-top: 20px;padding-bottom: 20px">
 	<div class="row" style="padding-top: 20px;" >
 		
 		<div class="col-xs-2">
