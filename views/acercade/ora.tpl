@@ -1,5 +1,5 @@
 <div id="texto" class="col-xs-8 font-tahoma11cinza-escuro" style="padding-top: 20px;padding-bottom: 20px">
-	<div class="row" style="padding-top: 20px;" >
+	<div class="row" style="padding-top: 15px;" >
 		
 		<div class="col-xs-2">
 			
@@ -14,8 +14,6 @@
 
 		              <h5 style="text-align:center"><strong>PROPUESTA DE MECANISMO DE FUNCIONAMIENTO</strong>
 		              </h5>
-
-		              <br>
 		              <br>
 		              <section id="OBJETIVOS" >
 		              <ul class="vinieta"> <li><h5 style="text-align: justify;"><strong>OBJETIVOS</strong></h5></li></ul>
@@ -184,7 +182,8 @@
 </div>
 
 
-<div class="col col-md-4 col-sm-12 col-xs-12 back-color-white" style="border-left: 1px solid #ebeaea; padding-left: 10px;">
+
+<div class="col col-md-4 col-sm-12 col-xs-12 back-color-white" style="padding-top: 20px; border-left: 1px solid #ebeaea; padding-left: 10px;">
         <ul class="nav nav-tabs jsoft-tabs bg-verde">
             <li class="active" ><a class=""  data-toggle="tab" href="#evento_interes">Eventos de Interés</a></li>
             <li><a data-toggle="tab" href="#dato_interes">Datos de Interés</a></li>
