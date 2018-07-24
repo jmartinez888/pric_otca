@@ -1,6 +1,6 @@
 <input id="hidden_url" value="{BASE_URL}elearning/" hidden="hidden"/>
 {include file='modules/elearning/views/cursos/menu/lateral.tpl'}
-<div class="col-lg-10">  
+<div class="col-lg-10">
     <div class="row">
         <div class="col-lg-12">
             <h3>Calendario de Cursos</h3>
@@ -44,8 +44,8 @@
               result += "<div class='col-lg-3'>CULMINACIÓN</div>";
             }
             result += "<div class='col-lg-3'><center>";
-            result += "<a class='btn btn-success' href='" + _root_ + "elearning/cursos/curso/" + row.ID + "'>";
-            result += "<span class='glyphicon glyphicon-calendar'></span></a>";
+            result += "<a class='btn btn-success' style='margin-right: 5px' href='" + _root_ + "elearning/cursos/curso/" + row.ID + "'>";
+            result += "<span class='glyphicon glyphicon-list-alt'></span></a>";
             result += "<a class='btn btn-success' href='" + _root_ + "elearning/cursos/calendario_curso/" + row.ID + "'>";
             result += "<span class='glyphicon glyphicon-calendar'></span></a>";
             result += "</center></div>";
