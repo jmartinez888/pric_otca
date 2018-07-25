@@ -169,7 +169,7 @@ class _gestionCursoModel extends Model {
   }
 
 
-  public function getAnuncios($curso){
+   public function getAnuncios($curso){
       $sql = "SELECT * FROM anuncio_curso
               WHERE Cur_IdCurso = {$curso}";
       return $this->getArray($sql);
@@ -181,12 +181,12 @@ class _gestionCursoModel extends Model {
         try{
             $anuncios = $this->_db->query(
                 " SELECT COUNT(anc.Anc_IdAnuncioCurso) AS CantidadRegistros from anuncio_curso anc $condicion "
-            );
-            return $anuncios->fetch(PDO::FETCH_ASSOC);
+            );           
+            return $anuncios->fetch(PDO::FETCH_ASSOC);            
         } catch (PDOException $exception) {
             $this->registrarBitacora("gestion(indexModel)", "getAnunciosRowCount", "Error Model", $exception);
             return $exception->getTraceAsString();
-        }
+        }        
     }
 
   public function getAnunciosCondicion($pagina,$registrosXPagina,$condicion = "")
@@ -194,14 +194,14 @@ class _gestionCursoModel extends Model {
         try{
             $registroInicio = 0;
             if ($pagina > 0) {
-                $registroInicio = ($pagina - 1) * $registrosXPagina;
+                $registroInicio = ($pagina - 1) * $registrosXPagina;                
             }
-            $sql = " SELECT * FROM anuncio_curso $condicion
+            $sql = " SELECT *, SUBSTRING(Anc_Descripcion, 1, 30) AS Anc_DescripcionRec FROM anuncio_curso anc $condicion 
                 LIMIT $registroInicio, $registrosXPagina ";
             $result = $this->_db->query($sql);
             return $result->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $exception) {
-            $this->registrarBitacora("acl(indexModel)", "getPermisosCondicion", "Error Model", $exception);
+            $this->registrarBitacora("elearning(_gestionCursoModel)", "getAnunciosCondicion", "Error Model", $exception);
             return $exception->getTraceAsString();
         }
     }
@@ -228,20 +228,33 @@ class _gestionCursoModel extends Model {
   // }
 
   public function registrarAnuncio($titulo, $descripcion, $idCurso){
-        try {
+        try {             
             $sql = "call s_i_anuncios(?,?,?)";
             $result = $this->_db->prepare($sql);
             $result->bindParam(1, $titulo, PDO::PARAM_STR);
             $result->bindParam(2, $descripcion, PDO::PARAM_STR);
-            $result->bindParam(3, $idCurso,  PDO::PARAM_INT);
+            $result->bindParam(3, $idCurso,  PDO::PARAM_INT);                       
             $result->execute();
             return $result->fetch();
         } catch (PDOException $exception) {
-            $this->registrarBitacora("elearning(_gestionCursoModel)", "insertarPermiso", "Error Model", $exception);
+            $this->registrarBitacora("elearning(_gestionCursoModel)", "registrarAnuncio", "Error Model", $exception);
             return $exception->getTraceAsString();
         }
     }
 
+    public function registrarAnuncioUsuario($anuncio, $usuario){
+        try {             
+            $sql = "call s_i_anuncios_usuarios(?,?)";
+            $result = $this->_db->prepare($sql);
+            $result->bindParam(1, $anuncio, PDO::PARAM_STR);
+            $result->bindParam(2, $usuario, PDO::PARAM_STR);                       
+            $result->execute();
+            return $result->fetch();
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("elearning(_gestionCursoModel)", "registrarAnuncioUsuario", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
 
   public function editarAnuncio($idAnuncioCurso, $titulo, $descripcion)
     {
@@ -256,20 +269,33 @@ class _gestionCursoModel extends Model {
         }
     }
 
+     public function cambiarEstadoLeido($idAnuncioCurso, $usuario)
+    {
+        try{
+            $per = $this->_db->query(
+                " UPDATE anuncio_usuario SET Anu_Leido=1 WHERE Usu_IdUsuario=$usuario AND Anc_IdAnuncioCurso =$idAnuncioCurso"
+            );
+            return $per->rowCount(PDO::FETCH_ASSOC);
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("elearning(_gestionCursoModel)", "editarAnuncio", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
+
 
     public function getMatriculadosCurso($curso)
     {
         try{
             $alumnos = $this->_db->query(
-                " SELECT * FROM usuario U
+                " SELECT *,u.Usu_IdUsuario IdUsu FROM usuario U
             INNER JOIN matricula_curso MC ON U.Usu_IdUsuario = MC.Usu_IdUsuario
             WHERE Cur_IdCurso = $curso "
-            );
-            return $alumnos->fetchAll(PDO::FETCH_ASSOC);
+            );           
+            return $alumnos->fetchAll(PDO::FETCH_ASSOC);            
         } catch (PDOException $exception) {
             $this->registrarBitacora("elearning(_gestionCursoModel)", "getMatriculadosCurso", "Error Model", $exception);
             return $exception->getTraceAsString();
-        }
+        }        
     }
 
 
@@ -280,12 +306,12 @@ class _gestionCursoModel extends Model {
                 " SELECT U.Usu_Nombre,U.Usu_Apellidos,U.Usu_DocumentoIdentidad,U.Usu_Email FROM usuario U
             INNER JOIN matricula_curso MC ON U.Usu_IdUsuario = MC.Usu_IdUsuario
             WHERE Cur_IdCurso = $curso "
-            );
-            return $alumnos->fetchAll(PDO::FETCH_ASSOC);
+            );           
+            return $alumnos->fetchAll(PDO::FETCH_ASSOC);            
         } catch (PDOException $exception) {
             $this->registrarBitacora("elearning(_gestionCursoModel)", "getMatriculadosCurso", "Error Model", $exception);
             return $exception->getTraceAsString();
-        }
+        }        
     }
 
 
@@ -313,7 +339,7 @@ class _gestionCursoModel extends Model {
                 $result->bindParam(1, $Per_IdPermiso, PDO::PARAM_INT);
                 $result->execute();
 
-                return $result->rowCount(PDO::FETCH_ASSOC);
+                return $result->rowCount(PDO::FETCH_ASSOC);                
             }
             if($Per_Estado==1)
             {
@@ -337,7 +363,7 @@ class _gestionCursoModel extends Model {
         try{
 
             $permiso = $this->_db->query(
-                " UPDATE anuncio_curso SET Row_Estado = $Row_Estado WHERE Anc_IdAnuncioCurso = $Per_IdPermiso "
+                " UPDATE anuncio_curso SET Row_Estado = $Row_Estado WHERE Anc_IdAnuncioCurso = $Per_IdPermiso "               
                 );
             return $permiso->rowCount(PDO::FETCH_ASSOC);
         } catch (PDOException $exception) {

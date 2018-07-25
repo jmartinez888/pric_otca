@@ -102,4 +102,112 @@ class certificadoModel extends Model {
                 WHERE Usu_IdUsuario = '{$usuario}' AND Cur_IdCurso = {$curso}";
         return $this->getArray($sql);
     }
+
+     public function registrarPlantillaCertificado($iPlc_UrlImg, $iPlc_StyleNombre, $iPlc_StyleCurso, $iPlc_StyleHoras, $iPlc_StyleFecha,$iCur_IdCurso){
+        try {             
+            $sql = "call s_i_plantilla_certificado(?,?,?,?,?,?)";
+            $result = $this->_db->prepare($sql);
+            $result->bindParam(1, $iPlc_UrlImg, PDO::PARAM_STR);
+            $result->bindParam(2, $iPlc_StyleNombre, PDO::PARAM_STR);
+            $result->bindParam(3, $iPlc_StyleCurso, PDO::PARAM_STR); 
+            $result->bindParam(4, $iPlc_StyleHoras, PDO::PARAM_STR); 
+            $result->bindParam(5, $iPlc_StyleFecha, PDO::PARAM_STR);        
+            $result->bindParam(6, $iCur_IdCurso, PDO::PARAM_STR);              
+            $result->execute();
+            return $result->fetch();
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("elearning(certificadoModel)", "registrarPlantillaCertificado", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
+
+    public function getAllPlantillaCertificado($idCurso)
+    {
+        try{
+            $sql = " SELECT * FROM plantilla_certificado WHERE cur_idcurso= $idCurso";
+            $result = $this->_db->query($sql);
+            return $result->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("elearning(certificadoModel)", "getAllPlantillaCertificado", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
+
+    public function getPlantillaCertificado($idCurso)
+    {
+        try{
+            $sql = " SELECT * FROM plantilla_certificado WHERE cur_idcurso= $idCurso and plc_Seleccionado=1";
+            $result = $this->_db->query($sql);
+            return $result->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("elearning(certificadoModel)", "getPlantillaCertificado", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
+
+    public function getPlantillaCertificadoxId($id)
+    {
+        try{
+            $sql = " SELECT * FROM plantilla_certificado WHERE Plc_IdPlantillaCertificado= $id";
+            $result = $this->_db->query($sql);
+            return $result->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("elearning(certificadoModel)", "getPlantillaCertificado", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
+
+     public function cambiarSelectedPlantilla($Per_IdPermiso, $Per_Estado)
+    {
+        try{
+            if($Per_Estado==0)
+            {
+
+                $sql = "call s_u_cambiar_selected_plantilla(?,1)";
+                $result = $this->_db->prepare($sql);
+                $result->bindParam(1, $Per_IdPermiso, PDO::PARAM_INT);
+                $result->execute();
+
+                return $result->rowCount(PDO::FETCH_ASSOC);                
+            }
+            if($Per_Estado==1)
+            {
+
+                $sql = "call s_u_cambiar_selected_plantilla(?,0)";
+                $result = $this->_db->prepare($sql);
+                $result->bindParam(1, $Per_IdPermiso, PDO::PARAM_INT);
+                $result->execute();
+
+                return $result->rowCount(PDO::FETCH_ASSOC);
+            }
+
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("elearning(certificadoModel)", "cambiarSelectedPlantilla", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
+
+    public function editarPlantilla($iPlc_UrlImg, $iPlc_StyleNombre, $iPlc_StyleCurso, $iPlc_StyleHoras, $iPlc_StyleFecha,$iPlc_IdPlantillaCertificado) {
+        try{
+            $permiso = $this->_db->query(
+                " UPDATE plantilla_certificado SET Plc_UrlImg = '$iPlc_UrlImg', Plc_StyleNombre = '$iPlc_StyleNombre', Plc_StyleCurso = '$iPlc_StyleCurso', Plc_StyleHora = '$iPlc_StyleHoras', Plc_StyleFecha = '$iPlc_StyleFecha' WHERE Plc_IdPlantillaCertificado = $iPlc_IdPlantillaCertificado"
+            );
+            return $permiso->rowCount(PDO::FETCH_ASSOC);
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("elearning(certificadoModel)", "editarPlantilla", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
+
+      public function eliminarPlantilla($iPlc_IdPlantillaCertificado) {
+        try{
+            $permiso = $this->_db->query(
+                " DELETE FROM plantilla_certificado WHERE Plc_IdPlantillaCertificado = $iPlc_IdPlantillaCertificado"
+            );
+            return $permiso->rowCount(PDO::FETCH_ASSOC);
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("elearning(certificadoModel)", "eliminarPlantilla", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
 }

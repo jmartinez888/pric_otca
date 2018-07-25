@@ -33,9 +33,12 @@
                                     <td style=" text-align: center">{$rl.Cer_FechaReg}</td>
                                     {if $_acl->permiso("editar_rol")}
                                         <td style=" text-align: center">
-                                            <a target="_blank" class="btn btn-success btn-certificado" style="margin-bottom: 10px" href="{BASE_URL}elearning/cursos/obtenerCertificado/{$rl.Cer_IdCertificado}">
-                                                <strong><span class="glyphicon glyphicon-list-alt"></span> &nbsp;Visualizar</strong>
-                                            </a>
+                                             <a target="_blank" class="btn btn-success btn-certificado" style="margin-bottom: 10px" href="{BASE_URL}elearning/cursos/obtenerCertificado/{$rl.Cer_IdCertificado}">
+                        <strong><span class="glyphicon glyphicon-download-alt"></span></strong>
+                      </a>
+                      <a target="_blank" class="btn btn-success btn-certificado" style="margin-bottom: 10px" href="{BASE_URL}elearning/cursos/verCertificado/{$rl.Cer_IdCertificado}">
+                        <strong><span class="glyphicon glyphicon-eye-open"></span></strong>
+                      </a>
                                         </td>
                                     {/if}
                                 </tr>

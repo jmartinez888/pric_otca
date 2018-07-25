@@ -18,7 +18,7 @@ $(document).on('ready', function () {
         paginacion($(this).attr("pagina"), $(this).attr("nombre"), $(this).attr("parametros"),$(this).attr("total_registros"));
     });
     var paginacion = function (pagina, nombrelista, datos,total_registros) {
-        var pagina = {'pagina':pagina,'filas':$("#s_filas_"+nombrelista).val(),'total_registros':total_registros};
+        var pagina = {'pagina':pagina,'filas':$("#s_filas_"+nombrelista).val(),'total_registros':total_registros,'idCurso':$("#idCurso").val(),'tipo':$("#tipo").val()};
         
         $.post(_root_ + 'elearning/gestion/_paginacion_' + nombrelista + '/' + datos, pagina, function (data) {
             $("#" + nombrelista).html('');
@@ -38,10 +38,21 @@ $(document).on('ready', function () {
          $(e.currentTarget).find("#texto_").html(bookId);
     }); 
 
+    $('#confirm-leer').on('show.bs.modal', function(e) { 
+        var bookId = $(e.relatedTarget).data('book-id'); 
+         $(e.currentTarget).find("#titulo_").html(bookId);
+         var bookTexto = $(e.relatedTarget).data('book-texto'); 
+         $(e.currentTarget).find("#texto_").html(bookTexto);
+
+          // $.post(_root_ + 'elearning/gestion/_marcar_leido' +'/' + datos, pagina, function (data) {
+
+          //   });
+    }); 
+
     //PERMISOS
     $("body").on('click', "#buscaranuncio", function () { 
         $("#cargando").show();       
-        buscarAnuncio($("#palabraanuncio").val());
+        buscarAnuncio($("#palabraanuncio").val(),$("#idCurso").val(), $("#tipo").val());
     }); 
 
     $("body").on('click', '.estado-anuncio', function() {
@@ -68,7 +79,9 @@ $(document).on('ready', function () {
                     _Anc_Estado: _estado,
                     pagina: $(".pagination .active span").html(),
                     palabra: $("#palabraanuncio").val(),
-                    filas:$("#s_filas_"+'listaranuncios').val()
+                    filas:$("#s_filas_"+'listaranuncios').val(),
+                    idCurso:$("#idCurso").val(),
+                    tipo:$("#tipo").val()
                 },
         function(data) {
             $("#listaranuncios").html('');
@@ -102,7 +115,9 @@ $(document).on('ready', function () {
                     _Row_Estado: _Row_Estado_,
                     pagina: $(".pagination .active span").html(),
                     palabra: $("#palabraanuncio").val(),
-                    filas:$("#s_filas_"+'listaranuncios').val()
+                    filas:$("#s_filas_"+'listaranuncios').val(),
+                    idCurso:$("#idCurso").val(),
+                    tipo:$("#tipo").val()
                 },
         function(data) {
             $("#listaranuncios").html('');
@@ -131,7 +146,9 @@ $(document).on('ready', function () {
                     _Row_Estado: _Row_Estado_,
                     pagina: $(".pagination .active span").html(),
                     palabra: $("#palabraPermiso").val(),
-                    filas:$("#s_filas_"+'listaranuncios').val()
+                    filas:$("#s_filas_"+'listaranuncios').val(),
+                    idCurso:$("#idCurso").val(),
+                    tipo:$("#tipo").val()
                 },
         function(data) {
             $("#listaranuncios").html('');
@@ -141,12 +158,13 @@ $(document).on('ready', function () {
     });
 });
 
-function buscarAnuncio(criterio) {
+function buscarAnuncio(criterio,idCurso,tipo) {
     $("#cargando").show();
     $.post(_root_ + 'elearning/gestion/_buscarAnuncio',
     {
-        palabra:criterio
-        
+        palabra:criterio,
+        idCurso:idCurso,
+        tipo:tipo
     }, function (data) {
         $("#listaranuncios").html('');
         $("#cargando").hide();

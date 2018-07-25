@@ -1,5 +1,9 @@
 <?php
 
+use Dompdf\Adapter\CPDF;
+use Dompdf\Dompdf;
+use Dompdf\Exception;
+
 /**
  * Description of loginController
  * @author ROLORO
@@ -47,6 +51,7 @@ class cursosController extends elearningController {
     $this->_view->setCss(array("modulo", "index", "jp-index", "jp-detalle-lateral"));
     $this->_view->assign("busqueda",$busqueda);
     $this->_view->assign("curso",$cursos);
+     $this->_view->assign("c",0);
     $this->_view->renderizar('inicio');
   }
 
@@ -61,6 +66,7 @@ class cursosController extends elearningController {
     $this->_view->assign("busqueda","");
     $this->_view->assign("usu_curso",Session::get("usuario"));
     $this->_view->assign("curso",$cursos);
+    $this->_view->assign("c",1);
     $this->_view->renderizar('inicio');
   }
 
@@ -96,6 +102,12 @@ class cursosController extends elearningController {
     $modulo = $mModulo->getModulosCurso($id, Session::get("id_usuario"));
     $duracion = $model->getDuracionCurso($id);
     $certificado = $mCert->getCertificadoUsuarioCurso(Session::get("id_usuario"), $id);
+
+    $plantilla =$mCert->getPlantillaCertificado($id);
+
+    if($plantilla){
+      $this->_view->assign("plantilla", $plantilla);
+    }
 
     $this->_view->setTemplate(LAYOUT_FRONTEND);
     $this->_view->setCss(array("curso", "jp-curso"));
@@ -279,6 +291,13 @@ class cursosController extends elearningController {
     }else{
       $model->insertarInscripcion(Session::get("id_usuario"), $curso, 2);
     }
+
+     $Cmodel = $this->loadModel("_gestionCurso");
+    $anuncios = $Cmodel->getAnuncios($curso);
+
+    foreach ($anuncios as $a) {
+      $Cmodel->registrarAnuncioUsuario($a['Anc_IdAnuncioCurso'], Session::get("id_usuario"));
+    }
     $this->redireccionar("elearning/cursos/curso/" . $curso);
   }
 
@@ -411,39 +430,144 @@ class cursosController extends elearningController {
     $mCert = $this->loadModel("certificado");
 
     $certificado =$mCert->getCertificado_Id($id);
+    $plantilla =$mCert->getPlantillaCertificado($certificado[0]["Cur_IdCurso"]);
     $modulo = $mModulo->getModulosCurso_Id($certificado[0]["Cur_IdCurso"]);
 
     $this->_view->setTemplate(LAYOUT_FRONTEND);
     $this->_view->setCss(array("curso", "jp-curso"));
     $this->_view->setJs(array(array(BASE_URL . 'modules/elearning/views/gestion/js/core/util.js'), "curso"));
 
+    // if ($this->botonPress("export_data_pdf")) {
+        $b = "";
+        $c= "";   
+        $d= "";
+        $cuerpo="";
+        $img=BASE_URL.$plantilla['Plc_UrlImg'];
+         $a = "
+            <head>
+                <link href='views/layout/frontend/css/bootstrap.min.css' rel='stylesheet' type='text/css'>
+                <STYLE type='text/css'>             
+                @page {
+                            margin: 0;
+                        }
+                 </STYLE>
+            </head>    
+            <body>                   
+              <div class='col-lg-12 col-xs-12' style='position: relative; display: inline-block; text-align:center; height:100%; padding:0px;'>
+                  <img src='".$img."' style='width:100%; height:21cm'>
+                  <div class='' style=' ".$plantilla['Plc_StyleNombre']."border:0; '><b>".$certificado[0]['Usu_Nombre']." ".$certificado[0]['Usu_Apellidos']."</b></div>
+                  <div class='col-lg-12 hidden-xs' style='".$plantilla['Plc_StyleCurso']."border:0; '><b>".$certificado[0]['Cur_Titulo']."</b></div>
+                  <div class='col-lg-12 hidden-xs' style='".$plantilla['Plc_StyleFecha']."border:0; '>".$certificado[0]['Fecha_completa']."<br/></div> 
+                   <div class='col-lg-12 hidden-xs' style='".$plantilla['Plc_StyleHora']."border:0; '>".$certificado[0]['Cur_Duracion']."</div> 
+                  <div class='col-lg-12 col-xs-12' style='position: absolute; bottom:0; left: 5%;'><span style='font-size:13px'>Certificación de aprobación online</span><br/><span style='font-size:12px'>Código:".$certificado[0]['Cer_Codigo']."</span></div>
+                  </div> 
+            <script type='text/javascript' src='views/layout/frontend/js/bootstrap.min.js' ></script>
+        </body>";
+
+        // $a = "
+        // <html>
+        //     <head>
+        //         <link href='views/layout/frontend/css/bootstrap.min.css' rel='stylesheet' type='text/css'>
+        //     </head>    
+        //     <body style='width:100vw'>                   
+        //       <div class='col-lg-12 col-xs-12' style='background-image: url(".$img."); background-size: contain; width: 100%; height:100%; position: fixed;  background-repeat:no-repeat; background-position:center center;'>
+        //           <div class='' style=' ".$plantilla['Plc_StyleNombre']."border:0; '><b>".$certificado[0]['Usu_Nombre']." ".$certificado[0]['Usu_Apellidos']."</b><br/></div>
+        //           <div class='' style='".$plantilla['Plc_StyleCurso']."border:0; '><span style='font-size:30px'><b>".$certificado[0]['Cur_Titulo']."</b></span><br/></div>
+        //           <div class='' style='".$plantilla['Plc_StyleFecha']."border:0; '><span style='font-size:20px'>".$certificado[0]['Fecha_completa']."</span><br/></div> 
+        //           <div class='' style='position: absolute; bottom:0; left: 5%;'><span style='font-size:13px'>Certificación de aprobación online</span><br/><span style='font-size:12px'>Código:".$certificado[0]['Cer_Codigo']."</span></div>
+        //           </div> 
+        //     <script type='text/javascript' src='views/layout/frontend/js/bootstrap.min.js' ></script>
+        //     </body></html>";   
+        // echo $a.$cuerpo.$e; exit;         
+            
+            require_once("libs/autoload.inc.php");
+            $dompdf = new Dompdf(array('enable_remote' => true)); 
+            $dompdf->set_paper('A4', 'landscape'); //esta es una forma de ponerlo horizontal
+            $dompdf->set_option('isHtml5ParserEnabled', true);
+            $dompdf->loadHtml("$a.$cuerpo");
+            $dompdf->render();
+            $dompdf->stream("'".APP_NAME.'-OTCA_Descargas.pdf');
+    // }
+    
+    // $this->_view->assign("modulo", $modulo);
+    // $this->_view->assign("certificado", $certificado);
+    // $this->_view->assign("plantilla", $plantilla);
+    // // $this->_view->assign("detalle", $model->getDetalleCurso($curso["Cur_IdCurso"]));
+    // $this->_view->assign("session",Session::get("autenticado"));
+    // $this->_view->renderizar('certificado_curso');
+  }
+
+
+  public function verCertificado($id=0){
+    $model = $this->loadModel("curso");
+    $mModulo = $this->loadModel("modulo");
+    $mCert = $this->loadModel("certificado");
+
+    $certificado =$mCert->getCertificado_Id($id);
+    $plantilla =$mCert->getPlantillaCertificado($certificado[0]["Cur_IdCurso"]);
+    $modulo = $mModulo->getModulosCurso_Id($certificado[0]["Cur_IdCurso"]);
+
+    $this->_view->setTemplate(LAYOUT_FRONTEND);
+    $this->_view->setCss(array("curso", "jp-curso"));
+    $this->_view->setJs(array(array(BASE_URL . 'modules/elearning/views/gestion/js/core/util.js'), "curso"));
+
+    if ($this->botonPress("export_data_pdf")) {
+        $b = "";
+        $c= "";   
+        $d= "";
+        $cuerpo="";
+        $img=BASE_URL.$plantilla['Plc_UrlImg'];
+         $a = "
+            <head>
+                <link href='views/layout/frontend/css/bootstrap.min.css' rel='stylesheet' type='text/css'>
+                <STYLE type='text/css'>             
+                @page {
+                            margin: 0;
+                        }
+                 </STYLE>
+            </head>    
+            <body>                   
+              <div class='col-lg-12 col-xs-12' style='position: relative; display: inline-block; text-align:center; height:100%; padding:0px;'>
+                  <img src='".$img."' style='width:100%; height:21cm'>
+                  <div class='' style=' ".$plantilla['Plc_StyleNombre']."border:0; '><b>".$certificado[0]['Usu_Nombre']." ".$certificado[0]['Usu_Apellidos']."</b></div>
+                  <div class='col-lg-12 hidden-xs' style='".$plantilla['Plc_StyleCurso']."border:0; '><b>".$certificado[0]['Cur_Titulo']."</b></div>
+                  <div class='col-lg-12 hidden-xs' style='".$plantilla['Plc_StyleFecha']."border:0; '>".$certificado[0]['Fecha_completa']."<br/></div> 
+                   <div class='col-lg-12 hidden-xs' style='".$plantilla['Plc_StyleHora']."border:0; '>".$certificado[0]['Cur_Duracion']."</div> 
+                  <div class='col-lg-12 col-xs-12' style='position: absolute; bottom:0; left: 5%;'><span style='font-size:13px'>Certificación de aprobación online</span><br/><span style='font-size:12px'>Código:".$certificado[0]['Cer_Codigo']."</span></div>
+                  </div> 
+            <script type='text/javascript' src='views/layout/frontend/js/bootstrap.min.js' ></script>
+        </body>";
+
+        // $a = "
+        // <html>
+        //     <head>
+        //         <link href='views/layout/frontend/css/bootstrap.min.css' rel='stylesheet' type='text/css'>
+        //     </head>    
+        //     <body style='width:100vw'>                   
+        //       <div class='col-lg-12 col-xs-12' style='background-image: url(".$img."); background-size: contain; width: 100%; height:100%; position: fixed;  background-repeat:no-repeat; background-position:center center;'>
+        //           <div class='' style=' ".$plantilla['Plc_StyleNombre']."border:0; '><b>".$certificado[0]['Usu_Nombre']." ".$certificado[0]['Usu_Apellidos']."</b><br/></div>
+        //           <div class='' style='".$plantilla['Plc_StyleCurso']."border:0; '><span style='font-size:30px'><b>".$certificado[0]['Cur_Titulo']."</b></span><br/></div>
+        //           <div class='' style='".$plantilla['Plc_StyleFecha']."border:0; '><span style='font-size:20px'>".$certificado[0]['Fecha_completa']."</span><br/></div> 
+        //           <div class='' style='position: absolute; bottom:0; left: 5%;'><span style='font-size:13px'>Certificación de aprobación online</span><br/><span style='font-size:12px'>Código:".$certificado[0]['Cer_Codigo']."</span></div>
+        //           </div> 
+        //     <script type='text/javascript' src='views/layout/frontend/js/bootstrap.min.js' ></script>
+        //     </body></html>";   
+        // echo $a.$cuerpo.$e; exit;         
+            
+            require_once("libs/autoload.inc.php");
+            $dompdf = new Dompdf(array('enable_remote' => true)); 
+            $dompdf->set_paper('A4', 'landscape'); //esta es una forma de ponerlo horizontal
+            $dompdf->set_option('isHtml5ParserEnabled', true);
+            $dompdf->loadHtml("$a.$cuerpo");
+            $dompdf->render();
+            $dompdf->stream("'".APP_NAME.'-OTCA_Descargas.pdf');
+    }
+    
     $this->_view->assign("modulo", $modulo);
     $this->_view->assign("certificado", $certificado);
+    $this->_view->assign("plantilla", $plantilla);
     // $this->_view->assign("detalle", $model->getDetalleCurso($curso["Cur_IdCurso"]));
     $this->_view->assign("session",Session::get("autenticado"));
     $this->_view->renderizar('certificado_curso');
-  }
-
-
-  public function calendario(){
-    $this->_view->setTemplate(LAYOUT_FRONTEND);
-    $this->_view->renderizar('calendario');
-  }
-
-  public function data_calendario(){
-    $anio = $this->getTexto("anio");
-    $mes = $this->getTexto("mes");
-    $model = $this->loadModel("curso");
-    $ini_cursos = $model->cursos_x_calendario($anio, $mes);
-    $resultado = array();
-
-    foreach ($ini_cursos as $item) {
-      $evento1 = array("ID" => $item["ID"], "D" => "01", "M" => $mes, "A" => $anio
-      , "H" => $item["HORA"], "DET" => $item["DET"], "ESTADO" => $item["ESTADO"]
-      , "FECHA" => $item["FECHA"]);
-      array_push($resultado, $evento1);
-    }
-
-    echo json_encode($resultado);
   }
 }

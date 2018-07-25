@@ -2,7 +2,7 @@
   {include file='modules/elearning/views/cursos/menu/lateral.tpl'}
   <div class="col-lg-10" style="margin-top: 20px">
 
-     {if $_acl->permiso("agregar_usuario")}
+     {if $_acl->permiso("agregar_usuario") && $tipo==0}
     <div class="panel panel-default">
         <div class="panel-heading jsoftCollap">
             <h3 aria-expanded="false" data-toggle="collapse" href="#collapse3" class="panel-title collapsed"><i style="float:right" class="fa fa-ellipsis-v"></i><i class="fa fa-user-plus"></i>&nbsp;&nbsp;<strong>Nuevo Anuncio</strong></h3>
@@ -44,12 +44,15 @@
 
 
      <div class="panel-body" style=" margin: 15px">
+        <input type="hidden" name="idCurso" value="{$id}" id="idCurso">
              <div class="row" style="text-align:right">
                 <div style="display:inline-block;padding-right:2em">
                     <input class="form-control" placeholder="Buscar anuncio" style="width: 150px; float: left; margin: 0px 10px;" name="palabraanuncio" id="palabraanuncio">
                     <button class="btn btn-success" style=" float: left" type="button" id="buscaranuncio"  ><i class="glyphicon glyphicon-search"></i></button>
                 </div>
             </div>
+
+                <input type="hidden" name="tipo" id="tipo" value="{if $tipo==0}0{else}1{/if}">
             <div id="listaranuncios">
                 {if isset($anuncios) && count($anuncios)}
                 <div class="table-responsive">
@@ -59,12 +62,15 @@
                             <th style=" text-align: center">Titulo</th>
                             <th style=" text-align: center">Descripción</th>
                             <th style=" text-align: center">Fecha</th>
+                            {if $tipo==0}
                              <th style=" text-align: center">Estado</th>
                             {if $_acl->permiso("editar_rol")}
                             <th style=" text-align: center">Opciones</th>
                             {/if}
+                            {/if}
                         </tr>
                         {foreach item=rl from=$anuncios}
+                        {if $tipo==0}
                             <tr {if $rl.Row_Estado==0}
                                         {if $_acl->permiso("ver_eliminados")}
                                             class="btn-danger"
@@ -74,7 +80,7 @@
                                     {/if} >
                                 <td style=" text-align: center">{$numeropagina++}</td>
                                 <td style=" text-align: center">{$rl.Anc_Titulo}</td>
-                                <td style=" text-align: center">{$rl.Anc_Descripcion}</td>
+                                <td style=" text-align: center">{$rl.Anc_DescripcionRec}...</td>
                                 <td style=" text-align: center">{$rl.Anc_FechaReg}</td>
                                  <td style=" text-align: center">
                                         {if $rl.Anc_Estado==0}
@@ -93,6 +99,9 @@
 
                                         <a data-toggle="tooltip" data-placement="bottom" class="btn btn-default btn-sm glyphicon glyphicon-envelope" title="Enviar email" href="{$_layoutParams.root}elearning/gestion/enviarEmailAnuncios/{$rl.Anc_IdAnuncioCurso}"></a>
 
+                                         
+
+
 
                                         <a   
                                         {if $rl.Row_Estado==0}
@@ -108,6 +117,30 @@
                                     </td>
                                     {/if}
                             </tr>
+                            {else}
+
+                               
+                                <tr >
+
+                                <td style=" text-align: center"> <a data-book-id="{$rl.Anc_Titulo}" data-book-texto="{$rl.Anc_Descripcion}"
+                                            data-toggle="modal"  data-target="#confirm-leer"
+                                            title="{$lenguaje.label_eliminar}"
+                                        id_anuncio="{$rl.Anc_IdAnuncioCurso}" data-placement="bottom" > {if $rl.Anu_Leido==0}<b>{/if}{$numeropagina++}{if $rl.Anu_Leido==0}</b>{/if}</a></td>
+                                <td style=" text-align: center"> <a data-book-id="{$rl.Anc_Titulo}" data-book-texto="{$rl.Anc_Descripcion}"
+                                            data-toggle="modal"  data-target="#confirm-leer"
+                                            title="{$lenguaje.label_eliminar}"
+                                        id_anuncio="{$rl.Anc_IdAnuncioCurso}" data-placement="bottom" > {if $rl.Anu_Leido==0}<b>{/if}{$rl.Anc_Titulo}{if $rl.Anu_Leido==0}</b>{/if}</a></td>
+                                <td style=" text-align: center"> <a data-book-id="{$rl.Anc_Titulo}" data-book-texto="{$rl.Anc_Descripcion}"
+                                            data-toggle="modal"  data-target="#confirm-leer"
+                                            title="{$lenguaje.label_eliminar}"
+                                        id_anuncio="{$rl.Anc_IdAnuncioCurso}" data-placement="bottom" > {if $rl.Anu_Leido==0}<b>{/if}{$rl.Anc_DescripcionRec}...{if $rl.Anu_Leido==0}</b>{/if}</a></td>
+                                <td style=" text-align: center"> <a data-book-id="{$rl.Anc_Titulo}" data-book-texto="{$rl.Anc_Descripcion}"
+                                            data-toggle="modal"  data-target="#confirm-leer"
+                                            title="{$lenguaje.label_eliminar}"
+                                        id_anuncio="{$rl.Anc_IdAnuncioCurso}" data-placement="bottom" > {if $rl.Anu_Leido==0}<b>{/if}{$rl.Anc_FechaReg}{if $rl.Anu_Leido==0}</b>{/if}</a></td>
+                                </tr>
+                                
+                            {/if}
                         {/foreach}
                     </table>
                 </div>
@@ -138,6 +171,25 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
                 <a style="cursor:pointer"  data-dismiss="modal" class="btn btn-danger danger eliminar_anuncio">Eliminar</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal " id="confirm-leer" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="titulo_" name='titulo_'>Anuncio</h4>
+            </div>
+            <div class="modal-body">
+                <!-- <p> <strong  class="nombre-es"><label id="titulo_" name='titulo_'></label></strong></p> -->
+                <label id="texto_" name='texto_'></label>
+                <!-- <input type='text' class='form-control' name='codigo' id='validate-number' placeholder='Codigo' required> --> 
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Volver</button>
             </div>
         </div>
     </div>

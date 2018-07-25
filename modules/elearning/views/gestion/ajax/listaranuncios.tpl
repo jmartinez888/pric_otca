@@ -6,12 +6,15 @@
                             <th style=" text-align: center">Titulo</th>
                             <th style=" text-align: center">Descripción</th>
                             <th style=" text-align: center">Fecha</th>
+                            {if $tipo==0}
                              <th style=" text-align: center">Estado</th>
                             {if $_acl->permiso("editar_rol")}
                             <th style=" text-align: center">Opciones</th>
                             {/if}
+                            {/if}
                         </tr>
                         {foreach item=rl from=$anuncios}
+                        {if $tipo==0}
                             <tr {if $rl.Row_Estado==0}
                                         {if $_acl->permiso("ver_eliminados")}
                                             class="btn-danger"
@@ -21,7 +24,7 @@
                                     {/if} >
                                 <td style=" text-align: center">{$numeropagina++}</td>
                                 <td style=" text-align: center">{$rl.Anc_Titulo}</td>
-                                <td style=" text-align: center">{$rl.Anc_Descripcion}</td>
+                                <td style=" text-align: center">{$rl.Anc_DescripcionRec}...</td>
                                 <td style=" text-align: center">{$rl.Anc_FechaReg}</td>
                                  <td style=" text-align: center">
                                         {if $rl.Anc_Estado==0}
@@ -40,6 +43,9 @@
 
                                         <a data-toggle="tooltip" data-placement="bottom" class="btn btn-default btn-sm glyphicon glyphicon-envelope" title="Enviar email" href="{$_layoutParams.root}elearning/gestion/enviarEmailAnuncios/{$rl.Anc_IdAnuncioCurso}"></a>
 
+                                         
+
+
 
                                         <a   
                                         {if $rl.Row_Estado==0}
@@ -55,6 +61,30 @@
                                     </td>
                                     {/if}
                             </tr>
+                            {else}
+
+                               
+                                <tr >
+
+                                <td style=" text-align: center"> <a data-book-id="{$rl.Anc_Titulo}" data-book-texto="{$rl.Anc_Descripcion}"
+                                            data-toggle="modal"  data-target="#confirm-leer"
+                                            title="{$lenguaje.label_eliminar}"
+                                        id_anuncio="{$rl.Anc_IdAnuncioCurso}" data-placement="bottom" > {if $rl.Anu_Leido==0}<b>{/if}{$numeropagina++}{if $rl.Anu_Leido==0}</b>{/if}</a></td>
+                                <td style=" text-align: center"> <a data-book-id="{$rl.Anc_Titulo}" data-book-texto="{$rl.Anc_Descripcion}"
+                                            data-toggle="modal"  data-target="#confirm-leer"
+                                            title="{$lenguaje.label_eliminar}"
+                                        id_anuncio="{$rl.Anc_IdAnuncioCurso}" data-placement="bottom" > {if $rl.Anu_Leido==0}<b>{/if}{$rl.Anc_Titulo}{if $rl.Anu_Leido==0}</b>{/if}</a></td>
+                                <td style=" text-align: center"> <a data-book-id="{$rl.Anc_Titulo}" data-book-texto="{$rl.Anc_Descripcion}"
+                                            data-toggle="modal"  data-target="#confirm-leer"
+                                            title="{$lenguaje.label_eliminar}"
+                                        id_anuncio="{$rl.Anc_IdAnuncioCurso}" data-placement="bottom" > {if $rl.Anu_Leido==0}<b>{/if}{$rl.Anc_DescripcionRec}...{if $rl.Anu_Leido==0}</b>{/if}</a></td>
+                                <td style=" text-align: center"> <a data-book-id="{$rl.Anc_Titulo}" data-book-texto="{$rl.Anc_Descripcion}"
+                                            data-toggle="modal"  data-target="#confirm-leer"
+                                            title="{$lenguaje.label_eliminar}"
+                                        id_anuncio="{$rl.Anc_IdAnuncioCurso}" data-placement="bottom" > {if $rl.Anu_Leido==0}<b>{/if}{$rl.Anc_FechaReg}{if $rl.Anu_Leido==0}</b>{/if}</a></td>
+                                </tr>
+                                
+                            {/if}
                         {/foreach}
                     </table>
                 </div>
