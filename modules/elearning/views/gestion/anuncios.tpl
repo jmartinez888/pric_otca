@@ -1,8 +1,9 @@
 <div class="col-lg-12">
   {include file='modules/elearning/views/cursos/menu/lateral.tpl'}
   <div class="col-lg-10" style="margin-top: 20px">
-
-     {if $_acl->permiso("agregar_usuario") && $tipo==0}
+<!-- 
+     {if $_acl->permiso("agregar_usuario") && $tipo==0} -->
+     {if  $tipo==0}
     <div class="panel panel-default">
         <div class="panel-heading jsoftCollap">
             <h3 aria-expanded="false" data-toggle="collapse" href="#collapse3" class="panel-title collapsed"><i style="float:right" class="fa fa-ellipsis-v"></i><i class="fa fa-user-plus"></i>&nbsp;&nbsp;<strong>Nuevo Anuncio</strong></h3>
