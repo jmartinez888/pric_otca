@@ -36,6 +36,12 @@ $(".btnAnuncios").click(function(){
   location.href = Link;
 });
 
+$(".btnCertificado").click(function(){
+  var Curso = $(this).parent().find(".hidden_IdCurso").val();
+  var Link = $("#hidden_url").val() + "certificado/plantilla_opcion/" + Curso;
+  location.href = Link;
+});
+
 $(".btnDeshabilitar").click(function(){
   var Curso = $(this).parent().find(".hidden_IdCurso").val();
   ToggleEstado(Curso, "0");

@@ -274,7 +274,7 @@ function initMap() {
 var contentString = '<div id="iw-container">'+
     '<div class="iw-title">Cobertura de Bosques</div>'+
     '<div class="iw-content">' +
-    '<div class="iw-subTitle">+600000 &nbsp;&nbsp;<a href="'+_root_ +'noticias/index/1" title="Ver más" '+
+    '<div class="iw-subTitle"> 600000 Km<sup>2</sup> &nbsp;&nbsp;<a href="'+_root_ +'noticias/index/index/333" title="Ver más" '+
     'target="_blank" class="glyphicon glyphicon-share"></a></div>'
     '</div>';
 
@@ -377,7 +377,7 @@ var contentString = '<div id="iw-container">'+
 var contentString2 = '<div id="iw-container">'+
     '<div class="iw-title">Áreas Protegidas</div>'+
     '<div class="iw-content">' +
-    '<div class="iw-subTitle">+340000 &nbsp;&nbsp;<a href="'+_root_ +'noticias/index/1" title="Ver más" '+
+    '<div class="iw-subTitle"> 340000 Km<sup>2</sup> &nbsp;&nbsp;<a href="'+_root_ +'noticias/index/index/338" title="Ver más" '+
     'target="_blank" class="glyphicon glyphicon-share"></a></div>'
     '</div>';
 
@@ -390,9 +390,9 @@ var contentString2 = '<div id="iw-container">'+
     // '</div>';
 
 var contentString3 = '<div id="iw-container">'+
-    '<div class="iw-title">Carga Hídrica de Cauce</div>'+
+    '<div class="iw-title">Caudal del Amazonas</div>'+
     '<div class="iw-content">' +
-    '<div class="iw-subTitle">+323320 &nbsp;&nbsp;<a href="'+_root_ +'noticias/index/1" title="Ver más" '+
+    '<div class="iw-subTitle"> 219000 mts<sup>3</sup>  &nbsp;&nbsp;<a href="'+_root_ +'noticias/index/index/328" title="Ver más" '+
     'target="_blank" class="glyphicon glyphicon-share"></a></div>'
     '</div>';
 
@@ -405,7 +405,7 @@ var contentString3 = '<div id="iw-container">'+
 var contentString4 = '<div id="iw-container">'+
     '<div class="iw-title">Pueblos Indígenas</div>'+
     '<div class="iw-content">' +
-    '<div class="iw-subTitle">+75345 &nbsp;&nbsp;<a href="'+_root_ +'noticias/index/1" title="Ver más" '+
+    '<div class="iw-subTitle"> 75345 &nbsp;&nbsp;<a href="'+_root_ +'noticias/index/index/343" title="Ver más" '+
     'target="_blank" class="glyphicon glyphicon-share"></a></div>'
     '</div>';
 

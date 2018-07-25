@@ -75,6 +75,8 @@ class cursoModel extends Model {
           if($c["Mod_IdModCurso"]==2){
             $c["Detalle"] = $this->DetalleLMS($c["Cur_IdCurso"]);
           }
+          $c["Total"] = $this->getAnunciosCountTotal($c["Cur_IdCurso"]);
+          $c["NoLeidos"] = $this->getAnunciosCountNoLeidos($usuario,$c["Cur_IdCurso"]);
           array_push($resultado, $c);
         }
         return $resultado;
@@ -108,6 +110,18 @@ class cursoModel extends Model {
       return $this->getArray($sql)[0];
     }
 
+    public function getAnunciosCountTotal($curso){
+      $sql = "SELECT COUNT(*) Totales FROM anuncio_curso WHERE Cur_IdCurso=$curso AND Anc_Estado=1 AND Row_Estado=1";
+      return $this->getArray($sql)[0];
+    }
+
+    public function getAnunciosCountNoLeidos($usuario,$curso){
+      $sql = "SELECT COUNT(*) NoLeidos FROM anuncio_usuario anu
+              INNER JOIN anuncio_curso anc ON anu.Anc_IdAnuncioCurso=anc.Anc_IdAnuncioCurso
+              WHERE anu.Usu_IdUsuario=$usuario AND anu.Anu_Leido=0 AND anc.Cur_IdCurso=$curso AND anc.Anc_Estado=1 AND anc.Row_Estado=1";
+      return $this->getArray($sql)[0];
+    }
+
     public function getProgresoCurso($curso, $id_usuario){
       $sql = "SELECT
                 (CASE WHEN Y.Lecciones = Y.Completos THEN 1 ELSE 0 END) as Completo,
@@ -133,7 +147,7 @@ class cursoModel extends Model {
     }
 
     public function getDetalleCurso($curso){
-      $sql = "SELECT * FROM detalle_curso 
+      $sql = "SELECT * FROM detalle_curso
               WHERE Cur_IdCurso = {$curso} AND Row_Estado = 1";
       return $this->getArray($sql);
     }
@@ -149,7 +163,7 @@ class cursoModel extends Model {
               FROM respuesta rr
               INNER JOIN pregunta pp ON pp.Pre_IdPregunta = rr.Pre_IdPregunta
               WHERE rr.Usu_IdUsuario = '{$usuario}' AND pp.Exa_IdExamen = '{$examen}'
-                AND rr.Res_Intento = 
+                AND rr.Res_Intento =
               (SELECT ifnull(MAX(r.Res_Intento), 1) as Intento FROM respuesta r
               INNER JOIN pregunta p ON p.Pre_IdPregunta = r.Pre_IdPregunta
               WHERE r.Usu_IdUsuario = '{$usuario}' AND p.Exa_IdExamen = '{$examen}')) as X
@@ -162,9 +176,9 @@ class cursoModel extends Model {
     }
 
     public function getUsuarioCurso($id){
-      $sql = "SELECT * FROM usuario 
+      $sql = "SELECT * FROM usuario
               WHERE Usu_Estado = 1 AND Row_Estado = 1
-              AND Usu_IdUsuario = (SELECT Usu_IdUsuario FROM curso 
+              AND Usu_IdUsuario = (SELECT Usu_IdUsuario FROM curso
                                   WHERE Cur_IdCurso = {$id}
                                   AND Row_Estado = 1 AND Cur_Estado = 1)";
       return $this->getArray($sql);
@@ -175,10 +189,69 @@ class cursoModel extends Model {
       return $this->getArray($sql);
     }
 
+    public function cursos_x_calendario($anio, $mes){
+      $sql = "SELECT * FROM
+              (SELECT
+                1 as ESTADO,
+                (SELECT C.Cur_IdCurso FROM curso c INNER JOIN modulo_curso mc on c.Cur_IdCurso = mc.Cur_IdCurso
+                WHERE mc.Mod_IdModulo = L.Mod_IdModulo) as ID,
+                (SELECT C.Cur_Titulo FROM curso c INNER JOIN modulo_curso mc on c.Cur_IdCurso = mc.Cur_IdCurso
+                WHERE mc.Mod_IdModulo = L.Mod_IdModulo) as DET,
+                HOUR(L.Lec_FechaDesde) as HORA,
+                L.Lec_FechaDesde AS FECHA
+              FROM leccion L WHERE Lec_IdLeccion IN
+              (SELECT
+                (SELECT l.Lec_IdLeccion FROM leccion l INNER JOIN modulo_curso mc ON l.Mod_IdModulo = mc.Mod_IdModulo
+                WHERE mc.Cur_IdCurso = C.Cur_IdCurso AND mc.Mod_Estado = 1 AND mc.Row_Estado = 1 AND
+                  l.Lec_Estado = 1 AND l.Row_Estado = 1 AND l.Lec_FechaDesde IS NOT NULL AND l.Lec_FechaHasta IS NOT NULL
+                ORDER BY l.Lec_FechaDesde ASC LIMIT 1) as MiLeccion
+              FROM curso C
+              WHERE C.Cur_Estado = 1 AND C.Row_Estado = 1)
+              UNION
+              SELECT
+                2 as ESTADO,
+                (SELECT C.Cur_IdCurso FROM curso c INNER JOIN modulo_curso mc on c.Cur_IdCurso = mc.Cur_IdCurso
+                WHERE mc.Mod_IdModulo = L.Mod_IdModulo) as ID,
+                (SELECT C.Cur_Titulo FROM curso c INNER JOIN modulo_curso mc on c.Cur_IdCurso = mc.Cur_IdCurso
+                WHERE mc.Mod_IdModulo = L.Mod_IdModulo) as DET,
+                HOUR(L.Lec_FechaDesde) as HORA,
+                L.Lec_FechaHasta AS FECHA
+              FROM leccion L WHERE Lec_IdLeccion IN
+              (SELECT
+                (SELECT l.Lec_IdLeccion FROM leccion l INNER JOIN modulo_curso mc ON l.Mod_IdModulo = mc.Mod_IdModulo
+                WHERE mc.Cur_IdCurso = C.Cur_IdCurso AND mc.Mod_Estado = 1 AND mc.Row_Estado = 1 AND
+                  l.Lec_Estado = 1 AND l.Row_Estado = 1 AND l.Lec_FechaDesde IS NOT NULL AND l.Lec_FechaHasta IS NOT NULL
+                ORDER BY l.Lec_FechaHasta DESC LIMIT 1) as MiLeccion
+              FROM curso C
+              WHERE C.Cur_Estado = 1 AND C.Row_Estado = 1))X
+              WHERE MONTH(X.FECHA) = '{$mes}' AND YEAR(X.FECHA) = '{$anio}'
+              ORDER BY X.FECHA";
+      echo $sql; exit;
+      return $this->getArray($sql);
+    }
+
+    public function calendario_curso_id($curso, $anio, $mes){
+      $sql = "SELECT
+                l.Lec_IdLeccion AS ID,
+                DATE(l.Lec_FechaDesde) as FECHA,
+                DAY(l.Lec_FechaDesde) as DIA,
+                HOUR(l.Lec_FechaDesde) as HORA,
+                l.Lec_Titulo as DET,
+                1 as ESTADO
+              FROM leccion L
+              INNER JOIN modulo_curso mc ON l.Mod_IdModulo = mc.Mod_IdModulo
+              WHERE mc.Cur_IdCurso = '{$curso}'
+                AND mc.Mod_Estado = 1 AND mc.Row_Estado = 1
+                AND l.Lec_Estado = 1 AND l.Row_Estado = 1
+                AND MONTH(l.Lec_FechaDesde) = '{$mes}' AND YEAR(l.Lec_FechaDesde) = '{$anio}'
+              ORDER BY l.Lec_FechaDesde ASC";
+      return $this->getArray($sql);
+    }
+
     public function getDuracionCurso($curso){
-      $sql = "SELECT COUNT(*) as Total FROM leccion 
-              WHERE Mod_IdModulo IN 
-                (SELECT Mod_IdModulo FROM modulo_curso 
+      $sql = "SELECT COUNT(*) as Total FROM leccion
+              WHERE Mod_IdModulo IN
+                (SELECT Mod_IdModulo FROM modulo_curso
                 WHERE Cur_IdCurso = {$curso} AND Mod_Estado = 1 AND Row_Estado = 1)
               AND Row_Estado = 1 AND Lec_Estado = 1";
       $lec = $this->getArray($sql);

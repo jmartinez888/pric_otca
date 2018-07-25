@@ -44,6 +44,7 @@
                           {else}
                           <button class="btnHabilitar"><i class="glyphicon glyphicon-ok"></i></button>
                           {/if}
+                           <button class="btnCertificado"><i class="glyphicon glyphicon-picture"></i></button>
                           <button class="btnEliminar"><i class="glyphicon glyphicon-trash"></i></button>
                         </td>
                     </tr>

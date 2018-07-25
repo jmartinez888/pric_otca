@@ -31,6 +31,10 @@ class calendarioController extends elearningController {
   }
 
   public function calendario(){
+      
+    #$this->_view->setJs(array(array(BASE_URL."/modules/elearning/views/gestion/js/core/controller.js"),array(BASE_URL."/modules/elearning/views/calendario/js/calendario.js"),"calendario"));
+    $this->_view->setCss(array("calendario"));
+      
     $anio = $this->getTexto("anio");
     $mes = $this->getTexto("mes");
     $evento = html_entity_decode($this->getTexto("eventos"));
@@ -38,6 +42,7 @@ class calendarioController extends elearningController {
     $titulo = $this->NombreMes($mes) . " del " . $anio;
 
     $calendario = $this->MesCalendario($anio, $mes);
+   
     $calendario = $this->AddEventos($calendario, $evento);
 
     $this->_view->assign("anterior", $this->MesAnterior($fecha));

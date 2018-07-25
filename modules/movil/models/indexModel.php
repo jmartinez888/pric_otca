@@ -2,17 +2,14 @@
 class indexModel extends Model {
     public function __construct() {
         parent::__construct();
-    }
-    /*
-    public function getCursos($Mod_IdModCurso){
+    }    
+    public function getCursos(){  
         $sql = $this->_db->query(
-                "SELECT Cur_IdCurso,Cur_UrlBanner,Cur_Titulo FROM curso WHERE Mod_IdModCurso=$Mod_IdModCurso"
+            "SELECT cur.*,COUNT(mat.Cur_IdCurso) as Inscritos,COUNT(moc.Cur_IdCurso) as Total
+            FROM curso cur LEFT JOIN matricula_curso mat ON cur.Cur_IdCurso=mat.Cur_IdCurso
+            LEFT JOIN modulo_curso moc ON cur.Cur_IdCurso=moc.Cur_IdCurso
+            WHERE cur.Cur_Estado=1 AND cur.Row_Estado=1 GROUP BY mat.Cur_IdCurso"
         );              
-        return $sql->fetchAll();
-    }
-    */
-    public function getCursos(){
-        $sql = $this->_db->query("SELECT Cur_IdCurso,Cur_UrlBanner,Cur_Titulo FROM curso WHERE Cur_Estado=1");              
         return $sql->fetchAll();
     }
     public function getContenidoLeccion($Lec_IdLeccion){
@@ -20,33 +17,22 @@ class indexModel extends Model {
                 "SELECT CL_Descripcion  FROM contenido_leccion WHERE Lec_IdLeccion=$Lec_IdLeccion"
         );              
         return $sql->fetchAll();
-    }
-    /*
-    public function getCursosUsuario($Mod_IdModCurso,$Usu_IdUsuario){
-        $sql = $this->_db->query(
-                "SELECT cur.Cur_IdCurso,cur.Cur_UrlBanner,cur.Cur_Titulo FROM curso cur
-                INNER JOIN usuario_curso usc ON cur.Cur_IdCurso=usc.Cur_IdCurso
-                WHERE Mod_IdModCurso=$Mod_IdModCurso AND usc.Usu_IdUsuario=$Usu_IdUsuario"
-        );              
-        return $sql->fetchAll();
-    }
-    */
-    
+    } 
     public function getForos() {
         $sql = $this->_db->query(
                 "SELECT f.*,(SELECT COUNT(Com_IdComentario) FROM comentarios c WHERE c.For_IdForo=f.For_IdForo) as For_TComentarios  FROM foro f WHERE f.For_Funcion LIKE '%forum%' AND Row_Estado=1 ORDER BY f.For_FechaCreacion DESC"
         );              
         return $sql->fetchAll();        
     }
-    public function getLecciones($Mod_IdModulo){
+    public function getLecciones(){
         $sql = $this->_db->query(
-                "SELECT * FROM leccion WHERE Mod_IdModulo=$Mod_IdModulo"
+                "SELECT * FROM leccion"
         );              
         return $sql->fetchAll();
     }
-    public function getModulos($Cur_IdCurso){
+    public function getModulos(){
         $sql = $this->_db->query(
-                "SELECT Mod_IdModulo,Mod_Titulo FROM modulo_curso WHERE Cur_IdCurso=$Cur_IdCurso"
+                "SELECT * FROM modulo_curso"
         );              
         return $sql->fetchAll();
     }
@@ -54,7 +40,7 @@ class indexModel extends Model {
         $sql = $this->_db->query(
                 "SELECT usc.* FROM curso cur INNER JOIN usuario_curso usc ON 
                 cur.Cur_IdCurso=usc.Cur_IdCurso WHERE usc.Usu_IdUsuario=$Usu_IdUsuario 
-                AND cur.Estado=1"
+                AND cur.Cur_Estado=1"
         );              
         return $sql->fetchAll();
     }
@@ -70,9 +56,10 @@ class indexModel extends Model {
         );              
         return $sql->fetchAll();                
     } 
-    public function getUsuarioPorUsuarioPassword($Usu_Usuario,$Usu_Password){        
+    public function getUsuarioPorUsuarioPassword($Usu_Usuario,$Usu_Password){                
         $sql = $this->_db->query(
-                "SELECT * FROM usuario WHERE  Usu_Usuario='$Usu_Usuario' AND Usu_Password = '$Usu_Password' "
+                "SELECT * FROM usuario WHERE  Usu_Usuario='$Usu_Usuario' 
+                AND  Usu_Password='".Hash::getHash('sha1', $Usu_Password, HASH_KEY) ."'"
         );              
         return $sql->fetchAll();         
     }

@@ -18,6 +18,12 @@
   right: 10px;
 }
 
+.btn-anuncios{
+  position: absolute;
+  bottom: -10px;
+  right: 0px;
+}
+
 .curso-item-title{
   /* position: absolute; */
   /*bottom: 170px;

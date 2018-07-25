@@ -10,13 +10,14 @@
 .back-light{
     background-color: #F2F2F2;
 }
+.back-white{
+    background-color: #FFFFFF;
+}
 /*text-colors*/
 .text-color-white{
 	color:#fff;
 }
-.text-color-primary-dark{
-	color:#373941;
-}
+
 /*display*/
 .display-inline{
 	display: inline-block;
@@ -39,6 +40,38 @@
 	text-align: center;
 }
 
+/*border*/
+
+.border-0{
+	border:0;
+}
+.border-t-0{
+	border-top: 0 !important;
+}
+.border-l-0{
+	border-left: 0 !important;
+}
+.border-r-0{
+	border-right: 0 !important;
+}
+.border-b-0{
+	border-bottom: 0 !important;
+}
+.border-1{
+	border: 1px solid #e6e6e6;
+}
+.border-b-1{
+	border-bottom: 1px solid #e6e6e6 !important;
+}
+.border-l-1{
+	border-left: 1px solid #e6e6e6 !important;
+}
+.border-r-1{
+	border-right: 1px solid #e6e6e6 !important;
+}
+.border-t-1{
+	border-top: 1px solid #e6e6e6 !important;
+}
 /*margin*/
 .margin-t-10{
 	margin-top: 10px;
@@ -67,6 +100,9 @@
 	padding:5px !important;
 }
 .padding-10{
+	padding:10px !important;
+}
+.padding-t-10{
 	padding:10px !important;
 }
 /*font-size*/
@@ -108,21 +144,8 @@
 .max-width-100{
 	max-width: 100px !important;
 }
-.max-width-390{
-	max-width: 390px !important;
-}
 
 
-/*position*/
-.position-relative{
-	position: relative;
-}
-.position-absolute{
-
-}
-.position-fixed{
-	position: fixed;
-}
 /*scrollbar*/
 
     

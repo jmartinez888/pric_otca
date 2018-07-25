@@ -122,6 +122,7 @@
                   <div class="tag-lms"><center>Está pendiente la aprobación de tu inscripción</center></div>
                 {else}
                   {if $session && $progreso.Completo==1}
+                    {if isset($inscripcion) && count($inscripcion)>0}
                     {if !count($certificado)}
                       <button class="btn btn-success btn-certificado" style="margin-bottom: 10px" id="btnCertificado">
                         <strong><span class="glyphicon glyphicon-list-alt"></span> &nbsp;Obtener certificado</strong>
@@ -130,6 +131,7 @@
                       <a target="_blank" class="btn btn-success btn-certificado" style="margin-bottom: 10px" href="{BASE_URL}elearning/cursos/obtenerCertificado/{$certificado[0]['Cer_IdCertificado']}">
                         <strong><span class="glyphicon glyphicon-list-alt"></span> &nbsp;Visualizar certificado</strong>
                       </a>
+                    {/if}
                     {/if}
                   {/if}
                   <center class="tag-inscrito">

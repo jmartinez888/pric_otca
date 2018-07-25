@@ -60,7 +60,7 @@
     <div class="modal-dialog modal-xm">
        <div class="panel">
            <div class="panel-heading panel-calendario-header">
-               <span style="height: 20px; width: 20px; margin-right: 5px;" class="glyphicon glyphicon-add"></span>
+               <span style="height: 20px; width: 20px; margin-right: 5px; margin: 0px 0px 0px 5px;" class="glyphicon glyphicon-calendar"></span>
                <div id="panel-calendario-titulo" style="display: inline-block"></div>
                <button class="close" data-dismiss="modal" style="margin-top: 0px;color: white !important">&times;</button>
            </div>

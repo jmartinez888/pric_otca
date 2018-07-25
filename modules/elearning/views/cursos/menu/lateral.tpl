@@ -242,16 +242,24 @@
             <span> Bandeja de Entrada</span></li></div>
           </a>
         </ul>
+        <ul>
+            <a href="{BASE_URL}elearning/certificado/miscertificados" class="nounderline">
+                <div class="side-menu2"><li class="side-menu" style="position: relative">
+                        <i class="glyphicon glyphicon-education"></i>
+                        <span>Mis Certificados</span></li></div>
+            </a>
+        </ul>
         {/if}
         <ul>
-          <a href="{BASE_URL}elearning/certificado/menu" class="nounderline">
+          <a href="{BASE_URL}elearning/cursos/calendario" class="nounderline">
             <div class="side-menu2"><li class="side-menu" style="position: relative">
-            <i class="glyphicon glyphicon-education"></i>
-            <span>Mis Certificados</span></li></div>
+            <i class="glyphicon glyphicon-calendar"></i>
+            <span> Calendario de Cursos</span></li></div>
           </a>
         </ul>
+
         <ul>
-          <a href="{BASE_URL}elearning/certificado/otros" class="nounderline">
+          <a href="{BASE_URL}elearning/certificado/verificar" class="nounderline">
             <div class="side-menu2"><li class="side-menu" style="position: relative">
             <i class="glyphicon glyphicon-education"></i>
             <span>Verificar Certificados</span></li></div>
