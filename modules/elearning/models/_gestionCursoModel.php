@@ -288,9 +288,9 @@ class _gestionCursoModel extends Model {
     {
         try{
             $alumnos = $this->_db->query(
-                " SELECT *,u.Usu_IdUsuario IdUsu FROM usuario U
+                " SELECT u.Usu_IdUsuario IdUsu FROM usuario U
             INNER JOIN matricula_curso MC ON U.Usu_IdUsuario = MC.Usu_IdUsuario
-            WHERE Cur_IdCurso = $curso "
+            WHERE MC.Cur_IdCurso = $curso "
             );           
             return $alumnos->fetchAll(PDO::FETCH_ASSOC);            
         } catch (PDOException $exception) {
