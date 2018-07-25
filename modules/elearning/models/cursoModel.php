@@ -108,6 +108,18 @@ class cursoModel extends Model {
       return $this->getArray($sql)[0];
     }
 
+    public function getAnunciosCountTotal($curso){
+      $sql = "SELECT COUNT(*) Totales FROM anuncio_curso WHERE Cur_IdCurso=$curso AND Anc_Estado=1 AND Row_Estado=1";
+      return $this->getArray($sql)[0];
+    }
+
+    public function getAnunciosCountNoLeidos($usuario,$curso){
+      $sql = "SELECT COUNT(*) NoLeidos FROM anuncio_usuario anu
+              INNER JOIN anuncio_curso anc ON anu.Anc_IdAnuncioCurso=anc.Anc_IdAnuncioCurso
+              WHERE anu.Usu_IdUsuario=$usuario AND anu.Anu_Leido=0 AND anc.Cur_IdCurso=$curso AND anc.Anc_Estado=1 AND anc.Row_Estado=1";
+      return $this->getArray($sql)[0];
+    }
+
     public function getProgresoCurso($curso, $id_usuario){
       $sql = "SELECT
                 (CASE WHEN Y.Lecciones = Y.Completos THEN 1 ELSE 0 END) as Completo,

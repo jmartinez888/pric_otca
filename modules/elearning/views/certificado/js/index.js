@@ -1,5 +1,11 @@
 var _post = null;
 var _Per_IdPermiso_ = 0;
+var contador = 0;
+var selected= '';
+var hidden='';
+var estilo= '';
+var fuente='';
+// var color='';
 $(document).on('ready', function () {   
     $('#form3').validator().on('submit', function (e) {
     if (e.isDefaultPrevented()) {
@@ -8,13 +14,50 @@ $(document).on('ready', function () {
 
     }
     });
-    // $('#tablas').dataTable( {
-    //     responsive: true
-    // } );
-    // $('.mitooltip').tooltip();
-    // $(function() {
-    //     $("[data-toggle='tooltip']").tooltip();
-    // });
+
+    $('#ckbNombre').change(function() {
+        if ($(this).is(':checked')) 
+            $("#arrastrable1").attr("style",$("#estiloAlumno").val());
+
+        else
+            $("#arrastrable1").attr("style","display:none;");
+    });
+
+    $('#ckbCurso').change(function() {
+        if ($(this).is(':checked')) 
+            $("#arrastrable2").attr("style",$("#estiloCurso").val());
+
+        else
+            $("#arrastrable2").attr("style","display:none;");
+    });
+
+    $('#ckbDuracion').change(function() {
+        if ($(this).is(':checked')) 
+            $("#arrastrable3").attr("style",$("#estiloHoras").val());
+
+        else
+            $("#arrastrable3").attr("style","display:none;");
+    });
+
+    $('#ckbFecha').change(function() {
+        if ($(this).is(':checked')) 
+            $("#arrastrable4").attr("style",$("#estiloFecha").val());
+
+        else
+            $("#arrastrable4").attr("style","display:none;");
+    });
+
+    $(".printer").bind("click",function()
+                {
+                    $(".PrintArea").printArea();
+                });
+
+       $("#printButton").click(function(){
+        var mode = 'iframe'; //popup
+        var close = mode == "popup";
+        var options = { mode : mode, popClose : close};
+        $("div.printableArea").printArea( options );
+    });
     
     $('body').on('click', '.pagina', function () {
         $("#cargando").show();
@@ -57,7 +100,94 @@ $(document).on('ready', function () {
         buscarOtros($("#palabracertificado").val());
     }); 
 
-   
+    $("#arrastrable1").click(function(){
+        selected= "#arrastrable1";
+        estilo= $("#arrastrable1").attr("style");
+        $("input[name=color]").val(rgba2hex( $("#arrastrable1").css("color") ));
+        var tamaño=$("#arrastrable1").css("font-size");
+        var array=tamaño.split('p');
+        $("input[name=tamaño]").val(array[0]);
+        $("input[name=ancho]").val(10);
+        hidden="#estiloAlumno";
+    });
+
+    $("#arrastrable2").click(function(){
+        selected= "#arrastrable2";
+        estilo= $(selected).attr("style");
+         $("input[name=color]").val(rgba2hex( $(selected).css("color") ));
+        var tamaño=$(selected).css("font-size");
+        var array=tamaño.split('p')
+        $("input[name=tamaño]").val(array[0]);
+        hidden="#estiloCurso";
+    });
+
+      $("#arrastrable3").click(function(){
+        selected= "#arrastrable3";
+        estilo= $(selected).attr("style");
+         $("input[name=color]").val(rgba2hex( $(selected).css("color") ));
+        var tamaño=$(selected).css("font-size");
+        var array=tamaño.split('p')
+        $("input[name=tamaño]").val(array[0]);
+        hidden="#estiloHoras";
+    });
+
+    $("#arrastrable4").click(function(){
+        selected= "#arrastrable4";
+        estilo= $(selected).attr("style");
+         $("input[name=color]").val(rgba2hex( $(selected).css("color") ));
+        var tamaño=$(selected).css("font-size");
+        var array=tamaño.split('p')
+        $("input[name=tamaño]").val(array[0]);
+        hidden="#estiloFecha";
+    });
+
+    $("input[name=color]").change(function(){
+        // alert($('input[name=color]').val());
+        $(selected).attr("style",estilo+"color:"+$(this).val()+";");
+        estilo=estilo+"color:"+$(this).val()+";";
+        $(hidden).val(estilo);
+    });
+
+    $("input[name=tamaño]").change(function(){
+        // alert($('input[name=color]').val());
+        $(selected).attr("style",estilo+"font-size:"+$(this).val()+"px;");
+        estilo=estilo+"font-size:"+$(this).val()+"px;";
+        $(hidden).val(estilo);
+    });
+
+     $("input[name=ancho]").change(function(){
+        // alert($('input[name=color]').val());
+        $(selected).attr("style",estilo+"width:"+$(this).val()+"%;");
+        estilo=estilo+"width:"+$(this).val()+"%;";
+        $(hidden).val(estilo);
+    });
+
+    //  $("input[name=ancho]").change(function(){
+    //     $(selected).attr("width",$(this).val()+"%");
+    // });
+   // $(window).load(function(){
+
+     // $(function() {
+      $('#img').change(function(e) {
+          addImage(e); 
+         });
+
+         function addImage(e){
+          var file = e.target.files[0],
+          imageType = /image.*/;
+        
+          if (!file.type.match(imageType))
+           return;
+      
+          var reader = new FileReader();
+          reader.onload = fileOnload;
+          reader.readAsDataURL(file);
+         }
+      
+         function fileOnload(e) {
+          var result=e.target.result;
+          $('#cuadro1').attr("style","background-image: url('"+result+"'); background-size: 100%; -moz-background-size: 100%; -o-background-size: 100%; -webkit-background-size: 100%; -khtml-background-size: 100%;  height:700px; position: relative;");
+         }
 });
 
 function buscarPermiso(criterio) {
@@ -99,4 +229,237 @@ function gestionIdiomas(idrol, idIdiomaOriginal, idIdioma) {
         $("#gestion_idiomas_rol").html(data);
         $('form').validator();
     });
+
+// function rgb2hex(rgb){
+//  rgb = rgb.match(/^rgb((d+),s*(d+),s*(d+))$/);
+//  return "#" +
+//   ("0" + parseInt(rgb[1],10).toString(16)).slice(-2) +
+//   ("0" + parseInt(rgb[2],10).toString(16)).slice(-2) +
+//   ("0" + parseInt(rgb[3],10).toString(16)).slice(-2);
+// }
 }
+
+function start_as(e) {
+    e.dataTransfer.effecAllowed = 'move'; // Define el efecto como mover (Es el por defecto)
+    e.dataTransfer.setData("Data", e.target.id); // Coje el elemento que se va a mover
+    e.dataTransfer.setDragImage(e.target, 0, 0); // Define la imagen que se vera al ser arrastrado el elemento y por donde se coje el elemento que se va a mover (el raton aparece en la esquina sup_izq con 0,0)
+    e.target.style.opacity = '0.4'; 
+
+    //  if(e.target.id=="arrastrable1"){
+    //     selected= "#arrastrable1";
+    //     estilo= $("#arrastrable1").attr("style");
+    //     $("input[name=color]").val(rgba2hex( $("#arrastrable1").css("color") ));
+    //     var tamaño=$("#arrastrable1").css("font-size");
+    //     var array=tamaño.split('p');
+    //     $("input[name=tamaño]").val(array[0]);
+    //     var ancho=$("#arrastrable2").width();
+    //     var anchoPadre=$("#cuadro1").width();
+    //     $("input[name=ancho]").val(ancho/anchoPadre*100);
+    //     hidden="#estiloAlumno";
+    //  }
+    // else if(e.target.id=="arrastrable2"){
+    //      selected= "#arrastrable2";
+    //     estilo= $("#arrastrable2").attr("style");
+    //     $("input[name=color]").val(rgba2hex( $("#arrastrable2").css("color") ));
+    //     var tamaño=$("#arrastrable1").css("font-size");
+    //     var array=tamaño.split('p');
+    //     $("input[name=tamaño]").val(array[0]);
+    //     $("input[name=ancho]").val(10);
+    //     hidden="#estiloCurso";
+    //  }
+    //  else if(e.target.id=="arrastrable3"){
+    //     selected= "#arrastrable3";
+    //     estilo= $(selected).attr("style");
+    //      $("input[name=color]").val(rgba2hex( $(selected).css("color") ));
+    //     var tamaño=$(selected).css("font-size");
+    //     var array=tamaño.split('p')
+    //     $("input[name=tamaño]").val(array[0]);
+    //     hidden="#estiloHoras";
+    //  }
+    //  else if(e.target.id=="arrastrable4"){
+    //     selected= "#arrastrable4";
+    //     estilo= $(selected).attr("style");
+    //      $("input[name=color]").val(rgba2hex( $(selected).css("color") ));
+    //     var tamaño=$(selected).css("font-size");
+    //     var array=tamaño.split('p')
+    //     $("input[name=tamaño]").val(array[0]);
+    //     hidden="#estiloFecha";
+    //  }
+}
+
+function end_as(e){
+    e.target.style.opacity = ''; // Pone la opacidad del elemento a 1           
+    e.dataTransfer.clearData("Data");
+
+    // if(e.target.id=="arrastrable1")
+    //      $("#estiloAlumno").val(e.target.style);
+    // else if(e.target.id=="arrastrable2")
+    //      $("#estiloCurso").val(e.target.style);
+    //  else if(e.target.id=="arrastrable3")
+    //      $("#estiloHoras").val(e.target.style);
+    //  else if(e.target.id=="arrastrable4")
+    //      $("#estiloFecha").val(e.target.style);
+
+
+     if(e.target.id=="arrastrable1"){
+        selected= "#arrastrable1";
+        estilo= $("#arrastrable1").attr("style");
+        $("input[name=color]").val(rgba2hex( $("#arrastrable1").css("color") ));
+        var tamaño=$("#arrastrable1").css("font-size");
+        var array=tamaño.split('p');
+        $("input[name=tamaño]").val(array[0]);
+        var ancho=$("#arrastrable2").width();
+        var anchoPadre=$("#cuadro1").width();
+        $("input[name=ancho]").val((ancho*100)/anchoPadre);
+        $("#estiloAlumno").val(estilo);
+     }
+    else if(e.target.id=="arrastrable2"){
+         selected= "#arrastrable2";
+        estilo= $("#arrastrable2").attr("style");
+        $("input[name=color]").val(rgba2hex( $("#arrastrable2").css("color") ));
+        var tamaño=$("#arrastrable1").css("font-size");
+        var array=tamaño.split('p');
+        $("input[name=tamaño]").val(array[0]);
+        $("input[name=ancho]").val(10);
+        $("#estiloCurso").val(estilo);
+     }
+     else if(e.target.id=="arrastrable3"){
+        selected= "#arrastrable3";
+        estilo= $(selected).attr("style");
+         $("input[name=color]").val(rgba2hex( $(selected).css("color") ));
+        var tamaño=$(selected).css("font-size");
+        var array=tamaño.split('p')
+        $("input[name=tamaño]").val(array[0]);
+        $("#estiloHoras").val(estilo);
+     }
+     else if(e.target.id=="arrastrable4"){
+        selected= "#arrastrable4";
+        estilo= $(selected).attr("style");
+         $("input[name=color]").val(rgba2hex( $(selected).css("color") ));
+        var tamaño=$(selected).css("font-size");
+        var array=tamaño.split('p')
+        $("input[name=tamaño]").val(array[0]);
+        $("#estiloFecha").val(estilo);
+     }
+}
+
+function enter_as(e) {
+    // e.target.style.border = '3px dotted #555'; 
+}
+
+function leave_as(e) {
+    // e.target.style.border = ''; 
+}
+
+function over_as(e) {
+    var elemArrastrable = e.dataTransfer.getData("Data"); // Elemento arrastrado
+    var id = e.target.id; // Elemento sobre el que se arrastra
+    
+    // return false para que se pueda soltar
+    if (id == 'cuadro1'){
+        return false; // Cualquier elemento se puede soltar sobre el div destino 1
+    }
+
+    if ((id == 'cuadro2') && (elemArrastrable != 'arrastrable3')){
+        return false; // En el cuadro2 se puede soltar cualquier elemento menos el elemento con id=arrastrable3
+    }   
+
+    if (id == 'cuadro3')
+        return false;
+
+    if (id == 'papelera')
+        return false; // Cualquier elemento se puede soltar en la papelera
+        
+}
+
+
+/**
+* 
+* Mueve el elemento
+*
+**/
+function drop_as(e){
+
+    var elementoArrastrado = e.dataTransfer.getData("Data"); // Elemento arrastrado
+    e.target.appendChild(document.getElementById(elementoArrastrado));
+    e.target.style.border = '';  // Quita el borde
+    tamContX = $('#'+e.target.id).width();
+    tamContY = $('#'+e.target.id).height();
+
+    tamElemX = $('#'+elementoArrastrado).width();
+    tamElemY = $('#'+elementoArrastrado).height();
+
+    posXCont = $('#'+e.target.id).position().left;
+    posYCont = $('#'+e.target.id).position().top;
+
+    // Posicion absoluta del raton
+    x = e.layerX;
+    y = e.layerY;
+
+    // Si parte del elemento que se quiere mover se queda fuera se cambia las coordenadas para que no sea asi
+    if (posXCont + tamContX <= x + tamElemX){
+        x = posXCont + tamContX - tamElemX;
+    }
+
+    if (posYCont + tamContY <= y + tamElemY){
+        y = posYCont + tamContY - tamElemY;
+    }
+
+    document.getElementById(elementoArrastrado).style.position = "absolute";
+    document.getElementById(elementoArrastrado).style.left = x + "px";
+    document.getElementById(elementoArrastrado).style.top = y + "px";
+}
+
+/**
+* 
+* Elimina el elemento que se mueve
+*
+**/
+function eliminar_as(e){
+    var elementoArrastrado = document.getElementById(e.dataTransfer.getData("Data")); // Elemento arrastrado
+    elementoArrastrado.parentNode.removeChild(elementoArrastrado); // Elimina el elemento
+    e.target.style.border = '';   // Quita el borde
+}
+
+/**
+* 
+* Clona el elemento que se mueve
+*
+**/
+
+function clonar_as(e){
+    var elementoArrastrado = document.getElementById(e.dataTransfer.getData("Data")); // Elemento arrastrado
+
+    elementoArrastrado.style.opacity = ''; // Dejamos la opacidad a su estado anterior para copiar el elemento igual que era antes
+
+    var elementoClonado = elementoArrastrado.cloneNode(true); // Se clona el elemento
+    elementoClonado.id = "ElemClonado" + contador; // Se cambia el id porque tiene que ser unico
+    contador += 1;  
+    elementoClonado.style.position = "static";  // Se posiciona de forma "normal" (Sino habria que cambiar las coordenadas de la posición)  
+    e.target.appendChild(elementoClonado); // Se añade el elemento clonado
+    e.target.style.border = '';   // Quita el borde del "cuadro clonador"
+}
+
+// var pos1=document.getElementById("boton1");
+// var ele=document.getElementById("arrastrable1");
+// var ele2=document.getElementById("arrastrable2");
+//         pos1.onclick=function(){
+//             var posleft=ele.offsetLeft;
+//             var postop=ele.offsetTop;
+//             var posleft2=ele2.offsetLeft;
+//             var postop2=ele2.offsetTop;
+//             alert("Left: "+posleft+"px - Top: "+postop+"px");}
+
+
+function rgba2hex( color_value ) {
+    if ( ! color_value ) return false;
+    var parts = color_value.toLowerCase().match(/^rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*(\d+(?:\.\d+)?))?\)$/),
+        length = color_value.indexOf('rgba') ? 3 : 2; // Fix for alpha values
+    delete(parts[0]);
+    for ( var i = 1; i <= length; i++ ) {
+        parts[i] = parseInt( parts[i] ).toString(16);
+        if ( parts[i].length == 1 ) parts[i] = '0' + parts[i];
+    }
+    return '#' + parts.join('').toUpperCase(); // #F7F7F7
+}
+
