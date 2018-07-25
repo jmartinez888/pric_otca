@@ -1,4 +1,4 @@
-f<?php
+<?php
 
 class adminModel extends Model
 {

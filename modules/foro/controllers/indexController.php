@@ -197,6 +197,77 @@ class indexController extends foroController {
         $this->_view->renderizar('ajax/lista_comentarios', false, true);
     }
 
+    public function _eliminar_comentario()
+    {
+        // echo "hola"; exit;
+        $iFor_IdForo = $this->getInt('id_foro');
+        $iCom_IdComentario = $this->getInt('id_comentario');
+        //echo $iCom_IdComentario."hola"; exit;
+        $this->_model->eliminarComentario($iCom_IdComentario, 0);
+        // echo $iFor_IdForo. " " .$iCom_IdComentario; exit;
+        $Rol_Ckey = $this->_model->getRolForo(Session::get('id_usuario'), $iFor_IdForo);
+        $foro = $this->_model->getForo_x_idforo($iFor_IdForo);
+
+        $foro["Archivos"] = $this->_model->getArchivos_x_idforo($iFor_IdForo);
+        $foro["For_Comentarios"] = $this->_model->getComentarios_x_idforo($iFor_IdForo);
+
+
+        for ($index = 0; $index < count($foro["For_Comentarios"]); $index++) {
+            $foro["For_Comentarios"][$index]["Hijo_Comentarios"] = $this->_model->getComentarios_x_idcomentario($foro["For_Comentarios"][$index]["Com_IdComentario"]);
+            $foro["For_Comentarios"][$index]["Archivos"] = $this->_model->getArchivos_x_idcomentario($foro["For_Comentarios"][$index]["Com_IdComentario"]);
+            for ($j = 0; $j < count($foro["For_Comentarios"][$index]["Hijo_Comentarios"]); $j++) {
+                $foro["For_Comentarios"][$index]["Hijo_Comentarios"][$j]["Archivos"] = $this->_model->getArchivos_x_idcomentario($foro["For_Comentarios"][$index]["Hijo_Comentarios"][$j]["Com_IdComentario"]);
+            }
+        }
+
+        // print_r($foro);
+
+        $this->_view->assign('Rol_Ckey', $Rol_Ckey["Rol_Ckey"]);
+        $this->_view->assign('comentar_foro', $this->_permiso($iFor_IdForo, "comentar_foro"));
+        $this->_view->assign('foro', $foro);
+        $this->_view->renderizar('ajax/lista_comentarios', false, true);
+    }
+   
+    public function _editar_comentario() {
+        
+        header("access-control-allow-origin: *");
+        #$this->_acl->acceso('registro_actividad_tarea');      
+        $iFor_IdForo = $this->getInt('id_foro');  
+        $iUsu_IdUsuario = $this->getInt('id_usuario');    
+        $iCom_Descripcion = $this->getTexto('descripcion');
+        $iCom_IdPadre = $this->getInt('id_padre');
+        $iCom_IdComentario = $this->getInt('iCom_IdComentario');
+        $iFim_Files = html_entity_decode($this->getTexto('att_files'));
+
+        $aFim_Files = json_decode($iFim_Files, true);
+        
+        $Rol_Ckey = $this->_model->getRolForo(Session::get('id_usuario'), $iFor_IdForo);
+
+        $result = $this->_model->editarComentario($iCom_IdComentario, $iCom_Descripcion);
+        foreach ($aFim_Files as $key => $value) {
+            $result_e = $this->_model->insertarFileComentario($value["name"], $value["type"], $value["size"], $result[0], 0);
+        }
+
+        $foro = $this->_model->getForo_x_idforo($iFor_IdForo);
+
+        $foro["Archivos"] = $this->_model->getArchivos_x_idforo($iFor_IdForo);
+        $foro["For_Comentarios"] = $this->_model->getComentarios_x_idforo($iFor_IdForo);
+
+
+        for ($index = 0; $index < count($foro["For_Comentarios"]); $index++) {
+            $foro["For_Comentarios"][$index]["Hijo_Comentarios"] = $this->_model->getComentarios_x_idcomentario($foro["For_Comentarios"][$index]["Com_IdComentario"]);
+            $foro["For_Comentarios"][$index]["Archivos"] = $this->_model->getArchivos_x_idcomentario($foro["For_Comentarios"][$index]["Com_IdComentario"]);
+            for ($j = 0; $j < count($foro["For_Comentarios"][$index]["Hijo_Comentarios"]); $j++) {
+                $foro["For_Comentarios"][$index]["Hijo_Comentarios"][$j]["Archivos"] = $this->_model->getArchivos_x_idcomentario($foro["For_Comentarios"][$index]["Hijo_Comentarios"][$j]["Com_IdComentario"]);
+            }
+        }
+          // $this->_view->setJs(array("ficha_foro"));
+        $this->_view->assign('Rol_Ckey', $Rol_Ckey["Rol_Ckey"]);
+        $this->_view->assign('comentar_foro', $this->_permiso($iFor_IdForo, "comentar_foro"));
+        $this->_view->assign('foro', $foro);
+        $this->_view->renderizar('ajax/lista_comentarios', false, true);
+    }
+
     public function _inscribir_participante_foro() {
         $iFor_IdForo = $this->getInt('id_foro');
         $iUsu_IdUsuario = Session::get('id_usuario');
@@ -208,6 +279,8 @@ class indexController extends foroController {
         $result = $this->_model->inscribir_participante_foro($iFor_IdForo, $iUsu_IdUsuario, $iRol_IdRol["Rol_IdRol"], 1);
         echo json_encode(["id_foro" => $iFor_IdForo, "url" => $this->_url], true);
     }
+
+
 
     public function _load_file_coment() {
         $file = $_FILES;
