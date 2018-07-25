@@ -124,19 +124,19 @@
                                 <td style=" text-align: center"> <a data-book-id="{$rl.Anc_Titulo}" data-book-texto="{$rl.Anc_Descripcion}"
                                             data-toggle="modal"  data-target="#confirm-leer"
                                             title="{$lenguaje.label_eliminar}"
-                                        id_anuncio="{$rl.Anc_IdAnuncioCurso}" data-placement="bottom" > {if $rl.Anu_Leido==0}<b>{/if}{$numeropagina++}{if $rl.Anu_Leido==0}</b>{/if}</a></td>
+                                        data-book-id-anuncio="{$rl.Anc_IdAnuncioCurso}" data-placement="bottom" > {if $rl.Anu_Leido==0}<b>{/if}{$numeropagina++}{if $rl.Anu_Leido==0}</b>{/if}</a></td>
                                 <td style=" text-align: center"> <a data-book-id="{$rl.Anc_Titulo}" data-book-texto="{$rl.Anc_Descripcion}"
                                             data-toggle="modal"  data-target="#confirm-leer"
                                             title="{$lenguaje.label_eliminar}"
-                                        id_anuncio="{$rl.Anc_IdAnuncioCurso}" data-placement="bottom" > {if $rl.Anu_Leido==0}<b>{/if}{$rl.Anc_Titulo}{if $rl.Anu_Leido==0}</b>{/if}</a></td>
+                                        data-book-id-anuncio="{$rl.Anc_IdAnuncioCurso}" data-placement="bottom" > {if $rl.Anu_Leido==0}<b>{/if}{$rl.Anc_Titulo}{if $rl.Anu_Leido==0}</b>{/if}</a></td>
                                 <td style=" text-align: center"> <a data-book-id="{$rl.Anc_Titulo}" data-book-texto="{$rl.Anc_Descripcion}"
                                             data-toggle="modal"  data-target="#confirm-leer"
                                             title="{$lenguaje.label_eliminar}"
-                                        id_anuncio="{$rl.Anc_IdAnuncioCurso}" data-placement="bottom" > {if $rl.Anu_Leido==0}<b>{/if}{$rl.Anc_DescripcionRec}...{if $rl.Anu_Leido==0}</b>{/if}</a></td>
+                                        data-book-id-anuncio="{$rl.Anc_IdAnuncioCurso}" data-placement="bottom" > {if $rl.Anu_Leido==0}<b>{/if}{$rl.Anc_DescripcionRec}...{if $rl.Anu_Leido==0}</b>{/if}</a></td>
                                 <td style=" text-align: center"> <a data-book-id="{$rl.Anc_Titulo}" data-book-texto="{$rl.Anc_Descripcion}"
                                             data-toggle="modal"  data-target="#confirm-leer"
                                             title="{$lenguaje.label_eliminar}"
-                                        id_anuncio="{$rl.Anc_IdAnuncioCurso}" data-placement="bottom" > {if $rl.Anu_Leido==0}<b>{/if}{$rl.Anc_FechaReg}{if $rl.Anu_Leido==0}</b>{/if}</a></td>
+                                        data-book-id-anuncio="{$rl.Anc_IdAnuncioCurso}" data-placement="bottom" > {if $rl.Anu_Leido==0}<b>{/if}{$rl.Anc_FechaReg}{if $rl.Anu_Leido==0}</b>{/if}</a></td>
                                 </tr>
                                 
                             {/if}

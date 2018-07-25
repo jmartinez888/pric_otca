@@ -43,10 +43,8 @@ $(document).on('ready', function () {
          $(e.currentTarget).find("#titulo_").html(bookId);
          var bookTexto = $(e.relatedTarget).data('book-texto'); 
          $(e.currentTarget).find("#texto_").html(bookTexto);
-
-          // $.post(_root_ + 'elearning/gestion/_marcar_leido' +'/' + datos, pagina, function (data) {
-
-          //   });
+         var bookIdAnuncio= $(e.relatedTarget).data('book-id-anuncio'); 
+        $.post(_root_ + 'elearning/gestion/_marcar_leido' +'/'+ bookIdAnuncio, function (data) { });
     }); 
 
     //PERMISOS

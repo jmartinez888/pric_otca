@@ -1,8 +1,8 @@
 <div class="printableArea">
 <!-- <div class="col-lg-12 col-xs-12" style="padding:20px; text-align:center; border: 10px solid #187875">
 <div class="col-lg-12 col-xs-12" style="padding:20px; text-align:center; border: 5px solid #787878"> -->
-  <div class="col-lg-12 col-xs-12" style="position: relative; display: inline-block; text-align:center; height:100vh; padding:0px;">
-    <img src="{$_layoutParams.root_clear}{$plantilla.Plc_UrlImg}"  style="width:100%; height:100vh;">
+  <div class="col-lg-12 col-xs-12" style="position: relative; display: inline-block; text-align:center; height:21cm; padding:0px;">
+    <img src="{$_layoutParams.root_clear}{$plantilla.Plc_UrlImg}"  style="width:100%; height:21cm;">
                 <!-- <div class="col col-md-3 col-sm-2 col-xs-3 padding-10">
                     <img  class="width-250" src="{$_layoutParams.ruta_img}frontend/logo.png" alt="La ORA" title="ORA">
                 </div>

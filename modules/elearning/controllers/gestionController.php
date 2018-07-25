@@ -383,6 +383,12 @@ class gestionController extends elearningController {
         $this->_view->renderizar('ajax/listaranuncios', false, true);
     }
 
+    public function _marcar_leido($id) 
+    {
+        $_model = $this->loadModel("_gestionCurso");
+        $_model->cambiarEstadoLeido($id,Session::get("id_usuario"));
+    }
+
 
  public function _cambiarEstadoAnuncio()
     {
