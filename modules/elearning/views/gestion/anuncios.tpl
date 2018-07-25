@@ -1,8 +1,6 @@
 <div class="col-lg-12">
   {include file='modules/elearning/views/cursos/menu/lateral.tpl'}
   <div class="col-lg-10" style="margin-top: 20px">
-<!-- 
-     {if $_acl->permiso("agregar_usuario") && $tipo==0} -->
      {if  $tipo==0}
     <div class="panel panel-default">
         <div class="panel-heading jsoftCollap">
