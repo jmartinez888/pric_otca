@@ -73,11 +73,11 @@
         <div>{$curso.Cur_Descripcion}</div> <br/>
       </div>
 
-      <div class="col-lg-12 text-curso">
+     <!--  <div class="col-lg-12 text-curso">
         <a href="{BASE_URL}elearning/cursos/calendario_curso/{$curso.Cur_IdCurso}" class="btn btn-success">
           <span class="glyphicon glyphicon-calendar"></span> Ver Calendario
         </a>
-      </div>
+      </div> -->
 
       <div class="col-lg-12" style="padding-top: 10px; position: relative">
         {if $session==1}
