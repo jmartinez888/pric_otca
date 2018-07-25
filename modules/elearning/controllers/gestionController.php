@@ -140,6 +140,8 @@ class gestionController extends elearningController {
             );
         
         if ($idUsuario) {
+
+            echo "si" exit;
             if ($idUsuario[0] > 0) {
                 $this->_view->assign('_mensaje', 'Anuncio registrado');
 
