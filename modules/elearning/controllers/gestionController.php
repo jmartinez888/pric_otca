@@ -139,7 +139,7 @@ class gestionController extends elearningController {
                 $id
             );
         
-        if (is_array($idUsuario)) {
+        if ($idUsuario) {
             if ($idUsuario[0] > 0) {
                 $this->_view->assign('_mensaje', 'Anuncio registrado');
 
