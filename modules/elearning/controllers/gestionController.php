@@ -141,15 +141,17 @@ class gestionController extends elearningController {
         
         if ($idUsuario) {
 
-            echo "si"; exit();
+
             if ($idUsuario[0] > 0) {
                 $this->_view->assign('_mensaje', 'Anuncio registrado');
 
                 $usuarios=$_model->getMatriculadosCurso($id);
 
-                if(count($usuarios)!=0)
+                if(count($usuarios)!=0){
+                    echo "si"; exit();
                     foreach($usuarios as $u)
                         $_model->registrarAnuncioUsuario($idUsuario[0], $u['IdUsu']);
+                }
                 $this->redireccionar("elearning/gestion/anuncios/$id");
             } else {
                 $this->_view->assign('_error', 'Error al registrar el Anuncio');
