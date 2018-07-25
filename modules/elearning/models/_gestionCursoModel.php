@@ -247,8 +247,8 @@ class _gestionCursoModel extends Model {
         try {             
             $sql = "call s_i_anuncios_usuarios(?,?)";
             $result = $this->_db->prepare($sql);
-            $result->bindParam(1, $anuncio, PDO::PARAM_STR);
-            $result->bindParam(2, $usuario, PDO::PARAM_STR);                       
+            $result->bindParam(1, $anuncio, PDO::PARAM_INT);
+            $result->bindParam(2, $usuario, PDO::PARAM_INT);                       
             $result->execute();
             return $result->fetch();
         } catch (PDOException $exception) {

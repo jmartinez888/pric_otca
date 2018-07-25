@@ -150,7 +150,6 @@ class gestionController extends elearningController {
                 if(count($usuarios)!=0){
                     
                     foreach($usuarios as $u){
-                        echo $idUsuario[0], $u['IdUsu']; exit();
                         $_model->registrarAnuncioUsuario($idUsuario[0], $u['IdUsu']);
                     }
                 }
