@@ -148,9 +148,11 @@ class gestionController extends elearningController {
                 $usuarios=$_model->getMatriculadosCurso($id);
 
                 if(count($usuarios)!=0){
-                    echo "si"; exit();
-                    foreach($usuarios as $u)
+                    
+                    foreach($usuarios as $u){
+                        echo $idUsuario[0], $u['IdUsu']; exit();
                         $_model->registrarAnuncioUsuario($idUsuario[0], $u['IdUsu']);
+                    }
                 }
                 $this->redireccionar("elearning/gestion/anuncios/$id");
             } else {
