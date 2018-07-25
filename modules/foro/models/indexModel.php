@@ -99,7 +99,7 @@ class indexModel extends Model {
     public function getComentarios_x_idforo($iFor_IdForo) {
         try {
             $post = $this->_db->query(
-                    "SELECT c.Com_IdComentario,c.Com_Descripcion,c.Com_Fecha,c.Com_Estado,c.For_IdForo,c.Idi_IdIdioma,c.Row_Estado,u.Usu_Nombre,u.Usu_Apellidos, u.Usu_IdUsuario FROM comentarios c INNER JOIN usuario u ON u.Usu_IdUsuario=c.Usu_IdUsuario WHERE c.For_IdForo={$iFor_IdForo} and Com_IdPadre IS NULL ORDER BY c.Com_Fecha DESC");
+                    "SELECT c.Com_IdComentario,c.Com_Descripcion,c.Com_Fecha,c.Com_Estado,c.For_IdForo,c.Idi_IdIdioma,c.Row_Estado,u.Usu_Nombre,u.Usu_Apellidos, u.Usu_IdUsuario FROM comentarios c INNER JOIN usuario u ON u.Usu_IdUsuario=c.Usu_IdUsuario WHERE c.For_IdForo={$iFor_IdForo} AND c.Row_Estado = 1 and Com_IdPadre IS NULL ORDER BY c.Com_Fecha DESC");
             return $post->fetchAll();
         } catch (PDOException $exception) {
             $this->registrarBitacora("foro(indexModel)", "getComentarios_x_idforo", "Error Model", $exception);
@@ -110,7 +110,7 @@ class indexModel extends Model {
     public function getComentarios_x_idcomentario($iCom_IdComentario) {
         try {
             $post = $this->_db->query(
-                    "SELECT c.Com_IdComentario,c.Com_Descripcion,c.Com_Fecha,c.Com_Estado,c.For_IdForo,c.Idi_IdIdioma,c.Row_Estado,u.Usu_IdUsuario, u.Usu_Nombre,u.Usu_Apellidos FROM comentarios c INNER JOIN usuario u ON u.Usu_IdUsuario=c.Usu_IdUsuario WHERE c.Com_IdPadre={$iCom_IdComentario} ORDER BY c.Com_Fecha DESC");
+                    "SELECT c.Com_IdComentario,c.Com_Descripcion,c.Com_Fecha,c.Com_Estado,c.For_IdForo,c.Idi_IdIdioma,c.Row_Estado,u.Usu_IdUsuario, u.Usu_Nombre,u.Usu_Apellidos FROM comentarios c INNER JOIN usuario u ON u.Usu_IdUsuario=c.Usu_IdUsuario WHERE c.Com_IdPadre={$iCom_IdComentario} AND c.Row_Estado = 1 ORDER BY c.Com_Fecha DESC");
             return $post->fetchAll();
         } catch (PDOException $exception) {
             $this->registrarBitacora("foro(indexModel)", "getComentarios_x_idcomentario", "Error Model", $exception);
@@ -144,6 +144,39 @@ class indexModel extends Model {
         } catch (PDOException $exception) {
 
             $this->registrarBitacora("foro(indexModel)", "registrarComentario", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
+
+     public function editarComentario($iCom_IdComentario, $iCom_Descripcion)
+    {
+        try {
+            $sql    = " call s_u_comentario(?,?)";
+            $result = $this->_db->prepare($sql);
+            $result->bindParam(2, $iFor_IdForo, PDO::PARAM_INT);
+            $result->bindParam(1, $iCom_IdComentario, PDO::PARAM_INT);
+            $result->bindParam(2, $iCom_Descripcion, PDO::PARAM_STR);
+
+            $result->execute();
+            return $result->rowCount(PDO::FETCH_ASSOC);
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("foro(indexModel)", "editarComentario", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
+
+    public function eliminarComentario($iCom_IdComentario = 0, $Row_Estado = 0)
+    {
+        try{
+            $permiso = $this->_db->query(
+                " UPDATE comentarios SET Row_Estado = $Row_Estado WHERE Com_IdComentario = $iCom_IdComentario "               
+                );
+            // $permiso = $this->_db->query(
+            //     " DELETE FROM comentarios WHERE Com_IdComentario = $iCom_IdComentario "               
+            //     );
+            return $permiso->rowCount(PDO::FETCH_ASSOC);
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("foro(indexModel)", "eliminarComentario", "Error Model", $exception);
             return $exception->getTraceAsString();
         }
     }

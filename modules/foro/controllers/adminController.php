@@ -708,6 +708,7 @@ class adminController extends foroController
 
         $this->_view->assign('numeropagina', $paginador->getNumeroPagina());
         //$this->_view->assign('cantidadporpagina',$registros);
+        $this->_view->assign('text_busqueda_miembro', "");
         $this->_view->assign('paginacion', $paginador->getView('paginacion_ajax_s_filas'));
         $this->_view->renderizar('ajax/listaMembers', false, true);
     }

@@ -54,7 +54,6 @@ class indexController extends foroController {
 
     public function discussions() {
         $this->_view->setTemplate(LAYOUT_FRONTEND);
-        
         $this->_view->assign('titulo', "Discusiones");
         $this->_view->setCss(array("jp-index"));
         $this->_view->assign('lista_foros', $this->_model->getForos("forum"));
@@ -63,7 +62,6 @@ class indexController extends foroController {
 
     public function query() {
         $this->_view->setTemplate(LAYOUT_FRONTEND);
-        
         $this->_view->assign('titulo', "Consultas");
         $this->_view->setCss(array("jp-index"));
         $this->_view->assign('lista_foros', $this->_model->getForos("query"));
@@ -86,7 +84,6 @@ class indexController extends foroController {
     }
 
     public function agenda() {
-       
         $this->_view->setTemplate(LAYOUT_FRONTEND);
         $this->_view->setJs(array('agenda', array(BASE_URL . 'public/js/fullcalendar/moment.min.js'), array(BASE_URL . 'public/js/fullcalendar/fullcalendar.min.js'), array(BASE_URL . 'public/js/fullcalendar/locale/es.js')));
         $this->_view->setCss(array('agenda', 'jp-agenda', array(BASE_URL . "public/css/fullcalendar/fullcalendar.min.css")));
@@ -117,6 +114,7 @@ class indexController extends foroController {
             "statistics"
         ));
         $this->_view->assign('titulo', "Estadisticas Foro");
+        
         //$this->_view->assign('StdGeneral', $this->_model->getEstadistcaGeneral());
         $this->_view->assign('StdCharComentarios',json_encode($this->_model->getComentario_x_Mes()));
         $this->_view->assign('StdActividades',$this->_model->getCantidaFuncionForo());
@@ -179,6 +177,8 @@ class indexController extends foroController {
 
 
         $result = $this->_model->registrarComentario($iFor_IdForo, $iUsu_IdUsuario, $iCom_Descripcion, $iCom_IdPadre);
+        // print_r($result); exit;
+        // echo $result[0]; exit;
         foreach ($aFim_Files as $key => $value) {
             $result_e = $this->_model->insertarFileComentario($value["name"], $value["type"], $value["size"], $result[0], 0);
         }
@@ -251,8 +251,9 @@ class indexController extends foroController {
         $Rol_Ckey = $this->_model->getRolForo(Session::get('id_usuario'), $iFor_IdForo);
 
         $result = $this->_model->editarComentario($iCom_IdComentario, $iCom_Descripcion);
+        // echo $result[0]; exit;
         foreach ($aFim_Files as $key => $value) {
-            $result_e = $this->_model->insertarFileComentario($value["name"], $value["type"], $value["size"], $result[0], 0);
+            $result_e = $this->_model->insertarFileComentario($value["name"], $value["type"], $value["size"], $iCom_IdComentario, 0);
         }
 
         $foro = $this->_model->getForo_x_idforo($iFor_IdForo);

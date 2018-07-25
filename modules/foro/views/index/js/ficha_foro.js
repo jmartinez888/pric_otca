@@ -12,12 +12,26 @@ $(document).on('ready', function () {
         $("#div_loading_" + $(this).attr("id_foro") + "_" + $(this).attr("id_padre")).html("");
         $("#div_loading_" + $(this).attr("id_foro") + "_" + $(this).attr("id_padre")).removeClass("d-block");
         $("#div_loading_" + $(this).attr("id_foro") + "_" + $(this).attr("id_padre")).addClass("d-none");
-        
+
     });
+
+    $('body').on('click', '.foro_coment_editado', function () {
+        editar_comentario($(this).attr("id_foro"), $(this).attr("id_usuario"), $("#edit_comentario_" + $(this).attr("id_foro") + "_" + $(this).attr("id_padre")).val(), $(this).attr("id_padre"), $(this).attr("id_padre"));
+        $("#text_comentario_" + $(this).attr("id_foro") + "_" + $(this).attr("id_padre")).val("");
+        $("#div_loading_" + $(this).attr("id_foro") + "_" + $(this).attr("id_padre")).html("");
+        $("#div_loading_" + $(this).attr("id_foro") + "_" + $(this).attr("id_padre")).removeClass("d-block");
+        $("#div_loading_" + $(this).attr("id_foro") + "_" + $(this).attr("id_padre")).addClass("d-none");
+    });
+
     $('body').on('click', '.coment_coment', function () {
 
         $("#comen_comen_" + $(this).attr("id_comentario")).css("display", "block");
     });
+
+    $('body').on('click', '.eliminar_comentario_foro', function () {
+        eliminar_comentario($(this).attr("id_foro"), $(this).attr("id_comentario_delete"));
+    });
+
     $('body').on('click', '.btn_registro_user', function () {
         $("[name=register-form-link]").addClass("active");
         $("[name=login-form-link]").removeClass("active");
@@ -29,6 +43,7 @@ $(document).on('ready', function () {
     $('body').on('click', '.inscribir_foro', function () {
         inscribir_participante_foro($(this).attr("id_foro"));
     });
+  
     $('body').on('change', '.files_coment', function () {
         load_files_coment($(this)[0].files, $($(($($(this).parent()).parent()).parent()).parent()).find(".load_files"));
     });
@@ -40,12 +55,37 @@ $(document).on('ready', function () {
             $("#" + id_padre).removeClass("d-block")
             $("#" + id_padre).addClass("d-none")
         }
-    });
+    });    
+
+    js_option();
 
     $("#hd_login_modulo").val("foro");
 
-    js_option();
+    $('body').on('click', '.editar_comentario_foro', function () {
+        $(".capa_"+$(this).attr("id_comentario_editar")).toggle();
+        var comentario = $(this).attr("comentario_");
+        $("#edit_comentario_"+ $(this).attr("id_foro") + "_" + $(this).attr("id_comentario_editar")).val(comentario);
+        $(".capaEditar_"+$(this).attr("id_comentario_editar")).toggle();   
+    });
+    $('body').on('click', '.cancelar_comentario_foro', function () {        
+        $(".capa_"+$(this).attr("id_comentario_editar")).toggle();
+        $(".capaEditar_"+$(this).attr("id_comentario_editar")).toggle();   
+    });
 });
+
+function eliminar_comentario(id_foro, id_comentario) {
+    $("#cargando").show();
+    $.post(_root_ + 'foro/index/_eliminar_comentario',
+            {
+                id_foro: id_foro,
+                id_comentario: id_comentario
+            }, function (data) {
+        $("#lista_comentarios").html('');
+        $("#cargando").hide();
+        $("#lista_comentarios").html(data);
+    });
+}
+
 function regitrar_comentario(id_foro, id_usuario, descripcion, id_padre) {
     $("#cargando").show();
     var files={};
@@ -65,8 +105,30 @@ function regitrar_comentario(id_foro, id_usuario, descripcion, id_padre) {
         $("#cargando").hide();
         $("#lista_comentarios").html(data);
     });
-
 }
+
+function editar_comentario(id_foro, id_usuario, descripcion, id_padre, iCom_IdComentario) {
+    $("#cargando").show();
+    var files={};
+    jQuery.each($("[name=attach_"+id_padre+"]"), function (i, file) {
+        files[$(file).attr("id")]={"name":$(file).val(),"size":$(file).attr("f-size"),"type":$(file).attr("f-type")};
+    })
+    att_files=JSON.stringify(files);
+    $.post(_root_ + 'foro/index/_editar_comentario',
+            {
+                id_foro: id_foro,
+                id_usuario: id_usuario,
+                descripcion: descripcion,
+                id_padre: id_padre,
+                att_files:att_files,
+                iCom_IdComentario: iCom_IdComentario
+            }, function (data) {
+        $("#lista_comentarios").html('');
+        $("#cargando").hide();
+        $("#lista_comentarios").html(data);
+    });
+}
+
 function inscribir_participante_foro(id_foro) {
     $("#cargando").show();
     $.post(_root_ + 'foro/index/_inscribir_participante_foro',
@@ -113,11 +175,9 @@ function load_files_coment(file, div_conte) {
             result = JSON.parse(data);
             jQuery.each(result, function (i, file) {
                 id_file = file["id"];
-                $("#" + id_file).val(file["name"]);
-                $("#" + id_file).attr("f-size", file["size"]);
+                $("#" + id_file).val(file["name"]);                
                 $("#" + id_file).attr("f-type", file["type"]);
-
-
+                $("#" + id_file).attr("f-size", file["size"]);
             });
         }
     });
@@ -126,7 +186,6 @@ function load_files_coment(file, div_conte) {
 function js_option() {
     // body...
     $(".capa").hover(function(){
-
         // $(".dropdown-menu").show();
         $(".opciones_comentario_"+$(this).attr("id_comentario_capa")).show();
     }, function(){
@@ -135,7 +194,7 @@ function js_option() {
     });
 }
 
-function div_file(titulo, peso, id,id_padre) {
+function div_file(titulo, peso, id, id_padre) {
     div = "<div class='files' tabindex='-1' id='' >";
     div += "<input id='" + id + "' name='attach_"+id_padre+"' type='hidden' value='' checked=''>";
     div += "<div class='file_titulo'>" + titulo + "</div>";
