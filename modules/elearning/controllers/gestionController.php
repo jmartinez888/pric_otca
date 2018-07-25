@@ -93,6 +93,7 @@ class gestionController extends elearningController {
 
         if($tipo>0)
             $condicion = " INNER JOIN anuncio_usuario au ON anc.Anc_IdAnuncioCurso=au.Anc_IdAnuncioCurso WHERE au.Usu_IdUsuario=$idUsuario AND anc.Cur_IdCurso = $id and Anc_Estado=1 and Row_Estado=1 order by Anc_FechaReg desc ";
+
         // echo $condicion; exit;
         $arrayRowCount = $_model->getAnunciosRowCount($condicion);
         // print_r($arrayRowCount);
@@ -112,6 +113,7 @@ class gestionController extends elearningController {
     //         $_model->cambiarEstadoLeido($a['Anc_IdAnuncioCurso'],Session::get("id_usuario"));
     //     }
     // }
+
 
     if ($this->botonPress("bt_guardar")) {
             $this->registrarAnuncio($id);                
@@ -188,6 +190,7 @@ class gestionController extends elearningController {
             }
         }
 
+
         $idUsuario=Session::get("id_usuario");
 
         if($tipo>0)
@@ -195,6 +198,7 @@ class gestionController extends elearningController {
                 $condicion = "INNER JOIN anuncio_usuario au ON anc.Anc_IdAnuncioCurso=au.Anc_IdAnuncioCurso WHERE au.Usu_IdUsuario=$idUsuario and anc.Cur_IdCurso = $idCurso AND Anc_Titulo liKe '%$txtBuscar%' and Anc_Estado=1 and Row_Estado=1 order by Anc_FechaReg desc ";
             else 
                 $condicion = "INNER JOIN anuncio_usuario au ON anc.Anc_IdAnuncioCurso=au.Anc_IdAnuncioCurso WHERE au.Usu_IdUsuario=$idUsuario and anc.Cur_IdCurso = $idCurso and Anc_Estado=1 and Row_Estado=1 order by Anc_FechaReg desc ";
+
 
         $paginador = new Paginador();
 
@@ -212,7 +216,6 @@ class gestionController extends elearningController {
 
         $this->_view->assign('anuncios', $anuncios);
         $this->_view->assign('tipo', $tipo);
-
         $this->_view->assign('numeropagina', $paginador->getNumeroPagina());
         //$this->_view->assign('cantidadporpagina',$registros);
         $this->_view->assign('paginacionanuncios', $paginador->getView('paginacion_ajax_s_filas'));
@@ -342,6 +345,7 @@ class gestionController extends elearningController {
             }
         }
 
+
         $idUsuario=Session::get("id_usuario");
 
         if($tipo>0)
@@ -356,11 +360,13 @@ class gestionController extends elearningController {
         $totalRegistros = $arrayRowCount['CantidadRegistros'];
 
         $anuncios=$_model->getAnunciosCondicion($pagina,CANT_REG_PAG, $condicion);
+
         // if($tipo>0){
         // foreach ($anuncios as $a) {
         //     $_model->cambiarEstadoLeido($a['Anc_IdAnuncioCurso'],Session::get("id_usuario"));
         // }
     // }
+
 
         $paginador->paginar( $totalRegistros,"listaranuncios", "$txtBuscar", $pagina,CANT_REG_PAG, true);
 

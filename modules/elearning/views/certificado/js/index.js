@@ -244,7 +244,6 @@ function start_as(e) {
     e.dataTransfer.setData("Data", e.target.id); // Coje el elemento que se va a mover
     e.dataTransfer.setDragImage(e.target, 0, 0); // Define la imagen que se vera al ser arrastrado el elemento y por donde se coje el elemento que se va a mover (el raton aparece en la esquina sup_izq con 0,0)
     e.target.style.opacity = '0.4'; 
-    
 
     //  if(e.target.id=="arrastrable1"){
     //     selected= "#arrastrable1";

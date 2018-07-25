@@ -196,6 +196,7 @@ class _gestionCursoModel extends Model {
             if ($pagina > 0) {
                 $registroInicio = ($pagina - 1) * $registrosXPagina;                
             }
+
             $sql = " SELECT *, SUBSTRING(Anc_Descripcion, 1, 30) AS Anc_DescripcionRec FROM anuncio_curso anc $condicion 
                 LIMIT $registroInicio, $registrosXPagina ";
             $result = $this->_db->query($sql);
