@@ -389,6 +389,65 @@ class gestionController extends elearningController {
         $_model->cambiarEstadoLeido($id,Session::get("id_usuario"));
     }
 
+     public function _actualizar() 
+    {
+        $this->_acl->acceso('editar_rol');
+        //Para Mensajes
+        $resultado = array();
+        $mensaje = "error";
+        $contenido = "";
+        //Variables de Ajax_JavaScript
+        $txtBuscar = $this->getSql('palabra');
+        $pagina = $this->getInt('pagina');
+        $filas=$this->getInt('filas');
+
+        $idCurso = $this->getInt('idCurso');
+         $tipo = $this->getInt('tipo');
+        $soloActivos = 0;
+        $condicion = " WHERE Cur_IdCurso=$idCurso ";
+        if ($txtBuscar) 
+        {
+            $condicion .= " AND Anc_Titulo liKe '%$txtBuscar%' ";
+            //Filtro por Activos/Eliminados
+            if (!$this->_acl->permiso('ver_eliminados')) {
+                $soloActivos = 1;
+                $condicion .= " AND Row_Estado = $soloActivos ORDER BY Anc_FechaReg DESC";
+            } else {
+                $condicion .= " ORDER BY Anc_FechaReg DESC, Row_Estado DESC ";
+            }
+            
+        } else {
+            $condicion .= " ORDER BY Anc_FechaReg DESC, Row_Estado DESC ";
+            //Filtro por Activos/Eliminados  
+            if (!$this->_acl->permiso('ver_eliminados')) {
+                $soloActivos = 1;
+                $condicion = " WHERE Cur_IdCurso=$idCurso AND Row_Estado = $soloActivos ORDER BY Anc_FechaReg DESC ";
+            }
+        }
+
+        $idUsuario=Session::get("id_usuario");
+
+        if($tipo>0)
+            if ($txtBuscar) 
+                $condicion = "INNER JOIN anuncio_usuario au ON anc.Anc_IdAnuncioCurso=au.Anc_IdAnuncioCurso WHERE au.Usu_IdUsuario=$idUsuario and anc.Cur_IdCurso = $idCurso AND Anc_Titulo liKe '%$txtBuscar%' and Anc_Estado=1 and Row_Estado=1 order by Anc_FechaReg desc ";
+            else 
+                $condicion = "INNER JOIN anuncio_usuario au ON anc.Anc_IdAnuncioCurso=au.Anc_IdAnuncioCurso WHERE au.Usu_IdUsuario=$idUsuario and anc.Cur_IdCurso = $idCurso and Anc_Estado=1 and Row_Estado=1 order by Anc_FechaReg desc ";
+
+        $paginador = new Paginador();
+
+        $arrayRowCount = $this->_gestionm->getAnunciosRowCount($condicion);
+        $totalRegistros = $arrayRowCount['CantidadRegistros'];
+        // echo($totalRegistros);
+        // print_r($arrayRowCount); echo($condicion);exit;
+        $this->_view->assign('anuncios', $this->_gestionm->getAnunciosCondicion($pagina,$filas, $condicion));
+
+        $paginador->paginar( $totalRegistros ,"listaranuncios", "$txtBuscar", $pagina, $filas, true);
+        $this->_view->assign('tipo',$tipo);
+        $this->_view->assign('numeropagina', $paginador->getNumeroPagina());
+        $this->_view->assign('paginacionanuncios', $paginador->getView('paginacion_ajax_s_filas'));
+        $this->_view->renderizar('ajax/listaranuncios', false, true);
+    }
+
 
  public function _cambiarEstadoAnuncio()
     {
@@ -458,9 +517,9 @@ class gestionController extends elearningController {
 
         if($tipo>0)
             if ($txtBuscar) 
-                $condicion = "INNER JOIN anuncio_usuario au ON anc.Anc_IdAnuncioCurso=au.Anc_IdAnuncioCurso WHERE au.Usu_IdUsuario=$idUsuario and anc.Cur_IdCurso = $id AND Anc_Titulo liKe '%$txtBuscar%' and Anc_Estado=1 and Row_Estado=1 order by Anc_FechaReg desc ";
+                $condicion = "INNER JOIN anuncio_usuario au ON anc.Anc_IdAnuncioCurso=au.Anc_IdAnuncioCurso WHERE au.Usu_IdUsuario=$idUsuario and anc.Cur_IdCurso = $idCurso AND Anc_Titulo liKe '%$txtBuscar%' and Anc_Estado=1 and Row_Estado=1 order by Anc_FechaReg desc ";
             else 
-                $condicion = "INNER JOIN anuncio_usuario au ON anc.Anc_IdAnuncioCurso=au.Anc_IdAnuncioCurso WHERE au.Usu_IdUsuario=$idUsuario and anc.Cur_IdCurso = $id and Anc_Estado=1 and Row_Estado=1 order by Anc_FechaReg desc ";
+                $condicion = "INNER JOIN anuncio_usuario au ON anc.Anc_IdAnuncioCurso=au.Anc_IdAnuncioCurso WHERE au.Usu_IdUsuario=$idUsuario and anc.Cur_IdCurso = $idCurso and Anc_Estado=1 and Row_Estado=1 order by Anc_FechaReg desc ";
 
         $paginador = new Paginador();
 
@@ -574,9 +633,9 @@ class gestionController extends elearningController {
 
         if($tipo>0)
             if ($txtBuscar) 
-                $condicion = "INNER JOIN anuncio_usuario au ON anc.Anc_IdAnuncioCurso=au.Anc_IdAnuncioCurso WHERE au.Usu_IdUsuario=$idUsuario and anc.Cur_IdCurso = $id AND Anc_Titulo liKe '%$txtBuscar%' and Anc_Estado=1 and Row_Estado=1 order by Anc_FechaReg desc ";
+                $condicion = "INNER JOIN anuncio_usuario au ON anc.Anc_IdAnuncioCurso=au.Anc_IdAnuncioCurso WHERE au.Usu_IdUsuario=$idUsuario and anc.Cur_IdCurso = $idCurso AND Anc_Titulo liKe '%$txtBuscar%' and Anc_Estado=1 and Row_Estado=1 order by Anc_FechaReg desc ";
             else 
-                $condicion = "INNER JOIN anuncio_usuario au ON ac.Anc_IdAnuncioCurso=au.Anc_IdAnuncioCurso WHERE au.Usu_IdUsuario=$idUsuario and ac.Cur_IdCurso = $id and Anc_Estado=1 and Row_Estado=1 order by Anc_FechaReg desc ";
+                $condicion = "INNER JOIN anuncio_usuario au ON ac.Anc_IdAnuncioCurso=au.Anc_IdAnuncioCurso WHERE au.Usu_IdUsuario=$idUsuario and ac.Cur_IdCurso = $idCurso and Anc_Estado=1 and Row_Estado=1 order by Anc_FechaReg desc ";
 
         $paginador = new Paginador();
 

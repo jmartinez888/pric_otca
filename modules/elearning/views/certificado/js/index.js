@@ -186,7 +186,7 @@ $(document).on('ready', function () {
       
          function fileOnload(e) {
           var result=e.target.result;
-          $('#cuadro1').attr("style","background-image: url('"+result+"'); background-size: 100%; -moz-background-size: 100%; -o-background-size: 100%; -webkit-background-size: 100%; -khtml-background-size: 100%;  height:700px; position: relative;");
+          $('#cuadro1').attr("style","background-image: url('"+result+"'); background-size: 100%; -moz-background-size: 100%; -o-background-size: 100%; -webkit-background-size: 100%; -khtml-background-size: 100%;  height:21cm; position: relative;");
          }
 });
 

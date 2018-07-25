@@ -38,6 +38,24 @@ $(document).on('ready', function () {
          $(e.currentTarget).find("#texto_").html(bookId);
     }); 
 
+    $('#confirm-leer').on('hidden.bs.modal', function(e) {  
+        // $.post(_root_ + 'elearning/gestion/_actualizar'+'/'+ bookId, function (data) { });
+        $.post(_root_ + 'elearning/gestion/_actualizar',
+                {                    
+                    pagina: $(".pagination .active span").html(),
+                    palabra: $("#palabraanuncio").val(),
+                    filas:$("#s_filas_"+'listaranuncios').val(),
+                    idCurso:$("#idCurso").val(),
+                    tipo:$("#tipo").val()
+                },
+        function(data) {
+            $("#listaranuncios").html('');
+            $("#cargando").hide();
+            $("#listaranuncios").html(data);
+            // mensaje(JSON.parse(data));
+        });
+    }); 
+
     $('#confirm-leer').on('show.bs.modal', function(e) { 
         var bookId = $(e.relatedTarget).data('book-id'); 
          $(e.currentTarget).find("#titulo_").html(bookId);
