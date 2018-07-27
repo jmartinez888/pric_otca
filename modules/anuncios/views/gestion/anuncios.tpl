@@ -96,11 +96,13 @@
                                         
                                         <a data-toggle="tooltip" data-placement="bottom" class="btn btn-default btn-sm glyphicon glyphicon-edit" title="Editar" href="{$_layoutParams.root}elearning/gestion/editarAnuncios/{$rl.Anc_IdAnuncioCurso}"></a>
 
-                                        <!-- <button class="btn" id="bt_guardar" name="bt_enviar" type="submit" ><i class="glyphicon glyphicon-envelope"> </i></button> -->
+                                        <a data-toggle="tooltip" data-placement="bottom" class="btn btn-default btn-sm glyphicon glyphicon-envelope" title="Enviar email" href="{$_layoutParams.root}elearning/gestion/enviarEmailAnuncios/{$rl.Anc_IdAnuncioCurso}"></a>
 
-                                        <a data-toggle="tooltip" data-placement="bottom" class="btn btn-default btn-sm glyphicon glyphicon-envelope" title="Enviar email" href="{$_layoutParams.root}anuncios/gestion/enviarEmailAnuncios/{$rl.Anc_IdAnuncioCurso}/elearning"></a>
+                                         
 
-                                         <a   
+
+
+                                        <a   
                                         {if $rl.Row_Estado==0}
                                             data-toggle="tooltip" 
                                             class="btn btn-default btn-sm  glyphicon glyphicon-ok confirmar-habilitar-anuncio" title="{$lenguaje.label_habilitar}" 

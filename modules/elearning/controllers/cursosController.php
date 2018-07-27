@@ -430,7 +430,19 @@ class cursosController extends elearningController {
     $mCert = $this->loadModel("certificado");
 
     $certificado =$mCert->getCertificado_Id($id);
+    $plantilla=array();
     $plantilla =$mCert->getPlantillaCertificado($certificado[0]["Cur_IdCurso"]);
+
+    if(!$plantilla)
+    {
+      $plantilla['Plc_UrlImg']="modules/elearning/views/certificado/img/pric.png";
+      $plantilla['Plc_StyleNombre']="position: absolute; top: 248px; left: 150px; transform: translate(0%, -50%); font-size: 30px; z-index: 1000; border: 2px solid black; text-align: center; width: 80%;";
+      $plantilla['Plc_StyleCurso']="position: absolute; top: 356px; left: 156px; transform: translate(0%, -50%); font-size: 30px; z-index: 1000; border: 2px solid black; text-align: center; width: 80%;";
+      $plantilla['Plc_StyleHora']="position: absolute; top: 404px; left: 316px; transform: translate(0%, -50%); font-size: 26px; z-index: 1000; border: 2px solid black; text-align: center; width: 5%;";
+      $plantilla['Plc_StyleFecha']="position: absolute; top: 562px; left: 741px; transform: translate(0%, -50%); font-size: 22px; z-index: 1000; border: 2px solid black; text-align: center; width: 30%;";
+
+    }
+
     $modulo = $mModulo->getModulosCurso_Id($certificado[0]["Cur_IdCurso"]);
 
     $this->_view->setTemplate(LAYOUT_FRONTEND);
@@ -505,6 +517,18 @@ class cursosController extends elearningController {
 
     $certificado =$mCert->getCertificado_Id($id);
     $plantilla =$mCert->getPlantillaCertificado($certificado[0]["Cur_IdCurso"]);
+
+
+    if(!$plantilla)
+    {
+      $plantilla['Plc_UrlImg']="modules/elearning/views/certificado/img/pric.png";
+      $plantilla['Plc_StyleNombre']="position: absolute; top: 248px; left: 150px; transform: translate(0%, -50%); font-size: 30px; z-index: 1000; border: 2px solid black; text-align: center; width: 80%;";
+      $plantilla['Plc_StyleCurso']="position: absolute; top: 356px; left: 156px; transform: translate(0%, -50%); font-size: 30px; z-index: 1000; border: 2px solid black; text-align: center; width: 80%;";
+      $plantilla['Plc_StyleHora']="position: absolute; top: 404px; left: 316px; transform: translate(0%, -50%); font-size: 26px; z-index: 1000; border: 2px solid black; text-align: center; width: 5%;";
+      $plantilla['Plc_StyleFecha']="position: absolute; top: 562px; left: 741px; transform: translate(0%, -50%); font-size: 22px; z-index: 1000; border: 2px solid black; text-align: center; width: 30%;";
+
+    }
+    
     $modulo = $mModulo->getModulosCurso_Id($certificado[0]["Cur_IdCurso"]);
 
     $this->_view->setTemplate(LAYOUT_FRONTEND);
