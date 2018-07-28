@@ -286,24 +286,91 @@ class gleccionController extends elearningController {
 
   public function _registrar_pregunta(){
     $leccion = $this->getTexto("leccion");
-    $pregunta = $this->getTexto("pregunta");
-    $valor = $this->getTexto("valor");
-    $alt1 = $this->getTexto("alt1");
-    $alt2 = $this->getTexto("alt2");
-    $alt3 = $this->getTexto("alt3");
-    $alt4 = $this->getTexto("alt4");
-    $alt5 = $this->getTexto("alt5");
+    $tipo = $this->getTexto("tipo");
 
-    $model = $this->loadModel("_gestionLeccion");
-    $pregunta = $model->insertPregunta($leccion, $pregunta, $valor);
-    $model->insertAlternativa($pregunta["Pre_IdPregunta"], 1, $alt1);
-    $model->insertAlternativa($pregunta["Pre_IdPregunta"], 2, $alt2);
-    $model->insertAlternativa($pregunta["Pre_IdPregunta"], 3, $alt3);
-    $model->insertAlternativa($pregunta["Pre_IdPregunta"], 4, $alt4);
-    $model->insertAlternativa($pregunta["Pre_IdPregunta"], 5, $alt5);
+    if($tipo==1){
+        $pregunta = $this->getTexto("pregunta");
+        $valor = $this->getTexto("valor");
+        $alt1 = $this->getTexto("alt1");
+        $alt2 = $this->getTexto("alt2");
+        $alt3 = $this->getTexto("alt3");
+        $alt4 = $this->getTexto("alt4");
+        $alt5 = $this->getTexto("alt5");
 
-    $this->service->Success("Se insertó los materiales");
-    $this->service->Send();
+        $model = $this->loadModel("_gestionLeccion");
+        $pregunta = $model->insertPregunta($leccion, $pregunta, $valor, $tipo);
+        $model->insertAlternativa($pregunta["Pre_IdPregunta"], 1, $alt1);
+        $model->insertAlternativa($pregunta["Pre_IdPregunta"], 2, $alt2);
+        $model->insertAlternativa($pregunta["Pre_IdPregunta"], 3, $alt3);
+        $model->insertAlternativa($pregunta["Pre_IdPregunta"], 4, $alt4);
+        $model->insertAlternativa($pregunta["Pre_IdPregunta"], 5, $alt5);
+    }
+
+    else if($tipo==2){
+        $pregunta = $this->getTexto("pregunta");
+        $valor = $this->getTexto("valor");
+        $alt1 = $this->getTexto("alt1");
+        $alt2 = $this->getTexto("alt2");
+        $alt3 = $this->getTexto("alt3");
+        $alt4 = $this->getTexto("alt4");
+        $alt5 = $this->getTexto("alt5");
+
+        $model = $this->loadModel("_gestionLeccion");
+        $pregunta = $model->insertPregunta($leccion, $pregunta, $valor,$tipo);
+        $model->insertAlternativa($pregunta["Pre_IdPregunta"], 1, $alt1);
+        $model->insertAlternativa($pregunta["Pre_IdPregunta"], 2, $alt2);
+        $model->insertAlternativa($pregunta["Pre_IdPregunta"], 3, $alt3);
+        $model->insertAlternativa($pregunta["Pre_IdPregunta"], 4, $alt4);
+        $model->insertAlternativa($pregunta["Pre_IdPregunta"], 5, $alt5);
+    }
+
+    else if($tipo==3){
+        $pregunta = $this->getTexto("pregunta");
+        $pregunta2 = $this->getTexto("pregunta2");
+        $valor = $this->getTexto("valor");
+        $model = $this->loadModel("_gestionLeccion");
+        $pregunta = $model->insertPregunta($leccion, $pregunta, $valor,$tipo,$pregunta2);
+    }
+
+    else if($tipo==4){
+        $pregunta = $this->getTexto("pregunta");
+        $valor = $this->getTexto("valor");
+        $alt1 = $this->getTexto("alt1");
+        $alt2 = $this->getTexto("alt2");
+        $alt3 = $this->getTexto("alt3");
+        $alt4 = $this->getTexto("alt4");
+        $alt5 = $this->getTexto("alt5");
+        $rpta1 = $this->getTexto("rpta1");
+        $rpta2 = $this->getTexto("rpta2");
+        $rpta3 = $this->getTexto("rpta3");
+        $rpta4 = $this->getTexto("rpta4");
+        $rpta5 = $this->getTexto("rpta5");
+
+        $model = $this->loadModel("_gestionLeccion");
+        $pregunta = $model->insertPregunta($leccion, $pregunta, $valor, $tipo);
+        $model->insertAlternativa($pregunta["Pre_IdPregunta"], 1, $alt1);
+        $model->insertAlternativa($pregunta["Pre_IdPregunta"], 2, $alt2);
+        $model->insertAlternativa($pregunta["Pre_IdPregunta"], 3, $alt3);
+        $model->insertAlternativa($pregunta["Pre_IdPregunta"], 4, $alt4);
+        $model->insertAlternativa($pregunta["Pre_IdPregunta"], 5, $alt5);
+        $model->insertAlternativa($pregunta["Pre_IdPregunta"], 1, $rpta1,1);
+        $model->insertAlternativa($pregunta["Pre_IdPregunta"], 2, $rpta2,2);
+        $model->insertAlternativa($pregunta["Pre_IdPregunta"], 3, $rpta3,3);
+        $model->insertAlternativa($pregunta["Pre_IdPregunta"], 4, $rpta4,4);
+        $model->insertAlternativa($pregunta["Pre_IdPregunta"], 5, $rpta5,5);
+    }
+
+     else if($tipo==5){
+        $pregunta = $this->getTexto("pregunta");
+        $valor = $this->getTexto("valor");
+        
+        $model = $this->loadModel("_gestionLeccion");
+        $pregunta = $model->insertPregunta($leccion, $pregunta, $valor, $tipo);
+    }
+
+        $this->service->Success("Se insertó la pregunta");
+        $this->service->Send();
+
   }
 
   public function _actualizar_examen(){

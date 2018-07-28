@@ -263,50 +263,60 @@ class gestionController extends elearningController {
     }
 
 
-    public function enviarEmailAnuncios($Anc_IdAnuncioCurso = false)
-    {
-        $this->_acl->acceso('editar_rol');
-        $this->validarUrlIdioma();
-        $this->_view->getLenguaje("index_inicio");
-        $this->_view->setJs(array('anuncios'));
+    // public function enviarEmailAnuncios($Anc_IdAnuncioCurso = false)
+    // {
+    //     $_model = $this->loadModel("_gestionCurso");
+    //     $anuncio = $_model->getAnuncio($this->filtrarInt($Anc_IdAnuncioCurso));
+    //     $usuarios = $_model->getEmailMatriculadosCurso($anuncio['Cur_IdCurso']);
 
-        $pagina = $this->getInt('pagina');
-        //$registros = $this->getInt('registros');
-        $nombre = $this->getSql('nombre');
-        $_model = $this->loadModel("_gestionCurso");
-        $anuncio = $_model->getAnuncio($this->filtrarInt($Anc_IdAnuncioCurso));
-        $usuarios = $_model->getEmailMatriculadosCurso($anuncio['Cur_IdCurso']);
+    //     $this->redireccionar("anuncios/gestion/enviarEmailAnuncios/".$anuncio.'/'.$usuarios.'/'.'elearning');
+    // }
 
-        if ($this->botonPress("bt_cancelarEditarAnuncio")) {
-            $this->redireccionar('elearning/gestion/anuncios/'.$anuncio['Cur_IdCurso']);
-        }
 
-        if ($this->botonPress("enviar")) 
-        {            
-            for($i=1; $i<=count($usuarios);$i++){
-                $variable='usu'.$i;
-                if(null !==$this->getSql($variable )){
-                    $this->sendEmail($this->getSql($variable ),$anuncio['Anc_Titulo'],$anuncio['Anc_Descripcion']);
-                }
-            }
+    // public function enviarEmailAnuncios($Anc_IdAnuncioCurso = false)
+    // {
+    //     $this->_acl->acceso('editar_rol');
+    //     $this->validarUrlIdioma();
+    //     $this->_view->getLenguaje("index_inicio");
+    //     $this->_view->setJs(array('anuncios'));
 
-                // if($id)
-                // {
-                //     $this->_view->assign('_mensaje', 'Anuncio editado Correctamente');
-                //     $anuncio = $_model->getAnuncio($this->filtrarInt($Anc_IdAnuncioCurso));
-                // }  
-                // else 
-                // {
-                //     $this->_view->assign('_error', 'Error al editar anuncio');
-                // }
-        }        
-        // $this->_view->assign('idiomas',$this->_aclm->getIdiomas());        
-        $this->_view->assign('usuarios',$usuarios);
-        $this->_view->setTemplate(LAYOUT_FRONTEND);
-        $this->_view->assign('numeropagina', 1);
-        $this->_view->assign('datos',$anuncio);
-        $this->_view->renderizar('ajax/enviarEmailAnuncio','enviarEmailAnuncio');
-    }
+    //     $pagina = $this->getInt('pagina');
+    //     //$registros = $this->getInt('registros');
+    //     $nombre = $this->getSql('nombre');
+    //     $_model = $this->loadModel("_gestionCurso");
+    //     $anuncio = $_model->getAnuncio($this->filtrarInt($Anc_IdAnuncioCurso));
+    //     $usuarios = $_model->getEmailMatriculadosCurso($anuncio['Cur_IdCurso']);
+
+    //     if ($this->botonPress("bt_cancelarEditarAnuncio")) {
+    //         $this->redireccionar('elearning/gestion/anuncios/'.$anuncio['Cur_IdCurso']);
+    //     }
+
+    //     if ($this->botonPress("enviar")) 
+    //     {            
+    //         for($i=1; $i<=count($usuarios);$i++){
+    //             $variable='usu'.$i;
+    //             if(null !==$this->getSql($variable )){
+    //                 $this->sendEmail($this->getSql($variable ),$anuncio['Anc_Titulo'],$anuncio['Anc_Descripcion']);
+    //             }
+    //         }
+
+    //             // if($id)
+    //             // {
+    //             //     $this->_view->assign('_mensaje', 'Anuncio editado Correctamente');
+    //             //     $anuncio = $_model->getAnuncio($this->filtrarInt($Anc_IdAnuncioCurso));
+    //             // }  
+    //             // else 
+    //             // {
+    //             //     $this->_view->assign('_error', 'Error al editar anuncio');
+    //             // }
+    //     }        
+    //     // $this->_view->assign('idiomas',$this->_aclm->getIdiomas());        
+    //     $this->_view->assign('usuarios',$usuarios);
+    //     $this->_view->setTemplate(LAYOUT_FRONTEND);
+    //     $this->_view->assign('numeropagina', 1);
+    //     $this->_view->assign('datos',$anuncio);
+    //     $this->_view->renderizar('ajax/enviarEmailAnuncio','enviarEmailAnuncio');
+    // }
 
      public function sendEmail($Email,$Subject,$contenido)
     {

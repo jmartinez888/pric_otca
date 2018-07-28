@@ -88,14 +88,15 @@
                         </div>
                     </div>
 
-                    {if $c==1}
+         {if $c==1}
           <a href="{BASE_URL}elearning/gestion/anuncios/{$o.Cur_IdCurso}/1">
             <button class="btn btn-default btn-anuncios" {if $o.NoLeidos.NoLeidos>0} style="color:Red;"{/if}><i class="glyphicon glyphicon-bell"></i>{$o.NoLeidos.NoLeidos}/{$o.Total.Totales}</button>
           </a>
-          {/if}
+        {/if}
                 </div>
             </a>
         {/foreach}
+
     {else}
         <div class="col-lg-10" style="padding: 10px 0 0 0">
             {if strlen($busqueda) >0 }

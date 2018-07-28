@@ -208,11 +208,11 @@ class _gestionLeccionModel extends Model {
     $this->execQuery($sql);
   }
 
-  public function insertPregunta($leccion, $descripcion, $valor){
+  public function insertPregunta($leccion, $descripcion, $valor, $tipo, $descripcion2=''){
     $sql = "INSERT INTO pregunta(Exa_IdExamen,
-            TP_IdTpoPregunta, Pre_Descripcion, Pre_FechaReg, Pre_Valor, Pre_Estado)
+            TP_IdTpoPregunta, Pre_Descripcion, Pre_Descripcion2, Pre_FechaReg, Pre_Valor, Pre_Tipo, Pre_Estado)
             VALUES( (SELECT Exa_IdExamen FROM examen WHERE Lec_IdLeccion = {$leccion} ), '1',
-              '{$descripcion}', NOW(), '{$valor}', '1')";
+              '{$descripcion}','{$descripcion2}', NOW(), '{$valor}',{$tipo},'1')";
     $this->execQuery($sql);
     $sql = "SELECT * FROM pregunta
             WHERE Exa_IdExamen = (SELECT Exa_IdExamen FROM examen WHERE Lec_IdLeccion = {$leccion})
@@ -220,9 +220,9 @@ class _gestionLeccionModel extends Model {
     return $this->getArray($sql)[0];
   }
 
-  public function insertAlternativa($pregunta, $valor, $descripcion){
-    $sql = "INSERT INTO alternativa(Pre_IdPregunta, Alt_Etiqueta, Alt_Valor, Alt_FechaReg, Alt_Estado)
-            VALUES({$pregunta}, '{$descripcion}', {$valor}, NOW(), '1')";
+  public function insertAlternativa($pregunta, $valor, $descripcion, $relacion=0){
+    $sql = "INSERT INTO alternativa(Pre_IdPregunta, Alt_Etiqueta, Alt_Valor, Alt_FechaReg, Alt_Relacion, Alt_Estado)
+            VALUES({$pregunta}, '{$descripcion}', {$valor}, NOW(),{$relacion}, '1')";
     $this->execQuery($sql);
   }
 

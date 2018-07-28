@@ -80,7 +80,7 @@ class trabajoModel extends Model {
 
 
 	public function getConstanteTrabajo(){
-		$sql = "SELECT * FROM Constante
+		$sql = "SELECT * FROM constante
 				WHERE Con_Codigo = 4000
 					AND Con_Estado = 1
 					AND Row_Estado = 1
