@@ -107,6 +107,17 @@ class indexModel extends Model {
         }
     }
 
+    public function getComentario_x_idforo($iFor_IdForo, $iCom_IdComentario) {
+        try {
+            $post = $this->_db->query(
+                    "SELECT c.Com_IdComentario,c.Com_Descripcion,c.Com_Fecha,c.Com_Estado,c.For_IdForo,c.Idi_IdIdioma,c.Row_Estado,u.Usu_Nombre,u.Usu_Apellidos, u.Usu_IdUsuario FROM comentarios c INNER JOIN usuario u ON u.Usu_IdUsuario=c.Usu_IdUsuario WHERE c.For_IdForo={$iFor_IdForo} AND c.Row_Estado = 1 AND c.Com_IdComentario = {$iCom_IdComentario}");
+            return $post->fetch();
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("foro(indexModel)", "getComentario_x_idforo", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
+
     public function getComentarios_x_idcomentario($iCom_IdComentario) {
         try {
             $post = $this->_db->query(
@@ -186,7 +197,19 @@ class indexModel extends Model {
             $post = $this->_db->query(
                     "SELECT uf.*, r.Rol_Ckey FROM usuario_foro uf
                     INNER JOIN rol r ON uf.Rol_IdRol = r.Rol_IdRol 
-                    WHERE uf.Usu_IdUsuario = {$iUsu_IdUsuario} AND uf.For_IdForo = {$iFor_IdForo}");
+                    WHERE uf.Usu_IdUsuario = {$iUsu_IdUsuario} AND uf.For_IdForo = {$iFor_IdForo} AND uf.Row_Estado = 1");
+            return $post->fetch();
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("foro(indexModel)", "getRolForo", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
+
+    public function getRol_Ckey($iUsu_IdUsuario) {
+        try {
+            $post = $this->_db->query(
+                    "SELECT r.Rol_Ckey FROM usuario_rol usr INNER JOIN usuario usu ON usr.Usu_IdUsuario = usu.Usu_IdUsuario
+                        INNER JOIN rol r ON r.Rol_IdRol = usr.Rol_IdRol WHERE usu.Usu_IdUsuario = $iUsu_IdUsuario AND r.Rol_Ckey = 'administrador_foro' AND r.Row_Estado = 1");
             return $post->fetch();
         } catch (PDOException $exception) {
             $this->registrarBitacora("foro(indexModel)", "getRolForo", "Error Model", $exception);
@@ -237,6 +260,24 @@ class indexModel extends Model {
         }
     }
 
+    public function getEmails_usuarios_x_foro($For_IdForo)
+    {
+        try {
+            $post = $this->_db->query(
+                "SELECT usu.Usu_Email FROM usuario usu 
+                INNER JOIN (SELECT usf.Usu_IdUsuario 
+                    FROM usuario_foro usf INNER JOIN usuario usu
+                    ON usf.Usu_IdUsuario = usu.Usu_IdUsuario INNER JOIN rol r ON usf.Rol_IdRol = r.Rol_IdRol
+                    WHERE usf.For_IdForo = {$For_IdForo} AND (r.Rol_Ckey = 'lider_foro' OR r.Rol_Ckey = 'moderador_foro' 
+                    OR r.Rol_Ckey = 'facilitador_foro')) usuarios_foro
+                ON usu.Usu_IdUsuario = usuarios_foro.Usu_IdUsuario");
+            return $post->fetchAll();
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("foro(indexModel)", "getEmails_usuarios_x_foro", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
+
     public function insertarFileComentario($Fim_NombreFile, $Fim_TipoFile, $Fim_SizeFile, $Com_IdComentario, $Rec_IdComentario) {
         try {
 
@@ -262,7 +303,7 @@ class indexModel extends Model {
             $sql = "select u.Usu_Nombre,u.Usu_Apellidos,u.Usu_InstitucionLaboral,r.Rol_IdRol,r.Rol_Nombre from usuario_foro uf
                     inner join usuario u on u.Usu_IdUsuario=uf.Usu_IdUsuario
                     inner join rol r on r.Rol_IdRol=uf.Rol_IdRol
-                    where uf.For_IdForo= $iFor_IdForo and (r.Rol_Ckey = 'lider_foro' or r.Rol_Ckey = 'moderador_foro' or r.Rol_Ckey = 'facilitador_foro') order by r.Rol_Nombre desc";
+                    where uf.For_IdForo= $iFor_IdForo and (r.Rol_Ckey = 'lider_foro' or r.Rol_Ckey = 'moderador_foro' or r.Rol_Ckey = 'facilitador_foro') AND uf.Row_Estado = 1 order by r.Rol_Nombre desc";
             $result = $this->_db->query($sql);
             return $result->fetchAll();
         } catch (PDOException $exception) {

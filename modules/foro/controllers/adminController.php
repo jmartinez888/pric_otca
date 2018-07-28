@@ -655,6 +655,7 @@ class adminController extends foroController
 
         $result = $this->_model->cambiarEstadoMember($id_usuario, $id_foro, $estado_member);
 
+        $this->_view->assign('text_busqueda_miembro', "");
         $this->_paginacion_listaMembers();
     }
 
@@ -665,6 +666,7 @@ class adminController extends foroController
 
         $this->_model->updestadoRowMember($id_usuario, $id_foro, 0);
 
+        $this->_view->assign('text_busqueda_miembro', "");
         $this->_paginacion_listaMembers();
     }
 

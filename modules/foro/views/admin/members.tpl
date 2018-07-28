@@ -1,10 +1,7 @@
-<a href = ""  onclick = " window.open ('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent ('{$_layoutParams.root}{$_layoutParams.modulo}'),' facebook-share-dialog ',' width = 626, height = 436, left = 300, top = 150 '); return false; ">
-<img src = "{$_layoutParams.root}public/img/facebook.png" alt = " facebook" >
-</a >
-<!-- Este es el código de Twitter donde ponlo más te convenga-->
-<a  href = " https://twitter.com/share "  class = " twitter-share-button "  data-url = "asdf"  data-text = " Charolastra "  data-lang = " es "  data-size = " large " >
-Twitter
-</a >
+<a href = "" onclick = "window.open ('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent ('{$_layoutParams.root}{$_layoutParams.modulo}'),' facebook-share-dialog ',' width = 626, height = 436, left = 300, top = 150 '); return false; ">
+<img style="width: 4%;" src = "{$_layoutParams.root_clear}public/img/facebook.png" alt = " facebook" >
+<a href ="https://twitter.com/share" class ="twitter-share-button" data-url="" data-text="Charolastra" data-lang="es" data-size="large">
+<img style="width: 3%;" src = "{$_layoutParams.root_clear}public/img/twiter.png" alt = " facebook"></a>
 
     <h3 class="titulo-view">{$lenguaje.foro_admin__members_label_titulo}</h3>
     <div class="row">
@@ -172,8 +169,7 @@ Twitter
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label for="ta_mensaje_usuario">Mensaje</label>
-                                                <textarea  class="form-control"  id="ta_mensaje_usuario" name="ta_mensaje_usuario" >              
-                                                </textarea>  
+                                                <textarea  class="form-control"  id="ta_mensaje_usuario" name="ta_mensaje_usuario" ></textarea>  
                                             </div>
 
                                         </div>
@@ -188,12 +184,12 @@ Twitter
                 </div>
             </div>
             <div class="modal-footer">  
-                <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal"id="bt_asignar_usuario" id_foro="{$foro.For_IdForo}" >Guardar</button>
+                <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal" id="bt_asignar_usuario" id_foro="{$foro.For_IdForo}" >Guardar</button>
             </div>
         </div>
     </div>
 </div>
-<!-- 
+
 <!--  Modal Permisos Member -->
 <div class="modal fade top-space-0" id="modal-permisos-member" tabindex="-1" role="dialog">
     <div class="modal-dialog login-dialog">
@@ -214,4 +210,4 @@ Twitter
         </div>
     </div>
 </div>
-<!-- 
+

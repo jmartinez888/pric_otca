@@ -57,6 +57,16 @@ $(document).on('ready', function () {
         }
     });    
 
+    // probando
+    // jQuery(function () {
+    //   jQuery(".leerMas").bind("click", function () {
+    //     jQuery(this).text(jQuery(this).text() == "Leer más" ? "Ocultar" : "Leer más");
+    //     jQuery(this).prev().slideToggle();
+    //   });
+    // });
+    
+    //
+
     js_option();
 
     $("#hd_login_modulo").val("foro");
@@ -71,7 +81,43 @@ $(document).on('ready', function () {
         $(".capa_"+$(this).attr("id_comentario_editar")).toggle();
         $(".capaEditar_"+$(this).attr("id_comentario_editar")).toggle();   
     });
+
+    $('body').on('click', '.ver_mas', function () {
+        $(".capaVer1_"+$(this).attr("id_comentario_editar")).toggle();
+        $(".capaVer2_"+$(this).attr("id_comentario_editar")).toggle();   
+    });
+    $('body').on('click', '.ver_menos', function () {        
+        $(".capaVer1_"+$(this).attr("id_comentario_editar")).toggle();
+        $(".capaVer2_"+$(this).attr("id_comentario_editar")).toggle();  
+    });
+
+    $('body').on('click', '.enviar_reporte', function () {        
+       enviarReporte($(this).attr("id_foro"), $('#idcomentario').val(), $("#ta_mensaje_reportar").val()); 
+    });
+
+    $('body').on('click', '.reportar', function () {       
+        var id = $(this).attr("id_comentario_reportar"); 
+        $('#modal-reportar-comentario').on('show.bs.modal', function (e) {
+            $("#idcomentario").val(id);
+        });
+    });
+
+        
 });
+
+function enviarReporte(id_foro, iCom_IdComentario, mensaje) {
+    $("#cargando").show();
+    $.post(_root_ + 'foro/index/ReportarComentario',
+            {
+                mensaje: mensaje,
+                iCom_IdComentario, iCom_IdComentario,
+                id_foro: id_foro
+            }, function (data) {
+        $("#lista_comentarios").html('');
+        $("#cargando").hide();
+        $("#lista_comentarios").html(data);
+    });
+}
 
 function eliminar_comentario(id_foro, id_comentario) {
     $("#cargando").show();
@@ -187,7 +233,12 @@ function js_option() {
     // body...
     $(".capa").hover(function(){
         // $(".dropdown-menu").show();
-        $(".opciones_comentario_"+$(this).attr("id_comentario_capa")).show();
+        // if(($(this).attr("Rol_Ckey") == 'administrador_foro') || ($(this).attr("Rol_Ckey") == 'lider_foro') 
+        //     || ($(this).attr("Rol_Ckey") == 'moderador_foro') || ($(this).attr("Rol_Ckey") == 'facilitador_foro') 
+        //     || ($(this).attr("Rol_Ckey") == 'participante_foro')) {
+            $(".opciones_comentario_"+$(this).attr("id_comentario_capa")).show();
+        // }
+       
     }, function(){
         // $(".dropdown-menu").hide();
         $(".opciones_comentario_"+$(this).attr("id_comentario_capa")).hide();
