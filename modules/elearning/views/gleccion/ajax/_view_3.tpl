@@ -113,6 +113,21 @@
       </div>
       <div class="panel-body" style="padding: 0px !important">
         <div class="col-lg-12">
+          <label class="">Tipo de Pregunta</label>
+          <select name="tipo_pregunta" id="tipo_pregunta" class="form-control" value="{$examen.Exa_NroPreguntas}" >
+            <option value="1" >Con Respuesta Única</option>
+<!--             <option value="8" >Con Respuesta Única con Nose</option> -->
+            <option value="2" >Con Respuesta Múltiple</option>
+            <option value="3" >Con Rellenar Espacios en Blanco</option>
+            <option value="4" >Con Relacionar</option>
+            <option value="5" >Abierta</option>
+            <option value="6" >Con Zonas de Imagen</option>
+            <option value="7" >Con Combinación Exacta</option>
+          </select>
+        </div>
+
+        <div id="pregunta">
+        <div class="col-lg-12">
           <label class="">Pregunta</label>
           <input placeholder="Pregunta" class="form-control" name="pregunta" id="in_pregunta"/>
         </div>
@@ -132,10 +147,93 @@
         <div class="col-lg-1"><input type="radio" value="4" class="radioalt margin-top-10" name="valor_preg" /></div>
         <div class="col-lg-11"><input placeholder="Alternativa 5" class="form-control margin-top-10" name="alt1" id="inPreg5"/></div>
         <div class="col-lg-1"><input type="radio" value="5" class="radioalt margin-top-10" name="valor_preg" /></div>
+        </div>
+        <!-- FinPregunta -->
+
+        <div id="pregunta2">
+        <div class="col-lg-12">
+          <label class="">Pregunta</label>
+          <input placeholder="Pregunta" class="form-control" name="pregunta2" id="in_pregunta2"/>
+        </div>
+        <div class="col-lg-9">
+          <label class="margin-top-10">Alternativas</label>
+        </div>
+        <div class="col-lg-3">
+          <label class="margin-top-10 pull-right">Correcto</label>
+        </div>
+        <div class="col-lg-11"><input placeholder="Alternativa 1" class="form-control margin-top-10" name="alt12" id="inPreg13"/></div>
+        <div class="col-lg-1"><input type="checkbox" value="1" class="radioalt margin-top-10" name="valor_preg2" checked="checked" id="ckbPre1"/></div>
+        <div class="col-lg-11"><input placeholder="Alternativa 2" class="form-control margin-top-10" name="alt1" id="inPreg23"/></div>
+        <div class="col-lg-1"><input id="ckbPre2" type="checkbox" value="2" class="radioalt margin-top-10" name="valor_preg2" /></div>
+        <div class="col-lg-11"><input placeholder="Alternativa 3" class="form-control margin-top-10" name="alt1" id="inPreg33"/></div>
+        <div class="col-lg-1"><input id="ckbPre3" type="checkbox" value="3" class="radioalt margin-top-10" name="valor_preg2" /></div>
+        <div class="col-lg-11"><input placeholder="Alternativa 4" class="form-control margin-top-10" name="alt1" id="inPreg43"/></div>
+        <div class="col-lg-1"><input id="ckbPre4"  type="checkbox" value="4" class="radioalt margin-top-10" name="valor_preg2" /></div>
+        <div class="col-lg-11"><input placeholder="Alternativa 5" class="form-control margin-top-10" name="alt1" id="inPreg53"/></div>
+        <div class="col-lg-1"><input id="ckbPre5"  type="checkbox" value="5" class="radioalt margin-top-10" name="valor_preg2" /></div>
+        </div>
+
+        <!-- FinPregunta2 -->
+
+
+        <div id="pregunta3">
+          <div class="col-lg-12">
+            <label class="">Pregunta</label>
+            <input placeholder="Pregunta" class="form-control" name="in_pregunta31" id="in_pregunta31"/>
+            <input placeholder="Espacio en Blanco" class="form-control" readonly="readonly" />
+            <input placeholder="Continuar pregunta" class="form-control" name="in_pregunta32" id="in_pregunta32"/>
+          </div>
+        </div>
+        <!-- FinPregunta3 -->
+
+
+        <div id="pregunta4">
+         <div class="col-lg-12">
+          <label class="">Pregunta</label>
+          <input placeholder="Pregunta" class="form-control" name="pregunta4" id="in_pregunta4"/>
+        </div>
+        <div class="col-lg-12">
+          <label class="">Enunciado 1</label>
+          <input placeholder="Enunciado" class="form-control" name="enu1" id="enu1"/>
+          <input placeholder="Respuesta relacionada" class="form-control" name="rpta1" id="rpta1"/>
+        </div>
+         <div class="col-lg-12">
+          <label class="">Enunciado 2</label>
+          <input placeholder="Enunciado" class="form-control" name="enu2" id="enu2"/>
+          <input placeholder="Respuesta relacionada" class="form-control" name="rpta2" id="rpta2"/>
+        </div>
+         <div class="col-lg-12">
+          <label class="">Enunciado 3</label>
+          <input placeholder="Enunciado" class="form-control" name="enu3" id="enu3"/>
+          <input placeholder="Respuesta relacionada" class="form-control" name="rpta3" id="rpta3"/>
+        </div>
+         <div class="col-lg-12">
+          <label class="">Enunciado 4</label>
+          <input placeholder="Enunciado" class="form-control" name="enu4" id="enu4"/>
+          <input placeholder="Respuesta relacionada" class="form-control" name="rpta4" id="rpta4"/>
+        </div>
+        <div class="col-lg-12">
+          <label class="">Enunciado 5</label>
+          <input placeholder="Enunciado" class="form-control" name="enu5" id="enu5"/>
+          <input placeholder="Respuesta relacionada" class="form-control" name="rpta5" id="rpta5"/>
+        </div>
+         </div>
+        <!-- FinPregunta4 -->
+
+         <div id="pregunta5">
+          <div class="col-lg-12">
+            <label class="">Pregunta</label>
+            <input placeholder="Pregunta" class="form-control" name="pregunta5" id="in_pregunta5"/>
+          </div>
+        </div>
+        <!-- FinPregunta5 -->
+
+
         <div class="col-lg-12" style="margin-bottom: 15px">
           <button class="btn btn-success pull-right margin-top-10" id="btn_registrar_pregunta">Registrar</button>
         </div>
       </div>
+
     </div>
   </div>
 </div>
