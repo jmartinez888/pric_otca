@@ -221,11 +221,22 @@ class indexController extends foroController {
 
     public function ReportarComentario()
     {        
+        header("access-control-allow-origin: *");
         // echo $mensaje; exit;
         $iFor_IdForo = $this->getInt('id_foro');
         $iCom_IdComentario = $this->getTexto('iCom_IdComentario');
         $mensaje = $this->getTexto('mensaje');
         $Emails = $this->_model->getEmails_usuarios_x_foro($iFor_IdForo);
+
+        $idUsuario = Session::get('id_usuario');
+        if(!empty($idUsuario)){
+            $Rol_Ckey = $this->_model->getRolForo(Session::get('id_usuario'), $iFor_IdForo); 
+            if(empty($Rol_Ckey)){
+                $Rol_Ckey = $this->_model->getRol_Ckey(Session::get('id_usuario'));
+            }
+        }else{
+            $Rol_Ckey["Rol_Ckey"]="";   
+        } 
         // echo $Emails[0][0]; 
         // echo $Emails[1][0]; 
         // echo $Emails[2][0]; exit;
@@ -244,18 +255,8 @@ class indexController extends foroController {
 
         for ($i=0; $i < count($Emails); $i++) { 
             $SendCorreo = $Correo->enviar($Emails[$i][0], "", $Subject, $contenido, $fromName);
-        }
-         
-        $this->_view->assign('url', $url);    
-
-        if(!empty($idUsuario)){
-            $Rol_Ckey = $this->_model->getRolForo(Session::get('id_usuario'), $iFor_IdForo); 
-            if(empty($Rol_Ckey)){
-                $Rol_Ckey = $this->_model->getRol_Ckey(Session::get('id_usuario'));
-            }
-        }else{
-            $Rol_Ckey["Rol_Ckey"]="";   
-        } 
+        }         
+        //$this->_view->assign('url', $url);
 
         $foro = $this->_model->getForo_x_idforo($iFor_IdForo);
 
@@ -270,7 +271,6 @@ class indexController extends foroController {
                 $foro["For_Comentarios"][$index]["Hijo_Comentarios"][$j]["Archivos"] = $this->_model->getArchivos_x_idcomentario($foro["For_Comentarios"][$index]["Hijo_Comentarios"][$j]["Com_IdComentario"]);
             }
         }
-          // $this->_view->setJs(array("ficha_foro"));
         $this->_view->assign('Rol_Ckey', $Rol_Ckey["Rol_Ckey"]);
         $this->_view->assign('comentar_foro', $this->_permiso($iFor_IdForo, "comentar_foro"));
         $this->_view->assign('foro', $foro);
@@ -332,6 +332,7 @@ class indexController extends foroController {
         // echo "hola"; exit;
         $iFor_IdForo = $this->getInt('id_foro');
         $iCom_IdComentario = $this->getInt('id_comentario');
+        $tpl = $this->getTexto('tpl');
         //echo $iCom_IdComentario."hola"; exit;
         $this->_model->eliminarComentario($iCom_IdComentario, 0);
         // echo $iFor_IdForo. " " .$iCom_IdComentario; exit;
@@ -366,7 +367,9 @@ class indexController extends foroController {
         $this->_view->assign('Rol_Ckey', $Rol_Ckey["Rol_Ckey"]);
         $this->_view->assign('comentar_foro', $this->_permiso($iFor_IdForo, "comentar_foro"));
         $this->_view->assign('foro', $foro);
-        $this->_view->renderizar('ajax/lista_comentarios', false, true);
+        if($tpl == "ficha_foro"){
+            $this->_view->renderizar('ajax/lista_comentarios', false, true);
+        }
     }
    
     public function _editar_comentario() {
@@ -379,6 +382,9 @@ class indexController extends foroController {
         $iCom_IdPadre = $this->getInt('id_padre');
         $iCom_IdComentario = $this->getInt('iCom_IdComentario');
         $iFim_Files = html_entity_decode($this->getTexto('att_files'));
+        $tpl = $this->getTexto('tpl');
+        $Fim_IdForo = explode(",", $this->getTexto('Fim_IdForo'));
+
 
         $aFim_Files = json_decode($iFim_Files, true);
         
@@ -390,16 +396,23 @@ class indexController extends foroController {
             }
         }else{
             $Rol_Ckey["Rol_Ckey"]="";   
-        }       
+        }      
+
+        //print_r($Fim_IdForo); exit; 
         //print_r($usuario_foro); 
         // echo $Rol_Ckey["Rol_Ckey"]; exit;
         // exit; 
 
         $result = $this->_model->editarComentario($iCom_IdComentario, $iCom_Descripcion);
         // echo $result[0]; exit;
+
+        for ($i=0; $i < count($Fim_IdForo); $i++) { 
+            $result_a = $this->_model->eliminar_archivos_comentario($Fim_IdForo[$i]);
+        }       
+
         foreach ($aFim_Files as $key => $value) {
             $result_e = $this->_model->insertarFileComentario($value["name"], $value["type"], $value["size"], $iCom_IdComentario, 0);
-        }
+        }        
 
         $foro = $this->_model->getForo_x_idforo($iFor_IdForo);
 
@@ -418,7 +431,15 @@ class indexController extends foroController {
         $this->_view->assign('Rol_Ckey', $Rol_Ckey["Rol_Ckey"]);
         $this->_view->assign('comentar_foro', $this->_permiso($iFor_IdForo, "comentar_foro"));
         $this->_view->assign('foro', $foro);
-        $this->_view->renderizar('ajax/lista_comentarios', false, true);
+        // echo "hola"; exit;
+        if($tpl == "ficha_foro"){
+            $this->_view->renderizar('ajax/lista_comentarios', false, true);
+        }
+        //   else{
+        //     if ($tpl == "comentario_completo") {
+        //         $this->redireccionar("foro/index/ficha_comentario_completo/".$iFor_IdForo."/".$iCom_IdComentario);
+        //     }
+        // }        
     }
 
     public function _inscribir_participante_foro() {

@@ -140,6 +140,19 @@ class indexModel extends Model {
         }
     }
 
+    public function eliminar_archivos_comentario($Fim_IdForo)
+    {
+        try{
+            $permiso = $this->_db->query(
+                " DELETE FROM file_comentario WHERE Fim_IdForo = {$Fim_IdForo}"              
+                );
+            return $permiso->rowCount(PDO::FETCH_ASSOC);
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("foro(indexModel)", "eliminar_archivos_comentario", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
+
     public function registrarComentario($iFor_IdForo, $iUsu_IdUsuario, $iCom_Descripcion, $iCom_IdPadre) {
         try {
             $iCom_IdPadre = empty($iCom_IdPadre) ? null : $iCom_IdPadre;
@@ -162,11 +175,11 @@ class indexModel extends Model {
      public function editarComentario($iCom_IdComentario, $iCom_Descripcion)
     {
         try {
+            // echo $iCom_Descripcion; exit;
             $sql    = " call s_u_comentario(?,?)";
             $result = $this->_db->prepare($sql);
-            $result->bindParam(2, $iFor_IdForo, PDO::PARAM_INT);
             $result->bindParam(1, $iCom_IdComentario, PDO::PARAM_INT);
-            $result->bindParam(2, $iCom_Descripcion, PDO::PARAM_STR);
+            $result->bindParam(2, $iCom_Descripcion, PDO::PARAM_LOB);
 
             $result->execute();
             return $result->rowCount(PDO::FETCH_ASSOC);

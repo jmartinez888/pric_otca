@@ -183,7 +183,17 @@ and open the template in the editor.
 {
     display:block;
 }
-.status-upload .files .file_close
+.status-upload .files .file_close 
+{
+    background: url(//ssl.gstatic.com/ui/v1/icons/common/x_8px.png) no-repeat 0 0;
+    cursor: pointer;
+    float: right;
+    height: 16px;
+    margin-top: 1px;
+    opacity: .5;
+    width: 16px;
+}
+.file_close2
 {
     background: url(//ssl.gstatic.com/ui/v1/icons/common/x_8px.png) no-repeat 0 0;
     cursor: pointer;
@@ -431,3 +441,11 @@ and open the template in the editor.
 .media, .media-body {
     overflow: inherit !important;
 }
+
+.simulalink:hover {
+    text-decoration:underline;
+    cursor: pointer;
+}
+
+
+

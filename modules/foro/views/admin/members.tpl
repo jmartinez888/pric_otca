@@ -7,7 +7,7 @@
     <div class="row">
         <div class="col-md-3">
             <div class="panel-group" id="accordion">
-                <div class="panel panel-default">
+                <div class="panel panel-default">                    
                     <div class="panel-heading">
                         <h4 class="panel-title">
                             <strong>Foro</strong>
@@ -55,12 +55,24 @@
 
         <div class="col-md-9">
             <div class="panel panel-default">
+                <input type="hidden" id="ckey" name="ckey" value="{$Rol_Ckey}">
                 <ul class="nav nav-tabs" role="tablist">
-                    <li role="presentation" class="active"><a href="#tab_members" aria-controls="tab_members" role="tab" data-toggle="tab" class="tab_member" rol_member="lider_foro" id_foro="{$foro.For_IdForo|Default:0}">Lider</a></li>
-                    <li role="presentation" ><a href="#tab_members" aria-controls="tab_members" role="tab" data-toggle="tab" class="tab_member" rol_member="moderador_foro" id_foro="{$foro.For_IdForo|Default:0}">Moderador</a></li>
-                    <li role="presentation"><a href="#tab_members" aria-controls="tab_members" role="tab" data-toggle="tab" class="tab_member" rol_member="facilitador_foro" id_foro="{$foro.For_IdForo|Default:0}">Facilitador</a></li>
-                    <li role="presentation"><a href="#tab_members" aria-controls="tab_members" role="tab" data-toggle="tab" class="tab_member" rol_member="participante_foro" id_foro="{$foro.For_IdForo|Default:0}">Participante</a></li>
-                    <li class="pull-right"><a type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal-asignar-member" title="Asignar nuevo miembro al foro">Asignar</a></li>
+                    {if $Rol_Ckey=="lider_foro" || $Rol_Ckey=="administrador_foro"}
+                        <li role="presentation" class="active"><a href="#tab_members" aria-controls="tab_members" role="tab" data-toggle="tab" class="tab_member" rol_member="lider_foro" id_foro="{$foro.For_IdForo|Default:0}">Lider</a></li>
+                    {/if}
+                    {if $Rol_Ckey=="moderador_foro" || $Rol_Ckey=="lider_foro" || $Rol_Ckey=="administrador_foro"}
+                        <li role="presentation" ><a href="#tab_members" aria-controls="tab_members" role="tab" data-toggle="tab" class="tab_member" rol_member="moderador_foro" id_foro="{$foro.For_IdForo|Default:0}">Moderador</a></li>
+                    {/if}
+                    {if $Rol_Ckey=="moderador_foro" || $Rol_Ckey=="lider_foro" || $Rol_Ckey=="administrador_foro"}    
+                        <li role="presentation"><a href="#tab_members" aria-controls="tab_members" role="tab" data-toggle="tab" class="tab_member" rol_member="facilitador_foro" id_foro="{$foro.For_IdForo|Default:0}">Facilitador</a></li>
+                    {/if}
+                    {if $Rol_Ckey=="facilitador_foro" || $Rol_Ckey=="moderador_foro" || $Rol_Ckey=="lider_foro" || $Rol_Ckey=="administrador_foro"}
+                        <li role="presentation"><a href="#tab_members" aria-controls="tab_members" role="tab" data-toggle="tab" class="tab_member" rol_member="participante_foro" id_foro="{$foro.For_IdForo|Default:0}">Participante</a></li>
+                    {/if}
+                    {if $Rol_Ckey=="facilitador_foro" || $Rol_Ckey=="moderador_foro" || $Rol_Ckey=="lider_foro" || $Rol_Ckey=="administrador_foro"}
+                        <li class="pull-right"><a type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal-asignar-member" title="Asignar nuevo miembro al foro">Asignar</a></li>
+                    {/if}
+                    <!-- ver -->
                 </ul>
                 <!-- Tab panes -->
                 <div class="tab-content">  
@@ -173,9 +185,6 @@
                                             </div>
 
                                         </div>
-
-
-
                                     </div>
                                 </div>                               
                             </div>

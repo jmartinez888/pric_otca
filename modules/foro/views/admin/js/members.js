@@ -45,7 +45,43 @@ $(document).on('ready', function () {
 
     $('body').on('click', '#bt_asignar_usuario', function () {
         $("#cargando").show();
-        asignar_user_to_member($("input[name='rd_member_select']:checked").val(), $(this).attr("id_foro"), $("#s_lista_rol_foro").val(), $("#s_lista_rol_foro option:selected").attr("ckey"), );
+        var ckey_usuario = $("#ckey").val();
+        var ckey_guardar = $("#s_lista_rol_foro option:selected").attr("ckey");
+
+        if(ckey_usuario == "facilitador_foro"){
+            if(ckey_usuario == "facilitador_foro" && ckey_guardar == "participante_foro"){
+                asignar_user_to_member($("input[name='rd_member_select']:checked").val(), $(this).attr("id_foro"), $("#s_lista_rol_foro").val(), $("#s_lista_rol_foro option:selected").attr("ckey"));
+            }else{
+                alert("Sin permiso");
+                $("#cargando").hide();
+            }
+        }else{
+            if(ckey_usuario == "moderador_foro"){
+                 if(ckey_usuario == "moderador_foro" && (ckey_guardar == "participante_foro" || ckey_guardar == "facilitador_foro" || ckey_guardar == "moderador_foro") ){
+                    asignar_user_to_member($("input[name='rd_member_select']:checked").val(), $(this).attr("id_foro"), $("#s_lista_rol_foro").val(), $("#s_lista_rol_foro option:selected").attr("ckey"));
+                }else{
+                    alert("Sin permiso");
+                    $("#cargando").hide();                    
+                }
+            }else{
+                if(ckey_usuario == "lider_foro"){
+                    if(ckey_usuario == "lider_foro" && (ckey_guardar == "participante_foro" || ckey_guardar == "facilitador_foro" || ckey_guardar == "moderador_foro" || ckey_guardar == "lider_foro")){
+                        asignar_user_to_member($("input[name='rd_member_select']:checked").val(), $(this).attr("id_foro"), $("#s_lista_rol_foro").val(), $("#s_lista_rol_foro option:selected").attr("ckey"));
+                    }else{
+                        alert("Sin permiso");
+                        $("#cargando").hide();
+                    }
+                }else{
+                    if(ckey_usuario == "administrador_foro"){
+                        asignar_user_to_member($("input[name='rd_member_select']:checked").val(), $(this).attr("id_foro"), $("#s_lista_rol_foro").val(), $("#s_lista_rol_foro option:selected").attr("ckey"));
+                    }else{
+                        alert("Sin permiso");
+                        $("#cargando").hide();
+                    }
+                }                
+            }
+        }       
+             
     });
     $('body').on('click', '.permisos_member', function () {
         $("#cargando").show();

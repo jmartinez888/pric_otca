@@ -472,8 +472,22 @@ class adminController extends foroController
 
     public function members($id_foro = 0)
     {
+        $model_index = $this->loadModel('index');                
         if ($id_foro != 0) {
             $foro = $this->_model->getForos_x_Id($id_foro);
+
+            $idUsuario = Session::get('id_usuario');
+            if(!empty($idUsuario)){
+                $Rol_Ckey = $model_index->getRolForo(Session::get('id_usuario'), $id_foro); 
+                if(empty($Rol_Ckey)){
+                    $Rol_Ckey = $model_index->getRol_Ckey(Session::get('id_usuario'));
+                }
+                $this->_view->assign('Rol_Ckey', $Rol_Ckey["Rol_Ckey"]); 
+            }else{
+                $Rol_Ckey["Rol_Ckey"]="";   
+                $this->_view->assign('Rol_Ckey', "sin permiso"); 
+            }
+            
 
             if (!empty($foro)) {
                 $this->_view->getLenguaje("foro_admin_members");
@@ -487,7 +501,7 @@ class adminController extends foroController
                 $totalRegistros = $this->_model->getRowMembers_x_Foro($id_foro, "lider_foro");
 
                 $paginador->paginar($totalRegistros["Usf_RowMembers"], "listaMembers", "", $pagina = 1, CANT_REG_PAG, true);
-
+               
                 $this->_view->assign('numeropagina', $paginador->getNumeroPagina());
                 $this->_view->assign('paginacion', $paginador->getView('paginacion_ajax_s_filas'));
                 $this->_view->assign('lista_members', $lista_members);
