@@ -5,12 +5,6 @@
             
             <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
                 <div class="col-lg-12 p-rt-lt-0">
-                    <h3 class="titulo-ficha">{$foro.For_Titulo}</h3>
-                </div>
-                <div class="col-lg-12 contenido">
-                    <p>{$foro.For_Descripcion|html_entity_decode}</p>
-                </div>
-                <div class="col-lg-12 p-rt-lt-0">
                     <hr class="cursos-hr">
                 </div>
                 <input type="hidden" id="comentario_completo" name="comentario_completo" value="comentario_completo">

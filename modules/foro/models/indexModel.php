@@ -8,8 +8,13 @@ class indexModel extends Model {
 
     public function getForos($iFor_Funcion) {
         try {
+            // $post = $this->_db->query(
+            //         "SELECT f.*,(SELECT COUNT(Com_IdComentario) FROM comentarios c WHERE c.For_IdForo=f.For_IdForo) as For_TComentarios  FROM foro f WHERE f.For_Funcion LIKE '%$iFor_Funcion%' AND Row_Estado=1 ORDER BY f.For_FechaCreacion DESC");
             $post = $this->_db->query(
-                    "SELECT f.*,(SELECT COUNT(Com_IdComentario) FROM comentarios c WHERE c.For_IdForo=f.For_IdForo) as For_TComentarios  FROM foro f WHERE f.For_Funcion LIKE '%$iFor_Funcion%' AND Row_Estado=1 ORDER BY f.For_FechaCreacion DESC");
+                    "SELECT f.*,(SELECT COUNT(Com_IdComentario) FROM comentarios c 
+                                WHERE c.For_IdForo=f.For_IdForo) AS For_TComentarios, u.Usu_Usuario 
+                    FROM foro f INNER JOIN usuario u ON u.Usu_IdUsuario=f.Usu_IdUsuario
+                    WHERE f.For_Funcion LIKE '%$iFor_Funcion%' AND f.Row_Estado=1 ORDER BY f.For_FechaCreacion DESC");
             return $post->fetchAll();
         } catch (PDOException $exception) {
             $this->registrarBitacora("foro(indexModel)", "getForos", "Error Model", $exception);
@@ -81,6 +86,66 @@ class indexModel extends Model {
             return $post->fetch();
         } catch (PDOException $exception) {
             $this->registrarBitacora("foro(indexModel)", "getForos", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
+
+    public function getHora_Servidor() {
+        try {
+            $post = $this->_db->query(
+                    "SELECT NOW() AS hora_servidor");
+            return $post->fetch();
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("foro(indexModel)", "getHora_Servidor", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
+
+    public function getPropietario_foro($Usu_IdUsuario) {
+        try {
+            $post = $this->_db->query(
+                    "SELECT Usu_Nombre FROM usuario 
+                    WHERE Usu_IdUsuario = {$Usu_IdUsuario}");
+            return $post->fetch();
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("foro(indexModel)", "getPropietario_foro", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
+
+    public function getLineaTematica($Lit_IdLineaTematica) {
+        try {
+            $post = $this->_db->query(
+                    "SELECT Lit_Nombre FROM linea_tematica
+                        WHERE Lit_IdLineaTematica = {$Lit_IdLineaTematica}");
+            return $post->fetch();
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("foro(indexModel)", "getLineaTematica", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
+
+    public function getNumero_comentarios_x_idForo($For_IdForo) {
+        try {
+            $post = $this->_db->query(
+                    "SELECT COUNT(*) AS Numero_comentarios FROM comentarios 
+                        WHERE For_IdForo = {$For_IdForo} AND Row_Estado = 1");
+            return $post->fetch();
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("foro(indexModel)", "getNumero_comentarios_x_idForo", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
+
+    public function getNumero_participantes_x_idForo($For_IdForo) {
+        try {
+            $post = $this->_db->query(
+                    "SELECT COUNT(*) AS numero_participantes FROM usuario_foro usr INNER JOIN rol r
+                        ON usr.Rol_IdRol = r.Rol_IdRol 
+                        WHERE usr.For_IdForo = {$For_IdForo} AND usr.Row_Estado = 1");
+            return $post->fetch();
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("foro(indexModel)", "getNumero_comentarios_x_idForo", "Error Model", $exception);
             return $exception->getTraceAsString();
         }
     }
@@ -160,7 +225,7 @@ class indexModel extends Model {
             $result = $this->_db->prepare($sql);
             $result->bindParam(1, $iFor_IdForo, PDO::PARAM_INT);
             $result->bindParam(2, $iUsu_IdUsuario, PDO::PARAM_INT);
-            $result->bindParam(3, $iCom_Descripcion, PDO::PARAM_STR);
+            $result->bindParam(3, $iCom_Descripcion, PDO::PARAM_LOB);
             $result->bindParam(4, $iCom_IdPadre, PDO::PARAM_NULL | PDO::PARAM_INT);
 
             $result->execute();

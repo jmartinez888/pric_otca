@@ -6,18 +6,31 @@
             <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
             <!-- ficha-foro-josepacaya -->
                 <div class="col-lg-12 p-rt-lt-0">
-                    <a class="regresar-tematica" href="#"> < NombreDeLaTemática</a>
-                    <div class="pull-right etiqueta">Discusión</div>
+                    <a class="regresar-tematica" href="#">Temática: {$linea_tematica}</a>
+                    <div class="pull-right etiqueta">
+                        {if $foro.For_Funcion == 'forum'}
+                            Foro
+                        {/if}
+                        {if $foro.For_Funcion == 'webinar'}
+                            Webinars
+                        {/if}
+                        {if $foro.For_Funcion == 'query'}
+                            Consultas
+                        {/if}
+                        {if $foro.For_Funcion == 'workshop'}
+                            Workshop
+                        {/if}
+                    </div>
                 </div>
                 <div class="col-lg-12 p-rt-lt-0">
                     <h3 class="titulo-ficha">{$foro.For_Titulo}</h3>
                 </div>
                 <div class="col-lg-12 p-rt-lt-0" style="font-size: 12px;">
                     <div class="col-lg-6 p-rt-lt-0">
-                    hace 1 mes por <strong>NombreDelUsuario</strong>
+                    Creado hace {$tiempo} por <strong>{$nombre_usuario}</strong>
                     </div>
                     <div class="col-lg-6 p-rt-lt-0">
-                        <div class="pull-right">Comentarios: <strong>0</strong></div>
+                        <div class="pull-right">Comentarios: <strong>{$Numero_comentarios_x_idForo}</strong></div>
                     </div>
                 </div>
                 <div class="col-lg-12 p-rt-lt-0">
@@ -28,7 +41,7 @@
                 </div>
                 <div class="col-lg-12 p-rt-lt-0" style="font-size: 12px;">
                     <div class="col-lg-8 p-rt-lt-0">
-                        <div class="participantes">Participantes: <strong>2</strong></div>
+                        <div class="participantes">Participantes: <strong>{$Numero_participantes_x_idForo}</strong></div>
                     </div>
                     <div class="col-lg-4 p-rt-lt-0">
                         <button data-toggle="modal" data-target="#modal-login" id="login-form-link" class="btn btn-default btn-comentar">
@@ -217,8 +230,8 @@
                                         {else}
                                         <button title="Editar o Eliminar" class=" btn btn-default glyphicon glyphicon-option-horizontal dropdown-toggle opciones_comentario_{$comentarios.Com_IdComentario}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="right: 70%;">
                                         </button >
-                                             <ul class="dropdown-menu" style="left: -504%; z-index: 100 !important; top: 100%;">
-                                                <li><a href="{$_layoutParams.root}foro/index/ficha_comentario_completo/{$foro.For_IdForo}/{$comentarios.Com_IdComentario}" target="_blank" comentario_="{$comentarios.Com_Descripcion}" id_comentario_editar="{$comentarios.Com_IdComentario}" id_foro="{$foro.For_IdForo}" class="" style="cursor: pointer;">Ver comentario en una nueva pestaña</a></li>
+                                            <ul class="dropdown-menu" style="left: -504%; z-index: 100 !important; top: 100%;">
+                                                <li><a href="{$_layoutParams.root}foro/index/ficha_comentario_completo/{$foro.For_IdForo}/{$comentarios.Com_IdComentario}" target="_blank" comentario_="{$comentarios.Com_Descripcion}" id_comentario_editar="{$comentarios.Com_IdComentario}" id_foro="{$foro.For_IdForo}" class="" style="cursor: pointer;">Ver comentario completo</a></li>
                                             </ul>       
                                         {/if}                             
                                     </div>
@@ -443,7 +456,7 @@
                                                 <button title="Editar o Eliminar" class=" btn btn-default glyphicon glyphicon-option-horizontal dropdown-toggle opciones_comentario_{$hijo_comentarios.Com_IdComentario}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="right: 600%;">
                                                 </button >
                                                      <ul class="dropdown-menu" style="left: -670%; z-index: 100 !important; top: 100%;">
-                                                        <li><a href="{$_layoutParams.root}foro/index/ficha_comentario_completo/{$foro.For_IdForo}/{$hijo_comentarios.Com_IdComentario}" target="_blank" comentario_="{$hijo_comentarios.Com_Descripcion}" id_comentario_editar="{$hijo_comentarios.Com_IdComentario}" id_foro="{$foro.For_IdForo}" class="" style="cursor: pointer;">Ver comentario en una nueva pestaña</a></li>
+                                                        <li><a href="{$_layoutParams.root}foro/index/ficha_comentario_completo/{$foro.For_IdForo}/{$hijo_comentarios.Com_IdComentario}" target="_blank" comentario_="{$hijo_comentarios.Com_Descripcion}" id_comentario_editar="{$hijo_comentarios.Com_IdComentario}" id_foro="{$foro.For_IdForo}" class="" style="cursor: pointer;">Ver comentario completo</a></li>
                                                     </ul>       
                                                 {/if}
                                                 </div>

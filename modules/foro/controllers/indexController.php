@@ -22,6 +22,9 @@ class indexController extends foroController {
         $this->_view->assign('titulo', $lenguaje["foro_index_titulo"]);
 
         $lista_foros = $this->_model->getForosRecientes("%");
+        for ($i=0; $i < count($lista_foros); $i++) { 
+            $lista_foros[$i]["tiempo"]= $this->getTiempo($lista_foros[$i]["For_FechaCreacion"]);
+        }
         $lista_tematica = $this->_model->getResumenLineTematica();
         $lista_agenda = $this->_model->getAgendaIndex();
         $this->_view->assign('lista_foros', $lista_foros);      
@@ -56,7 +59,11 @@ class indexController extends foroController {
         $this->_view->setTemplate(LAYOUT_FRONTEND);
         $this->_view->assign('titulo', "Discusiones");
         $this->_view->setCss(array("jp-index"));
-        $this->_view->assign('lista_foros', $this->_model->getForos("forum"));
+        $lista_foros = $this->_model->getForos("forum");
+        for ($i=0; $i < count($lista_foros); $i++) { 
+            $lista_foros[$i]["tiempo"]= $this->getTiempo($lista_foros[$i]["For_FechaCreacion"]);
+        }
+        $this->_view->assign('lista_foros', $lista_foros);
         $this->_view->renderizar('discussions');
     }
 
@@ -64,14 +71,22 @@ class indexController extends foroController {
         $this->_view->setTemplate(LAYOUT_FRONTEND);
         $this->_view->assign('titulo', "Consultas");
         $this->_view->setCss(array("jp-index"));
-        $this->_view->assign('lista_foros', $this->_model->getForos("query"));
+        $lista_foros = $this->_model->getForos("query");
+        for ($i=0; $i < count($lista_foros); $i++) { 
+            $lista_foros[$i]["tiempo"]= $this->getTiempo($lista_foros[$i]["For_FechaCreacion"]);
+        }
+        $this->_view->assign('lista_foros', $lista_foros);
         $this->_view->renderizar('query');
     }
 
     public function webinar() {
         $this->_view->setTemplate(LAYOUT_FRONTEND);
         $this->_view->setCss(array("jp-index"));
-        $this->_view->assign('lista_foros', $this->_model->getForos("webinar"));
+        $lista_foros = $this->_model->getForos("webinar");
+        for ($i=0; $i < count($lista_foros); $i++) { 
+            $lista_foros[$i]["tiempo"]= $this->getTiempo($lista_foros[$i]["For_FechaCreacion"]);
+        }
+        $this->_view->assign('lista_foros', $lista_foros);
         $this->_view->renderizar('webinar');
     }
 
@@ -144,6 +159,8 @@ class indexController extends foroController {
 
         $lenguaje = Session::get("fileLenguaje");
         $foro = $this->_model->getForo_x_idforo($iFor_IdForo);
+        $linea_tematica = $this->_model->getLineaTematica($foro["Lit_IdLineaTematica"]);
+        // echo $linea_tematica["Lit_Nombre"];exit;
         $this->_view->assign('titulo', $lenguaje["foro_ficha_titulo"] . " " . $foro["For_Titulo"]);
         $foro["Archivos"] = $this->_model->getArchivos_x_idforo($iFor_IdForo);
         $foro["For_Comentarios"] = $this->_model->getComentarios_x_idforo($iFor_IdForo);
@@ -162,12 +179,76 @@ class indexController extends foroController {
             }
         }
 
+        $Nombre_propietario = $this->_model->getPropietario_foro(Session::get('id_usuario'));  
+        $Numero_comentarios_x_idForo = $this->_model->getNumero_comentarios_x_idForo($iFor_IdForo);  
+        $Numero_participantes_x_idForo = $this->_model->getNumero_participantes_x_idForo($iFor_IdForo);  
+
+        $tiempo = $this->getTiempo($foro["For_FechaCreacion"]);
+        // echo $tiempo; exit;
+        $this->_view->assign('Numero_participantes_x_idForo', $Numero_participantes_x_idForo["numero_participantes"]);
+        $this->_view->assign('Numero_comentarios_x_idForo', $Numero_comentarios_x_idForo["Numero_comentarios"]);
+        $this->_view->assign('nombre_usuario', $Nombre_propietario["Usu_Nombre"]);
+        $this->_view->assign('tiempo', $tiempo); 
         $this->_view->assign('Rol_Ckey', $Rol_Ckey["Rol_Ckey"]); 
+        $this->_view->assign('linea_tematica', $linea_tematica["Lit_Nombre"]);
         $this->_view->assign('facilitadores', $this->_model->getFacilitadores($iFor_IdForo));
         $this->_view->assign('comentar_foro', $this->_permiso($iFor_IdForo, "comentar_foro"));
         
         $this->_view->assign('foro', $foro);
         $this->_view->renderizar('ficha_foro');
+    }
+
+    public function getTiempo($fecha_inicial)
+    {
+        $tiempo ="";
+        $hora_servidor = $this->_model->getHora_Servidor();
+        $fechainicial = new DateTime($fecha_inicial);
+        $fechafinal = new DateTime($hora_servidor["hora_servidor"]);
+        $diferencia = $fechainicial->diff($fechafinal);
+        $meses = ( $diferencia->y * 12 ) + $diferencia->m;
+        if($diferencia->y < 1){
+            if ($meses<1) {
+                if ($diferencia->d < 1) {
+                    if ($diferencia->h < 1) {                        
+                        if($diferencia->i < 1){
+                            $tiempo = " un momento ";                                        
+                        }else{
+                            if($diferencia->i == 1){
+                                $tiempo = $diferencia->i . " minuto ";
+                            }else{
+                                $tiempo = $diferencia->i . " minutos ";                  
+                            }
+                              
+                        }                 
+                    }else{
+                        if($diferencia->h == 1){
+                            $tiempo = $diferencia->h . " hora ";
+                        }else{
+                            $tiempo = $diferencia->h . " horas ";
+                        }                             
+                    } 
+                }else{
+                    if($diferencia->d == 1){
+                        $tiempo = $diferencia->d . " día ";
+                    }else{
+                        $tiempo = $diferencia->d . " días ";
+                    } 
+                }        
+            }else{
+                if($diferencia->m == 1){
+                    $tiempo = $diferencia->m . " mes ";
+                }else{
+                    $tiempo = $diferencia->m . " meses ";
+                }                
+            }
+        }else{
+            if($diferencia->y == 1){
+                    $tiempo = $diferencia->y . " año ";
+            }else{
+                $tiempo = $diferencia->y . " años ";
+            } 
+        }
+        return $tiempo;
     }
 
     public function ficha_comentario_completo($iFor_IdForo, $iCom_IdComentario) {

@@ -1,4 +1,4 @@
-<!-- <div id="lista_comentarios" class="row">   -->             
+            
                     {foreach from=$foro.For_Comentarios item=comentarios} 
                         <div class="comment-box">
                             <div class="col-md-1 media-left">
@@ -18,7 +18,7 @@
                                              <ul class="dropdown-menu" style="left: -490%; z-index: 100 !important; top: 100%;">
                                                 <li><a comentario_="{$comentarios.Com_Descripcion}" id_comentario_editar="{$comentarios.Com_IdComentario}" id_foro="{$foro.For_IdForo}" class="editar_comentario_foro files_coment_editar" style="cursor: pointer;">Editar</a></li>
                                                 <li><a id_foro="{$foro.For_IdForo}" id_comentario_delete="{$comentarios.Com_IdComentario}" class="eliminar_comentario_foro" style="cursor: pointer;">Eliminar</a></li>
-                                                <li><a href="{$_layoutParams.root}foro/index/ficha_comentario_completo/{$foro.For_IdForo}/{$comentarios.Com_IdComentario}" target="_blank" comentario_="{$comentarios.Com_Descripcion}" id_comentario_editar="{$comentarios.Com_IdComentario}" id_foro="{$foro.For_IdForo}" class="" style="cursor: pointer;">Ver comentario completo
+                                                <li><a href="{$_layoutParams.root}foro/index/ficha_comentario_completo/{$foro.For_IdForo}/{$comentarios.Com_IdComentario}" target="_blank" comentario_="{$comentarios.Com_Descripcion}" id_comentario_editar="{$comentarios.Com_IdComentario}" id_foro="{$foro.For_IdForo}" class="" style="cursor: pointer;">Ver comentario completo</a></li>
                                             </ul>                                                    
                                             {/if} 
 
@@ -122,8 +122,8 @@
                                         {else}
                                         <button title="Editar o Eliminar" class=" btn btn-default glyphicon glyphicon-option-horizontal dropdown-toggle opciones_comentario_{$comentarios.Com_IdComentario}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="right: 70%;">
                                         </button >
-                                             <ul class="dropdown-menu" style="left: -504%; z-index: 100 !important; top: 100%;">
-                                                <li><a href="{$_layoutParams.root}foro/index/ficha_comentario_completo/{$foro.For_IdForo}/{$comentarios.Com_IdComentario}" target="_blank" comentario_="{$comentarios.Com_Descripcion}" id_comentario_editar="{$comentarios.Com_IdComentario}" id_foro="{$foro.For_IdForo}" class="" style="cursor: pointer;">Ver comentario en una nueva pestaña</a></li>
+                                            <ul class="dropdown-menu" style="left: -504%; z-index: 100 !important; top: 100%;">
+                                                <li><a href="{$_layoutParams.root}foro/index/ficha_comentario_completo/{$foro.For_IdForo}/{$comentarios.Com_IdComentario}" target="_blank" comentario_="{$comentarios.Com_Descripcion}" id_comentario_editar="{$comentarios.Com_IdComentario}" id_foro="{$foro.For_IdForo}" class="" style="cursor: pointer;">Ver comentario completo</a></li>
                                             </ul>       
                                         {/if}                             
                                     </div>
@@ -344,6 +344,12 @@
                                                     </ul>   
                                                     {/if} 
                                                 <!-- hasta aca --> 
+                                                {else}
+                                                <button title="Editar o Eliminar" class=" btn btn-default glyphicon glyphicon-option-horizontal dropdown-toggle opciones_comentario_{$hijo_comentarios.Com_IdComentario}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="right: 600%;">
+                                                </button >
+                                                     <ul class="dropdown-menu" style="left: -670%; z-index: 100 !important; top: 100%;">
+                                                        <li><a href="{$_layoutParams.root}foro/index/ficha_comentario_completo/{$foro.For_IdForo}/{$hijo_comentarios.Com_IdComentario}" target="_blank" comentario_="{$hijo_comentarios.Com_Descripcion}" id_comentario_editar="{$hijo_comentarios.Com_IdComentario}" id_foro="{$foro.For_IdForo}" class="" style="cursor: pointer;">Ver comentario completo</a></li>
+                                                    </ul>       
                                                 {/if}
                                                 </div>
                                             </h4>
@@ -425,7 +431,4 @@
                             </div>
                         </div>                
                     {/foreach}
-                <!-- </div> -->
-<script type="text/javascript">
-    js_option();
-</script>
+             

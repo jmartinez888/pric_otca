@@ -1,5 +1,6 @@
 <div  class="col-md-12 col-xs-12 col-sm-12 col-lg-12">
     {include file='modules/foro/views/index/menu/lateral.tpl'}
+
     <div  class="col-md-10 col-xs-12 col-sm-8 col-lg-10" style="margin-top: 10px;">       
         <h3 class="titulo-view titulo"><strong>{$lenguaje.foro_index_label_titulo}</strong> </h3>
         <p class="descripcion-foro">{$lenguaje.foro_index_label_descripcion}</p>   
@@ -8,17 +9,17 @@
             <div class="col-lg-12">
                 <hr class="cursos-hr">
             </div>
-            <div class="col-sm-12">
-                <div class="input-group">
-                    <input type ="text" class="form-control"  data-toggle="tooltip" data-original-title="Buscar Foro" placeholder="Buscar Foro" name="text_busqueda" id="text_busqueda" onkeypress="tecla_enter_foro(event)" value="{$palabrabuscada|default:''}">                  
-                    <span class="input-group-btn">
-                        <button class="btn  btn-success btn-buscador" type="button" id="buscar_foro"><i class="glyphicon glyphicon-search"></i></button>
-                    </span>
-                </div><!-- /input-group -->
-            </div>  
             <div class="col-md-8">
                 <div class="row">
-                    
+                    <div class="col-sm-12">
+                        <div class="input-group">
+                            <input type ="text" class="form-control"  data-toggle="tooltip" data-original-title="Buscar Foro" placeholder="Buscar Foro" name="text_busqueda" id="text_busqueda" onkeypress="tecla_enter_foro(event)" value="{$palabrabuscada|default:''}">                  
+                            <span class="input-group-btn">
+                                <button class="btn  btn-success btn-buscador" type="button" id="buscar_foro"><i class="glyphicon glyphicon-search"></i></button>
+                            </span>
+                        </div><!-- /input-group -->
+                    </div>                    
+
                     <div class="col-md-12">
                         <h3 class="subtitle-foro">Temáticas</h3>
                     </div>
@@ -70,7 +71,7 @@
                                          <p style="text-align: justify;">{$foro.For_Resumen|truncate:120:"..."}</p>
                                     </div>
                                     {/if}
-                                    <div class="detalles-act-reciente">{$foro.Usu_Usuario} &nbsp;&nbsp;-&nbsp;&nbsp; hace 1 mes &nbsp;&nbsp;-&nbsp;&nbsp; 3 votos &nbsp;&nbsp;-&nbsp;&nbsp; {$foro.For_TParticipantes|default:0} miembro(s) &nbsp;&nbsp;-&nbsp;&nbsp;{$foro.For_TComentarios|default:0} comentario(s)</div>
+                                    <div class="detalles-act-reciente">{$foro.Usu_Usuario} &nbsp;&nbsp;-&nbsp;&nbsp; hace {$foro.tiempo} &nbsp;&nbsp;-&nbsp;&nbsp; 3 votos &nbsp;&nbsp;-&nbsp;&nbsp; {$foro.For_TParticipantes|default:0} miembro(s) &nbsp;&nbsp;-&nbsp;&nbsp;{$foro.For_TComentarios|default:0} comentario(s)</div>
                         </div>
                         {/foreach}
                     </div>
