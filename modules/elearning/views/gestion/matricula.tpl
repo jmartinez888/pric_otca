@@ -3,7 +3,7 @@
   <div class="col-lg-10" style="margin-top: 20px">
     {if $curso.Mod_IdModCurso == 2}
     <div class="panel panel-default">
-      <div class="panel-heading">
+      <div class="panel-heading cabecera-titulo">
         <h3 class="panel-title">
           <i class="glyphicon glyphicon-list-alt"></i>&nbsp;&nbsp;
           <strong>ALUMNOS INSCRITOS</strong>
@@ -51,7 +51,7 @@
     </div>
     {else}
     <div class="panel panel-default">
-      <div class="panel-heading">
+      <div class="panel-heading cabecera-titulo">
         <h3 class="panel-title">
           <i class="glyphicon glyphicon-list-alt"></i>&nbsp;&nbsp;
           <strong>CURSO MOOC</strong>

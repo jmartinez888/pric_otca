@@ -15,7 +15,8 @@
 }
 .cursos-hr{
 	border-top: 1px solid #cdcdcd;
-	margin: 0px;
+	margin-top: 5px;
+  margin-bottom: 10px;
 	padding: 0.3px;
 }
 .ic-decoration{
@@ -60,6 +61,11 @@ label{
 }
 .active {
 	color: orange;
+}
+
+.btn-gestion-jp{
+    margin-left: 10px;
+    margin-top: 10px;
 }
 
 /*................................*

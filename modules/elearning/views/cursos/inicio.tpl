@@ -20,6 +20,7 @@
                 <div class="col-lg-4" style="margin-bottom: 20px;">
 
                     <div class="curso-item curso-sombra">
+
                         <form>
                             <div class="clasificacion">
 
@@ -42,8 +43,16 @@
                         {else}
                             <img class="curso-item-img" alt="Imagen" src="{BASE_URL}modules/elearning/views/cursos/img/portada/default.png" />
                         {/if}
+
                         <div class="col-md-12">
                             <div class="row">
+
+                                {if $o.Usu_IdUsuario == Session::get("id_usuario")}
+                                    <a href="{BASE_URL}elearning/gestion/matriculados/{$o.Cur_IdCurso}">
+                                        <button class="btn btn-success btn-gestion-jp">Gestión</button>
+                                    </a>
+                                {/if}
+
                                 <h4 class="col-md-9 curso-item-title">
                                     <strong>{$o.Cur_Titulo}</strong>
                                 </h4>
@@ -59,16 +68,13 @@
                             <hr class="cursos-hr">
 
                             {if $o.Mod_IdModCurso==1}
-                                <br>
                                 <div class="curso-item-desc">
                                     {substr($o.Cur_Descripcion, 0, 250)}...
                                 </div>
-                            {else} 
-                                <br>           
+                            {else}           
                                 <div class="curso-item-desc">
                                     {substr($o.Cur_Descripcion, 0, 100)}...
                                 </div>
-                                <br> 
                                 <hr class="cursos-hr">
                                 <div class="curso-item-lms-tab">
                                     <div><span class="glyphicon glyphicon-calendar"></span>
@@ -80,11 +86,6 @@
                                 </div>
                             {/if}
 
-                            {if $o.Usu_IdUsuario == Session::get("id_usuario")}
-                                <a href="{BASE_URL}elearning/gestion/matriculados/{$o.Cur_IdCurso}">
-                                    <button class="btn btn-default btn-gestion">Gestión</button>
-                                </a>
-                            {/if}
                         </div>
                     </div>
 

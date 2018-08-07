@@ -196,3 +196,10 @@
     background-color: #fff !important;
     border-color: #e9ba46;
 }
+.p-rt-lt-0{
+    padding-right: 0px;
+    padding-left: 0px;
+}
+.btn-gestion{
+    margin-bottom: 20px;
+}

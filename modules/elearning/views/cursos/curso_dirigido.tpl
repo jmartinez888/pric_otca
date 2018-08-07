@@ -101,6 +101,29 @@
                   <span><strong>Inscrito:</strong>
                   {$inscripcion[0].Mat_FechaReg}</span>
                 </center>
+
+                {if Session::get('id_usuario')}
+                <div class="col-lg-12 p-rt-lt-0">
+                  <div class="progress progress-estilo">
+                    <div class="progress-bar progress-bar-striped" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: {$progreso.Porcentaje}%">
+                      <div class="progress-porcentaje">
+                        <strong>{$progreso.Porcentaje}% Completado</strong>
+                      </div>
+                    </div>
+                  </div>
+
+
+                  <!--{if ($session==1 && isset($inscripcion) && count($inscripcion)>0 && $inscripcion[0].Mat_Valor==1) && ($curso.Usu_IdUsuario != Session::get('id_usuario')) }
+                    <a href="{BASE_URL}elearning/clase/clase/{$curso.Cur_IdCurso}"><button class="btn btn-success">ir a clase</button></a>
+                  {/if}
+                  {if $curso.Usu_IdUsuario == Session::get('id_usuario')}
+                    <a href="{BASE_URL}elearning/clase/clase/{$curso.Cur_IdCurso}"><button class="btn btn-success">Dar clase</button></a>
+                  {/if}-->
+
+
+                </div>
+                {/if}
+
               {else}
                 <div class="tag-lms"><center>Registro rechazado</center></div>
               {/if}
@@ -131,28 +154,6 @@
               </div>
         {/if}
       </div>
-
-      {if Session::get('id_usuario')}
-      <div class="col-lg-12">
-        <div class="progress progress-estilo">
-          <div class="progress-bar progress-bar-striped" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: {$progreso.Porcentaje}%">
-            <div class="progress-porcentaje">
-              <strong>{$progreso.Porcentaje}% Completado</strong>
-            </div>
-          </div>
-        </div>
-
-
-        <!--{if ($session==1 && isset($inscripcion) && count($inscripcion)>0 && $inscripcion[0].Mat_Valor==1) && ($curso.Usu_IdUsuario != Session::get('id_usuario')) }
-          <a href="{BASE_URL}elearning/clase/clase/{$curso.Cur_IdCurso}"><button class="btn btn-success">ir a clase</button></a>
-        {/if}
-        {if $curso.Usu_IdUsuario == Session::get('id_usuario')}
-          <a href="{BASE_URL}elearning/clase/clase/{$curso.Cur_IdCurso}"><button class="btn btn-success">Dar clase</button></a>
-        {/if}-->
-
-
-      </div>
-      {/if}
 
       {if $session==1 && count($modulo)>0 }
       <div class="col-lg-12">

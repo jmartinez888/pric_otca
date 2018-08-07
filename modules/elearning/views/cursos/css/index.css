@@ -39,6 +39,7 @@
   /* top: 288px; */
   color: #393939;
   text-align: justify;
+  margin-bottom: 10px;
 }
 
 .curso-item-img{
@@ -47,7 +48,9 @@
 }
 
 .curso-item-mod{
-
+  position: absolute;
+  top: 0px;
+  right: 0px;
   padding: 10px;
   color: white;
   border-radius: 0px 0px 0px 20px;

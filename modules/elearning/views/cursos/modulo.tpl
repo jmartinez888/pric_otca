@@ -236,7 +236,7 @@
             {/if}
 
             <div class="col-lg-12"><label>¿Y ahora qué?, puedes:</label></div>
-            <div class="col-lg-6">
+            <div class="col-lg-12">
               <button id="btnExamen" class="btn btn-danger" style="margin-right: 10px">
                 <span class="glyphicon glyphicon-repeat" aria-hidden="true"></span>
                 Volver a intentar el exámen
