@@ -352,7 +352,7 @@ class indexModel extends Model {
             $post = $this->_db->query(
                     "SELECT COUNT(*) AS Nvaloraciones
                         FROM like_foro_comentario
-                        WHERE ID = {$iID}");
+                        WHERE ID = '$iID'");
             return $post->fetch();
         } catch (PDOException $exception) {
             $this->registrarBitacora("foro(indexModel)", "getNvaloraciones", "Error Model", $exception);
