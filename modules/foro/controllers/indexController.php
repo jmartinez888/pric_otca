@@ -146,13 +146,17 @@ class indexController extends foroController {
         if(!empty($idUsuario)){
             $Rol_Ckey = $this->_model->getRolForo(Session::get('id_usuario'), $iFor_IdForo); 
             if(empty($Rol_Ckey)){
-                $Rol_Ckey = $this->_model->getRol_Ckey(Session::get('id_usuario'));
+                $Rol_Ckey = $this->_model->getRol_Ckey(Session::get('id_usuario')); 
+                if(empty($Rol_Ckey)){
+                    $Rol_Ckey["Rol_Ckey"] = "sin_rol"; 
+                }
             }
             $valoracion_foro = $this->_model->getValoracion_personal($idUsuario, $iFor_IdForo);
-            $this->_view->assign('valoracion_foro', $valoracion_foro["Nvaloracion_personal"]);             
+            $this->_view->assign('valoracion_foro', $valoracion_foro["Nvaloracion_personal"]);   
         }else{
             $idUsuario = "";
             $Rol_Ckey["Rol_Ckey"]="";   
+
         } 
         //print_r($usuario_foro); 
         // echo $Rol_Ckey["Rol_Ckey"]; exit;
@@ -336,7 +340,10 @@ class indexController extends foroController {
         if(!empty($idUsuario)){
             $Rol_Ckey = $this->_model->getRolForo(Session::get('id_usuario'), $iFor_IdForo); 
             if(empty($Rol_Ckey)){
-                $Rol_Ckey = $this->_model->getRol_Ckey(Session::get('id_usuario'));
+                $Rol_Ckey = $this->_model->getRol_Ckey(Session::get('id_usuario')); 
+                if(empty($Rol_Ckey)){
+                    $Rol_Ckey["Rol_Ckey"] = "sin_rol"; 
+                }
             }
         }else{
             $Rol_Ckey["Rol_Ckey"]="";   
@@ -391,7 +398,10 @@ class indexController extends foroController {
         if(!empty($idUsuario)){
             $Rol_Ckey = $this->_model->getRolForo(Session::get('id_usuario'), $iFor_IdForo); 
             if(empty($Rol_Ckey)){
-                $Rol_Ckey = $this->_model->getRol_Ckey(Session::get('id_usuario'));
+                $Rol_Ckey = $this->_model->getRol_Ckey(Session::get('id_usuario')); 
+                if(empty($Rol_Ckey)){
+                    $Rol_Ckey["Rol_Ckey"] = "sin_rol"; 
+                }
             }
         }else{
             $Rol_Ckey["Rol_Ckey"]="";   
@@ -426,10 +436,28 @@ class indexController extends foroController {
         for ($index = 0; $index < count($foro["For_Comentarios"]); $index++) {
             $foro["For_Comentarios"][$index]["Hijo_Comentarios"] = $this->_model->getComentarios_x_idcomentario($foro["For_Comentarios"][$index]["Com_IdComentario"]);
             $foro["For_Comentarios"][$index]["Archivos"] = $this->_model->getArchivos_x_idcomentario($foro["For_Comentarios"][$index]["Com_IdComentario"]);
+
+            $valoracion_comentario = $this->_model->getValoracion_personal($idUsuario, $foro["For_Comentarios"][$index]["Com_IdComentario"]);
+            $foro["For_Comentarios"][$index]["valoracion_comentario"] = $valoracion_comentario["Nvaloracion_personal"];
+
+            $Nvaloraciones_comentario = $this->_model->getNvaloraciones($foro["For_Comentarios"][$index]["Com_IdComentario"]);
+            $foro["For_Comentarios"][$index]["Nvaloraciones_comentario"] = $Nvaloraciones_comentario["Nvaloraciones"];
+
             for ($j = 0; $j < count($foro["For_Comentarios"][$index]["Hijo_Comentarios"]); $j++) {
+
+                $valoracion_comentario = $this->_model->getValoracion_personal($idUsuario, $foro["For_Comentarios"][$index]["Hijo_Comentarios"][$j]["Com_IdComentario"]);
+                $foro["For_Comentarios"][$index]["Hijo_Comentarios"][$j]["valoracion_comentario"] = $valoracion_comentario["Nvaloracion_personal"];
+
+                $Nvaloraciones_comentario = $this->_model->getNvaloraciones($foro["For_Comentarios"][$index]["Hijo_Comentarios"][$j]["Com_IdComentario"]);
+                $foro["For_Comentarios"][$index]["Hijo_Comentarios"][$j]["Nvaloraciones_comentario"] = $Nvaloraciones_comentario["Nvaloraciones"];
+
+
                 $foro["For_Comentarios"][$index]["Hijo_Comentarios"][$j]["Archivos"] = $this->_model->getArchivos_x_idcomentario($foro["For_Comentarios"][$index]["Hijo_Comentarios"][$j]["Com_IdComentario"]);
             }
         }
+        $Nvaloraciones_foro = $this->_model->getNvaloraciones($iFor_IdForo);
+         
+        $this->_view->assign('Nvaloraciones_foro', $Nvaloraciones_foro["Nvaloraciones"]);
         $this->_view->assign('Rol_Ckey', $Rol_Ckey["Rol_Ckey"]);
         $this->_view->assign('comentar_foro', $this->_permiso($iFor_IdForo, "comentar_foro"));
         $this->_view->assign('foro', $foro);
@@ -448,8 +476,13 @@ class indexController extends foroController {
         if(!empty($idUsuario)){
             $Rol_Ckey = $this->_model->getRolForo(Session::get('id_usuario'), $iFor_IdForo); 
             if(empty($Rol_Ckey)){
-                $Rol_Ckey = $this->_model->getRol_Ckey(Session::get('id_usuario'));
+                $Rol_Ckey = $this->_model->getRol_Ckey(Session::get('id_usuario')); 
+                if(empty($Rol_Ckey)){
+                    $Rol_Ckey["Rol_Ckey"] = "sin_rol"; 
+                }
             }
+            $valoracion_foro = $this->_model->getValoracion_personal($idUsuario, $iFor_IdForo);
+            $this->_view->assign('valoracion_foro', $valoracion_foro["Nvaloracion_personal"]);  
         }else{
             $Rol_Ckey["Rol_Ckey"]="";   
         } 
@@ -475,11 +508,28 @@ class indexController extends foroController {
         for ($index = 0; $index < count($foro["For_Comentarios"]); $index++) {
             $foro["For_Comentarios"][$index]["Hijo_Comentarios"] = $this->_model->getComentarios_x_idcomentario($foro["For_Comentarios"][$index]["Com_IdComentario"]);
             $foro["For_Comentarios"][$index]["Archivos"] = $this->_model->getArchivos_x_idcomentario($foro["For_Comentarios"][$index]["Com_IdComentario"]);
+
+            $valoracion_comentario = $this->_model->getValoracion_personal($idUsuario, $foro["For_Comentarios"][$index]["Com_IdComentario"]);
+            $foro["For_Comentarios"][$index]["valoracion_comentario"] = $valoracion_comentario["Nvaloracion_personal"];
+
+            $Nvaloraciones_comentario = $this->_model->getNvaloraciones($foro["For_Comentarios"][$index]["Com_IdComentario"]);
+            $foro["For_Comentarios"][$index]["Nvaloraciones_comentario"] = $Nvaloraciones_comentario["Nvaloraciones"];
+
             for ($j = 0; $j < count($foro["For_Comentarios"][$index]["Hijo_Comentarios"]); $j++) {
+
+                $valoracion_comentario = $this->_model->getValoracion_personal($idUsuario, $foro["For_Comentarios"][$index]["Hijo_Comentarios"][$j]["Com_IdComentario"]);
+                $foro["For_Comentarios"][$index]["Hijo_Comentarios"][$j]["valoracion_comentario"] = $valoracion_comentario["Nvaloracion_personal"];
+
+                $Nvaloraciones_comentario = $this->_model->getNvaloraciones($foro["For_Comentarios"][$index]["Hijo_Comentarios"][$j]["Com_IdComentario"]);
+                $foro["For_Comentarios"][$index]["Hijo_Comentarios"][$j]["Nvaloraciones_comentario"] = $Nvaloraciones_comentario["Nvaloraciones"];
+
+
                 $foro["For_Comentarios"][$index]["Hijo_Comentarios"][$j]["Archivos"] = $this->_model->getArchivos_x_idcomentario($foro["For_Comentarios"][$index]["Hijo_Comentarios"][$j]["Com_IdComentario"]);
             }
         }
-          // $this->_view->setJs(array("ficha_foro"));
+        $Nvaloraciones_foro = $this->_model->getNvaloraciones($iFor_IdForo);
+         
+        $this->_view->assign('Nvaloraciones_foro', $Nvaloraciones_foro["Nvaloraciones"]);
         $this->_view->assign('Rol_Ckey', $Rol_Ckey["Rol_Ckey"]);
         $this->_view->assign('comentar_foro', $this->_permiso($iFor_IdForo, "comentar_foro"));
         $this->_view->assign('foro', $foro);
@@ -499,8 +549,13 @@ class indexController extends foroController {
         if(!empty($idUsuario)){
             $Rol_Ckey = $this->_model->getRolForo(Session::get('id_usuario'), $iFor_IdForo); 
             if(empty($Rol_Ckey)){
-                $Rol_Ckey = $this->_model->getRol_Ckey(Session::get('id_usuario'));
+                $Rol_Ckey = $this->_model->getRol_Ckey(Session::get('id_usuario')); 
+                if(empty($Rol_Ckey)){
+                    $Rol_Ckey["Rol_Ckey"] = "sin_rol"; 
+                }
             }
+            $valoracion_foro = $this->_model->getValoracion_personal($idUsuario, $iFor_IdForo);
+            $this->_view->assign('valoracion_foro', $valoracion_foro["Nvaloracion_personal"]);  
         }else{
             $Rol_Ckey["Rol_Ckey"]="";   
         }       
@@ -516,13 +571,29 @@ class indexController extends foroController {
         for ($index = 0; $index < count($foro["For_Comentarios"]); $index++) {
             $foro["For_Comentarios"][$index]["Hijo_Comentarios"] = $this->_model->getComentarios_x_idcomentario($foro["For_Comentarios"][$index]["Com_IdComentario"]);
             $foro["For_Comentarios"][$index]["Archivos"] = $this->_model->getArchivos_x_idcomentario($foro["For_Comentarios"][$index]["Com_IdComentario"]);
+
+            $valoracion_comentario = $this->_model->getValoracion_personal($idUsuario, $foro["For_Comentarios"][$index]["Com_IdComentario"]);
+            $foro["For_Comentarios"][$index]["valoracion_comentario"] = $valoracion_comentario["Nvaloracion_personal"];
+
+            $Nvaloraciones_comentario = $this->_model->getNvaloraciones($foro["For_Comentarios"][$index]["Com_IdComentario"]);
+            $foro["For_Comentarios"][$index]["Nvaloraciones_comentario"] = $Nvaloraciones_comentario["Nvaloraciones"];
+
             for ($j = 0; $j < count($foro["For_Comentarios"][$index]["Hijo_Comentarios"]); $j++) {
+
+                $valoracion_comentario = $this->_model->getValoracion_personal($idUsuario, $foro["For_Comentarios"][$index]["Hijo_Comentarios"][$j]["Com_IdComentario"]);
+                $foro["For_Comentarios"][$index]["Hijo_Comentarios"][$j]["valoracion_comentario"] = $valoracion_comentario["Nvaloracion_personal"];
+
+                $Nvaloraciones_comentario = $this->_model->getNvaloraciones($foro["For_Comentarios"][$index]["Hijo_Comentarios"][$j]["Com_IdComentario"]);
+                $foro["For_Comentarios"][$index]["Hijo_Comentarios"][$j]["Nvaloraciones_comentario"] = $Nvaloraciones_comentario["Nvaloraciones"];
+
+
                 $foro["For_Comentarios"][$index]["Hijo_Comentarios"][$j]["Archivos"] = $this->_model->getArchivos_x_idcomentario($foro["For_Comentarios"][$index]["Hijo_Comentarios"][$j]["Com_IdComentario"]);
             }
         }
 
-        // print_r($foro);
-
+        $Nvaloraciones_foro = $this->_model->getNvaloraciones($iFor_IdForo);
+         
+        $this->_view->assign('Nvaloraciones_foro', $Nvaloraciones_foro["Nvaloraciones"]);
         $this->_view->assign('Rol_Ckey', $Rol_Ckey["Rol_Ckey"]);
         $this->_view->assign('comentar_foro', $this->_permiso($iFor_IdForo, "comentar_foro"));
         $this->_view->assign('foro', $foro);
@@ -544,15 +615,19 @@ class indexController extends foroController {
         $tpl = $this->getTexto('tpl');
         $Fim_IdForo = explode(",", $this->getTexto('Fim_IdForo'));
 
-
         $aFim_Files = json_decode($iFim_Files, true);
         
         $idUsuario = Session::get('id_usuario');
         if(!empty($idUsuario)){
             $Rol_Ckey = $this->_model->getRolForo(Session::get('id_usuario'), $iFor_IdForo); 
             if(empty($Rol_Ckey)){
-                $Rol_Ckey = $this->_model->getRol_Ckey(Session::get('id_usuario'));
+                $Rol_Ckey = $this->_model->getRol_Ckey(Session::get('id_usuario')); 
+                if(empty($Rol_Ckey)){
+                    $Rol_Ckey["Rol_Ckey"] = "sin_rol"; 
+                }
             }
+            $valoracion_foro = $this->_model->getValoracion_personal($idUsuario, $iFor_IdForo);
+            $this->_view->assign('valoracion_foro', $valoracion_foro["Nvaloracion_personal"]);  
         }else{
             $Rol_Ckey["Rol_Ckey"]="";   
         }      
@@ -582,11 +657,28 @@ class indexController extends foroController {
         for ($index = 0; $index < count($foro["For_Comentarios"]); $index++) {
             $foro["For_Comentarios"][$index]["Hijo_Comentarios"] = $this->_model->getComentarios_x_idcomentario($foro["For_Comentarios"][$index]["Com_IdComentario"]);
             $foro["For_Comentarios"][$index]["Archivos"] = $this->_model->getArchivos_x_idcomentario($foro["For_Comentarios"][$index]["Com_IdComentario"]);
+
+            $valoracion_comentario = $this->_model->getValoracion_personal($idUsuario, $foro["For_Comentarios"][$index]["Com_IdComentario"]);
+            $foro["For_Comentarios"][$index]["valoracion_comentario"] = $valoracion_comentario["Nvaloracion_personal"];
+
+            $Nvaloraciones_comentario = $this->_model->getNvaloraciones($foro["For_Comentarios"][$index]["Com_IdComentario"]);
+            $foro["For_Comentarios"][$index]["Nvaloraciones_comentario"] = $Nvaloraciones_comentario["Nvaloraciones"];
+
             for ($j = 0; $j < count($foro["For_Comentarios"][$index]["Hijo_Comentarios"]); $j++) {
+
+                $valoracion_comentario = $this->_model->getValoracion_personal($idUsuario, $foro["For_Comentarios"][$index]["Hijo_Comentarios"][$j]["Com_IdComentario"]);
+                $foro["For_Comentarios"][$index]["Hijo_Comentarios"][$j]["valoracion_comentario"] = $valoracion_comentario["Nvaloracion_personal"];
+
+                $Nvaloraciones_comentario = $this->_model->getNvaloraciones($foro["For_Comentarios"][$index]["Hijo_Comentarios"][$j]["Com_IdComentario"]);
+                $foro["For_Comentarios"][$index]["Hijo_Comentarios"][$j]["Nvaloraciones_comentario"] = $Nvaloraciones_comentario["Nvaloraciones"];
+
+
                 $foro["For_Comentarios"][$index]["Hijo_Comentarios"][$j]["Archivos"] = $this->_model->getArchivos_x_idcomentario($foro["For_Comentarios"][$index]["Hijo_Comentarios"][$j]["Com_IdComentario"]);
             }
         }
-          // $this->_view->setJs(array("ficha_foro"));
+        $Nvaloraciones_foro = $this->_model->getNvaloraciones($iFor_IdForo);
+         
+        $this->_view->assign('Nvaloraciones_foro', $Nvaloraciones_foro["Nvaloraciones"]);
         $this->_view->assign('Rol_Ckey', $Rol_Ckey["Rol_Ckey"]);
         $this->_view->assign('comentar_foro', $this->_permiso($iFor_IdForo, "comentar_foro"));
         $this->_view->assign('foro', $foro);
