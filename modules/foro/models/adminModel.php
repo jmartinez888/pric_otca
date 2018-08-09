@@ -60,7 +60,20 @@ class adminModel extends Model
             );
             return $idiomas->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $exception) {
-            $this->registrarBitacora("foro(adminModel)", "getfoginas", "Error Model", $exception);
+            $this->registrarBitacora("foro(adminModel)", "getIdiomas", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
+
+    public function getLineaTematicas() {
+        try{
+            $idiomas = $this->_db->query(
+                    "SELECT * FROM linea_tematica 
+                        WHERE Row_Estado = 1"
+            );
+            return $idiomas->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("foro(adminModel)", "getLineaTematicas", "Error Model", $exception);
             return $exception->getTraceAsString();
         }
     }
@@ -92,13 +105,26 @@ class adminModel extends Model
 
             return $paginas->fetch();
         } catch (PDOException $exception) {
-            $this->registrarBitacora("foro(adminModel)", "getForos", "Error Model", $exception);
+            $this->registrarBitacora("foro(adminModel)", "getPaginaTraducida", "Error Model", $exception);
             return $exception->getTraceAsString();
         }
     }
 
     public function verificarNombreForo($For_IdForo, $For_Titulo, $For_Resumen, $For_Descripcion, $For_PalabrasClaves) {
         try{  
+            if(empty($For_Titulo)){
+                $For_Titulo = "sin contenido";
+            }
+            if(empty($For_Resumen)){
+                $For_Resumen = "sin contenido";
+            }
+            if(empty($For_Descripcion)){
+                $For_Descripcion = "sin contenido";
+            }
+            if(empty($For_PalabrasClaves)){
+                $For_PalabrasClaves = "sin contenido";
+            }
+
             $post = $this->_db->query(
                         "SELECT For_IdForo, For_Titulo FROM foro WHERE For_IdForo = $For_IdForo AND For_Titulo = '$For_Titulo' AND For_Resumen = '$For_Resumen' AND For_Descripcion = '$For_Descripcion' AND For_PalabrasClaves = '$For_PalabrasClaves' ");
         return $post->fetch();
@@ -283,11 +309,16 @@ class adminModel extends Model
         }
     }
 
-    public function getRowForos($iFor_Filtros = "")
+    public function getRowForos($iFor_Filtros = "", $iFor_Filtros2 = "")
     {
         try {
             $post = $this->_db->query(
-                "SELECT COUNT(*) as For_NRow from foro f WHERE f.For_Titulo LIKE '%$iFor_Filtros%' OR f.For_Resumen LIKE '%$iFor_Filtros%' OR f.For_Descripcion LIKE '%$iFor_Filtros%' OR f.For_PalabrasClaves LIKE '%$iFor_Filtros%'");
+                "SELECT COUNT(*) as For_NRow from foro f 
+                    WHERE (f.For_Titulo LIKE CONCAT('%','$iFor_Filtros','%') 
+                    OR f.For_Resumen LIKE CONCAT('%','$iFor_Filtros','%') 
+                    OR f.For_Descripcion LIKE CONCAT('%','$iFor_Filtros','%') 
+                    OR f.For_PalabrasClaves LIKE CONCAT('%','$iFor_Filtros','%'))
+                    AND f.For_Funcion LIKE CONCAT('%','$iFor_Filtros2','%') ORDER BY f.For_FechaCreacion DESC");
 
             return $post->fetch();
         } catch (PDOException $exception) {
@@ -340,6 +371,11 @@ class adminModel extends Model
                     "UPDATE foro SET For_Estado = 0 where For_IdForo = $iFor_IdForo"
                 );
             }
+            if ($iFor_Estado == 2) {
+                $foro = $this->_db->query(
+                    "UPDATE foro SET For_Estado = 1 where For_IdForo = $iFor_IdForo"
+                );
+            }
 
             return $foro->rowCount(PDO::FETCH_ASSOC);
         } catch (PDOException $exception) {
@@ -351,7 +387,6 @@ class adminModel extends Model
     public function updestadoRowForo($iFor_IdForo, $iRow_Estado)
     {
         try {
-
             $foro = $this->_db->query(
                 "UPDATE foro SET Row_Estado = $iRow_Estado where For_IdForo = $iFor_IdForo"
             );
@@ -362,13 +397,21 @@ class adminModel extends Model
             return $exception->getTraceAsString();
         }
     }
-    public function cerrarForo($iFor_IdForo)
+    public function cerrarForo($iFor_IdForo, $iFor_Estado)
     {
         try {
+            // echo $iFor_Estado; exit;
 
-            $foro = $this->_db->query(
-                "UPDATE foro SET For_FechaCierre = NOW(),For_Estado=2 where For_IdForo = $iFor_IdForo"
-            );
+            if ($iFor_Estado == 2) {
+                $foro = $this->_db->query(
+                    "UPDATE foro SET For_Estado = 1 where For_IdForo = $iFor_IdForo"
+                );
+            }
+            if ($iFor_Estado == 1 || $iFor_Estado == 0) {
+                $foro = $this->_db->query(
+                    "UPDATE foro SET For_FechaCierre = NOW(),For_Estado=2 where For_IdForo = $iFor_IdForo"
+                );
+            }
 
             return $foro->rowCount(PDO::FETCH_ASSOC);
         } catch (PDOException $exception) {

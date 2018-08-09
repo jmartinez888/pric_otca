@@ -46,20 +46,19 @@ class adminController extends foroController
         $this->_view->renderizar('index');
     }
 
-    public function _paginacion_listarForo()
+    public function _paginacion_listarForo($filtro = false)
     {
         //Variables de Ajax_JavaScript
         $pagina         = $this->getInt('pagina');
         $filas          = $this->getInt('filas');
         $totalRegistros = $this->getInt('total_registros');
-        $filtro         = $this->getTexto('filtro');
+        $filtro2 = $this->getTexto('filtro2');
 
         $paginador = new Paginador();
 
-        // $this->_view->assign('roles', $paginador->paginar($this->_aclm->getRoles($condicion), "listarRoles", "$nombre", $pagina, 25));
-        $lista_foros = $this->_model->getForos($filtro, $pagina, $filas);
+        $paginador->paginar($totalRegistros, "listarForo", "$filtro", $pagina, $filas, true);
 
-        $paginador->paginar($totalRegistros, "listarForo", $filtro, $pagina, $filas, true);
+        $lista_foros    = $this->_model->getForos($filtro, $filtro2, $pagina, $filas);        
 
         $this->_view->assign('lista_foros', $lista_foros);
 
@@ -77,7 +76,7 @@ class adminController extends foroController
         $paginador = new Paginador();
 
         $lista_foros    = $this->_model->getForos($filtro, $filtro2);
-        $totalRegistros = $this->_model->getRowForos($filtro);
+        $totalRegistros = $this->_model->getRowForos($filtro, $filtro2);
 
         $paginador->paginar($totalRegistros["For_NRow"], "listarForo", $filtro, $pagina = 0, CANT_REG_PAG, true);
 
@@ -245,6 +244,7 @@ class adminController extends foroController
     {
         $id_foro     = $this->getInt('id_foro');
         $estado_foro = $this->getInt('estado_foro');
+        // echo $id_foro . $estado_foro; exit;
 
         $this->_model->cambiarEstadoForo($id_foro, $estado_foro);
 
@@ -262,8 +262,9 @@ class adminController extends foroController
     public function _cerrarForo()
     {
         $id_foro = $this->getInt('id_foro');
+        $estado_foro = $this->getInt('estado_foro');
 
-        $this->_model->cerrarForo($id_foro);
+        $this->_model->cerrarForo($id_foro, $estado_foro);
 
         $this->_paginacion_listarForo();
     }
@@ -418,7 +419,9 @@ class adminController extends foroController
             $this->_view->assign('start_date', date('d-m-Y H:m'));
             $this->_view->assign('end_date', date('d-m-Y H:m', strtotime('+1 day')));
         }
-
+        
+        $linea_tematica = $this->_model->getLineaTematicas();
+        $this->_view->assign('linea_tematica', $linea_tematica);
         $this->_view->assign('Form_Funcion', $funcion);
         $this->_view->setJs(array('form', array(BASE_URL . 'public/ckeditor/ckeditor.js'), array(BASE_URL . 'public/ckeditor/adapters/jquery.js'), array(BASE_URL . 'public/js/jquery-ui.min.js'), array(BASE_URL . 'public/js/jquery-ui-timepicker-addon.js')));
         $this->_view->setCss(array('form', array(BASE_URL . "public/css/jquery-ui-timepicker-addon.css"), array(BASE_URL . "public/css/jquery-ui.min.css")));
@@ -483,11 +486,11 @@ class adminController extends foroController
                     $Rol_Ckey = $model_index->getRol_Ckey(Session::get('id_usuario'));
                 }
                 $this->_view->assign('Rol_Ckey', $Rol_Ckey["Rol_Ckey"]); 
+                // echo $Rol_Ckey["Rol_Ckey"]; exit;
             }else{
                 $Rol_Ckey["Rol_Ckey"]="";   
                 $this->_view->assign('Rol_Ckey', "sin permiso"); 
-            }
-            
+            }             
 
             if (!empty($foro)) {
                 $this->_view->getLenguaje("foro_admin_members");

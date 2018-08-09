@@ -193,7 +193,6 @@ class indexController extends aclController
         $paginador->paginar( $totalRegistros ,"listarRoles", "$txtBuscar", $pagina, $filas, true);
 
         $this->_view->assign('numeropagina', $paginador->getNumeroPagina());
-        $this->_view->assign('paginacion', $paginador->getView('paginacion_ajax_s_filas'));
         $this->_view->renderizar('ajax/listarRoles', false, true);
     }
     //Modificado por Jhon Martinez

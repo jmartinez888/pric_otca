@@ -293,7 +293,7 @@ class indexModel extends Model
         }
     }
     public function getRolesPaginado($pagina = 1, $registrosXPagina = 1, $activos = 1)
-    {
+    {        
         try{
             $sql = "call s_s_listar_roles_con_modulo(?,?,?)";
             $result = $this->_db->prepare($sql);

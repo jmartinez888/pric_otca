@@ -26,7 +26,7 @@
                                     <tbody>
                                         {foreach from=$lista_foros item=foro}
                                             <tr>
-                                                <td>                                                   
+                                                <td class="col-xs-10">                                                   
                                                     {if $foro.For_Funcion=="forum"}
                                                         Discusión
                                                     {else if  $foro.For_Funcion=="webinar"}
@@ -37,12 +37,14 @@
                                                         Consulta                                                        
                                                     {/if}
                                                     <br>
-                                                    <a href="#" target="_blank">{$foro.For_Titulo}</a>                                                    
+                                                    <a class="simulalink" href="{$_layoutParams.root}foro/index/ficha/{$foro.For_IdForo}" target="_blank">{$foro.For_Titulo}</a>                             
                                                     <br/>
+                                                    <a class="simulalink" style="color: black;" href="{$_layoutParams.root}foro/index/ficha/{$foro.For_IdForo}" target="_blank">{$foro.For_Resumen}</a>    
+                                                    <br>                      
                                                     <small>
                                                         <strong>Iniciado por:</strong> {$foro.Usu_Usuario} 
                                                     </small>
-                                                    <br>
+                                                    <br/>                                                   
                                                     <small class="pull-left">
                                                         <strong>Participantes:</strong> {$foro.For_NParticipantes} 
                                                     </small>
@@ -50,7 +52,7 @@
                                                         <strong>Comentarios:</strong> {$foro.For_NComentarios}
                                                     </small>
                                                 </td>
-                                                <td>
+                                                <td class="col-xs-2">
                                                     <small>
                                                         <strong>Iniciado:</strong>
                                                     </small>

@@ -36,25 +36,32 @@ class indexModel extends Model {
         }
     }
 
-    public function getForosPaginado($iFor_Filtros = "", $iPagina = 1, $iRegistrosXPagina = CANT_REG_PAG) {
+    public function getForosPaginado($iFor_Filtros = "", $iFor_Filtros2 = "", $iPagina = 1, $iRegistrosXPagina = CANT_REG_PAG)
+    {
         try {
-            $sql = " call s_s_foro_admin(?,?,?)";
+            $sql = " call s_s_foro_admin(?,?,?,?)";
             $result = $this->_db->prepare($sql);
-            $result->bindParam(1, $iFor_Filtros, PDO::PARAM_STR);
-            $result->bindParam(2, $iPagina, PDO::PARAM_STR);
-            $result->bindParam(3, $iRegistrosXPagina, PDO::PARAM_INT);
+             $result->bindParam(1, $iFor_Filtros, PDO::PARAM_STR);   
+            $result->bindParam(2, $iFor_Filtros2, PDO::PARAM_STR);         
+            $result->bindParam(3, $iPagina, PDO::PARAM_INT);
+            $result->bindParam(4, $iRegistrosXPagina, PDO::PARAM_INT);
 
             $result->execute();
             return $result->fetchAll();
         } catch (PDOException $exception) {
-            $this->registrarBitacora("foro(adminModel)", "getForos", "Error Model", $exception);
+            $this->registrarBitacora("foro(adminModel)", "getForosPaginado", "Error Model", $exception);
             return $exception->getTraceAsString();
         }
     }
-    public function getRowForos($iFor_Filtros = "") {
+    public function getRowForos($iFor_Filtros = "", $iFor_Filtros2 = "") {
         try {
             $post = $this->_db->query(
-                    "SELECT COUNT(*) as For_NRow from foro f WHERE f.For_Titulo LIKE '%$iFor_Filtros%' OR f.For_Resumen LIKE '%$iFor_Filtros%' OR f.For_Descripcion LIKE '%$iFor_Filtros%' OR f.For_PalabrasClaves LIKE '%$iFor_Filtros%'");
+                    "SELECT COUNT(*) as For_NRow from foro f 
+                    WHERE (f.For_Titulo LIKE CONCAT('%','$iFor_Filtros','%') 
+                    OR f.For_Resumen LIKE CONCAT('%','$iFor_Filtros','%') 
+                    OR f.For_Descripcion LIKE CONCAT('%','$iFor_Filtros','%') 
+                    OR f.For_PalabrasClaves LIKE CONCAT('%','$iFor_Filtros','%'))
+                    AND f.For_Funcion LIKE CONCAT('%','$iFor_Filtros2','%') ORDER BY f.For_FechaCreacion DESC");
 
             return $post->fetch();
         } catch (PDOException $exception) {
@@ -283,14 +290,109 @@ class indexModel extends Model {
         }
     }
 
+    public function getValorarForo_x_IdUsuario($iUsu_IdUsuario, $iFor_IdForo) {
+        try {
+            $post = $this->_db->query(
+                    "SELECT * FROM usuario_foro WHERE Usu_IdUsuario = {$iUsu_IdUsuario} AND For_IdForo = {$iFor_IdForo}");
+            return $post->fetch();
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("foro(indexModel)", "getValorarForo_x_UsuIdUsuario", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
+
+    // public function getValoraciones_x_IdForo($iFor_IdForo) {
+    //     try {
+    //         $post = $this->_db->query(
+    //                 "SELECT COUNT(For_Valorar) AS Nvaloraciones_foro FROM usuario_foro
+    //                     WHERE For_IdForo = {$iFor_IdForo} AND For_Valorar = 1");
+    //         return $post->fetch();
+    //     } catch (PDOException $exception) {
+    //         $this->registrarBitacora("foro(indexModel)", "getValoraciones_x_For_IdForo", "Error Model", $exception);
+    //         return $exception->getTraceAsString();
+    //     }
+    // }
+
+    // public function Valorar_Foro($iFor_IdForo, $iUsu_IdUsuario, $For_Valorar)
+    // {
+    //     try {
+    //         if ($For_Valorar == 0) {
+    //             $foro = $this->_db->query(
+    //                 "UPDATE usuario_foro SET For_Valorar = 1 where Usu_IdUsuario = '$iUsu_IdUsuario'  and For_IdForo = {$iFor_IdForo}"
+    //             );
+    //         }
+    //         if ($For_Valorar == 1) {
+    //             $foro = $this->_db->query(
+    //                 "UPDATE usuario_foro SET For_Valorar = 0 where Usu_IdUsuario = '$iUsu_IdUsuario'  and For_IdForo = {$iFor_IdForo}"
+    //             );
+    //         }
+
+    //         return $foro->rowCount(PDO::FETCH_ASSOC);
+    //     } catch (PDOException $exception) {
+    //         $this->registrarBitacora("foro(indexModel)", "Valorar_Foro", "Error Model", $exception);
+    //         return $exception->getTraceAsString();
+    //     }
+    // }    
+
+    public function getValoracion_personal($iUsu_IdUsuario, $iID) {
+        try {
+            $post = $this->_db->query(
+                    "SELECT COUNT(*) AS Nvaloracion_personal
+                        FROM like_foro_comentario
+                        WHERE Usu_IdUsuario = '$iUsu_IdUsuario' AND ID = {$iID}");
+            return $post->fetch();
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("foro(indexModel)", "getValoracion_personal", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
+
+    public function getNvaloraciones($iID) {
+        try {
+            $post = $this->_db->query(
+                    "SELECT COUNT(*) AS Nvaloraciones
+                        FROM like_foro_comentario
+                        WHERE ID = {$iID}");
+            return $post->fetch();
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("foro(indexModel)", "getNvaloraciones", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
+
+    public function registrarValoracion_Comentario_Foro($iUsu_IdUsuario, $iID, $Valor) {
+        try {
+            if ($Valor == 0) {                
+                $sql = "call s_i_like_comentario_foro(?,?)";
+                $result = $this->_db->prepare($sql);
+                $result->bindParam(1, $iUsu_IdUsuario, PDO::PARAM_INT);
+                $result->bindParam(2, $iID, PDO::PARAM_INT);
+
+                $result->execute();
+                return $result->fetch();
+            }else{
+                if ($Valor == 1) {
+                    $result = $this->_db->query(
+                        "DELETE FROM like_foro_comentario WHERE Usu_IdUsuario = {$iUsu_IdUsuario}  AND ID = {$iID}"
+                    );
+                    return $result->rowCount(PDO::FETCH_ASSOC);
+                }
+            }
+        } catch (PDOException $exception) {
+
+            $this->registrarBitacora("foro(indexModel)", "registrarValoracion_Comentario_Foro", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
+
     public function getRol_Ckey($iUsu_IdUsuario) {
         try {
             $post = $this->_db->query(
                     "SELECT r.Rol_Ckey FROM usuario_rol usr INNER JOIN usuario usu ON usr.Usu_IdUsuario = usu.Usu_IdUsuario
-                        INNER JOIN rol r ON r.Rol_IdRol = usr.Rol_IdRol WHERE usu.Usu_IdUsuario = $iUsu_IdUsuario AND r.Rol_Ckey = 'administrador_foro' AND r.Row_Estado = 1");
+                        INNER JOIN rol r ON r.Rol_IdRol = usr.Rol_IdRol WHERE usu.Usu_IdUsuario = $iUsu_IdUsuario AND (r.Rol_Ckey = 'administrador_foro' OR r.Rol_Ckey = 'administrador') AND r.Row_Estado = 1");
             return $post->fetch();
         } catch (PDOException $exception) {
-            $this->registrarBitacora("foro(indexModel)", "getRolForo", "Error Model", $exception);
+            $this->registrarBitacora("foro(indexModel)", "getRol_Ckey", "Error Model", $exception);
             return $exception->getTraceAsString();
         }
     }

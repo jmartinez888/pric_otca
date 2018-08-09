@@ -5,8 +5,7 @@
             
             <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
             <!-- ficha-foro-josepacaya -->
-                <div class="col-lg-12 p-rt-lt-0">
-                    <a class="regresar-tematica" href="#">Temática: {$linea_tematica}</a>
+                <div class="col-lg-12 p-rt-lt-0">                    
                     <div class="pull-right etiqueta">
                         {if $foro.For_Funcion == 'forum'}
                             Foro
@@ -40,20 +39,124 @@
                     <p>{$foro.For_Descripcion|html_entity_decode}</p>
                 </div>
                 <div class="col-lg-12 p-rt-lt-0" style="font-size: 12px;">
-                    <div class="col-lg-8 p-rt-lt-0">
+                    <div class="col-lg-7 p-rt-lt-0">
+                        {if $foro.For_PalabrasClaves != ""}
+                        <div class="" style="width: fit-content;line-height: 250%;">Tags: 
+                            {$tags = explode(",", $foro.For_PalabrasClaves)}
+                            {for $i=0; $i<count($tags); $i++}
+                            <a class="regresar-tematica" href="{$_layoutParams.root}foro/index/searchForo/{trim($tags[$i])}">{trim($tags[$i])}</a>
+                            {/for}
+                        </div>
+                        {/if}
                         <div class="participantes">Participantes: <strong>{$Numero_participantes_x_idForo}</strong></div>
-                    </div>
-                    <div class="col-lg-4 p-rt-lt-0">
-                        <button data-toggle="modal" data-target="#modal-login" id="login-form-link" class="btn btn-default btn-comentar">
-                            <i class="glyphicon glyphicon-comment"></i>
-                        &nbsp;Comentar</button>
-                        <button data-toggle="modal" data-target="#modal-login" id="login-form-link" class="btn btn-default btn-like pull-right" id="btnCalificar">
-                            <i class="glyphicon glyphicon-thumbs-up"></i>
-                        </button>
-                    </div> 
+                    </div>                     
+                    <a class="pull-right regresar-tematica" href="#">Temática: {$linea_tematica}</a>
                 </div>
                 <div class="col-lg-12 p-rt-lt-0">
                     <hr class="cursos-hr">
+                    <div id="valoraciones_foro">                        
+                        {if Session::get('autenticado')}
+                            {if $valoracion_foro == 0}
+                            <button title="Me gusta" class="btn-like btn pull-right" id="ValorarForo" name="ValorarForo" id_foro="{$foro.For_IdForo}" id_usuario="{Session::get('id_usuario')}" valor="{$valoracion_foro}" ajaxtpl="valoraciones_foro">
+                                <i class="glyphicon glyphicon-heart-empty"></i>
+                                {if count($Nvaloraciones_foro)<1000000}
+                                <strong>&nbsp;{$Nvaloraciones_foro}</strong>
+                                {else}
+                                    {if count($Nvaloraciones_foro)>=1000000 && count($Nvaloraciones_foro)<2000000}
+                                    <strong>&nbsp;1M</strong>
+                                    {else}
+                                        {if count($Nvaloraciones_foro)>=2000000 && count($Nvaloraciones_foro)<3000000}
+                                        <strong>&nbsp;2M</strong>
+                                        {else}
+                                            {if count($Nvaloraciones_foro)>=3000000 && count($Nvaloraciones_foro)<4000000}
+                                            <strong>&nbsp;3M</strong>
+                                            {else}
+                                                {if count($Nvaloraciones_foro)>=4000000 && count($Nvaloraciones_foro)<5000000}
+                                                <strong>&nbsp;4M</strong>
+                                                {else}
+                                                    {if count($Nvaloraciones_foro)>=5000000 && count($Nvaloraciones_foro)<6000000}
+                                                    <strong>&nbsp;5M</strong>
+                                                    {else}
+                                                        {if count($Nvaloraciones_foro)>=6000000 && count($Nvaloraciones_foro)<7000000}
+                                                        <strong>&nbsp;6M</strong>
+                                                        {else}
+                                                            {if count($Nvaloraciones_foro)>=7000000 && count($Nvaloraciones_foro)<8000000}
+                                                            <strong>&nbsp;7M</strong>
+                                                            {else}
+                                                                {if count($Nvaloraciones_foro)>=8000000 && count($Nvaloraciones_foro)<9000000}
+                                                                <strong>&nbsp;8M</strong>
+                                                                {else}
+                                                                    {if count($Nvaloraciones_foro)>=9000000 && count($Nvaloraciones_foro)<10000000}
+                                                                    <strong>&nbsp;9M</strong>
+                                                                    {else}
+                                                                        <strong>&nbsp;más de 10 millones</strong>  
+                                                                    {/if}
+                                                                {/if}
+                                                            {/if}
+                                                        {/if}
+                                                    {/if}
+                                                {/if}
+                                            {/if}
+                                        {/if}
+                                    {/if}
+                                {/if}
+                            </button>
+                            {else}
+                            <button title="Ya no me gusta" class="btn btn-info pull-right" id="ValorarForo" name="ValorarForo" id_foro="{$foro.For_IdForo}" id_usuario="{Session::get('id_usuario')}" valor="{$valoracion_foro}" ajaxtpl="valoraciones_foro">
+                                <i class="glyphicon glyphicon-heart-empty"></i>
+                                {if count($Nvaloraciones_foro)<1000000}
+                                <strong>&nbsp;{$Nvaloraciones_foro}</strong>
+                                {else}
+                                    {if count($Nvaloraciones_foro)>=1000000 && count($Nvaloraciones_foro)<2000000}
+                                    <strong>&nbsp;1M</strong>
+                                    {else}
+                                        {if count($Nvaloraciones_foro)>=2000000 && count($Nvaloraciones_foro)<3000000}
+                                        <strong>&nbsp;2M</strong>
+                                        {else}
+                                            {if count($Nvaloraciones_foro)>=3000000 && count($Nvaloraciones_foro)<4000000}
+                                            <strong>&nbsp;3M</strong>
+                                            {else}
+                                                {if count($Nvaloraciones_foro)>=4000000 && count($Nvaloraciones_foro)<5000000}
+                                                <strong>&nbsp;4M</strong>
+                                                {else}
+                                                    {if count($Nvaloraciones_foro)>=5000000 && count($Nvaloraciones_foro)<6000000}
+                                                    <strong>&nbsp;5M</strong>
+                                                    {else}
+                                                        {if count($Nvaloraciones_foro)>=6000000 && count($Nvaloraciones_foro)<7000000}
+                                                        <strong>&nbsp;6M</strong>
+                                                        {else}
+                                                            {if count($Nvaloraciones_foro)>=7000000 && count($Nvaloraciones_foro)<8000000}
+                                                            <strong>&nbsp;7M</strong>
+                                                            {else}
+                                                                {if count($Nvaloraciones_foro)>=8000000 && count($Nvaloraciones_foro)<9000000}
+                                                                <strong>&nbsp;8M</strong>
+                                                                {else}
+                                                                    {if count($Nvaloraciones_foro)>=9000000 && count($Nvaloraciones_foro)<10000000}
+                                                                    <strong>&nbsp;9M</strong>
+                                                                    {else}
+                                                                        <strong>&nbsp;más de 10 millones</strong>  
+                                                                    {/if}
+                                                                {/if}
+                                                            {/if}
+                                                        {/if}
+                                                    {/if}
+                                                {/if}
+                                            {/if}
+                                        {/if}
+                                    {/if}
+                                {/if}
+                            </button>
+                            {/if}                        
+                        {else}
+                        <button data-toggle="modal" data-target="#modal-login" id="login-form-link" class="btn btn-default btn-comentar" style="margin-left: 64%;">
+                            <i class="glyphicon glyphicon-comment"></i>
+                        &nbsp;Comentar</button>
+                        <button data-toggle="modal" data-target="#modal-login" id="login-form-link" class="btn-like btn pull-right">
+                            <i class="glyphicon glyphicon-heart-empty"></i>
+                            <strong>&nbsp;{$Nvaloraciones_foro}</strong>
+                        </button>
+                        {/if}
+                    </div>
                 </div>
                     <div class="col-md-12 p-rt-lt-0">
                         {if Session::get('autenticado')}               
@@ -126,16 +229,16 @@
                                              <ul class="dropdown-menu" style="left: -490%; z-index: 100 !important; top: 100%;">
                                                 <li><a comentario_="{$comentarios.Com_Descripcion}" id_comentario_editar="{$comentarios.Com_IdComentario}" id_foro="{$foro.For_IdForo}" class="editar_comentario_foro files_coment_editar" style="cursor: pointer;">Editar</a></li>
                                                 <li><a id_foro="{$foro.For_IdForo}" id_comentario_delete="{$comentarios.Com_IdComentario}" class="eliminar_comentario_foro" style="cursor: pointer;">Eliminar</a></li>
-                                                <li><a href="{$_layoutParams.root}foro/index/ficha_comentario_completo/{$foro.For_IdForo}/{$comentarios.Com_IdComentario}" target="_blank" comentario_="{$comentarios.Com_Descripcion}" id_comentario_editar="{$comentarios.Com_IdComentario}" id_foro="{$foro.For_IdForo}" class="" style="cursor: pointer;">Ver comentario completo</a></li>
+                                                <li><a href="{$_layoutParams.root}foro/index/ficha_comentario_completo/{$foro.For_IdForo}/{$comentarios.Com_IdComentario}" target="_blank" comentario_="{$comentarios.Com_Descripcion}" id_comentario_editar="{$comentarios.Com_IdComentario}" id_foro="{$foro.For_IdForo}" class="" style="cursor: pointer;">Ver comentario en otra página</a></li>
                                             </ul>                                                    
                                             {/if} 
 
-                                            {if $Rol_Ckey=="participante_foro" && $_acl->Usu_IdUsuario() != $comentarios.Usu_IdUsuario}
+                                            {if $_acl->Usu_IdUsuario() != $comentarios.Usu_IdUsuario}
                                             <button title="Editar o Eliminar" class=" btn btn-default glyphicon glyphicon-option-horizontal dropdown-toggle opciones_comentario_{$comentarios.Com_IdComentario}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="right: 70%;">
                                             </button >
                                             <ul class="dropdown-menu" style="left: -490%; z-index: 100 !important; top: 100%;">
                                                <li><a id_comentario_reportar="{$comentarios.Com_IdComentario}" class="reportar" style="cursor: pointer;" data-toggle="modal" data-target="#modal-reportar-comentario">Reportar</a></li>
-                                               <li><a href="{$_layoutParams.root}foro/index/ficha_comentario_completo/{$foro.For_IdForo}/{$comentarios.Com_IdComentario}" target="_blank" comentario_="{$comentarios.Com_Descripcion}" id_comentario_editar="{$comentarios.Com_IdComentario}" id_foro="{$foro.For_IdForo}" class="" style="cursor: pointer;">Ver comentario completo</a></li>
+                                               <li><a href="{$_layoutParams.root}foro/index/ficha_comentario_completo/{$foro.For_IdForo}/{$comentarios.Com_IdComentario}" target="_blank" comentario_="{$comentarios.Com_Descripcion}" id_comentario_editar="{$comentarios.Com_IdComentario}" id_foro="{$foro.For_IdForo}" class="" style="cursor: pointer;">Ver comentario en otra página</a></li>
                                             </ul>   
                                             {/if}
                                             <!-- hasta aca --> 
@@ -147,7 +250,7 @@
                                              <ul class="dropdown-menu" style="left: -490%; z-index: 100 !important; top: 100%;">
                                                 <li><a comentario_="{$comentarios.Com_Descripcion}" id_comentario_editar="{$comentarios.Com_IdComentario}" id_foro="{$foro.For_IdForo}" class="editar_comentario_foro files_coment_editar" style="cursor: pointer;">Editar</a></li>
                                                 <li><a id_foro="{$foro.For_IdForo}" id_comentario_delete="{$comentarios.Com_IdComentario}" class="eliminar_comentario_foro" style="cursor: pointer;">Eliminar</a></li>
-                                                <li><a href="{$_layoutParams.root}foro/index/ficha_comentario_completo/{$foro.For_IdForo}/{$comentarios.Com_IdComentario}" target="_blank" comentario_="{$comentarios.Com_Descripcion}" id_comentario_editar="{$comentarios.Com_IdComentario}" id_foro="{$foro.For_IdForo}" class="" style="cursor: pointer;">Ver comentario completo</a></li>
+                                                <li><a href="{$_layoutParams.root}foro/index/ficha_comentario_completo/{$foro.For_IdForo}/{$comentarios.Com_IdComentario}" target="_blank" comentario_="{$comentarios.Com_Descripcion}" id_comentario_editar="{$comentarios.Com_IdComentario}" id_foro="{$foro.For_IdForo}" class="" style="cursor: pointer;">Ver comentario en otra página</a></li>
                                             </ul>                                                    
                                             {/if} 
 
@@ -157,7 +260,7 @@
                                             <ul class="dropdown-menu" style="left: -490%; z-index: 100 !important; top: 100%;">
                                                <li><a id_comentario_reportar="{$comentarios.Com_IdComentario}" class="reportar" style="cursor: pointer;" data-toggle="modal" data-target="#modal-reportar-comentario">Reportar</a></li>
                                                <li><a id_foro="{$foro.For_IdForo}" id_comentario_delete="{$comentarios.Com_IdComentario}" class="eliminar_comentario_foro" style="cursor: pointer;">Eliminar</a></li>
-                                               <li><a href="{$_layoutParams.root}foro/index/ficha_comentario_completo/{$foro.For_IdForo}/{$comentarios.Com_IdComentario}" target="_blank" comentario_="{$comentarios.Com_Descripcion}" id_comentario_editar="{$comentarios.Com_IdComentario}" id_foro="{$foro.For_IdForo}" class="" style="cursor: pointer;">Ver comentario completo</a></li>
+                                               <li><a href="{$_layoutParams.root}foro/index/ficha_comentario_completo/{$foro.For_IdForo}/{$comentarios.Com_IdComentario}" target="_blank" comentario_="{$comentarios.Com_Descripcion}" id_comentario_editar="{$comentarios.Com_IdComentario}" id_foro="{$foro.For_IdForo}" class="" style="cursor: pointer;">Ver comentario en otra página</a></li>
                                             </ul>   
                                             {/if}                                                                          
                                             <!-- hasta aca --> 
@@ -169,7 +272,7 @@
                                              <ul class="dropdown-menu" style="left: -490%; z-index: 100 !important; top: 100%;">
                                                 <li><a comentario_="{$comentarios.Com_Descripcion}" id_comentario_editar="{$comentarios.Com_IdComentario}" id_foro="{$foro.For_IdForo}" class="editar_comentario_foro files_coment_editar" style="cursor: pointer;">Editar</a></li>
                                                 <li><a id_foro="{$foro.For_IdForo}" id_comentario_delete="{$comentarios.Com_IdComentario}" class="eliminar_comentario_foro" style="cursor: pointer;">Eliminar</a></li>
-                                                <li><a href="{$_layoutParams.root}foro/index/ficha_comentario_completo/{$foro.For_IdForo}/{$comentarios.Com_IdComentario}" target="_blank" comentario_="{$comentarios.Com_Descripcion}" id_comentario_editar="{$comentarios.Com_IdComentario}" id_foro="{$foro.For_IdForo}" class="" style="cursor: pointer;">Ver comentario completo</a></li>
+                                                <li><a href="{$_layoutParams.root}foro/index/ficha_comentario_completo/{$foro.For_IdForo}/{$comentarios.Com_IdComentario}" target="_blank" comentario_="{$comentarios.Com_Descripcion}" id_comentario_editar="{$comentarios.Com_IdComentario}" id_foro="{$foro.For_IdForo}" class="" style="cursor: pointer;">Ver comentario en otra página</a></li>
                                             </ul>                                                    
                                             {/if} 
 
@@ -179,7 +282,7 @@
                                             <ul class="dropdown-menu" style="left: -490%; z-index: 100 !important; top: 100%;">
                                                <li><a id_comentario_reportar="{$comentarios.Com_IdComentario}" class="reportar" style="cursor: pointer;" data-toggle="modal" data-target="#modal-reportar-comentario">Reportar</a></li>
                                                <li><a id_foro="{$foro.For_IdForo}" id_comentario_delete="{$comentarios.Com_IdComentario}" class="eliminar_comentario_foro" style="cursor: pointer;">Eliminar</a></li>
-                                               <li><a href="{$_layoutParams.root}foro/index/ficha_comentario_completo/{$foro.For_IdForo}/{$comentarios.Com_IdComentario}" target="_blank" comentario_="{$comentarios.Com_Descripcion}" id_comentario_editar="{$comentarios.Com_IdComentario}" id_foro="{$foro.For_IdForo}" class="" style="cursor: pointer;">Ver comentario completo</a></li>
+                                               <li><a href="{$_layoutParams.root}foro/index/ficha_comentario_completo/{$foro.For_IdForo}/{$comentarios.Com_IdComentario}" target="_blank" comentario_="{$comentarios.Com_Descripcion}" id_comentario_editar="{$comentarios.Com_IdComentario}" id_foro="{$foro.For_IdForo}" class="" style="cursor: pointer;">Ver comentario en otra página</a></li>
                                             </ul>   
                                             {/if}                                            
                                             <!-- hasta aca --> 
@@ -191,7 +294,7 @@
                                              <ul class="dropdown-menu" style="left: -490%; z-index: 100 !important; top: 100%;">
                                                 <li><a comentario_="{$comentarios.Com_Descripcion}" id_comentario_editar="{$comentarios.Com_IdComentario}" id_foro="{$foro.For_IdForo}" class="editar_comentario_foro files_coment_editar" style="cursor: pointer;">Editar</a></li>
                                                 <li><a id_foro="{$foro.For_IdForo}" id_comentario_delete="{$comentarios.Com_IdComentario}" class="eliminar_comentario_foro" style="cursor: pointer;">Eliminar</a></li>
-                                                <li><a href="{$_layoutParams.root}foro/index/ficha_comentario_completo/{$foro.For_IdForo}/{$comentarios.Com_IdComentario}" target="_blank" comentario_="{$comentarios.Com_Descripcion}" id_comentario_editar="{$comentarios.Com_IdComentario}" id_foro="{$foro.For_IdForo}" class="" style="cursor: pointer;">Ver comentario completo</a></li>
+                                                <li><a href="{$_layoutParams.root}foro/index/ficha_comentario_completo/{$foro.For_IdForo}/{$comentarios.Com_IdComentario}" target="_blank" comentario_="{$comentarios.Com_Descripcion}" id_comentario_editar="{$comentarios.Com_IdComentario}" id_foro="{$foro.For_IdForo}" class="" style="cursor: pointer;">Ver comentario en otra página</a></li>
                                             </ul>                                                    
                                             {/if} 
 
@@ -201,29 +304,29 @@
                                             <ul class="dropdown-menu" style="left: -490%; z-index: 100 !important; top: 100%;">
                                                <li><a id_comentario_reportar="{$comentarios.Com_IdComentario}" class="reportar" style="cursor: pointer;" data-toggle="modal" data-target="#modal-reportar-comentario">Reportar</a></li>
                                                <li><a id_foro="{$foro.For_IdForo}" id_comentario_delete="{$comentarios.Com_IdComentario}" class="eliminar_comentario_foro" style="cursor: pointer;">Eliminar</a></li>
-                                               <li><a href="{$_layoutParams.root}foro/index/ficha_comentario_completo/{$foro.For_IdForo}/{$comentarios.Com_IdComentario}" target="_blank" comentario_="{$comentarios.Com_Descripcion}" id_comentario_editar="{$comentarios.Com_IdComentario}" id_foro="{$foro.For_IdForo}" class="" style="cursor: pointer;">Ver comentario completo</a></li>
+                                               <li><a href="{$_layoutParams.root}foro/index/ficha_comentario_completo/{$foro.For_IdForo}/{$comentarios.Com_IdComentario}" target="_blank" comentario_="{$comentarios.Com_Descripcion}" id_comentario_editar="{$comentarios.Com_IdComentario}" id_foro="{$foro.For_IdForo}" class="" style="cursor: pointer;">Ver comentario en otra página</a></li>
                                             </ul>   
                                             {/if}  
                                             <!-- hasta aca -->
 
                                             <!-- para el administrador de foros -->
-                                            {if $Rol_Ckey=="administrador_foro" && $_acl->Usu_IdUsuario() == $comentarios.Usu_IdUsuario}
+                                            {if $Rol_Ckey=="administrador_foro" || $Rol_Ckey=="administrador" && $_acl->Usu_IdUsuario() == $comentarios.Usu_IdUsuario}
                                             <button title="Editar o Eliminar" class=" btn btn-default glyphicon glyphicon-option-horizontal dropdown-toggle opciones_comentario_{$comentarios.Com_IdComentario}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="right: 70%;">
                                             </button >
                                              <ul class="dropdown-menu" style="left: -490%; z-index: 100 !important; top: 100%;">
                                                 <li><a comentario_="{$comentarios.Com_Descripcion}" id_comentario_editar="{$comentarios.Com_IdComentario}" id_foro="{$foro.For_IdForo}" class="editar_comentario_foro files_coment_editar" style="cursor: pointer;">Editar</a></li>
                                                 <li><a id_foro="{$foro.For_IdForo}" id_comentario_delete="{$comentarios.Com_IdComentario}" class="eliminar_comentario_foro" style="cursor: pointer;">Eliminar</a></li>
-                                                <li><a href="{$_layoutParams.root}foro/index/ficha_comentario_completo/{$foro.For_IdForo}/{$comentarios.Com_IdComentario}" target="_blank" comentario_="{$comentarios.Com_Descripcion}" id_comentario_editar="{$comentarios.Com_IdComentario}" id_foro="{$foro.For_IdForo}" class="" style="cursor: pointer;">Ver comentario completo</a></li>
+                                                <li><a href="{$_layoutParams.root}foro/index/ficha_comentario_completo/{$foro.For_IdForo}/{$comentarios.Com_IdComentario}" target="_blank" comentario_="{$comentarios.Com_Descripcion}" id_comentario_editar="{$comentarios.Com_IdComentario}" id_foro="{$foro.For_IdForo}" class="" style="cursor: pointer;">Ver comentario en otra página</a></li>
                                             </ul>                                                    
                                             {/if} 
 
-                                            {if $Rol_Ckey=="administrador_foro" && $_acl->Usu_IdUsuario() != $comentarios.Usu_IdUsuario}
+                                            {if $Rol_Ckey=="administrador_foro" || $Rol_Ckey=="administrador" && $_acl->Usu_IdUsuario() != $comentarios.Usu_IdUsuario}
                                             <button title="Editar o Eliminar" class=" btn btn-default glyphicon glyphicon-option-horizontal dropdown-toggle opciones_comentario_{$comentarios.Com_IdComentario}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="right: 70%;">
                                             </button >
                                             <ul class="dropdown-menu" style="left: -490%; z-index: 100 !important; top: 100%;">
                                                <li><a id_comentario_reportar="{$comentarios.Com_IdComentario}" class="reportar" style="cursor: pointer;" data-toggle="modal" data-target="#modal-reportar-comentario">Reportar</a></li>
                                                <li><a id_foro="{$foro.For_IdForo}" id_comentario_delete="{$comentarios.Com_IdComentario}" class="eliminar_comentario_foro" style="cursor: pointer;">Eliminar</a></li>
-                                               <li><a href="{$_layoutParams.root}foro/index/ficha_comentario_completo/{$foro.For_IdForo}/{$comentarios.Com_IdComentario}" target="_blank" comentario_="{$comentarios.Com_Descripcion}" id_comentario_editar="{$comentarios.Com_IdComentario}" id_foro="{$foro.For_IdForo}" class="" style="cursor: pointer;">Ver comentario completo</a></li>
+                                               <li><a href="{$_layoutParams.root}foro/index/ficha_comentario_completo/{$foro.For_IdForo}/{$comentarios.Com_IdComentario}" target="_blank" comentario_="{$comentarios.Com_Descripcion}" id_comentario_editar="{$comentarios.Com_IdComentario}" id_foro="{$foro.For_IdForo}" class="" style="cursor: pointer;">Ver comentario en otra página</a></li>
                                             </ul>   
                                             {/if} 
                                             <!-- hasta aca --> 
@@ -231,27 +334,44 @@
                                         <button title="Editar o Eliminar" class=" btn btn-default glyphicon glyphicon-option-horizontal dropdown-toggle opciones_comentario_{$comentarios.Com_IdComentario}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="right: 70%;">
                                         </button >
                                             <ul class="dropdown-menu" style="left: -504%; z-index: 100 !important; top: 100%;">
-                                                <li><a href="{$_layoutParams.root}foro/index/ficha_comentario_completo/{$foro.For_IdForo}/{$comentarios.Com_IdComentario}" target="_blank" comentario_="{$comentarios.Com_Descripcion}" id_comentario_editar="{$comentarios.Com_IdComentario}" id_foro="{$foro.For_IdForo}" class="" style="cursor: pointer;">Ver comentario completo</a></li>
+                                                <li><a href="{$_layoutParams.root}foro/index/ficha_comentario_completo/{$foro.For_IdForo}/{$comentarios.Com_IdComentario}" target="_blank" comentario_="{$comentarios.Com_Descripcion}" id_comentario_editar="{$comentarios.Com_IdComentario}" id_foro="{$foro.For_IdForo}" class="" style="cursor: pointer;">Ver comentario en otra página</a></li>
                                             </ul>       
                                         {/if}                             
                                     </div>
                                 </h4>
                                 <div class="col-xs-12 capa capa_{$comentarios.Com_IdComentario}" Rol_Ckey="{$Rol_Ckey}" id_comentario_capa="{$comentarios.Com_IdComentario}">
-                                    <span class="col-xs-11 capaVer1_{$comentarios.Com_IdComentario}">
+                                    <span class="col-xs-12 capaVer1_{$comentarios.Com_IdComentario}">
                                         {if strlen($comentarios.Com_Descripcion)<=250}
                                             {$comentarios.Com_Descripcion}
                                         {else}
-                                            {substr($comentarios.Com_Descripcion, 0, 250)}
+                                            {substr($comentarios.Com_Descripcion, 0, 270)}
                                         <a class="ver_mas" id_comentario_editar="{$comentarios.Com_IdComentario}" style="cursor: pointer;">...ver más</a>
                                         {/if}
-                                    </span>
-                                    <span class="col-xs-11 capaVer2_{$comentarios.Com_IdComentario}" style="display:none;" id_comentario_editar="{$comentarios.Com_IdComentario}">
-                                        {substr($comentarios.Com_Descripcion, 0, 600)}
+                                    </span> 
+                                    <span class="col-xs-12 capaVer2_{$comentarios.Com_IdComentario}" style="display:none;" id_comentario_editar="{$comentarios.Com_IdComentario}">
+                                        {substr($comentarios.Com_Descripcion, 0, 1500)}
                                         <a class="ver_menos" id_comentario_editar="{$comentarios.Com_IdComentario}" style="cursor: pointer;">...ver menos</a>
-                                    </span>
-                                    {if $comentar_foro || $Rol_Ckey == "administrador_foro"}                                   
+                                    </span>                                    
+                                    {if Session::get('autenticado')}  
+                                        <!-- valoraciones -->
+                                        <div id="valoraciones_comentarios_{$comentarios.Com_IdComentario}" class="pull-right" style="padding-left:  0%;width: 23%;">
+                                            <strong class="col col-xs-1 pull-right">&nbsp;{$comentarios.Nvaloraciones_comentario}&nbsp;</strong>
+                                            <span class="col-xs-1 pull-right" style="padding-left:  1%; padding-right:  1%; width: 16%;">
+                                                {if $comentarios.valoracion_comentario == 1}
+                                                <img style="max-width: 110% !important;" src="{$_layoutParams.root_clear}/public/img/corazon_verde2.png">
+                                                {else}
+                                                    {if $comentarios.valoracion_comentario == 0}
+                                                    <img src="{$_layoutParams.root_clear}/public/img/corazon.png">
+                                                    {/if}
+                                                {/if}
+                                            </span>
+                                            <span class="pull-right simulalink" style="font-size: 15px"> {if $comentarios.valoracion_comentario == 1}<b>{/if}<a id_comentario="{$comentarios.Com_IdComentario}" id_usuario="{Session::get('id_usuario')}" ajaxtpl="valoraciones_comentarios" class="valorar_comentario" valor="{$comentarios.valoracion_comentario}">Me gusta&nbsp;</a>{if $comentarios.valoracion_comentario == 1}</b>{/if}</span>
+                                        </div> 
+                                    {/if}
+                                    {if $comentar_foro || $Rol_Ckey == "administrador_foro"}
                                         <span class="pull-right simulalink" style="font-size: 15px"> <a id_comentario="{$comentarios.Com_IdComentario}" class="coment_coment"> Responder</a></span>
-                                    {/if}                                    
+                                    {/if} 
+                                                                                                          
                                 </div>
                                     <!-- Para el editar en comentario principal -->
                                 <div class="status-upload capaEditar_{$comentarios.Com_IdComentario}" idCapaEditar="{$comentarios.Com_IdComentario}" style="display:none;">                                    
@@ -351,16 +471,16 @@
                                                      <ul class="dropdown-menu" style="left: -650%; z-index: 100 !important; top: 100%;">
                                                         <li><a comentario_="{$hijo_comentarios.Com_Descripcion}" id_comentario_editar="{$hijo_comentarios.Com_IdComentario}" id_foro="{$foro.For_IdForo}" class="editar_comentario_foro files_coment_editar" style="cursor: pointer;">Editar</a></li>
                                                         <li><a id_foro="{$foro.For_IdForo}" id_comentario_delete="{$hijo_comentarios.Com_IdComentario}" class="eliminar_comentario_foro" style="cursor: pointer;">Eliminar</a></li>
-                                                        <li><a href="{$_layoutParams.root}foro/index/ficha_comentario_completo/{$foro.For_IdForo}/{$hijo_comentarios.Com_IdComentario}" target="_blank" comentario_="{$hijo_comentarios.Com_Descripcion}" id_comentario_editar="{$hijo_comentarios.Com_IdComentario}" id_foro="{$foro.For_IdForo}" class="" style="cursor: pointer;">Ver comentario completo</a></li>
+                                                        <li><a href="{$_layoutParams.root}foro/index/ficha_comentario_completo/{$foro.For_IdForo}/{$hijo_comentarios.Com_IdComentario}" target="_blank" comentario_="{$hijo_comentarios.Com_Descripcion}" id_comentario_editar="{$hijo_comentarios.Com_IdComentario}" id_foro="{$foro.For_IdForo}" class="" style="cursor: pointer;">Ver comentario en otra página</a></li>
                                                     </ul>                                                    
                                                     {/if} 
 
-                                                    {if $Rol_Ckey=="participante_foro" && $_acl->Usu_IdUsuario() != $hijo_comentarios.Usu_IdUsuario}
+                                                    {if $_acl->Usu_IdUsuario() != $hijo_comentarios.Usu_IdUsuario}
                                                     <button title="Editar o Eliminar" class=" btn btn-default glyphicon glyphicon-option-horizontal dropdown-toggle opciones_comentario_{$hijo_comentarios.Com_IdComentario}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="right: 18px;">
                                                     </button >
                                                     <ul class="dropdown-menu" style="left: -650%; z-index: 100 !important; top: 100%;">
                                                        <li><a id_comentario_reportar="{$hijo_comentarios.Com_IdComentario}" style="cursor: pointer;" class="reportar" style="cursor: pointer;" data-toggle="modal" data-target="#modal-reportar-comentario">Reportar</a></li>    
-                                                       <li><a href="{$_layoutParams.root}foro/index/ficha_comentario_completo/{$foro.For_IdForo}/{$hijo_comentarios.Com_IdComentario}" target="_blank" comentario_="{$hijo_comentarios.Com_Descripcion}" id_comentario_editar="{$hijo_comentarios.Com_IdComentario}" id_foro="{$foro.For_IdForo}" class="" style="cursor: pointer;">Ver comentario completo</a></li>                                           
+                                                       <li><a href="{$_layoutParams.root}foro/index/ficha_comentario_completo/{$foro.For_IdForo}/{$hijo_comentarios.Com_IdComentario}" target="_blank" comentario_="{$hijo_comentarios.Com_Descripcion}" id_comentario_editar="{$hijo_comentarios.Com_IdComentario}" id_foro="{$foro.For_IdForo}" class="" style="cursor: pointer;">Ver comentario en otra página</a></li>                                           
                                                     </ul>   
                                                     {/if}
                                                     <!-- hasta aca --> 
@@ -372,7 +492,7 @@
                                                      <ul class="dropdown-menu" style="left: -650%; z-index: 100 !important; top: 100%;">
                                                         <li><a comentario_="{$hijo_comentarios.Com_Descripcion}" id_comentario_editar="{$hijo_comentarios.Com_IdComentario}" id_foro="{$foro.For_IdForo}" class="editar_comentario_foro files_coment_editar" style="cursor: pointer;">Editar</a></li>
                                                         <li><a id_foro="{$foro.For_IdForo}" id_comentario_delete="{$hijo_comentarios.Com_IdComentario}" class="eliminar_comentario_foro" style="cursor: pointer;">Eliminar</a></li>
-                                                        <li><a href="{$_layoutParams.root}foro/index/ficha_comentario_completo/{$foro.For_IdForo}/{$hijo_comentarios.Com_IdComentario}" target="_blank" comentario_="{$hijo_comentarios.Com_Descripcion}" id_comentario_editar="{$hijo_comentarios.Com_IdComentario}" id_foro="{$foro.For_IdForo}" class="" style="cursor: pointer;">Ver comentario completo</a></li>
+                                                        <li><a href="{$_layoutParams.root}foro/index/ficha_comentario_completo/{$foro.For_IdForo}/{$hijo_comentarios.Com_IdComentario}" target="_blank" comentario_="{$hijo_comentarios.Com_Descripcion}" id_comentario_editar="{$hijo_comentarios.Com_IdComentario}" id_foro="{$foro.For_IdForo}" class="" style="cursor: pointer;">Ver comentario en otra página</a></li>
                                                     </ul>                                                    
                                                     {/if} 
 
@@ -382,7 +502,7 @@
                                                     <ul class="dropdown-menu" style="left: -650%; z-index: 100 !important; top: 100%;">
                                                        <li><a id_comentario_reportar="{$hijo_comentarios.Com_IdComentario}" style="cursor: pointer;" class="reportar" style="cursor: pointer;" data-toggle="modal" data-target="#modal-reportar-comentario">Reportar</a></li>  
                                                        <li><a id_foro="{$foro.For_IdForo}" id_comentario_delete="{$hijo_comentarios.Com_IdComentario}" class="eliminar_comentario_foro" style="cursor: pointer;">Eliminar</a></li>
-                                                       <li><a href="{$_layoutParams.root}foro/index/ficha_comentario_completo/{$foro.For_IdForo}/{$hijo_comentarios.Com_IdComentario}" target="_blank" comentario_="{$hijo_comentarios.Com_Descripcion}" id_comentario_editar="{$hijo_comentarios.Com_IdComentario}" id_foro="{$foro.For_IdForo}" class="" style="cursor: pointer;">Ver comentario completo</a></li>
+                                                       <li><a href="{$_layoutParams.root}foro/index/ficha_comentario_completo/{$foro.For_IdForo}/{$hijo_comentarios.Com_IdComentario}" target="_blank" comentario_="{$hijo_comentarios.Com_Descripcion}" id_comentario_editar="{$hijo_comentarios.Com_IdComentario}" id_foro="{$foro.For_IdForo}" class="" style="cursor: pointer;">Ver comentario en otra página</a></li>
                                                     </ul>   
                                                     {/if}                                                                          
                                                     <!-- hasta aca --> 
@@ -394,7 +514,7 @@
                                                      <ul class="dropdown-menu" style="left: -650%; z-index: 100 !important; top: 100%;">
                                                         <li><a comentario_="{$hijo_comentarios.Com_Descripcion}" id_comentario_editar="{$hijo_comentarios.Com_IdComentario}" id_foro="{$foro.For_IdForo}" class="editar_comentario_foro files_coment_editar" style="cursor: pointer;">Editar</a></li>
                                                         <li><a id_foro="{$foro.For_IdForo}" id_comentario_delete="{$hijo_comentarios.Com_IdComentario}" class="eliminar_comentario_foro" style="cursor: pointer;">Eliminar</a></li>
-                                                        <li><a href="{$_layoutParams.root}foro/index/ficha_comentario_completo/{$foro.For_IdForo}/{$hijo_comentarios.Com_IdComentario}" target="_blank" comentario_="{$hijo_comentarios.Com_Descripcion}" id_comentario_editar="{$hijo_comentarios.Com_IdComentario}" id_foro="{$foro.For_IdForo}" class="" style="cursor: pointer;">Ver comentario completo</a></li>
+                                                        <li><a href="{$_layoutParams.root}foro/index/ficha_comentario_completo/{$foro.For_IdForo}/{$hijo_comentarios.Com_IdComentario}" target="_blank" comentario_="{$hijo_comentarios.Com_Descripcion}" id_comentario_editar="{$hijo_comentarios.Com_IdComentario}" id_foro="{$foro.For_IdForo}" class="" style="cursor: pointer;">Ver comentario en otra página</a></li>
                                                     </ul>                                                    
                                                     {/if} 
 
@@ -404,7 +524,7 @@
                                                     <ul class="dropdown-menu" style="left: -650%; z-index: 100 !important; top: 100%;">
                                                        <li><a id_comentario_reportar="{$hijo_comentarios.Com_IdComentario}" style="cursor: pointer;" class="reportar" style="cursor: pointer;" data-toggle="modal" data-target="#modal-reportar-comentario">Reportar</a></li>  
                                                        <li><a id_foro="{$foro.For_IdForo}" id_comentario_delete="{$hijo_comentarios.Com_IdComentario}" class="eliminar_comentario_foro" style="cursor: pointer;">Eliminar</a></li>
-                                                       <li><a href="{$_layoutParams.root}foro/index/ficha_comentario_completo/{$foro.For_IdForo}/{$hijo_comentarios.Com_IdComentario}" target="_blank" comentario_="{$hijo_comentarios.Com_Descripcion}" id_comentario_editar="{$hijo_comentarios.Com_IdComentario}" id_foro="{$foro.For_IdForo}" class="" style="cursor: pointer;">Ver comentario completo</a></li>
+                                                       <li><a href="{$_layoutParams.root}foro/index/ficha_comentario_completo/{$foro.For_IdForo}/{$hijo_comentarios.Com_IdComentario}" target="_blank" comentario_="{$hijo_comentarios.Com_Descripcion}" id_comentario_editar="{$hijo_comentarios.Com_IdComentario}" id_foro="{$foro.For_IdForo}" class="" style="cursor: pointer;">Ver comentario en otra página</a></li>
                                                     </ul>   
                                                     {/if}                                            
                                                     <!-- hasta aca --> 
@@ -416,7 +536,7 @@
                                                      <ul class="dropdown-menu" style="left: -650%; z-index: 100 !important; top: 100%;">
                                                         <li><a comentario_="{$hijo_comentarios.Com_Descripcion}" id_comentario_editar="{$hijo_comentarios.Com_IdComentario}" id_foro="{$foro.For_IdForo}" class="editar_comentario_foro files_coment_editar" style="cursor: pointer;">Editar</a></li>
                                                         <li><a id_foro="{$foro.For_IdForo}" id_comentario_delete="{$hijo_comentarios.Com_IdComentario}" class="eliminar_comentario_foro" style="cursor: pointer;">Eliminar</a></li>
-                                                        <li><a href="{$_layoutParams.root}foro/index/ficha_comentario_completo/{$foro.For_IdForo}/{$hijo_comentarios.Com_IdComentario}" target="_blank" comentario_="{$hijo_comentarios.Com_Descripcion}" id_comentario_editar="{$hijo_comentarios.Com_IdComentario}" id_foro="{$foro.For_IdForo}" class="" style="cursor: pointer;">Ver comentario completo</a></li>
+                                                        <li><a href="{$_layoutParams.root}foro/index/ficha_comentario_completo/{$foro.For_IdForo}/{$hijo_comentarios.Com_IdComentario}" target="_blank" comentario_="{$hijo_comentarios.Com_Descripcion}" id_comentario_editar="{$hijo_comentarios.Com_IdComentario}" id_foro="{$foro.For_IdForo}" class="" style="cursor: pointer;">Ver comentario en otra página</a></li>
                                                     </ul>                                                    
                                                     {/if} 
 
@@ -426,29 +546,29 @@
                                                     <ul class="dropdown-menu" style="left: -650%; z-index: 100 !important; top: 100%;">
                                                        <li><a id_comentario_reportar="{$hijo_comentarios.Com_IdComentario}" style="cursor: pointer;" class="reportar" style="cursor: pointer;" data-toggle="modal" data-target="#modal-reportar-comentario">Reportar</a></li>  
                                                        <li><a id_foro="{$foro.For_IdForo}" id_comentario_delete="{$hijo_comentarios.Com_IdComentario}" class="eliminar_comentario_foro" style="cursor: pointer;">Eliminar</a></li>
-                                                       <li><a href="{$_layoutParams.root}foro/index/ficha_comentario_completo/{$foro.For_IdForo}/{$hijo_comentarios.Com_IdComentario}" target="_blank" comentario_="{$hijo_comentarios.Com_Descripcion}" id_comentario_editar="{$hijo_comentarios.Com_IdComentario}" id_foro="{$foro.For_IdForo}" class="" style="cursor: pointer;">Ver comentario completo</a></li>
+                                                       <li><a href="{$_layoutParams.root}foro/index/ficha_comentario_completo/{$foro.For_IdForo}/{$hijo_comentarios.Com_IdComentario}" target="_blank" comentario_="{$hijo_comentarios.Com_Descripcion}" id_comentario_editar="{$hijo_comentarios.Com_IdComentario}" id_foro="{$foro.For_IdForo}" class="" style="cursor: pointer;">Ver comentario en otra página</a></li>
                                                     </ul>   
                                                     {/if}  
                                                     <!-- hasta aca -->
 
                                                     <!-- para el administrador de foros -->
-                                                    {if $Rol_Ckey=="administrador_foro" && $_acl->Usu_IdUsuario() == $hijo_comentarios.Usu_IdUsuario}
+                                                    {if $Rol_Ckey=="administrador_foro" || $Rol_Ckey=="administrador" && $_acl->Usu_IdUsuario() == $hijo_comentarios.Usu_IdUsuario}
                                                     <button title="Editar o Eliminar" class=" btn btn-default glyphicon glyphicon-option-horizontal dropdown-toggle opciones_comentario_{$hijo_comentarios.Com_IdComentario}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="right: 18px;">
                                                     </button >
                                                      <ul class="dropdown-menu" style="left: -650%; z-index: 100 !important; top: 100%;">
                                                         <li><a comentario_="{$hijo_comentarios.Com_Descripcion}" id_comentario_editar="{$hijo_comentarios.Com_IdComentario}" id_foro="{$foro.For_IdForo}" class="editar_comentario_foro files_coment_editar" style="cursor: pointer;">Editar</a></li>
                                                         <li><a id_foro="{$foro.For_IdForo}" id_comentario_delete="{$hijo_comentarios.Com_IdComentario}" class="eliminar_comentario_foro" style="cursor: pointer;">Eliminar</a></li>
-                                                        <li><a href="{$_layoutParams.root}foro/index/ficha_comentario_completo/{$foro.For_IdForo}/{$hijo_comentarios.Com_IdComentario}" target="_blank" comentario_="{$hijo_comentarios.Com_Descripcion}" id_comentario_editar="{$hijo_comentarios.Com_IdComentario}" id_foro="{$foro.For_IdForo}" class="" style="cursor: pointer;">Ver comentario completo</a></li>
+                                                        <li><a href="{$_layoutParams.root}foro/index/ficha_comentario_completo/{$foro.For_IdForo}/{$hijo_comentarios.Com_IdComentario}" target="_blank" comentario_="{$hijo_comentarios.Com_Descripcion}" id_comentario_editar="{$hijo_comentarios.Com_IdComentario}" id_foro="{$foro.For_IdForo}" class="" style="cursor: pointer;">Ver comentario en otra página</a></li>
                                                     </ul>                                                    
                                                     {/if} 
 
-                                                    {if $Rol_Ckey=="administrador_foro" && $_acl->Usu_IdUsuario() != $hijo_comentarios.Usu_IdUsuario}
+                                                    {if $Rol_Ckey=="administrador_foro" || $Rol_Ckey=="administrador" && $_acl->Usu_IdUsuario() != $hijo_comentarios.Usu_IdUsuario}
                                                     <button title="Editar o Eliminar" class=" btn btn-default glyphicon glyphicon-option-horizontal dropdown-toggle opciones_comentario_{$hijo_comentarios.Com_IdComentario}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="right: 18px;">
                                                     </button >
                                                     <ul class="dropdown-menu" style="left: -650%; z-index: 100 !important; top: 100%;">
                                                        <li><a id_comentario_reportar="{$hijo_comentarios.Com_IdComentario}" style="cursor: pointer;" class="reportar" style="cursor: pointer;" data-toggle="modal" data-target="#modal-reportar-comentario">Reportar</a></li>  
                                                        <li><a id_foro="{$foro.For_IdForo}" id_comentario_delete="{$hijo_comentarios.Com_IdComentario}" class="eliminar_comentario_foro" style="cursor: pointer;">Eliminar</a></li>
-                                                       <li><a href="{$_layoutParams.root}foro/index/ficha_comentario_completo/{$foro.For_IdForo}/{$hijo_comentarios.Com_IdComentario}" target="_blank" comentario_="{$hijo_comentarios.Com_Descripcion}" id_comentario_editar="{$hijo_comentarios.Com_IdComentario}" id_foro="{$foro.For_IdForo}" class="" style="cursor: pointer;">Ver comentario completo</a></li>
+                                                       <li><a href="{$_layoutParams.root}foro/index/ficha_comentario_completo/{$foro.For_IdForo}/{$hijo_comentarios.Com_IdComentario}" target="_blank" comentario_="{$hijo_comentarios.Com_Descripcion}" id_comentario_editar="{$hijo_comentarios.Com_IdComentario}" id_foro="{$foro.For_IdForo}" class="" style="cursor: pointer;">Ver comentario en otra página</a></li>
                                                     </ul>   
                                                     {/if} 
                                                 <!-- hasta aca --> 
@@ -456,24 +576,40 @@
                                                 <button title="Editar o Eliminar" class=" btn btn-default glyphicon glyphicon-option-horizontal dropdown-toggle opciones_comentario_{$hijo_comentarios.Com_IdComentario}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="right: 600%;">
                                                 </button >
                                                      <ul class="dropdown-menu" style="left: -670%; z-index: 100 !important; top: 100%;">
-                                                        <li><a href="{$_layoutParams.root}foro/index/ficha_comentario_completo/{$foro.For_IdForo}/{$hijo_comentarios.Com_IdComentario}" target="_blank" comentario_="{$hijo_comentarios.Com_Descripcion}" id_comentario_editar="{$hijo_comentarios.Com_IdComentario}" id_foro="{$foro.For_IdForo}" class="" style="cursor: pointer;">Ver comentario completo</a></li>
+                                                        <li><a href="{$_layoutParams.root}foro/index/ficha_comentario_completo/{$foro.For_IdForo}/{$hijo_comentarios.Com_IdComentario}" target="_blank" comentario_="{$hijo_comentarios.Com_Descripcion}" id_comentario_editar="{$hijo_comentarios.Com_IdComentario}" id_foro="{$foro.For_IdForo}" class="" style="cursor: pointer;">Ver comentario en otra página</a></li>
                                                     </ul>       
                                                 {/if}
                                                 </div>
                                             </h4>
                                             <div class="col-xs-12 capa capa_{$hijo_comentarios.Com_IdComentario}" id_comentario_capa="{$hijo_comentarios.Com_IdComentario}">
-                                                <span class="col-xs-11 capaVer1_{$hijo_comentarios.Com_IdComentario}">
+                                                <span class="col-xs-12 capaVer1_{$hijo_comentarios.Com_IdComentario}">
                                                     {if strlen($hijo_comentarios.Com_Descripcion)<=250}
                                                         {$hijo_comentarios.Com_Descripcion}
                                                     {else}
-                                                        {substr($hijo_comentarios.Com_Descripcion, 0, 250)}
+                                                        {substr($hijo_comentarios.Com_Descripcion, 0, 270)}
                                                     <a class="ver_mas" id_comentario_editar="{$hijo_comentarios.Com_IdComentario}" style="cursor: pointer;">...ver más</a>
                                                     {/if}
                                                 </span>
-                                                <span class="col-xs-11 capaVer2_{$hijo_comentarios.Com_IdComentario}" style="display:none;" id_comentario_editar="{$hijo_comentarios.Com_IdComentario}">
-                                                    {substr($hijo_comentarios.Com_Descripcion, 0, 500)}
+                                                <span class="col-xs-12 capaVer2_{$hijo_comentarios.Com_IdComentario}" style="display:none;" id_comentario_editar="{$hijo_comentarios.Com_IdComentario}">
+                                                    {substr($hijo_comentarios.Com_Descripcion, 0, 1000)}
                                                     <a class="ver_menos" id_comentario_editar="{$hijo_comentarios.Com_IdComentario}" style="cursor: pointer;">...ver menos</a>
-                                                </span>                                                
+                                                </span>   
+                                                {if Session::get('autenticado')}  
+                                                <!-- valoraciones -->
+                                                <div id="valoraciones_comentarios_{$hijo_comentarios.Com_IdComentario}" class="pull-right" style="padding-left:  0%;width: 24%;">
+                                                    <strong class="col col-xs-1 pull-right">&nbsp;{$hijo_comentarios.Nvaloraciones_comentario}&nbsp;</strong>
+                                                    <span class="col-xs-1 pull-right" style="padding-left:  1%; padding-right:  1%; width: 16%;">
+                                                        {if $hijo_comentarios.valoracion_comentario == 1}
+                                                        <img style="max-width: 110% !important;" src="{$_layoutParams.root_clear}/public/img/corazon_verde2.png">
+                                                        {else}
+                                                            {if $hijo_comentarios.valoracion_comentario == 0}
+                                                            <img src="{$_layoutParams.root_clear}/public/img/corazon.png">
+                                                            {/if}
+                                                        {/if}
+                                                    </span>
+                                                    <span class="pull-right simulalink" style="font-size: 15px"> {if $hijo_comentarios.valoracion_comentario == 1}<b>{/if}<a id_comentario="{$hijo_comentarios.Com_IdComentario}" id_usuario="{Session::get('id_usuario')}" ajaxtpl="valoraciones_comentarios" class="valorar_comentario" valor="{$hijo_comentarios.valoracion_comentario}">Me gusta&nbsp;</a>{if $hijo_comentarios.valoracion_comentario == 1}</b>{/if}</span>
+                                                </div>  
+                                                {/if}                                              
                                             </div>
                                                 <!-- Para el editar en el hijo -->
                                                 <div class="status-upload capaEditar_{$hijo_comentarios.Com_IdComentario}" idCapaEditar="{$hijo_comentarios.Com_IdComentario}" style="display:none;">
@@ -540,6 +676,7 @@
                         </div>                
                     {/foreach}
                 </div>
+                 {$paginacion|default:""}
             </div>
             <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
                 <div class="addon">

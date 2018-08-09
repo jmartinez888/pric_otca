@@ -24,6 +24,8 @@ class indexController extends foroController {
         $lista_foros = $this->_model->getForosRecientes("%");
         for ($i=0; $i < count($lista_foros); $i++) { 
             $lista_foros[$i]["tiempo"]= $this->getTiempo($lista_foros[$i]["For_FechaCreacion"]);
+            $votos = $this->_model->getNvaloraciones($lista_foros[$i]["For_IdForo"]);
+            $lista_foros[$i]["votos"]= $votos["Nvaloraciones"];
         }
         $lista_tematica = $this->_model->getResumenLineTematica();
         $lista_agenda = $this->_model->getAgendaIndex();
@@ -38,7 +40,7 @@ class indexController extends foroController {
         $this->_view->setTemplate(LAYOUT_FRONTEND);
         $filtro = $this->filtrarTexto($filtro);
         $this->_view->setJs(array('index'));
-
+        $this->_view->setCss(array("index"));
         $paginador = new Paginador();
 
         $lista_foros = $this->_model->getForosPaginado($filtro);
@@ -146,9 +148,12 @@ class indexController extends foroController {
             if(empty($Rol_Ckey)){
                 $Rol_Ckey = $this->_model->getRol_Ckey(Session::get('id_usuario'));
             }
+            $valoracion_foro = $this->_model->getValoracion_personal($idUsuario, $iFor_IdForo);
+            $this->_view->assign('valoracion_foro', $valoracion_foro["Nvaloracion_personal"]);             
         }else{
+            $idUsuario = "";
             $Rol_Ckey["Rol_Ckey"]="";   
-        }       
+        } 
         //print_r($usuario_foro); 
         // echo $Rol_Ckey["Rol_Ckey"]; exit;
         // exit;              
@@ -174,17 +179,35 @@ class indexController extends foroController {
         for ($index = 0; $index < count($foro["For_Comentarios"]); $index++) {
             $foro["For_Comentarios"][$index]["Hijo_Comentarios"] = $this->_model->getComentarios_x_idcomentario($foro["For_Comentarios"][$index]["Com_IdComentario"]);
             $foro["For_Comentarios"][$index]["Archivos"] = $this->_model->getArchivos_x_idcomentario($foro["For_Comentarios"][$index]["Com_IdComentario"]);
+
+            $valoracion_comentario = $this->_model->getValoracion_personal($idUsuario, $foro["For_Comentarios"][$index]["Com_IdComentario"]);
+            $foro["For_Comentarios"][$index]["valoracion_comentario"] = $valoracion_comentario["Nvaloracion_personal"];
+
+            $Nvaloraciones_comentario = $this->_model->getNvaloraciones($foro["For_Comentarios"][$index]["Com_IdComentario"]);
+            $foro["For_Comentarios"][$index]["Nvaloraciones_comentario"] = $Nvaloraciones_comentario["Nvaloraciones"];
+
             for ($j = 0; $j < count($foro["For_Comentarios"][$index]["Hijo_Comentarios"]); $j++) {
+
+                $valoracion_comentario = $this->_model->getValoracion_personal($idUsuario, $foro["For_Comentarios"][$index]["Hijo_Comentarios"][$j]["Com_IdComentario"]);
+                $foro["For_Comentarios"][$index]["Hijo_Comentarios"][$j]["valoracion_comentario"] = $valoracion_comentario["Nvaloracion_personal"];
+
+                $Nvaloraciones_comentario = $this->_model->getNvaloraciones($foro["For_Comentarios"][$index]["Hijo_Comentarios"][$j]["Com_IdComentario"]);
+                $foro["For_Comentarios"][$index]["Hijo_Comentarios"][$j]["Nvaloraciones_comentario"] = $Nvaloraciones_comentario["Nvaloraciones"];
+
+
                 $foro["For_Comentarios"][$index]["Hijo_Comentarios"][$j]["Archivos"] = $this->_model->getArchivos_x_idcomentario($foro["For_Comentarios"][$index]["Hijo_Comentarios"][$j]["Com_IdComentario"]);
             }
         }
 
-        $Nombre_propietario = $this->_model->getPropietario_foro(Session::get('id_usuario'));  
+        $Nombre_propietario = $this->_model->getPropietario_foro($foro["Usu_IdUsuario"]);  
         $Numero_comentarios_x_idForo = $this->_model->getNumero_comentarios_x_idForo($iFor_IdForo);  
         $Numero_participantes_x_idForo = $this->_model->getNumero_participantes_x_idForo($iFor_IdForo);  
 
         $tiempo = $this->getTiempo($foro["For_FechaCreacion"]);
-        // echo $tiempo; exit;
+
+        $Nvaloraciones_foro = $this->_model->getNvaloraciones($iFor_IdForo);
+         
+        $this->_view->assign('Nvaloraciones_foro', $Nvaloraciones_foro["Nvaloraciones"]); 
         $this->_view->assign('Numero_participantes_x_idForo', $Numero_participantes_x_idForo["numero_participantes"]);
         $this->_view->assign('Numero_comentarios_x_idForo', $Numero_comentarios_x_idForo["Numero_comentarios"]);
         $this->_view->assign('nombre_usuario', $Nombre_propietario["Usu_Nombre"]);
@@ -196,6 +219,61 @@ class indexController extends foroController {
         
         $this->_view->assign('foro', $foro);
         $this->_view->renderizar('ficha_foro');
+    }
+
+    public function ValorarForo()
+    {
+        $id_foro = $this->getInt('id_foro');
+        $id_usuario = $this->getInt('id_usuario');
+        $valor = $this->getInt('valor');        
+
+        $result = $this->_model->Valorar_Foro($id_foro, $id_usuario, $valor);
+        $Nvaloraciones_foro = $this->_model->getValoraciones_x_IdForo($id_foro);
+
+        $valoracion_foro = $this->_model->getValorarForo_x_IdUsuario($id_usuario, $id_foro);
+        if($valoracion_foro["For_Valorar"]==""){
+           $this->_view->assign('valoracion_foro', 0); 
+        }else{
+            $this->_view->assign('valoracion_foro', $valoracion_foro["For_Valorar"]); 
+        }
+        $foro=["For_IdForo"=>$id_foro];
+        $this->_view->assign('foro', $foro);
+        $this->_view->assign('Nvaloraciones_foro', $Nvaloraciones_foro["Nvaloraciones_foro"]); 
+        $this->_view->renderizar('ajax/valoraciones_foro', false, true);
+
+    }
+
+    public function registrarValoracion_Comentario_Foro()
+    {    
+        $id_usuario = $this->getInt('id_usuario');
+        $ID = $this->getInt('ID');
+        $valor = $this->getInt('valor');  
+        $ajaxtpl = $this->getTexto('ajaxtpl');
+
+        //echo "idUsuario:".$id_usuario . " idregistro: " . $ID . " valor: ". $valor . " ajax: " . $ajaxtpl; exit;
+
+        $result = $this->_model->registrarValoracion_Comentario_Foro($id_usuario, $ID, $valor);//inserta el me gusta
+        $Nvaloraciones = $this->_model->getNvaloraciones($ID);
+
+        $valoracion = $this->_model->getValoracion_personal($id_usuario, $ID);
+        
+       // $this->_view->assign('valoracion_comentario', $valoracion_comentario["Nvaloraciones_x_comentario"]);         
+        // $foro=["For_IdForo"=>$id_comentario];
+        // $this->_view->assign('foro', $foro);
+        $comentarios=["Nvaloraciones_comentario"=>$Nvaloraciones["Nvaloraciones"], 
+                    "ID"=>$ID,
+                    "valoracion_comentario"=>$valoracion["Nvaloracion_personal"]];
+
+        $foro=["For_IdForo"=>$ID];
+        $this->_view->assign('foro', $foro);
+        $this->_view->assign('valoracion_foro', $valoracion["Nvaloracion_personal"]); 
+        $this->_view->assign('Nvaloraciones_foro', $Nvaloraciones["Nvaloraciones"]); 
+
+        $this->_view->assign('comentarios', $comentarios);
+
+        // $this->_view->assign('Nvaloraciones_comentario', $Nvaloraciones_comentario["Nvaloraciones_comentario"]); 
+        $this->_view->renderizar('ajax/'.$ajaxtpl, false, true);
+
     }
 
     public function getTiempo($fecha_inicial)
