@@ -13,8 +13,21 @@ class indexController extends movilController {
         $contenido_leccion = $this->_model->getContenidoLeccion($Lec_IdLeccion);
         $this->retornar($contenido_leccion,"contenido_leccion");                  
     }  
-    public function getCursos($Usu_IdUsuario=0,$Con_Descripcion='',$Cur_Titulo='') {                
-        $cursos = $this->_model->getCursos($Usu_IdUsuario,$Con_Descripcion,$Cur_Titulo);            
+    public function getCursos($_tipo_curso=0,$Usu_IdUsuario=0,$busqueda="",
+        $_mis_cursos=0) { 
+        $condicion = " WHERE cr.Cur_Estado = 1 AND cr.Row_Estado = 1";
+        $busqueda = str_replace('_',' ',$busqueda); 
+        if($busqueda != "" && $busqueda != "xxx"){
+            $condicion .= " AND cr.Cur_Titulo LIKE '%" . $busqueda . "%' AND cr.Cur_Descripcion LIKE '%" . $busqueda . "%' ";
+        } 
+        if ($_mis_cursos == 1) {
+            $condicion .= " AND mt.Usu_IdUsuario = " . $Usu_IdUsuario;
+        }
+        if ($_tipo_curso > 0 && $_tipo_curso != 3) {
+              $condicion .= " AND cr.Moa_IdModalidad =  $_tipo_curso";
+        }
+        $condicion .= " GROUP BY cr.Cur_IdCurso ";
+        $cursos = $this->_model->getCursosPaginado(0,CANT_REG_PAG,$condicion,$Usu_IdUsuario);            
         $this->retornar($cursos,"cursos");                       
     }       
     public function getCursoDetalle($Cur_IdCurso=0) {                
@@ -101,7 +114,7 @@ class indexController extends movilController {
             );
         }
     }  
-    public function insertarUsuario($Usu_Nombre='',$Usu_Apellidos='',$Usu_Email='',$Usu_Usuario='',$Usu_Password='') {     
+    public function insertarUsuario__($Usu_Nombre='',$Usu_Apellidos='',$Usu_Email='',$Usu_Usuario='',$Usu_Password='') {     
         $retorno = $this->_model->insertarUsuario($Usu_Nombre,$Usu_Apellidos,$Usu_Email,$Usu_Usuario,$Usu_Password);        
         if ($retorno) {
             print json_encode(
@@ -187,6 +200,126 @@ class indexController extends movilController {
             ));
         } 
     }
+
+
+    
+    //Jhon Martinez
+    public function cursos(){
+
+          // $mConstante = $this->loadModel("constante");
+          $_tipo_curso = $this->getInt('_tipo_curso');
+          $_mis_cursos = $this->getInt('_mis_cursos');
+          $busqueda = $this->getTexto("busqueda");
+          $pagina = $this->getInt('pagina');
+          
+          $busqueda = $this->filtrarTexto($busqueda);
+          if (Session::get("autenticado")) {
+              $Usu_IdUsuario = Session::get("id_usuario");
+          } else {
+              $Usu_IdUsuario = false;
+          }
+          //Filtro por Activos/Eliminados
+          $condicion = " WHERE mt.Mat_Valor = 1 AND cr.Cur_Estado = 1 ";
+          $soloActivos = 0;
+          if (!$this->_acl->permiso('ver_eliminados')) {
+              $soloActivos = 1; 
+              $condicion .= " AND cr.Row_Estado = $soloActivos ";
+          }
+          //Filtro por Activos/Eliminados
+          
+          // $condicion = "";
+          if($busqueda != ""){
+              $condicion .= " AND cr.Cur_Titulo LIKE '%" . $busqueda . "%' AND cr.Cur_Descripcion LIKE '%" . $busqueda . "%' ";
+          } 
+          if ($_mis_cursos == 1) {
+              $condicion .= " AND mt.Usu_IdUsuario = " . Session::get("id_usuario");
+          }
+          if ($_mis_cursos == 2) {
+              $condicion .= " AND cr.Usu_IdUsuario = " . Session::get("id_usuario");
+          }
+          
+          if ($_tipo_curso > 0) {
+              $condicion .= " AND cr.Moa_IdModalidad =  $_tipo_curso";
+          }
+          
+          if ($soloActivos == 0) { 
+              $condicion .= " GROUP BY cr.Cur_IdCurso ORDER BY cr.Row_Estado DESC ";
+          } else {
+              $condicion .= " GROUP BY cr.Cur_IdCurso ";
+          }
+
+          $arrayRowCount = $this->_model->getCursosRowCount($condicion);
+          $totalRegistros = $arrayRowCount['CantidadRegistros'];
+          $cursos = $this->_model->getCursosPaginado(0,CANT_REG_PAG,$condicion,$Usu_IdUsuario);
+    }
+      
+    //Jhon Martinez
+    public function insertarUsuario($Usu_Nombre='',$Usu_Apellidos='',$Usu_Email='',$Usu_Usuario='',$Usu_Password='') {     
+        $i=0;
+        $error = ""; $error1 = ""; $idUsuario = "";
+        if($this->_model->verificarUsuario($Usu_Usuario)){
+            $error = ' El usuario ' . $Usu_Usuario . ' ya existe. ';
+            $i=1;
+        }
+        
+        if($this->_model->verificarEmail($Usu_Email)){
+            $error1 = ' La direccion de correo ' . $Usu_Email . ' ya esta registrada. ';
+            $i=2;
+        }
+
+        if($i==0)
+        {
+            $Usu_Codigo = rand((int)(1782598471), (int)(9999999999));
+            $idUsuario = $this->_model->insertarUsuario(
+                $Usu_Nombre,
+                $Usu_Apellidos,
+                $Usu_Email,
+                $Usu_Usuario,
+                $Usu_Password,
+                $Usu_Codigo
+            );
+        }
+        
+        if (is_array($idUsuario)) {
+            if ($idUsuario[0] > 0) {
+
+                $Subject = 'Activar Cuenta PRIC';
+                $contenido = 'Para activar su cuenta en la PRIC hacer click en el siguiente enlace: <br><a href="'. BASE_URL .'usuarios/login/activarCuenta/'.$Usu_Codigo.'/'.$Usu_Email.'">'. BASE_URL .'usuarios/login/activarCuenta/'.$Usu_Codigo.'/'.$Usu_Email.'</a>';
+                $fromName = 'PRIC - Creación de Usuario';
+
+                // Parametro ($forEmail, $forName, $Subject, $contenido, $fromName = "Proyecto PRIC")
+                $Correo = new Correo();
+                $SendCorreo = $Correo->enviar($Usu_Email, $Usu_Usuario, $Subject, $contenido, $fromName);
+                $Usuario = $this->_model->verificarUsuario($Usu_Usuario);
+                print json_encode(
+                    array(
+                            "estado" => 1,
+                            "mensaje" => " Usuario registrado correctamente, activar su cuenta con su correo.  ", 
+                            "Usuario" => $Usuario));
+            } else {
+                print json_encode(
+                    array(
+                    "estado" => 2,
+                    "mensaje" => " Error al registrar el Usuario "
+                ));
+            }
+        } else {
+            if($i!=0)
+            {
+                print json_encode(
+                    array(
+                    "estado" => 2,
+                    "mensaje" => $error . $error1
+                ));
+            }else{
+                print json_encode(
+                    array(
+                    "estado" => 2,
+                    "mensaje" => " Ocurrio un error al Registrar los datos"
+                ));
+            }            
+        }      
+    }  
 }
 
 ?>
