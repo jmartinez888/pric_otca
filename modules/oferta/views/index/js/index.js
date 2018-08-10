@@ -9,6 +9,18 @@ $(document).on('ready', function () {
     //     $("[data-toggle='tooltip']").tooltip();
     // });
     
+    $('#selectPais').on('change', function () {
+
+        // var src='public/img/legal/';
+        // if($("#selectPais").val()=='Perú')
+        //     src=src+'Perú.png';
+        // else if($("#selectPais").val()=='Brasil')
+        //     src=src+'Brasil.png';
+
+            $("#banderita").attr('src', _root_+'public/img/legal/'+$("#selectPais").val()+'.png');
+            if ($("#selectPais").val()=='--Seleccione--') {$("#banderita").attr('src', '');}
+    });
+    
     $('body').on('click', '.pagina', function () {
         $("#cargando").show();
         paginacion($(this).attr("pagina"), $(this).attr("nombre"), $(this).attr("parametros"),$(this).attr("total_registros"));
@@ -384,10 +396,10 @@ function initMap() {
 }
 
 $(document).ready(function(){
-$("#selectPais").change(function(){
-        var mapa = $('select[id=selectPais]').val();
-        $("div.mapita").html("<img style='width:30px; padding-top: 5px;' src='http://localhost:8080/framework_mvc_php_multi-idioma/modules/oferta/views/instituciones/img/"+ mapa + ".png' alt=''>");
-    });
+// $("#selectPais").change(function(){
+//         var mapa = $('select[id=selectPais]').val();
+//         $("div.mapita").html("<img style='width:30px; padding-top: 5px;' src='http://localhost:8080/framework_mvc_php_multi-idioma/modules/oferta/views/instituciones/img/"+ mapa + ".png' alt=''>");
+//     });
 });
 function asignarFiltro2(dato){
     var filtro_2; 

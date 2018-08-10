@@ -1,8 +1,8 @@
 {if (isset($listaIns) && count($listaIns))}
 	{foreach key=key from=$listaIns item=b}
-		<div class="row" style="background: #E9F8CA; -webkit-box-shadow: 0 15px 10px #777; -moz-box-shadow: 0 10px 10px #777; box-shadow: 0 10px 10px #777;">
+		<div class="row" style="border-bottom: 1px solid #ddd; padding-bottom: 10px;">
 			<div class="col-md-10">
-				<a style="color: black;" href="{$_layoutParams.root_clear}oferta/instituciones/ficha/{$b.Ins_IdInstitucion}">
+				<a class="underline" style="color: black;" href="{$_layoutParams.root_clear}oferta/instituciones/ficha/{$b.Ins_IdInstitucion}">
             	{$numeracion=$numeracion + 1}	
             	<h3>{$numeracion}. {$b.Ins_Nombre} <img width="30" src="{$_layoutParams.root_clear}public/img/legal/{$b.Pai_Nombre}.png" alt="{$b.Pai_Nombre}" class="pais " data-toggle="tooltip" data-original-title="{$b.Ubi_Sede}, {$b.Pai_Nombre}"></h3>
             	<h4><b>{$lenguaje["Contacto"]}</b> 
@@ -45,7 +45,7 @@
             	</h4>
             	</a>
 			</div>
-			<div class="col-md-2" style="padding-top: 5px;">
+			<div class="col-md-2" style="padding-top: 10px;">
 				
 				{if $b.Ins_img == ''}
 				{$b.Ins_img = 'logos/default.png'}			

@@ -12,6 +12,7 @@ class indexController extends ofertaController
     public function index() {
     	$this->validarUrlIdioma();
         $this->_view->getLenguaje("oferta_index");
+        $this->_view->setCss(array("jp-index"));
         $this->_view->setJs(array('index'));
         $idioma = Cookie::lenguaje();
 
@@ -94,7 +95,7 @@ class indexController extends ofertaController
         $this->_view->setTemplate(LAYOUT_FRONTEND);
         $pagina = $this->getInt('pagina');
         $filas=$this->getInt('filas');        
-        $this->_view->assign('paises', $this->_inst->getPaises($idioma));
+        // $this->_view->assign('paises', $this->_inst->getPaises($idioma));
         $arrayRowCount = $this->_inst->getBusquedaGeneralRowCount($dato);
         $totalRegistros = $arrayRowCount['CantidadRegistros'];  
         $this->_view->assign('cantidadResultados', $totalRegistros);
@@ -147,6 +148,7 @@ class indexController extends ofertaController
         $this->_view->assign('rowcount3', $rowcount3);
         //$this->_view->assign('cantidadporpagina',$registros);
         $this->_view->assign('paginacion', $paginador->getView('paginacion_ajax_s_filas'));
+        $this->_view->setCss(array("jp-index"));
         $this->_view->renderizar('index','index');
     }
     public function buscarportematica($dato = '')
@@ -158,11 +160,12 @@ class indexController extends ofertaController
         $this->_view->setTemplate(LAYOUT_FRONTEND);
         $pagina = $this->getInt('pagina');
         $filas=$this->getInt('filas');        
-        $this->_view->assign('paises', $this->_inst->getPaises($idioma));
+        // $this->_view->assign('paises', $this->_inst->getPaises($idioma));
         $arrayRowCount = $this->_inst->getBusquedaTematicaRowCount($dato);
         $totalRegistros = $arrayRowCount['CantidadRegistros'];  
         $this->_view->assign('cantidadResultados', $totalRegistros);
         $this->_view->setJs(array('index'));
+        $this->_view->setCss(array("jp-index"));
         $paginador = new Paginador();
             if($pagina==0){
                 $numeracion=0;
@@ -204,7 +207,7 @@ class indexController extends ofertaController
         $this->_view->setTemplate(LAYOUT_FRONTEND);
         $pagina = $this->getInt('pagina');
         $filas=$this->getInt('filas');        
-        $this->_view->assign('paises', $this->_inst->getPaises($idioma));
+        // $this->_view->assign('paises', $this->_inst->getPaises($idioma));
         
         if($selectPais=="all"){$selectPais="";}
         if($datos=="all"){$datos="";}
@@ -402,6 +405,7 @@ class indexController extends ofertaController
         $this->_view->assign('rowcount3', $rowcount3);
         //fin resumen        
         $this->_view->setJs(array('index'));
+        $this->_view->setCss(array("jp-index"));
         $paginador = new Paginador();
         if($pagina==0){
         $numeracion=0;
