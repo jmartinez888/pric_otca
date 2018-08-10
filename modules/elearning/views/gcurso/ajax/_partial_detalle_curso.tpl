@@ -5,7 +5,7 @@
     <div><strong>{$d.DC_Titulo}</strong></div>
     <div>{$d.DC_Descripcion}</div>
     <input class="Hidden_IdDetalle" hidden="hidden" value="{$d.DC_IdDetCurso}"/>
-    <button class="btn btn-default btn-detalle">Quitar</button>
+    <button class="btn btn-danger btn-detalle"><i class="glyphicon glyphicon-trash"></i></button>
   </div>
   {/foreach}
 {else}

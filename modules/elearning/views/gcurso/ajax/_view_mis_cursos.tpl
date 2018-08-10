@@ -26,14 +26,12 @@
                 <tr>
                     <th>Id</th>
                     <th>Curso</th>
-                    <th>Detalle</th>
                     <th>Operaciones</th>
                 </tr>
                 {foreach from=$cursos item=c}
                     <tr>
                         <td>{$c.Cur_IdCurso}</td>
-                        <td>{$c.Cur_Titulo}</td>
-                        <td>{$c.Cur_Descripcion}</td>
+                        <td>{$c.Cur_Titulo}<br><a href="{BASE_URL}elearning/cursos/ficha/{$curso.Cur_IdCurso}" class="text-success"><i class="glyphicon glyphicon-user"></i> {$c.Usu_Nombre} {$c.Usu_Apellidos} </a></td>
                         <td>
                           <input class="hidden_IdCurso estado" value="{$c.Cur_IdCurso}"/>
                           <button class="btnGestion"><i class="glyphicon glyphicon-signal"></i></button>

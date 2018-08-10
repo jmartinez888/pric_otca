@@ -9,6 +9,8 @@
 <div id="menu_docente">{include file='modules/elearning/views/cursos/menu/lateral.tpl'}</div>
 <div id="menu_curso" style="display: none">{include file='modules/elearning/views/gestion/menu/menu.tpl'}</div>
 <div class="col-lg-10" style="padding-top: 20px">
+	
+
     <div class="col-lg-12">
         <div id="learn_content_main"></div>
     </div>

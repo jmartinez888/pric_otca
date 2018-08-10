@@ -13,9 +13,12 @@
 }
 
 .btn-gestion{
-  position: absolute;
-  bottom: 50px;
-  right: 10px;
+    position: absolute;
+    /*top: 0px;
+    left: 0px;*/
+    font-size: 20px;
+    float: left;
+    z-index: 1;
 }
 
 .btn-anuncios{
@@ -39,6 +42,7 @@
   /* top: 288px; */
   color: #393939;
   text-align: justify;
+  padding: 6px 0px;
 }
 
 .curso-item-img{
@@ -69,4 +73,11 @@
   /* left: 10px; */
   color: #393939;
   padding-top: 10px;
+}
+
+/*Jmartinez*/
+@media (max-width: 991px){
+    #div-margin-t-10{
+        margin-top: 10px
+    }
 }

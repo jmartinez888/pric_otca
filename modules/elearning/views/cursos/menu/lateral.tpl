@@ -6,12 +6,12 @@
   .sidebar-left {
       padding-top: 20px;
       width: 100%;
-      padding-right: 0px;
+      /*padding-right: 0px;*/
   }
   .side-menu {
       list-style: none;
       color: #222;
-      padding: 10px 20px;
+      padding: 10px 15px;
       cursor: pointer;
       background-color: #ffffff;
       font-size: 15px;
@@ -26,7 +26,7 @@
   }
 
   .side-menu2{
-    border-left: 5px solid #355D3A;
+    border-left: 5px solid #00979c;
   }
 
   .side-menu2:hover{
@@ -210,9 +210,8 @@
     padding-left: 0px !important;
   }
 </style>
-  <div class="col-lg-2" style="padding-left: 0px !important">
-    <div class="sidebar-left">
-
+  <div class="col col-md-2" >
+    <div class="sidebar-left col-md-12">
         <ul>
           <a href="{BASE_URL}elearning/cursos/" class="nounderline">
           <div class="side-menu2"><li class="side-menu" style="position: relative">
@@ -221,18 +220,70 @@
           </a>
         </ul>
         {if Session::get('id_usuario')}
-        <ul>
+
+            {if isset($ficha) && $ficha == 1}
+                <ul>
+                  <a href="{BASE_URL}elearning/cursos/" class="nounderline">
+                  <div class="side-menu2"><li class="side-menu" style="position: relative">
+                  <i class="fa fa-file-text-o"></i>
+                  <span> Ficha de Curso</span></li></div>
+                  </a>
+                </ul>
+                <ul>
+                  <a href="{BASE_URL}elearning/cursos/" class="nounderline">
+                  <div class="side-menu2"><li class="side-menu" style="position: relative">
+                  <i class="fa fa-book"></i>
+                  <span> Modulos</span></li></div>
+                  </a>
+                </ul>
+                <ul>
+                  <a href="{BASE_URL}elearning/cursos/" class="nounderline">
+                  <div class="side-menu2"><li class="side-menu" style="position: relative">
+                  <i class="fa fa-pencil-square"></i>
+                  <span> Tareas</span></li></div>
+                  </a>
+                </ul>
+                <ul>
+                  <a href="{BASE_URL}elearning/cursos/" class="nounderline">
+                  <div class="side-menu2"><li class="side-menu" style="position: relative">
+                  <i class="fa fa-edit"></i>
+                  <span> Examen</span></li></div>
+                  </a>
+                </ul>
+                <ul>
+                  <a href="{BASE_URL}elearning/cursos/" class="nounderline">
+                  <div class="side-menu2"><li class="side-menu" style="position: relative">
+                  <i class="fa fa-send-o"></i>
+                  <span> Anuncios</span></li></div>
+                  </a>
+                </ul>
+                <ul>
+                  <a href="{BASE_URL}elearning/cursos/" class="nounderline">
+                  <div class="side-menu2"><li class="side-menu" style="position: relative">
+                  <i class="fa fa-users"></i>
+                  <span> Alumnos</span></li></div>
+                  </a>
+                </ul>
+                <ul>
+                  <a href="{BASE_URL}elearning/cursos/" class="nounderline">
+                  <div class="side-menu2"><li class="side-menu" style="position: relative">
+                  <i class="fa fa-calendar"></i>
+                  <span> Calendario</span></li></div>
+                  </a>
+                </ul>
+            {/if}
+        <!-- <ul>
           <a href="{BASE_URL}elearning/cursos/miscursos" class="nounderline">
             <div class="side-menu2"><li class="side-menu" style="position: relative">
             <i class="glyphicon glyphicon-book"></i>
             <span> Mis Cursos</span></li></div>
           </a>
-        </ul>
+        </ul> -->
         <ul>
           <a href="{BASE_URL}elearning/gestion/_inicio" class="nounderline">
             <div class="side-menu2"><li class="side-menu" style="position: relative">
             <i class="glyphicon glyphicon-book"></i>
-            <span> Mis Cursos (Docente)</span></li></div>
+            <span> Mis Cursos </span></li></div>
           </a>
         </ul>
         <!-- <ul>
@@ -265,5 +316,7 @@
             <span>Verificar Certificados</span></li></div>
           </a>
         </ul>
+
+
     </div>
   </div>

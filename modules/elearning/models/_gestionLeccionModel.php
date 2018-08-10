@@ -5,7 +5,7 @@ class _gestionLeccionModel extends Model {
   public function __construct() { parent::__construct(); }
 
   public function insertLeccion($modulo, $tipo, $titulo, $descripcion){
-    $sql = "INSERT INTO leccion(Mod_IdModulo, Lec_Tipo, Lec_Titulo, Lec_Descripcion, Lec_LMSEstado, Lec_Estado)
+    $sql = "INSERT INTO leccion(Moc_IdModuloCurso, Lec_Tipo, Lec_Titulo, Lec_Descripcion, Lec_LMSEstado, Lec_Estado)
             VALUES({$modulo}, {$tipo}, '{$titulo}', '{$descripcion}', 0, 0)";
     $this->execQuery($sql);
   }
@@ -28,7 +28,7 @@ class _gestionLeccionModel extends Model {
               C.Con_Descripcion as Tipo
             FROM leccion L
             INNER JOIN constante C ON C.Con_Valor = L.Lec_Tipo AND C.Con_Codigo = 2000
-            WHERE L.Mod_IdModulo = {$modulo}
+            WHERE L.Moc_IdModuloCurso = {$modulo}
               AND L.Row_Estado = 1";
     return $this->getArray($sql);
   }
@@ -113,7 +113,7 @@ class _gestionLeccionModel extends Model {
             FROM leccion
             WHERE YEAR(Lec_FechaDesde) = {$anio}
               AND MONTH(Lec_FechaDesde) = {$mes}
-              AND Mod_IdModulo = {$modulo}
+              AND Moc_IdModuloCurso = {$modulo}
               AND Row_Estado = 1";
     return $this->getArray($sql);
   }
@@ -126,30 +126,30 @@ class _gestionLeccionModel extends Model {
     $this->execQuery($sql);
     $sql = "UPDATE modulo_curso SET
               Mod_FechaDesde = (SELECT Lec_FechaDesde FROM leccion
-                                WHERE Mod_IdModulo = (SELECT Mod_IdModulo FROM leccion WHERE Lec_IdLeccion = {$leccion})
+                                WHERE Moc_IdModuloCurso = (SELECT Moc_IdModuloCurso FROM leccion WHERE Lec_IdLeccion = {$leccion})
                                   AND Row_Estado = 1
                                 ORDER BY Lec_FechaDesde ASC LIMIT 1),
               Mod_FechaHasta = (SELECT Lec_FechaDesde FROM Leccion
-                                WHERE Mod_IdModulo = (SELECT Mod_IdModulo FROM leccion WHERE Lec_IdLeccion = {$leccion})
+                                WHERE Moc_IdModuloCurso = (SELECT Moc_IdModuloCurso FROM leccion WHERE Lec_IdLeccion = {$leccion})
                                   AND Row_Estado = 1
                                 ORDER BY Lec_FechaHasta DESC LIMIT 1)
-            WHERE Mod_IdModulo = (SELECT Mod_IdModulo FROM leccion WHERE Lec_IdLeccion = {$leccion})";
+            WHERE Moc_IdModuloCurso = (SELECT Moc_IdModuloCurso FROM leccion WHERE Lec_IdLeccion = {$leccion})";
     $this->execQuery($sql);
     $sql = "UPDATE curso SET
               Cur_FechaDesde = (SELECT Mod_FechaDesde FROM modulo_curso
                                 WHERE Row_Estado = 1
                                   AND Cur_IdCurso = (SELECT Cur_IdCurso FROM modulo_curso
-                                                      WHERE Mod_IdModulo = (SELECT Mod_IdModulo FROM leccion
+                                                      WHERE Moc_IdModuloCurso = (SELECT Moc_IdModuloCurso FROM leccion
                                                                             WHERE Lec_IdLeccion = {$leccion}))
                                 ORDER BY Mod_FechaDesde ASC LIMIT 1),
               Cur_FechaHasta = (SELECT Mod_FechaHasta FROM modulo_curso
                                 WHERE Row_Estado = 1
                                   AND Cur_IdCurso = (SELECT Cur_IdCurso FROM modulo_curso
-                                                      WHERE Mod_IdModulo = (SELECT Mod_IdModulo FROM leccion
+                                                      WHERE Moc_IdModuloCurso = (SELECT Moc_IdModuloCurso FROM leccion
                                                                             WHERE Lec_IdLeccion = {$leccion}))
                                 ORDER BY Mod_FechaHasta DESC LIMIT 1)
             WHERE Cur_IdCurso = (SELECT Cur_IdCurso FROM modulo_curso
-                                WHERE Mod_IdModulo = (SELECT Mod_IdModulo FROM leccion
+                                WHERE Moc_IdModuloCurso = (SELECT Moc_IdModuloCurso FROM leccion
                                                       WHERE Lec_IdLeccion = {$leccion}))";
     $this->execQuery($sql);
   }

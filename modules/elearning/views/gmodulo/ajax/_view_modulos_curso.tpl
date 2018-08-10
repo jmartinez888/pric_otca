@@ -18,12 +18,12 @@
               </tr>
               {foreach from=$modulos item=c}
                   <tr>
-                      <td>{$c.Mod_Titulo}</td>
-                      <td>{$c.Mod_Descripcion}</td>
+                      <td>{$c.Moc_Titulo}</td>
+                      <td>{$c.Moc_Descripcion}</td>
                       <td>
-                        <input class="hidden_IdModulo estado" value="{$c.Mod_IdModulo}"/>
+                        <input class="hidden_IdModulo estado" value="{$c.Moc_IdModuloCurso}"/>
                         <button class="btnFinalizarReg"><i class="glyphicon glyphicon-pencil"></i></button>
-                        {if $c.Mod_Estado == 1 }
+                        {if $c.Moc_Estado == 1 }
                         <button class="btnDeshabilitar"><i class="glyphicon glyphicon-remove"></i></button>
                         {else}
                         <button class="btnHabilitar"><i class="glyphicon glyphicon-ok"></i></button>

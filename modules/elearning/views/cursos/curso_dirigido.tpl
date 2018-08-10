@@ -11,6 +11,9 @@
           <div class="col-lg-12" style="padding-left: 0px; padding-right: 0px;">
             <div class="col-lg-3 img-curso">
               <img src="{BASE_URL}modules/elearning/views/cursos/img/portada/{$curso.Cur_UrlBanner}" />
+              {if $curso.Moa_IdModalidad == 2}
+              <div class="col-xs-12 text-center " style="background: #2196F3; color: white; font-weight: bold; font-size: 18px;">LMS</div>
+              {/if}
             </div>
             <div class="col-lg-6">
             <br>
@@ -27,6 +30,7 @@
                 <a class="btn fa fa-twitter im_sociales" id="im_sociales" style="background: #55ACEE" href="#"></a>
                 <a class="btn fa fa-google-plus im_sociales" id="im_sociales" style="background: #C03A2A" href="#"></a>
             </div>
+            
           </div>
 
           <div class="col-lg-12">
@@ -34,7 +38,7 @@
           </div>
 
           <div class="col-lg-8">
-            <iframe class="video-intro" width="100%" height="310" src="https://www.youtube.com/embed/eBVvD85Ml2c" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+            <iframe class="video-intro" width="100%" height="310" src="https://www.youtube.com/embed/{$curso.Cur_UrlVideoPresentacion}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
           </div>
 
           <div class="col-lg-4">
@@ -107,7 +111,7 @@
             {/if}
           {else}
             {if $curso.Usu_IdUsuario != Session::get("id_usuario")}
-              <a href="{BASE_URL}elearning/cursos/_inscripcion/{$curso.Mod_IdModCurso}/{$curso.Cur_IdCurso}">
+              <a href="{BASE_URL}elearning/cursos/_inscripcion/{$curso.Moa_IdModalidad}/{$curso.Cur_IdCurso}">
                 <button class="btn btn-group btn-inscribir">Inscribirme</button>
               </a>
             {else}
@@ -164,8 +168,8 @@
         <div class="col-lg-12">
           <div class="ficha-mod col-lg-12">
             <div class="col-lg-2"><img class="img-modulo" src="{BASE_URL}modules/elearning/views/cursos/img/contador-modulo-lms.png"/></div>
-            <div class="col-lg-10 ficha-mod-title"><strong>{$o.Mod_Titulo}</strong></div>
-            <div class="col-lg-10 ficha-mod-desc">{$o.Mod_Descripcion}</div>
+            <div class="col-lg-10 ficha-mod-title"><strong>{$o.Moc_Titulo}</strong></div>
+            <div class="col-lg-10 ficha-mod-desc">{$o.Moc_Descripcion}</div>
         </div>
           {foreach from=$o.LECCIONES item=l}
             <div class="col-lg-12" style="padding-left: 0px; padding-right: 0px;">
@@ -175,12 +179,12 @@
                 Fecha: {$l.Lec_FechaDesde}
                 {if $l.Activo==0}
                   {if ($session==1 && isset($inscripcion) && count($inscripcion)>0 && $inscripcion[0].Mat_Valor==1) }
-                  <a href="{BASE_URL}elearning/cursos/modulo/{$curso.Cur_IdCurso}/{$o.Mod_IdModulo}/{$l.Lec_IdLeccion}">
+                  <a href="{BASE_URL}elearning/cursos/modulo/{$curso.Cur_IdCurso}/{$o.Moc_IdModuloCurso}/{$l.Lec_IdLeccion}">
                   <div class="tag-terminado"><center><strong>Revisar</strong></center></div>
                   </a>
                   {else}
                     {if $curso.Usu_IdUsuario == Session::get('id_usuario')}
-                    <a href="{BASE_URL}elearning/cursos/modulo/{$curso.Cur_IdCurso}/{$o.Mod_IdModulo}/{$l.Lec_IdLeccion}">
+                    <a href="{BASE_URL}elearning/cursos/modulo/{$curso.Cur_IdCurso}/{$o.Moc_IdModuloCurso}/{$l.Lec_IdLeccion}">
                     <div class="tag-terminado"><center><strong>Revisar lección</strong></center></div>
                     </a>
                     {else}

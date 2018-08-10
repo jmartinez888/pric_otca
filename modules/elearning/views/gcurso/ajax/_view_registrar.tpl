@@ -22,14 +22,14 @@
           <select class="form-control" name="modalidad" id="slModalidad">
               <option value="-1" selected disabled>Seleccione una modalidad</option>
             {foreach from=$modalidad item=mod}
-              <option value="{$mod.Mod_IdModCurso}">{$mod.Mod_Titulo}</option>
+              <option value="{$mod.Moa_IdModalidad}">{$mod.Moc_Titulo}</option>
             {/foreach}
           </select>
         </div>
         <div class="col-lg-8 col-md-6 col-sm-12" style="text-align: justify">
           <div class="opcion_mod" style="color: red; display: inherit">(Seleccione una modalidad)</div>
           {foreach from=$modalidad item=mod}
-          <div class="opcion_mod" id="ModCurso{$mod.Mod_IdModCurso}">{$mod.Mod_Descripcion}</div>
+          <div class="opcion_mod" id="ModCurso{$mod.Moa_IdModalidad}">{$mod.Moc_Descripcion}</div>
           {/foreach}
         </div>
         <div class="col-lg-12 margin-top-10"><h5><strong>Título de Curso</strong></h5></div>

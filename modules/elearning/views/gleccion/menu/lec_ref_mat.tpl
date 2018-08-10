@@ -86,7 +86,7 @@
     </div>
   </div>
 
-  {if ($curso.Mod_IdModCurso==2)}
+  {if ($curso.Moa_IdModalidad==2)}
 
   <div class="panel panel-default margin-top-10">
     <div class="panel-heading">
@@ -733,7 +733,7 @@
       fecha1 = new Date(Date.parse(fecha1 + ":00"));
     }
     fecha2 = new Date(Date.parse(fecha2 + ":00"));
-
+    // alert(fecha1 + " //// " + fecha2);
     var diferencia = fecha2.getTime() - fecha1.getTime();
 
     if(diferencia > 0){

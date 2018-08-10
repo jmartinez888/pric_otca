@@ -5,7 +5,7 @@
   <div class="row gradiente">
       <br>
       <div class="col-lg-5 titulo-modulo">
-         <h4><strong> Módulo {$mod_datos.INDEX}: {$modulo["Mod_Titulo"]}</strong></h4>
+         <h4><strong> Módulo {$mod_datos.INDEX}: {$modulo["Moc_Titulo"]}</strong></h4>
       </div>
       <div class="col-lg-5 derecha" style="margin-top: 5px !important">
           <span>Lección {$leccion["Index"]} de {count($lecciones)}</span>
@@ -172,7 +172,7 @@
                 </button>
               </a>
 
-              <a href="{BASE_URL}elearning/cursos/modulo/{$curso}/{$next_mod[0].Mod_IdModulo}/{$next_mod[0].Leccion}">
+              <a href="{BASE_URL}elearning/cursos/modulo/{$curso}/{$next_mod[0].Moc_IdModuloCurso}/{$next_mod[0].Leccion}">
                 <button class="btn btn-success">
                   <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
                   Ir al siguiente módulo

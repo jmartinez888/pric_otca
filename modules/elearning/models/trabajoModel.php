@@ -58,7 +58,7 @@ class trabajoModel extends Model {
 						INNER JOIN leccion L ON L.Lec_IdLeccion = T.Lec_IdLeccion
             	WHERE T.Row_Estado = 1 AND T.Tra_Estado = 1
 								AND L.Row_Estado = 1 AND L.Lec_Estado = 1
-								AND L.Mod_IdModulo = {$modulo}
+								AND L.Moc_IdModuloCurso = {$modulo}
 						ORDER BY T.Tra_FechaDesde";
     	return $this->getArray($sql);
 	}

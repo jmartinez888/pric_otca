@@ -12,38 +12,93 @@
     right: 10px;
   }
   .img-banner{
-    padding-bottom: 10px !important;
+    padding: 10px !important;
+    border: 2px solid #02969b;
   }
 </style>
 <link href="{$_url}gcurso/css/_view_finalizar_registro.css" rel="stylesheet" type="text/css"/>
 
 {include file='modules/elearning/views/gestion/menu/tag_url.tpl'}
 
-<div class="col-lg-12 margin-top-10">
+<div class="col-lg-12 margin-top-10 ">
   <div class="panel panel-default">
     <div class="panel-heading" tag="0" id="headerImg">
       <h3 class="panel-title">
         <i class="glyphicon glyphicon-list-alt"></i>&nbsp;&nbsp;
-        <strong>CURSO</strong>
+        <strong>PRESENTACIÓN</strong>
       </h3>
     </div>
-    <div class="panel-body" style=" margin: 15px 25px; display: none" id="panelImg">
-      {if strlen($curso.Cur_UrlBanner)>0}
-        <img class="img-banner" src="{BASE_URL}modules/elearning/views/cursos/img/portada/{$curso.Cur_UrlBanner}" />
-      {/if}
-      <button id="btn-subir-imagen" class="btn btn-success margin-top-10">Seleccionar Imagen</button>
+    <div class="panel-body form-horizontal" style=" margin: 15px 25px; " id="panelImg">
+      
+      <div class="form-group">
+          <label class="col-md-3 control-label"> Imagen Icono : </label>
+          <div class="col-md-6">
+              {if strlen($curso.Cur_UrlBanner)>0 && $curso.Cur_UrlBanner != "default.jpg"}
+                  <img class="img-banner" src="{BASE_URL}modules/elearning/views/cursos/img/portada/{$curso.Cur_UrlBanner}" />
+              {else}
+                <b class="col-xs-12 text-center">Imagen Default</b>
+                  <img class="img-banner" style="opacity: 0.6" src="{BASE_URL}modules/elearning/views/cursos/img/portada/default.jpg" />
+              {/if}
+          </div>
+          <div class=" col-md-2">
+            <button id="btn-subir-imagen" class="btn btn-info btn-sm">Seleccionar Imagen</button>
+          </div>
+      </div> 
+      
+      <!-- Jhon Martinez -->
+      <!-- <div class="form-group">
+          <label for="exampleInputFile" class="col-md-4 control-label"> Video Presentación </label>
+          <div class="col-md-6">
+              <input class="btn btn-success btn-sm" type="file" id="Arf_IdArchivoFisico" name="Arf_IdArchivoFisico">
+          </div>
+      </div> -->   
+      <div class="form-group">
+          <label class="col-md-3 control-label"> Video Presentación : </label>
+          <div class="col-md-6">
+            {if strlen($curso.Cur_UrlVideoPresentacion)>0}
+              <input name="Cur_UrlVideoPresentacion" id="Cur_UrlVideoPresentacion" class="form-control" value="https://www.youtube.com/watch?v={$curso.Cur_UrlVideoPresentacion}" />
+            {else}
+              <input name="Cur_UrlVideoPresentacion" id="Cur_UrlVideoPresentacion" class="form-control" value="" placeholder="Video de Presentación de Curso" />
+            {/if}
+          </div>
+          <div class=" col-md-2">
+              <button id="btn-guardarVideo" class=" form-control btn btn-success btn-sm"> <i class="glyphicon glyphicon-floppy-disk"></i> Guardar</button>
+          </div>
+      </div> 
+      <div class="form-group">
+          {if strlen($curso.Cur_UrlVideoPresentacion)>0}
+              <div class="col-md-offset-3 col-md-6 " style="padding: 5px; border: 2px solid #00a65a;">
+                  <object width="100%" height="344">
+                    <param name="movie" value="http://www.youtube.com/v/{$curso.Cur_UrlVideoPresentacion}"></param>
+                    <param name="allowFullScreen" value="true"></param>
+                    <param name="allowscriptaccess" value="always"></param>
+                    <embed src="http://www.youtube.com/v/{$curso.Cur_UrlVideoPresentacion}" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="100%" height="344"></embed>
+                  </object> 
+              </div>
+          {/if}
+      </div>
+
+      <!-- <div class="col-lg-12 hidden">
+          <object width="425" height="344">
+            <param name="movie" value="http://www.youtube.com/v/s-fjg7Stgb4&hl=es&fs=1&"></param>
+            <param name="allowFullScreen" value="true"></param>
+            <param name="allowscriptaccess" value="always"></param>
+            <embed src="http://www.youtube.com/v/s-fjg7Stgb4&hl=es&fs=1&" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="425" height="344"></embed>
+          </object> 
+      </div> -->
+      
     </div>
   </div>
 </div>
 
 {include file='modules/elearning/views/uploader/uploader.tpl'}
 
-<div class="col-lg-12">
+<div class="col-lg-12 " >
   <div class="panel panel-default">
     <div class="panel-heading" tag="0" id="headerDetalle">
       <h3 class="panel-title">
         <i class="glyphicon glyphicon-list-alt"></i>&nbsp;&nbsp;
-        <strong>FICHA DE CURSO</strong>
+        <strong>CONTENIDO</strong>
       </h3>
     </div>
     <div class="panel-body" style=" margin: 15px 15px; display: none" id="panelDetalle">
@@ -63,10 +118,10 @@
         <div class="col-lg-12"><h5><strong>Objetivo General del Curso</strong></h5></div>
         <div class="col-lg-12"><input class="form-control" id="inObjetivo" name="objgeneral" value="{$curso.Cur_ObjetivoGeneral}"/></div>
         <div class="col-lg-12 margin-top-10"><h5><strong>Objetivos Específicos</strong></h5></div>
-        <div class="col-lg-12"><div id="divObjetivosEspecificos"></div></div>
-        <div class="col-lg-12">
+        <div id="divObjetivosEspecificos"></div>
+        <div class="col-xs-3">
           <input class="estado" id="toggle_NuevoObjetivo" value="0" />
-          <button id="btnNuevoObjetivo" class="form-control" style="width: 150px">Agregar objetivo</button>
+          <button id="btnNuevoObjetivo" class="col-xs-12 btn btn-sm btn-warning" >Agregar objetivo</button>
         </div>
         <div class="col-lg-12 margin-top-10"><h5><strong>Público Objetivo</strong></h5></div>
         <div class="col-lg-12"><input class="form-control" id="inPublico" name="publico" value="{$curso.Cur_PublicoObjetivo}"/></div>
@@ -81,9 +136,9 @@
         <div class="col-lg-12"><h5><strong>Metodología</strong></h5></div>
         <div class="col-lg-12"><input class="form-control" id="inMetodologia" name="metodologia" value="{$curso.Cur_Metodologia}"/></div>
         <div id="divDetallesCursos"></div>
-        <div class="col-lg-12">
+        <div class="col-xs-3">
           <input class="estado" id="toggle_NuevoDetalle" value="0" />
-          <button id="btnNuevoDetalle" class="form-control" style="width: 150px">Agregar información</button>
+          <button id="btnNuevoDetalle" class="col-xs-12 btn btn-sm btn-warning" >Agregar información</button>
         </div>
         <div class="col-lg-12 margin-top-10" >
           <button class="btn btn-success" style=" float: right" type="button" id="btn_registrar">
@@ -97,7 +152,7 @@
 
 
 
-<div class="col-lg-12">
+<div class="col-lg-12 ">
   <div class="panel panel-default">
     <div class="panel-heading" tag="0" id="headerParametros">
       <h3 class="panel-title">

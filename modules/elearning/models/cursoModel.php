@@ -4,25 +4,25 @@ class cursoModel extends Model {
 
     public function __construct() { parent::__construct(); }
 
-    public function getCurso(){
-        $cursos = $this->getArray("SELECT C.*, CC.Con_Descripcion as Modalidad FROM curso C
-            INNER JOIN constante CC ON CC.Con_Valor = C.Mod_IdModCurso AND CC.Con_Codigo = 1000
-            WHERE C.Cur_Estado = 1 AND C.Row_Estado = 1");
-        $resultado = array();
-        foreach ($cursos as $c) {
-          if($c["Mod_IdModCurso"]==2){
-            $c["Detalle"] = $this->DetalleLMS($c["Cur_IdCurso"]);
-          }
-          array_push($resultado, $c);
-        }
-        return $resultado;
-    }
+    // public function getCurso(){
+    //     $cursos = $this->getArray("SELECT C.*, CC.Con_Descripcion as Modalidad FROM curso C
+    //         INNER JOIN constante CC ON CC.Con_Valor = C.Moa_IdModalidad AND CC.Con_Codigo = 1000
+    //         WHERE C.Cur_Estado = 1 AND C.Row_Estado = 1");
+    //     $resultado = array();
+    //     foreach ($cursos as $c) {
+    //       if($c["Moa_IdModalidad"]==2){
+    //         $c["Detalle"] = $this->DetalleLMS($c["Cur_IdCurso"]);
+    //       }
+    //       array_push($resultado, $c);
+    //     }
+    //     return $resultado;
+    // }
 
     public function getCursoID($id){
         $cursos = $this->getArray("SELECT * FROM curso WHERE Cur_IdCurso = {$id} AND Cur_Estado = 1 AND Row_Estado = 1");
         $resultado = array();
         foreach ($cursos as $c) {
-          if($c["Mod_IdModCurso"]==2){
+          if($c["Moa_IdModalidad"]==2){
             $c["Detalle"] = $this->DetalleLMS($c["Cur_IdCurso"]);
           }
           array_push($resultado, $c);
@@ -32,14 +32,14 @@ class cursoModel extends Model {
 
     public function getCursoBusqueda($texto){
         $sql = "SELECT C.*, CC.Con_Descripcion as Modalidad FROM curso C
-                INNER JOIN constante CC ON CC.Con_Valor = C.Mod_IdModCurso AND CC.Con_Codigo = 1000
+                INNER JOIN constante CC ON CC.Con_Valor = C.Moa_IdModalidad AND CC.Con_Codigo = 1000
                 WHERE (C.Cur_Titulo like '%{$texto}%'
                   OR C.Cur_Descripcion like '%{$texto}%')
                   AND C.Row_Estado = 1";
         $curso = $this->getArray($sql);
         $resultado = array();
         foreach ($curso as $c) {
-          if($c["Mod_IdModCurso"]==2){
+          if($c["Moa_IdModalidad"]==2){
             $c["Detalle"] = $this->DetalleLMS($c["Cur_IdCurso"]);
           }
           array_push($resultado, $c);
@@ -48,14 +48,14 @@ class cursoModel extends Model {
     }
     public function getCursoBusquedaMath($texto){
         $sql = "SELECT C.*, CC.Con_Descripcion as Modalidad FROM curso C
-                INNER JOIN constante CC ON CC.Con_Valor = C.Mod_IdModCurso AND CC.Con_Codigo = 1000
+                INNER JOIN constante CC ON CC.Con_Valor = C.Moa_IdModalidad AND CC.Con_Codigo = 1000
                 WHERE (C.Cur_Titulo like '%{$texto}%'
                   OR C.Cur_Descripcion like '%{$texto}%')
                   AND C.Row_Estado = 1";
         $curso = $this->getArray($sql);
         $resultado = array();
         foreach ($curso as $c) {
-          if($c["Mod_IdModCurso"]==2){
+          if($c["Moa_IdModalidad"]==2){
             $c["Detalle"] = $this->DetalleLMS($c["Cur_IdCurso"]);
           }
           array_push($resultado, $c);
@@ -65,14 +65,14 @@ class cursoModel extends Model {
 
     public function getCursoUsuario($usuario){
         $sql = "SELECT C.*, CC.Con_Descripcion as Modalidad FROM curso C
-                INNER JOIN constante CC ON CC.Con_Valor = C.Mod_IdModCurso AND CC.Con_Codigo = 1000
+                INNER JOIN constante CC ON CC.Con_Valor = C.Moa_IdModalidad AND CC.Con_Codigo = 1000
                 INNER JOIN matricula_curso MC ON C.Cur_IdCurso = MC.Cur_IdCurso
                 WHERE MC.Usu_IdUsuario = {$usuario} AND MC.Mat_Valor = 1
                   AND C.Cur_Estado = 1 AND C.Row_Estado = 1";
         $curso = $this->getArray($sql);
         $resultado = array();
         foreach ($curso as $c) {
-          if($c["Mod_IdModCurso"]==2){
+          if($c["Moa_IdModalidad"]==2){
             $c["Detalle"] = $this->DetalleLMS($c["Cur_IdCurso"]);
           }
           $c["Total"] = $this->getAnunciosCountTotal($c["Cur_IdCurso"]);
@@ -84,13 +84,13 @@ class cursoModel extends Model {
 
     public function getCursoDocente($usuario){
         $sql = "SELECT C.*, CC.Con_Descripcion as Modalidad FROM curso C
-                INNER JOIN constante CC ON CC.Con_Valor = C.Mod_IdModCurso AND CC.Con_Codigo = 1000
+                INNER JOIN constante CC ON CC.Con_Valor = C.Moa_IdModalidad AND CC.Con_Codigo = 1000
                 WHERE C.Usu_IdUsuario = {$usuario}
                   AND C.Cur_Estado = 1 AND C.Row_Estado = 1";
         $curso = $this->getArray($sql);
         $resultado = array();
         foreach ($curso as $c) {
-          if($c["Mod_IdModCurso"]==2){
+          if($c["Moa_IdModalidad"]==2){
             $c["Detalle"] = $this->DetalleLMS($c["Cur_IdCurso"]);
           }
           array_push($resultado, $c);
@@ -133,9 +133,9 @@ class cursoModel extends Model {
                   FROM leccion L1
                 LEFT JOIN progreso_curso PC1 ON PC1.Lec_IdLeccion = L1.Lec_IdLeccion
                   AND PC1.Usu_IdUsuario = {$id_usuario}
-                INNER JOIN modulo_curso MC ON L1.Mod_IdModulo = MC.Mod_IdModulo
+                INNER JOIN modulo_curso MC ON L1.Moc_IdModuloCurso = MC.Moc_IdModuloCurso
                 WHERE MC.Cur_IdCurso = {$curso} AND L1.Lec_Estado = 1 AND L1.Row_Estado = 1
-                  AND MC.Mod_Estado = 1 AND MC.Row_Estado = 1)X
+                  AND MC.Moc_Estado = 1 AND MC.Row_Estado = 1)X
               GROUP BY X.CONTADOR)Y";
 
       $resultado = $this->getArray($sql);
@@ -194,15 +194,15 @@ class cursoModel extends Model {
               (SELECT
                 1 as ESTADO,
                 (SELECT C.Cur_IdCurso FROM curso c INNER JOIN modulo_curso mc on c.Cur_IdCurso = mc.Cur_IdCurso
-                WHERE mc.Mod_IdModulo = L.Mod_IdModulo) as ID,
+                WHERE mc.Moc_IdModuloCurso = L.Moc_IdModuloCurso) as ID,
                 (SELECT C.Cur_Titulo FROM curso c INNER JOIN modulo_curso mc on c.Cur_IdCurso = mc.Cur_IdCurso
-                WHERE mc.Mod_IdModulo = L.Mod_IdModulo) as DET,
+                WHERE mc.Moc_IdModuloCurso = L.Moc_IdModuloCurso) as DET,
                 HOUR(L.Lec_FechaDesde) as HORA,
                 L.Lec_FechaDesde AS FECHA
               FROM leccion L WHERE Lec_IdLeccion IN
               (SELECT
-                (SELECT l.Lec_IdLeccion FROM leccion l INNER JOIN modulo_curso mc ON l.Mod_IdModulo = mc.Mod_IdModulo
-                WHERE mc.Cur_IdCurso = C.Cur_IdCurso AND mc.Mod_Estado = 1 AND mc.Row_Estado = 1 AND
+                (SELECT l.Lec_IdLeccion FROM leccion l INNER JOIN modulo_curso mc ON l.Moc_IdModuloCurso = mc.Moc_IdModuloCurso
+                WHERE mc.Cur_IdCurso = C.Cur_IdCurso AND mc.Moc_Estado = 1 AND mc.Row_Estado = 1 AND
                   l.Lec_Estado = 1 AND l.Row_Estado = 1 AND l.Lec_FechaDesde IS NOT NULL AND l.Lec_FechaHasta IS NOT NULL
                 ORDER BY l.Lec_FechaDesde ASC LIMIT 1) as MiLeccion
               FROM curso C
@@ -211,15 +211,15 @@ class cursoModel extends Model {
               SELECT
                 2 as ESTADO,
                 (SELECT C.Cur_IdCurso FROM curso c INNER JOIN modulo_curso mc on c.Cur_IdCurso = mc.Cur_IdCurso
-                WHERE mc.Mod_IdModulo = L.Mod_IdModulo) as ID,
+                WHERE mc.Moc_IdModuloCurso = L.Moc_IdModuloCurso) as ID,
                 (SELECT C.Cur_Titulo FROM curso c INNER JOIN modulo_curso mc on c.Cur_IdCurso = mc.Cur_IdCurso
-                WHERE mc.Mod_IdModulo = L.Mod_IdModulo) as DET,
+                WHERE mc.Moc_IdModuloCurso = L.Moc_IdModuloCurso) as DET,
                 HOUR(L.Lec_FechaDesde) as HORA,
                 L.Lec_FechaHasta AS FECHA
               FROM leccion L WHERE Lec_IdLeccion IN
               (SELECT
-                (SELECT l.Lec_IdLeccion FROM leccion l INNER JOIN modulo_curso mc ON l.Mod_IdModulo = mc.Mod_IdModulo
-                WHERE mc.Cur_IdCurso = C.Cur_IdCurso AND mc.Mod_Estado = 1 AND mc.Row_Estado = 1 AND
+                (SELECT l.Lec_IdLeccion FROM leccion l INNER JOIN modulo_curso mc ON l.Moc_IdModuloCurso = mc.Moc_IdModuloCurso
+                WHERE mc.Cur_IdCurso = C.Cur_IdCurso AND mc.Moc_Estado = 1 AND mc.Row_Estado = 1 AND
                   l.Lec_Estado = 1 AND l.Row_Estado = 1 AND l.Lec_FechaDesde IS NOT NULL AND l.Lec_FechaHasta IS NOT NULL
                 ORDER BY l.Lec_FechaHasta DESC LIMIT 1) as MiLeccion
               FROM curso C
@@ -239,9 +239,9 @@ class cursoModel extends Model {
                 l.Lec_Titulo as DET,
                 1 as ESTADO
               FROM leccion L
-              INNER JOIN modulo_curso mc ON l.Mod_IdModulo = mc.Mod_IdModulo
+              INNER JOIN modulo_curso mc ON l.Moc_IdModuloCurso = mc.Moc_IdModuloCurso
               WHERE mc.Cur_IdCurso = '{$curso}'
-                AND mc.Mod_Estado = 1 AND mc.Row_Estado = 1
+                AND mc.Moc_Estado = 1 AND mc.Row_Estado = 1
                 AND l.Lec_Estado = 1 AND l.Row_Estado = 1
                 AND MONTH(l.Lec_FechaDesde) = '{$mes}' AND YEAR(l.Lec_FechaDesde) = '{$anio}'
               ORDER BY l.Lec_FechaDesde ASC";
@@ -250,9 +250,9 @@ class cursoModel extends Model {
 
     public function getDuracionCurso($curso){
       $sql = "SELECT COUNT(*) as Total FROM leccion
-              WHERE Mod_IdModulo IN
-                (SELECT Mod_IdModulo FROM modulo_curso
-                WHERE Cur_IdCurso = {$curso} AND Mod_Estado = 1 AND Row_Estado = 1)
+              WHERE Moc_IdModuloCurso IN
+                (SELECT Moc_IdModuloCurso FROM modulo_curso
+                WHERE Cur_IdCurso = {$curso} AND Moc_Estado = 1 AND Row_Estado = 1)
               AND Row_Estado = 1 AND Lec_Estado = 1";
       $lec = $this->getArray($sql);
       if($lec!=null && count($lec)>0){
@@ -260,5 +260,119 @@ class cursoModel extends Model {
       }else{
         return array("Total" => "0");
       }
+    }
+
+
+
+
+    // Jhon Martinez
+    public function getCursoBusquedas($texto){
+        $sql = " SELECT C.*, CC.Con_Descripcion as Modalidad FROM curso C
+
+                INNER JOIN constante CC ON CC.Con_Valor = C.Moa_IdModalidad AND CC.Con_Codigo = 1000
+                WHERE (C.Cur_Titulo like '%{$texto}%'
+                  OR C.Cur_Descripcion like '%{$texto}%')
+                  AND C.Row_Estado = 1";
+        $curso = $this->getArray($sql);
+        $resultado = array();
+        foreach ($curso as $c) {
+          if($c["Moa_IdModalidad"]==2){
+            $c["Detalle"] = $this->DetalleLMS($c["Cur_IdCurso"]);
+          }
+          array_push($resultado, $c);
+        }
+        return $resultado;
+    }
+    //Jhon Martinez
+    public function getCursosRowCount($condicion = "")
+    {
+        try{
+            $sql = " SELECT COUNT(cr.Cur_IdCurso) AS CantidadRegistros FROM curso cr
+              INNER JOIN matricula_curso mt ON cr.Cur_IdCurso = mt.Cur_IdCurso $condicion ";
+            $result = $this->_db->prepare($sql);
+            $result->execute();
+            return $result->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("elearning(cursoModel)", "getCursosRowCount", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
+    // Jhon Martinez
+    public function getCursos($Usu_IdUsuario = false, $Texto = false){
+        
+        if ($Usu_IdUsuario) {
+            $andUsuario = " AND mat.Usu_IdUsuario = " . $Usu_IdUsuario;
+        } else {
+            $andUsuario = " AND mat.Usu_IdUsuario = 0 ";
+        }
+        try{
+            $sql = " SELECT   cr.Cur_IdCurso, cr.Cur_UrlBanner, cr.Cur_Titulo, cr.Cur_Descripcion, cr.Usu_IdUsuario, cr.Cur_Vacantes, cr.Cur_FechaDesde, cr.Moa_IdModalidad, CONCAT(u.Usu_Nombre,' ',u.Usu_Apellidos) AS Docente, cc.Con_Descripcion AS Modalidad, COUNT(mt.Mat_IdMatricula) AS Matriculados, (CASE WHEN AVG(vc.Val_Valor) > 0 THEN AVG(vc.Val_Valor) ELSE 0 END) AS Valoracion, (CASE WHEN cu_m.Matriculado = 1 THEN 1 ELSE 0 END) AS Inscrito FROM 
+                  (SELECT cur.Cur_IdCurso, 1 AS Matriculado FROM curso cur
+                  INNER JOIN matricula_curso mat ON cur.Cur_IdCurso = mat.Cur_IdCurso
+                  WHERE cur.Cur_Estado = 1 AND cur.Row_Estado = 1 AND mat.Mat_Valor = 1 ". $andUsuario . " ) cu_m
+              RIGHT JOIN curso cr ON cu_m.Cur_IdCurso = cr.Cur_IdCurso
+              INNER JOIN matricula_curso mt ON cr.Cur_IdCurso = mt.Cur_IdCurso
+              INNER JOIN constante cc ON cr.Moa_IdModalidad = cc.Con_Valor AND cc.Con_Codigo = 1000
+              INNER JOIN usuario u ON cr.Usu_IdUsuario = u.Usu_IdUsuario
+              LEFT JOIN valoracion_curso vc ON cr.Cur_IdCurso = vc.Cur_IdCurso 
+              WHERE cr.Cur_Estado = 1 AND cr.Row_Estado = 1 AND mt.Mat_Valor = 1 " . $Texto . "
+              GROUP BY cr.Cur_IdCurso ";
+            $result = $this->_db->prepare($sql);
+            $result->execute();
+            return $result->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("elearning(cursoModel)", "getCursos", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
+    // Jhon Martinez
+    public function getCursosPaginado($pagina = 1, $registrosXPagina = 1, $condicionActivos = "", $Usu_IdUsuario = false){
+
+        $registroInicio = 0;
+        if ($pagina > 0) {
+            $registroInicio = ($pagina - 1) * $registrosXPagina;               
+        }
+
+        if ($Usu_IdUsuario) {
+            $andUsuario = " AND mat.Usu_IdUsuario = " . $Usu_IdUsuario;
+        } else {
+            $andUsuario = " AND mat.Usu_IdUsuario = 0 ";
+        }
+
+        try{
+            $sql = " SELECT cur_so.*, COUNT(vc.Usu_IdUsuario) AS Valoraciones, 
+                    CAST((CASE WHEN AVG(vc.Val_Valor) > 0 THEN AVG(vc.Val_Valor) ELSE 0 END) AS DECIMAL(2,1)) AS Valor FROM 
+                    (   SELECT cr.Cur_IdCurso, cr.Cur_UrlBanner, cr.Cur_Titulo, cr.Cur_Descripcion, cr.Usu_IdUsuario, cr.Cur_Vacantes, cr.Cur_FechaDesde, cr.Moa_IdModalidad, CONCAT(u.Usu_Nombre,' ',u.Usu_Apellidos) AS Docente, cc.Con_Descripcion AS Modalidad, SUM(CASE WHEN mt.Mat_Valor = 1 THEN 1 ELSE 0 END) AS Matriculados, (CASE WHEN cu_m.Matriculado = 1 THEN 1 ELSE 0 END) AS Inscrito FROM 
+                            ( SELECT cur.Cur_IdCurso, 1 AS Matriculado FROM curso cur
+                              INNER JOIN matricula_curso mat ON cur.Cur_IdCurso = mat.Cur_IdCurso
+                              WHERE cur.Cur_Estado = 1 AND cur.Row_Estado = 1 AND mat.Mat_Valor = 1 $andUsuario ) cu_m 
+                        RIGHT JOIN curso cr ON cu_m.Cur_IdCurso = cr.Cur_IdCurso
+                        LEFT JOIN matricula_curso mt ON cr.Cur_IdCurso = mt.Cur_IdCurso
+                        INNER JOIN constante cc ON cr.Moa_IdModalidad = cc.Con_Valor AND cc.Con_Codigo = 1000
+                        INNER JOIN usuario u ON cr.Usu_IdUsuario = u.Usu_IdUsuario $condicionActivos ) cur_so 
+                    LEFT JOIN valoracion_curso vc ON cur_so.Cur_IdCurso = vc.Cur_IdCurso 
+                    GROUP BY cur_so.Cur_IdCurso 
+                    LIMIT $registroInicio, $registrosXPagina " ;
+
+            $result = $this->_db->prepare($sql);
+            $result->execute();
+            return $result->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("elearning(cursoModel)", "getCursosPaginado", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
+
+    // Jhon Martinez
+    public function getConstante($cod, $valor = ""){
+        try{
+            $sql = " SELECT * FROM constante WHERE Con_Codigo = {$cod} ";
+            if ($valor!="" ){ $sql .= " AND Con_Valor = {$valor} "; }
+            $sql .= " AND Con_Estado = 1 AND Row_Estado = 1";
+            return $this->getArray($sql);
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("elearning(cursoModel)", "getConstante", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
     }
 }

@@ -202,7 +202,7 @@
         <div class="side-menu2">
           <li class="side-menu" style="position: relative">
             <i class="glyphicon glyphicon-book"></i>
-            <span> Mis Cursos (docente)</span>
+            <span> Mis Cursos </span>
           </li>
         </div>
     </ul>
@@ -210,7 +210,7 @@
         <div class="side-menu2">
           <li class="side-menu" style="position: relative">
             <i class="glyphicon glyphicon-list-alt"></i>
-            <span> Ficha Curso</span>
+            <span> Ficha Curso </span>
           </li>
         </div>
     </ul>
@@ -226,7 +226,7 @@
         <div class="side-menu2">
           <li class="side-menu" style="position: relative">
             <i class="glyphicon glyphicon-blackboard"></i>
-            <span> Tareas Asignadas</span>
+            <span> Tareas Asignadas </span>
           </li>
         </div>
     </ul>

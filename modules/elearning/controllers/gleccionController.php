@@ -33,7 +33,7 @@ class gleccionController extends elearningController {
     $Mmodel = $this->loadModel("_gestionModulo");
 
     $curso = $Cmodel->getCursoXId($curso);
-    $tipo = $Lmodel->getTipoLecccion( $curso["Mod_IdModCurso"]==2? " ": "" );
+    $tipo = $Lmodel->getTipoLecccion( $curso["Moa_IdModalidad"]==2? " ": "" );
     $lecciones = $Lmodel->getLecciones($modulo);
     $modulo = $Mmodel->getModuloId($modulo);
 

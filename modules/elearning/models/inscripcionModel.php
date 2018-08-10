@@ -5,9 +5,12 @@ class inscripcionModel extends Model {
     public function __construct() { parent::__construct(); }
 
     public function getInscripcion($usuario, $curso){
-        return $this->getArray("SELECT * FROM matricula_curso
-          WHERE Usu_IdUsuario = '{$usuario}'
-            AND Cur_IdCurso = '{$curso}' ");
+        try {
+            return $this->getArray("SELECT * FROM matricula_curso WHERE Usu_IdUsuario = '{$usuario}' AND Cur_IdCurso = '{$curso}' ");          
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("elearning(inscripcionModel)", "getInscripcion", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
     }
 
     public function getInscritos($curso){
@@ -24,8 +27,8 @@ class inscripcionModel extends Model {
       $pre = $this->getInscripcion($usuario, $curso);
 
       if($pre==null || count($pre)==0){
-        $this->execQuery("INSERT INTO matricula_curso(Usu_IdUsuario, Cur_IdCurso, Mat_Valor)
-                          VALUES({$usuario}, {$curso}, {$estado})");
+        $this->execQuery(" INSERT INTO matricula_curso(Usu_IdUsuario, Cur_IdCurso, Mat_Valor)
+                          VALUES({$usuario}, {$curso}, {$estado}) ");
       }
     }
 }
