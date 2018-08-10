@@ -306,7 +306,7 @@ class indexModel extends Model {
 
     public function insertarValoracion($Cur_IdCurso,$Usu_IdUsuario,$Val_Comentario,$Val_Valor){        
         try {                                        
-            $sql = "INSERT INTO valoracion_curso(Cur_IdCurso,Usu_IdUsuario,Val_Comentario,Val_Valor) VALUES($Cur_IdCurso,$Usu_IdUsuario,'$Val_Comentario',$Val_Valor)";                         
+            $sql = "INSERT INTO valoracion_curso(Cur_IdCurso,Usu_IdUsuario,Val_Comentario,Val_Valor,Val_FechaReg) VALUES($Cur_IdCurso,$Usu_IdUsuario,'$Val_Comentario',$Val_Valor,NOW())";                         
             $result = $this->_db->prepare($sql);                                                   
             $result->execute();
             return $result->fetch();
