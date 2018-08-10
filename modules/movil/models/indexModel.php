@@ -186,7 +186,10 @@ class indexModel extends Model {
     public function getUsuarioPorUsuarioPassword($Usu_Usuario,$Usu_Password){                
         try{
             $datos = $this->_db->query(
-                    "SELECT * FROM usuario WHERE Usu_Usuario = '$Usu_Usuario' AND Usu_Password = '" . Hash::getHash('sha1', $Usu_Password, HASH_KEY) ."'"
+                    "SELECT ISNULL(Usu_IdUsuario,''),ISNULL(Usu_Nombre,''),ISNULL(Usu_Apellidos,''),ISNULL(Usu_URLImage,''),
+                    ISNULL(Usu_GradoAcademico,''),ISNULL( Usu_Especialidad,''),ISNULL(Usu_Perfil,''),
+    ISNULL(Usu_DocumentoIdentidad,''),ISNULL( Usu_InstitucionLaboral,''),ISNULL(Usu_Cargo,''),ISNULL(Usu_Usuario,'') ,ISNULL(Usu_Password,'') 
+    FROM usuario WHERE Usu_Usuario = '$Usu_Usuario' AND Usu_Password = '" . Hash::getHash('sha1', $Usu_Password, HASH_KEY) ."'"
                     );
             return $datos->fetch(PDO::FETCH_ASSOC);
         } catch (PDOException $exception) {
