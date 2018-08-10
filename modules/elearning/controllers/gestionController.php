@@ -60,6 +60,7 @@ class gestionController extends elearningController {
     $matriculados = $_model->getMatriculados($id);
 
     $this->_view->setTemplate(LAYOUT_FRONTEND);
+    $this->_view->setCss(array('jp-matricula'));
     $this->_view->assign("curso", $curso[0]);
     $this->_view->assign("matriculados", $matriculados);
     $this->_view->renderizar("matricula");

@@ -75,8 +75,12 @@ $(document).on('ready', function () {
                     if(ckey_usuario == "administrador_foro"){
                         asignar_user_to_member($("input[name='rd_member_select']:checked").val(), $(this).attr("id_foro"), $("#s_lista_rol_foro").val(), $("#s_lista_rol_foro option:selected").attr("ckey"));
                     }else{
-                        alert("Sin permiso");
-                        $("#cargando").hide();
+                        if(ckey_usuario == "administrador"){
+                            asignar_user_to_member($("input[name='rd_member_select']:checked").val(), $(this).attr("id_foro"), $("#s_lista_rol_foro").val(), $("#s_lista_rol_foro option:selected").attr("ckey"));
+                        }else{
+                            alert("Sin permiso");
+                            $("#cargando").hide();
+                        }
                     }
                 }                
             }

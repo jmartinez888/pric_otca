@@ -74,7 +74,7 @@ class indexController extends usuariosController {
     }
 
     public function _paginacion_listaregistros($txtBuscar = false) {
-
+        
         //$this->validarUrlIdioma();
         $idRol = $this->getInt('idrol');        
         $pagina = $this->getInt('pagina');

@@ -30,19 +30,19 @@
                         {foreach from=$lista_tematica item=tematica}
                             {if $tematica.Lit_Discussions!="" || $tematica.Lit_Query!=""|| $tematica.Lit_Webinar!=""|| $tematica.Lit_Workshop!=""}
                             <div class="col-md-6 tematica-foro margin-r-0">
-                            <div class="row tem_titulo"><a class="link-foro" href="#"><h4>{$tematica.Lit_Nombre}</h4></a></div>
+                            <div class="row tem_titulo"><a class="link-foro" href="{$_layoutParams.root}foro/index/searchForo/{trim($tematica.Lit_Nombre)}"><h4>{$tematica.Lit_Nombre}</h4></a></div>
                          <div class="row detalles-tematica">
                                     {if $tematica.Lit_Discussions!=""}
-                                    <div class="col-md-4 item-tematica">Discusiones: {$tematica.Lit_Discussions}</div> 
+                                    <div class="col-md-4 item-tematica"><a class="simulalink" href="{$_layoutParams.root}foro/index/discussions">Discusiones: {$tematica.Lit_Discussions}</a></div>
                                     {/if}
                                     {if $tematica.Lit_Query!=""}
-                                    <div class="col-md-6 item-tematica">Consultas: {$tematica.Lit_Query}</div>  
+                                    <div class="col-md-6 item-tematica"><a class="simulalink" href="{$_layoutParams.root}foro/index/query">Consultas: {$tematica.Lit_Query}</a></div>  
                                     {/if}
                                     {if $tematica.Lit_Webinar!=""}
-                                    <div class="col-md-4 item-tematica">Webinars: {$tematica.Lit_Webinar}</div> 
+                                    <div class="col-md-4 item-tematica"><a class="simulalink" href="{$_layoutParams.root}foro/index/webinar">Webinars: {$tematica.Lit_Webinar}</a></div> 
                                     {/if}
                                     {if $tematica.Lit_Workshop!=""}
-                                    <div class="col-md-6 item-tematica">Workshop: {$tematica.Lit_Workshop}</div> 
+                                    <div class="col-md-6 item-tematica"><a class="simulalink" href="{$_layoutParams.root}foro/index/workshop">Workshop: {$tematica.Lit_Workshop}</a></div> 
                                     {/if}
                                     
                             <div class="row col-md-12 margin-t-5">
@@ -71,7 +71,7 @@
                                          <p style="text-align: justify;">{$foro.For_Resumen|truncate:120:"..."}</p>
                                     </div>
                                     {/if}
-                                    <div class="detalles-act-reciente">{$foro.Usu_Usuario} &nbsp;&nbsp;-&nbsp;&nbsp; hace {$foro.tiempo} &nbsp;&nbsp;-&nbsp;&nbsp; 3 votos &nbsp;&nbsp;-&nbsp;&nbsp; {$foro.For_TParticipantes|default:0} miembro(s) &nbsp;&nbsp;-&nbsp;&nbsp;{$foro.For_TComentarios|default:0} comentario(s)</div>
+                                    <div class="detalles-act-reciente">{$foro.Usu_Usuario} &nbsp;&nbsp;-&nbsp;&nbsp; hace {$foro.tiempo} &nbsp;&nbsp;-&nbsp;&nbsp; {$foro.votos} voto(s) &nbsp;&nbsp;-&nbsp;&nbsp; {$foro.For_TParticipantes|default:0} miembro(s) &nbsp;&nbsp;-&nbsp;&nbsp;{$foro.For_TComentarios|default:0} comentario(s)</div>
                         </div>
                         {/foreach}
                     </div>

@@ -18,6 +18,12 @@
               <!-- <div class="col-xs-3">
                  <span>MOOC</span>
               </div> -->
+
+<!--               {if strlen($curso.Cur_UrlBanner) >0 }
+              <img alt="Imagen" src="{BASE_URL}modules/elearning/views/cursos/img/portada/{$curso.Cur_UrlBanner}" />
+              {else}
+              <img alt="Imagen" src="{BASE_URL}modules/elearning/views/cursos/img/portada/default.png" /> -->
+
               {/if}
             </div>
             <div class="col-lg-6">
@@ -148,6 +154,19 @@
                     <span><strong>Inscrito:</strong>
                     {$inscripcion[0].Mat_FechaReg}</span>
                   </center>
+
+                  {if Session::get('id_usuario')}
+                  <div class="col-lg-12 p-rt-lt-0">
+                    <div class="progress progress-estilo">
+                      <div class="progress-bar progress-bar-striped" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: {$progreso.Porcentaje}%">
+                        <div class="progress-porcentaje">
+                          <strong>{$progreso.Porcentaje}% Completado</strong>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  {/if}
+
                 {/if}
               {else}
                 {if $curso.Usu_IdUsuario != Session::get("id_usuario")}
@@ -156,7 +175,7 @@
                   </a>
                 {else}
                   <a href="{BASE_URL}elearning/gestion/matriculados/{$curso.Cur_IdCurso}">
-                    <button class="btn btn-default btn-gestion">Gestión de Curso</button>
+                    <button class="btn btn-success btn-gestion">Gestión de Curso</button>
                   </a>
                 {/if}
               {/if}
@@ -173,17 +192,7 @@
             {/if}
           </div>
 
-          {if Session::get('id_usuario')}
-          <div class="col-lg-12">
-            <div class="progress progress-estilo">
-              <div class="progress-bar progress-bar-striped" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: {$progreso.Porcentaje}%">
-                <div class="progress-porcentaje">
-                  <strong>{$progreso.Porcentaje}% Completado</strong>
-                </div>
-              </div>
-            </div>
-          </div>
-          {/if}
+          
 
 
           {if $session==1 && count($modulo)>0 }

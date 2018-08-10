@@ -20,6 +20,7 @@
                     </select>
                 </div>
 
+
                 <div class="col-sm-12 col-md-6" id="div-margin-t-10">
                     <div class="input-group">
                         <input class="form-control" name="busqueda" placeholder="Buscar curso" value="{$busqueda}">
@@ -45,6 +46,11 @@
                     {/if}
                     <a href="{BASE_URL}elearning/cursos/curso/{$o.Cur_IdCurso}">
                         <div class="curso-item curso-sombra">
+
+                   <!--  <div class="curso-item curso-sombra">
+
+                        <form> -->
+
                             <div class="clasificacion">
                                 <span class="contador">{$o.Valoraciones}&nbsp; </span>
                                 {$foo=1}
@@ -60,6 +66,7 @@
                                     {/if}
                                 {/for}
                             </div>
+
                             <!--<span class="glyphicon glyphicon-bookmark ic-decoration"></span>-->
                             {if strlen($o.Cur_UrlBanner) >0 }
                                 <img class="curso-item-img" alt="Imagen" src="{BASE_URL}modules/elearning/views/cursos/img/portada/{$o.Cur_UrlBanner}" />
@@ -74,6 +81,45 @@
                                     <div class="col-xs-3 curso-item-mod {if $o.Moa_IdModalidad==1} mooc {else} lms {/if}">{$o.Modalidad}</div>
                                 </div>
                                 <hr class="cursos-hr">
+<!-- //desde aqui -->
+                        <!-- </form> 
+
+                        <!-<span class="glyphicon glyphicon-bookmark ic-decoration"></span>->
+                        {if strlen($o.Cur_UrlBanner) >0 }
+                            <img class="curso-item-img" alt="Imagen" src="{BASE_URL}modules/elearning/views/cursos/img/portada/{$o.Cur_UrlBanner}" />
+                        {else}
+                            <img class="curso-item-img" alt="Imagen" src="{BASE_URL}modules/elearning/views/cursos/img/portada/default.png" />
+                        {/if}
+
+                        <div class="col-md-12">
+                            <div class="row">
+
+                                {if $o.Usu_IdUsuario == Session::get("id_usuario")}
+                                    <a href="{BASE_URL}elearning/gestion/matriculados/{$o.Cur_IdCurso}">
+                                        <button class="btn btn-success btn-gestion-jp">Gestión</button>
+                                    </a>
+                                {/if}
+
+                                <h4 class="col-md-9 curso-item-title">
+                                    <strong>{$o.Cur_Titulo}</strong>
+                                </h4>
+                                <div class="col-md-3 curso-item-mod {if $o.Mod_IdModCurso==1} mooc {else} lms {/if}">{$o.Modalidad}</div>
+
+                                <!-<h4 class="curso-item-title">
+                                   <a href="{BASE_URL}elearning/cursos/curso/{$o.Cur_IdCurso}">
+                                   <strong>{$o.Cur_Titulo}</strong>
+                                  </a>
+                                </h4>->
+
+                            </div>
+                            <hr class="cursos-hr">
+
+                            {if $o.Mod_IdModCurso==1}
+                                <div class="curso-item-desc">
+                                    {substr($o.Cur_Descripcion, 0, 250)}...
+                                </div>
+                            <!-- {else}  -->          
+
                                 <div class="curso-item-desc">
                                     {substr($o.Cur_Descripcion, 0, 150)}...
                                 </div>
@@ -86,7 +132,12 @@
                                     <div><span class="glyphicon glyphicon-user"></span>
                                         <strong>&nbsp;Docente:</strong> {$o.Docente}</div>
                                 </div>
+
                             </div>
+
+                            <!-- {/if} -->
+
+
                         </div>
                     </a>
                     {if $c==1}

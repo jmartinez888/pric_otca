@@ -120,15 +120,6 @@ $(document).on('ready', function () {
         $(".capaEditar_"+$(this).attr("id_comentario_editar")).toggle(); //muestra el texto obtenido en el nuevo textarea
 
         $(".ocultar_archivos_list_" + $(this).attr("id_comentario_editar")).toggle();  //oculta/muestra los archivos originales
-        
-        // var div = $("#div_show_"+ $(this).attr("id_foro") + "_" + $(this).attr("id_comentario_editar"));
-        // if(div.is(':visible')){
-
-        // }else{
-        //     $("#div_show_"+ $(this).attr("id_foro") + "_" + $(this).attr("id_comentario_editar")).show(); 
-        // }
-        
-
     });
 
     $('body').on('click', '.cancelar_comentario_foro', function () {        
@@ -174,15 +165,50 @@ $(document).on('ready', function () {
             $("#idcomentario").val(id);
         });
     });
-        
+
+    //para el like del foro
+    $('body').on('click', '#ValorarForo', function () {       
+        valorar_foro($(this).attr("id_usuario"), $(this).attr("id_foro"), $(this).attr("valor"), $(this).attr("ajaxtpl"));
+    });       
+
+    //para el like del comentario del foro
+    $('body').on('click', '.valorar_comentario', function () {       
+        valorar_comentario_foro($(this).attr("id_usuario"),$(this).attr("id_comentario"), $(this).attr("valor"), $(this).attr("ajaxtpl"));
+    });  
 });
+
+function valorar_comentario_foro(id_usuario, ID, valor, ajaxtpl) {
+    $.post(_root_ + 'foro/index/registrarValoracion_Comentario_Foro',
+        {
+            id_usuario: id_usuario,
+            ID: ID,
+            valor: valor,
+            ajaxtpl: ajaxtpl
+        }, function (data) {
+        $("#valoraciones_comentarios_" + ID).html('');
+        $("#valoraciones_comentarios_" + ID).html(data);
+    });
+}
+
+function valorar_foro(id_usuario, ID, valor, ajaxtpl) {
+    $.post(_root_ + 'foro/index/registrarValoracion_Comentario_Foro',
+        {
+            id_usuario: id_usuario,
+            ID: ID,
+            valor: valor,
+            ajaxtpl: ajaxtpl
+        }, function (data) {
+        $("#valoraciones_foro").html('');
+        $("#valoraciones_foro").html(data);
+    });
+}
 
 function enviarReporte(id_foro, iCom_IdComentario, mensaje, tpl) {
     if(tpl == "ficha_foro"){
         $.post(_root_ + 'foro/index/ReportarComentario',
             {
                 mensaje: mensaje,
-                iCom_IdComentario, iCom_IdComentario,
+                iCom_IdComentario: iCom_IdComentario,
                 id_foro: id_foro,
                 tpl: tpl
             }, function (data) {
@@ -196,11 +222,11 @@ function enviarReporte(id_foro, iCom_IdComentario, mensaje, tpl) {
             $.post(_root_ + 'foro/index/ReportarComentario',
                 {
                     mensaje: mensaje,
-                    iCom_IdComentario, iCom_IdComentario,
+                    iCom_IdComentario: iCom_IdComentario,
                     id_foro: id_foro,
                     tpl: tpl
             }, function () {
-                $("#cargando").hide();
+                // $("#cargando").hide();
                 location.href = _root_ + "foro/index/ficha_comentario_completo/"+id_foro+"/"+iCom_IdComentario;
             });
         }        
@@ -229,7 +255,7 @@ function eliminar_comentario(id_foro, id_comentario, tpl) {
                     id_comentario: id_comentario,
                     tpl: tpl
             }, function () {
-                $("#cargando").hide();
+                // $("#cargando").hide();
                 location.href = _root_ + "foro/index/ficha_comentario_completo/"+id_foro+"/"+id_comentario;
             });
         }        
@@ -294,7 +320,7 @@ function editar_comentario(id_foro, id_usuario, descripcion, id_padre, iCom_IdCo
                     Fim_IdForo: Fim_IdForo, 
                     tpl: tpl
             }, function () {
-                $("#cargando").hide();
+                // $("#cargando").hide();
                 location.href = _root_ + "foro/index/ficha_comentario_completo/"+id_foro+"/"+iCom_IdComentario;
             });
         }        
