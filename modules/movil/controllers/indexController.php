@@ -1,5 +1,5 @@
 <?php
-class indexController extends movilController {
+class  indexController extends movilController {
     private $_model;    
     public function __construct($lang, $url){
         parent::__construct($lang, $url);
