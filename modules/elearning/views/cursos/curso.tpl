@@ -19,10 +19,6 @@
                  <span>MOOC</span>
               </div> -->
 
-<!--               {if strlen($curso.Cur_UrlBanner) >0 }
-              <img alt="Imagen" src="{BASE_URL}modules/elearning/views/cursos/img/portada/{$curso.Cur_UrlBanner}" />
-              {else}
-              <img alt="Imagen" src="{BASE_URL}modules/elearning/views/cursos/img/portada/default.png" /> -->
 
               {/if}
             </div>
