@@ -168,8 +168,15 @@ class indexModel extends Model {
         }
     }
 
-    public function getComentarios_x_idforo($iFor_IdForo) {
+    public function getComentarios_x_idforo($iFor_IdForo, $iPagina = 1, $iRegistrosXPagina = CANT_REG_PAG) {
         try {
+            // $registroInicio = 0;
+            // if ($iPagina > 0) {
+            //     $registroInicio = ($iPagina - 1) * $iRegistrosXPagina;                
+            // }
+            // $post = $this->_db->query(
+            //         "SELECT c.Com_IdComentario,c.Com_Descripcion,c.Com_Fecha,c.Com_Estado,c.For_IdForo,c.Idi_IdIdioma,c.Row_Estado,u.Usu_Nombre,u.Usu_Apellidos, u.Usu_IdUsuario FROM comentarios c INNER JOIN usuario u ON u.Usu_IdUsuario=c.Usu_IdUsuario WHERE c.For_IdForo={$iFor_IdForo} AND c.Row_Estado = 1 and Com_IdPadre IS NULL ORDER BY c.Com_Fecha DESC
+            //         LIMIT registroInicio, iRegistrosXPagina");
             $post = $this->_db->query(
                     "SELECT c.Com_IdComentario,c.Com_Descripcion,c.Com_Fecha,c.Com_Estado,c.For_IdForo,c.Idi_IdIdioma,c.Row_Estado,u.Usu_Nombre,u.Usu_Apellidos, u.Usu_IdUsuario FROM comentarios c INNER JOIN usuario u ON u.Usu_IdUsuario=c.Usu_IdUsuario WHERE c.For_IdForo={$iFor_IdForo} AND c.Row_Estado = 1 and Com_IdPadre IS NULL ORDER BY c.Com_Fecha DESC");
             return $post->fetchAll();

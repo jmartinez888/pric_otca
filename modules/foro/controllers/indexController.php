@@ -157,10 +157,7 @@ class indexController extends foroController {
             $idUsuario = "";
             $Rol_Ckey["Rol_Ckey"]="";   
 
-        } 
-        //print_r($usuario_foro); 
-        // echo $Rol_Ckey["Rol_Ckey"]; exit;
-        // exit;              
+        }             
         $this->_view->setTemplate(LAYOUT_FRONTEND);
         $this->_view->getLenguaje("foro_index_ficha");
         $this->_view->setCss(array("ficha_foro", "jp-ficha_foro"));
@@ -173,6 +170,127 @@ class indexController extends foroController {
         $this->_view->assign('titulo', $lenguaje["foro_ficha_titulo"] . " " . $foro["For_Titulo"]);
         $foro["Archivos"] = $this->_model->getArchivos_x_idforo($iFor_IdForo);
         $foro["For_Comentarios"] = $this->_model->getComentarios_x_idforo($iFor_IdForo);
+       
+        if ($foro["For_Funcion"] == "forum") {
+            $foro["Sub_Foros"] = $this->_model->getSubForo_x_idforo($iFor_IdForo);            
+        } else {
+            $foro["Sub_Foros"] = array();           
+        }
+
+        $foro1 = $foro["For_Comentarios"];
+        $foro["For_Comentarios"] = array();
+        for ($index = 0; $index < count($foro1); $index++) {
+            if ($index < CANT_REG_PAG) {
+                $foro["For_Comentarios"][$index] = $foro1[$index];
+                $foro["For_Comentarios"][$index]["Hijo_Comentarios"] = $this->_model->getComentarios_x_idcomentario($foro["For_Comentarios"][$index]["Com_IdComentario"]);
+                $foro["For_Comentarios"][$index]["Archivos"] = $this->_model->getArchivos_x_idcomentario($foro["For_Comentarios"][$index]["Com_IdComentario"]);
+
+                $valoracion_comentario = $this->_model->getValoracion_personal($idUsuario, $foro["For_Comentarios"][$index]["Com_IdComentario"]);
+                $foro["For_Comentarios"][$index]["valoracion_comentario"] = $valoracion_comentario["Nvaloracion_personal"];
+
+                $Nvaloraciones_comentario = $this->_model->getNvaloraciones($foro["For_Comentarios"][$index]["Com_IdComentario"]);
+                $foro["For_Comentarios"][$index]["Nvaloraciones_comentario"] = $Nvaloraciones_comentario["Nvaloraciones"];
+
+
+                $foro2 = $foro["For_Comentarios"][$index]["Hijo_Comentarios"];
+                $foro["For_Comentarios"][$index]["Hijo_Comentarios"] = array();
+
+                for ($j = 0; $j < count($foro2); $j++) {
+
+                    if ($j < CANT_REG_PAG) {
+                        $foro["For_Comentarios"][$index]["Hijo_Comentarios"][$j] = $foro2[$j];
+
+                        $valoracion_comentario = $this->_model->getValoracion_personal($idUsuario, $foro["For_Comentarios"][$index]["Hijo_Comentarios"][$j]["Com_IdComentario"]);
+                        $foro["For_Comentarios"][$index]["Hijo_Comentarios"][$j]["valoracion_comentario"] = $valoracion_comentario["Nvaloracion_personal"];
+
+                        $Nvaloraciones_comentario = $this->_model->getNvaloraciones($foro["For_Comentarios"][$index]["Hijo_Comentarios"][$j]["Com_IdComentario"]);
+                        $foro["For_Comentarios"][$index]["Hijo_Comentarios"][$j]["Nvaloraciones_comentario"] = $Nvaloraciones_comentario["Nvaloraciones"];
+
+
+                        $foro["For_Comentarios"][$index]["Hijo_Comentarios"][$j]["Archivos"] = $this->_model->getArchivos_x_idcomentario($foro["For_Comentarios"][$index]["Hijo_Comentarios"][$j]["Com_IdComentario"]);
+                    } else {
+                        // print_r($foro); exit;
+                        break;
+                    }
+                }
+            } else {
+                // print_r($foro["For_Comentarios"]); exit;
+                break;
+            }            
+        }    
+        //para mostrar los datos detalles de los subforos 
+        for ($i=0; $i<count($foro["Sub_Foros"]); $i++) {
+            $Nombre_propietario_subforo = $this->_model->getPropietario_foro($foro["Sub_Foros"][$i]["Usu_IdUsuario"]);
+            $foro["Sub_Foros"][$i]["Usu_Usuario"] = $Nombre_propietario_subforo["Usu_Nombre"];            
+            $foro["Sub_Foros"][$i]["tiempo"] = $this->getTiempo($foro["Sub_Foros"][$i]["For_FechaCreacion"]);
+            $Nvaloraciones_subforo = $this->_model->getNvaloraciones($foro["Sub_Foros"][$i]["For_IdForo"]);
+            $foro["Sub_Foros"][$i]["votos"] = $Nvaloraciones_subforo["Nvaloraciones"]; 
+            $Numero_participantes_subforo = $this->_model->getNumero_participantes_x_idForo($foro["Sub_Foros"][$i]["For_IdForo"]);
+            $foro["Sub_Foros"][$i]["For_TParticipantes"] = $Numero_participantes_subforo["numero_participantes"];
+            $Numero_comentarios_x_idsubForo = $this->_model->getNumero_comentarios_x_idForo($foro["Sub_Foros"][$i]["For_IdForo"]);  
+            $foro["Sub_Foros"][$i]["For_TComentarios"] = $Numero_comentarios_x_idsubForo["Numero_comentarios"];
+        }        
+        
+        $Nombre_propietario = $this->_model->getPropietario_foro($foro["Usu_IdUsuario"]);  
+        $Numero_comentarios_x_idForo = $this->_model->getNumero_comentarios_x_idForo($iFor_IdForo);  
+        $Numero_participantes_x_idForo = $this->_model->getNumero_participantes_x_idForo($iFor_IdForo); 
+        $tiempo = $this->getTiempo($foro["For_FechaCreacion"]);
+        $Nvaloraciones_foro = $this->_model->getNvaloraciones($iFor_IdForo);
+
+        $this->_view->assign('Nvaloraciones_foro', $Nvaloraciones_foro["Nvaloraciones"]); 
+        $this->_view->assign('Numero_participantes_x_idForo', $Numero_participantes_x_idForo["numero_participantes"]);
+        $this->_view->assign('Numero_comentarios_x_idForo', $Numero_comentarios_x_idForo["Numero_comentarios"]);
+        $this->_view->assign('nombre_usuario', $Nombre_propietario["Usu_Nombre"]);
+        $this->_view->assign('tiempo', $tiempo); 
+        $this->_view->assign('Rol_Ckey', $Rol_Ckey["Rol_Ckey"]); 
+        $this->_view->assign('linea_tematica', $linea_tematica["Lit_Nombre"]);
+        $this->_view->assign('facilitadores', $this->_model->getFacilitadores($iFor_IdForo));
+        $this->_view->assign('comentar_foro', $this->_permiso($iFor_IdForo, "comentar_foro"));
+        
+        $this->_view->assign('foro', $foro);
+        $this->_view->renderizar('ficha_foro');
+    }
+
+    public function _paginacion_listarComentarios()
+    {
+        $pagina         = $this->getInt('pagina');
+        $filas          = $this->getInt('filas');
+        $totalRegistros = $this->getInt('total_registros');
+        //Variables de Ajax_JavaScript
+        $this->validarUrlIdioma();
+        
+        $idUsuario = Session::get('id_usuario');
+        if(!empty($idUsuario)){
+            $Rol_Ckey = $this->_model->getRolForo(Session::get('id_usuario'), $iFor_IdForo); 
+            if(empty($Rol_Ckey)){
+                $Rol_Ckey = $this->_model->getRol_Ckey(Session::get('id_usuario')); 
+                if(empty($Rol_Ckey)){
+                    $Rol_Ckey["Rol_Ckey"] = "sin_rol"; 
+                }
+            }
+            $valoracion_foro = $this->_model->getValoracion_personal($idUsuario, $iFor_IdForo);
+            $this->_view->assign('valoracion_foro', $valoracion_foro["Nvaloracion_personal"]);   
+        }else{
+            $idUsuario = "";
+            $Rol_Ckey["Rol_Ckey"]="";   
+
+        }             
+        $this->_view->setTemplate(LAYOUT_FRONTEND);
+        $this->_view->getLenguaje("foro_index_ficha");
+        $this->_view->setCss(array("ficha_foro", "jp-ficha_foro"));
+        $this->_view->setJs(array("ficha_foro"));
+
+        $lenguaje = Session::get("fileLenguaje");
+
+        $paginador = new Paginador();
+        $paginador->paginar($totalRegistros, "listarComentarios", "", $pagina, $filas, true);
+
+        $foro = $this->_model->getForo_x_idforo($iFor_IdForo);
+        $linea_tematica = $this->_model->getLineaTematica($foro["Lit_IdLineaTematica"]);
+        // echo $linea_tematica["Lit_Nombre"];exit;
+        $this->_view->assign('titulo', $lenguaje["foro_ficha_titulo"] . " " . $foro["For_Titulo"]);
+        $foro["Archivos"] = $this->_model->getArchivos_x_idforo($iFor_IdForo);
+        $foro["For_Comentarios"] = $this->_model->getComentarios_x_idforo($iFor_IdForo, $pagina, $filas);
        
         if ($foro["For_Funcion"] == "forum") {
             $foro["Sub_Foros"] = $this->_model->getSubForo_x_idforo($iFor_IdForo);            
@@ -201,7 +319,7 @@ class indexController extends foroController {
 
                 $foro["For_Comentarios"][$index]["Hijo_Comentarios"][$j]["Archivos"] = $this->_model->getArchivos_x_idcomentario($foro["For_Comentarios"][$index]["Hijo_Comentarios"][$j]["Com_IdComentario"]);
             }
-        }
+        }       
 
         $Nombre_propietario = $this->_model->getPropietario_foro($foro["Usu_IdUsuario"]);  
         $Numero_comentarios_x_idForo = $this->_model->getNumero_comentarios_x_idForo($iFor_IdForo);  
@@ -209,7 +327,10 @@ class indexController extends foroController {
 
         $tiempo = $this->getTiempo($foro["For_FechaCreacion"]);
 
-        $Nvaloraciones_foro = $this->_model->getNvaloraciones($iFor_IdForo);
+        $Nvaloraciones_foro = $this->_model->getNvaloraciones($iFor_IdForo);        
+
+        $this->_view->assign('numeropagina', $paginador->getNumeroPagina());
+        $this->_view->assign('paginacion', $paginador->getView('paginacion_ajax_s_filas'));
          
         $this->_view->assign('Nvaloraciones_foro', $Nvaloraciones_foro["Nvaloraciones"]); 
         $this->_view->assign('Numero_participantes_x_idForo', $Numero_participantes_x_idForo["numero_participantes"]);

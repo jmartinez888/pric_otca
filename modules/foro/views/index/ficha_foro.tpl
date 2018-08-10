@@ -21,8 +21,16 @@
                         {/if}
                     </div>
                 </div>
-                <div class="col-lg-12 p-rt-lt-0">
+                <div class="col col-lg-10">
                     <h3 class="titulo-ficha">{$foro.For_Titulo}</h3>
+                </div>
+                <div class="col col-lg-2 text-center" style="padding-left: 10%;">
+                    <button title="Editar o Eliminar" class=" btn btn-default glyphicon glyphicon-option-horizontal dropdown-toggle opciones_comentario_{$foro.For_IdForo}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    </button >
+                     <ul class="dropdown-menu" style="left: -490%; z-index: 100 !important; top: 100%;">
+                        <li><a id_foro="{$foro.For_IdForo}" class="" style="cursor: pointer;">Editar</a></li>
+                        <li><a id_foro="{$foro.For_IdForo}" class="" style="cursor: pointer;">Eliminar</a></li>
+                    </ul>
                 </div>
                 <div class="col-lg-12 p-rt-lt-0" style="font-size: 12px;">
                     <div class="col-lg-6 p-rt-lt-0">
@@ -37,7 +45,58 @@
                 </div>
                 <div class="col-lg-12 contenido">
                     <p>{$foro.For_Descripcion|html_entity_decode}</p>
-                </div>
+                </div>                
+                {if $foro.For_Funcion=="forum"}
+                    {if count($foro.Sub_Foros)>0}
+                    <div class="col-lg-10">
+                        <label class="">Sub Discusiones:</label>  
+                        <hr class="cursos-hr">
+                            <ul class="col">
+                                {foreach from=$foro.Sub_Foros  item=sub_foro}
+                                    <li class="clearfix">
+                                        <div>
+                                            <a href="{$_layoutParams.root}foro/index/ficha/{$sub_foro.For_IdForo}" target="_blank">
+                                                <strong>{$sub_foro.For_Titulo}</strong>
+                                            </a>                                        
+                                            <br>
+                                            <a class="simulalink" style="color: black;" href="{$_layoutParams.root}foro/index/ficha/{$sub_foro.For_IdForo}" target="_blank">
+                                            {if strlen($sub_foro.For_Resumen)>150}
+                                            {substr($sub_foro.For_Resumen, 0, 150)}...
+                                            {else}
+                                            {$sub_foro.For_Resumen}
+                                            {/if}
+                                            </a>                                           
+                                            <!-- <div>
+                                                <i>Por: </i> 
+                                            </div>
+                                            <div class="pull-left">
+                                                Creado el: {$sub_foro.For_FechaCreacion|date_format:"%d-%m-%Y"}
+                                            </div>
+                                            <br></br>
+                                            <div class="pull-left">
+                                                Colaboraciones <span class="badge">{$sub_foro.For_TComentarios}</span>
+                                            </div> -->
+                                        </div>
+                                    </li>
+                                    <div class="detalles-act-reciente">{$sub_foro.Usu_Usuario} &nbsp;&nbsp;-&nbsp;&nbsp; hace {$sub_foro.tiempo} &nbsp;&nbsp;-&nbsp;&nbsp; {$sub_foro.votos} voto(s) &nbsp;&nbsp;-&nbsp;&nbsp; {$sub_foro.For_TParticipantes|default:0} miembro(s) &nbsp;&nbsp;-&nbsp;&nbsp;{$sub_foro.For_TComentarios|default:0} comentario(s)</div>
+                                    <br>
+                                    <!-- <hr class="cursos-hr"> -->
+                                {/foreach}
+                            </ul>
+                    </div>
+                    {/if}
+                    {if isset($foro.Sub_Foros.For_IdPadre)}
+                    <div class="col-lg-2" style="padding: 7%;padding-top: 0%;">
+                        <a type="button"  href="{$_layoutParams.root}foro/admin/form/new/forum/{$foro.For_IdForo}" class="btn btn-primary btn-sm" title="Nuevo Sub Foro">Nuevo</a>
+                    </div>
+                    {else}
+                        {if !isset($foro.For_IdPadre)}
+                        <div class="col-lg-2" style="padding: 7%;padding-top: 0%;">
+                            <a type="button"  href="{$_layoutParams.root}foro/admin/form/new/forum/{$foro.For_IdForo}" class="btn btn-primary btn-sm" title="Nuevo Sub Foro">Nuevo</a>
+                        </div>
+                        {/if}
+                    {/if}
+                {/if}
                 <div class="col-lg-12 p-rt-lt-0" style="font-size: 12px;">
                     <div class="col-lg-7 p-rt-lt-0">
                         {if $foro.For_PalabrasClaves != ""}
@@ -476,6 +535,9 @@
                                         </div><!-- Widget Area -->
                                     </div>
                                 {/if}
+
+                                <!-- Jhon Martinez -->
+                                <div class="col-xs-12" id="comentarioshijos_{$comentarios.Com_IdComentario}">
                                 {foreach from=$comentarios.Hijo_Comentarios item=hijo_comentarios}
                                     <div class="col-xs-12 media">
                                         <div class="col-md-1 media-left">
@@ -492,7 +554,7 @@
                                                     {if $Rol_Ckey=="participante_foro" && $_acl->Usu_IdUsuario() == $hijo_comentarios.Usu_IdUsuario}
                                                     <button title="Editar o Eliminar" class=" btn btn-default glyphicon glyphicon-option-horizontal dropdown-toggle opciones_comentario_{$hijo_comentarios.Com_IdComentario}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="right: 18px;">
                                                     </button >
-                                                     <ul class="dropdown-menu" style="left: -650%; z-index: 100 !important; top: 100%;">
+                                                    <ul class="dropdown-menu" style="left: -650%; z-index: 100 !important; top: 100%;">
                                                         <li><a comentario_="{$hijo_comentarios.Com_Descripcion}" id_comentario_editar="{$hijo_comentarios.Com_IdComentario}" id_foro="{$foro.For_IdForo}" class="editar_comentario_foro files_coment_editar" style="cursor: pointer;">Editar</a></li>
                                                         <li><a id_foro="{$foro.For_IdForo}" id_comentario_delete="{$hijo_comentarios.Com_IdComentario}" class="eliminar_comentario_foro" style="cursor: pointer;">Eliminar</a></li>
                                                         <li><a href="{$_layoutParams.root}foro/index/ficha_comentario_completo/{$foro.For_IdForo}/{$hijo_comentarios.Com_IdComentario}" target="_blank" comentario_="{$hijo_comentarios.Com_Descripcion}" id_comentario_editar="{$hijo_comentarios.Com_IdComentario}" id_foro="{$foro.For_IdForo}" class="" style="cursor: pointer;">Ver comentario en otra página</a></li>
@@ -606,11 +668,14 @@
                                                     {/if} 
                                                 <!-- hasta aca --> 
                                                 {else}
-                                                <button title="Editar o Eliminar" class=" btn btn-default glyphicon glyphicon-option-horizontal dropdown-toggle opciones_comentario_{$hijo_comentarios.Com_IdComentario}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="right: 600%;">
+                                                <button title="Editar o Eliminar" class=" btn btn-default glyphicon glyphicon-option-horizontal dropdown-toggle opciones_comentario_{$hijo_comentarios.Com_IdComentario}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="right: 18px;">
                                                 </button >
-                                                     <ul class="dropdown-menu" style="left: -670%; z-index: 100 !important; top: 100%;">
+                                                    <!--  <ul class="dropdown-menu" style="left: -670%; z-index: 100 !important; top: 100%;">
                                                         <li><a href="{$_layoutParams.root}foro/index/ficha_comentario_completo/{$foro.For_IdForo}/{$hijo_comentarios.Com_IdComentario}" target="_blank" comentario_="{$hijo_comentarios.Com_Descripcion}" id_comentario_editar="{$hijo_comentarios.Com_IdComentario}" id_foro="{$foro.For_IdForo}" class="" style="cursor: pointer;">Ver comentario en otra página</a></li>
-                                                    </ul>       
+                                                    </ul>  --> 
+                                                    <ul class="dropdown-menu" style="left: -650%; z-index: 100 !important; top: 100%;">
+                                                        <li><a href="{$_layoutParams.root}foro/index/ficha_comentario_completo/{$foro.For_IdForo}/{$hijo_comentarios.Com_IdComentario}" target="_blank" comentario_="{$hijo_comentarios.Com_Descripcion}" id_comentario_editar="{$hijo_comentarios.Com_IdComentario}" id_foro="{$foro.For_IdForo}" class="" style="cursor: pointer;">Ver comentario en otra página</a></li>
+                                                    </ul>      
                                                 {/if}
                                                 </div>
                                             </h4>
@@ -644,7 +709,7 @@
                                                 </div>  
                                                 {else}
                                                 <!-- valoraciones -->
-                                                <div id="valoraciones_comentarios_{$hijo_comentarios.Com_IdComentario}" class="pull-right" style="padding-left:  0%;width: 23%;">
+                                                <div id="valoraciones_comentarios_{$hijo_comentarios.Com_IdComentario}" class="pull-right" style="padding-left:  0%;">
                                                     <strong class="col col-xs-1 pull-right">&nbsp;{$hijo_comentarios.Nvaloraciones_comentario}&nbsp;</strong>
                                                     <span class="col-xs-1 pull-right" style="padding-left:  1%; padding-right:  1%; width: 16%;">
                                                         {if $hijo_comentarios.valoracion_comentario == 1}
@@ -720,11 +785,17 @@
                                         </div>
                                     </div>                          
                                 {/foreach}
+                                    <!-- <div class="col-xs-12 text-center ">
+                                        <span class="text-success btn-default"> Ver más comentarios </span>
+                                    </div>  -->
+                                <div>
+                                <!-- Jhon Martinez -->
+                                </div>
+                                </div>
                             </div>
                         </div>                
                     {/foreach}
                 </div>
-                 {$paginacion|default:""}
             </div>
             <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
                 <div class="addon">
@@ -774,37 +845,7 @@
                             {/foreach}
                         </ul>
                     </div>
-                {/if}
-                {if $foro.For_Funcion=="forum"}
-                <div class="addon">
-                    <label class="tit-integrante">Sub Foros</label>
-                    <div style="padding: 10px">
-                        <a type="button"  href="{$_layoutParams.root}foro/admin/form/new/forum/{$foro.For_IdForo}" class="btn btn-primary btn-sm" title="Nuevo Sub FOro">Nuevo</a>
-                    </div>
-                    {if count($foro.Sub_Foros)>0}
-                        <ul>
-                            {foreach from=$foro.Sub_Foros  item=sub_foro}
-                                <li class="clearfix">
-                                    <div >
-                                        <a href="{$_layoutParams.root}foro/index/ficha/{$sub_foro.For_IdForo}" target="_blank">
-                                            <strong>{$sub_foro.For_Titulo}</strong>
-                                        </a>
-                                        <div>
-                                            <i>Por: </i> 
-                                        </div>
-                                        <div class="pull-left">
-                                            {$sub_foro.For_FechaCreacion|date_format:"%d-%m-%Y"}
-                                        </div>
-                                        <div class="pull-right">
-                                            Colaboraciones <span class="badge">{$sub_foro.For_TComentarios}</span>
-                                        </div>
-                                    </div>
-                                </li>
-                            {/foreach}
-                        </ul>
-                    {/if}
-                </div>
-                {/if}
+                {/if}               
 
                 {if Session::get('autenticado')}
                     {if !$comentar_foro && $Rol_Ckey != "administrador_foro" && $Rol_Ckey != "administrador"}

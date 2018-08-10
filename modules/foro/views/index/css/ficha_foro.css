@@ -447,5 +447,10 @@ and open the template in the editor.
     cursor: pointer;
 }
 
+.detalles-act-reciente{
+    padding-bottom: 10px;
+    font-size: 12px;
+    border-bottom: 0.2px solid #ddd;
+}
 
 

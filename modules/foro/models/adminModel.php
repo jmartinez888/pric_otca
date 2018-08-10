@@ -251,7 +251,6 @@ class adminModel extends Model
             if ($iFor_IdPadre == 0) {
                 $iFor_IdPadre = null;
             }
-
             $sql    = "call s_u_foro(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
             $result = $this->_db->prepare($sql);
             $result->bindParam(1, $iFor_IdForo, PDO::PARAM_INT);
@@ -387,9 +386,14 @@ class adminModel extends Model
     public function updestadoRowForo($iFor_IdForo, $iRow_Estado)
     {
         try {
-            $foro = $this->_db->query(
-                "UPDATE foro SET Row_Estado = $iRow_Estado where For_IdForo = $iFor_IdForo"
-            );
+            if ($iRow_Estado == 0) {
+                $foro = $this->_db->query(
+                "UPDATE foro SET Row_Estado = 1 where For_IdForo = {$iFor_IdForo}");
+            }
+            if ($iRow_Estado == 1) {
+                $foro = $this->_db->query(
+                "UPDATE foro SET Row_Estado = 0 where For_IdForo = {$iFor_IdForo}");
+            }
 
             return $foro->rowCount(PDO::FETCH_ASSOC);
         } catch (PDOException $exception) {

@@ -254,8 +254,9 @@ class adminController extends foroController
     public function _eliminarForo()
     {
         $id_foro = $this->getInt('id_foro');
+        $estado = $this->getInt('estado');
 
-        $this->_model->updestadoRowForo($id_foro, 0);
+        $this->_model->updestadoRowForo($id_foro, $estado);
 
         $this->_paginacion_listarForo();
     }
