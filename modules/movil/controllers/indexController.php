@@ -84,13 +84,81 @@ class  indexController extends movilController {
         $usuarios = $this->_model->getUsuarioPorId($Usu_IdUsuario);            
         $this->retornar($usuarios,"usuarios");                       
     } 
+     public function getTiempo($fecha_inicial){
+        $tiempo ="";
+        $hora_servidor = $this->_model->getHora_Servidor();
+        $fechainicial = new DateTime($fecha_inicial);
+    
+        $fechafinal = new DateTime($hora_servidor["hora_servidor"]);
+        $diferencia = $fechainicial->diff($fechafinal);
+        $meses = ( $diferencia->y * 12 ) + $diferencia->m;
+        if($diferencia->y < 1){
+            if ($meses<1) {
+                if ($diferencia->d < 1) {
+                    if ($diferencia->h < 1) {                        
+                        if($diferencia->i < 1){
+                            $tiempo = " un momento ";                                        
+                        }else{
+                            if($diferencia->i == 1){
+                                $tiempo = $diferencia->i . " minuto ";
+                            }else{
+                                $tiempo = $diferencia->i . " minutos ";                  
+                            }
+                              
+                        }                 
+                    }else{
+                        if($diferencia->h == 1){
+                            $tiempo = $diferencia->h . " hora ";
+                        }else{
+                            $tiempo = $diferencia->h . " horas ";
+                        }                             
+                    } 
+                }else{
+                    if($diferencia->d == 1){
+                        $tiempo = $diferencia->d . " día ";
+                    }else{
+                        $tiempo = $diferencia->d . " días ";
+                    } 
+                }        
+            }else{
+                if($diferencia->m == 1){
+                    $tiempo = $diferencia->m . " mes ";
+                }else{
+                    $tiempo = $diferencia->m . " meses ";
+                }                
+            }
+        }else{
+            if($diferencia->y == 1){
+                    $tiempo = $diferencia->y . " año ";
+            }else{
+                $tiempo = $diferencia->y . " años ";
+            } 
+        }
+        return $tiempo;
+    }
     public function getUsuariosCursos($Usu_IdUsuario=0) {                
         $usuarios_cursos = $this->_model->getUsuariosCursos($Usu_IdUsuario);            
         $this->retornar($usuarios_cursos,"usuarios_cursos");                       
     }  
     public function getValoraciones($Cur_IdCurso=0) {                
-        $valoraciones = $this->_model->getValoraciones($Cur_IdCurso);            
-        $this->retornar($valoraciones,"valoraciones");                       
+        $valoraciones = $this->_model->getValoraciones($Cur_IdCurso); 
+        if ($valoraciones) {
+            $nuevasValoraciones=array(); 
+            foreach ($valoraciones as $clave=>$valor) {           
+                $Tiempo=$this->getTiempo($valor[3]);
+                $reemplazo=array(3=>"$Tiempo", "Val_FechaReg"=>"$Tiempo");
+                array_push($nuevasValoraciones, array_replace($valor, $reemplazo));
+            }
+            $datos["estado"] = 1;
+            $datos["valoraciones"] = $nuevasValoraciones;
+            print json_encode($datos);
+        } else {
+            print json_encode(
+                array(
+                "estado" => 2,
+                "mensaje" => "No hay valoraciones"
+            ));
+        }                      
     } 
     public function iniciarSesion($Usu_usuario=0,$Usu_Password=0) {        
         $usuario = $this->_model->getUsuarioPorUsuarioPassword($Usu_usuario,$Usu_Password);
