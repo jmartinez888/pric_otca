@@ -107,10 +107,10 @@ class indexModel extends Model {
                 INNER JOIN modulo_curso MC ON L1.Moc_IdModuloCurso = MC.Moc_IdModuloCurso
                 inner join curso cur ON MC.Cur_IdCurso=cur.Cur_IdCurso
                 INNER JOIN constante CC ON CC.Con_Valor=cur.Moa_IdModalidad AND CC.Con_Codigo=1000
-                INNER JOIN matricula_curso Mat ON cur.Cur_IdCurso = Mat.Cur_IdCurso
+                INNER JOIN matricula_curso mat ON cur.Cur_IdCurso = mat.Cur_IdCurso
                 WHERE cur.Cur_Estado=1 AND cur.Row_Estado=1 AND
                 L1.Lec_Estado = 1 AND L1.Row_Estado = 1
-                AND MC.Moc_Estado = 1 AND MC.Row_Estado = 1 AND Mat.Mat_Valor = 1 AND  mat.Usu_IdUsuario=$Usu_IdUsuario
+                AND MC.Moc_Estado = 1 AND MC.Row_Estado = 1 AND mat.Mat_Valor = 1 AND  mat.Usu_IdUsuario=$Usu_IdUsuario
                 AND CC.Con_Descripcion LIKE '%$Con_Descripcion%' AND cur.Cur_Titulo LIKE '%$Cur_Titulo%'
                 GROUP by MC.Cur_IdCurso
             )Y "
