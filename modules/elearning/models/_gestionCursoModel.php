@@ -50,7 +50,7 @@ class _gestionCursoModel extends Model {
 
   public function getLeccionActiva($id){
     $sql = "SELECT * FROM leccion L
-            INNER JOIN modulo_curso MC ON L.Mod_IdModulo = MC.Mod_IdModulo
+            INNER JOIN modulo_curso MC ON L.Moc_IdModuloCurso = MC.Moc_IdModuloCurso
             INNER JOIN curso C ON MC.Cur_IdCurso = C.Cur_IdCurso
             WHERE L.Lec_FechaHasta < NOW()
             ORDER BY L.Lec_FechaDesde ASC LIMIT 1";
@@ -60,10 +60,10 @@ class _gestionCursoModel extends Model {
 
   public function getModalidadCurso() {
       $sql = "SELECT
-                C.Con_Valor as Mod_IdModCurso,
-                C.Con_Descripcion as Mod_Titulo,
+                C.Con_Valor as Moa_IdModalidad,
+                C.Con_Descripcion as Moc_Titulo,
                 (SELECT Con_Descripcion FROM constante
-                  WHERE Con_Codigo = 1100 AND Con_Valor = C.Con_Valor) as Mod_Descripcion
+                  WHERE Con_Codigo = 1100 AND Con_Valor = C.Con_Valor) as Moc_Descripcion
               FROM constante C
               WHERE C.Con_Estado = 1 AND C.Row_Estado = 1
                 AND C.Con_Codigo = 1000 AND C.Con_Codigo <> C.Con_Valor";
@@ -79,11 +79,12 @@ class _gestionCursoModel extends Model {
   }
 
   public function getCursoXDocente($id, $busqueda = "") {
-      $sql = "SELECT * FROM curso
-              WHERE Usu_IdUsuario = {$id}
-                AND Row_Estado = 1";
+      $sql = "SELECT * FROM curso c
+              INNER JOIN usuario u ON c.Usu_IdUsuario = u.Usu_IdUsuario
+              WHERE c.Usu_IdUsuario = {$id}
+                AND c.Row_Estado = 1";
       if( strlen($busqueda) ){
-        $sql .=" AND Cur_Titulo like '%{$busqueda}%' ";
+        $sql .=" AND Cur_Titulo like '%{$busqueda}%' AND Cur_Descripcion like '%{$busqueda}%'";
       }
       //echo $sql; exit;
       return $this->getArray($sql);
@@ -99,8 +100,8 @@ class _gestionCursoModel extends Model {
   }
 
   public function saveCurso($usuario, $modalidad, $titulo, $descripcion){
-    $this->execQuery("INSERT INTO curso(Usu_IdUsuario, Mod_IdModCurso, Cur_Titulo, Cur_Descripcion, Cur_Estado)
-      VALUES($usuario, $modalidad, '$titulo', '$descripcion', 0)");
+    $this->execQuery("INSERT INTO curso(Usu_IdUsuario, Cur_UrlBanner, Moa_IdModalidad, Cur_Titulo, Cur_Descripcion, Cur_Estado)
+      VALUES($usuario, 'default.jpg', $modalidad, '$titulo', '$descripcion', 0)");
   }
 
   public function updateEstadoCurso($curso, $estado){
@@ -166,6 +167,21 @@ class _gestionCursoModel extends Model {
   public function updateBannerCurso($curso, $banner){
     $sql = "UPDATE curso SET Cur_UrlBanner = '{$banner}' WHERE Cur_IdCurso = '{$curso}'";
     $this->execQuery($sql);
+  }
+
+  //Jhon Martinez
+  public function updateVideoCurso($curso, $video){
+    try {
+        $sql = " UPDATE curso SET Cur_UrlVideoPresentacion = '{$video}' WHERE Cur_IdCurso = '{$curso}' ";
+         // $this->execQuery($sql);
+         $result = $this->_db->prepare($sql);                                                   
+          $result->execute();
+          return $result->rowCount(PDO::FETCH_ASSOC);
+    } catch (PDOException $exception) {
+        $this->registrarBitacora("elearning(_gestionCursoModel)", "updateVideoCurso", "Error Model", $exception);
+        return $exception->getTraceAsString();
+    } 
+    
   }
 
 

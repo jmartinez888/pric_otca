@@ -7,15 +7,15 @@ class leccionModel extends Model {
     public function validarLeccion($leccion, $modulo, $usuario){
       if($leccion==""){
         $sql = "SELECT MIN(L.Lec_IdLeccion) as Lec_IdLeccion FROM modulo_curso M
-                INNER JOIN leccion L ON L.Mod_IdModulo = M.Mod_IdModulo
-                WHERE M.Mod_IdModulo = {$modulo}
-                  AND M.Mod_Estado = 1 AND M.Row_Estado = 1
+                INNER JOIN leccion L ON L.Moc_IdModuloCurso = M.Moc_IdModuloCurso
+                WHERE M.Moc_IdModuloCurso = {$modulo}
+                  AND M.Moc_Estado = 1 AND M.Row_Estado = 1
                   AND L.Lec_Estado = 1 AND L.Row_Estado = 1";
       }else{
         $sql = "SELECT L.Lec_IdLeccion FROM leccion L INNER JOIN
-                (SELECT Mod_IdModulo, Lec_IdLeccion FROM leccion WHERE Lec_IdLeccion = {$leccion}
+                (SELECT Moc_IdModuloCurso, Lec_IdLeccion FROM leccion WHERE Lec_IdLeccion = {$leccion}
                 AND Lec_Estado = 1 AND Row_Estado = 1)X
-                ON L.Mod_IdModulo = X.Mod_IdModulo AND L.Lec_IdLeccion < X.Lec_IdLeccion
+                ON L.Moc_IdModuloCurso = X.Moc_IdModuloCurso AND L.Lec_IdLeccion < X.Lec_IdLeccion
                   AND L.Lec_Estado = 1 AND L.Row_Estado = 1";
       }
       $previo = $this->getArray($sql);
@@ -56,17 +56,17 @@ class leccionModel extends Model {
             (SELECT IFNULL(
               MAX(PC.Lec_IdLeccion),
               (SELECT MIN(L.Lec_IdLeccion) as Lec_IdLeccion FROM leccion L
-              WHERE L.Mod_IdModulo = {$modulo})
+              WHERE L.Moc_IdModuloCurso = {$modulo})
             ) as Lec_IdLeccion
             FROM leccion LE
             LEFT JOIN progreso_curso PC ON PC.Lec_IdLeccion = LE.Lec_IdLeccion
-            WHERE LE.Mod_IdModulo = {$modulo} AND PC.Usu_IdUsuario = {$usuario}
+            WHERE LE.Moc_IdModuloCurso = {$modulo} AND PC.Usu_IdUsuario = {$usuario}
             AND PC.Pro_Valor = 1 AND LE.Lec_Estado = 1 AND LE.Row_Estado = 1)";
           }else{
             $sql = "SELECT * FROM leccion
             WHERE Lec_IdLeccion =
             (SELECT MIN(L.Lec_IdLeccion) as Lec_IdLeccion FROM leccion L
-            WHERE L.Mod_IdModulo = {$modulo})
+            WHERE L.Moc_IdModuloCurso = {$modulo})
             AND Lec_Estado = 1 AND Row_Estado = 1";
           }
         }else{
@@ -80,7 +80,7 @@ class leccionModel extends Model {
       
       if($prev!=null && count($prev)>0){
         $leccion = $prev[0];
-        $lecciones = $this->getLecciones($leccion["Mod_IdModulo"]);
+        $lecciones = $this->getLecciones($leccion["Moc_IdModuloCurso"]);
 
         $clave = array_search($leccion["Lec_IdLeccion"], array_column($lecciones, "Lec_IdLeccion"));
         $leccion["Index"] = $clave + 1;
@@ -92,7 +92,7 @@ class leccionModel extends Model {
     }
 
     public function getLecciones($modulo, $usuario = ""){
-      $sql = "SELECT * FROM leccion WHERE Mod_IdModulo = {$modulo}
+      $sql = "SELECT * FROM leccion WHERE Moc_IdModuloCurso = {$modulo}
               AND Lec_Estado = 1 AND Row_Estado = 1
               ORDER BY Lec_IdLeccion ASC";
       $lecciones = $this->getArray($sql);
@@ -142,9 +142,9 @@ class leccionModel extends Model {
     /* PARA EL CASO LMS*/
     public function getLeccionesLMS($curso){
       $sql = "SELECT * FROM leccion L
-              INNER JOIN modulo_curso M ON L.Mod_IdModulo = M.Mod_IdModulo
+              INNER JOIN modulo_curso M ON L.Moc_IdModuloCurso = M.Moc_IdModuloCurso
               INNER JOIN curso C ON M.Cur_IdCurso = C.Cur_IdCurso AND C.Cur_IdCurso = {$curso}
-              WHERE C.Cur_Estado = 1 AND M.Mod_Estado = 1 AND L.Lec_Estado = 1
+              WHERE C.Cur_Estado = 1 AND M.Moc_Estado = 1 AND L.Lec_Estado = 1
                 AND C.Row_Estado = 1 AND M.Row_Estado = 1 AND L.Row_Estado = 1
               ORDER BY L.Lec_FechaDesde ASC";
       $lecciones = $this->getArray($sql);

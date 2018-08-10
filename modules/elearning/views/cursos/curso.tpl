@@ -1,20 +1,29 @@
 <input type="text" id="inHiddenCurso" value="{$curso.Cur_IdCurso}" hidden="hidden"> <!-- RODRIGO 20180607 -->
-<div class="col-lg-12">
-  <div class="col-lg-12 referencia-curso-total">
-    <a class="referencia-curso" href="{BASE_URL}elearning/cursos/">Cursos</a>  /  {$curso.Cur_Titulo}
+<div class="col col-lg-12">
+  <div class="col-lg-12">
+    <div class="col-lg-12 referencia-curso-total">
+      <a class="referencia-curso" href="{BASE_URL}elearning/cursos/">Cursos</a>  /  {$curso.Cur_Titulo}
+    </div>
   </div>
   {include file='modules/elearning/views/cursos/menu/lateral.tpl'}
-  <div class="col-lg-10" style="margin-top: 20px">
+  <div class="col col-lg-10" style="margin-top: 20px">
     <div class="col-lg-12">
-
       <div class="panel panel-default">
         <div class="panel-body">
           <div class="col-lg-12" style="padding-left: 0px; padding-right: 0px;">
             <div class="col-lg-3 img-curso">
-              {if strlen($curso.Cur_UrlBanner) >0 }
+              <img src="{BASE_URL}modules/elearning/views/cursos/img/portada/{$curso.Cur_UrlBanner}" />
+              {if $curso.Moa_IdModalidad == 1}
+              <div class="col-xs-12 text-center mooc" style="color: white; font-weight: bold; font-size: 18px;">MOOC</div>
+              <!-- <div class="col-xs-3">
+                 <span>MOOC</span>
+              </div> -->
+
+<!--               {if strlen($curso.Cur_UrlBanner) >0 }
               <img alt="Imagen" src="{BASE_URL}modules/elearning/views/cursos/img/portada/{$curso.Cur_UrlBanner}" />
               {else}
-              <img alt="Imagen" src="{BASE_URL}modules/elearning/views/cursos/img/portada/default.png" />
+              <img alt="Imagen" src="{BASE_URL}modules/elearning/views/cursos/img/portada/default.png" /> -->
+
               {/if}
             </div>
             <div class="col-lg-6">
@@ -32,6 +41,9 @@
                 <a class="btn fa fa-twitter im_sociales" id="im_sociales" style="background: #55ACEE" href="#"></a>
                 <a class="btn fa fa-google-plus im_sociales" id="im_sociales" style="background: #C03A2A" href="#"></a>
             </div>
+
+            
+
           </div>
 
           <div class="col-lg-12">
@@ -39,7 +51,7 @@
           </div>
 
           <div class="col-lg-8">
-            <iframe class="video-intro" width="100%" height="310" src="https://www.youtube.com/embed/eBVvD85Ml2c" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+            <iframe class="video-intro" width="100%" height="310" src="https://www.youtube.com/embed/{$curso.Cur_UrlVideoPresentacion}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
           </div>
 
           <div class="col-lg-4">
@@ -158,7 +170,7 @@
                 {/if}
               {else}
                 {if $curso.Usu_IdUsuario != Session::get("id_usuario")}
-                  <a href="{BASE_URL}elearning/cursos/_inscripcion/{$curso.Mod_IdModCurso}/{$curso.Cur_IdCurso}">
+                  <a href="{BASE_URL}elearning/cursos/_inscripcion/{$curso.Moa_IdModalidad}/{$curso.Cur_IdCurso}">
                     <button class="btn btn-group btn-inscribir">Inscribirme</button>
                   </a>
                 {else}
@@ -197,11 +209,11 @@
                     <img class="img-modulo" src="{BASE_URL}modules/elearning/views/cursos/img/contador-modulo-{$index}.png"/>
                     <strong class="ficha-mod-icon"></strong>
                   </div>
-                  <div class="col-lg-10 ficha-mod-title"> <strong>{$o.Mod_Titulo}</strong> </div>
-                  <div class="col-lg-10 ficha-mod-desc">{$o.Mod_Descripcion}</div>
+                  <div class="col-lg-10 ficha-mod-title"> <strong>{$o.Moc_Titulo}</strong> </div>
+                  <div class="col-lg-10 ficha-mod-desc">{$o.Moc_Descripcion}</div>
                   {if ($o.Disponible==1 && isset($inscripcion) && count($inscripcion)>0) || ($curso.Usu_IdUsuario == Session::get('id_usuario') && $o.Disponible==1)}
                   <div class="col-lg-12">
-                    <a href="{BASE_URL}elearning/cursos/modulo/{$curso.Cur_IdCurso}/{$o.Mod_IdModulo}/{$o.PrimerLeccion}">
+                    <a href="{BASE_URL}elearning/cursos/modulo/{$curso.Cur_IdCurso}/{$o.Moc_IdModuloCurso}/{$o.PrimerLeccion}">
                       <button class="btn btn-success btn-modulo pull-right">
                         {if $o.Completo == 0}
                         Iniciar - {$o.Porcentaje}% completado

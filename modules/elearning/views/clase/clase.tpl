@@ -31,7 +31,7 @@
 <input value="{$leccion.Lec_IdLeccion}" id="hiddenLeccion" hidden="hidden" />
 <div class="row gradiente">
   <div class="col-lg-5 tittle-modulo ">
-     <h4><strong> Módulo {$modulo.Index}: {$modulo["Mod_Titulo"]}</strong></h4>
+     <h4><strong> Módulo {$modulo.Index}: {$modulo["Moc_Titulo"]}</strong></h4>
   </div>
   <div class="col-lg-5 derecha" style="margin-top: 5px !important">
       <span>Lección {$leccion["Index"]} de {count($lecciones)}</span>
@@ -194,7 +194,7 @@
           <div id="placeholder-div1"></div>
 
           {if $usuario==$ocurso.Usu_IdUsuario}
-          <a href="{BASE_URL}elearning/clase/finalizar/{$curso}/{$modulo.Mod_IdModulo}/{$leccion.Lec_IdLeccion}">
+          <a href="{BASE_URL}elearning/clase/finalizar/{$curso}/{$modulo.Moc_IdModuloCurso}/{$leccion.Lec_IdLeccion}">
             <button class="btn btn-success" id="btnFinalizarClase" style="margin-bottom: 10px">
               Finalizar lección
             </button>
