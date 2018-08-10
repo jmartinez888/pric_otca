@@ -198,7 +198,7 @@ class indexModel extends Model {
                     IFNULL(Usu_GradoAcademico,'"."') AS Usu_GradoAcademico,IFNULL( Usu_Especialidad,'"."') AS Usu_Especialidad,IFNULL(Usu_Perfil,'"."') AS Usu_Perfil,
           IFNULL(Usu_DocumentoIdentidad,'"."') AS Usu_DocumentoIdentidad,IFNULL( Usu_InstitucionLaboral,'"."') AS Usu_InstitucionLaboral,IFNULL(Usu_Cargo,'"."') AS Usu_Cargo,IFNULL(Usu_Usuario,'"."') AS Usu_Usuario ,IFNULL(Usu_Password,'"."')  AS Usu_Password 
             FROM usuario WHERE Usu_Usuario = '$Usu_Usuario' AND Usu_Password = '" . Hash::getHash('sha1', $Usu_Password, HASH_KEY) ."'" );
-            return $datos->fetch(PDO::FETCH_ASSOC);
+            return $datos->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $exception) {
             $this->registrarBitacora("movil(indexModel)", "getUsuarioPorUsuarioPassword", "Error Model", $exception);
             return $exception->getTraceAsString();
