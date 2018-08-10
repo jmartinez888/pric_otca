@@ -183,14 +183,21 @@ class indexModel extends Model {
         );              
         return $sql->fetchAll();                
     } 
-    public function getUsuarioPorUsuarioPassword($Usu_Usuario,$Usu_Password){                
+    public function getUsuarioPorUsuarioPassword($Usu_Usuario,$Usu_Password){          
+      
         try{
-            $datos = $this->_db->query(
-                    "SELECT ISNULL(Usu_IdUsuario,''),ISNULL(Usu_Nombre,''),ISNULL(Usu_Apellidos,''),ISNULL(Usu_URLImage,''),
-                    ISNULL(Usu_GradoAcademico,''),ISNULL( Usu_Especialidad,''),ISNULL(Usu_Perfil,''),
-    ISNULL(Usu_DocumentoIdentidad,''),ISNULL( Usu_InstitucionLaboral,''),ISNULL(Usu_Cargo,''),ISNULL(Usu_Usuario,'') ,ISNULL(Usu_Password,'') 
+            /*
+             $datos = $this->_db->query(
+                    "SELECT Usu_IdUsuario,Usu_Nombre,Usu_ApellidoS,Usu_URLImage,
+                    Usu_GradoAcademico,Usu_Especialidad,Usu_Perfil,Usu_DocumentoIdentidad, Usu_InstitucionLaboral,Usu_Cargo,Usu_Usuario,Usu_Password
     FROM usuario WHERE Usu_Usuario = '$Usu_Usuario' AND Usu_Password = '" . Hash::getHash('sha1', $Usu_Password, HASH_KEY) ."'"
                     );
+             */
+            $datos = $this->_db->query(
+                    "SELECT IFNULL(Usu_IdUsuario,'"."') AS Usu_IdUsuario,IFNULL(Usu_Nombre,'"."') as Usu_Nombre,IFNULL(Usu_Apellidos,'"."') AS Usu_Apellidos,IFNULL(Usu_URLImage,'"."') AS Usu_URLImage,
+                    IFNULL(Usu_GradoAcademico,'"."') AS Usu_GradoAcademico,IFNULL( Usu_Especialidad,'"."') AS Usu_Especialidad,IFNULL(Usu_Perfil,'"."') AS Usu_Perfil,
+          IFNULL(Usu_DocumentoIdentidad,'"."') AS Usu_DocumentoIdentidad,IFNULL( Usu_InstitucionLaboral,'"."') AS Usu_InstitucionLaboral,IFNULL(Usu_Cargo,'"."') AS Usu_Cargo,IFNULL(Usu_Usuario,'"."') AS Usu_Usuario ,IFNULL(Usu_Password,'"."')  AS Usu_Password 
+            FROM usuario WHERE Usu_Usuario = '$Usu_Usuario' AND Usu_Password = '" . Hash::getHash('sha1', $Usu_Password, HASH_KEY) ."'" );
             return $datos->fetch(PDO::FETCH_ASSOC);
         } catch (PDOException $exception) {
             $this->registrarBitacora("movil(indexModel)", "getUsuarioPorUsuarioPassword", "Error Model", $exception);
