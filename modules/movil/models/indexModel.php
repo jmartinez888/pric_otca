@@ -20,7 +20,6 @@ class indexModel extends Model {
         );              
         return $sql->fetchAll();
     }   
-    
     public function getCursos($Usu_IdUsuario,$Con_Descripcion,$Cur_Titulo){      
         $sql = $this->_db->query(
             "SELECT cur.Cur_IdCurso,cur.Cur_UrlBanner,cur.Cur_Titulo, CC.Con_Descripcion as Modalidad,
@@ -48,22 +47,16 @@ class indexModel extends Model {
         );            
         return $sql->fetchAll();
     }    
-
-
-    // Jhon Martinez
     public function getCursosPaginado($pagina = 1, $registrosXPagina = 10, $condicionActivos = "", $Usu_IdUsuario = false){
-
         $registroInicio = 0;
         if ($pagina > 0) {
             $registroInicio = ($pagina - 1) * $registrosXPagina;               
         }
-
         if ($Usu_IdUsuario) {
             $andUsuario = " AND mat.Usu_IdUsuario = " . $Usu_IdUsuario;
         } else {
             $andUsuario = " AND mat.Usu_IdUsuario = 0 ";
         }
-
         try{
             $sql = " SELECT cur_so.*, COUNT(vc.Usu_IdUsuario) AS Valoraciones, 
                     CAST((CASE WHEN AVG(vc.Val_Valor) > 0 THEN AVG(vc.Val_Valor) ELSE 0 END) AS DECIMAL(2,1)) AS Valor FROM 
@@ -87,8 +80,6 @@ class indexModel extends Model {
             return $exception->getTraceAsString();
         }
     }
-
-
     public function getCursosDocente($Usu_IdUsuario,$Cur_IdCurso){          
         $sql = $this->_db->query(
             "SELECT Cur_Titulo FROM curso WHERE Cur_Estado = 1 AND Row_Estado = 1 AND Usu_IdUsuario = $Usu_IdUsuario AND
@@ -119,7 +110,7 @@ class indexModel extends Model {
     }
     public function getCursoDetalle($Cur_IdCurso){          
         $sql = $this->_db->query(
-            "SELECT cur.*, COUNT(DISTINCT mac.Mat_IdMatricula) AS NMatriculados, COUNT(DISTINCT lec.Lec_IdLeccion) AS NLecciones, CAST((CASE WHEN AVG(val.Val_Valor) > 0 THEN AVG(val.Val_Valor) ELSE 0 END) AS DECIMAL(2,1)) AS Valoracion  FROM 
+            "SELECT cur.Cur_Titulo,cur.Cur_Descripcion,cur.Cur_PublicoObjetivo,cur.Cur_ObjetivoGeneral,cur.Cur_Metodologia,cur.Cur_Contacto,cur.Cur_UrlImgPresentacion,cur.Cur_UrlVideoPresentacion, COUNT(DISTINCT mac.Mat_IdMatricula) AS NMatriculados, COUNT(DISTINCT lec.Lec_IdLeccion) AS NLecciones, CAST((CASE WHEN AVG(val.Val_Valor) > 0 THEN AVG(val.Val_Valor) ELSE 0 END) AS DECIMAL(2,1)) AS Valoracion  FROM 
             curso cur LEFT JOIN matricula_curso mac ON cur.Cur_IdCurso=mac.Cur_IdCurso INNER JOIN modulo_curso moc ON cur.Cur_IdCurso=moc.Cur_IdCurso 
             INNER JOIN leccion lec ON moc.Moc_IdModuloCurso=lec.Moc_IdModuloCurso LEFT JOIN valoracion_curso val ON cur.Cur_IdCurso=val.Cur_IdCurso
             WHERE cur.Cur_Estado=1 AND cur.Row_Estado AND lec.Lec_Estado=1 AND lec.Row_Estado =1 

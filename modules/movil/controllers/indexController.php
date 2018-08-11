@@ -27,7 +27,7 @@ class  indexController extends movilController {
               $condicion .= " AND cr.Moa_IdModalidad =  $_tipo_curso";
         }
         $condicion .= " GROUP BY cr.Cur_IdCurso ";
-        $cursos = $this->_model->getCursosPaginado(0,CANT_REG_PAG,$condicion,$Usu_IdUsuario);            
+        $cursos = $this->_model->getCursosPaginado(0,CANT_REG_PAG,$condicion,$Usu_IdUsuario);           
         $this->retornar($cursos,"cursos");                       
     }       
     public function getCursoDetalle($Cur_IdCurso=0) {                
@@ -37,7 +37,11 @@ class  indexController extends movilController {
     public function getCursosDocente($Usu_IdUsuario=0,$Cur_IdCurso='') {                
         $cursos = $this->_model->getCursosDocente($Usu_IdUsuario,$Cur_IdCurso);            
         $this->retornar($cursos,"cursos"); 
-    }                      
+    }
+    public function getCursosUsuario($Usu_IdUsuario=0,$Con_Descripcion='',$Cur_Titulo='') {                
+        $cursos = $this->_model->getCursosUsuario($Usu_IdUsuario,$Con_Descripcion,$Cur_Titulo);            
+        $this->retornar($cursos,"cursos");                       
+    }                        
     public function getDocenteCurso($Cur_IdCurso=0){
         $usuarios = $this->_model->getDocenteCurso($Cur_IdCurso);            
         $this->retornar($usuarios,"usuarios");
@@ -50,10 +54,6 @@ class  indexController extends movilController {
         $lecciones = $this->_model->getLecciones($Mod_IdModulo);
         $this->retornar($lecciones,"lecciones");                  
     }
-    public function getCursosUsuario($Usu_IdUsuario=0,$Con_Descripcion='',$Cur_Titulo='') {                
-        $cursos = $this->_model->getCursosUsuario($Usu_IdUsuario,$Con_Descripcion,$Cur_Titulo);            
-        $this->retornar($cursos,"cursos");                       
-    }  
     public function getModulos($Cur_IdCurso=0,$Usu_IdUsuario=0) {        
         $modulos_curso = $this->_model->getModulos($Cur_IdCurso,$Usu_IdUsuario);
         $this->retornar($modulos_curso,"modulos_curso");                  
