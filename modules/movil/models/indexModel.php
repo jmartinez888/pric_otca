@@ -60,7 +60,7 @@ class indexModel extends Model {
         try{
             $sql = " SELECT cur_so.*, COUNT(vc.Usu_IdUsuario) AS Valoraciones, 
                     CAST((CASE WHEN AVG(vc.Val_Valor) > 0 THEN AVG(vc.Val_Valor) ELSE 0 END) AS DECIMAL(2,1)) AS Valor FROM 
-                    (   SELECT cr.Cur_IdCurso, cr.Cur_UrlBanner, cr.Cur_Titulo, cr.Cur_Descripcion, cr.Usu_IdUsuario, cr.Cur_Vacantes, cr.Cur_FechaDesde, cr.Moa_IdModalidad, CONCAT(u.Usu_Nombre,' ',u.Usu_Apellidos) AS Docente, cc.Con_Descripcion AS Modalidad, SUM(CASE WHEN mt.Mat_Valor = 1 THEN 1 ELSE 0 END) AS Matriculados, (CASE WHEN cu_m.Matriculado = 1 THEN 1 ELSE 0 END) AS Inscrito FROM 
+                    (SELECT cr.Cur_IdCurso, IFNULL(cr.Cur_UrlBanner,'default.jpg') AS Cur_UrlBanner, cr.Cur_Titulo, cr.Cur_Descripcion, cr.Usu_IdUsuario, cr.Cur_Vacantes, cr.Cur_FechaDesde, cr.Moa_IdModalidad, CONCAT(u.Usu_Nombre,' ',u.Usu_Apellidos) AS Docente, cc.Con_Descripcion AS Modalidad, SUM(CASE WHEN mt.Mat_Valor = 1 THEN 1 ELSE 0 END) AS Matriculados, (CASE WHEN cu_m.Matriculado = 1 THEN 1 ELSE 0 END) AS Inscrito FROM 
                             ( SELECT cur.Cur_IdCurso, 1 AS Matriculado FROM curso cur
                               INNER JOIN matricula_curso mat ON cur.Cur_IdCurso = mat.Cur_IdCurso
                               WHERE cur.Cur_Estado = 1 AND cur.Row_Estado = 1 AND mat.Mat_Valor = 1 $andUsuario ) cu_m 
@@ -120,7 +120,7 @@ class indexModel extends Model {
     } 
     public function getDocenteCurso($Usu_IdUsuario){          
         $sql = $this->_db->query(
-            "SELECT * FROM usuario WHERE Usu_Estado = 1 AND Row_Estado = 1
+            "SELECT Usu_IdUsuario,Usu_Nombre,Usu_Apellidos,Usu_URLImage,Usu_GradoAcademico,Usu_Especialidad,Usu_Perfil,Usu_InstitucionLaboral,Usu_Cargo FROM usuario WHERE Usu_Estado = 1 AND Row_Estado = 1
               AND Usu_IdUsuario = (SELECT Usu_IdUsuario FROM curso WHERE Cur_IdCurso = $Usu_IdUsuario AND Row_Estado = 1 AND Cur_Estado = 1)"
         );              
         return $sql->fetchAll();
@@ -130,6 +130,16 @@ class indexModel extends Model {
                 "SELECT f.*,(SELECT COUNT(Com_IdComentario) FROM comentarios c WHERE c.For_IdForo=f.For_IdForo) as For_TComentarios  FROM foro f WHERE f.For_Funcion LIKE '%forum%' AND Row_Estado=1 ORDER BY f.For_FechaCreacion DESC"
         );              
         return $sql->fetchAll();        
+    }
+    public function getHora_Servidor() {
+        try {
+            $sql = $this->_db->query(
+                    "SELECT NOW() AS hora_servidor");
+            return $sql->fetch();
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("movil(indexModel)", "getHora_Servidor", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
     }
     public function getInscripcion($Usu_IdUsuario, $Cur_IdCurso){
         return $this->getArray("SELECT * FROM matricula_curso
@@ -188,7 +198,7 @@ class indexModel extends Model {
     }
     public function getValoraciones($Cur_IdCurso){          
         $sql = $this->_db->query(
-            "SELECT usu.Usu_Usuario,val.Val_Valor,val.Val_Comentario FROM valoracion_curso val 
+            "SELECT usu.Usu_Usuario,val.Val_Valor,val.Val_Comentario,val.Val_FechaReg FROM valoracion_curso val 
             INNER JOIN usuario usu ON val.Usu_IdUsuario=usu.Usu_IdUsuario WHERE val.Cur_IdCurso=$Cur_IdCurso 
             AND val.Row_Estado=1
               "
