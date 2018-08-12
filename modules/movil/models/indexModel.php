@@ -152,7 +152,12 @@ class indexModel extends Model {
         );              
         return $sql->fetchAll();
     }
-
+    public function getMateriales($Lec_IdLeccion){
+        $sql = $this->_db->query(
+                "SELECT Mat_Enlace FROM material_leccion WHERE Lec_IdLeccion=$Lec_IdLeccion AND Mat_Estado=1 AND Row_Estado=1"
+        );              
+        return $sql->fetchAll();
+    }
     public function getModulos($Cur_IdCurso,$Usu_IdUsuario){
         $sql = $this->_db->query(
                 "SELECT Y.Moc_IdModuloCurso, Y.Moc_Titulo,(CASE WHEN Y.Lecciones = Y.Completos THEN 1 ELSE 0 END) as Completo,

@@ -54,6 +54,10 @@ class  indexController extends movilController {
         $lecciones = $this->_model->getLecciones($Mod_IdModulo);
         $this->retornar($lecciones,"lecciones");                  
     }
+    public function getMateriales($Lec_IdLeccion=0) {        
+        $materiales_leccion = $this->_model->getMateriales($Lec_IdLeccion);
+        $this->retornar($materiales_leccion,"materiales_leccion");                  
+    }
     public function getModulos($Cur_IdCurso=0,$Usu_IdUsuario=0) {        
         $modulos_curso = $this->_model->getModulos($Cur_IdCurso,$Usu_IdUsuario);
         $this->retornar($modulos_curso,"modulos_curso");                  
