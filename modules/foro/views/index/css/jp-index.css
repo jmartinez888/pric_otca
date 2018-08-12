@@ -1,10 +1,7 @@
 .titulo{
 	margin-top: 10px !important;
-	padding-top: 10px;
-	padding-bottom: 10px;
 	font-family: 'Lucida Sans';
-	background-color: #525252;
-	color: #fff;
+	color: #3c763d;
 }
 .link-foro{
 	color: #222;
@@ -17,15 +14,20 @@
     margin-top: 0px;
     padding: 0.2px;
 }
+.cursos-hr-title-foro{
+    margin-top: 0px;
+    padding: 0.2px;
+    border-top: 1px solid #3c763d;
+}
 .descripcion-foro{
 	font-size: 15px;
-	padding-top: 10px;
 	margin-bottom: 15px;
 	text-align: justify;
 }
 .subtitle-foro{
 	font-family: 'Gill Sans MT';
 	margin-top: 10px;
+	color: #3c763d;
 }
 .contenedor-link-agenda{
 	border-bottom: 1px solid #ddd;
@@ -63,10 +65,10 @@
 }
 .detalles-tematica{
 	padding-bottom: 10px;
-        padding-right: 15px;
-        margin-right: 0px;
+    padding-right: 15px;
+    margin-right: 0px;
 	font-size: 12px;
-	border-bottom: 0.2px solid #ddd;
+	border-bottom: 1px solid #ddd;
 }
 .detalles-tematica .col-md-4 + .col-md-6:before{
     content: "\2022";
@@ -84,7 +86,7 @@
 .detalles-act-reciente{
 	padding-bottom: 10px;
 	font-size: 12px;
-	border-bottom: 0.2px solid #ddd;
+	border-bottom: 1px solid #ddd;
 }
 .discusion{
 	border-bottom: 0.2px solid #ddd;
@@ -94,4 +96,14 @@
 	padding-bottom: 10px;
 	font-size: 12px;
 }
-
+.p-rt-lt-0{
+	padding-right: 0px;
+	padding-left: 0px;
+}
+.underline{
+	color: #000;
+}
+.underline:hover{
+	text-decoration: underline;
+	color: #000;
+}

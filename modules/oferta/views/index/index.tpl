@@ -173,6 +173,7 @@
 					</div>
 						
 					<div class="row">
+						<div class="col-lg-12">
 						<div class="pull-right">
 							<center><a id="activar_avanzado" onclick="mostrar_seccion()" style="cursor: pointer;"><button class="btn btn-success pull-right">{$lenguaje["activar_busqueda_avanzada"]}</button></a></center>
 							<center><a id="desactivar_avanzado" onclick="quitar_seccion()" style="cursor: pointer; display: none;"><button class="btn btn-success pull-right">{$lenguaje["desactivar_busqueda_avanzada"]}</button></a></center>
@@ -189,7 +190,7 @@
 								</div>
 							</div>
 						</div>
-
+						</div>
 					</div>
 					<div class="col-md-12 text-center p-rt-lt-0" id="seccion_filtros" style="display: none;">
 						<form class="col-md-12 busqueda-avanzada" style="text-align: left; margin-top: 15px;">
@@ -279,14 +280,14 @@
 			    	</div>
 			    	<!--paises-->
 			    	{if isset($paises) && count($paises)}
-			    	<div class="col-lg-12">
+			    	<div class="col-lg-12 p-rt-lt-0">
 						<center><h3 class="titulo2">Instituciones por países</h3></center>
 					</div>
-					<div class="col-lg-12">
+					<div class="col-lg-12 p-rt-lt-0">
 						<hr class="cursos-hr">
 					</div>
 					
-					<div class="col-md-12 text-center">
+					<div class="col-md-12 text-center p-rt-lt-0">
 				      	
 				            {foreach item=datos from=$paises}
 				               <div class="instituciones-paises">
@@ -302,7 +303,7 @@
 					<!--fin paises-->
 					<input type="hidden" id="filtro_pais" name="filtro_pais" value="">
 					<input type="hidden" id="filtro_2" name="filtro_2" value="">
-			    	<div class="col-md-12">
+			    	<div class="col-md-12 p-rt-lt-0">
 			    		{if isset($busqueda) || isset($busquedaAvanzada)}
 				    		{if isset($cantidad)}
 				    			<h4 class="resumen-busqueda">Instituciones Registradas: <b>{$cantidad}</b></h4>
