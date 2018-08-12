@@ -3,15 +3,17 @@
     <div class="col-xs-12">
         <form class="form-horizontal" method="post" action="{BASE_URL}elearning/cursos/cursos">
             <div class="form-group">
-                {if Session::get('id_usuario')}
                 <div class="col-sm-6 col-md-3">
+                {if Session::get('id_usuario')}
                     <select class="form-control" name="_mis_cursos" id="_mis_cursos">
                         <option value="0" > Todos </option>
                         <option value="1" {if $_mis_cursos == 1} selected="" {/if}> Inscritos </option>
+                        {if $_acl->permiso("agregar_usuario")}
                         <option value="2" {if $_mis_cursos == 2} selected="" {/if}> Creados </option>
+                        {/if}
                     </select>
-                </div>
                 {/if}
+                </div>
                 <div class="col-sm-6 col-md-3 " id="div-margin-t-10">
                     <select class="form-control" name="_tipo_curso" id="_tipo_curso">
                         <option value="0" > Todos </option>
@@ -121,7 +123,7 @@
                             <!-- {else}  -->          
 
                                 <div class="curso-item-desc">
-                                    {substr($o.Cur_Descripcion, 0, 150)}...
+                                    {substr($o.Cur_Descripcion, 0, 135)}...
                                 </div>
                                 <hr class="cursos-hr">
                                 <div class="curso-item-lms-tab">

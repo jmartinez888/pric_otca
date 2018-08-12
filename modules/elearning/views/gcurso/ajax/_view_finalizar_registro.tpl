@@ -20,15 +20,19 @@
 
 {include file='modules/elearning/views/gestion/menu/tag_url.tpl'}
 
-<div class="col-lg-12 margin-top-10 ">
-  <div class="panel panel-default">
-    <div class="panel-heading" tag="0" id="headerImg">
-      <h3 class="panel-title">
-        <i class="glyphicon glyphicon-list-alt"></i>&nbsp;&nbsp;
-        <strong>PRESENTACIÓN</strong>
-      </h3>
-    </div>
-    <div class="panel-body form-horizontal" style=" margin: 15px 25px; " id="panelImg">
+<div class="col-lg-12">
+  <ul class="nav nav-tabs">
+    <li role="presentation" class="active"><a href="#">PRESENTACIÓN</a></li>
+    <li role="presentation"><a href="#">CONTENIDO</a></li>
+    <li role="presentation"><a href="#">PARAMETROS</a></li>
+  </ul>
+</div>
+
+<!-- PRESENTACION -->
+<div class="col-lg-12  ">
+  <div class="panel panel-default" style="border-top: 0; border-top-left-radius: 0; border-top-right-radius: 0;">
+    
+    <div class="panel-body form-horizontal"  id="panelImg">
       
       <div class="form-group">
           <label class="col-md-3 control-label"> Imagen Icono : </label>
@@ -93,6 +97,7 @@
 
 {include file='modules/elearning/views/uploader/uploader.tpl'}
 
+<!-- CONTENIDO -->
 <div class="col-lg-12 " >
   <div class="panel panel-default">
     <div class="panel-heading" tag="0" id="headerDetalle">
@@ -150,14 +155,13 @@
   </div>
 </div>
 
-
-
+<!-- PARAMETROS -->
 <div class="col-lg-12 ">
   <div class="panel panel-default">
     <div class="panel-heading" tag="0" id="headerParametros">
       <h3 class="panel-title">
         <i class="glyphicon glyphicon-list-alt"></i>&nbsp;&nbsp;
-        <strong>CONFIGURAR PARAMETROS</strong>
+        <strong>PARAMETROS</strong>
       </h3>
     </div>
     <div class="panel-body" style=" margin: 15px 25px; display: none" id="panelParametros">
@@ -176,7 +180,7 @@
   </div>
 </div>
 
-<script>
+<script >
   $("#hidden_curso").val("{Session::get('learn_param_curso')}");
 </script>
 <script type="text/javascript" src="{$_url}gcurso/js/_view_finalizar_registro.js"></script>

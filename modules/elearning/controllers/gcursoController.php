@@ -25,9 +25,11 @@ class gcursoController extends elearningController {
   {
     $id = Session::get("id_usuario");
     $busqueda = $this->getTexto('busqueda');
-    $cursos = $this->curso->getCursoXDocente($id, $busqueda);
+    // $cursos = $this->curso->getCursoXDocente($id, $busqueda);
+    $cursos = $this->curso->getMisCursos($id, $busqueda);
 
     //print_r($cursos); exit;
+    // $this->_view->setCss(array("jm-mis-cursos"));
     Session::set("learn_url_tmp", "gcurso/_view_mis_cursos");
     $this->_view->getLenguaje("learn");
     $this->_view->assign('cursos', $cursos);

@@ -6,7 +6,7 @@
   .sidebar-left {
       padding-top: 20px;
       width: 100%;
-      /*padding-right: 0px;*/
+      padding-right: 0px;
   }
   .side-menu {
       list-style: none;
@@ -209,69 +209,27 @@
   ul{
     padding-left: 0px !important;
   }
+
+  .menu-cursos > .active{
+    border-left: 5px solid #355D3A;
+    -moz-box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.6);
+    -webkit-box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.6);
+    box-shadow: 3px 3px 10px rgba(100, 100, 100, 0.6);
+  }
 </style>
+
+{include file='modules/elearning/views/cursos/menu/descripcion.tpl'}
+
   <div class="col col-md-2" >
-    <div class="sidebar-left col-md-12">
+    <div class="padding-t-20 col-md-12 menu-cursos">
         <ul>
           <a href="{BASE_URL}elearning/cursos/" class="nounderline">
           <div class="side-menu2"><li class="side-menu" style="position: relative">
-          <i class="glyphicon glyphicon-book"></i>
+          <i class="glyphicon glyphicon-blackboard"></i>
           <span> Cursos</span></li></div>
           </a>
         </ul>
         {if Session::get('id_usuario')}
-
-            {if isset($ficha) && $ficha == 1}
-                <ul>
-                  <a href="{BASE_URL}elearning/cursos/" class="nounderline">
-                  <div class="side-menu2"><li class="side-menu" style="position: relative">
-                  <i class="fa fa-file-text-o"></i>
-                  <span> Ficha de Curso</span></li></div>
-                  </a>
-                </ul>
-                <ul>
-                  <a href="{BASE_URL}elearning/cursos/" class="nounderline">
-                  <div class="side-menu2"><li class="side-menu" style="position: relative">
-                  <i class="fa fa-book"></i>
-                  <span> Modulos</span></li></div>
-                  </a>
-                </ul>
-                <ul>
-                  <a href="{BASE_URL}elearning/cursos/" class="nounderline">
-                  <div class="side-menu2"><li class="side-menu" style="position: relative">
-                  <i class="fa fa-pencil-square"></i>
-                  <span> Tareas</span></li></div>
-                  </a>
-                </ul>
-                <ul>
-                  <a href="{BASE_URL}elearning/cursos/" class="nounderline">
-                  <div class="side-menu2"><li class="side-menu" style="position: relative">
-                  <i class="fa fa-edit"></i>
-                  <span> Examen</span></li></div>
-                  </a>
-                </ul>
-                <ul>
-                  <a href="{BASE_URL}elearning/cursos/" class="nounderline">
-                  <div class="side-menu2"><li class="side-menu" style="position: relative">
-                  <i class="fa fa-send-o"></i>
-                  <span> Anuncios</span></li></div>
-                  </a>
-                </ul>
-                <ul>
-                  <a href="{BASE_URL}elearning/cursos/" class="nounderline">
-                  <div class="side-menu2"><li class="side-menu" style="position: relative">
-                  <i class="fa fa-users"></i>
-                  <span> Alumnos</span></li></div>
-                  </a>
-                </ul>
-                <ul>
-                  <a href="{BASE_URL}elearning/cursos/" class="nounderline">
-                  <div class="side-menu2"><li class="side-menu" style="position: relative">
-                  <i class="fa fa-calendar"></i>
-                  <span> Calendario</span></li></div>
-                  </a>
-                </ul>
-            {/if}
         <!-- <ul>
           <a href="{BASE_URL}elearning/cursos/miscursos" class="nounderline">
             <div class="side-menu2"><li class="side-menu" style="position: relative">
@@ -281,7 +239,7 @@
         </ul> -->
         <ul>
           <a href="{BASE_URL}elearning/gestion/_inicio" class="nounderline">
-            <div class="side-menu2"><li class="side-menu" style="position: relative">
+            <div {if isset($active) && $active == 'mis_cursos'} class="side-menu2 active" {else} class="side-menu2 " {/if}><li class="side-menu" style="position: relative">
             <i class="glyphicon glyphicon-book"></i>
             <span> Mis Cursos </span></li></div>
           </a>
@@ -296,8 +254,8 @@
         <ul>
             <a href="{BASE_URL}elearning/certificado/miscertificados" class="nounderline">
                 <div class="side-menu2"><li class="side-menu" style="position: relative">
-                        <i class="glyphicon glyphicon-education"></i>
-                        <span>Mis Certificados</span></li></div>
+                    <i class="glyphicon glyphicon-education"></i>
+                    <span>Mis Certificados</span></li></div>
             </a>
         </ul>
         {/if}

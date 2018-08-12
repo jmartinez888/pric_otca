@@ -174,6 +174,7 @@
 
         <!-- CONTENIDO CENTRAL DE LA PAGINA -->
         <div class="container back-color-white">
+            <div class="col-xs-12"> <a class="text-success"> Link Uno / Link Dos / Link Tres </a></div>
             <noscript><p>Para el correcto funcionamiento debe tener el soporte para javascript habilitado</p></noscript>
             {if isset($_error)}
                 <div id="_errl" class="alert alert-error ">

@@ -15,11 +15,6 @@
               <img src="{BASE_URL}modules/elearning/views/cursos/img/portada/{$curso.Cur_UrlBanner}" />
               {if $curso.Moa_IdModalidad == 1}
               <div class="col-xs-12 text-center mooc" style="color: white; font-weight: bold; font-size: 18px;">MOOC</div>
-              <!-- <div class="col-xs-3">
-                 <span>MOOC</span>
-              </div> -->
-
-
               {/if}
             </div>
             <div class="col-lg-6">
