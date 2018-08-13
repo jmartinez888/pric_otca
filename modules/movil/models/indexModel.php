@@ -163,6 +163,17 @@ class indexModel extends Model {
         );              
         return $sql->fetchAll();
     }
+    public function getMisCertificados($Usu_IdUsuario){
+        try{  
+            $sql = " SELECT v.Cer_Codigo,v.Cer_FechaReg,  c.Cur_Titulo FROM certificado_curso v 
+                INNER JOIN usuario u ON u.Usu_IdUsuario = v.Usu_IdUsuario
+                INNER JOIN curso c ON c.Cur_IdCurso = v.Cur_IdCurso
+                WHERE v.Usu_IdUsuario=$Usu_IdUsuario";
+            return $this->getArray($sql);
+        } catch (PDOException $exception) {
+             $this->registrarBitacora("movil(indexModel)", "getMisCertificados", "Error Model", $exception);
+        }
+    }
     public function getModulos($Cur_IdCurso,$Usu_IdUsuario){
         $sql = $this->_db->query(
                 "SELECT Y.Moc_IdModuloCurso, Y.Moc_Titulo,(CASE WHEN Y.Lecciones = Y.Completos THEN 1 ELSE 0 END) as Completo,
