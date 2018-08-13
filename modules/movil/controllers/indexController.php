@@ -5,12 +5,21 @@ class  indexController extends movilController {
         parent::__construct($lang, $url);
         $this->_model = $this->loadModel('index');               
     }
-     public function getCertificados($Usu_IdUsuario=0) {                
+    public function contenido($Lec_IdLeccion=0){
+        $html = $this->_model->getContenido($Lec_IdLeccion);
+            $this->_view->assign("cont_html", $html);
+        $this->_view->setTemplate(LAYOUT_FRONTEND);
+        $this->_view->setCss(array('modulo', 'jp-modulo'));
+        $this->_view->setJs(array(//array(BASE_URL . 'modules/elearning/views/gestion/js/core/util.js'),
+        'modulo'));
+        $this->_view->renderizar('ajax/contenido', false, true);
+    }
+    public function getCertificados($Usu_IdUsuario=0) {                
         $certificados = $this->_model->getCertificados($Usu_IdUsuario);            
         $this->retornar($certificados,"certificados");                       
     } 
     public function getContenidoLeccion($Lec_IdLeccion=0) {        
-        $contenido_leccion = $this->_model->getContenidoLeccion($Lec_IdLeccion);
+        $contenido_leccion = $this->_model->getContenido($Lec_IdLeccion);
         $this->retornar($contenido_leccion,"contenido_leccion");                  
     }  
     public function getCursos($_tipo_curso=0,$Usu_IdUsuario=0,$busqueda="",

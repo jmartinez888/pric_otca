@@ -14,9 +14,9 @@ class indexModel extends Model {
            $this->registrarBitacora("acl(indexModel)", "getCertificados", "Error Model", $exception);
         }
     }
-    public function getContenidoLeccion($Lec_IdLeccion){
+    public function getContenido($Lec_IdLeccion){
         $sql = $this->_db->query(
-                "SELECT CL_Descripcion  FROM contenido_leccion WHERE Lec_IdLeccion=$Lec_IdLeccion"
+                "SELECT CL_Descripcion FROM contenido_leccion WHERE Lec_IdLeccion=$Lec_IdLeccion"
         );              
         return $sql->fetchAll();
     }   
@@ -149,7 +149,7 @@ class indexModel extends Model {
     
     public function getLecciones($Moc_IdModuloCurso,$Usu_IdUsuario){
         $sql = $this->_db->query(
-                "SELECT DISTINCT lec.Lec_IdLeccion,lec.Lec_Titulo,lec.Lec_Tipo,col.CL_Descripcion,(CASE WHEN prc.Pro_IdProgreso IS NULL THEN 0  ELSE prc.Pro_Valor END) as Completo
+                "SELECT lec.Lec_IdLeccion,lec.Lec_Titulo,lec.Lec_Tipo,col.CL_Descripcion,(CASE WHEN prc.Pro_IdProgreso IS NULL THEN 0  ELSE prc.Pro_Valor END) as Completo
                  FROM leccion lec LEFT JOIN progreso_curso prc ON lec.Lec_IdLeccion=prc.Lec_IdLeccion AND prc.Usu_IdUsuario=$Usu_IdUsuario
                  LEFT JOIN contenido_leccion col ON lec.Lec_IdLeccion=col.Lec_IdLeccion
                 WHERE Moc_IdModuloCurso=$Moc_IdModuloCurso
