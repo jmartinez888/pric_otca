@@ -147,7 +147,7 @@ class indexModel extends Model {
             AND Cur_IdCurso = $Cur_IdCurso ");
     }
     
-    public function getLecciones($Moc_IdModuloCurso,$Usu_IdUsuario){
+    public function getLecciones($Moc_IdModuloCurso){
         $sql = $this->_db->query(
                 "SELECT lec.Lec_IdLeccion,lec.Lec_Titulo,lec.Lec_Tipo,col.CL_Descripcion,(CASE WHEN prc.Pro_IdProgreso IS NULL THEN 0  ELSE prc.Pro_Valor END) as Completo
                  FROM leccion lec LEFT JOIN progreso_curso prc ON lec.Lec_IdLeccion=prc.Lec_IdLeccion
