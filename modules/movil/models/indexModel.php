@@ -147,13 +147,13 @@ class indexModel extends Model {
             AND Cur_IdCurso = $Cur_IdCurso ");
     }
     
-    public function getLecciones($Moc_IdModuloCurso){
+    public function getLecciones($Moc_IdModuloCurso,$Usu_IdUsuario){
         $sql = $this->_db->query(
                 "SELECT lec.Lec_IdLeccion,lec.Lec_Titulo,lec.Lec_Tipo,col.CL_Descripcion,(CASE WHEN prc.Pro_IdProgreso IS NULL THEN 0  ELSE prc.Pro_Valor END) as Completo
                  FROM leccion lec LEFT JOIN progreso_curso prc ON lec.Lec_IdLeccion=prc.Lec_IdLeccion
                  LEFT JOIN contenido_leccion col ON lec.Lec_IdLeccion=col.Lec_IdLeccion
                 WHERE Moc_IdModuloCurso=$Moc_IdModuloCurso
-                AND lec.Lec_Estado=1 AND lec.Row_Estado=1"
+                AND lec.Lec_Estado=1 AND lec.Row_Estado=1 AND prc.Usu_IdUsuario=$Usu_IdUsuario"
         );              
         return $sql->fetchAll();
     }
