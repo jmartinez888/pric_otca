@@ -165,7 +165,7 @@ class indexModel extends Model {
     }
     public function getMisCertificados($Usu_IdUsuario){
         try{  
-            $sql = " SELECT v.Cer_Codigo,v.Cer_FechaReg,  c.Cur_Titulo FROM certificado_curso v 
+            $sql = " SELECT v.Cer_IdCertificado,v.Cer_Codigo,v.Cer_FechaReg,  c.Cur_Titulo FROM certificado_curso v 
                 INNER JOIN usuario u ON u.Usu_IdUsuario = v.Usu_IdUsuario
                 INNER JOIN curso c ON c.Cur_IdCurso = v.Cur_IdCurso
                 WHERE v.Usu_IdUsuario=$Usu_IdUsuario";
