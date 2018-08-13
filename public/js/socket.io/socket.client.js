@@ -24,7 +24,8 @@ function AddSocketInstance(ope){
 	});
 }
 function InitSocket(objeto){
-	socket = io('http://191.232.182.250:3000/', { query: "id=" + objeto.id + "&curso=" + objeto.curso + "&tipo=2" });
+  socket = io('http://35.198.18.102:3000/', { query: "id=" + objeto.id + "&curso=" + objeto.curso + "&tipo=2" });
+
 }
 function StartServer(){
   socket.on('connect', function(){
