@@ -153,7 +153,7 @@ class indexModel extends Model {
                  FROM leccion lec LEFT JOIN progreso_curso prc ON lec.Lec_IdLeccion=prc.Lec_IdLeccion
                  INNER JOIN contenido_leccion col ON lec.Lec_IdLeccion=col.Lec_IdLeccion
                 WHERE Moc_IdModuloCurso=$Moc_IdModuloCurso
-                AND lec.Lec_Estado=1 AND lec.Row_Estado=1 AND prc.Usu_IdUsuario=$Usu_IdUsuario"
+                AND lec.Lec_Estado=1 AND lec.Row_Estado=1"
         );              
         return $sql->fetchAll();
     }
