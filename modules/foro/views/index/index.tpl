@@ -2,7 +2,7 @@
     {include file='modules/foro/views/index/menu/lateral.tpl'}
 
     <div  class="col-md-10 col-xs-12 col-sm-8 col-lg-10" style="margin-top: 10px;">       
-        <h3 class="titulo"><strong>{$lenguaje.foro_index_label_titulo}</strong> </h3>
+        <h2 class="titulo">{$lenguaje.foro_index_label_titulo}</h2>
         <div class="col-lg-12 p-rt-lt-0">
             <hr class="cursos-hr-title-foro">
         </div>
@@ -20,7 +20,7 @@
             <div class="col-md-8">
                 <div class="row">
                     <div class="col-md-12">
-                        <h3 class="subtitle-foro"><strong>Temáticas</strong></h3>
+                        <h3 class="subtitle-foro">Temáticas</h3>
                     </div>
                     <div class="col-md-12">
                         <hr class="cursos-hr-title-foro">
@@ -55,7 +55,7 @@
                     <div class="col-lg-12"><br></div>
 
                     <div class="col-md-12">
-                        <h3 class="subtitle-foro"><strong>Actividad reciente</strong></h3>
+                        <h3 class="subtitle-foro">Actividad reciente</h3>
                     </div>
                     <div class="col-lg-12">
                         <hr class="cursos-hr-title-foro">
@@ -144,7 +144,7 @@
             <div class="col-md-4">
                 <div class="row">
                     <div class="col-md-12">
-                        <h3 class="subtitle-foro"><strong>Agenda</strong></h3>
+                        <h3 class="subtitle-foro">Agenda</h3>
                     </div>
                     <div class="col-lg-12">
                         <hr class="cursos-hr-title-foro">
