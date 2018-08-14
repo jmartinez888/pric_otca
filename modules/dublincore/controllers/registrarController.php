@@ -9,10 +9,13 @@ class registrarController extends Controller {
         $this->_dublincore = $this->loadModel('registrar');
     }
 
-    public function index($recurso = false) {
+    public function index($recurso = false, $For_IdForo=false) {
         $this->_acl->acceso('registro_individual');
         $this->validarUrlIdioma();
-        //$this->_view->setTemplate(LAYOUT_FRONTEND);
+        if ($For_IdForo) {
+            $this->_view->setTemplate(LAYOUT_FRONTEND);
+        }
+        
         $this->_view->getLenguaje("bdrecursos_metadata");
         $this->_view->setJs(array('dublincore'));
         if (empty($this->getSql('Idi_IdIdioma'))) {
@@ -104,6 +107,11 @@ class registrarController extends Controller {
 
                 $dublin = $this->_dublincore->registrarDublinCore(
                         $this->getSql('Dub_Titulo'), $this->getSql('Dub_Descripcion'), $this->getSql('Dub_Editor'), $this->getSql('Dub_Colabrorador'), $this->getSql('Dub_FechaDocumento'), $this->getSql('Dub_Formato'), $this->getSql('Dub_Identificador'), $this->getSql('Dub_Fuente'), $this->getSql('Dub_Idioma'), $this->getSql('Dub_Relacion'), $this->getSql('Dub_Cobertura'), $this->getSql('Dub_Derechos'), $this->getSql('Dub_PalabraClave'), $tipo_dublin[0], $archivo_fisico, $this->getSql('Idi_IdIdioma'), $tema_dublin[0], $this->filtrarInt($recurso));
+
+                if ($For_IdForo) {
+                    $result_e = $this->_dublincore->insertarFileForo($nombre_archivo, "", "", $For_IdForo, $recurso, "REPORTE-FORO-". $For_IdForo);
+                    $this->_view->assign('For_IdForo', $For_IdForo);
+                }
 
                 // echo($dublin); 
                 // print_r($dublin);

@@ -64,7 +64,9 @@
                     <div class="col-lg-12">
                         {foreach from=$lista_foros item=foro}
                         <div class="row col-lg-12 tematica-foro">
-                            <div><a class="link-foro"  href="{$_layoutParams.root}foro/index/ficha/{$foro.For_IdForo}">
+                            {if $foro.For_Tipo == 1}
+                                {if $foro.For_Estado != 0 && $foro.Row_Estado == 1} 
+                                    <div><a class="link-foro"  href="{$_layoutParams.root}foro/index/ficha/{$foro.For_IdForo}">
                                     <h4 style="text-align: justify;">{$foro.For_Titulo}</h4></a></div>
                                     {if !empty($foro.For_Resumen) && $foro.For_Resumen!=""}
                                     <div style="padding-bottom: 10px;">
@@ -72,6 +74,67 @@
                                     </div>
                                     {/if}
                                     <div class="detalles-act-reciente">{$foro.Usu_Usuario} &nbsp;&nbsp;-&nbsp;&nbsp; hace {$foro.tiempo} &nbsp;&nbsp;-&nbsp;&nbsp; {$foro.votos} voto(s) &nbsp;&nbsp;-&nbsp;&nbsp; {$foro.For_TParticipantes|default:0} miembro(s) &nbsp;&nbsp;-&nbsp;&nbsp;{$foro.For_TComentarios|default:0} comentario(s)</div>
+                                {else}
+                                    {if $foro.Row_Estado == 1}
+                                        {if $Rol_Ckey == "lider_foro" || $Rol_Ckey == "moderador_foro" || $Rol_Ckey == "facilitador_foro" || $Rol_Ckey == "administrador_foro" || $Rol_Ckey == "administrador"}
+                                        <div><a class="link-foro"  href="{$_layoutParams.root}foro/index/ficha/{$foro.For_IdForo}">
+                                        <h4 style="text-align: justify;">{$foro.For_Titulo}</h4></a></div>
+                                        {if !empty($foro.For_Resumen) && $foro.For_Resumen!=""}
+                                        <div style="padding-bottom: 10px;">
+                                             <p style="text-align: justify;">{$foro.For_Resumen|truncate:120:"..."}</p>
+                                        </div>
+                                        {/if}
+                                        <div class="detalles-act-reciente">{$foro.Usu_Usuario} &nbsp;&nbsp;-&nbsp;&nbsp; hace {$foro.tiempo} &nbsp;&nbsp;-&nbsp;&nbsp; {$foro.votos} voto(s) &nbsp;&nbsp;-&nbsp;&nbsp; {$foro.For_TParticipantes|default:0} miembro(s) &nbsp;&nbsp;-&nbsp;&nbsp;{$foro.For_TComentarios|default:0} comentario(s)</div>
+                                        {/if}
+                                    {else}
+                                        {if $Rol_Ckey == "administrador_foro" || $Rol_Ckey == "administrador"}
+                                        <div><a class="link-foro"  href="{$_layoutParams.root}foro/index/ficha/{$foro.For_IdForo}">
+                                        <h4 style="text-align: justify;">{$foro.For_Titulo}</h4></a></div>
+                                        {if !empty($foro.For_Resumen) && $foro.For_Resumen!=""}
+                                        <div style="padding-bottom: 10px;">
+                                             <p style="text-align: justify;">{$foro.For_Resumen|truncate:120:"..."}</p>
+                                        </div>
+                                        {/if}
+                                        <div class="detalles-act-reciente">{$foro.Usu_Usuario} &nbsp;&nbsp;-&nbsp;&nbsp; hace {$foro.tiempo} &nbsp;&nbsp;-&nbsp;&nbsp; {$foro.votos} voto(s) &nbsp;&nbsp;-&nbsp;&nbsp; {$foro.For_TParticipantes|default:0} miembro(s) &nbsp;&nbsp;-&nbsp;&nbsp;{$foro.For_TComentarios|default:0} comentario(s)</div>
+                                        {/if}  
+                                    {/if}
+                                {/if}                                  
+                            {else}
+                                {if $foro.For_Estado != 0 && $foro.Row_Estado == 1 && ($Rol_Ckey == "lider_foro" || $Rol_Ckey == "moderador_foro" || $Rol_Ckey == "facilitador_foro" || $Rol_Ckey == "administrador_foro" || $Rol_Ckey == "administrador" || $Rol_Ckey == "participante_foro")} 
+                                    <div><a class="link-foro"  href="{$_layoutParams.root}foro/index/ficha/{$foro.For_IdForo}">
+                                    <h4 style="text-align: justify;">{$foro.For_Titulo}</h4></a></div>
+                                    {if !empty($foro.For_Resumen) && $foro.For_Resumen!=""}
+                                    <div style="padding-bottom: 10px;">
+                                         <p style="text-align: justify;">{$foro.For_Resumen|truncate:120:"..."}</p>
+                                    </div>
+                                    {/if}
+                                    <div class="detalles-act-reciente">{$foro.Usu_Usuario} &nbsp;&nbsp;-&nbsp;&nbsp; hace {$foro.tiempo} &nbsp;&nbsp;-&nbsp;&nbsp; {$foro.votos} voto(s) &nbsp;&nbsp;-&nbsp;&nbsp; {$foro.For_TParticipantes|default:0} miembro(s) &nbsp;&nbsp;-&nbsp;&nbsp;{$foro.For_TComentarios|default:0} comentario(s)</div>
+                                {else}
+                                    {if $foro.Row_Estado == 1}
+                                        {if $Rol_Ckey == "lider_foro" || $Rol_Ckey == "moderador_foro" || $Rol_Ckey == "facilitador_foro" || $Rol_Ckey == "administrador_foro" || $Rol_Ckey == "administrador"}
+                                        <div><a class="link-foro"  href="{$_layoutParams.root}foro/index/ficha/{$foro.For_IdForo}">
+                                        <h4 style="text-align: justify;">{$foro.For_Titulo}</h4></a></div>
+                                        {if !empty($foro.For_Resumen) && $foro.For_Resumen!=""}
+                                        <div style="padding-bottom: 10px;">
+                                             <p style="text-align: justify;">{$foro.For_Resumen|truncate:120:"..."}</p>
+                                        </div>
+                                        {/if}
+                                        <div class="detalles-act-reciente">{$foro.Usu_Usuario} &nbsp;&nbsp;-&nbsp;&nbsp; hace {$foro.tiempo} &nbsp;&nbsp;-&nbsp;&nbsp; {$foro.votos} voto(s) &nbsp;&nbsp;-&nbsp;&nbsp; {$foro.For_TParticipantes|default:0} miembro(s) &nbsp;&nbsp;-&nbsp;&nbsp;{$foro.For_TComentarios|default:0} comentario(s)</div>
+                                        {/if}
+                                    {else}
+                                        {if $Rol_Ckey == "administrador_foro" || $Rol_Ckey == "administrador"}
+                                        <div><a class="link-foro"  href="{$_layoutParams.root}foro/index/ficha/{$foro.For_IdForo}">
+                                        <h4 style="text-align: justify;">{$foro.For_Titulo}</h4></a></div>
+                                        {if !empty($foro.For_Resumen) && $foro.For_Resumen!=""}
+                                        <div style="padding-bottom: 10px;">
+                                             <p style="text-align: justify;">{$foro.For_Resumen|truncate:120:"..."}</p>
+                                        </div>
+                                        {/if}
+                                        <div class="detalles-act-reciente">{$foro.Usu_Usuario} &nbsp;&nbsp;-&nbsp;&nbsp; hace {$foro.tiempo} &nbsp;&nbsp;-&nbsp;&nbsp; {$foro.votos} voto(s) &nbsp;&nbsp;-&nbsp;&nbsp; {$foro.For_TParticipantes|default:0} miembro(s) &nbsp;&nbsp;-&nbsp;&nbsp;{$foro.For_TComentarios|default:0} comentario(s)</div>
+                                        {/if}  
+                                    {/if}
+                                {/if}  
+                            {/if}
                         </div>
                         {/foreach}
                     </div>

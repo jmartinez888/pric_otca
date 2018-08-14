@@ -10,13 +10,24 @@ class indexController extends foroController {
     }
 
     public function index() {
+        $idUsuario = Session::get('id_usuario');
+
+        if(!empty($idUsuario)){
+            $Rol_Ckey = $this->_model->getRol_Ckey(Session::get('id_usuario'));
+            if(empty($Rol_Ckey)){
+                $Rol_Ckey["Rol_Ckey"] = "sin_rol"; 
+            }             
+        }else{
+            $idUsuario = "";
+            $Rol_Ckey["Rol_Ckey"]="";   
+        } 
+
         $this->validarUrlIdioma();
         $this->_view->setTemplate(LAYOUT_FRONTEND);
 
         $this->_view->getLenguaje("foro_index_index");
         $this->_view->setCss(array("index", "jp-index"));
         $this->_view->setJs(array('index'));
-
 
         $lenguaje = Session::get("fileLenguaje");
         $this->_view->assign('titulo', $lenguaje["foro_index_titulo"]);
@@ -30,6 +41,7 @@ class indexController extends foroController {
         $lista_tematica = $this->_model->getResumenLineTematica();
         $lista_agenda = $this->_model->getAgendaIndex();
         $this->_view->assign('lista_foros', $lista_foros);      
+        $this->_view->assign('Rol_Ckey', $Rol_Ckey["Rol_Ckey"]); 
         $this->_view->assign('lista_tematica', $lista_tematica);  
         $this->_view->assign('lista_agenda', $lista_agenda);
         
@@ -112,7 +124,11 @@ class indexController extends foroController {
         $this->_view->setTemplate(LAYOUT_FRONTEND);
         $this->_view->assign('titulo', "Historico");
         $this->_view->setCss(array("historico", "jp-historico"));
-        $this->_view->assign('lista_foros', $this->_model->getHistorico());
+        $foro = $this->_model->getHistorico();
+        for ($index = 0; $index < count($foro); $index++) {
+                $foro[$index]["Archivos"] = $this->_model->getArchivos_x_idforo($foro[$index]["For_IdForo"]);
+        } 
+        $this->_view->assign('lista_foros', $foro);
         $this->_view->renderizar('historico');
     }
     public function statistics() {

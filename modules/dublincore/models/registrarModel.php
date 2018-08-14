@@ -227,6 +227,42 @@ WHERE dua.Dub_IdDublinCore = '$Dub_IdDublinCore' AND dua.Aut_IdAutor = '$Aut_IdA
         return $post->fetch();
     }
 
+    public function insertarFileForo($iFif_NombreFile, $iFif_TipoFile, $iFif_SizeFile, $iFor_IdForo, $iRec_IdRecurso, $iFif_Titulo)
+    {
+        try {
+
+            $sql    = "call s_i_insertar_file_foro(?,?,?,?,?,?)";
+            $result = $this->_db->prepare($sql);
+            $result->bindParam(1, $iFif_NombreFile, PDO::PARAM_STR);
+            $result->bindParam(2, $iFif_TipoFile, PDO::PARAM_STR);
+            $result->bindParam(3, $iFif_SizeFile, PDO::PARAM_INT);
+            $result->bindParam(4, $iFor_IdForo, PDO::PARAM_INT);
+            $result->bindParam(5, $iRec_IdRecurso, PDO::PARAM_INT);
+            $result->bindParam(6, $iFif_Titulo, PDO::PARAM_STR);
+
+            $result->execute();
+            return $result->fetch();
+        } catch (PDOException $exception) {
+
+            $this->registrarBitacora("foro(indexModel)", "insertarFileForo", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
+
+    public function updateFileForo($iFor_IdForo, $iFif_NombreFile, $iFif_TipoFile, $iFif_SizeFile)
+    {
+        try {
+            $foro = $this->_db->query(
+                "UPDATE file_foro SET Fif_NombreFile = $iFif_NombreFile, Fif_TipoFile = $iFif_TipoFile, Fif_SizeFile = $iFif_SizeFile where Fif_IdFileForo=$iFor_IdForo"
+            );
+
+            return $foro->rowCount(PDO::FETCH_ASSOC);
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("registrar(adminModel)", "updateFileForo", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
+
     public function registrarDublinAutor($Dub_IdDublinCore, $Aut_IdAutor) {
         $this->_db->prepare(
                         "insert into dublincore_autor (Dub_IdDublinCore,Aut_IdAutor) values " .

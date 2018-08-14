@@ -17,7 +17,7 @@
                             {foreach from=$lista_foros item=foro}
                                 <tr>
                                     <td>
-                                         <a class="link-foro" href="#" target="_blank"><h4 style="text-align: justify;">{$foro.For_Titulo}</h4></a>
+                                        <a class="link-foro" href="{$_layoutParams.root_clear}foro/index/ficha/{$foro.For_IdForo}" target="_blank"><h4 style="text-align: justify;">{$foro.For_Titulo}</h4></a>
 
                                         <div style="padding-bottom: 10px;">{if $foro.For_Funcion=="forum"}
                                             Discusión
@@ -46,7 +46,12 @@
                                         </small>
                                         {$foro.For_FechaCierre}
                                         <br>
-                                        <a class="reporte" href="#">Descargar Reporte</a>
+                                        {foreach from=$foro.Archivos item=file}
+                                            {if $file.Fif_Titulo =="REPORTE-FORO-{$foro.For_IdForo}"}
+                                            <a class="reporte" target="_blank" href="{$_layoutParams.root_archivo_fisico}{$file.Fif_NombreFile}">Descargar Reporte</a>
+                                            {break}
+                                            {/if}
+                                        {/foreach}                                        
                                     </td>
                                 </tr>
                                 <!--washington-->

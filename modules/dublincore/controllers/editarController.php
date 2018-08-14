@@ -10,9 +10,12 @@ class editarController extends Controller {
         $this->_registrar = $this->loadModel('registrar');
     }
 
-    public function index($registros = false) {
+    public function index($registros = false, $For_IdForo=false) {
         $this->_acl->acceso('editar_registros_recurso');
         $this->validarUrlIdioma();
+        if ($For_IdForo) {
+            $this->_view->setTemplate(LAYOUT_FRONTEND);
+        }
         $this->_view->getLenguaje("index_inicio");
         $this->_view->getLenguaje("bdrecursos_metadata");
         $this->_view->setJs(array('dublincore'));
@@ -46,7 +49,7 @@ class editarController extends Controller {
         $this->_view->renderizar('index', 'editar');
     }
 
-    private function editarDublin($registros = false) {
+    private function editarDublin($registros = false, $For_IdForo=false) {
 
         if ($this->_editar->verificarIdiomaDublin($this->getInt('Dub_IdDublinCore'), $this->getSql('idiomaSelect'))) {
             // echo "hola0000";exit;
@@ -115,6 +118,11 @@ class editarController extends Controller {
                 $dublin = $this->_editar->actualizararDublinCore(
                         $this->getSql('Dub_Titulo'), $this->getSql('Dub_Descripcion'), $this->getSql('Dub_Editor'), $this->getSql('Dub_Colabrorador'), $this->getSql('Dub_FechaDocumento'), $formato[1], $this->getSql('Dub_Identificador'), $this->getSql('Dub_Fuente'), $this->getSql('Dub_Idioma'), $this->getSql('Dub_Relacion'), $this->getSql('Dub_Cobertura'), $this->getSql('Dub_Derechos'), $this->getSql('Dub_PalabraClave'), $tipo_dublin[0], $this->getInt('Arf_IdArchivoFisico'), $tema_dublin[0], $this->filtrarInt($registros)
                 );
+
+                if ($For_IdForo) {
+                    $result_e = $this->_dublincore->updateFileForo($For_IdForo, $nombre_archivo, "", "");
+                    $this->_view->assign('For_IdForo', $For_IdForo);
+                }
 
 
                 $dublin_autor = $this->_registrar->getDublinAutor($this->filtrarInt($registros), $autor[0]);
