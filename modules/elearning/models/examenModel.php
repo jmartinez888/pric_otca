@@ -54,6 +54,19 @@ class examenModel extends Model {
         }
     }
 
+    public function getTituloCurso($id)
+    {
+        try{
+            $sql = " SELECT Cur_Titulo FROM curso WHERE Cur_IdCurso=$id ";
+            $result = $this->_db->prepare($sql);
+            $result->execute();
+            return $result->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("elearning(examenModel)", "getTituloCurso", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
+
     public function getUltimoExamen($id, $idusuario)
     {
         try{

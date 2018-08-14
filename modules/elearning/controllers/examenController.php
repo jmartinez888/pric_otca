@@ -83,6 +83,7 @@ class examenController extends elearningController {
         $this->_view->assign('porcentaje', $porcentaje['Porcentaje'] );
         $this->_view->assign('titulo', 'Administracion de preguntas');
         $this->_view->assign('idcurso', $idcurso);
+        $this->_view->assign('titulo', $this->examen->getTituloCurso($idcurso));
         $this->_view->renderizar('examens');
     }
 
@@ -203,7 +204,9 @@ class examenController extends elearningController {
         // $this->_view->assign('lecciones',$lecciones);
         $this->_view->assign('modulos',$modulos);
         $this->_view->assign('idcurso', $id);
+        $this->_view->assign('titulo', $this->examen->getTituloCurso($id));
         $this->_view->renderizar('nuevoexamen', 'elearning');
+
     }
 
     public function actualizarlecciones(){
@@ -280,6 +283,7 @@ class examenController extends elearningController {
         $this->_view->assign('examen', $idExamen);
         $this->_view->assign('idcurso', $id);
         $this->_view->renderizar('preguntas', 'preguntas');
+        $this->_view->assign('titulo', $this->examen->getTituloCurso($id));
     }
 
 
