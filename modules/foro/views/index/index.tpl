@@ -1,8 +1,8 @@
 <div  class="col-md-12 col-xs-12 col-sm-12 col-lg-12">
     {include file='modules/foro/views/index/menu/lateral.tpl'}
 
-    <div  class="col-md-10 col-xs-12 col-sm-8 col-lg-10" style="margin-top: 10px;">       
-        <h3 class="titulo"><strong>{$lenguaje.foro_index_label_titulo}</strong> </h3>
+    <div  class="col-md-9 col-xs-12 col-sm-8 col-lg-9" style="margin-top: 10px;">       
+        <h2 class="titulo">{$lenguaje.foro_index_label_titulo}</h2>
         <div class="col-lg-12 p-rt-lt-0">
             <hr class="cursos-hr-title-foro">
         </div>
@@ -20,7 +20,7 @@
             <div class="col-md-8">
                 <div class="row">
                     <div class="col-md-12">
-                        <h3 class="subtitle-foro"><strong>Temáticas</strong></h3>
+                        <h3 class="subtitle-foro">Temáticas</h3>
                     </div>
                     <div class="col-md-12">
                         <hr class="cursos-hr-title-foro">
@@ -32,13 +32,13 @@
                             <div class="row tem_titulo"><a class="link-foro" href="{$_layoutParams.root}foro/index/searchForo/{trim($tematica.Lit_Nombre)}"><h4><strong>{$tematica.Lit_Nombre}</strong></h4></a></div>
                             <div class="row detalles-tematica">
                                 {if $tematica.Lit_Discussions!=""}
-                                <div class="col-md-4 item-tematica"><a class="simulalink underline" href="{$_layoutParams.root}foro/index/discussions">Discusiones: {$tematica.Lit_Discussions}</a></div>
+                                <div class="col-md-6 item-tematica"><a class="simulalink underline" href="{$_layoutParams.root}foro/index/discussions">Discusiones: {$tematica.Lit_Discussions}</a></div>
                                 {/if}
                                 {if $tematica.Lit_Query!=""}
                                 <div class="col-md-6 item-tematica"><a class="simulalink underline" href="{$_layoutParams.root}foro/index/query">Consultas: {$tematica.Lit_Query}</a></div>  
                                 {/if}
                                 {if $tematica.Lit_Webinar!=""}
-                                <div class="col-md-4 item-tematica"><a class="simulalink underline" href="{$_layoutParams.root}foro/index/webinar">Webinars: {$tematica.Lit_Webinar}</a></div> 
+                                <div class="col-md-6 item-tematica"><a class="simulalink underline" href="{$_layoutParams.root}foro/index/webinar">Webinars: {$tematica.Lit_Webinar}</a></div> 
                                 {/if}
                                 {if $tematica.Lit_Workshop!=""}
                                 <div class="col-md-6 item-tematica"><a class="simulalink underline" href="{$_layoutParams.root}foro/index/workshop">Workshop: {$tematica.Lit_Workshop}</a></div> 
@@ -55,7 +55,7 @@
                     <div class="col-lg-12"><br></div>
 
                     <div class="col-md-12">
-                        <h3 class="subtitle-foro"><strong>Actividad reciente</strong></h3>
+                        <h3 class="subtitle-foro">Actividad reciente</h3>
                     </div>
                     <div class="col-lg-12">
                         <hr class="cursos-hr-title-foro">
@@ -144,7 +144,7 @@
             <div class="col-md-4">
                 <div class="row">
                     <div class="col-md-12">
-                        <h3 class="subtitle-foro"><strong>Agenda</strong></h3>
+                        <h3 class="subtitle-foro">Agenda</h3>
                     </div>
                     <div class="col-lg-12">
                         <hr class="cursos-hr-title-foro">

@@ -1,12 +1,23 @@
 {include file='modules/elearning/views/cursos/menu/lateral.tpl'}
-<div class="col-lg-10">
+<div class="col-lg-9">
 <div class="col-lg-12">
+    <div class="col-lg-12">
+  <div class=" " style="margin-bottom: 0px !important">
+    <div class="text-center text-bold" style="margin-top: 20px; margin-bottom: 20px; color: #267161;">
+      <h3 style="text-transform: uppercase; margin: 0; font-weight: bold;">
+        Titulo de Nuevo curso mooc
+                </h3>
+    </div>
+  </div>
+</div>
         <h3>Nuevo Examen</h3>
         <hr class="cursos-hr">
     </div>
    <div style="width: 100%; margin: 0px auto">
-    <form class="form-horizontal" role="form" method="post" action="" autocomplete="on">
+    <form class="form-horizontal" autocomplete="on" method="POST">
         <input type="hidden" value="1" name="enviar" />
+        <input type="hidden" name="idcurso" id="idcurso" value="{$idcurso}">
+        <input type="hidden" name="hidden_curso" id="hidden_curso" value="{$idcurso}">
        
         <div class="form-group">
                 
@@ -15,59 +26,60 @@
                 <p><input class="form-control" id ="titulo" type="text" name="titulo" value="{$datos.nombre|default:""}" placeholder="Título"/></p>
             </div>
         </div>
-            
-        <div class="form-group">
-            <label class="col-lg-3 control-label" >Porcentaje Global: </label>
-            <div class="col-lg-9">
-                <p><input class="form-control" id ="porcentaje" type="number" name="porcentaje" value="{$datos.apellidos|default:""}" placeholder="Porcentaje" 
-                max="{$porcentaje}" min="0" value="0"/></p>
-            </div>
-        </div>
-            
-        <div class="form-group">
-            <label class="col-lg-3 control-label" >Puntaje Máximo: </label>
-            <div class="col-lg-9">
-                <p><input type="radio" value="20" class="radioalt margin-top-10" name="puntaje" checked="checked" style="margin-top:10px;"/>20</p>
-                <p><input type="radio" value="100" class="radioalt margin-top-10" name="puntaje"  style="margin-top:10px;"/>100</p>
-            </div>
-        </div>
-            
-        <div class="form-group">
-            <label class="col-lg-3 control-label" >Número Máximo de Intentos: </label>
-            <div class="col-lg-9">
-                <p>
-                  <select class="form-control" id="intentos" name="intentos">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="5">5</option>
-                    <option value="10">10</option>
-                    <option value="0">Ilimitado</option>
-                  </select>
-                </p>
-            </div>
-        </div>
 
         <div class="form-group">
-            <label class="col-lg-3 control-label" >Aplicar después de: </label>
+            <label class="col-lg-3 control-label" >Módulo: </label>
             <div class="col-lg-9">
                 <p>
-                  <select class="form-control" id="selectleccion" name="selectleccion">
-                    {if isset($lecciones) && count($lecciones)}
-                    {foreach item=ll from=$lecciones}
-                        <option value="{$ll.Lec_IdLeccion}">{$ll.Lec_Titulo}</option>
+                  <select class="form-control" id="selectmodulo" name="selectmodulo">
+                    {if isset($modulos) && count($modulos)}
+                    <option value="0">Seleccione módulo</option>
+                    {foreach item=ll from=$modulos}
+                        <option value="{$ll.Moc_IdModuloCurso}">{$ll.Moc_Titulo}</option>
                     {/foreach}
                     {/if}
                   </select>
                 </p>
             </div>
         </div>
-        
+
+        <div id="completar">
+
+        </div>
         <div class="form-group">
             <div class="col-lg-offset-2 col-lg-10">
-             <button class="btn btn-success pull-right margin-top-10" name="guardar" id="guardar">Preparar preguntas</button>
+             <button class="btn btn-success pull-right margin-top-10" id="guardar" name="guardar">Preparar preguntas</button>
             </div>
         </div>
     </form>
 </div>
 </div>
+</div>
+</div>
+
+<!-- <script type="text/javascript">
+    Menu(1);
+    RefreshTagUrl();
+   $("#btn-guardar-examen").click(function(e){
+  e.preventDefault();
+  SubmitForm($("#frm_registro"), $(this), function(data, event){
+    Mensaje("Exámen registrado con éxito", function(){
+      CargarPagina("examen/preguntas", { id: $("#idcurso").val(), idleccion: $("#selectleccion").val()  }, false, false);
+    })
+  });
+});
+
+   $("body").on('change', "#selectmodulo", function () {      
+        $("#cargando").show();
+    $.post(_root_ + 'elearning/examen/actualizarlecciones',
+    {
+        id:$("#selectmodulo").val() 
+        
+    }, function (data) {
+        $("#completar").html('');
+        $("#cargando").hide();
+        $("#completar").html(data);
+    });
+    });
+</script> -->
+

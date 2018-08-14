@@ -35,8 +35,11 @@
     border-color: #6f7271;
 
 }
-
+.simulalink{
+    color: #222;
+}
 .simulalink:hover {
+    color: #222;
     text-decoration:underline;
     cursor: pointer;
 }

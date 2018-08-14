@@ -1,9 +1,20 @@
+<style type="text/css">
+	.category-caption h2.main-caption{
+    	background-color: #ccc;
+	}
+
+    .active2{
+    	background: #373941 !important;
+		border-left: 4px solid #8BC34A !important;
+		color: #fff !important;
+		font-weight: normal !important;
+    }
+</style>
 {if $id_noticia == 341}
 <div class="col-lg-8" style="padding-bottom:  10px;">
 	<div class="row category-caption">
 		<div class="col-lg-12">
-			<h2 class="pull-left main-caption">Noticias</h2>
-			<h2 class="pull-left">Noticias</h2>
+			<h2 class="pull-left active2">Noticias</h2>
 		</div>
 	</div>
 	<div class="row">
@@ -36,7 +47,7 @@
 			<div class="text">
 				<p><b>Brasilia, 23/04/2018.-</b> La Secretaria General de la OTCA, Embajadora María Jacqueline Mendoza, fue condecorada por el presidente de Brasil Michel Temer con la insignia de la Orden de Rio Branco, en el grado de Gran Cruz, la más alta comenda de honra de la diplomacia brasileira.<br></p><p>Esta medalla fue en reconocimiento a la valiosa labor que realiza en la OTCA en favor del desarrollo de la Región Amazónica.</p><p>La ceremonia de imposición de insignias de la Orden de Rio Branco se llevó acabo el 20 de abril y cerca de 100 personalidades recibieron la medalla, entre políticos, militares y diplomáticos. Este gran evento se realizó en el Día de la Diplomacia, que marca el nacimiento del Varón de Rio Branco.</p><p><br></p>
 			</div>
-			<div class="source"><b>Fuente</b>: OTCA | foto ceremonia:  Marcos Corrêa/PR. <a href="http://www.otca-oficial.info/news/details/341" class="btn btn-primary " target="_blank">Ir a Noticia</a></div>
+			<div class="source"><b>Fuente</b>: OTCA | foto ceremonia:  Marcos Corrêa/PR. <a href="http://www.otca-oficial.info/news/details/341" class="btn btn-success " target="_blank">Ir a Noticia</a></div>
 			
 			<hr>
 			<!--<div class="no-print">
@@ -96,8 +107,7 @@
 <div class="col-lg-8">
 	<div class="row category-caption">
 		<div class="col-lg-12">
-			<h2 class="pull-left main-caption">Noticias</h2>
-			<h2 class="pull-left">Noticias</h2>
+			<h2 class="pull-left active2">Noticias</h2>
 		</div>
 	</div> 
 	
@@ -185,7 +195,7 @@
 
 			<hr>
 
-			<div class="source"> <b>Fuente</b>: CAF | OTCA <a href="http://www.otca-oficial.info/news/details/328" class="btn btn-primary " target="_blank">Ir a Noticia</a>
+			<div class="source"> <b>Fuente</b>: CAF | OTCA <a href="http://www.otca-oficial.info/news/details/328" class="btn btn-success " target="_blank">Ir a Noticia</a>
 			</div>
 
 			<hr>
@@ -202,8 +212,7 @@
 <div class="col-lg-8">
 	<div class="row category-caption">
 		<div class="col-lg-12">
-			<h2 class="pull-left main-caption">Noticias</h2>
-			<h2 class="pull-left">Noticias</h2>
+			<h2 class="pull-left active2">Noticias</h2>
 		</div>
 	</div>
 
@@ -239,7 +248,7 @@
 
 			<hr>
 
-			<div class="source"><b>Fuente</b>: OTCA <a href="http://www.otca-oficial.info/news/details/338" class="btn btn-primary " target="_blank">Ir a Noticia</a>
+			<div class="source"><b>Fuente</b>: OTCA <a href="http://www.otca-oficial.info/news/details/338" class="btn btn-success " target="_blank">Ir a Noticia</a>
 			</div>
 			<hr>
 		</article>
@@ -252,8 +261,7 @@
 <div class="col-lg-8">
 	<div class="row category-caption">
 		<div class="col-lg-12">
-			<h2 class="pull-left main-caption">Noticias</h2>
-			<h2 class="pull-left">Noticias</h2>
+			<h2 class="pull-left active2">Noticias</h2>
 		</div>
 	</div>
 
@@ -292,7 +300,7 @@
 			</div>
 			<hr>
 
-			<div class="source"><b>Fuente</b>: OTCA <a href="http://www.otca-oficial.info/news/details/333" class="btn btn-primary " target="_blank">Ir a Noticia</a>
+			<div class="source"><b>Fuente</b>: OTCA <a href="http://www.otca-oficial.info/news/details/333" class="btn btn-success " target="_blank">Ir a Noticia</a>
 			</div>
 			<hr>
 
@@ -306,8 +314,7 @@
 <div class="col-lg-8">
 	<div class="row category-caption">
 		<div class="col-lg-12">
-			<h2 class="pull-left main-caption">Noticias</h2>
-			<h2 class="pull-left">Noticias</h2>
+			<h2 class="pull-left active2">Noticias</h2>
 		</div>
 	</div>
 	<div class="row">
@@ -345,7 +352,7 @@
 			<hr>
 
 			<div class="source">
-				<b>Fuente</b>: OTCA  <a href="http://www.otca-oficial.info/news/details/343" class="btn btn-primary " target="_blank">Ir a Noticia</a></div>
+				<b>Fuente</b>: OTCA  <a href="http://www.otca-oficial.info/news/details/343" class="btn btn-success " target="_blank">Ir a Noticia</a></div>
 			<hr>
 				</article>
 	</div>
@@ -356,8 +363,7 @@
 <div class="col-lg-8">
 	<div class="row category-caption">
 		<div class="col-lg-12">
-			<h2 class="pull-left main-caption">Noticias</h2>
-			<h2 class="pull-left">Noticias</h2>
+			<h2 class="pull-left active2">Noticias</h2>
 		</div>
 	</div>
 
@@ -399,7 +405,7 @@
 			<hr>
 
 			<div class="source">
-				<b>Fuente</b>: OTCA  <a href="http://www.otca-oficial.info/news/details/344" class="btn btn-primary " target="_blank">Ir a Noticia</a>
+				<b>Fuente</b>: OTCA  <a href="http://www.otca-oficial.info/news/details/344" class="btn btn-success " target="_blank">Ir a Noticia</a>
 			</div>
 			<hr>
 		</article>
@@ -411,8 +417,7 @@
 <div class="col-lg-8">
 	<div class="row category-caption">
 		<div class="col-lg-12">
-			<h2 class="pull-left main-caption">Noticias</h2>
-			<h2 class="pull-left">Calendario</h2>
+			<h2 class="pull-left active2">Calendario</h2>
 		</div>
 	</div>
 
@@ -440,7 +445,7 @@
 
 			<hr>
 
-			<div class="source"><b>Fuente</b>: OTCA   <a href="http://www.otca-oficial.info/news/details/290" class="btn btn-primary " target="_blank">Ir a Noticia</a>
+			<div class="source"><b>Fuente</b>: OTCA   <a href="http://www.otca-oficial.info/news/details/290" class="btn btn-success " target="_blank">Ir a Noticia</a>
 			</div>
 			<hr>
 			
@@ -454,8 +459,7 @@
 <div class="col-lg-8">
 	<div class="row category-caption">
 		<div class="col-lg-12">
-			<h2 class="pull-left main-caption">Noticias</h2>
-			<h2 class="pull-left">Calendario</h2>
+			<h2 class="pull-left active2">Calendario</h2>
 		</div>
 	</div>
 	<div class="row">
@@ -482,7 +486,7 @@
 			</div>
 			<hr>
 
-			<div class="source"><b>Fuente</b>: OTCA   <a href="http://www.otca-oficial.info/news/details/301" class="btn btn-primary " target="_blank">Ir a Noticia</a> </div>
+			<div class="source"><b>Fuente</b>: OTCA   <a href="http://www.otca-oficial.info/news/details/301" class="btn btn-success " target="_blank">Ir a Noticia</a> </div>
 			<hr>
 		</article>
 	</div>
@@ -494,8 +498,7 @@
 <div class="col-lg-8">
 	<div class="row category-caption">
 		<div class="col-lg-12">
-			<h2 class="pull-left main-caption">Noticias</h2>
-			<h2 class="pull-left">Calendario</h2>
+			<h2 class="pull-left active2">Calendario</h2>
 		</div>
 	</div>
 
@@ -525,7 +528,7 @@
 				</div>
 			</div>
 
-			<div class="source"><b>Fuente</b>: OTCA <a href="http://www.otca-oficial.info/news/details/322" class="btn btn-primary " target="_blank">Ir a Noticia</a>
+			<div class="source"><b>Fuente</b>: OTCA <a href="http://www.otca-oficial.info/news/details/322" class="btn btn-success " target="_blank">Ir a Noticia</a>
 			</div>
 			<hr>
 		</article>
@@ -537,8 +540,7 @@
 <div class="col-lg-8">
 	<div class="row category-caption">
 		<div class="col-lg-12">
-			<h2 class="pull-left main-caption">Noticias</h2>
-			<h2 class="pull-left">Noticias</h2>
+			<h2 class="pull-left active2">Noticias</h2>
 		</div>
 	</div>
 
@@ -568,7 +570,7 @@
 			</div>
 			<hr>
 
-			<div class="source"><b>Fuente</b>: OTCA   <a href="http://www.otca-oficial.info/news/details/303" class="btn btn-primary " target="_blank">Ir a Noticia</a>
+			<div class="source"><b>Fuente</b>: OTCA   <a href="http://www.otca-oficial.info/news/details/303" class="btn btn-success " target="_blank">Ir a Noticia</a>
 			</div>
 
 			<hr>

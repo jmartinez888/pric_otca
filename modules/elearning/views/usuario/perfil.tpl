@@ -2,7 +2,7 @@
   	{include file='modules/elearning/views/cursos/menu/lateral.tpl'}
 	<input hidden="hidden" id="hidden_url" value="{BASE_URL}/elearning/" />
 	<input hidden="hidden" id="hidden_base_url" value="{BASE_URL}" />
-  	<div class="col-lg-10" style="margin-top: 20px">
+  	<div class="col-lg-9" style="margin-top: 20px">
   		<div class="panel panel-default margin-top-10">
 	        <div class="panel-heading">
 	          <h3 class="panel-title">

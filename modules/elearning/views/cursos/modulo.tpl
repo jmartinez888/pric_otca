@@ -107,7 +107,7 @@
 
 
     {if $leccion["Lec_Tipo"]==3}
-    {include file='modules/elearning/views/cursos/examen.tpl'}
+
     <div class="col-lg-12" id="leccion-contenido" style="padding-left:0px; padding-right:0px;">
       <div class="panel panel-default">
           <div class="panel-heading cabecera-titulo">
@@ -117,13 +117,13 @@
           </h3>
         </div>
         <div class="panel-body contenedor-clase">
-
-          {if $leccion["Progreso"]==1}
+          {if isset($ultimoexamen) && count($ultimoexamen) }
+          {if $ultimoexamen.Exl_Nota*100/$examen.Exa_Peso>50}
           <div class="row">
             <div class="col-lg-12">
               <div class="alert alert-success" role="alert">
                   <h3>¡Enhorabuena! ¡Usted ya aprobó su exámen!</h3>
-                  <small>Superaste el {$examen.Exa_Porcentaje}% de preguntas correctas, puedes continuar con el siguiente módulo.
+                  <small>Obtuviste {$ultimoexamen.Exl_Nota} puntos de {$examen.Exa_Peso}
                   </small>
                   <h3></h3>
               </div>
@@ -140,63 +140,50 @@
                   </div>
                 </div>
                 <div class="label">
-                {$resultados.CORRECTAS*100/($resultados.CORRECTAS + $resultados.INCORRECTAS)}%
+                {$ultimoexamen.Exl_Nota*100/$examen.Exa_Peso}%
                 </div>
               </div>
             </div>
-            {if isset($resultados) }
-            <div class="col-lg-12">
-              <label>Informe de Resultados: </label>
-            </div>
-            <div class="col-lg-12">
-              <div class="progress">
-                {if $resultados.CORRECTAS > 0}
-                <div class="progress-bar progress-bar-success" style="width:{$resultados.CORRECTAS*100/($resultados.CORRECTAS + $resultados.INCORRECTAS)}%">
-                  <span class="sr-only">{$resultados.CORRECTAS}/{($resultados.CORRECTAS + $resultados.INCORRECTAS)}</span>
-                </div>
-                {/if}
-                {if $resultados.INCORRECTAS > 0}
-                <div class="progress-bar progress-bar-danger" style="width:{$resultados.INCORRECTAS*100/($resultados.CORRECTAS + $resultados.INCORRECTAS)}%">
-                  <span class="sr-only">{$resultados.INCORRECTAS}/{($resultados.CORRECTAS + $resultados.INCORRECTAS)}</span>
-                </div>
-                {/if}
-              </div>
-            </div>
-            {/if}
-            <div class="col-lg-12"><label>¿Y ahora qué?, puedes:</label></div>
-            <div class="col-lg-12">
-              <a href="{BASE_URL}elearning/cursos/curso/{$curso}">
-                <button class="btn btn-success" style="margin-right: 10px">
-                  <span class="glyphicon glyphicon-book" aria-hidden="true"></span>
-                  Volver al índice del curso
-                </button>
-              </a>
 
-              <a href="{BASE_URL}elearning/cursos/modulo/{$curso}/{$next_mod[0].Moc_IdModuloCurso}/{$next_mod[0].Leccion}">
-                <button class="btn btn-success">
-                  <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-                  Ir al siguiente módulo
-                </button>
-              </a>
-            </div>
+          {if $restantes > 0}
+            <div style="width: 100%; margin: 0px auto; text-align:center;">
+            <form class="" role="form" method="post" action="" autocomplete="on">
+                <input type="hidden" value="1" name="enviar" />
+               
+                <div class="form-group">
+                        
+                    <label class="col-lg-12 control-label">Número de intentos: {$intentos.intentos} de {$examen.Exa_Intentos}</label>
+                    <div class="col-lg-12">
+                    <p></p>
+                        <p>Al presionar el botón de Comenzar Prueba se contabilizará un intento.</p>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <div class="col-lg-12">
+                     <button class="btn btn-success margin-top-10" name="comenzar" id="comenzar">Comenzar Prueba</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+            {else}
+            <div style="width: 100%; margin: 0px auto; text-align:center;">
+                <div class="form-group">
+                        
+                    <label class="col-lg-12 control-label">Número de intentos: {$intentos.intentos} de {$examen.Exa_Intentos}</label>
+                    <div class="col-lg-12">
+                    <p></p>
+                        <p>Usted ya no cuenta con más intentos</p>
+                    </div>
+                </div>
+              </div>
+            {/if}
           </div>
           {else}
-
-            {if $intentos == 0}
-            <div class="col-lg-12"><!--id="leccion-contenido"-->
-              <button id="btnExamen" class="btn btn-success">
-                <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
-                Iniciar exámen
-              </button>
-            </div>
-            {else}
-
-
-
             <div class="col-lg-12">
               <div class="alert alert-danger" role="alert">
                   <h3>Lo sentimos, no has superado el exámen.</h3>
-                  <small>Obtuviste {$resultados.CORRECTAS*100/($resultados.CORRECTAS + $resultados.INCORRECTAS)}% de aciertos en tu última evaluación. El procentaje mínimo de preguntas correctas para superar el exámen es {$examen.Exa_Porcentaje}%</small>
+                  <small>Obtuviste {$ultimoexamen.Exl_Nota} puntos de {$examen.Exa_Peso}</small>
                   <h3></h3>
               </div>
             </div> 
@@ -211,48 +198,65 @@
                   </div>
                 </div>
                 <div class="label">
-                {$resultados.CORRECTAS*100/($resultados.CORRECTAS + $resultados.INCORRECTAS)}%
+                {$ultimoexamen.Exl_Nota*100/$examen.Exa_Peso}%
                 </div>
               </div>
             </div>
-            {if isset($resultados) }
-            <div class="col-lg-12">
-              <label>Informe de Resultados: </label>
-            </div>
-            <div class="col-lg-12">
-              <div class="progress">
-                {if $resultados.CORRECTAS > 0}
-                <div class="progress-bar progress-bar-success" style="width:{$resultados.CORRECTAS*100/($resultados.CORRECTAS + $resultados.INCORRECTAS)}%">
-                  <span class="sr-only">{$resultados.CORRECTAS}/{($resultados.CORRECTAS + $resultados.INCORRECTAS)}</span>
+            {if $restantes > 0}
+            <div style="width: 100%; margin: 0px auto; text-align:center;">
+            <form class="" role="form" method="post" action="" autocomplete="on">
+                <input type="hidden" value="1" name="enviar" />
+               
+                <div class="form-group">
+                        
+                    <label class="col-lg-12 control-label">Número de intentos: {$intentos.intentos} de {$examen.Exa_Intentos}</label>
+                    <div class="col-lg-12">
+                    <p></p>
+                        <p>Al presionar el botón de Comenzar Prueba se contabilizará un intento.</p>
+                    </div>
                 </div>
-                {/if}
-                {if $resultados.INCORRECTAS > 0}
-                <div class="progress-bar progress-bar-danger" style="width:{$resultados.INCORRECTAS*100/($resultados.CORRECTAS + $resultados.INCORRECTAS)}%">
-                  <span class="sr-only">{$resultados.INCORRECTAS}/{($resultados.CORRECTAS + $resultados.INCORRECTAS)}</span>
+                
+                <div class="form-group">
+                    <div class="col-lg-12">
+                     <button class="btn btn-success margin-top-10" name="comenzar" id="comenzar">Comenzar Prueba</button>
+                    </div>
                 </div>
-                {/if}
+            </form>
+        </div>
+            {else}
+            <div style="width: 100%; margin: 0px auto; text-align:center;">
+                <div class="form-group">
+                        
+                    <label class="col-lg-12 control-label">Número de intentos: {$intentos.intentos} de {$examen.Exa_Intentos}</label>
+                    <div class="col-lg-12">
+                    <p></p>
+                        <p>Usted ya no cuenta con más intentos</p>
+                    </div>
+                </div>
               </div>
-            </div>
             {/if}
-
-            <div class="col-lg-12"><label>¿Y ahora qué?, puedes:</label></div>
-            <div class="col-lg-12">
-              <button id="btnExamen" class="btn btn-danger" style="margin-right: 10px">
-                <span class="glyphicon glyphicon-repeat" aria-hidden="true"></span>
-                Volver a intentar el exámen
-              </button>
-
-              <a href="{BASE_URL}elearning/cursos/curso/{$curso}">
-                <button class="btn btn-danger">
-                  <span class="glyphicon glyphicon-repeat" aria-hidden="true"></span>
-                  Repasar las lecciones del módulo
-                </button>
-              </a>
-            </div>
             {/if}
-
-
-
+            {else}
+              <div style="width: 100%; margin: 0px auto; text-align:center;">
+               <form class="" role="form" method="post" action="" autocomplete="on">
+                <input type="hidden" value="1" name="enviar" />
+               
+                <div class="form-group">
+                    <h3>Usted no ha realizado ningún intento hasta el momento</h3>
+                    <label class="col-lg-12 control-label">Número de intentos disponibles: {$examen.Exa_Intentos}</label>
+                    <div class="col-lg-12">
+                    <p></p>
+                        <p>Al presionar el botón de Comenzar Prueba se contabilizará un intento.</p>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <div class="col-lg-12">
+                     <button class="btn btn-success margin-top-10" name="comenzar" id="comenzar">Comenzar Prueba</button>
+                    </div>
+                </div>
+            </form>
+            </div>
             <!-- {if ($examen["Exa_Intentos"]==0 || ($examen["Exa_Intentos"] != 0
             && $examen["Exa_Intentos"] >= $intentos))}
 

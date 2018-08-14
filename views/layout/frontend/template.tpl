@@ -85,10 +85,10 @@
                                     <a class="nav-link txt-color-white f-z-14" href="#"> | Inglés</a>
                                 </li>
                                 <li class="nav-item">
-                                  <a class="nav-link txt-color-white f-z-14" href="#"> | Contácto</a>
+                                  <a class="nav-link txt-color-white f-z-14" href="{$_layoutParams.root_clear}acercade/contacto"> | Contácto</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link txt-color-white f-z-14" href="#"> | Acerca de</a>
+                                    <a class="nav-link txt-color-white f-z-14" href="{$_layoutParams.root_clear}acercade"> | Acerca de</a>
                                 </li>
                                 {if Session::get('autenticado')}
                                     <li class="nav-item">
@@ -113,7 +113,7 @@
         <header class="container">
             <div class="row">
                 <div class="col col-md-3 col-sm-2 col-xs-3 padding-10">
-                    <img  class="width-250" src="{$_layoutParams.ruta_img}frontend/logo.png" alt="La ORA" title="ORA">
+                    <img  class="width-250" src="{$_layoutParams.ruta_img}frontend/logo.png" alt="EL PRIC" title="PRIC">
                 </div>
                 <div class="col col-md-6 col-sm-8 col-xs-6 hidden-xs  texto-header  border-left-1 txt-color-grey padding-l-10">
                     <h2 class="txt-color-black display-block text-bold ">Plataforma Regional de Intercambio de Información y Conocimientos</h2>

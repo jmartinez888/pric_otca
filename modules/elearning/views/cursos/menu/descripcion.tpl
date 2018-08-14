@@ -1,6 +1,6 @@
 <div class="col col-lg-12" style="margin-bottom: 15px;">
 	<div class="col-lg-12">
-		<center><h2 class="text-left titulo"> <strong>Cursos</strong> </h2></center>
+		<center><h2 class="text-left titulo"> Cursos </h2></center>
 	</div>
 	<div class="col-lg-12">
 		<hr class="cursos-hr-title-foro">

@@ -1,6 +1,6 @@
 <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12">
     {include file='modules/foro/views/index/menu/lateral.tpl'}
-    <div  class="col-md-10 col-xs-12 col-sm-8 col-lg-10">
+    <div  class="col-md-9 col-xs-12 col-sm-8 col-lg-9">
         <div class="row ficha_foro">
             
             <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">

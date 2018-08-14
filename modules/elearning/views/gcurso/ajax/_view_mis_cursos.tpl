@@ -130,6 +130,7 @@
                                 <button class="btn btn-sm btn-default btnHabilitar" data-toggle="tooltip" data-placement="bottom" title="Habilitar Curso"><i class="glyphicon glyphicon-ok" ></i></button>
                             {/if}
                             <button class="btn btn-sm btn-default btnCertificado" data-toggle="tooltip" data-placement="bottom" title="Diseñar Plantilla de Certificado"><i class="glyphicon glyphicon-picture"></i></button>
+                            <button class="btn btn-sm btn-default btnExamen" data-toggle="tooltip" data-placement="bottom" title="Gestionar Examenes"><i class="glyphicon glyphicon-file"></i></button>
                             <button class="btn btn-sm btn-default btnEliminar" data-toggle="tooltip" data-placement="bottom" title="Eliminar Curso"><i class="glyphicon glyphicon-trash"></i></button>
                         </td>
                         {/if}

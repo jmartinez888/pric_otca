@@ -4,8 +4,8 @@
     <a class="referencia-curso" href="{BASE_URL}elearning/cursos/">Cursos</a>  /  {$curso.Cur_Titulo}
   </div>
   {include file='modules/elearning/views/cursos/menu/lateral.tpl'}
-  <div class="col-lg-10" style="margin-top: 20px">
-    <div class="col-lg-12">
+  <div class="col-lg-9" style="margin-top: 20px; padding-left: 0px; padding-right: 0px;">
+    <div class="col-lg-12" style="padding-right: 0px;">
       <div class="panel panel-default">
         <div class="panel-body">
           <div class="col-lg-12" style="padding-left: 0px; padding-right: 0px;">

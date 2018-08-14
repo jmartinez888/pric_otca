@@ -152,28 +152,28 @@ class cursoModel extends Model {
       return $this->getArray($sql);
     }
 
-    public function getResultadoExamen($examen, $usuario){
-      $sql = "SELECT SUM(CORRECTAS) as CORRECTAS, SUM(INCORRECTAS) as INCORRECTAS FROM
-              (SELECT
-                SUM(CASE WHEN X.Respuesta = 1 THEN 1 ELSE 0 END) as CORRECTAS,
-                SUM(CASE WHEN X.Respuesta = 0 THEN 1 ELSE 0 END) as INCORRECTAS
-              FROM
-              (SELECT
-                (CASE WHEN rr.Res_Descripcion = pp.Pre_Valor THEN 1 ELSE 0 END) as Respuesta
-              FROM respuesta rr
-              INNER JOIN pregunta pp ON pp.Pre_IdPregunta = rr.Pre_IdPregunta
-              WHERE rr.Usu_IdUsuario = '{$usuario}' AND pp.Exa_IdExamen = '{$examen}'
-                AND rr.Res_Intento =
-              (SELECT ifnull(MAX(r.Res_Intento), 1) as Intento FROM respuesta r
-              INNER JOIN pregunta p ON p.Pre_IdPregunta = r.Pre_IdPregunta
-              WHERE r.Usu_IdUsuario = '{$usuario}' AND p.Exa_IdExamen = '{$examen}')) as X
-              GROUP BY X.Respuesta)Y";
-      $resultado = $this->getArray($sql);
-      if( $resultado != null && count($resultado)>0){
-        return $resultado[0];
-      }
-      return null;
-    }
+    // public function getResultadoExamen($examen, $usuario){
+    //   $sql = "SELECT SUM(CORRECTAS) as CORRECTAS, SUM(INCORRECTAS) as INCORRECTAS FROM
+    //           (SELECT
+    //             SUM(CASE WHEN X.Respuesta = 1 THEN 1 ELSE 0 END) as CORRECTAS,
+    //             SUM(CASE WHEN X.Respuesta = 0 THEN 1 ELSE 0 END) as INCORRECTAS
+    //           FROM
+    //           (SELECT
+    //             (CASE WHEN rr.Res_Descripcion = pp.Pre_Valor THEN 1 ELSE 0 END) as Respuesta
+    //           FROM respuesta rr
+    //           INNER JOIN pregunta pp ON pp.Pre_IdPregunta = rr.Pre_IdPregunta
+    //           WHERE rr.Usu_IdUsuario = '{$usuario}' AND pp.Exa_IdExamen = '{$examen}'
+    //             AND rr.Res_Intento =
+    //           (SELECT ifnull(MAX(r.Res_Intento), 1) as Intento FROM respuesta r
+    //           INNER JOIN pregunta p ON p.Pre_IdPregunta = r.Pre_IdPregunta
+    //           WHERE r.Usu_IdUsuario = '{$usuario}' AND p.Exa_IdExamen = '{$examen}')) as X
+    //           GROUP BY X.Respuesta)Y";
+    //   $resultado = $this->getArray($sql);
+    //   if( $resultado != null && count($resultado)>0){
+    //     return $resultado[0];
+    //   }
+    //   return null;
+    // }
 
     public function getUsuarioCurso($id){
       $sql = "SELECT * FROM usuario

@@ -223,6 +223,8 @@ class cursosController extends elearningController {
       $Mmodel = $this->loadModel("modulo");
       $Lmodel = $this->loadModel("leccion");
       $Cmodel = $this->loadModel("curso");
+      $Emodel = $this->loadModel("examen");
+       Session::set("intento", 0);
 
       if(strlen($curso)==0 || strlen($modulo)==0){ $this->redireccionar("elearning/"); }
       if(!Session::get("autenticado")){ $this->redireccionar("elearning/"); }
@@ -232,11 +234,16 @@ class cursosController extends elearningController {
       //if(!$Lmodel->validarLeccion($leccion, $modulo, Session::get("id_usuario"))){ $this->redireccionar("elearning/cursos"); }
 
       $OLeccion = $Lmodel->getLeccion($leccion, $modulo, Session::get("id_usuario"));
+
       $lecciones = $Lmodel->getLecciones($modulo, Session::get("id_usuario"));
+      // $examenes= $Emodel->getExamensModulo($modulo);
+
       $clave = array_search($OLeccion["Lec_IdLeccion"], array_column($lecciones, "Lec_IdLeccion"));
   // print($lecciones);
       $tmp = $lecciones[$clave];
-      $datos_modulo = $Mmodel->getModuloDatos($OLeccion["Moc_IdModuloCurso"]);
+      // $datos_modulo = $Mmodel->getModuloDatos($OLeccion["Moc_IdModuloCurso"]);
+
+      $datos_modulo = $Mmodel->getModuloDatos($modulo);
 
       $indice_leccion = $clave + 1;
       $final = count($lecciones) == $indice_leccion ? true : false;
@@ -251,31 +258,47 @@ class cursosController extends elearningController {
           //$Lmodel->RegistrarProgreso($OLeccion["Lec_IdLeccion"], Session::get("id_usuario"));
           $html = $Lmodel->getContenido($OLeccion["Lec_IdLeccion"]);
           $this->_view->assign("html", $html[0]);
-      }else if($OLeccion["Lec_Tipo"] == 3){
-          $Emodel = $this->loadModel("examen");
-          $examen = $Emodel->getExamen($OLeccion["Lec_IdLeccion"]);
+      }
+
+      else if($OLeccion["Lec_Tipo"] == 3){
+          $examen = $Emodel->getExamenxLeccion($OLeccion["Lec_IdLeccion"]);
+
+          // echo $examen["Exa_IdExamen"]. Session::get("id_usuario"); exit;
+          $ultimoexamen = $Emodel->getUltimoExamen($examen["Exa_IdExamen"], Session::get("id_usuario"));
+
+          // echo $ultimoexamen[0]; exit;
           $intentos = $Emodel->getIntentos($examen["Exa_IdExamen"], Session::get("id_usuario"));
 
           if($tmp["Progreso"]==1 || $intentos > 0){
-            $resultados = $Cmodel->getResultadoExamen($examen["Exa_IdExamen"], Session::get("id_usuario"));
-            if($resultados != null){
-              $angulo_ok = $resultados["CORRECTAS"] * 360 / ($resultados["CORRECTAS"] + $resultados["INCORRECTAS"]);
+            // $resultados = $Cmodel->getResultadoExamen($examen["Exa_IdExamen"], Session::get("id_usuario"));
+            if($ultimoexamen){
+              $angulo_ok = $ultimoexamen['Exl_Nota'] * 360 / $examen['Exa_Peso'];
               $ang_1 = $angulo_ok > 180 ? 180 : $angulo_ok;
               $ang_2 = $angulo_ok > 180 ? $angulo_ok - $ang_1 : 0;
               $this->_view->assign("ang_1", $ang_1);
               $this->_view->assign("ang_2", $ang_2);
-              $this->_view->assign("next_mod", $Mmodel->getNextModulo($modulo));
+              // $this->_view->assign("next_mod", $Mmodel->getNextModulo($modulo));
+              $this->_view->assign("ultimoexamen", $ultimoexamen);
             }
-            $this->_view->assign("resultados", $resultados);
+            // $this->_view->assign("resultados", $resultados);
             //$this->redireccionar("elearning/cursos/modulo/" . $curso. "/" . $tmp["Moc_IdModuloCurso"] . "/" .
               //$lecciones[0]["Lec_IdLeccion"]);
           }
           $OLeccion["Progreso"]=$tmp["Progreso"];
 
           if($examen==null){ $this->redireccionar("elearning/"); }
+
+          if ($this->botonPress("comenzar")) {
+
+            $this->redireccionar('elearning/examen/examen/'.$examen['Exa_IdExamen']);
+        }
           $this->_view->assign("intentos", $intentos);
+
+          $this->_view->assign("restantes",$examen['Exa_Intentos']-$intentos['intentos']);
           $this->_view->assign("examen", $examen);
-      }else if ($OLeccion["Lec_Tipo"] == 4){
+      }
+
+      else if ($OLeccion["Lec_Tipo"] == 4){
         $this->redireccionar("elearning/clase/clase/" . $curso . "/" .$modulo  . "/" . $OLeccion["Lec_IdLeccion"]);
         exit;
       }
@@ -283,6 +306,8 @@ class cursosController extends elearningController {
         $this->redireccionar("elearning/clase/examen/" . $curso . "/" .$modulo  . "/" . $OLeccion["Lec_IdLeccion"]);
         exit;
       }
+
+
       $Tmodel = $this->loadModel("trabajo");
       $TTmodel = $this->loadModel("tarea");
       $tareas = $Tmodel->getTrabajoXLeccion($OLeccion["Lec_IdLeccion"]);
@@ -292,11 +317,15 @@ class cursosController extends elearningController {
           $tareas[$i]["Archivos"] = $Tmodel->getArchivos($tareas[$i]["Tra_IdTrabajo"]);
         }
       }
+    
+
 
       $this->_view->setTemplate(LAYOUT_FRONTEND);
       $this->_view->assign("mod_datos", $datos_modulo);
       $this->_view->assign("modulo", $Mmodel->getModulo($modulo));
       $this->_view->assign("lecciones", $lecciones);
+      // $this->_view->assign("examenes", $examenes);
+
       $this->_view->assign("leccion", $OLeccion);
       $this->_view->assign("referencias", $Lmodel->getReferencias($OLeccion["Lec_IdLeccion"]));
       $this->_view->assign("materiales", $Lmodel->getMateriales($OLeccion["Lec_IdLeccion"]));

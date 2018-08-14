@@ -1,7 +1,5 @@
 .titulo{
 	margin-top: 10px !important;
-	font-family: 'Lucida Sans';
-	color: #3c763d;
 }
 .link-foro{
 	color: #222;
@@ -25,9 +23,7 @@
 	text-align: justify;
 }
 .subtitle-foro{
-	font-family: 'Gill Sans MT';
 	margin-top: 10px;
-	color: #3c763d;
 }
 .contenedor-link-agenda{
 	border-bottom: 1px solid #ddd;

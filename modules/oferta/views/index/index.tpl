@@ -1,7 +1,7 @@
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-lg-12">
-			<center><h1 class="titulo2">{$lenguaje["label_h1_titulo"]}</h1></center>
+			<center><h2 class="titulo2">{$lenguaje["label_h1_titulo"]}</h2></center>
 		</div>
 		<div class="col-lg-12">
 			<hr class="cursos-hr">

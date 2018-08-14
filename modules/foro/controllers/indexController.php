@@ -52,7 +52,7 @@ class indexController extends foroController {
         $this->_view->setTemplate(LAYOUT_FRONTEND);
         $filtro = $this->filtrarTexto($filtro);
         $this->_view->setJs(array('index'));
-        $this->_view->setCss(array("index"));
+        $this->_view->setCss(array("index", "jp-index"));
         $paginador = new Paginador();
 
         $lista_foros = $this->_model->getForosPaginado($filtro);
