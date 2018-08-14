@@ -1,6 +1,6 @@
 <div class="col-lg-12">
   	{include file='modules/elearning/views/cursos/menu/lateral.tpl'}
-  	<div class="col-lg-10" style="margin-top: 20px">
+  	<div class="col-lg-9" style="margin-top: 20px">
 	    	<div class="panel panel-default">
 		        <div class="panel-heading cabecera-titulo">
 		          <h3 class="panel-title">

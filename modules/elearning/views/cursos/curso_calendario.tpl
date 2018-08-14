@@ -1,7 +1,7 @@
 <input id="hidden_url" value="{BASE_URL}elearning/" hidden="hidden"/>
 <div class="col-lg-12">
   	{include file='modules/elearning/views/cursos/menu/lateral.tpl'}
-  	<div class="col-lg-10" style="margin-top: 20px">
+  	<div class="col-lg-9" style="margin-top: 20px">
       <div class="col-lg-12">
         <center><h4>Calendario {$curso.Cur_Titulo}</h4></center>
       </div>
