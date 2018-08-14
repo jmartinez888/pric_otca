@@ -6,7 +6,7 @@
     </div>
   </div>
   {include file='modules/elearning/views/cursos/menu/lateral.tpl'}
-  <div class="col col-lg-10" style="margin-top: 20px">
+  <div class="col col-lg-9" style="margin-top: 20px; padding-left: 0px;">
     <div class="col-lg-12">
       <div class="panel panel-default">
         <div class="panel-body">

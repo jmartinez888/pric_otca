@@ -47,7 +47,7 @@
         padding-left: 0px !important;
     }
 </style>
-<div class="col-md-2 col-xs-12 col-sm-4 col-lg-2" style="padding-left: 0px !important">
+<div class="col-md-3 col-xs-12 col-sm-4 col-lg-3" style="padding-left: 0px !important">
     <div class="sidebar-left">
         <div class="side-menu">
             <ul>
