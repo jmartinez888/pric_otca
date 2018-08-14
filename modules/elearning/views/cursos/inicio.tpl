@@ -1,3 +1,4 @@
+{include file='modules/elearning/views/cursos/menu/descripcion.tpl'}
 {include file='modules/elearning/views/cursos/menu/lateral.tpl'}
 <div class="col col-md-10" style="padding-bottom: 20px; padding-top: 20px">
     <div class="col-xs-12">

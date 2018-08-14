@@ -235,7 +235,7 @@
     </ul>
 
     <!-- Jhon Martinez -->
-    <ul id="item-examen-curso">
+    <!-- <ul id="item-examen-curso">
       <div class="side-menu2">
         <li class="side-menu" style="position: relative">
           <i class="fa fa-edit"></i>
@@ -258,7 +258,8 @@
           <span> Certificado </span>
         </li>
       </div>
-    </ul>
+    </ul> -->
+    <!-- {if $modalidad == 2}
     <ul id="item-alumnos-curso">
       <div class="side-menu2">
         <li class="side-menu" style="position: relative">
@@ -267,14 +268,15 @@
         </li>
       </div>
     </ul>
-    <ul id="item-calendario-curso">
+    {/if} -->
+    <!-- <ul id="item-calendario-curso">
       <div class="side-menu2">
         <li class="side-menu" style="position: relative">
           <i class="fa fa-calendar"></i>
           <span> Calendario </span>
         </li>
       </div>
-    </ul>
+    </ul> -->
 
     <!-- Jhon Martinez -->
 
@@ -296,4 +298,11 @@
         CargarPagina("gmodulo/_view_tareas_curso", { id: $("#hidden_curso").val() }, false, $(this));
     });
   }, 400);
+
+  $("#item-alumnos-curso").click(function(){
+    var Curso =  $("#hidden_curso").val();
+    var Link = $("#hidden_url").val() + "gestion/matriculados/" + Curso;
+    location.href = Link;
+  });
+
 </script>

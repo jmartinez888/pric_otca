@@ -218,7 +218,7 @@
   }
 </style>
 
-{include file='modules/elearning/views/cursos/menu/descripcion.tpl'}
+
 
   <div class="col col-md-2" >
     <div class="padding-t-20 col-md-12 menu-cursos">
