@@ -28,7 +28,7 @@
             </div>
             
                 <div class="col-lg-12" style="margin-top: 15px">
-                  <a href="{$_layoutParams.root}elearning/examen/preguntas/{$examen}" class="btn btn-danger pull-right">Cancelar</a>
+                  <a href="{$_layoutParams.root}elearning/examen/preguntas/{$idcurso}/{$examen}" class="btn btn-danger">Cancelar</a>
                    <button class="btn btn-success margin-top-10" name="btn_registrar_pregunta" id="btn_registrar_pregunta">Registrar</button>
                 </div>
         </form>
