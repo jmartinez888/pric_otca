@@ -118,10 +118,10 @@ class indexModel extends Model {
         );              
         return $sql->fetchAll();
     } 
-    public function getDocenteCurso($Usu_IdUsuario){          
+    public function getDocenteCurso($Cur_IdCurso){          
         $sql = $this->_db->query(
-            "SELECT Usu_IdUsuario,Usu_Nombre,Usu_Apellidos,Usu_URLImage,Usu_GradoAcademico,Usu_Especialidad,Usu_Perfil,Usu_InstitucionLaboral,Usu_Cargo FROM usuario WHERE Usu_Estado = 1 AND Row_Estado = 1
-              AND Usu_IdUsuario = (SELECT Usu_IdUsuario FROM curso WHERE Cur_IdCurso = $Usu_IdUsuario AND Row_Estado = 1 AND Cur_Estado = 1)"
+            "SELECT Usu_IdUsuario,CONCAT(Usu_Nombre,Usu_Apellidos) AS Nombres,Usu_URLImage,Usu_GradoAcademico,Usu_Especialidad,Usu_Perfil,Usu_InstitucionLaboral,Usu_Cargo FROM usuario WHERE Usu_Estado = 1 AND Row_Estado = 1
+              AND Usu_IdUsuario = (SELECT Usu_IdUsuario FROM curso WHERE Cur_IdCurso = $Cur_IdCurso AND Row_Estado = 1 AND Cur_Estado = 1)"
         );              
         return $sql->fetchAll();
     } 
