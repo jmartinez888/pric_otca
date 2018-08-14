@@ -267,6 +267,7 @@ function valorar_foro(id_usuario, ID, valor, ajaxtpl) {
 
 function enviarReporte(id_foro, iCom_IdComentario, mensaje, tpl) {
     if(tpl == "ficha_foro"){
+        $("#cargando").show();
         $.post(_root_ + 'foro/index/ReportarComentario',
             {
                 mensaje: mensaje,
