@@ -1061,7 +1061,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                <button type="button" id_foro="52" class="btn btn-primary btn-md enviar_reporte" data-dismiss="modal" style="margin-left: 88%;">Enviar</button>
+                                <button type="button" id_foro="{$foro.For_IdForo}" class="btn btn-primary btn-md enviar_reporte" data-dismiss="modal" style="margin-left: 88%;">Enviar</button>
                                 </div>                               
                             </div>
                         </div>
