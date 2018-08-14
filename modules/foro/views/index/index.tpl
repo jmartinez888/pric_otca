@@ -9,17 +9,16 @@
         <p class="descripcion-foro">{$lenguaje.foro_index_label_descripcion}</p>   
         
         <div class="row">
+            <div class="col-md-12" style="margin-bottom: 15px;">
+                <div class="input-group">
+                    <input type ="text" class="form-control"  data-toggle="tooltip" data-original-title="Buscar Foro" placeholder="Buscar Foro" name="text_busqueda" id="text_busqueda" onkeypress="tecla_enter_foro(event)" value="{$palabrabuscada|default:''}">                  
+                    <span class="input-group-btn">
+                        <button class="btn  btn-success btn-buscador" type="button" id="buscar_foro"><i class="glyphicon glyphicon-search"></i></button>
+                    </span>
+                </div><!-- /input-group -->
+            </div> 
             <div class="col-md-8">
                 <div class="row">
-                    <div class="col-md-12">
-                        <div class="input-group">
-                            <input type ="text" class="form-control"  data-toggle="tooltip" data-original-title="Buscar Foro" placeholder="Buscar Foro" name="text_busqueda" id="text_busqueda" onkeypress="tecla_enter_foro(event)" value="{$palabrabuscada|default:''}">                  
-                            <span class="input-group-btn">
-                                <button class="btn  btn-success btn-buscador" type="button" id="buscar_foro"><i class="glyphicon glyphicon-search"></i></button>
-                            </span>
-                        </div><!-- /input-group -->
-                    </div>                    
-
                     <div class="col-md-12">
                         <h3 class="subtitle-foro"><strong>Temáticas</strong></h3>
                     </div>
@@ -64,15 +63,11 @@
                     <div class="col-lg-12">
                         {foreach from=$lista_foros item=foro}
                         <div class="row col-lg-12 tematica-foro">
-<<<<<<< HEAD
+
                             {if $foro.For_Tipo == 1}
                                 {if $foro.For_Estado != 0 && $foro.Row_Estado == 1} 
-                                    <div><a class="link-foro"  href="{$_layoutParams.root}foro/index/ficha/{$foro.For_IdForo}">
-                                    <h4 style="text-align: justify;">{$foro.For_Titulo}</h4></a></div>
-=======
                             <div><a class="link-foro"  href="{$_layoutParams.root}foro/index/ficha/{$foro.For_IdForo}">
                                     <h4 style="text-align: justify;"><strong>{$foro.For_Titulo}</strong></h4></a></div>
->>>>>>> aa976114709e62ef61ecd6a0583628fa8063e3f5
                                     {if !empty($foro.For_Resumen) && $foro.For_Resumen!=""}
                                     <div style="padding-bottom: 10px;">
                                          <p style="text-align: justify;">{$foro.For_Resumen|truncate:120:"..."}</p>
