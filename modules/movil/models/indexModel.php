@@ -91,7 +91,7 @@ class indexModel extends Model {
         $sql = $this->_db->query(
                 "SELECT (CASE WHEN Y.Lecciones = Y.Completos THEN 1 ELSE 0 END) as Completo,
                 ROUND((Y.Completos*100/Y.Lecciones),1) as Porcentaje,Y.Cur_IdCurso,Y.Moa_IdModalidad,Y.Cur_UrlBanner,Y.Cur_Titulo,Y.Cur_Descripcion,Y.Con_Descripcion as Modalidad  FROM
-               (SELECT  COUNT(CASE WHEN PC1.Pro_IdProgreso IS NULL THEN 0 ELSE PC1.Pro_Valor END) AS Lecciones,SUM(CASE WHEN PC1.Pro_IdProgreso IS NULL THEN 0 ELSE PC1.Pro_Valor END) as Completos,cur.Cur_IdCurso,cur.Moa_IdModalidad,cur.Cur_UrlBanner,cur.Cur_Titulo,cur.Cur_Descripcion,CC.Con_Descripcion
+               (SELECT  COUNT(CASE WHEN PC1.Pro_IdProgreso IS NULL THEN 0 ELSE PC1.Pro_Valor END) AS Lecciones,SUM(CASE WHEN PC1.Pro_IdProgreso IS NULL THEN 0 ELSE PC1.Pro_Valor END) as Completos,cur.Cur_IdCurso,cur.Moa_IdModalidad,IFNULL(cur.Cur_UrlBanner,'default.jpg') AS Cur_UrlBanner,cur.Cur_Titulo,cur.Cur_Descripcion,CC.Con_Descripcion
                   FROM leccion L1
                 LEFT JOIN progreso_curso PC1 ON PC1.Lec_IdLeccion = L1.Lec_IdLeccion
                   AND PC1.Usu_IdUsuario = $Usu_IdUsuario
@@ -165,7 +165,7 @@ class indexModel extends Model {
     }
     public function getMisCertificados($Usu_IdUsuario){
         try{  
-            $sql = " SELECT v.Cer_IdCertificado,v.Cer_Codigo,v.Cer_FechaReg,  c.Cur_Titulo FROM certificado_curso v 
+            $sql = " SELECT v.Cer_IdCertificado,v.Cer_Codigo,v.Cer_FechaReg, c.Cur_Titulo,IFNULL(c.Cur_UrlBanner,'default.jpg') AS Cur_UrlBanner FROM certificado_curso v 
                 INNER JOIN usuario u ON u.Usu_IdUsuario = v.Usu_IdUsuario
                 INNER JOIN curso c ON c.Cur_IdCurso = v.Cur_IdCurso
                 WHERE v.Usu_IdUsuario=$Usu_IdUsuario";
