@@ -1,6 +1,6 @@
-{include file='modules/elearning/views/cursos/menu/descripcion.tpl'}
 {include file='modules/elearning/views/cursos/menu/lateral.tpl'}
 <div class="col col-md-10" style="padding-bottom: 20px; padding-top: 20px">
+    {include file='modules/elearning/views/cursos/menu/descripcion.tpl'}
     <div class="col-xs-12">
         <form class="form-horizontal" method="post" action="{BASE_URL}elearning/cursos/cursos">
             <div class="form-group">

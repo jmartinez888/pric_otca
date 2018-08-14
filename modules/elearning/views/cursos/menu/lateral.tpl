@@ -221,7 +221,7 @@
 
 
   <div class="col col-md-2" >
-    <div class="padding-t-20 col-md-12 menu-cursos">
+    <div class="col-md-12 menu-cursos" style="padding-top: 40px;">
         <ul>
           <a href="{BASE_URL}elearning/cursos/" class="nounderline">
           <div class="side-menu2"><li class="side-menu" style="position: relative">
