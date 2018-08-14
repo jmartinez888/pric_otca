@@ -1,6 +1,15 @@
 {include file='modules/elearning/views/cursos/menu/lateral.tpl'}
 <div class="col-lg-10">
 <div class="col-lg-12">
+    <div class="col-lg-12">
+  <div class=" " style="margin-bottom: 0px !important">
+    <div class="text-center text-bold" style="margin-bottom: 20px; color: #267161;">
+      <h3 style="text-transform: uppercase; margin: 0; font-weight: bold;">
+        Titulo de Nuevo curso mooc
+                </h3>
+    </div>
+  </div>
+</div>
         <h3>Examenes</h3>
         <hr class="cursos-hr">
     </div>
@@ -9,14 +18,17 @@
             <div class="row" style="text-align:right">
                 <div style="display:inline-block;padding-right:2em">
                      <input type="hidden" name="idcurso" id="idcurso" value="{$idcurso}">
+                     <input type="hidden" name="hidden_curso" id="hidden_curso" value="{$idcurso}">
                     <input class="form-control" placeholder="Buscar examen" style="width: 300px; float: left; margin: 0px 10px;" name="palabraexamen" id="palabraexamen">
                     <button class="btn btn-success" style=" float: left" type="button" id="buscarexamen"  ><i class="glyphicon glyphicon-search"></i></button>
                 </div>
             </div>
             <div id="listarexamens">
             <div class="col-lg-12">
+
+
                  {if $porcentaje<100}
-                 <a href="{$_layoutParams.root}elearning/examen/nuevoexamen/{$idcurso}" class="btn btn-primary margin-top-10 glyphicon glyphicon-plus" id="btn_añadir1"> Nuevo</a>
+                 <a href="{$_layoutParams.root}elearning/examen/nuevoexamen/{$idcurso}" class="btn btn-primary margin-top-10 glyphicon glyphicon-plus" id="btn_nuevo"> Nuevo</a>
             {else}
              <a data-toggle="modal"  data-target="#msj-invalido" class="btn btn-danger margin-top-10 glyphicon glyphicon-plus" data-placement="bottom" > Nuevo</a>
             {/if}
@@ -46,9 +58,9 @@
                                         {if  $rl.Emitido==0}
                                         <a data-toggle="tooltip" data-placement="bottom" class="btn btn-default btn-sm glyphicon glyphicon-refresh estado-examen" title="{$lenguaje.tabla_opcion_cambiar_est}" id_examen="{$rl.Exa_IdExamen}" estado="{$rl.Exa_Estado}"> </a>
                                         {/if}
-                                        <a data-toggle="tooltip" data-placement="bottom" class="btn btn-default btn-sm glyphicon glyphicon-edit" title="Editar" href="{$_layoutParams.root}elearning/examen/{$rl.Exa_IdExamen}"></a>
+                                        <a data-toggle="tooltip" data-placement="bottom" class="btn btn-default btn-sm glyphicon glyphicon-edit" id="btn-Editar" title="Editar" href=""></a>
 
-                                         <a data-toggle="tooltip" data-placement="bottom" class="btn btn-default btn-sm glyphicon glyphicon-question-sign" title="Preguntas" href="{$_layoutParams.root}elearning/examen/preguntas/{$rl.Exa_IdExamen}"></a>
+                                         <a data-toggle="tooltip" data-placement="bottom" class="btn btn-default btn-sm glyphicon glyphicon-question-sign btn-preguntas" title="Preguntas" href="{$_layoutParams.root}elearning/examen/preguntas/{$idcurso}/{$rl.Exa_IdExamen}"></a>
 
                                         {if  $rl.Emitido==0}
                                         <a   
@@ -74,9 +86,9 @@
                 {/if}                
             </div>
             </div>
-        </div>
+
     </div>
-</div>
+</div></div></div>
 
 
 <div class="modal " id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -99,7 +111,7 @@
             </div>
         </div>
     </div>
-</div>
+<!-- </div> -->
 
 <div class="modal " id="msj-invalido" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -119,4 +131,40 @@
     </div>
 </div>
 
+<!-- <script type="text/javascript">
+    Menu(1);
+    RefreshTagUrl();
+    $("#btn_nuevo").click(function(){
+      CargarPagina("examen/nuevoexamen", { id: $("#idcurso").val() }, false, $(this));
+    });
+    $(".btn-preguntas").click(function(){
+    var IdExamen = $(this).parent().find(".hidden_IdExamen").val();
+      $("#hidden_IdExamen").val(IdExamen);
+          CargarPagina("examen/preguntas", { id: $("#idcurso").val(), idleccion:IdExamen }, false, $(this));
+    });
+</script> -->
+<!-- <script type="text/javascript">
+  setTimeout(function(){
+    $("#item-lista-curso").click(function(){
+        location.href = "{$_layoutParams.root}elearning/gcurso/_view_mis_cursos/"+$("#hidden_curso").val();
+    });
+    $("#item-ficha-curso").click(function(){
+        CargarPagina("gcurso/_view_finalizar_registro", { id: $("#hidden_curso").val() }, false, $(this));
+    });
+    $("#item-modulos-curso").click(function(){
+        CargarPagina("gmodulo/_view_modulos_curso", { id: $("#hidden_curso").val() }, false, $(this));
+    });
+    $("#item-tareas-curso").click(function(){
+        CargarPagina("gmodulo/_view_tareas_curso", { id: $("#hidden_curso").val() }, false, $(this));
+    });
+     $("#item-examen-curso").click(function(){
+        location.href = "{$_layoutParams.root}elearning/examen/examens/"+$("#hidden_curso").val();
+    });
+  }, 400);
+</script> -->
+<!-- <script type="text/javascript" src="{$_url}examen/js/index.js"></script>
+
+<script >
+  $("#hidden_curso").val("{Session::get('learn_param_curso')}");
+</script> -->
 

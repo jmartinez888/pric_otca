@@ -1,6 +1,15 @@
 {include file='modules/elearning/views/cursos/menu/lateral.tpl'}
 <div class="col-lg-10">
 <div class="col-lg-12">
+    <div class="col-lg-12">
+  <div class=" " style="margin-bottom: 0px !important">
+    <div class="text-center text-bold" style="margin-bottom: 20px; color: #267161;">
+      <h3 style="text-transform: uppercase; margin: 0; font-weight: bold;">
+        Titulo de Nuevo curso mooc
+                </h3>
+    </div>
+  </div>
+</div>
         <h3>Añadir pregunta: Respuesta con Zonas de Imagen </h3>
         <hr class="cursos-hr">
     </div>

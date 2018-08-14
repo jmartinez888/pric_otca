@@ -59,6 +59,7 @@ class gcursoController extends elearningController {
     Session::set("learn_url_tmp", "gcurso/_view_finalizar_registro");
 
     $this->_view->assign('curso', $datos);
+    $this->_view->assign('idcurso', $id);
     $this->_view->assign('parametros', $parametros);
     $this->_view->renderizar('ajax/_view_finalizar_registro', false, true);
   }

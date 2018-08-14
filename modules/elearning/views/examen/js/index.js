@@ -3,6 +3,9 @@ var _Per_IdPermiso_ = 0;
 var nextinput = $("#nextinput").val();
 var contadorinputs = nextinput-1;
 var contblanco=1;
+
+
+// Menu(1);
 $(document).on('ready', function () {   
     $('#form1').validator().on('submit', function (e) {
     if (e.isDefaultPrevented()) {
@@ -11,7 +14,10 @@ $(document).on('ready', function () {
 
     }
     });
+// RefreshTagUrl();
     
+    $("#hidden_curso").val($("#idcurso").val());
+
     $('body').on('click', '.pagina', function () {
         $("#cargando").show();
         paginacion($(this).attr("pagina"), $(this).attr("nombre"), $(this).attr("parametros"),$(this).attr("total_registros"));
@@ -21,7 +27,25 @@ $(document).on('ready', function () {
         paginacion($(this).attr("pagina"), $(this).attr("nombre"), $(this).attr("parametros"),$(this).attr("total_registros"));
     });
 
+
+    //  $(".btn-preguntas").click(function(){
+    // var IdExamen = $(this).parent().find(".hidden_IdExamen").val();
+    //   $("#hidden_IdExamen").val(IdExamen);
+    //       CargarPagina("examen/preguntas", { id: $("#idcurso").val(), idleccion:IdExamen }, false, $(this));
+    // });
      
+    $("body").on('change', "#selectmodulo", function () {      
+        $("#cargando").show();
+    $.post(_root_ + 'elearning/examen/actualizarlecciones',
+    {
+        id:$("#selectmodulo").val() 
+        
+    }, function (data) {
+        $("#completar").html('');
+        $("#cargando").hide();
+        $("#completar").html(data);
+    });
+    });
 
     var paginacion = function (pagina, nombrelista, datos,total_registros) {
 
@@ -124,6 +148,7 @@ $(document).on('ready', function () {
 
 
         $("#puntos").val(suma);
+        $("#puntoslabel").text("Puntos: "+ suma);
 
         var maximo=parseInt($("#maximo").val())-parseInt(suma);
         // $("#maximo").val(maximo);
@@ -375,3 +400,5 @@ $("#alt").on('click', '.remove_button', function(e){ //Once remove button is cli
     $(this).parent('div').remove(); //Remove field html //Decrement field counter
     contadorinputs--;
 });
+
+
