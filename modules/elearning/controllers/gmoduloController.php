@@ -44,7 +44,7 @@ class gmoduloController extends elearningController {
     $modulos = $Mmodel->getModulos($id);
 
     for ($i = 0; $i < count($modulos); $i++) {
-      $modulos[$i]["TAREAS"] = $Tmodel->getTrabajoXModulo($modulos[$i]["Mod_IdModulo"]);
+      $modulos[$i]["TAREAS"] = $Tmodel->getTrabajoXModulo($modulos[$i]["Moc_IdModuloCurso"]);
     }
 
     Session::set("learn_url_tmp", "gmodulo/_view_tareas_curso");

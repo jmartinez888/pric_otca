@@ -15,9 +15,14 @@
 }
 .cursos-hr{
 	border-top: 1px solid #cdcdcd;
-	margin-top: 5px;
+
+	margin: 0px;
+	padding: 0px;
+
+/*	margin-top: 5px;
   margin-bottom: 10px;
-	padding: 0.3px;
+	padding: 0.3px;*/
+
 }
 .ic-decoration{
 	color:rgba(250,250,0,.8);
@@ -49,14 +54,14 @@ label{
 
 .clasificacion {
 	display: inline-block;
-	font-size: 110%;
+	font-size: 115%;
 	background: rgba(240,240,240,.8);
-	padding: 10px 10px 0px 10px;
+	padding: 5px 10px 0px 10px;
 	position: absolute;
 	top: 0px;
 	right: 0px;
 	border-radius: 0px 0px 0px 5px;
-	direction: rtl;
+	/*direction: rtl;*/
 	unicode-bidi: bidi-override;
 }
 .active {

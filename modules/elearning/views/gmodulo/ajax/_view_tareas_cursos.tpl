@@ -1,5 +1,5 @@
 {include file='modules/elearning/views/gestion/menu/tag_url.tpl'}
-{if $curso.Mod_IdModCurso == 2}
+{if $curso.Moa_IdModalidad == 2}
 <div class="col-lg-12" style="margin-top: 10px">
   <div class="panel panel-default">
     <div class="panel-heading">
@@ -15,7 +15,7 @@
         <table class="table" style="border: 0px; background-color: #F5F5F5;">
           <tbody>
             <tr>
-              <th>{$index}. {$mod.Mod_Titulo}</th>
+              <th>{$index}. {$mod.Moc_Titulo}</th>
             </tr>
             <tr>
               <td>

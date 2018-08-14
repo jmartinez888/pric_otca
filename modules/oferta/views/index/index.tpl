@@ -1,30 +1,35 @@
-
 <div class="container-fluid">
 	<div class="row">
-		<center><h1>{$lenguaje["label_h1_titulo"]}</h1></center>
-		<div class="col-md-9 col-md-offset-2">
-			<center><h4>{$lenguaje["label_h2_descripcion"]}</h4></center>
+		<div class="col-lg-12">
+			<center><h1 class="titulo2">{$lenguaje["label_h1_titulo"]}</h1></center>
+		</div>
+		<div class="col-lg-12">
+			<hr class="cursos-hr">
+		</div>
+		<div class="col-lg-12">
+			<h4 class="descripcion-oferta">{$lenguaje["label_h2_descripcion"]}</h4>
 		</div>
 	</div>
 	<div class="row">
 		{if isset($busqueda) || isset($busquedaAvanzada)}
-		<div class="col-md-2">
-			<h4>{$lenguaje["busqueda_avanzada_label_resumen_busqueda"]}</h4>
+		<div class="col-md-2" style="margin-top: 50px;">
+			<h4 class="resumen-busqueda"><strong>{$lenguaje["busqueda_avanzada_label_resumen_busqueda"]}</strong></h4>
       		<div class="panel-group" id="accordion">
-        		<div class="panel panel-default">
-          			<div class="panel-heading">
-              			<h4 class="panel-title">
-              			<a data-toggle="collapse" data-parent="#accordion" href="#accordionOne">
-              			<strong>{$lenguaje["busqueda_avanzada_label_tipo_ins"]}
-			                {if isset($cantidadResultados)}
-			                    <span class="badge pull-right">{$cantidadResultados}</span> 
-			                {/if}
-              			</strong>  
-              			</a>
-             			</h4>
-           			</div>       
+        		<div class="side-menu2 col-md-12 p-rt-lt-0">
+              		<a data-toggle="collapse" data-parent="#accordion" href="#accordionOne">
+              			<div class="side-menu">
+              				<h4 class="panel-title">
+	              				{$lenguaje["busqueda_avanzada_label_tipo_ins"]}
+				                {if isset($cantidadResultados)}
+				                    <span class="badge pull-right position-badge">{$cantidadResultados}</span> 
+				                {/if}
+			                </h4>
+			            </div>
+              		</a>
+             			
+           			       
 		          	<div id="accordionOne" class="panel-collapse collapse" >
-			            <ul id="tematicas" class="list-group scroll"   style="height: auto;overflow-y: auto;">
+			            <ul id="tematicas" class="list-group scroll"   style="max-height: 300px;overflow-y: auto; margin-bottom: 0px;">
 			                {if isset($pais_buscado)}
 		    			{$BPais = $pais_buscado}
 		    			{else}
@@ -62,33 +67,35 @@
 		    			{/if}
 			                {if isset($resumen1) && count($resumen1)}
 			                  	{foreach item=datos1 from = $resumen1}
-			                       	<li class="list-group-item">
-			                      		<span class="badge">{$datos1.CantidadRegistros}</span>
-			                      		<a href="" style="cursor:pointer"><span class="temadocumento" id="temadocumento">{$datos1.Ins_Tipo}</span></a>
+			                       	<li class="list-group-item-jp col-md-12 p-rt-lt-0 padding-li2">
+			                      		<span class="badge pull-right position-badge">{$datos1.CantidadRegistros}</span>
+			                      		<a href="" style="cursor:pointer; color: #222;"><span class="temadocumento underline" id="temadocumento">{$datos1.Ins_Tipo}</span></a>
 			                    	</li>                            
 			                  	{/foreach}
 			                {/if}
 			            </ul>
 		          	</div>
         		</div>
-		        <div class="panel panel-default">
-		            <div class="panel-heading">
-		            	<h4 class="panel-title">
-		            		<a data-toggle="collapse" data-parent="#accordion" href="#accordionOne2">
-		               		<strong>{$lenguaje["busqueda_avanzada_label_proyectosR"]}</strong> 
-		               		{if isset($rowcount2)}
-		                  		<span class="badge pull-right">{$rowcount2}</span>
-		                	{/if}
-		              		</a>
-		             	</h4>
-		            </div>       
+		        <div class="side-menu2 col-md-12 p-rt-lt-0">
+		            <a data-toggle="collapse" data-parent="#accordion" href="#accordionOne2">
+		            	<div class="side-menu">
+		            		<h4 class="panel-title">
+			               		{$lenguaje["busqueda_avanzada_label_proyectosR"]}
+			               		{if isset($rowcount2)}
+			                  		<span class="badge pull-right position-badge">{$rowcount2}</span>
+			                	{/if}
+		                	</h4>
+		                </div> 
+		            </a>
+		             	
+		                  
 		          	<div id="accordionOne2" class="panel-collapse collapse" >
-			            <ul id="tipodocumento" class="list-group scroll"   style="height: auto;overflow-y: auto;">
+			            <ul id="tipodocumento" class="list-group scroll"   style="max-height: 300px;overflow-y: auto; margin-bottom: 0px;">
 			             	{if isset($resumen2) && count($resumen2)}
 			              		{foreach item=datos2 from = $resumen2}
-			                  	<li class="list-group-item">
-			                      <span class="badge">{$datos2.CantidadRegistros}</span>
-			                      <a href="" style="cursor:pointer"><span class="palabraclave" id="palabraclave">{$datos2.Tem_Nombre}</span></a>
+			                  	<li class="list-group-item-jp col-md-12 p-rt-lt-0 padding-li2">
+			                      <span class="badge pull-right position-badge">{$datos2.CantidadRegistros}</span>
+			                      <a href="" style="cursor:pointer; color: #222;"><span class="palabraclave underline" id="palabraclave">{$datos2.Tem_Nombre}</span></a>
 			                    </li>        
 			                  	{/foreach}
 			                {/if}             
@@ -96,23 +103,25 @@
 		          	</div>
 		        </div>
         		<!-- Filtro Autor -->
-				<div class="panel panel-default">
-			        <div class="panel-heading">
-		        	    <h4 class="panel-title">
-			                <a data-toggle="collapse" data-parent="#accordion" href="#accordionAutor">
-			                	<strong>{$lenguaje["busqueda_avanzada_label_ofertasR"]}</strong> 
+				<div class="side-menu2 col-md-12 p-rt-lt-0">
+			        <a data-toggle="collapse" data-parent="#accordion" href="#accordionAutor">
+			            <div class="side-menu">
+			                <h4 class="panel-title">
+			                	{$lenguaje["busqueda_avanzada_label_ofertasR"]}
 				                {if isset($rowcount3)}
-				                	<span class="badge pull-right">{$rowcount3}</span>
+				                	<span class="badge pull-right position-badge">{$rowcount3}</span>
 				                {/if}
-		        	      </a>
-		        	    </h4>
-			        </div>       
+				            </h4>
+				        </div>
+		        	</a>
+		        	    
+			               
 			        <div id="accordionAutor" class="panel-collapse collapse" >
-			        	<ul id="autor" class="list-group scroll"   style="height: auto;overflow-y: auto;">
+			        	<ul id="autor" class="list-group scroll"   style="max-height: 300px;overflow-y: auto;margin-bottom: 0px;">
 			               {if isset($resumen3) && count($resumen3)}
 			                {foreach item=a from = $resumen3}
-			                <li class="list-group-item">
-			                    <span class="badge">{$a.CantidadRegistros}</span>
+			                <li class="list-group-item-jp col-md-12 p-rt-lt-0 padding-li2">
+			                    <span class="badge pull-right position-badge">{$a.CantidadRegistros}</span>
 			                    {if $a.Tipo == 'ESPECIALIZACION'}
 			                    	{$IR_e = 'especializaciones'}
 			                    {else}
@@ -128,7 +137,7 @@
 			                    {else}
 			                    	{$IR_d = 'no'}
 			                    {/if}
-			                    <a href="{$_layoutParams.root_clear}oferta/index/busquedaAvanzada/{$BPais}/{$BDatos}/{$BProyectos}/{$BOfertas}/{$IR_e}/{$IR_m}/{$IR_d}" style="cursor:pointer"><span class="autordocumento" id="autorDocumento">{$a.Tipo}</span></a>
+			                    <a href="{$_layoutParams.root_clear}oferta/index/busquedaAvanzada/{$BPais}/{$BDatos}/{$BProyectos}/{$BOfertas}/{$IR_e}/{$IR_m}/{$IR_d}" style="cursor:pointer; color: #222;"><span class="autordocumento underline" id="autorDocumento">{$a.Tipo}</span></a>
 			                  </li>        
 			                {/foreach}
 			                {/if}             
@@ -138,15 +147,9 @@
       		</div>
   		</div>
   		{/if}
-  		<div {if isset($busqueda) || isset($busquedaAvanzada)} class="col-md-10" {else} class="col-md-11 col-md-offset-1"
+  		<div {if isset($busqueda) || isset($busquedaAvanzada)} class="col-md-10" {else} class="col-lg-12"
   		{/if} >
-			<div class="panel panel-default">
-				<div class="panel-heading">
-				  <h4 class="panel-title">
-				    <strong>{$lenguaje["label_p_titulo"]}</strong> 
-				  </h4>
-				</div>
-				<div class="panel-body">
+				<div class="panel-body p-rt-lt-0">
 					<div class="row">
 						<div class="col-md-2 col-md-offset-10">
 							{if Session::get('autenticado')}
@@ -156,20 +159,6 @@
 							{/if}
 						</div>
 					</div>
-					<div class="row">
-						<div class="buscarInstitucion">
-							<div class="col-md-4 col-md-offset-4">
-								<div class="input-group">
-									<input type="hidden" id="filtro_pais" name="filtro_pais" value="">
-									<input type="text" name="palabra" id="palabra" class="form-control" placeholder="{$lenguaje['placeholder_buscador_general']}">
-									<span class="input-group-btn">
-									<button class="btn  btn-success btn-buscador" onclick="buscarPalabraDocumentos('palabra')" type="button" id="btnEnviar"><i class="glyphicon glyphicon-search"></i></button>
-									</span>	
-								</div>
-							</div>
-						</div>
-					</div>
-					<br>
 					<div class="row">
 						<div class="col-md-1 col-md-offset-4">
 							<div class="demo-filtro">
@@ -182,34 +171,36 @@
 							</div>
 						</div>
 					</div>
-					<!--paises-->
-					<div class="col-md-12 text-center">
-				      	{if isset($paises) && count($paises)}
-				            {foreach item=datos from=$paises}
-				               <div style="margin-top:17px;display:inline-block;vertical-align:top;text-align:center;">
-				                  <a href="{$_layoutParams.root_clear}oferta/index/busquedaAvanzada/{$datos.Nombre}/all/all/all/no/no/no"><img class="pais "  data-toggle="tooltip" data-original-title="{$lenguaje['busqueda_avanzada_label_tooltip']} {$datos.Nombre}" style="cursor:pointer;width:40px" src="{$_layoutParams.root_clear}public/img/legal/{$datos.Nombre}.png" pais="{$datos.Nombre}" alt="{$datos.Nombre}" /></a>
-		                          <br>
-		                          <b>{$datos.Nombre}</b>
-		                          <p style="font-size:.8em">({$datos.Conteo|default:0})</p>
-				                </div>
-		        	        {/foreach}
-				        {else}
-	        		        <p><strong>{$lenguaje["sin_resultados"]}</strong></p>
-				        {/if}             
-				    </div>
-					<!--fin paises-->
-					<input type="hidden" id="filtro_pais" name="filtro_pais" value="">
-					<input type="hidden" id="filtro_2" name="filtro_2" value="">
-					<center><a id="activar_avanzado" onclick="mostrar_seccion()" style="cursor: pointer;">{$lenguaje["activar_busqueda_avanzada"]}</a></center>
-					<center><a id="desactivar_avanzado" onclick="quitar_seccion()" style="cursor: pointer;">{$lenguaje["desactivar_busqueda_avanzada"]}</a></center>
-					<div class="col-md-12 text-center" id="seccion_filtros">
-						<form>
+						
+					<div class="row">
+						<div class="col-lg-12">
+						<div class="pull-right">
+							<center><a id="activar_avanzado" onclick="mostrar_seccion()" style="cursor: pointer;"><button class="btn btn-success pull-right">{$lenguaje["activar_busqueda_avanzada"]}</button></a></center>
+							<center><a id="desactivar_avanzado" onclick="quitar_seccion()" style="cursor: pointer; display: none;"><button class="btn btn-success pull-right">{$lenguaje["desactivar_busqueda_avanzada"]}</button></a></center>
+						</div>
+
+						<div class="buscarInstitucion">
+							<div class="col-md-5 pull-right">
+								<div class="input-group">
+									<input type="hidden" id="filtro_pais" name="filtro_pais" value="">
+									<input type="text" name="palabra" id="palabra" class="form-control" placeholder="{$lenguaje['placeholder_buscador_general']}">
+									<span class="input-group-btn">
+									<button class="btn btn-success btn-buscador" onclick="buscarPalabraDocumentos('palabra')" type="button" id="btnEnviar"><i class="glyphicon glyphicon-search"></i></button>
+									</span>	
+								</div>
+							</div>
+						</div>
+						</div>
+					</div>
+					<div class="col-md-12 text-center p-rt-lt-0" id="seccion_filtros" style="display: none;">
+						<form class="col-md-12 busqueda-avanzada" style="text-align: left; margin-top: 15px;">
+							<div class="col-md-8 col-md-offset-2">
 							<div class="row">
-								<div class="col-md-8 col-md-offset-2">
-									<br><div class="col-md-4">
+								<div class="col-md-12">
+									<br><div class="col-md-5">
 											<label>{$lenguaje["busqueda_avanzada_label_pais"]}</label>
 										</div>
-									<div class="col-md-3">
+									<div class="col-md-4">
 										<select id="selectPais" class="form-control">
 										<option>{$lenguaje["busqueda_avanzada_select_pais"]}</option>
 										{if isset($paises) && count($paises)}
@@ -221,15 +212,18 @@
 					            		{/if}
 					            		</select>
 									</div>
-									<div class="col-md-1">
-										<div class="mapita"></div>
+									<div class="col-md-2">
+										<div class="mapita">
+											<img style="max-height: 30px;" id="banderita" src=""/>
+											<input type="hidden" id="bandera" value="{BASE_URL}">
+										</div>
 									</div>
 				            	</div>
 							</div>
 							<div class="row">
 								<br>
-								<div class="col-md-8 col-md-offset-2">
-									<div class="col-md-4">
+								<div class="col-md-12">
+									<div class="col-md-5">
 										<label>{$lenguaje["busqueda_avanzada_label_otros_datos"]} </label>
 									</div>
 									<div class="col-md-6">
@@ -239,8 +233,8 @@
 						 	</div>
 						 	<div class="row">
 								<br>
-								<div class="col-md-8 col-md-offset-2">
-									<div class="col-md-4">
+								<div class="col-md-12">
+									<div class="col-md-5">
 										<label>{$lenguaje["busqueda_avanzada_label_proyectos"]}</label>
 									</div>
 									<div class="col-md-6">
@@ -250,8 +244,8 @@
 						 	</div>
 						 	<div class="row">
 								<br>
-								<div class="col-md-8 col-md-offset-2">
-									<div class="col-md-4">
+								<div class="col-md-12">
+									<div class="col-md-5">
 										<label>{$lenguaje["busqueda_avanzada_label_ofertas"]}</label>
 									</div>
 									<div class="col-md-6">
@@ -261,11 +255,11 @@
 						 	</div>
 						 	<div class="row">
 								<br>
-								<div class="col-md-8 col-md-offset-2">
-									<div class="col-md-4">
+								<div class="col-md-12">
+									<div class="col-md-5">
 										<label>{$lenguaje["busqueda_avanzada_label_tipo_ofertas"]}</label>
 									</div>
-									<div class="col-md-2">
+									<div class="col-md-3">
 										<label for="esp">{$lenguaje["busqueda_avanzada_label_esp"]}</label>
 										<input id="esp" type="checkbox">
 									</div>
@@ -279,34 +273,60 @@
 									</div>
 								</div>
 						 	</div><br>
-						 	<button type="button" class="btn btn-success" onclick="busquedaAvanzada()">{$lenguaje["busqueda_avanzada_boton_buscar"]}</button>
+						 	<button type="button" class="btn btn-primary col-md-offset-5" onclick="busquedaAvanzada()">{$lenguaje["busqueda_avanzada_boton_buscar"]}</button>
+						 	<br><br>
+						 	</div>
 						</form>
 			    	</div>
-			    	<div class="col-md-12">
+			    	<!--paises-->
+			    	{if isset($paises) && count($paises)}
+			    	<div class="col-lg-12 p-rt-lt-0">
+						<center><h3 class="titulo2">Instituciones por países</h3></center>
+					</div>
+					<div class="col-lg-12 p-rt-lt-0">
+						<hr class="cursos-hr">
+					</div>
+					
+					<div class="col-md-12 text-center p-rt-lt-0">
+				      	
+				            {foreach item=datos from=$paises}
+				               <div class="instituciones-paises">
+				                  <a href="{$_layoutParams.root_clear}oferta/index/busquedaAvanzada/{$datos.Nombre}/all/all/all/no/no/no"><img class="pais "  data-toggle="tooltip" data-original-title="{$lenguaje['busqueda_avanzada_label_tooltip']} {$datos.Nombre}" style="cursor:pointer;width:40px" src="{$_layoutParams.root_clear}public/img/legal/{$datos.Nombre}.png" pais="{$datos.Nombre}" alt="{$datos.Nombre}" /></a>
+		                          <br>
+		                          <b>{$datos.Nombre}</b>
+		                          <br>
+		                          <span class="badge" style="font-size:.8em">{$datos.Conteo|default:0}</span>
+				                </div>
+		        	        {/foreach}
+				        {/if}             
+				    </div>
+					<!--fin paises-->
+					<input type="hidden" id="filtro_pais" name="filtro_pais" value="">
+					<input type="hidden" id="filtro_2" name="filtro_2" value="">
+			    	<div class="col-md-12 p-rt-lt-0">
 			    		{if isset($busqueda) || isset($busquedaAvanzada)}
-				    		<br>
 				    		{if isset($cantidad)}
-				    			<p>Instituciones Registradas: {$cantidad}</p>
+				    			<h4 class="resumen-busqueda">Instituciones Registradas: <b>{$cantidad}</b></h4>
 				    		{/if}
 				    		{if isset($cantidadResultados) && isset($palabra_buscada)}
-				    			<p>{$lenguaje["resultados_busqueda_avanzada_label_1"]} {$cantidadResultados} {$lenguaje["resultados_busqueda_avanzada_label_2"]} {$palabra_buscada}</p>
+				    			<h4 class="resumen-busqueda">{$lenguaje["resultados_busqueda_avanzada_label_1"]} <b>{$cantidadResultados}</b> {$lenguaje["resultados_busqueda_avanzada_label_2"]} <b>{$palabra_buscada}</b></h4>
 				    		{/if}
 				    		{if isset($busquedaAvanzada)}
-				    			<p>{$lenguaje["resultados_busqueda_avanzada_label_1"]} {$cantidadResultados} {$lenguaje["instituciones"]}. <b>{$lenguaje["resultados_busqueda_avanzada_label_filtros"]}</b>
+				    			<h4 class="resumen-busqueda">{$lenguaje["resultados_busqueda_avanzada_label_1"]} <b>{$cantidadResultados}</b> {$lenguaje["instituciones"]}.{$lenguaje["resultados_busqueda_avanzada_label_filtros"]}
 				    			{if isset($pais_buscado)}
-				    				{$lenguaje["resultados_busqueda_avanzada_label_filtros_pais"]} {$pais_buscado}
+				    				{$lenguaje["resultados_busqueda_avanzada_label_filtros_pais"]} <b>{$pais_buscado}</b>
 				    				<input type="hidden" id="pais_buscado" value="{$pais_buscado}">
 				    			{/if}
 				    			{if isset($datos_buscado)}
-				    				{$lenguaje["resultados_busqueda_avanzada_label_filtros_otros_datos"]} {$datos_buscado}
+				    				{$lenguaje["resultados_busqueda_avanzada_label_filtros_otros_datos"]} <b>{$datos_buscado}</b>
 				    				<input type="hidden" id="datos_buscado" value="{$datos_buscado}">
 				    			{/if}
 				    			{if isset($proyectos_buscado)}
-				    				{$lenguaje["resultados_busqueda_avanzada_label_filtros_proyectos"]} {$proyectos_buscado}
+				    				{$lenguaje["resultados_busqueda_avanzada_label_filtros_proyectos"]} <b>{$proyectos_buscado}</b>
 				    				<input type="hidden" id="proyectos_buscado" value="{$proyectos_buscado}">
 				    			{/if}
 				    			{if isset($ofertas_buscado)}
-				    				{$lenguaje["resultados_busqueda_avanzada_label_filtros_ofertas"]} {$ofertas_buscado}
+				    				{$lenguaje["resultados_busqueda_avanzada_label_filtros_ofertas"]} <b>{$ofertas_buscado}</b>
 				    				<input type="hidden" id="ofertas_buscado" value="{$ofertas_buscado}">
 				    			{/if}
 				    			{if isset($esp_buscado)}
@@ -321,16 +341,19 @@
 				    				{$lenguaje["resultados_busqueda_avanzada_label_filtros_doc"]}
 				    				<input type="hidden" id="doctorados" value="doctorados">
 				    			{/if}
-				    		</p>
+				    		</h4>
 				    		{/if}
 			    		{else}
 			    		<h3>{$lenguaje["busqueda_avanzada_label_resumen_general"]}</h3>
-						<div class="col-md-4">
-			    			<div class="panel-group" id="accordion">
-				        		<div class="panel panel-default">
-				          			<div class="panel-heading">
+			    		<div class="col-lg-12 p-rt-lt-0">
+			            	<hr class="cursos-hr">
+			            </div>
+						<div class="col-md-4 resumen-home">
+			    			<div class="" id="accordion">
+				        		<div class="">
+				          			<div class="cabecera-resumenes">
 				              			<h4 class="panel-title">
-				              			<a data-toggle="collapse" data-parent="#accordion" href="">
+				              			<a class="title-resumen" data-toggle="collapse" data-parent="#accordion" href="">
 				              			<strong>{$lenguaje["busqueda_avanzada_label_ins_reg"]}
 						                    <span class="badge pull-right">{$cantidad}</span> 
 				              			</strong>  
@@ -341,9 +364,9 @@
 							            <ul id="tematicas" class="list-group scroll"   style="height: auto;overflow-y: auto;">
 							                {if isset($resumen1) && count($resumen1)}
 							                  	{foreach item=datos1 from = $resumen1}
-							                       	<li class="list-group-item">
-							                      		<span class="badge">{$datos1.CantidadRegistros}</span>
-							                      		<a href="{$_layoutParams.root_clear}oferta/index/buscarporpalabras/{$datos1.Ins_Tipo}" style="cursor:pointer"><span class="temadocumento" id="temadocumento">{$datos1.Ins_Tipo}</span></a>
+							                       	<li class="list-group-item-jp padding-li">
+							                      		<span class="badge pull-right">{$datos1.CantidadRegistros}</span>
+							                      		<a class="subtitle-resumen" href="{$_layoutParams.root_clear}oferta/index/buscarporpalabras/{$datos1.Ins_Tipo}" style="cursor:pointer"><span class="temadocumento" id="temadocumento">{$datos1.Ins_Tipo}</span></a>
 							                    	</li>                            
 							                  	{/foreach}
 							                {/if}
@@ -352,12 +375,12 @@
 	        					</div>
 			    			</div>
 			    		</div>
-			    		<div class="col-md-4">
-			    			<div class="panel-group" id="accordion">
-				        		<div class="panel panel-default">
-				          			<div class="panel-heading">
+			    		<div class="col-md-4 resumen-home">
+			    			<div class="" id="accordion">
+				        		<div class="">
+				          			<div class="cabecera-resumenes">
 				              			<h4 class="panel-title">
-				              			<a data-toggle="collapse" data-parent="#accordion" href="">
+				              			<a class="title-resumen" data-toggle="collapse" data-parent="#accordion" href="">
 				              			<strong>{$lenguaje["busqueda_avanzada_label_proyectosR"]}
 						                    <span class="badge pull-right">{$rowcount2}</span> 
 				              			</strong>  
@@ -368,9 +391,9 @@
 							            <ul id="tematicas" class="list-group scroll"   style="height: auto;overflow-y: auto;">
 							                {if isset($resumen2) && count($resumen2)}
 							                  	{foreach item=datos2 from = $resumen2}
-							                       	<li class="list-group-item">
-							                      		<span class="badge">{$datos2.CantidadRegistros}</span>
-							                      		<a href="{$_layoutParams.root_clear}oferta/index/buscarportematica/{$datos2.Tem_Nombre}" style="cursor:pointer"><span class="temadocumento" id="temadocumento">{$datos2.Tem_Nombre}</span></a>
+							                       	<li class="list-group-item-jp padding-li">
+							                      		<span class="badge pull-right">{$datos2.CantidadRegistros}</span>
+							                      		<a class="subtitle-resumen" href="{$_layoutParams.root_clear}oferta/index/buscarportematica/{$datos2.Tem_Nombre}" style="cursor:pointer"><span class="temadocumento" id="temadocumento">{$datos2.Tem_Nombre}</span></a>
 							                    	</li>                            
 							                  	{/foreach}
 							                {/if}
@@ -379,12 +402,12 @@
 	        					</div>
 			    			</div>
 			    		</div>
-			    		<div class="col-md-4">
-			    			<div class="panel-group" id="accordion">
-				        		<div class="panel panel-default">
-				          			<div class="panel-heading">
+			    		<div class="col-md-4 resumen-home">
+			    			<div class="" id="accordion">
+				        		<div class="">
+				          			<div class="cabecera-resumenes">
 				              			<h4 class="panel-title">
-				              			<a data-toggle="collapse" data-parent="#accordion" href="">
+				              			<a class="title-resumen" data-toggle="collapse" data-parent="#accordion" href="">
 				              			<strong>{$lenguaje["busqueda_avanzada_label_ofertasR"]}
 						                    <span class="badge pull-right">{$rowcount3}</span> 
 				              			</strong>  
@@ -395,8 +418,8 @@
 							            <ul id="tematicas" class="list-group scroll"   style="height: auto;overflow-y: auto;">
 							                {if isset($resumen3) && count($resumen3)}
 							                  	{foreach item=datos from = $resumen3}
-							                       	<li class="list-group-item">
-							                      		<span class="badge">{$datos.CantidadRegistros}</span>
+							                       	<li class="list-group-item-jp padding-li">
+							                      		<span class="badge pull-right">{$datos.CantidadRegistros}</span>
 							                      		{if $datos.Tipo == 'ESPECIALIZACION'}
 									                    	{$IR_e = 'especializaciones'}
 									                    {else}
@@ -412,7 +435,7 @@
 									                    {else}
 									                    	{$IR_d = 'no'}
 									                    {/if}
-							                      		<a href="{$_layoutParams.root_clear}oferta/index/busquedaAvanzada/all/all/all/all/{$IR_e}/{$IR_m}/{$IR_d}" style="cursor:pointer"><span class="temadocumento" id="temadocumento">{$datos.Tipo}</span></a>
+							                      		<a class="subtitle-resumen" href="{$_layoutParams.root_clear}oferta/index/busquedaAvanzada/all/all/all/all/{$IR_e}/{$IR_m}/{$IR_d}" style="cursor:pointer"><span class="temadocumento" id="temadocumento">{$datos.Tipo}</span></a>
 							                    	</li>                            
 							                  	{/foreach}
 							                {/if}
@@ -426,9 +449,9 @@
 			    		<div id="listarInstituciones">
 			    		{if (isset($listaIns) && count($listaIns))}
 			        		{foreach key=key from=$listaIns item=b}
-			        			<div class="row" style="background: #E9F8CA; -webkit-box-shadow: 0 15px 10px #777; -moz-box-shadow: 0 10px 10px #777; box-shadow: 0 10px 10px #777;">
+			        			<div class="row" style="border-bottom: 1px solid #ddd; padding-bottom: 10px;">
 				        			<div class="col-md-10">
-				        				<a style="color: black;" href="{$_layoutParams.root_clear}oferta/instituciones/ficha/{$b.Ins_IdInstitucion}">
+				        				<a class="underline" style="color: black;" href="{$_layoutParams.root_clear}oferta/instituciones/ficha/{$b.Ins_IdInstitucion}">
 						            	{$numeracion=$numeracion + 1}	
 						            	<h3>{$numeracion}. {$b.Ins_Nombre} <img width="30" src="{$_layoutParams.root_clear}public/img/legal/{$b.Pai_Nombre}.png" alt="{$b.Pai_Nombre}" class="pais " data-toggle="tooltip" data-original-title="{$b.Ubi_Sede}, {$b.Pai_Nombre}"></h3>
 						            	<h4><b>{$lenguaje["Contacto"]}</b> 
@@ -471,7 +494,7 @@
 						            	</h4>
 						            	</a>
 				        			</div>
-				        			<div class="col-md-2" style="padding-top: 5px;">
+				        			<div class="col-md-2" style="padding-top: 10px;">
 				        				
 				        				{if $b.Ins_img == ''}
 										{$b.Ins_img = 'logos/default.png'}			
@@ -479,7 +502,6 @@
 										<img width="80" src="{$_layoutParams.root_clear}modules/oferta/views/instituciones/img/{$b.Ins_img}" alt="{$b.Ins_img}" class="pais " data-toggle="tooltip" style="padding-bottom: 5px;" data-original-title="{$b.Ins_Nombre}">
 				        			</div>
 			        			</div>
-			        			<br>
 				        	{/foreach}
 				        	{$paginacion|default:""}
 				        {else}
@@ -489,7 +511,7 @@
 			    		{/if}
 			    	</div>
 			    </div>
-			</div>
+
 		</div>
 	</div>
 </div>

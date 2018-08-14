@@ -1,5 +1,5 @@
 <style> 
-#raizaMenu {
+#raizaMenu{
    padding-top: 10px;   
 }
 @media (min-width: 1200px){
@@ -8,48 +8,51 @@
   }
 }
 @media(max-width: 991px){
-  #raizaMenu ul{
+  #raizaMenu-jp ul{
       height: 30px !important;
   }
 }
-#raizaMenu ul{
+#raizaMenu-jp ul{
    list-style: none;
    width: 100%;
     height: 30px;
       padding: 0px 10px;
 }
-#raizaMenu li{
+#raizaMenu-jp li{
    top: 3px;
    margin: 0px 2px;
    float: left;
 }
-#raizaMenu li .actual{
+#raizaMenu-jp li .actual{
   color: #444f4a;
 }
-#raizaMenu a{
+#raizaMenu-jp a{
    margin: 0px 3px;
    color: #03a506;
 }
   
 </style> 
 
-<div id="raizaMenu" clas="col-xs-3 col-sm-3 col-md-2 col-lg-2">
+<!-- <div id="raizaMenu-jp" clas="col-xs-3 col-sm-3 col-md-2 col-lg-2">
   <ul clas="col-xs-3 col-sm-3 col-md-2 col-lg-2">
     <li>
-      <a href="{$_layoutParams.root_clear}">{$lenguaje["label_inicio"]} </a>
+      <a class="underline" href="{$_layoutParams.root_clear}">{$lenguaje["label_inicio"]} </a>
     </li>
     <li>/</li>
     <li>
       <a class='actual' >{$lenguaje["label_h2_titulo_documentos"]} </a>
     </li>
   </ul>     
-</div>
+</div> -->
 
 
 <div class="container-fluid">
 <div class="row">
-    <div class="col-md-12 col-lg-offset-1 col-lg-10">
-    <h2 class="tit-pagina-principal"><center>Repositorio de Documentos</center></h2>
+    <div class="col-md-12 col-lg-12">
+    <center><h2 class="titulo2">Repositorio de Documentos</h2></center>
+    <div class="col-lg-12 p-rt-lt-0">
+      <hr class="cursos-hr">
+    </div>
     <input id="metodo" name="metodo" type="hidden" value="buscarporpalabras"/>
     <input id="query" name="query" type="hidden"/>
     </div>       
@@ -59,18 +62,21 @@
 
 
   <div id="resultados" >
-     <div class="col-xs-12  col-md-offset-1 col-md-10 ">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-        <h4 class="panel-title">
-          <strong>{$lenguaje["titulo_resultados_documentos"]}</strong> 
-        </h4>
-        </div>
-        <div class="panel-body">
+     <div class="col-xs-12 col-md-12">
+      <div class="">
+        <div class="panel-body p-rt-lt-0">
             <div class="row">
               <div class="col-md-12">
                   <div class="row">
-                      <div class="col-md-6 col-md-offset-3">
+                    <div class="col-md-12 col-lg-12">
+                      <div class="pull-right">
+                        <center><a id="activar_avanzado" onclick="mostrar_seccion()" style="cursor: pointer;"><button class="btn btn-success pull-right">Activar Búsqueda Avanzada</button></a></center>
+                        <center><a id="desactivar_avanzado" onclick="quitar_seccion()" style="cursor: pointer; display: none;"><button class="btn btn-success pull-right">Desactivar Búsqueda Avanzada</button></a></center>
+                      </div>
+                          <!-- <center>
+                            <a class="text-muted" id="busquedaAvanzada" style=""><button class="btn btn-success pull-right">Búsqueda Avanzada</button></a>
+                          </center> -->
+                      <div class="col-md-5 pull-right">
                           <div class="input-group">
                               <input type ="text" class="form-control"  data-toggle="tooltip" data-original-title="{$lenguaje['title_cuadro_buscar']}" placeholder="{$lenguaje['titulo_resultados_documentos']}" name="palabra" id="palabra" onkeypress="tecla_enter_dublincore(event)" value="{$palabrabuscada|default:''}">                  
                               <span class="input-group-btn">
@@ -81,84 +87,88 @@
 
                     {if $_acl->getAutenticado()}
                       {if isset($filtrousuario)}
-                      <div class="col-md-3 ">
+                      <div class="col-md-3">
                         <button class="btn  btn-success " onclick="buscarPalabraDocumentos('palabra','filtrotemadocumento','filtrotipodocumento','filtroautordocumento','filtroformatodocumento','filtropaisdocumento')" type="button" id="btnMisDoc"><i class="glyphicon glyphicon-list"></i> Todos </button>
                       </div>
                       {else}
-                        <div class="col-md-3 ">
+                        <div class="col-md-3 p-rt-lt-0">
                           <button data-toggle="tooltip" data-placement="top" title="Solo Mis Documentos"  class="btn  btn-success " onclick="buscarPalabraDocumentos('palabra','filtrotemadocumento','filtrotipodocumento','filtroautordocumento','filtroformatodocumento','filtropaisdocumento',1)" type="button" id="btnMisDoc"><i class="glyphicon glyphicon-user"></i></button>
                         </div>
                       {/if}
                     {/if}
                   </div>
-                  <div class="text-center " style="padding-top: 10px; padding-bottom: 10px">
-                      <a class="text-muted" id="busquedaAvanzada" style="">Búsqueda Avanzada</a>
-                  </div>
+                </div>
+              </div>
 
-                  <div class="form-horizontal col-sm-offset-1 col-sm-10 col-md-offset-2 col-md-8 hidden" id="ba_div">  
-                      <!-- {if isset($temadocumento) && count($temadocumento)}                 
-                      <div class="form-group">
-                          <label class="col-xs-3 control-label">Temática : </label>
-                          <div class="col-xs-9">
-                              <select class="form-control selectpicker" name="filtrotemadocumento" id="filtrotemadocumento" data-live-search="true">
-                                  <option value=""> -- Seleccione Temática --</option>
-                                  {foreach item=dt from=$temadocumento}
-                                      <option value="{$dt.Ted_Descripcion}">{$dt.Ted_Descripcion}</option>
-                                  {/foreach}
-                                     
-                              </select>
-                          </div>
-                      </div>
-                      {/if}  -->
-                      {if isset($temadocumento) && count($temadocumento)}                 
-                      <div class="form-group">
-                          <label class="col-xs-3 control-label">Temática : </label>
-                          <div class="col-xs-9">
-                              <!-- <input class="form-control"  list="tematicas"  id ="ba_tematica" type="text"  name="nombre" value="" placeholder="Temática" /> -->
-                              <input type="text" list="temas" class="form-control" id="filtrotemadocumento" name="filtrotemadocumento" placeholder="Temática"/>
-                              <datalist id="temas">
-                                  {foreach item=dat from=$temadocumento}
-                                      <option value="{$dat.Ted_Descripcion}">{$dat.Ted_Descripcion}</option>
-                                  {/foreach}    
-                              </datalist>
-                          </div>
-                      </div>
-                      {/if} 
-                      {if isset($autores) && count($autores)}
-                      <div class="form-group ">
-                          <label class="col-xs-3 control-label" >Autor : </label>
-                          <div class="col-xs-9">
-                              <input type="text" list="autores" class="form-control" id="filtroautordocumento" name="filtroautordocumento" placeholder="Autor"/>
-                              <datalist id="autores">
-                                  {foreach item=dat from=$autores}
-                                      <option value="{$dat.Aut_Nombre}">{$dat.Aut_Nombre}</option>
-                                  {/foreach}    
-                              </datalist>
-                              <!-- <select class="form-control selectpicker" name="filtroautordocumento" id="filtroautordocumento" data-live-search="true">
-                                  <option value=""> -- Seleccione Autor --</option>
-                                  {foreach item=da from=$autores}
-                                      <option value="{$da.Aut_Nombre}">{$da.Aut_Nombre}</option>
-                                  {/foreach}   
-                              </select> -->
-                          </div>
-                      </div> 
-                      {/if}
-                      {if isset($formatos) && count($formatos)}
-                      <div class="form-group">
-                          <label class="col-xs-3 control-label" >Formato : </label>
-                          <div class="col-xs-9">
+              <div class="col-md-12 col-lg-12" id="seccion_filtros" style="display: none;">
+                <form class="col-md-12 col-lg-12 busqueda-avanzada" style="margin-top: 15px;">
+                    <div class="form-horizontal col-sm-offset-1 col-sm-10 col-md-offset-3 col-md-8" id="ba_div" style="padding-top: 30px; text-align: left;">  
+                        <!-- {if isset($temadocumento) && count($temadocumento)}                 
+                        <div class="form-group">
+                            <label class="col-xs-3 control-label">Temática : </label>
+                            <div class="col-xs-9">
+                                <select class="form-control selectpicker" name="filtrotemadocumento" id="filtrotemadocumento" data-live-search="true">
+                                    <option value=""> -- Seleccione Temática --</option>
+                                    {foreach item=dt from=$temadocumento}
+                                        <option value="{$dt.Ted_Descripcion}">{$dt.Ted_Descripcion}</option>
+                                    {/foreach}
+                                       
+                                </select>
+                            </div>
+                        </div>
+                        {/if}  -->
+                        {if isset($temadocumento) && count($temadocumento)}                 
+                        <div class="form-group">
+                            <label class="col-md-2 control-label-jp">Temática : </label>
+                            <div class="col-md-7">
+                                <!-- <input class="form-control"  list="tematicas"  id ="ba_tematica" type="text"  name="nombre" value="" placeholder="Temática" /> -->
+                                <input type="text" list="temas" class="form-control" id="filtrotemadocumento" name="filtrotemadocumento" placeholder="Temática"/>
+                                <datalist id="temas">
+                                    {foreach item=dat from=$temadocumento}
+                                        <option value="{$dat.Ted_Descripcion}">{$dat.Ted_Descripcion}</option>
+                                    {/foreach}    
+                                </datalist>
+                            </div>
+                        </div>
+                        {/if} 
+                        {if isset($autores) && count($autores)}
+                        <div class="form-group">
+                            <label class="col-md-2 control-label-jp" >Autor : </label>
+                            <div class="col-md-7">
+                                <input type="text" list="autores" class="form-control" id="filtroautordocumento" name="filtroautordocumento" placeholder="Autor"/>
+                                <datalist id="autores">
+                                    {foreach item=dat from=$autores}
+                                        <option value="{$dat.Aut_Nombre}">{$dat.Aut_Nombre}</option>
+                                    {/foreach}    
+                                </datalist>
+                                <!-- <select class="form-control selectpicker" name="filtroautordocumento" id="filtroautordocumento" data-live-search="true">
+                                    <option value=""> -- Seleccione Autor --</option>
+                                    {foreach item=da from=$autores}
+                                        <option value="{$da.Aut_Nombre}">{$da.Aut_Nombre}</option>
+                                    {/foreach}   
+                                </select> -->
+                            </div>
+                        </div> 
+                        {/if}
+                        {if isset($formatos) && count($formatos)}
+                        <div class="form-group">
+                            <label class="col-md-2 control-label-jp" >Formato : </label>
+                            <div class="col-md-7">
 
-                              <select class="form-control selectpicker" name="filtroformatodocumento" id="filtroformatodocumento" data-live-search="true">
-                                  <option value=""> -- Seleccione Formato --</option>
-                                  {foreach item=df from=$formatos}
-                                      <option value="{$df.Taf_Descripcion}">{$df.Taf_Descripcion}</option>
-                                  {/foreach}  
-                              </select>
-                          </div>
-                      </div>  
-                      {/if}
-                  </div>
-              </div> 
+                                <select class="form-control selectpicker" name="filtroformatodocumento" id="filtroformatodocumento" data-live-search="true">
+                                    <option value=""> -- Seleccione Formato --</option>
+                                    {foreach item=df from=$formatos}
+                                        <option value="{$df.Taf_Descripcion}">{$df.Taf_Descripcion}</option>
+                                    {/foreach}  
+                                </select>
+                            </div>
+                        </div>  
+                        {/if}
+                          <button class="btn btn-primary col-md-offset-3" onclick="buscarPalabraDocumentos('palabra','filtrotemadocumento','filtrotipodocumento','filtroautordocumento','filtroformatodocumento','filtropaisdocumento')" type="button" id="btnEnviar">Realizar Búsqueda Avanzada</button>
+                          <br><br>
+                    </div>
+                </form>
+              </div>
 
               <!-- <div class="col-xs-12 text-center">
                   {foreach item=abc from=LIST_ABC}
@@ -245,38 +255,39 @@
                <div class="col-md-12">
                   <div class="row">
                     <div class="col-md-6">
+                      <h3>{$lenguaje["total_resultados_documentos"]}: {$totaldocumentos[0]}</h3>
+                    </div>
+                    <div class="col-md-6">
                       {if isset($resultPalabra) }
                         <b>Resultado de búsqueda</b> 
                       {$resultPalabra}{/if}
                     </div>
-                    <div class="col-md-6 text-right">
-                      <b><font size="-1">{$lenguaje["total_resultados_documentos"]}: {$totaldocumentos[0]}</font></b>
+                    <div class="col-lg-12">
+                      <hr class="cursos-hr">
                     </div>
                   </div>        
                </div>
                {/if}    
 
 
-                <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3">
-                  <div class="panel panel-default">
-                    <div class="panel-heading">
+                <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3 resumen-home">
+                  <div class="">
+                    <div class="cabecera-resumenes">
                         <h4 class="panel-title">
-                        <a data-toggle="collapse" data-parent="#accordion" href="#accordionOne">
                         <strong>{$lenguaje["menu_izquierdo1_documentos"]}
                           {if isset($temadocumento) && count($temadocumento)}
                               <span class="badge badge-dark pull-right">{count($temadocumento)|default:0}</span> 
                           {/if}
-                        </strong>  
-                        </a>
+                        </strong>
                        </h4>
                     </div>       
-                    <div id="accordionOne" class="panel-collapse " >
+                    <div id="accordionOne" class="panel-collapse">
                       <ul id="tematicas" class="list-group scroll"   style="height: 400px;overflow-y: auto;">
                           {if isset($temadocumento) && count($temadocumento)}
                             {foreach item=datos from = $temadocumento}
-                                 <li class="list-group-item">
-                                <span class="badge badge-dark">{$datos.cantidad|default:0}</span>
-                                <a href="#{$datos.Ted_Descripcion}" style="cursor:pointer"><span class="temadocumento" id="temadocumento">{$datos.Ted_Descripcion}</span></a>
+                                 <li class="list-group-item-jp padding-li">
+                                <span class="badge pull-right">{$datos.cantidad|default:0}</span>
+                                <a href="#{$datos.Ted_Descripcion}" style="cursor:pointer"><span class="temadocumento subtitle-resumen" id="temadocumento">{$datos.Ted_Descripcion}</span></a>
                               </li>                            
                             {/foreach}
                             {/if}
@@ -285,25 +296,23 @@
                   </div>
                 </div>
 
-                <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3">
-                  <div class="panel panel-default">
-                    <div class="panel-heading">
+                <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3 resumen-home">
+                  <div class="">
+                    <div class="cabecera-resumenes">
                         <h4 class="panel-title">
-                        <a data-toggle="collapse" data-parent="#accordion" href="#accordionOne2">
                          <strong>{$lenguaje["menu_izquierdo2_documentos"]}</strong> 
                          {if isset($tipodocumento) && count($tipodocumento)}
                             <span class="badge badge-dark pull-right">{count($tipodocumento)|default:0}</span>
                           {/if}
-                        </a>
                        </h4>
                      </div>       
                     <div id="accordionOne2" class="panel-collapse " >
                       <ul id="tipodocumento" class="list-group scroll"   style="height: 400px;overflow-y: auto;">
                        {if isset($tipodocumento) && count($tipodocumento)}
                         {foreach item=datos from = $tipodocumento}
-                            <li class="list-group-item">
-                                <span class="badge badge-dark">{$datos.cantidad|default:0}</span>
-                                <a href="#{$datos.Tid_Descripcion}" style="cursor:pointer"><span class="palabraclave" id="palabraclave">{$datos.Tid_Descripcion}</span></a>
+                            <li class="list-group-item-jp padding-li">
+                                <span class="badge pull-right">{$datos.cantidad|default:0}</span>
+                                <a href="#{$datos.Tid_Descripcion}" style="cursor:pointer"><span class="palabraclave subtitle-resumen" id="palabraclave">{$datos.Tid_Descripcion}</span></a>
                               </li>        
                             {/foreach}
                             {/if}             
@@ -311,26 +320,24 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3">
+                <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3 resumen-home">
                   <!-- Filtro Autor -->
-                  <div class="panel panel-default">
-                    <div class="panel-heading">
+                  <div class="">
+                    <div class="cabecera-resumenes">
                         <h4 class="panel-title">
-                        <a data-toggle="collapse" data-parent="#accordion" href="#accordionAutor">
                          <strong>{$lenguaje["autores_metadata_documentos"]}</strong> 
                          {if isset($autores) && count($autores)}
                             <span class="badge badge-dark pull-right">{count($autores)|default:0}</span>
                           {/if}
-                        </a>
                        </h4>
                      </div>       
                     <div id="accordionAutor" class="panel-collapse " >
                       <ul id="autor" class="list-group scroll"   style="height: 400px;overflow-y: auto;">
                          {if isset($autores) && count($autores)}
                           {foreach item=a from = $autores}
-                          <li class="list-group-item">
-                              <span class="badge badge-dark">{$a.cantidad|default:0}</span>
-                              <a href="#{$a.Aut_Nombre}" style="cursor:pointer"><span class="autordocumento" id="autorDocumento">{$a.Aut_Nombre}</span></a>
+                          <li class="list-group-item-jp padding-li">
+                              <span class="badge pull-right">{$a.cantidad|default:0}</span>
+                              <a href="#{$a.Aut_Nombre}" style="cursor:pointer"><span class="autordocumento subtitle-resumen" id="autorDocumento">{$a.Aut_Nombre}</span></a>
                             </li>        
                           {/foreach}
                           {/if}             
@@ -338,26 +345,24 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3">
+                <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3 resumen-home">
                   <!-- Filtro Formato -->
-                  <div class="panel panel-default">
-                    <div class="panel-heading">
+                  <div class="">
+                    <div class="cabecera-resumenes">
                         <h4 class="panel-title">
-                        <a data-toggle="collapse" data-parent="#accordion" href="#accordionFormato">
                           <strong>{$lenguaje["tabla_campo_tipo_documentos"]}</strong> 
                           {if isset($formatos) && count($formatos)}
                             <span class="badge badge-dark pull-right">{count($formatos)|default:0}</span>
                           {/if}
-                        </a>
                       </h4>
                     </div>       
                     <div id="accordionFormato" class="panel-collapse" >
                       <ul id="formato" class="list-group scroll"   style="height: 400px;overflow-y: auto;">              
                           {if isset($formatos) && count($formatos)}
                           {foreach item=t from = $formatos}
-                          <li class="list-group-item">
-                            <span class="badge badge-dark">{$t.cantidad|default:0}</span>
-                            <a href="#{$t.Taf_Descripcion}" style="cursor:pointer"><span class="formatodocumento" id="formatoDocumento">{$t.Taf_Descripcion}</span></a>
+                          <li class="list-group-item-jp padding-li">
+                            <span class="badge pull-right">{$t.cantidad|default:0}</span>
+                            <a href="#{$t.Taf_Descripcion}" style="cursor:pointer"><span class="formatodocumento subtitle-resumen" id="formatoDocumento">{$t.Taf_Descripcion}</span></a>
                           </li>        
                           {/foreach}
                           {/if}             

@@ -4,19 +4,19 @@
     <div class="panel-heading">
       <h3 class="panel-title">
         <i class="glyphicon glyphicon-list-alt"></i>&nbsp;&nbsp;
-        <strong>{$modulo.Mod_Titulo}</strong>
+        <strong>{$modulo.Moc_Titulo}</strong>
       </h3>
     </div>
     <div class="panel-body">
       <form id="frm-act-modulo" method="post" action="gmodulo/_actualizar_modulo">
       <div class="col-lg-12"><strong>Titulo</strong></div>
       <div class="col-lg-12">
-        <input name="id" hidden="hidden" value="{$modulo.Mod_IdModulo}" />
-        <input class="form-control" name="titulo" value="{$modulo.Mod_Titulo}" />
+        <input name="id" hidden="hidden" value="{$modulo.Moc_IdModuloCurso}" />
+        <input class="form-control" name="titulo" value="{$modulo.Moc_Titulo}" />
       </div>
       <div class="col-lg-12  margin-top-10"><strong>Descripcion</strong></div>
       <div class="col-lg-12">
-        <textarea class="form-control" name="descripcion">{$modulo.Mod_Descripcion}</textarea>
+        <textarea class="form-control" name="descripcion">{$modulo.Moc_Descripcion}</textarea>
       </div>
       </form>
       <div class="col-lg-12 margin-top-10">
@@ -90,7 +90,7 @@
     </div>
     <div class="panel-body" style=" margin: 15px 25px">
       <form method="post" action="gleccion/_registrar_leccion" id="frm_registro">
-        <input hidden="hidden" name="id" value="{$modulo.Mod_IdModulo}" />
+        <input hidden="hidden" name="id" value="{$modulo.Moc_IdModuloCurso}" />
         <div class="col-lg-12"><h5><strong>Titulo</strong></h5></div>
         <div class="col-lg-12">
           <input class="form-control" name="titulo" id="inTitulo" />

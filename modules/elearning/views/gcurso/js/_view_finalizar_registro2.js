@@ -1,4 +1,4 @@
-$(document).ready(function(){
+$(document).ready(function(){  
   $(".panel-heading").css({ "cursor": "pointer" });
   $(".panel-heading").click(function(){
     var panel = $(this).parent().find(".panel-body");
@@ -16,7 +16,7 @@ $(document).ready(function(){
       min: $("#inParMinNota").val(),
       max: $("#inParMaxNota").val()
     };
-    if(data.min==null || data.min.length <= 0 || data.min==null || data.min.length <= 0 ){
+    if(data.min==null || data.min.length <= 0 || data.max==null || data.max.length <= 0 ){
       $.fn.Mensaje({ mensaje: "Ingrese ambos parametros", tamano: "sm"});
       return;
     }

@@ -1,0 +1,40 @@
+.cursos-hr{
+    margin-top: 0px;
+    padding: 0.2px;
+}
+.p-rt-lt-0{
+	padding-right: 0px;
+	padding-left: 0px;
+}
+.titulo2{
+	text-align: left;
+}
+.im_sociales{
+    color: #fff;
+    display: inline-block;
+    margin-right: 5px;
+    padding: 10px;
+}
+#im_sociales{
+    font-size: 16px;
+}
+#im_sociales:hover{
+    font-size: 16px;
+    color: #fff;
+    -moz-box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.6);
+    -webkit-box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.6);
+    box-shadow: 3px 3px 5px rgba(100, 100, 100, 0.6);
+}
+.ic-sociales{
+	padding-top: 10px;
+	padding-bottom: 5px;
+}
+.div-resumen{
+	padding: 10px;
+	border-bottom: 1px #ddd solid;
+	color: #000;
+}
+.title-resumen:hover{
+	text-decoration: underline;
+	color: #000;
+}

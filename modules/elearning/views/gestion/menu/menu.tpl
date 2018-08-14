@@ -4,7 +4,7 @@
       height: 80px;
   }
   .sidebar-left {
-      padding-top: 40px;
+      /*padding-top: 40px;*/
       width: 100%;
       padding-right: 0px;
   }
@@ -196,28 +196,31 @@
     padding-left: 0px !important;
   }
 </style>
-<div class="col-lg-2" style="padding-left: 0px !important">
+
+<!-- {include file='modules/elearning/views/cursos/menu/descripcion.tpl'} -->
+
+<div class="col-lg-2" >
   <div class="sidebar-left">
     <ul id="item-lista-curso">
-        <div class="side-menu2">
+        <div {if $active = 'mis_cursos'} class="side-menu2 active" {else} class="side-menu2 " {/if} >
           <li class="side-menu" style="position: relative">
             <i class="glyphicon glyphicon-book"></i>
-            <span> Mis Cursos (docente)</span>
+            <span> Mis Cursos </span>
           </li>
         </div>
     </ul>
     <ul id="item-ficha-curso">
         <div class="side-menu2">
           <li class="side-menu" style="position: relative">
-            <i class="glyphicon glyphicon-list-alt"></i>
-            <span> Ficha Curso</span>
+            <i class="fa fa-file-text-o"></i>
+            <span> Ficha Curso </span>
           </li>
         </div>
     </ul>
     <ul id="item-modulos-curso">
         <div class="side-menu2">
           <li class="side-menu" style="position: relative">
-            <i class="glyphicon glyphicon-th"></i>
+            <i class="fa fa-book"></i>
             <span> Mis modulos</span>
           </li>
         </div>
@@ -225,11 +228,56 @@
     <ul id="item-tareas-curso">
         <div class="side-menu2">
           <li class="side-menu" style="position: relative">
-            <i class="glyphicon glyphicon-blackboard"></i>
-            <span> Tareas Asignadas</span>
+            <i class="fa fa-pencil-square"></i>
+            <span> Tareas Asignadas </span>
           </li>
         </div>
     </ul>
+
+    <!-- Jhon Martinez -->
+    <ul id="item-examen-curso">
+      <div class="side-menu2">
+        <li class="side-menu" style="position: relative">
+          <i class="fa fa-edit"></i>
+          <span> Examen </span>
+        </li>
+      </div>
+    </ul>
+    <ul id="item-anuncios-curso">
+      <div class="side-menu2">
+        <li class="side-menu" style="position: relative">
+          <i class="fa fa-send-o"></i>
+          <span> Anuncios </span>
+        </li>
+      </div>
+    </ul>
+    <ul id="item-certificado-curso">
+      <div class="side-menu2">
+        <li class="side-menu" style="position: relative">
+          <i class="fa fa-users"></i>
+          <span> Certificado </span>
+        </li>
+      </div>
+    </ul>
+    <ul id="item-alumnos-curso">
+      <div class="side-menu2">
+        <li class="side-menu" style="position: relative">
+          <i class="fa fa-users"></i>
+          <span> Alumnos </span>
+        </li>
+      </div>
+    </ul>
+    <ul id="item-calendario-curso">
+      <div class="side-menu2">
+        <li class="side-menu" style="position: relative">
+          <i class="fa fa-calendar"></i>
+          <span> Calendario </span>
+        </li>
+      </div>
+    </ul>
+
+    <!-- Jhon Martinez -->
+
   </div>
 </div>
 

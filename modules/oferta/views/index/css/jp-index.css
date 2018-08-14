@@ -1,0 +1,133 @@
+.titulo{
+	margin-top: 10px !important;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	font-family: 'Lucida Sans';
+	background-color: #525252;
+	color: #fff;
+}
+.titulo2{
+	text-align: left;
+}
+.descripcion-oferta{
+	margin-bottom: 15px;
+	margin-top: 0px;
+	text-align: justify;
+}
+.cabecera-titulo{
+	color: #fff !important;
+	background: #a0a0a0 !important;
+}
+.instituciones-paises{
+	margin-top:17px;
+	display:inline-block;
+	vertical-align:top;
+	text-align:center;
+	width: 80px;
+}
+.busqueda-avanzada{
+	background-color: #E8F5E9;
+}
+.cursos-hr{
+    margin-top: 0px;
+    padding: 0.2px;
+}
+.cursos-hr2{
+    padding: 0.2px;
+}
+.p-rt-lt-0{
+	padding-right: 0px;
+	padding-left: 0px;
+}
+.cabecera-resumenes{
+	padding: 10px 15px;
+	background: #525252;
+	border-left: 4px solid #8BC34A;
+	color: #fff;
+	font-size: 1.1em;
+}
+.title-resumen:hover{
+	text-decoration: underline;
+	color: #fff;
+}
+.list-group-item-jp{
+	position: relative;
+	display: block;
+	padding: 10px 15px;
+	background-color: #fff;
+	height: auto;
+	color: #000;
+	margin-bottom: -11px;
+	margin: 0 auto;
+}
+.subtitle-resumen{
+	text-decoration: none;
+	color: #000;
+}
+.subtitle-resumen:hover{
+	text-decoration: none;
+	color: #3c763d;
+	font-weight: bold;
+}
+.resumen-busqueda{
+	padding-bottom: 10px;
+	border-bottom: 1px #ddd solid;
+	padding-left: 15px;
+}
+.side-menu{
+	border-left: 5px solid #355D3A;
+	list-style: none;
+    color: #222;
+    padding: 10px 20px;
+    cursor: pointer;
+    background-color: #ffffff;
+    font-size: 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+.side-menu:hover{
+  	border-left: 5px solid #355D3A;
+  	border-bottom: 1px solid #ddd;
+    -moz-box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.6);
+    -webkit-box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.6);
+    box-shadow: 3px 3px 10px rgba(100, 100, 100, 0.6);
+ }
+ .side-menu2 {
+    list-style: none;
+    color: #222;
+    cursor: pointer;
+    background-color: #ffffff;
+    font-size: 15px;
+    text-align: left;
+    border-color: #DDD;
+    border-style: solid;
+    border-width: 1px;
+    margin-bottom: 10px;
+}
+.underline:hover{
+	text-decoration: underline;
+}
+.position-badge{
+	position: absolute;
+	top: 5px;
+	right: 5px;
+}
+.padding-li{
+	padding-top: 10px;
+	padding-bottom: 10px;
+	border-bottom: 1px solid #ddd;
+}
+.padding-li2{
+	padding-top: 25px;
+	padding-bottom: 10px;
+	border-bottom: 1px solid #ddd;
+}
+.badge{
+	min-width: 40px !important;
+	font-size: 15px !important;
+}
+.resumen-home{
+	border-left: 1px solid #ebeaea;
+	padding-left: 10px;
+	height: 220px;
+}

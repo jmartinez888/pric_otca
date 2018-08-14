@@ -1,8 +1,14 @@
 .titulo{
 	margin-top: 10px !important;
-	padding-top: 10px;
-	padding-bottom: 10px;
-	font-family: 'Lucida Sans';
-	background-color: #525252;
-	color: #fff;
+	font-family: 'Lucida Sans';;
+	color: #3c763d;
+}
+.cursos-hr-title-foro{
+    margin-top: 0px;
+    padding: 0.2px;
+    border-top: 1px solid #3c763d;
+}
+.p-rt-lt-0{
+	padding-right: 0px;
+	padding-left: 0px;
 }

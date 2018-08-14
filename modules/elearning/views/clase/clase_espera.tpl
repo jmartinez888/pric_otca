@@ -5,7 +5,7 @@
 </style>
 <div class="row">
   <div class="col-lg-5 tittle-modulo ">
-     <h4><strong> Módulo {$modulo.Index}: {$modulo["Mod_Titulo"]}</strong></h4>
+     <h4><strong> Módulo {$modulo.Index}: {$modulo["Moc_Titulo"]}</strong></h4>
   </div>
   <div class="col-lg-5 derecha" style="margin-top: 5px !important">
       <span>Lección {$leccion["Index"]} de {count($lecciones)}</span>
@@ -69,7 +69,7 @@
           Esta clase esta programada para el dia de hoy!
           <br/>
           <br/>
-          <a href="{BASE_URL}elearning/clase/iniciar/{$curso}/{$modulo.Mod_IdModulo}/{$leccion.Lec_IdLeccion}">
+          <a href="{BASE_URL}elearning/clase/iniciar/{$curso}/{$modulo.Moc_IdModuloCurso}/{$leccion.Lec_IdLeccion}">
             <button class="btn btn-success" id="btnIniciarClase">
               <span class="glyphicon glyphicon-play-circle" aria-hidden="true"></span>
               Iniciar clase

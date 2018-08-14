@@ -1,18 +1,21 @@
 <div  class="col-md-12 col-xs-12 col-sm-12 col-lg-12">
     {include file='modules/foro/views/index/menu/lateral.tpl'}
     <div  class="col-md-10 col-xs-12 col-sm-8 col-lg-10" style="margin-top: 10px;">       
-        <h3 class="titulo-view titulo"><strong>Consultas</strong> </h3>   
+        <h3 class="titulo"><strong>Consultas</strong></h3>
+        <div class="col-lg-12 p-rt-lt-0">
+            <hr class="cursos-hr-title-foro">
+        </div> 
         <a type="button" href="{$_layoutParams.root}foro/admin/form/new/query" class="btn btn-success btn-sm pull-right" style="margin-right: 15px;" title="Nuevo Sub FOro">Nuevo</a>
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-12" style="margin-bottom: 30px;">
                 
                 {if count($lista_foros)>0}
                 {foreach from=$lista_foros item=foro}
-                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                        <div class="foro-item">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <div class="">
                             <div class="cabecera-discusion">
                                 <a class="link-foro" href="{$_layoutParams.root}foro/index/ficha/{$foro.For_IdForo}">               
-                                    <h4 style="text-align: justify;">{$foro.For_Titulo}</h4>                               
+                                    <h4 style="text-align: justify;"><strong>{$foro.For_Titulo}</strong></h4>                               
                                 </a>
                             </div>
                             <div class="detalles-act-reciente">{$foro.Usu_Usuario} &nbsp;&nbsp;-&nbsp;&nbsp; hace {$foro.tiempo} &nbsp;&nbsp;-&nbsp;&nbsp; 3 votos &nbsp;&nbsp;-&nbsp;&nbsp; {$foro.For_TComentarios|default:0} comentario(s)</div>

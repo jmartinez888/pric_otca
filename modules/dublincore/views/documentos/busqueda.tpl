@@ -33,7 +33,7 @@
   
 </style> 
 
-<div id="raizaMenu" clas="col-xs-3 col-sm-3 col-md-2 col-lg-2">
+<!-- <div id="raizaMenu" clas="col-xs-3 col-sm-3 col-md-2 col-lg-2">
   <ul clas="col-xs-3 col-sm-3 col-md-2 col-lg-2">
     <li>
       <a href="{$_layoutParams.root_clear}">{$lenguaje["label_inicio"]} </a>
@@ -43,13 +43,16 @@
       <a class='actual' >{$lenguaje["label_h2_titulo_documentos"]} </a>
     </li>
   </ul>     
-</div>
+</div> -->
 
 
 <div class="container-fluid">
 <div class="row">
-    <div class="col-md-12 col-lg-offset-1 col-lg-10">
-    <h2 class="tit-pagina-principal"><center>{$lenguaje["label_h2_titulo_documentos"]}</center></h2>
+    <div class="col-md-12 col-lg-12">
+    <center><h2 class="titulo2">{$lenguaje["label_h2_titulo_documentos"]}</h2></center>
+    <div class="col-lg-12 p-rt-lt-0">
+      <hr class="cursos-hr">
+    </div>
     <input id="metodo" name="metodo" type="hidden" value="buscarporpalabras"/>
     <input id="query" name="query" type="hidden"/>
     </div>       
@@ -58,49 +61,49 @@
 <div class="row">    
   <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
       <div class="panel-group" id="accordion">
-        <div class="panel panel-default">
-          <div class="panel-heading">
+        <div class="side-menu2 col-md-12 p-rt-lt-0">
+          <a data-toggle="collapse" data-parent="#accordion" href="#accordionOne">
+            <div class="side-menu">
               <h4 class="panel-title">
-              <a data-toggle="collapse" data-parent="#accordion" href="#accordionOne">
               <strong>{$lenguaje["menu_izquierdo1_documentos"]}
                 {if isset($temadocumento) && count($temadocumento)}
-                    <span class="badge pull-right">{count($temadocumento)|default:0}</span> 
+                    <span class="badge pull-right position-badge">{count($temadocumento)|default:0}</span> 
                 {/if}
-              </strong>  
-              </a>
+              </strong>
              </h4>
-           </div>       
+            </div>
+          </a>       
           <div id="accordionOne" class="panel-collapse collapse" >
-            <ul id="tematicas" class="list-group scroll"   style="height: 400px;overflow-y: auto;">
+            <ul id="tematicas" class="list-group scroll"   style="max-height: 300px;overflow-y: auto; margin-bottom: 0px;">
                 {if isset($temadocumento) && count($temadocumento)}
                   {foreach item=datos from = $temadocumento}
-                       <li class="list-group-item">
-                      <span class="badge">{$datos.cantidad|default:0}</span>
-                      <a href="#{$datos.Ted_Descripcion}" style="cursor:pointer"><span class="temadocumento" id="temadocumento">{$datos.Ted_Descripcion}</span></a>
+                       <li class="list-group-item-jp col-md-12 p-rt-lt-0 padding-li2">
+                      <span class="badge position-badge">{$datos.cantidad|default:0}</span>
+                      <a href="#{$datos.Ted_Descripcion}" style="cursor:pointer; color: #222;"><span class="temadocumento underline" id="temadocumento">{$datos.Ted_Descripcion}</span></a>
                     </li>                            
                   {/foreach}
                   {/if}
             </ul>
           </div>
         </div>
-        <div class="panel panel-default">
-          <div class="panel-heading">
+        <div class="side-menu2 col-md-12 p-rt-lt-0">
+          <a data-toggle="collapse" data-parent="#accordion" href="#accordionOne2">
+            <div class="side-menu">
               <h4 class="panel-title">
-              <a data-toggle="collapse" data-parent="#accordion" href="#accordionOne2">
                <strong>{$lenguaje["menu_izquierdo2_documentos"]}</strong> 
                {if isset($tipodocumento) && count($tipodocumento)}
-                  <span class="badge pull-right">{count($tipodocumento)|default:0}</span>
+                  <span class="badge pull-right position-badge">{count($tipodocumento)|default:0}</span>
                 {/if}
-              </a>
              </h4>
-           </div>       
+            </div>
+           </a>       
           <div id="accordionOne2" class="panel-collapse collapse" >
-            <ul id="tipodocumento" class="list-group scroll"   style="height: 400px;overflow-y: auto;">
+            <ul id="tipodocumento" class="list-group scroll"   style="max-height: 300px;overflow-y: auto; margin-bottom: 0px;">
              {if isset($tipodocumento) && count($tipodocumento)}
               {foreach item=datos from = $tipodocumento}
-                  <li class="list-group-item">
-                      <span class="badge">{$datos.cantidad|default:0}</span>
-                      <a href="#{$datos.Tid_Descripcion}" style="cursor:pointer"><span class="palabraclave" id="palabraclave">{$datos.Tid_Descripcion}</span></a>
+                  <li class="list-group-item-jp col-md-12 p-rt-lt-0 padding-li2">
+                      <span class="badge position-badge">{$datos.cantidad|default:0}</span>
+                      <a href="#{$datos.Tid_Descripcion}" style="cursor:pointer; color: #222;"><span class="palabraclave underline" id="palabraclave">{$datos.Tid_Descripcion}</span></a>
                     </li>        
                   {/foreach}
                   {/if}             
@@ -109,24 +112,24 @@
         </div>
 
         <!-- Filtro Autor -->
-        <div class="panel panel-default">
-          <div class="panel-heading">
+        <div class="side-menu2 col-md-12 p-rt-lt-0">
+          <a data-toggle="collapse" data-parent="#accordion" href="#accordionAutor">
+            <div class="side-menu">
               <h4 class="panel-title">
-              <a data-toggle="collapse" data-parent="#accordion" href="#accordionAutor">
                <strong>{$lenguaje["autores_metadata_documentos"]}</strong> 
                {if isset($autores) && count($autores)}
-                  <span class="badge pull-right">{count($autores)|default:0}</span>
+                  <span class="badge pull-right position-badge">{count($autores)|default:0}</span>
                 {/if}
-              </a>
              </h4>
-           </div>       
+           </div>
+          </a>       
           <div id="accordionAutor" class="panel-collapse collapse" >
-            <ul id="autor" class="list-group scroll"   style="height: 400px;overflow-y: auto;">
+            <ul id="autor" class="list-group scroll"   style="max-height: 300px;overflow-y: auto; margin-bottom: 0px;">
                {if isset($autores) && count($autores)}
                 {foreach item=a from = $autores}
-                <li class="list-group-item">
-                    <span class="badge">{$a.cantidad|default:0}</span>
-                    <a href="#{$a.Aut_Nombre}" style="cursor:pointer"><span class="autordocumento" id="autorDocumento">{$a.Aut_Nombre}</span></a>
+                <li class="list-group-item-jp col-md-12 p-rt-lt-0 padding-li2">
+                    <span class="badge position-badge">{$a.cantidad|default:0}</span>
+                    <a href="#{$a.Aut_Nombre}" style="cursor:pointer; color: #222;"><span class="autordocumento underline" id="autorDocumento">{$a.Aut_Nombre}</span></a>
                   </li>        
                 {/foreach}
                 {/if}             
@@ -135,24 +138,24 @@
         </div>
 
         <!-- Filtro Formato -->
-        <div class="panel panel-default">
-          <div class="panel-heading">
+        <div class="side-menu2 col-md-12 p-rt-lt-0">
+          <a data-toggle="collapse" data-parent="#accordion" href="#accordionFormato">
+            <div class="side-menu">
               <h4 class="panel-title">
-              <a data-toggle="collapse" data-parent="#accordion" href="#accordionFormato">
                <strong>{$lenguaje["tabla_campo_tipo_documentos"]}</strong> 
                {if isset($formatos) && count($formatos)}
-                  <span class="badge pull-right">{count($formatos)|default:0}</span>
+                  <span class="badge pull-right position-badge">{count($formatos)|default:0}</span>
                 {/if}
-              </a>
              </h4>
-           </div>       
+           </div>
+          </a>     
           <div id="accordionFormato" class="panel-collapse collapse" >
-            <ul id="formato" class="list-group scroll"   style="height: 400px;overflow-y: auto;">              
+            <ul id="formato" class="list-group scroll"   style="max-height: 300px;overflow-y: auto;margin-bottom: 0px;">              
                {if isset($formatos) && count($formatos)}
                 {foreach item=t from = $formatos}
-                <li class="list-group-item">
-                    <span class="badge">{$t.cantidad|default:0}</span>
-                    <a href="#{$t.Taf_Descripcion}" style="cursor:pointer"><span class="formatodocumento" id="formatoDocumento">{$t.Taf_Descripcion}</span></a>
+                <li class="list-group-item-jp col-md-12 p-rt-lt-0 padding-li2">
+                    <span class="badge position-badge">{$t.cantidad|default:0}</span>
+                    <a href="#{$t.Taf_Descripcion}" style="cursor:pointer; color: #222;"><span class="formatodocumento underline" id="formatoDocumento">{$t.Taf_Descripcion}</span></a>
                   </li>        
                 {/foreach}
                 {/if}             
@@ -165,14 +168,9 @@
 
 
   <div id="resultados">
-     <div class="col-xs-12 col-sm-8 col-md-offset-0 col-md-9 col-lg-offset-0 col-lg-10">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-  <h4 class="panel-title">
-    <strong>{$lenguaje["titulo_resultados_documentos"]}</strong> 
-</h4>
-  </div>
-        <div class="panel-body">
+     <div class="col-xs-12 col-sm-8 col-md-offset-0 col-md-9 col-lg-offset-0 col-lg-10" style="margin-bottom: 15px;">
+      <div class="">
+        <div class="">
             <div class="row">
               <div class="col-md-12">
                   <div class="row">
@@ -210,15 +208,20 @@
                 {if isset($paises) && count($paises)}
                     {foreach item=datos from=$paises}
                         <div {if isset($filtroPais) && $datos.Pai_Nombre == $filtroPais}
-                         style="margin-top:17px;display:inline-block;vertical-align:top;text-align:center; background: #40bc4bad;" 
+                         class="instituciones-paises-color" 
                          {else}
-                          style="margin-top:17px;display:inline-block;vertical-align:top;text-align:center;"
+                          class="instituciones-paises" 
                          {/if}
                            >
                             <img class="pais " data-toggle="tooltip" data-original-title="{$lenguaje['title_paises_buscar']}" style="cursor:pointer;width:40px" src="{$_layoutParams.root_clear}public/img/legal/{$datos.Pai_Nombre}.png" pais="{$datos.Pai_Nombre}" />
                             <br>
                             <b>{$datos.Pai_Nombre}</b>
-                            <p style="font-size:.8em">({$datos.cantidad|default:0})</p>
+                            <br>
+                            {if isset($filtroPais) && $datos.Pai_Nombre == $filtroPais}
+                            <span class="badge-jp" style="font-size:.8em">{$datos.cantidad|default:0}</span>
+                            {else}
+                            <span class="badge" style="font-size:.8em">{$datos.cantidad|default:0}</span>
+                            {/if}
                         </div>
                     {/foreach}
                {else}
@@ -231,49 +234,49 @@
                 {/if}
                 {if isset($filtrousuario)}
                 <input type="hidden" id= "filtrousuariodocumento" value="{$filtrousuario}">
-                <a class="badge" href="{$_layoutParams.root_clear}dublincore/documentos/busqueda/{$palabrabuscada|default:'all'}/all/{$filtroTipo|default:'all'}/{$filtroAutor|default:'all'}/{$filtroFormato|default:'all'}/{$filtroPais|default:'all'}/all">
+                <a class="badge" style="margin: 3px !important;" href="{$_layoutParams.root_clear}dublincore/documentos/busqueda/{$palabrabuscada|default:'all'}/all/{$filtroTipo|default:'all'}/{$filtroAutor|default:'all'}/{$filtroFormato|default:'all'}/{$filtroPais|default:'all'}/all">
                  Usuario: {$usuario}  <i class="fa fa-times"></i> 
                 </a>
                 {/if}
 
                 {if isset($filtroTema)}
                 <input type="hidden" id= "filtrotemadocumento" value="{$filtroTema}">
-                <a class="badge" href="{$_layoutParams.root_clear}dublincore/documentos/busqueda/{$palabrabuscada|default:'all'}/all/{$filtroTipo|default:'all'}/{$filtroAutor|default:'all'}/{$filtroFormato|default:'all'}/{$filtroPais|default:'all'}/{$filtrousuario|default:'all'}">
+                <a class="badge" style="margin: 3px !important;" href="{$_layoutParams.root_clear}dublincore/documentos/busqueda/{$palabrabuscada|default:'all'}/all/{$filtroTipo|default:'all'}/{$filtroAutor|default:'all'}/{$filtroFormato|default:'all'}/{$filtroPais|default:'all'}/{$filtrousuario|default:'all'}">
                  Tema: {$filtroTema}  <i class="fa fa-times"></i> 
                 </a>
                 {/if}
                 {if isset($filtroTipo)}
                 <input type="hidden" id= "filtrotipodocumento" value="{$filtroTipo}">
-                <a class="badge" href="{$_layoutParams.root_clear}dublincore/documentos/busqueda/{$palabrabuscada|default:'all'}/{$filtroTema|default:'all'}/all/{$filtroAutor|default:'all'}/{$filtroFormato|default:'all'}/{$filtroPais|default:'all'}/{$filtrousuario|default:'all'}">
+                <a class="badge" style="margin: 3px !important;" href="{$_layoutParams.root_clear}dublincore/documentos/busqueda/{$palabrabuscada|default:'all'}/{$filtroTema|default:'all'}/all/{$filtroAutor|default:'all'}/{$filtroFormato|default:'all'}/{$filtroPais|default:'all'}/{$filtrousuario|default:'all'}">
                  Tipo: {$filtroTipo} <i class="fa fa-times"></i>               
                 </a>
                 {/if}
                 {if isset($filtroAutor)}
                 <input type="hidden" id= "filtroautordocumento" value="{$filtroAutor}">
-                <a class="badge" href="{$_layoutParams.root_clear}dublincore/documentos/busqueda/{$palabrabuscada|default:'all'}/{$filtroTema|default:'all'}/{$filtroTipo|default:'all'}/all/{$filtroFormato|default:'all'}/{$filtroPais|default:'all'}/{$filtrousuario|default:'all'}">
+                <a class="badge" style="margin: 3px !important;" href="{$_layoutParams.root_clear}dublincore/documentos/busqueda/{$palabrabuscada|default:'all'}/{$filtroTema|default:'all'}/{$filtroTipo|default:'all'}/all/{$filtroFormato|default:'all'}/{$filtroPais|default:'all'}/{$filtrousuario|default:'all'}">
                  Autor: {$filtroAutor} <i class="fa fa-times"></i>               
                 </a>
                 {/if}
                 {if isset($filtroFormato)}
                 <input type="hidden" id= "filtroformatodocumento" value="{$filtroFormato}">
-                <a class="badge" href="{$_layoutParams.root_clear}dublincore/documentos/busqueda/{$palabrabuscada|default:'all'}/{$filtroTema|default:'all'}/{$filtroTipo|default:'all'}/{$filtroAutor|default:'all'}/all/{$filtroPais|default:'all'}/{$filtrousuario|default:'all'}">
+                <a class="badge" style="margin: 3px !important;" href="{$_layoutParams.root_clear}dublincore/documentos/busqueda/{$palabrabuscada|default:'all'}/{$filtroTema|default:'all'}/{$filtroTipo|default:'all'}/{$filtroAutor|default:'all'}/all/{$filtroPais|default:'all'}/{$filtrousuario|default:'all'}">
                  Formato: {$filtroFormato} <i class="fa fa-times"></i>               
                 </a>
                 {/if}
                 {if isset($filtroPais)}
                 <input type="hidden" id= "filtropaisdocumento" value="{$filtroPais}">
-                <a class="badge " href="{$_layoutParams.root_clear}dublincore/documentos/busqueda/{$palabrabuscada|default:'all'}/{$filtroTema|default:'all'}/{$filtroTipo|default:'all'}/{$filtroAutor|default:'all'}/{$filtroFormato|default:'all'}/all/{$filtrousuario|default:'all'}">
+                <a class="badge" style="margin: 3px !important;" href="{$_layoutParams.root_clear}dublincore/documentos/busqueda/{$palabrabuscada|default:'all'}/{$filtroTema|default:'all'}/{$filtroTipo|default:'all'}/{$filtroAutor|default:'all'}/{$filtroFormato|default:'all'}/all/{$filtrousuario|default:'all'}">
                  País: {$filtroPais} <i class="fa fa-times"></i>               
                 </a>
                 {/if}
                 {if isset($filtroLetra)}
                 <input type="hidden" id= "filtroletradocumento" value="{$filtroLetra}">
-                <a class="badge " href="{$_layoutParams.root_clear}dublincore/documentos/busqueda/{$palabrabuscada|default:'all'}/{$filtroTema|default:'all'}/{$filtroTipo|default:'all'}/{$filtroAutor|default:'all'}/{$filtroFormato|default:'all'}/{$filtroPais|default:'all'}/{$filtrousuario|default:'all'}/all">
+                <a class="badge" style="margin: 3px !important;" href="{$_layoutParams.root_clear}dublincore/documentos/busqueda/{$palabrabuscada|default:'all'}/{$filtroTema|default:'all'}/{$filtroTipo|default:'all'}/{$filtroAutor|default:'all'}/{$filtroFormato|default:'all'}/{$filtroPais|default:'all'}/{$filtrousuario|default:'all'}/all">
                  País: {$filtroLetra} <i class="fa fa-times"></i>               
                 </a>
                 {/if}
                 {if isset($filtroTema) OR isset($filtroTipo) OR isset($filtroAutor) OR isset($filtroFormato) OR isset($filtroPais) OR isset($filtroLetra)}
-                  <a class="badge" data-toggle="tooltip" data-placement="top" title="Quitar todos los filtros" style="background: #bd0000b5" href="{$_layoutParams.root_clear}dublincore/documentos/busqueda/{$palabrabuscada|default:'all'}/all/all/all/all/all/all">
+                  <a class="badge" style="margin: 3px !important;" data-toggle="tooltip" data-placement="top" title="Quitar todos los filtros" style="background: #bd0000b5" href="{$_layoutParams.root_clear}dublincore/documentos/busqueda/{$palabrabuscada|default:'all'}/all/all/all/all/all/all">
                    Quitar Filtros <i class="fa fa-times"></i>
                    </a>
                 {/if}
@@ -282,12 +285,15 @@
                    <div class="col-md-12">
                       <div class="row">
                         <div class="col-md-6">
+                          <h3>{$lenguaje["total_resultados_documentos"]}: {$totaldocumentos[0]}</h3>
+                        </div>
+                        <div class="col-md-6">
                           {if isset($resultPalabra) }
                             <b>Resultado de búsqueda</b> 
                           {$resultPalabra}{/if}
                         </div>
-                        <div class="col-md-6 text-right">
-                          <b><font size="-1">{$lenguaje["total_resultados_documentos"]}: {$totaldocumentos[0]}</font></b>
+                        <div class="col-lg-12">
+                          <hr class="cursos-hr">
                         </div>
                       </div>        
                    </div>
@@ -295,7 +301,7 @@
             </div>
             <!-- <p>Some default panel content here.</p> -->
         </div>
-    <div class="col-xs-12" id="paginar" style="float: inherit;">
+    <div class="" id="paginar" style="float: inherit;">
         <div class="table-responsive ">
           {if isset($documentos) && count($documentos)}
             <table class="table table-hover table-condensed table-filtros">
@@ -337,14 +343,14 @@
                         <td> 
                         {if $_acl->permiso("editar_todos_los_documentos") || $_acl->Usu_IdUsuario() == $datos.Usu_IdUsuario}
                           {if $_acl->permiso("editar_documentos")}
-                              <a data-toggle="tooltip" data-placement="top" type="button" title="{$lenguaje['label_editar_bdrecursos']}" class="btn btn-default btn-sm glyphicon glyphicon-edit" href="{$_layoutParams.root}dublincore/editar/index/{$datos.Dub_IdDublinCore}" target="_blank">
+                              <a data-toggle="tooltip" data-placement="top" type="button" title="{$lenguaje['label_editar_bdrecursos']}" class="btn btn-primary btn-sm glyphicon glyphicon-edit" href="{$_layoutParams.root}dublincore/editar/index/{$datos.Dub_IdDublinCore}" target="_blank" style="margin: 3px;">
                               </a>
                           {/if}
                           {if $_acl->permiso("cambiar_estado_documentos")}
-                              <a data-toggle="tooltip" data-placement="top" class="btn btn-default btn-sm glyphicon glyphicon-refresh ce_dublin" id_dublin="{$datos.Dub_IdDublinCore}" estado_dublin="{if $datos.Dub_Estado==0}1{/if}{if $datos.Dub_Estado==1}2{/if}{if $datos.Dub_Estado==2}0{/if}"  title="{$lenguaje['cambiar_estado_bdrecursos']}" > </a>
+                              <a data-toggle="tooltip" data-placement="top" class="btn btn-success btn-sm glyphicon glyphicon-refresh ce_dublin" id_dublin="{$datos.Dub_IdDublinCore}" estado_dublin="{if $datos.Dub_Estado==0}1{/if}{if $datos.Dub_Estado==1}2{/if}{if $datos.Dub_Estado==2}0{/if}"  title="{$lenguaje['cambiar_estado_bdrecursos']}" style="margin: 3px;"> </a>
                           {/if}
                           {if $_acl->permiso("eliminar_documentos")}
-                               <a data-toggle="modal" data-target="#confirm-delete" href="#" type="button" title="{$lenguaje['label_eliminar_bdrecursos']}" data-id='{$datos.Dub_IdDublinCore}' data-nombre="{$datos.Dub_Titulo}" class="btn btn-default btn-sm glyphicon glyphicon-trash" >
+                               <a data-toggle="modal" data-target="#confirm-delete" href="#" type="button" title="{$lenguaje['label_eliminar_bdrecursos']}" data-id='{$datos.Dub_IdDublinCore}' data-nombre="{$datos.Dub_Titulo}" class="btn btn-danger btn-sm glyphicon glyphicon-trash" style="margin: 3px;">
                               </a>
                           {/if}
                         {/if}

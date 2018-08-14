@@ -28,61 +28,582 @@ class examenModel extends Model {
       return $this->getArray($sql);
     }
 
-    public function getPreguntas($examen, $nro){
-      $sql = "SELECT * FROM pregunta 
-              WHERE Exa_IdExamen = {$examen}
-              AND Pre_Estado = 1 AND Row_Estado = 1 ORDER BY RAND() LIMIT {$nro}";
-      $preguntas = $this->getArray($sql);
-      $resultado = array();
-      $indice = 1;
-      foreach ($preguntas as $i) {
-        if($i["TP_IdTpoPregunta"]==1){
-          $i["ALTERNATIVAS"] = $this->getAlternativas($i["Pre_IdPregunta"]);
+    public function getExamensPorcentaje($id)
+    {
+        try{
+            $sql = " SELECT SUM(e.Exa_Porcentaje) as Porcentaje FROM examen e WHERE Moc_IdModulo=$id AND e.Exa_Estado=1 AND e.Row_Estado=1 ";
+            $result = $this->_db->prepare($sql);
+            $result->execute();
+            return $result->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("elearning(examenModel)", "getExamensPorcentaje", "Error Model", $exception);
+            return $exception->getTraceAsString();
         }
-        $i["INDEX"] = $indice; $indice++;
-        array_push($resultado, $i);
-      }
-      return $resultado;
     }
 
-    public function getAlternativas($pregunta){
-      $sql = "SELECT * FROM alternativa WHERE Pre_IdPregunta = {$pregunta}
-              AND Alt_Estado = 1 AND Row_Estado = 1 ORDER BY RAND()";
-      return $this->getArray($sql);
+    public function getLecciones($id){
+        try{
+            $sql = " SELECT * FROM leccion WHERE Moc_IdModuloCurso = $id AND Lec_Estado = 1 AND Row_Estado = 1 ORDER BY Lec_IdLeccion ASC ";
+            $result = $this->_db->prepare($sql);
+            $result->execute();
+            return $result->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("elearning(examenModel)", "getLecciones", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
     }
 
-    public function insertRespuesta($usuario, $pregunta, $respuesta, $intentos){
-      if($intentos > 0){
-        $nuevo = $intentos + 1;
-        $sql = "INSERT INTO respuesta(Pre_IdPregunta, Usu_IdUsuario, Res_Descripcion, Res_Intento, Res_Estado)
-        VALUES({$pregunta}, {$usuario}, '{$respuesta}', {$nuevo}, 1)";
-      }else{
-        $sql = "INSERT INTO respuesta(Pre_IdPregunta, Usu_IdUsuario, Res_Descripcion, Res_Intento, Res_Estado)
-        VALUES({$pregunta}, {$usuario}, '{$respuesta}', 1, 1)";
-      }
-      $this->execQuery($sql);
+    public function getExamenPeso($id)
+    {
+        try{
+            $sql = " SELECT Exa_Peso FROM examen WHERE Exa_IdExamen=$id ";
+            $result = $this->_db->prepare($sql);
+            $result->execute();
+            return $result->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("elearning(examenModel)", "getExamenPeso", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
     }
 
-    public function getIntentos($examen, $usuario){
-      $sql = "SELECT ifnull( MAX(R.Res_Intento), 0) INTENTOS FROM respuesta R
-              INNER JOIN pregunta P ON R.Pre_IdPregunta = P.Pre_IdPregunta
-              INNER JOIN examen E ON P.Exa_IdExamen = E.Exa_IdExamen
-              WHERE E.Exa_IdExamen = {$examen} AND R.Usu_IdUsuario = {$usuario}
-                AND E.Exa_Estado = 1 AND E.Row_Estado = 1 
-                AND P.Pre_Estado = 1 AND P.Row_Estado = 1 
-                AND R.Row_Estado = 1";
-      $data = $this->getArray($sql);
-
-      if($data != null && count($data) > 0 ){
-        return $data[0]["INTENTOS"];
-      }else{
-        return 0;
-      }
+    public function getPuntosPregunta($id)
+    {
+        try{
+//             $sql = " SELECT (SELECT SUM(Pre_Puntos) FROM pregunta WHERE Exa_IdExamen=$id AND Pre_Estado=1 AND Row_Estado=1 AND Pre_Tipo!=2 AND Pre_Tipo!=3) +
+// (SELECT SUM(Alt_Puntos) FROM alternativa a INNER JOIN pregunta p ON a.Pre_IdPregunta=p.Pre_IdPregunta
+//  WHERE Exa_IdExamen=$id AND Pre_Estado=1 AND p.Row_Estado=1) AS puntos_pregunta ";
+             $sql = " SELECT SUM(Pre_Puntos) AS puntos_pregunta FROM pregunta WHERE Exa_IdExamen=$id AND Pre_Estado=1 AND Row_Estado=1 ";
+            $result = $this->_db->prepare($sql);
+            $result->execute();
+            return $result->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("elearning(examenModel)", "getPuntosPregunta", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
     }
 
-    public function getRespuestas($usuario){
-      $sql = "SELECT * FROM alternativa WHERE Pre_IdPregunta = {$pregunta}
-              AND Alt_Estado = 1 AND Row_Estado = 1 ORDER BY RAND()";
-      return $this->getArray($sql);
+     public function getExamensRowCount($condicion = "")
+    {
+        try{
+            $sql = " SELECT COUNT(e.Exa_IdExamen) AS CantidadRegistros, SUM(e.Exa_Porcentaje) as Suma_Porcentaje FROM examen e $condicion ";
+            $result = $this->_db->prepare($sql);
+            $result->execute();
+            return $result->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("elearning(examenModel)", "getExamensRowCount", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
     }
+
+
+    public function getExamensCondicion($pagina,$registrosXPagina,$condicion = "")
+    {
+        try{
+            $registroInicio = 0;
+            if ($pagina > 0) {
+                $registroInicio = ($pagina - 1) * $registrosXPagina;                
+            }
+            $sql = " SELECT e.*,(SELECT COUNT(ea.Exa_IdExamen) FROM examen_alumno ea WHERE ea.Exa_IdExamen=e.Exa_IdExamen LIMIT 1) AS Emitido FROM examen e $condicion 
+                LIMIT $registroInicio, $registrosXPagina ";
+            $result = $this->_db->query($sql);
+            return $result->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("elearning(examenModel)", "getExamensCondicion", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
+
+    public function cambiarEstadoexamens($Rol_IdRol, $Rol_Estado)
+    {
+        try{
+            if($Rol_Estado==0)
+            {
+                $sql = "call s_u_cambiar_estado_examen(?,1)";
+                $result = $this->_db->prepare($sql);
+                $result->bindParam(1, $Rol_IdRol, PDO::PARAM_INT);
+                $result->execute();
+
+                return $result->rowCount(PDO::FETCH_ASSOC);                
+            }
+            if($Rol_Estado==1)
+            {
+                $sql = "call s_u_cambiar_estado_examen(?,0)";
+                $result = $this->_db->prepare($sql);
+                $result->bindParam(1, $Rol_IdRol, PDO::PARAM_INT);
+                $result->execute();
+
+                return $result->rowCount(PDO::FETCH_ASSOC);
+            }
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("elearning(examenModel)", "cambiarEstadoexamens", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
+
+
+    public function insertExamen($iCur_IdCurso, $iExa_Titulo, $iExa_Porcentaje, $iExa_Peso, $iExa_Intentos,$iLec_IdLeccion){
+        try {             
+            $sql = "call s_i_examen(?,?,?,?,?,?)";
+            $result = $this->_db->prepare($sql);
+            $result->bindParam(1, $iCur_IdCurso, PDO::PARAM_INT);
+            $result->bindParam(2, $iExa_Titulo, PDO::PARAM_STR);
+            $result->bindParam(3, $iExa_Porcentaje, PDO::PARAM_INT); 
+            $result->bindParam(4, $iExa_Peso, PDO::PARAM_INT); 
+            $result->bindParam(5, $iExa_Intentos, PDO::PARAM_INT); 
+            $result->bindParam(6, $iLec_IdLeccion, PDO::PARAM_INT);                    
+            $result->execute();
+            return $result->fetch();
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("elearning(examenModel)", "inserteExamen", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
+
+    public function getPreguntasAll($pagina = 1, $registrosXPagina = 1, $activos = 1)
+    {
+        try{
+            $sql = "call s_s_listar_preguntas_All(?,?,?)";
+            $result = $this->_db->prepare($sql);
+            $result->bindParam(1, $pagina, PDO::PARAM_INT);
+            $result->bindParam(2, $registrosXPagina, PDO::PARAM_INT);
+            $result->bindParam(3, $activos, PDO::PARAM_INT);
+            $result->execute();
+            return $result->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("elearning(examenModel)", "getPreguntasAll", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
+
+
+    public function getPreguntasRowCount($condicion = "")
+    {
+        try{
+            $sql = " SELECT COUNT(Pre_IdPregunta) AS CantidadRegistros FROM pregunta $condicion ";
+            $result = $this->_db->prepare($sql);
+            $result->execute();
+            return $result->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("elearning(examenModel)", "getPreguntasRowCount", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
+
+
+    public function getPreguntasCondicion($pagina,$registrosXPagina,$condicion = "")
+    {
+        try{
+            $registroInicio = 0;
+            if ($pagina > 0) {
+                $registroInicio = ($pagina - 1) * $registrosXPagina;                
+            }
+            $sql = " SELECT * FROM pregunta p $condicion 
+                LIMIT $registroInicio, $registrosXPagina ";
+            $result = $this->_db->query($sql);
+            return $result->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("elearning(examenModel)", "getPreguntasCondicion", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
+
+    public function getPreguntas($examen)
+    {
+        try{
+            $sql = "  SELECT * FROM pregunta p WHERE p.Exa_IdExamen=$examen AND p.Pre_Estado=1 AND p.Row_Estado=1 ";
+            $result = $this->_db->query($sql);
+            $preguntas = $result->fetchAll(PDO::FETCH_ASSOC);    
+            
+            $resultado = array();
+            $indice = 1;
+
+            foreach ($preguntas as $i) {
+                if($i["Pre_Tipo"]==1||$i["Pre_Tipo"]==2||$i["Pre_Tipo"]==3||$i["Pre_Tipo"]==4||$i["Pre_Tipo"]==7){
+                    try{
+                        $i["Alt"] = $this->getAlternativas($i["Pre_IdPregunta"]);
+
+                    } catch (PDOException $exception) {
+                    $this->registrarBitacora("elearning(examenModel)", "getAlternativas", "Error Model", $exception);
+                    return $exception->getTraceAsString();}
+                }
+
+                $i["INDEX"] = $indice; $indice++;
+                array_push($resultado, $i);       
+            }
+
+            return $resultado;
+
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("elearning(examenModel)", "getPreguntas", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
+
+    // public function getPreguntas($examen, $nro){
+    //   $sql = "SELECT * FROM pregunta 
+    //           WHERE Exa_IdExamen = {$examen}
+    //           AND Pre_Estado = 1 AND Row_Estado = 1 ORDER BY RAND() LIMIT {$nro}";
+    //   $preguntas = $this->getArray($sql);
+    //   $resultado = array();
+    //   $indice = 1;
+    //   foreach ($preguntas as $i) {
+    //     if($i["TP_IdTpoPregunta"]==1){
+    //       $i["ALTERNATIVAS"] = $this->getAlternativas($i["Pre_IdPregunta"]);
+    //     }
+    //     $i["INDEX"] = $indice; $indice++;
+    //     array_push($resultado, $i);
+    //   }
+    //   return $resultado;
+    // }
+
+    public function cambiarEstadopreguntas($Rol_IdRol, $Rol_Estado)
+    {
+        try{
+            if($Rol_Estado==0)
+            {
+                $sql = "call s_u_cambiar_estado_pregunta(?,1)";
+                $result = $this->_db->prepare($sql);
+                $result->bindParam(1, $Rol_IdRol, PDO::PARAM_INT);
+                $result->execute();
+
+                return $result->rowCount(PDO::FETCH_ASSOC);                
+            }
+            if($Rol_Estado==1)
+            {
+                $sql = "call s_u_cambiar_estado_pregunta(?,0)";
+                $result = $this->_db->prepare($sql);
+                $result->bindParam(1, $Rol_IdRol, PDO::PARAM_INT);
+                $result->execute();
+
+                return $result->rowCount(PDO::FETCH_ASSOC);
+            }
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("elearning(examenModel)", "cambiarEstadopreguntas", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
+
+
+    public function eliminarHabilitarpregunta($iMod_Idpregunta = 0, $iRow_Estado = 0)
+    {
+        try{
+            $sql = "call s_u_habilitar_deshabilitar_pregunta(?,?)";
+            $result = $this->_db->prepare($sql);
+            $result->bindParam(1, $iMod_Idpregunta, PDO::PARAM_INT);
+            $result->bindParam(2, $iRow_Estado, PDO::PARAM_INT);
+            $result->execute();
+            
+            return $result->rowCount(PDO::FETCH_ASSOC); 
+
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("elearning(examenModel)", "eliminarHabilitarpregunta", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
+
+    public function insertPregunta($examen, $descripcion, $valor, $tipo, $descripcion2='', $puntos){
+        try {             
+            $sql = "call s_i_pregunta(?,?,?,?,?,?)";
+            $result = $this->_db->prepare($sql);
+            $result->bindParam(1, $examen, PDO::PARAM_INT);
+            $result->bindParam(2, $descripcion, PDO::PARAM_STR);
+            $result->bindParam(3, $valor, PDO::PARAM_STR); 
+            $result->bindParam(4, $tipo, PDO::PARAM_INT); 
+            $result->bindParam(5, $descripcion2, PDO::PARAM_STR);
+            $result->bindParam(6, $puntos, PDO::PARAM_INT);                    
+            $result->execute();
+            return $result->fetch();
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("elearning(examenModel)", "insertPregunta", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
+
+
+    public function updatePregunta($pregunta, $descripcion, $valor, $puntos){
+        try {             
+            $sql = "UPDATE pregunta SET
+              Pre_Descripcion = '$descripcion',
+              Pre_Valor = '$valor',
+              Pre_Puntos = $puntos,
+              Pre_FechaReg = NOW()
+            WHERE Pre_IdPregunta = $pregunta";
+            $result = $this->_db->prepare($sql);                
+            $result->execute();
+            return $result->rowCount(PDO::FETCH_ASSOC);
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("elearning(examenModel)", "updatePregunta", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
+
+    public function insertAlternativa($pregunta, $valor, $descripcion, $relacion=0, $check=0, $puntos=0){
+        try {             
+            $sql = "call s_i_alternativa(?,?,?,?,?,?)";
+            $result = $this->_db->prepare($sql);
+            $result->bindParam(1, $pregunta, PDO::PARAM_STR);
+            $result->bindParam(2, $valor, PDO::PARAM_INT);
+            $result->bindParam(3, $descripcion, PDO::PARAM_STR); 
+            $result->bindParam(4, $relacion, PDO::PARAM_INT); 
+            $result->bindParam(5, $check, PDO::PARAM_INT);   
+            $result->bindParam(6, $puntos, PDO::PARAM_INT);                  
+            $result->execute();
+            return $result->fetch();
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("elearning(examenModel)", "insertAlternativa", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
+
+    public function updateRelacionAlternativa($pregunta, $descripcion){
+        try {             
+            $sql = "UPDATE alternativa SET
+              Alt_Relacion = $descripcion
+            WHERE Alt_IdAlternativa = $pregunta";
+            $result = $this->_db->prepare($sql);                
+            $result->execute();
+            return $result->rowCount(PDO::FETCH_ASSOC);
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("elearning(examenModel)", "updateRelacionAlternativa", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
+
+    public function getAlternativas($pregunta = "")
+    {
+        try{
+            $sql = " SELECT * FROM alternativa WHERE Pre_IdPregunta = $pregunta ";
+            $result = $this->_db->prepare($sql);
+            $result->execute();
+            return $result->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("elearning(examenModel)", "getAlternativas", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
+
+    public function deleteAlternativa($pregunta = "")
+    {
+        try{
+            $sql = " DELETE FROM alternativa WHERE Pre_IdPregunta = $pregunta ";
+            $result = $this->_db->prepare($sql);
+            $result->execute();
+            return $result->rowCount(PDO::FETCH_ASSOC);
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("elearning(examenModel)", "deleteAlternativa", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
+
+    public function getValorPregunta($pregunta = "")
+    {
+        try{
+            $sql = " SELECT * FROM pregunta WHERE Pre_IdPregunta = $pregunta ";
+            $result = $this->_db->prepare($sql);
+            $result->execute();
+            return $result->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("elearning(examenModel)", "getValorPregunta", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
+
+    public function getMaxIntentos($idexamen)
+    {
+        try{
+            $sql = " SELECT Exa_Intentos FROM examen WHERE Exa_IdExamen=$idexamen ";
+            $result = $this->_db->prepare($sql);
+            $result->execute();
+            return $result->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("elearning(examenModel)", "getMaxIntentos", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
+
+
+    public function getIntentos($idexamen, $idusuario)
+    {
+        try{
+            $sql = " SELECT COUNT(ea.Exa_IdExamen) as intentos FROM examen_alumno ea WHERE ea.Exa_IdExamen=$idexamen AND ea.Usu_IdUsuario=$idusuario ";
+            $result = $this->_db->prepare($sql);
+            $result->execute();
+            return $result->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("elearning(examenModel)", "getIntentos", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
+
+    public function insertExamenAlumno($iExa_IdExamen, $iUsu_IdUsuario){
+        try {             
+            $sql = "call s_i_examen_alumno(?,?)";
+            $result = $this->_db->prepare($sql);
+            $result->bindParam(1, $iExa_IdExamen, PDO::PARAM_INT);
+            $result->bindParam(2, $iUsu_IdUsuario, PDO::PARAM_INT);            
+            $result->execute();
+            return $result->fetch();
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("elearning(examenModel)", "insertExamenAlumno", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
+
+    public function insertRespuesta($Pre_IdPregunta, $Exl_IdExamenAlumno, $Alt_IdAlternativa,$iAlt_IdAlternativa_Relacion, $Res_Respuesta="", $Res_Puntos){
+        try {             
+            $sql = "call s_i_respuesta(?,?,?,?,?,?)";
+            $result = $this->_db->prepare($sql);
+            $result->bindParam(1, $Pre_IdPregunta, PDO::PARAM_INT);
+            $result->bindParam(2, $Exl_IdExamenAlumno, PDO::PARAM_INT);
+            $result->bindParam(3, $Alt_IdAlternativa, PDO::PARAM_INT); 
+            $result->bindParam(4, $iAlt_IdAlternativa_Relacion, PDO::PARAM_INT); 
+            $result->bindParam(5, $Res_Respuesta, PDO::PARAM_STR);       
+            $result->bindParam(6, $Res_Puntos, PDO::PARAM_INT);                
+            $result->execute();
+            return $result->fetch();
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("elearning(examenModel)", "insertRespuesta", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
+
+    public function getRespuestas($id)
+    {
+        try{
+            $sql = "SELECT p.Pre_IdPregunta, p.Pre_Descripcion,p.Pre_Descripcion2, p.Pre_Tipo, p.Pre_Puntos, r.Res_IdRespuesta  FROM respuesta r INNER JOIN pregunta p ON r.Pre_IdPregunta=p.Pre_IdPregunta WHERE Exl_IdExamenAlumno=$id GROUP BY p.Pre_IdPregunta";
+            $result = $this->_db->query($sql);
+            $preguntas = $result->fetchAll(PDO::FETCH_ASSOC);    
+            
+            $resultado = array();
+            $indice = 1;
+
+            foreach ($preguntas as $i) {
+                if($i["Pre_Tipo"]==1||$i["Pre_Tipo"]==2||$i["Pre_Tipo"]==7){
+                    try{
+                        $i["Rpta"] = $this->getRespuestasTipos127($id, $i["Pre_IdPregunta"]);
+
+                    } catch (PDOException $exception) {
+                    $this->registrarBitacora("elearning(examenModel)", "getAlternativas", "Error Model", $exception);
+                    return $exception->getTraceAsString();}
+                }
+
+                else if($i["Pre_Tipo"]==3||$i["Pre_Tipo"]==5){
+                    try{
+                        $i["Rpta"] = $this->getRespuestasTipos35($id, $i["Pre_IdPregunta"]);
+
+                    } catch (PDOException $exception) {
+                    $this->registrarBitacora("elearning(examenModel)", "getAlternativas", "Error Model", $exception);
+                    return $exception->getTraceAsString();}
+                }
+
+                 else {
+                    try{
+                        $i["Rpta"] = $this->getRespuestasTipos4($id, $i["Pre_IdPregunta"]);
+
+                    } catch (PDOException $exception) {
+                    $this->registrarBitacora("elearning(examenModel)", "getAlternativas", "Error Model", $exception);
+                    return $exception->getTraceAsString();}
+                }
+                $i["INDEX"] = $indice; $indice++;
+                array_push($resultado, $i);       
+            }
+
+            return $resultado;
+
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("elearning(examenModel)", "getPreguntas", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
+
+
+    public function getRespuestasTipos127($idexamen, $idpregunta)
+    {
+        try{
+            $sql = " SELECT r.*,a.Alt_Etiqueta FROM respuesta r INNER JOIN alternativa a ON a.Alt_IdAlternativa=r.Alt_IdAlternativa WHERE Exl_IdExamenAlumno=$idexamen AND r.Pre_IdPregunta=$idpregunta ";
+            $result = $this->_db->query($sql);
+            return $result->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("elearning(examenModel)", "getRespuestasTipos127", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
+
+
+    public function getRespuestasTipos4($idexamen, $idpregunta)
+    {
+        try{
+            $sql = " SELECT r.*,a.Alt_Etiqueta rpta, ar.Alt_Etiqueta rpta2 FROM respuesta r INNER JOIN alternativa a ON a.Alt_IdAlternativa=r.Alt_IdAlternativa 
+INNER JOIN alternativa ar ON ar.Alt_IdAlternativa=r.Alt_IdAlternativa_Relacion
+WHERE Exl_IdExamenAlumno=$idexamen AND r.Pre_IdPregunta= $idpregunta";
+            $result = $this->_db->query($sql);
+            return $result->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("elearning(examenModel)", "getRespuestasTipos4", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
+
+
+    public function getRespuestasTipos35($idexamen, $idpregunta)
+    {
+        try{
+            $sql = " SELECT r.* FROM respuesta r WHERE Exl_IdExamenAlumno=$idexamen AND r.Pre_IdPregunta=$idpregunta ";
+            $result = $this->_db->query($sql);
+            return $result->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("elearning(examenModel)", "getRespuestasTipos35", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
+
+    public function updatePuntosRespuestaAbierta($pregunta, $descripcion){
+        try {             
+            $sql = "UPDATE respuesta SET
+              Res_Puntos = $descripcion
+            WHERE Res_IdRespuesta = $pregunta";
+            $result = $this->_db->prepare($sql);                
+            $result->execute();
+            return $result->rowCount(PDO::FETCH_ASSOC);
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("elearning(examenModel)", "updatePuntosRespuestaAbierta", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
+
+
+    // public function insertRespuesta($usuario, $pregunta, $respuesta, $intentos){
+    //   if($intentos > 0){
+    //     $nuevo = $intentos + 1;
+    //     $sql = "INSERT INTO respuesta(Pre_IdPregunta, Usu_IdUsuario, Res_Descripcion, Res_Intento, Res_Estado)
+    //     VALUES({$pregunta}, {$usuario}, '{$respuesta}', {$nuevo}, 1)";
+    //   }else{
+    //     $sql = "INSERT INTO respuesta(Pre_IdPregunta, Usu_IdUsuario, Res_Descripcion, Res_Intento, Res_Estado)
+    //     VALUES({$pregunta}, {$usuario}, '{$respuesta}', 1, 1)";
+    //   }
+    //   $this->execQuery($sql);
+    // }
+
+    // public function getIntentos($examen, $usuario){
+    //   $sql = "SELECT ifnull( MAX(R.Res_Intento), 0) INTENTOS FROM respuesta R
+    //           INNER JOIN pregunta P ON R.Pre_IdPregunta = P.Pre_IdPregunta
+    //           INNER JOIN examen E ON P.Exa_IdExamen = E.Exa_IdExamen
+    //           WHERE E.Exa_IdExamen = {$examen} AND R.Usu_IdUsuario = {$usuario}
+    //             AND E.Exa_Estado = 1 AND E.Row_Estado = 1 
+    //             AND P.Pre_Estado = 1 AND P.Row_Estado = 1 
+    //             AND R.Row_Estado = 1";
+    //   $data = $this->getArray($sql);
+
+    //   if($data != null && count($data) > 0 ){
+    //     return $data[0]["INTENTOS"];
+    //   }else{
+    //     return 0;
+    //   }
+    // }
+
+    // public function getRespuestas($usuario){
+    //   $sql = "SELECT * FROM alternativa WHERE Pre_IdPregunta = {$pregunta}
+    //           AND Alt_Estado = 1 AND Row_Estado = 1 ORDER BY RAND()";
+    //   return $this->getArray($sql);
+    // }
 }

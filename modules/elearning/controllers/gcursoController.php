@@ -25,9 +25,11 @@ class gcursoController extends elearningController {
   {
     $id = Session::get("id_usuario");
     $busqueda = $this->getTexto('busqueda');
-    $cursos = $this->curso->getCursoXDocente($id, $busqueda);
+    // $cursos = $this->curso->getCursoXDocente($id, $busqueda);
+    $cursos = $this->curso->getMisCursos($id, $busqueda);
 
     //print_r($cursos); exit;
+    // $this->_view->setCss(array("jm-mis-cursos"));
     Session::set("learn_url_tmp", "gcurso/_view_mis_cursos");
     $this->_view->getLenguaje("learn");
     $this->_view->assign('cursos', $cursos);
@@ -127,10 +129,10 @@ class gcursoController extends elearningController {
     $c=$this->curso->updateEstadoCurso($id, $estado);
 
     // if(count($c)>0 && $estado=='1'){
-      $correos =$this->curso->getEmail_Usuario();
+      // $correos =$this->curso->getEmail_Usuario();
 
-      for($i=0;$i<count($correos);$i++)
-        $this->sendEmail($correos[$i]);
+      // for($i=0;$i<count($correos);$i++)
+      //   $this->sendEmail($correos[$i]);
     // }
 
     $this->service->Success($estado);
@@ -190,6 +192,25 @@ class gcursoController extends elearningController {
     $this->curso->updateBannerCurso($curso, $img);
 
     $this->service->Success("Se actualizó el banner");
+    $this->service->Send();
+  }
+
+  //Jhon Martinez
+  public function _actualizar_video(){
+    $curso = $this->getTexto("curso");
+    $video = $this->getTexto("video");
+
+    // $codigo = $_POST['texto']; // aqui pones el codigo en un campo de texto 
+    $cadena='watch?v=';  
+    $pos=strpos($video,$cadena);  
+    $pos= $pos + strlen($cadena);  
+    $video=substr($video,$pos,100);  
+    // $_POST['video'] = $cadena;
+
+
+    $this->curso->updateVideoCurso($curso, $video);
+
+    $this->service->Success("Se actualizó el Video de Presentación");
     $this->service->Send();
   }
 

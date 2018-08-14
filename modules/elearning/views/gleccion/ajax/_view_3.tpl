@@ -99,7 +99,7 @@
   </div>
 </div>
 
-{if $curso.Mod_IdModCurso == 2}
+{if $curso.Moa_IdModalidad == 2}
   {include file='modules/elearning/views/gleccion/menu/lec_calendario.tpl'}
 {/if}
 

@@ -25,7 +25,9 @@ function AddSocketInstance(ope){
 	});
 }
 function InitSocket(objeto){
-	socket = io('http://192.168.15.208:3000/', { query: "id=" + objeto.id + "&curso=" + objeto.curso + "&tipo=" + objeto.tipo });
+	// socket = io('http://192.168.15.208:3000/', { query: "id=" + objeto.id + "&curso=" + objeto.curso + "&tipo=" + objeto.tipo });
+    socket = io('http://35.198.18.102:3000/', { query: "id=" + objeto.id + "&curso=" + objeto.curso + "&tipo=" + objeto.tipo });
+    // socket = io('http://local.github:3000/' + '/', { query: "id=" + objeto.id + "&curso=" + objeto.curso + "&tipo=" + objeto.tipo });
 }
 function StartServer(){
     socket.on('connect', function(){

@@ -174,6 +174,7 @@
 
         <!-- CONTENIDO CENTRAL DE LA PAGINA -->
         <div class="container back-color-white">
+            <div class="col-xs-12"> <a class="text-success"> Link Uno / Link Dos / Link Tres </a></div>
             <noscript><p>Para el correcto funcionamiento debe tener el soporte para javascript habilitado</p></noscript>
             {if isset($_error)}
                 <div id="_errl" class="alert alert-error ">
@@ -490,6 +491,7 @@
             var _root_ = '{$_layoutParams.root_clear}';
             var _root_lang = '{$_layoutParams.root}';
             var _root_archivo_fisico = '{$_layoutParams.root_archivo_fisico}';
+            var _root_socket = '{$_layoutParams.root_socket}';
             // $('.mitooltip').tooltip();
         </script>
         <!-- <script src="//code.jquery.com/jquery-1.11.2.min.js"></script> -->

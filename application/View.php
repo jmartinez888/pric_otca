@@ -103,6 +103,7 @@ class View extends Smarty
             'modulo' => $this->_request->getModulo(),
             'controlador' => $this->_request->getControlador(),
             'metodo' => $this->_request->getMetodo(),
+            // 'root_socket' => NODEJS_SERVER,
             'root_clear' => BASE_URL,
             'root_archivo_fisico' => URL_ARCHIVO_FISICO,
             'configs' => $this->getLangNameConfig($this->_lenguaje)

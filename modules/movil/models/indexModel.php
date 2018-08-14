@@ -14,9 +14,9 @@ class indexModel extends Model {
            $this->registrarBitacora("acl(indexModel)", "getCertificados", "Error Model", $exception);
         }
     }
-    public function getContenidoLeccion($Lec_IdLeccion){
+    public function getContenido($Lec_IdLeccion){
         $sql = $this->_db->query(
-                "SELECT CL_Descripcion  FROM contenido_leccion WHERE Lec_IdLeccion=$Lec_IdLeccion"
+                "SELECT CL_Descripcion FROM contenido_leccion WHERE Lec_IdLeccion=$Lec_IdLeccion"
         );              
         return $sql->fetchAll();
     }   
@@ -25,7 +25,7 @@ class indexModel extends Model {
             "SELECT cur.Cur_IdCurso,cur.Cur_UrlBanner,cur.Cur_Titulo, CC.Con_Descripcion as Modalidad,
             (CASE WHEN  mat.Usu_IdUsuario=$Usu_IdUsuario THEN 1 ELSE 0 END) AS Inscrito,AVG(val.Val_Valor) as Valoracion
             FROM curso cur
-            INNER JOIN constante CC ON CC.Con_Valor = cur.Mod_IdModCurso AND CC.Con_Codigo = 1000
+            INNER JOIN constante CC ON CC.Con_Valor = cur.Moa_IdModalidad AND CC.Con_Codigo = 1000
             INNER JOIN matricula_curso mat ON cur.Cur_IdCurso=mat.Cur_IdCurso
             INNER JOIN valoracion_curso val oN cur.Cur_IdCurso=val.Cur_IdCurso
             WHERE cur.Cur_Estado = 1 AND cur.Row_Estado = 1 AND mat.Usu_IdUsuario=$Usu_IdUsuario     
@@ -34,11 +34,11 @@ class indexModel extends Model {
             UNION
             SELECT cur.Cur_IdCurso,cur.Cur_UrlBanner,cur.Cur_Titulo, CC.Con_Descripcion as Modalidad,0 AS Inscrito,AVG(val.Val_Valor) as Valoracion
             FROM curso cur
-            INNER JOIN constante CC ON CC.Con_Valor = cur.Mod_IdModCurso AND CC.Con_Codigo = 1000
+            INNER JOIN constante CC ON CC.Con_Valor = cur.Moa_IdModalidad AND CC.Con_Codigo = 1000
             INNER JOIN valoracion_curso val ON cur.Cur_IdCurso=val.Cur_IdCurso
             WHERE cur.Cur_Estado = 1 AND cur.Row_Estado = 1 and cur.Cur_IdCurso NOT IN(SELECT cur.Cur_IdCurso
             FROM curso cur
-            INNER JOIN constante CC ON CC.Con_Valor = cur.Mod_IdModCurso AND CC.Con_Codigo = 1000
+            INNER JOIN constante CC ON CC.Con_Valor = cur.Moa_IdModalidad AND CC.Con_Codigo = 1000
             INNER JOIN matricula_curso mat ON cur.Cur_IdCurso=mat.Cur_IdCurso
             WHERE cur.Cur_Estado = 1 AND cur.Row_Estado = 1 AND mat.Usu_IdUsuario=$Usu_IdUsuario)
             AND CC.Con_Descripcion LIKE '%$Con_Descripcion%' AND cur.Cur_Titulo LIKE '%$Cur_Titulo%'
@@ -47,6 +47,39 @@ class indexModel extends Model {
         );            
         return $sql->fetchAll();
     }    
+    public function getCursosPaginado($pagina = 1, $registrosXPagina = 10, $condicionActivos = "", $Usu_IdUsuario = false){
+        $registroInicio = 0;
+        if ($pagina > 0) {
+            $registroInicio = ($pagina - 1) * $registrosXPagina;               
+        }
+        if ($Usu_IdUsuario) {
+            $andUsuario = " AND mat.Usu_IdUsuario = " . $Usu_IdUsuario;
+        } else {
+            $andUsuario = " AND mat.Usu_IdUsuario = 0 ";
+        }
+        try{
+            $sql = " SELECT cur_so.*, COUNT(vc.Usu_IdUsuario) AS Valoraciones, 
+                    CAST((CASE WHEN AVG(vc.Val_Valor) > 0 THEN AVG(vc.Val_Valor) ELSE 0 END) AS DECIMAL(2,1)) AS Valor FROM 
+                    (SELECT cr.Cur_IdCurso, IFNULL(cr.Cur_UrlBanner,'default.jpg') AS Cur_UrlBanner, cr.Cur_Titulo, cr.Cur_Descripcion, cr.Usu_IdUsuario, cr.Cur_Vacantes, cr.Cur_FechaDesde, cr.Moa_IdModalidad, CONCAT(u.Usu_Nombre,' ',u.Usu_Apellidos) AS Docente, cc.Con_Descripcion AS Modalidad, SUM(CASE WHEN mt.Mat_Valor = 1 THEN 1 ELSE 0 END) AS Matriculados, (CASE WHEN cu_m.Matriculado = 1 THEN 1 ELSE 0 END) AS Inscrito FROM 
+                            ( SELECT cur.Cur_IdCurso, 1 AS Matriculado FROM curso cur
+                              INNER JOIN matricula_curso mat ON cur.Cur_IdCurso = mat.Cur_IdCurso
+                              WHERE cur.Cur_Estado = 1 AND cur.Row_Estado = 1 AND mat.Mat_Valor = 1 $andUsuario ) cu_m 
+                        RIGHT JOIN curso cr ON cu_m.Cur_IdCurso = cr.Cur_IdCurso
+                        LEFT JOIN matricula_curso mt ON cr.Cur_IdCurso = mt.Cur_IdCurso
+                        INNER JOIN constante cc ON cr.Moa_IdModalidad = cc.Con_Valor AND cc.Con_Codigo = 1000
+                        INNER JOIN usuario u ON cr.Usu_IdUsuario = u.Usu_IdUsuario $condicionActivos ) cur_so 
+                    LEFT JOIN valoracion_curso vc ON cur_so.Cur_IdCurso = vc.Cur_IdCurso 
+                    GROUP BY cur_so.Cur_IdCurso 
+                    LIMIT $registroInicio, $registrosXPagina " ;
+
+            $result = $this->_db->prepare($sql);
+            $result->execute();
+            return $result->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("elearning(cursoModel)", "getCursosPaginado", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
     public function getCursosDocente($Usu_IdUsuario,$Cur_IdCurso){          
         $sql = $this->_db->query(
             "SELECT Cur_Titulo FROM curso WHERE Cur_Estado = 1 AND Row_Estado = 1 AND Usu_IdUsuario = $Usu_IdUsuario AND
@@ -57,18 +90,18 @@ class indexModel extends Model {
     public function getCursosUsuario($Usu_IdUsuario,$Con_Descripcion,$Cur_Titulo){
         $sql = $this->_db->query(
                 "SELECT (CASE WHEN Y.Lecciones = Y.Completos THEN 1 ELSE 0 END) as Completo,
-                ROUND((Y.Completos*100/Y.Lecciones),1) as Porcentaje,y.Cur_IdCurso,y.Mod_IdModCurso,y.Cur_UrlBanner,y.Cur_Titulo,y.Cur_Descripcion,y.Con_Descripcion as Modalidad  FROM
-               (SELECT  COUNT(CASE WHEN PC1.Pro_IdProgreso IS NULL THEN 0 ELSE PC1.Pro_Valor END) AS Lecciones,SUM(CASE WHEN PC1.Pro_IdProgreso IS NULL THEN 0 ELSE PC1.Pro_Valor END) as Completos,cur.Cur_IdCurso,cur.Mod_IdModCurso,cur.Cur_UrlBanner,cur.Cur_Titulo,cur.Cur_Descripcion,CC.Con_Descripcion
+                ROUND((Y.Completos*100/Y.Lecciones),1) as Porcentaje,Y.Cur_IdCurso,Y.Moa_IdModalidad,Y.Cur_UrlBanner,Y.Cur_Titulo,Y.Cur_Descripcion,Y.Con_Descripcion as Modalidad  FROM
+               (SELECT  COUNT(CASE WHEN PC1.Pro_IdProgreso IS NULL THEN 0 ELSE PC1.Pro_Valor END) AS Lecciones,SUM(CASE WHEN PC1.Pro_IdProgreso IS NULL THEN 0 ELSE PC1.Pro_Valor END) as Completos,cur.Cur_IdCurso,cur.Moa_IdModalidad,IFNULL(cur.Cur_UrlBanner,'default.jpg') AS Cur_UrlBanner,cur.Cur_Titulo,cur.Cur_Descripcion,CC.Con_Descripcion
                   FROM leccion L1
                 LEFT JOIN progreso_curso PC1 ON PC1.Lec_IdLeccion = L1.Lec_IdLeccion
                   AND PC1.Usu_IdUsuario = $Usu_IdUsuario
-                INNER JOIN modulo_curso MC ON L1.Mod_IdModulo = MC.Mod_IdModulo
+                INNER JOIN modulo_curso MC ON L1.Moc_IdModuloCurso = MC.Moc_IdModuloCurso
                 inner join curso cur ON MC.Cur_IdCurso=cur.Cur_IdCurso
-                INNER JOIN constante CC ON CC.Con_Valor=cur.Mod_IdModCurso AND CC.Con_Codigo=1000
-                INNER JOIN matricula_curso Mat ON cur.Cur_IdCurso = Mat.Cur_IdCurso
+                INNER JOIN constante CC ON CC.Con_Valor=cur.Moa_IdModalidad AND CC.Con_Codigo=1000
+                INNER JOIN matricula_curso mat ON cur.Cur_IdCurso = mat.Cur_IdCurso
                 WHERE cur.Cur_Estado=1 AND cur.Row_Estado=1 AND
                 L1.Lec_Estado = 1 AND L1.Row_Estado = 1
-                AND MC.Mod_Estado = 1 AND MC.Row_Estado = 1 AND Mat.Mat_Valor = 1 AND  mat.Usu_IdUsuario=$Usu_IdUsuario
+                AND MC.Moc_Estado = 1 AND MC.Row_Estado = 1 AND mat.Mat_Valor = 1 AND  mat.Usu_IdUsuario=$Usu_IdUsuario
                 AND CC.Con_Descripcion LIKE '%$Con_Descripcion%' AND cur.Cur_Titulo LIKE '%$Cur_Titulo%'
                 GROUP by MC.Cur_IdCurso
             )Y "
@@ -77,18 +110,18 @@ class indexModel extends Model {
     }
     public function getCursoDetalle($Cur_IdCurso){          
         $sql = $this->_db->query(
-            "SELECT cur.*, COUNT(DISTINCT mac.Mat_IdMatricula) AS NMatriculados, COUNT(DISTINCT lec.Lec_IdLeccion) AS NLecciones,AVG(val.Val_Valor) as Valoracion FROM 
-            curso cur INNER JOIN matricula_curso mac ON cur.Cur_IdCurso=mac.Cur_IdCurso INNER JOIN modulo_curso moc ON cur.Cur_IdCurso=moc.Cur_IdCurso 
-            INNER JOIN leccion lec ON moc.Mod_IdModulo=lec.Mod_IdModulo INNER JOIN valoracion_curso val ON cur.Cur_IdCurso=val.Cur_IdCurso
+            "SELECT cur.Cur_Titulo,cur.Cur_Descripcion,cur.Cur_PublicoObjetivo,cur.Cur_ObjetivoGeneral,cur.Cur_Metodologia,cur.Cur_Contacto,cur.Cur_UrlImgPresentacion,cur.Cur_UrlVideoPresentacion, COUNT(DISTINCT mac.Mat_IdMatricula) AS NMatriculados, COUNT(DISTINCT lec.Lec_IdLeccion) AS NLecciones, CAST((CASE WHEN AVG(val.Val_Valor) > 0 THEN AVG(val.Val_Valor) ELSE 0 END) AS DECIMAL(2,1)) AS Valoracion  FROM 
+            curso cur LEFT JOIN matricula_curso mac ON cur.Cur_IdCurso=mac.Cur_IdCurso INNER JOIN modulo_curso moc ON cur.Cur_IdCurso=moc.Cur_IdCurso 
+            INNER JOIN leccion lec ON moc.Moc_IdModuloCurso=lec.Moc_IdModuloCurso LEFT JOIN valoracion_curso val ON cur.Cur_IdCurso=val.Cur_IdCurso
             WHERE cur.Cur_Estado=1 AND cur.Row_Estado AND lec.Lec_Estado=1 AND lec.Row_Estado =1 
             AND cur.Cur_IdCurso=$Cur_IdCurso GROUP BY cur.Cur_IdCurso,val.Cur_IdCurso"
         );              
         return $sql->fetchAll();
     } 
-    public function getDocenteCurso($Usu_IdUsuario){          
+    public function getDocenteCurso($Cur_IdCurso){          
         $sql = $this->_db->query(
-            "SELECT * FROM usuario WHERE Usu_Estado = 1 AND Row_Estado = 1
-              AND Usu_IdUsuario = (SELECT Usu_IdUsuario FROM curso WHERE Cur_IdCurso = $Usu_IdUsuario AND Row_Estado = 1 AND Cur_Estado = 1)"
+            "SELECT Usu_IdUsuario,CONCAT(Usu_Nombre,Usu_Apellidos) AS Nombres,Usu_URLImage,Usu_GradoAcademico,Usu_Especialidad,Usu_Perfil,Usu_InstitucionLaboral,Usu_Cargo FROM usuario WHERE Usu_Estado = 1 AND Row_Estado = 1
+              AND Usu_IdUsuario = (SELECT Usu_IdUsuario FROM curso WHERE Cur_IdCurso = $Cur_IdCurso AND Row_Estado = 1 AND Cur_Estado = 1)"
         );              
         return $sql->fetchAll();
     } 
@@ -98,28 +131,59 @@ class indexModel extends Model {
         );              
         return $sql->fetchAll();        
     }
+    public function getHora_Servidor() {
+        try {
+            $sql = $this->_db->query(
+                    "SELECT NOW() AS hora_servidor");
+            return $sql->fetch();
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("movil(indexModel)", "getHora_Servidor", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
     public function getInscripcion($Usu_IdUsuario, $Cur_IdCurso){
         return $this->getArray("SELECT * FROM matricula_curso
           WHERE Usu_IdUsuario = $Usu_IdUsuario
             AND Cur_IdCurso = $Cur_IdCurso ");
     }
-    public function getLecciones($Mod_IdModulo){
+    
+    public function getLecciones($Moc_IdModuloCurso,$Usu_IdUsuario){
         $sql = $this->_db->query(
-                "SELECT Lec_IdLeccion,Lec_Titulo FROM leccion WHERE Mod_IdModulo=$Mod_IdModulo AND Lec_Estado=1 AND Row_Estado=1"
+                "SELECT lec.Lec_IdLeccion,lec.Lec_Titulo,lec.Lec_Tipo,col.CL_Descripcion,(CASE WHEN prc.Pro_IdProgreso IS NULL THEN 0  ELSE prc.Pro_Valor END) as Completo
+                 FROM leccion lec LEFT JOIN progreso_curso prc ON lec.Lec_IdLeccion=prc.Lec_IdLeccion AND prc.Usu_IdUsuario=$Usu_IdUsuario
+                 LEFT JOIN contenido_leccion col ON lec.Lec_IdLeccion=col.Lec_IdLeccion
+                WHERE Moc_IdModuloCurso=$Moc_IdModuloCurso
+                AND lec.Lec_Estado=1 AND lec.Row_Estado=1"
         );              
         return $sql->fetchAll();
     }
-
+    public function getMateriales($Lec_IdLeccion){
+        $sql = $this->_db->query(
+                "SELECT Mat_Enlace FROM material_leccion WHERE Lec_IdLeccion=$Lec_IdLeccion AND Mat_Estado=1 AND Row_Estado=1"
+        );              
+        return $sql->fetchAll();
+    }
+    public function getMisCertificados($Usu_IdUsuario){
+        try{  
+            $sql = " SELECT v.Cer_IdCertificado,v.Cer_Codigo,v.Cer_FechaReg, c.Cur_Titulo,IFNULL(c.Cur_UrlBanner,'default.jpg') AS Cur_UrlBanner FROM certificado_curso v 
+                INNER JOIN usuario u ON u.Usu_IdUsuario = v.Usu_IdUsuario
+                INNER JOIN curso c ON c.Cur_IdCurso = v.Cur_IdCurso
+                WHERE v.Usu_IdUsuario=$Usu_IdUsuario";
+            return $this->getArray($sql);
+        } catch (PDOException $exception) {
+             $this->registrarBitacora("movil(indexModel)", "getMisCertificados", "Error Model", $exception);
+        }
+    }
     public function getModulos($Cur_IdCurso,$Usu_IdUsuario){
         $sql = $this->_db->query(
-                "SELECT Y.Mod_IdModulo, Y.Mod_Titulo,(CASE WHEN Y.Lecciones = Y.Completos THEN 1 ELSE 0 END) as Completo,
+                "SELECT Y.Moc_IdModuloCurso, Y.Moc_Titulo,(CASE WHEN Y.Lecciones = Y.Completos THEN 1 ELSE 0 END) as Completo,
                 ROUND((Y.Completos*100/Y.Lecciones),1) as Porcentaje FROM
-              (SELECT moc.Mod_IdModulo,moc.Mod_Titulo,COUNT(CASE WHEN PC1.Pro_IdProgreso IS NULL THEN 0 ELSE PC1.Pro_Valor END) as Lecciones, 
+              (SELECT moc.Moc_IdModuloCurso,moc.Moc_Titulo,COUNT(CASE WHEN PC1.Pro_IdProgreso IS NULL THEN 0 ELSE PC1.Pro_Valor END) as Lecciones, 
               SUM(CASE WHEN PC1.Pro_IdProgreso IS NULL THEN 0  ELSE PC1.Pro_Valor END) as Completos FROM leccion L1
                 LEFT JOIN progreso_curso PC1 ON PC1.Lec_IdLeccion = L1.Lec_IdLeccion AND PC1.Usu_IdUsuario = $Usu_IdUsuario
-                INNER JOIN modulo_curso moc ON moc.Mod_IdModulo=L1.Mod_IdModulo
+                INNER JOIN modulo_curso moc ON moc.Moc_IdModuloCurso=L1.Moc_IdModuloCurso
                 WHERE  L1.Lec_Estado = 1 AND L1.Row_Estado = 1 AND moc.Cur_IdCurso=$Cur_IdCurso
-              GROUP BY L1.Mod_IdModulo)Y"
+              GROUP BY L1.Moc_IdModuloCurso)Y"
         );              
         return $sql->fetchAll();
     }
@@ -141,16 +205,21 @@ class indexModel extends Model {
         );              
         return $sql->fetchAll();                
     } 
-    public function getUsuarioPorUsuarioPassword($Usu_Usuario,$Usu_Password){                
-        $sql = $this->_db->query(
-                "SELECT * FROM usuario WHERE  Usu_Usuario='$Usu_Usuario' 
-                AND  Usu_Password='".Hash::getHash('sha1', $Usu_Password, HASH_KEY) ."'"
-        );              
-        return $sql->fetchAll();         
+    public function getUsuarioPorUsuarioPassword($Usu_Usuario,$Usu_Password){          
+        try{
+            $datos = $this->_db->query(
+                    "SELECT Usu_IdUsuario,Usu_Nombre,Usu_Apellidos,Usu_URLImage,Usu_GradoAcademico,Usu_Especialidad,Usu_Perfil,
+          Usu_DocumentoIdentidad,Usu_InstitucionLaboral,Usu_Cargo,Usu_Usuario,Usu_Password 
+            FROM usuario WHERE Usu_Usuario = '$Usu_Usuario' AND Usu_Password = '" . Hash::getHash('sha1', $Usu_Password, HASH_KEY) ."'" );
+            return $datos->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("movil(indexModel)", "getUsuarioPorUsuarioPassword", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }          
     }
     public function getValoraciones($Cur_IdCurso){          
         $sql = $this->_db->query(
-            "SELECT usu.Usu_Usuario,val.Val_Valor,val.Val_Comentario FROM valoracion_curso val 
+            "SELECT usu.Usu_Usuario,val.Val_Valor,val.Val_Comentario,val.Val_FechaReg FROM valoracion_curso val 
             INNER JOIN usuario usu ON val.Usu_IdUsuario=usu.Usu_IdUsuario WHERE val.Cur_IdCurso=$Cur_IdCurso 
             AND val.Row_Estado=1
               "
@@ -173,13 +242,13 @@ class indexModel extends Model {
         }  
         
     }
-    public function insertarUsuario($Usu_Nombre,$Usu_Apellidos,$Usu_Email,$Usu_Usuario,$Usu_Password){        
+    public function insertarUsuario___($Usu_Nombre,$Usu_Apellidos,$Usu_Email,$Usu_Usuario,$Usu_Password){        
         try {                                        
             $Usu_Password = Hash::getHash('sha1', $Usu_Password, HASH_KEY);
             $sql = "INSERT INTO usuario(Usu_Nombre,Usu_Apellidos,Usu_Email, Usu_Usuario,Usu_Password) VALUES('$Usu_Nombre','$Usu_Apellidos','$Usu_Email', '$Usu_Usuario','$Usu_Password')";                         
             $result = $this->_db->prepare($sql);                                                   
             $result->execute();
-            return $result->fetch();
+            return $result->fetchAll();
         } catch (PDOException $exception) {
             $this->registrarBitacora("movil(indexModel)", "insertarUsuario", "Error Model", $exception);
             return $exception->getTraceAsString();
@@ -199,7 +268,7 @@ class indexModel extends Model {
     }  
 
     //Jhon Martinez
-    public function insertarUsuarioPost($iUsu_Nombre = "", $iUsu_Apellidos = "", $iUsu_Email = "", $iUsu_Usuario = "", $iUsu_Password = "", $iRol_Ckey = "alumno", $iUsu_Estado = 1 )
+    public function insertarUsuario($iUsu_Nombre = "", $iUsu_Apellidos = "", $iUsu_Email = "", $iUsu_Usuario = "", $iUsu_Password = "", $iUsu_Codigo = 0, $iRol_Ckey = "alumno", $iUsu_Estado = 3 )
     {
         $iUsu_Password = Hash::getHash('sha1', $iUsu_Password, HASH_KEY);
             // echo($iUsu_Password.$iUsu_Nombre.$iUsu_Apellidos.$iUsu_Usuario.$iUsu_Password.$iUsu_Email.$iRol_Ckey.$iUsu_Estado.$iUsu_Codigo);
@@ -223,13 +292,44 @@ class indexModel extends Model {
             // print_r($result);exit;
 
         } catch (PDOException $exception) {
-            $this->registrarBitacora("movil(indexModel)", "insertarUsuarioPost", "Error Model", $exception);
+            $this->registrarBitacora("movil(indexModel)", "insertarUsuario", "Error Model", $exception);
             return $exception->getTraceAsString();
         }       
     }
+    //Jhon martinez
+    public function verificarUsuario($usuario)
+    {
+        try{
+            $id = $this->_db->query(
+                    " SELECT * FROM usuario WHERE Usu_Usuario = '$usuario' "
+                    );
+            return $id->fetch();
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("movil(indexModel)", "verificarUsuario", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
+    //Jhon Martinez
+    public function verificarEmail($email)
+    {
+        try{
+            $id = $this->_db->query(
+                    "select Usu_IdUsuario, Usu_Codigo, Usu_Usuario, Usu_Email from usuario where Usu_Email = '$email'"
+                    );        
+            return $id->fetch(PDO::FETCH_ASSOC);            
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("movil(indexModel)", "verificarEmail", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
+
+
+
+
+
     public function insertarValoracion($Cur_IdCurso,$Usu_IdUsuario,$Val_Comentario,$Val_Valor){        
         try {                                        
-            $sql = "INSERT INTO valoracion_curso(Cur_IdCurso,Usu_IdUsuario,Val_Comentario,Val_Valor) VALUES($Cur_IdCurso,$Usu_IdUsuario,'$Val_Comentario',$Val_Valor)";                         
+            $sql = "INSERT INTO valoracion_curso(Cur_IdCurso,Usu_IdUsuario,Val_Comentario,Val_Valor,Val_FechaReg) VALUES($Cur_IdCurso,$Usu_IdUsuario,'$Val_Comentario',$Val_Valor,NOW())";                         
             $result = $this->_db->prepare($sql);                                                   
             $result->execute();
             return $result->fetch();

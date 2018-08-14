@@ -116,6 +116,7 @@ $this->_view->assign('titulo', 'Instituciones');
         $this->_view->renderizar('index', 'instituciones');
     }
     public function ficha($id=false,$oferta=false,$id_oferta=false) {
+        $this->_view->setCss(array("jp-ficha"));
         $this->validarUrlIdioma();
         $this->_view->getLenguaje("oferta_index");
         $idioma = Cookie::lenguaje();

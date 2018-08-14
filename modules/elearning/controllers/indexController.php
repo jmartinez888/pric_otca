@@ -15,9 +15,9 @@ class indexController extends elearningController {
     $this->redireccionar("elearning/cursos/cursos");
   }
 
-  public function _busqueda_curso(){
-    $busqueda = $this->getTexto("busqueda");
-    $busqueda = str_replace(" ", "_", $busqueda);
-    $this->redireccionar("elearning/cursos/cursos/" . $busqueda);
-  }
+  // public function _busqueda_curso(){
+  //   $busqueda = $this->getTexto("busqueda");
+  //   $busqueda = str_replace(" ", "_", $busqueda);
+  //   $this->redireccionar("elearning/cursos/cursos/" . $busqueda);
+  // }
 }
