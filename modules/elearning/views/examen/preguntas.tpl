@@ -1,6 +1,15 @@
 {include file='modules/elearning/views/cursos/menu/lateral.tpl'}
 <div class="col-lg-10">
 <div class="col-lg-12">
+    <div class="col-lg-12">
+  <div class=" " style="margin-bottom: 0px !important">
+    <div class="text-center text-bold" style="margin-bottom: 20px; color: #267161;">
+      <h3 style="text-transform: uppercase; margin: 0; font-weight: bold;">
+        Titulo de Nuevo curso mooc
+                </h3>
+    </div>
+  </div>
+</div>
         <h3>Preguntas</h3>
         <hr class="cursos-hr">
     </div>
@@ -9,6 +18,8 @@
             <div class="row" style="text-align:right">
                 <div style="display:inline-block;padding-right:2em">
                      <input type="hidden" name="idexamen" id="idexamen" value="{$examen}">
+                    <input type="hidden" name="idcurso" id="idcurso" value="{$idcurso}">
+                     <input type="hidden" name="hidden_curso" id="hidden_curso" value="{$idcurso}">
                      <input type="hidden" name="puntos" id="puntos" value="{$puntos_maximo}">
                     <input class="form-control" placeholder="Buscar Pregunta" style="width: 300px; float: left; margin: 0px 10px;" name="palabrapregunta" id="palabrapregunta">
                     <button class="btn btn-success" style=" float: left" type="button" id="buscarpregunta"  ><i class="glyphicon glyphicon-search"></i></button>
@@ -18,28 +29,28 @@
                 <div class="row">
                 <div style="display:inline-block;padding-right:2em">
                 
-                    <a {if $puntos_maximo>0} href="{$_layoutParams.root}elearning/examen/registrarRespuestaUnica/{$examen}" {else}
+                    <a {if $puntos_maximo>0} href="{$_layoutParams.root}elearning/examen/registrarRespuestaUnica/{$examen}/{$idcurso}" {else}
                  data-toggle="modal"  data-target="#msj-invalido" data-placement="bottom" 
                 {/if}><img src="https://campus.chamilo.org/main/img/icons/64/mcua.png" alt="Respuesta única" title="Respuesta única"></a>
                 
                 </div>
                 <div style="display:inline-block;padding-right:2em">
-                    <a {if $puntos_maximo>0} href="{$_layoutParams.root}elearning/examen/registrarRespuestaMultiple/{$examen}" {else}
+                    <a {if $puntos_maximo>0} href="{$_layoutParams.root}elearning/examen/registrarRespuestaMultiple/{$examen}/{$idcurso}" {else}
                  data-toggle="modal"  data-target="#msj-invalido" data-placement="bottom" 
                 {/if}><img src="https://campus.chamilo.org/main/img/icons/64/mcma.png" alt="Respuesta múltiple" title="Respuesta múltiple"></a>
                 </div>
                 <div style="display:inline-block;padding-right:2em">
-                    <a {if $puntos_maximo>0} href="{$_layoutParams.root}elearning/examen/registrarRespuestaBlanco/{$examen}" {else}
+                    <a {if $puntos_maximo>0} href="{$_layoutParams.root}elearning/examen/registrarRespuestaBlanco/{$examen}/{$idcurso}" {else}
                  data-toggle="modal"  data-target="#msj-invalido" data-placement="bottom" 
                 {/if}><img src="https://campus.chamilo.org/main/img/icons/64/fill_in_blanks.png" alt="Rellenar blancos" title="Rellenar blancos"></a>
                 </div>
                 <div style="display:inline-block;padding-right:2em">
-                    <a {if $puntos_maximo>0} href="{$_layoutParams.root}elearning/examen/registrarRespuestaRelacionar/{$examen}" {else}
+                    <a {if $puntos_maximo>0} href="{$_layoutParams.root}elearning/examen/registrarRespuestaRelacionar/{$examen}/{$idcurso}" {else}
                  data-toggle="modal"  data-target="#msj-invalido" data-placement="bottom" 
                 {/if}><img src="https://campus.chamilo.org/main/img/icons/64/matching.png" alt="Relacionar" title="Relacionar"></a>
                 </div>
                 <div style="display:inline-block;padding-right:2em">
-                    <a {if $puntos_maximo>0} href="{$_layoutParams.root}elearning/examen/registrarRespuestaAbierta/{$examen}" {else}
+                    <a {if $puntos_maximo>0} href="{$_layoutParams.root}elearning/examen/registrarRespuestaAbierta/{$examen}/{$idcurso}" {else}
                  data-toggle="modal"  data-target="#msj-invalido" data-placement="bottom" 
                 {/if}><img src="https://campus.chamilo.org/main/img/icons/64/open_answer.png" alt="Respuesta abierta" title="Respuesta abierta"></a>
                 </div>
@@ -47,7 +58,7 @@
                     <a href="{$_layoutParams.root}elearning/examen/registrarRespuestaZonasImagen/{$examen}"><img src="https://campus.chamilo.org/main/img/icons/64/hotspot.png" alt="Zonas de Imagen" title="Zonas de Imagen"></a>
                 </div> -->
                 <div style="display:inline-block;padding-right:2em">
-                    <a {if $puntos_maximo>0} href="{$_layoutParams.root}elearning/examen/registrarRespuestaCombinacionExacta/{$examen}" {else}
+                    <a {if $puntos_maximo>0} href="{$_layoutParams.root}elearning/examen/registrarRespuestaCombinacionExacta/{$examen}/{$idcurso}" {else}
                  data-toggle="modal"  data-target="#msj-invalido" data-placement="bottom" 
                 {/if}><img src="https://campus.chamilo.org/main/img/icons/64/mcmac.png" alt="Combinación Exacta" title="Combinación Exacta"></a>
                 </div>
@@ -91,7 +102,7 @@
                                     <td style=" text-align: center">
                                         <a data-toggle="tooltip" data-placement="bottom" class="btn btn-default btn-sm glyphicon glyphicon-refresh estado-pregunta" title="{$lenguaje.tabla_opcion_cambiar_est}" id_pregunta="{$rl.Pre_IdPregunta}" estado="{$rl.Pre_Estado}"> </a>
                                         
-                                        <a data-toggle="tooltip" data-placement="bottom" class="btn btn-default btn-sm glyphicon glyphicon-edit" title="Editar" href="{$_layoutParams.root}elearning/examen/{if $rl.Pre_Tipo==1}editarRespuestaUnica{/if}{if $rl.Pre_Tipo==2}editarRespuestaMultiple{/if}{if $rl.Pre_Tipo==3}editarRespuestaBlanco{/if}{if $rl.Pre_Tipo==4}editarRespuestaRelacionar{/if}{if $rl.Pre_Tipo==5}editarRespuestaAbierta{/if}{if $rl.Pre_Tipo==6}editarRespuestaZonasImagen{/if}{if $rl.Pre_Tipo==7}editarRespuestaCombinacionExacta{/if}/{$rl.Pre_IdPregunta}"></a>
+                                        <a data-toggle="tooltip" data-placement="bottom" class="btn btn-default btn-sm glyphicon glyphicon-edit" title="Editar" href="{$_layoutParams.root}elearning/examen/{if $rl.Pre_Tipo==1}editarRespuestaUnica{/if}{if $rl.Pre_Tipo==2}editarRespuestaMultiple{/if}{if $rl.Pre_Tipo==3}editarRespuestaBlanco{/if}{if $rl.Pre_Tipo==4}editarRespuestaRelacionar{/if}{if $rl.Pre_Tipo==5}editarRespuestaAbierta{/if}{if $rl.Pre_Tipo==6}editarRespuestaZonasImagen{/if}{if $rl.Pre_Tipo==7}editarRespuestaCombinacionExacta{/if}/{$rl.Pre_IdPregunta}/{$idcurso}"></a>
 
                                         <a   
                                         {if $rl.Row_Estado==0}
@@ -117,7 +128,7 @@
         </div>
     </div>
 </div>
-
+    </div>
 
 <div class="modal " id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -157,4 +168,13 @@
         </div>
     </div>
 </div>
+<!-- <script type="text/javascript">
+    Menu(1);
+    RefreshTagUrl();
+    $("#btn_unica").click(function(){
+      CargarPagina("examen/registrarRespuestaUnica", { id: $("#idcurso").val(), idexamen: $("#idexamen").val()}, false, $(this));
+    });
+</script>
+<script type="text/javascript" src="{$_url}examen/js/index.js"></script> -->
+
 

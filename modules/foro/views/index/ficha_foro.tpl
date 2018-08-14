@@ -981,7 +981,6 @@
                         <label class="tit-integrante">Recursos</label>
                         <ul id="div_show_{$foro.For_IdForo}">
                             {foreach from=$foro.Archivos  item=file}
-                                {if $file.Fif_Titulo !="REPORTE-FORO-{$foro.For_IdForo}"}
                                 <li tabindex="-1" id="">
                                     {if $file.Fif_TipoFile|strstr:"video"}
                                         <i class="fa fa-video-camera"></i>
@@ -998,7 +997,6 @@
                                     {$file.Fif_SizeFile=$file.Fif_SizeFile/1024}
                                     <div class="file_size">({if $file.Fif_SizeFile<1024}{$file.Fif_SizeFile|string_format:"%.1f"} KB {else} {$file.Fif_SizeFile=$file.Fif_SizeFile/1024} {$file.Fif_SizeFile|string_format:"%.1f"} MB{/if})</div>
                                 </li>
-                                {/if}
                             {/foreach}
                         </ul>
                     </div>
