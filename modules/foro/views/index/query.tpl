@@ -5,8 +5,16 @@
         <div class="col-lg-12 p-rt-lt-0">
             <hr class="cursos-hr-title-foro">
         </div> 
+        <div class="col-sm-offset-6 col-sm-6">
+                <div class="input-group">
+                    <input type ="text" class="form-control"  data-toggle="tooltip" data-original-title="Buscar" placeholder="Buscar" name="text_busqueda" id="text_busqueda" onkeypress="tecla_enter_foro(event)" value="{$palabrabuscada|default:''}">                  
+                    <span class="input-group-btn">
+                        <button class="btn  btn-success btn-buscador" for_funcion ="query" ajax="lista_buscar_query" type="button" id="buscar_foro"><i class="glyphicon glyphicon-search"></i></button>
+                    </span>
+                </div><!-- /input-group -->
+        </div>
         <a type="button" href="{$_layoutParams.root}foro/admin/form/new/query" class="btn btn-success btn-sm pull-right" style="margin-right: 15px;" title="Nuevo Sub FOro">Nuevo</a>
-        <div class="row">
+        <div id="lista_buscar_query" class="row">
             <div class="col-md-12" style="margin-bottom: 30px;">
                 
                 {if count($lista_foros)>0}
@@ -40,9 +48,6 @@
                 {/if}
        
             </div>
-           
-
         </div>
-
     </div>
 </div>

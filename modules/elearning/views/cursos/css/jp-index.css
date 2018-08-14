@@ -15,13 +15,21 @@
 }
 .cursos-hr{
 	border-top: 1px solid #cdcdcd;
-
 	margin: 0px;
 	padding: 0px;
 
 /*	margin-top: 5px;
   margin-bottom: 10px;
 	padding: 0.3px;*/
+
+}
+.cursos-hr-jp{
+  margin-top: 0px;
+  padding: 0.2px;
+
+/*  margin-top: 5px;
+  margin-bottom: 10px;
+  padding: 0.3px;*/
 
 }
 .ic-decoration{
@@ -72,7 +80,16 @@ label{
     margin-left: 10px;
     margin-top: 10px;
 }
-
+.titulo{
+  margin-top: 10px !important;
+  font-family: 'Lucida Sans';
+  color: #3c763d;
+}
+.cursos-hr-title-foro{
+    margin-top: 0px;
+    padding: 0.2px;
+    border-top: 1px solid #3c763d;
+}
 /*................................*
 label:hover,
 label:hover ~ label {

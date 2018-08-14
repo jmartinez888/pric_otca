@@ -13,6 +13,7 @@ class adminController extends foroController
 
     public function index()
     {
+        $this->_view->setTemplate(LAYOUT_FRONTEND);
         $this->_acl->autenticado();
         $this->validarUrlIdioma();
         $this->_view->getLenguaje("foro_admin_index");
@@ -251,11 +252,19 @@ class adminController extends foroController
         $this->_paginacion_listarForo();
     }
 
+    public function _habilitarForo()
+    {
+        $id_foro= $this->getInt('id_foro');
+
+        $this->_model->habilitarForo($id_foro);
+
+        $this->_paginacion_listarForo();
+    }
+
     public function _eliminarForo()
     {
         $id_foro = $this->getInt('id_foro');
         $estado = $this->getInt('estado');
-
         $this->_model->updestadoRowForo($id_foro, $estado);
 
         $this->_paginacion_listarForo();
@@ -276,6 +285,7 @@ class adminController extends foroController
         $this->_view->getLenguaje("foro_admin_index");
         $foro = $this->_model->getForosComplit_x_Id($id_foro);
         $IdiomaOriginal = $foro['Idi_IdIdioma'];
+        $this->_view->setTemplate(LAYOUT_FRONTEND);
 
         if ($tipo != "new" && $tipo != "edit") {
             $this->redireccionar("foro/admin");
@@ -382,7 +392,7 @@ class adminController extends foroController
             if ($funcion == "query") {
                 $this->redireccionar("foro/index/query");
             } else {
-                $this->redireccionar("foro/admin/members/" . $result_foro[0]);
+                $this->redireccionar("foro/index/ficha/" . $id_foro);
             }
         }
 
@@ -476,6 +486,7 @@ class adminController extends foroController
 
     public function members($id_foro = 0)
     {
+        $this->_view->setTemplate(LAYOUT_FRONTEND);
         $model_index = $this->loadModel('index');                
         if ($id_foro != 0) {
             $foro = $this->_model->getForos_x_Id($id_foro);
@@ -523,6 +534,7 @@ class adminController extends foroController
 
     public function actividad($id_foro = 0)
     {
+        $this->_view->setTemplate(LAYOUT_FRONTEND);
         if ($id_foro == 0) {
             $this->redireccionar("foro/admin");
         }
@@ -596,14 +608,14 @@ class adminController extends foroController
 
         $paginador = new Paginador();
 
-        $lista_members = $this->_model->getMembers_x_Foro($id_foro, $rol_member, $pagina, $filas);
+        $lista_members = $this->_model->getMembers_x_Foro($id_foro, $rol_member, $pagina, $filas, $filtro);
 
         $paginador->paginar($totalRegistros, "listaMembers", $filtro, $pagina, $filas, true);
 
         $this->_view->assign('lista_members', $lista_members);
 
         $this->_view->assign('numeropagina', $paginador->getNumeroPagina());
-        //$this->_view->assign('cantidadporpagina',$registros);
+        $this->_view->assign('text_busqueda_miembro', $filtro);
         $this->_view->assign('paginacion', $paginador->getView('paginacion_ajax_s_filas'));
         $this->_view->renderizar('ajax/listaMembers', false, true);
     }
@@ -648,9 +660,9 @@ class adminController extends foroController
         $paginador  = new Paginador();
 
         $lista_members  = $this->_model->getMembers_x_Foro($id_foro, $rol_member, $pagina, CANT_REG_PAG, $filtro);
-        $totalRegistros = $this->_model->getRowMembers_x_Foro($id_foro, $rol_member);
+        $totalRegistros = count($lista_members);
 
-        $paginador->paginar($totalRegistros["Usf_RowMembers"], "listaMembers", "", $pagina, CANT_REG_PAG, true);
+        $paginador->paginar($totalRegistros, "listaMembers", "$filtro", $pagina, CANT_REG_PAG, true);
 
         $this->_view->assign('lista_members', $lista_members);
 

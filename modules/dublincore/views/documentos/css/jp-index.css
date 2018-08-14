@@ -47,7 +47,6 @@
 	border-bottom: 1px solid #ddd;
 }
 .padding-li2{
-	padding-top: 25px;
 	padding-bottom: 10px;
 	border-bottom: 1px solid #ddd;
 }
@@ -60,9 +59,8 @@
 	color: #000;
 }
 .subtitle-resumen:hover{
-	text-decoration: none;
 	color: #3c763d;
-	font-weight: bold;
+	text-decoration: underline;
 }
 .side-menu{
 	border-left: 5px solid #355D3A;
@@ -95,9 +93,7 @@
     margin-bottom: 10px;
 }
 .position-badge{
-	position: absolute;
-	top: 5px;
-	right: 5px;
+	vertical-align: middle;
 }
 .instituciones-paises{
 	margin-top:17px;
@@ -131,4 +127,9 @@
 	border-radius: 10px;
 	min-width: 40px !important;
 	font-size: 15px !important;
+}
+.letras{
+	margin-top: 15px;
+	background-color: #40bc4bad;
+	border-radius: 5px;
 }

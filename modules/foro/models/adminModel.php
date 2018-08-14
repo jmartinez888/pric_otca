@@ -362,23 +362,36 @@ class adminModel extends Model
         try {
             if ($iFor_Estado == 0) {
                 $foro = $this->_db->query(
-                    "UPDATE foro SET For_Estado = 1 where For_IdForo = $iFor_IdForo"
+                    "UPDATE foro SET For_Estado = 1 where For_IdForo = {$iFor_IdForo}"
                 );
             }
             if ($iFor_Estado == 1) {
                 $foro = $this->_db->query(
-                    "UPDATE foro SET For_Estado = 0 where For_IdForo = $iFor_IdForo"
+                    "UPDATE foro SET For_Estado = 0 where For_IdForo = {$iFor_IdForo}"
                 );
             }
             if ($iFor_Estado == 2) {
                 $foro = $this->_db->query(
-                    "UPDATE foro SET For_Estado = 1 where For_IdForo = $iFor_IdForo"
+                    "UPDATE foro SET For_Estado = 1 where For_IdForo = {$iFor_IdForo}"
                 );
             }
 
             return $foro->rowCount(PDO::FETCH_ASSOC);
         } catch (PDOException $exception) {
             $this->registrarBitacora("foro(adminModel)", "cambiarEstadoForo", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
+
+    public function habilitarForo($iFor_IdForo)
+    {
+        try {
+            $foro = $this->_db->query(
+                "UPDATE foro SET For_Estado = 1, Row_Estado = 1 where For_IdForo = {$iFor_IdForo}");
+
+            return $foro->rowCount(PDO::FETCH_ASSOC);
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("foro(adminModel)", "updestadoRowForo", "Error Model", $exception);
             return $exception->getTraceAsString();
         }
     }
@@ -397,7 +410,7 @@ class adminModel extends Model
 
             return $foro->rowCount(PDO::FETCH_ASSOC);
         } catch (PDOException $exception) {
-            $this->registrarBitacora("foro(adminModel)", "estadoRowForo", "Error Model", $exception);
+            $this->registrarBitacora("foro(adminModel)", "updestadoRowForo", "Error Model", $exception);
             return $exception->getTraceAsString();
         }
     }
@@ -413,7 +426,7 @@ class adminModel extends Model
             }
             if ($iFor_Estado == 1 || $iFor_Estado == 0) {
                 $foro = $this->_db->query(
-                    "UPDATE foro SET For_FechaCierre = NOW(),For_Estado=2 where For_IdForo = $iFor_IdForo"
+                    "UPDATE foro SET For_FechaCierre = NOW(), For_Estado=2 where For_IdForo = $iFor_IdForo"
                 );
             }
 

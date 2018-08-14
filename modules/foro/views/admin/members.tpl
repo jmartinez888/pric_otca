@@ -1,6 +1,6 @@
 <a href = "" onclick = "window.open ('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent ('{$_layoutParams.root}{$_layoutParams.modulo}'),' facebook-share-dialog ',' width = 626, height = 436, left = 300, top = 150 '); return false; ">
 <img style="width: 4%;" src = "{$_layoutParams.root_clear}public/img/facebook.png" alt = " facebook" >
-<a href ="https://twitter.com/share" class ="twitter-share-button" data-url="" data-text="Charolastra" data-lang="es" data-size="large">
+<a target="_blank" href ="https://twitter.com/share" class ="twitter-share-button" data-url="" data-text="Charolastra" data-lang="es" data-size="large">
 <img style="width: 3%;" src = "{$_layoutParams.root_clear}public/img/twiter.png" alt = " facebook"></a>
 
     <h3 class="titulo-view">{$lenguaje.foro_admin__members_label_titulo}</h3>

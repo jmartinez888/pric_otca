@@ -1,5 +1,6 @@
 {if (isset($listaIns) && count($listaIns))}
 	{foreach key=key from=$listaIns item=b}
+	<div class="col-md-12 col-lg-12">
 		<div class="row" style="border-bottom: 1px solid #ddd; padding-bottom: 10px;">
 			<div class="col-md-10">
 				<a class="underline" style="color: black;" href="{$_layoutParams.root_clear}oferta/instituciones/ficha/{$b.Ins_IdInstitucion}">
@@ -53,7 +54,7 @@
 				<img width="80" src="{$_layoutParams.root_clear}modules/oferta/views/instituciones/img/{$b.Ins_img}" alt="{$b.Ins_img}" class="pais " data-toggle="tooltip" style="padding-bottom: 5px;" data-original-title="{$b.Ins_Nombre}">
 			</div>
 		</div>
-		<br>
+	</div>
 	{/foreach}
 	{$paginacion|default:""}
 {else}

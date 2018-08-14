@@ -175,7 +175,69 @@ $(document).on('ready', function () {
     $('body').on('click', '.valorar_comentario', function () {       
         valorar_comentario_foro($(this).attr("id_usuario"),$(this).attr("id_comentario"), $(this).attr("valor"), $(this).attr("ajaxtpl"));
     });  
+
+    $('body').on('click', '.cerrar_foro', function () {
+        $("#cargando").show();        
+        cerrarForo($(this).attr('id_foro'), $(this).attr('estado'));
+    });
+
+    $('body').on('click', '.eliminar_foro', function () {
+        $("#cargando").show();        
+        eliminarForo($(this).attr('id_foro'), $(this).attr('Row_Estado'));
+    });
+
+    $('body').on('click', '.deshablitarForo', function () {
+        $("#cargando").show();        
+        deshablitarForo($(this).attr('id_foro'), $(this).attr('for_estado'));
+    });
+
+    $('body').on('click', '.hablitarForo', function () {
+        $("#cargando").show();        
+        hablitarForo($(this).attr('id_foro'));
+    });
 });
+
+function hablitarForo(id_foro) {
+    $.post(_root_ + 'foro/admin/_habilitarForo',
+    {
+        id_foro:id_foro        
+    }, function (data) {
+        location.href = _root_+"foro/index/ficha/"+id_foro;
+    });
+}
+
+function deshablitarForo(id_foro, estado_foro) {
+    $.post(_root_ + 'foro/admin/_cambiarEstadoForo',
+    {
+        id_foro:id_foro,
+        estado_foro: estado_foro
+        
+    }, function (data) {
+        location.href = _root_+"foro/index/ficha/"+id_foro;
+    });
+}
+
+function eliminarForo(id_foro, estado) {
+    $.post(_root_ + 'foro/admin/_eliminarForo',
+    {
+        id_foro:id_foro,
+        estado:estado
+        
+    }, function (data) {
+        location.href = _root_+"foro/index/ficha/"+id_foro;
+    });
+}
+
+function cerrarForo(id_foro, estado_foro) {
+    $.post(_root_ + 'foro/admin/_cerrarForo',
+    {
+        id_foro:id_foro,
+        estado_foro:estado_foro
+        
+    }, function (data) {
+        location.href = _root_+"foro/index/ficha/"+id_foro;
+    });
+}
 
 function valorar_comentario_foro(id_usuario, ID, valor, ajaxtpl) {
     $.post(_root_ + 'foro/index/registrarValoracion_Comentario_Foro',

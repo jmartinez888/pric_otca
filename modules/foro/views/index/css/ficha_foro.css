@@ -453,4 +453,30 @@ and open the template in the editor.
     border-bottom: 0.2px solid #ddd;
 }
 
+#btn-configuracion{
+    width: 35px;
+    height: 35px;
+    padding: 6px 4px;
+    border-radius: 35px;
+    font-size: 15px;
+    line-height: 1.33;
+    border-color: #fff !important;
+}
+
+.opciones_foro{
+    cursor: pointer;
+    color: black;
+    padding-right: 0;
+    padding: 4px 14px !important;
+}
+
+.alert-danger{
+    opacity: 0.87; 
+    background-color: #f2dede !important; 
+    border-color: #d73925;
+}
+
+.texto-alert-danger{
+    color: #b94a48;
+}
 

@@ -14,7 +14,7 @@ class indexModel extends Model {
                     "SELECT f.*,(SELECT COUNT(Com_IdComentario) FROM comentarios c 
                                 WHERE c.For_IdForo=f.For_IdForo) AS For_TComentarios, u.Usu_Usuario 
                     FROM foro f INNER JOIN usuario u ON u.Usu_IdUsuario=f.Usu_IdUsuario
-                    WHERE f.For_Funcion LIKE '%$iFor_Funcion%' AND f.Row_Estado=1 ORDER BY f.For_FechaCreacion DESC");
+                    WHERE f.For_Funcion LIKE '%$iFor_Funcion%' ORDER BY f.For_FechaCreacion DESC");
             return $post->fetchAll();
         } catch (PDOException $exception) {
             $this->registrarBitacora("foro(indexModel)", "getForos", "Error Model", $exception);
