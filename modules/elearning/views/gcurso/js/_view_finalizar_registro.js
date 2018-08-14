@@ -1,5 +1,37 @@
 ﻿Menu(1);
 
+// Jhon Martinez
+$("#item_presentacion").click(function() {
+  $(this).removeClass("active");
+  $("#item_contenido").removeClass("active");
+  $("#item_parametros").removeClass("active");  
+  // $(this).css('font-weight', 'bold');
+  $(this).addClass("active");
+  $('.div_presentacion').css('display', 'block');
+  $('.div_contenido').css('display', 'none');
+  $('.div_parametros').css('display', 'none');
+});
+$("#item_contenido").click(function() {
+  $(this).removeClass("active");
+  $("#item_presentacion").removeClass("active");
+  $("#item_parametros").removeClass("active");
+  // $(this).css('font-weight', 'bold');
+  $(this).addClass("active");
+  $('.div_contenido').css('display', 'block');
+  $('.div_presentacion').css('display', 'none');
+  $('.div_parametros').css('display', 'none');
+});
+$("#item_parametros").click(function() {
+  $(this).removeClass("active");
+  $("#item_contenido").removeClass("active");
+  $("#item_presentacion").removeClass("active");
+  // $(this).css('font-weight', 'bold');
+  $(this).addClass("active");
+  $('.div_parametros').css('display', 'block');
+  $('.div_contenido').css('display', 'none');
+  $('.div_presentacion').css('display', 'none');
+});
+
 $("#btn_regresar").click(function(){
   CargarPagina("gcurso/_view_mis_cursos/", {}, false, false);
 });

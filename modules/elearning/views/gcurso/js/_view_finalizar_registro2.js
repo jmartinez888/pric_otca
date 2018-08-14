@@ -1,4 +1,4 @@
-$(document).ready(function(){
+$(document).ready(function(){  
   $(".panel-heading").css({ "cursor": "pointer" });
   $(".panel-heading").click(function(){
     var panel = $(this).parent().find(".panel-body");

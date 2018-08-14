@@ -1,13 +1,13 @@
 {include file='modules/elearning/views/gestion/menu/tag_url.tpl'}
-<div class="col-lg-12 margin-top-10" id="panelModulos">
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h3 class="panel-title">
-        <i class="glyphicon glyphicon-list-alt"></i>&nbsp;&nbsp;
-        <strong>MÓDULOS CURSO</strong>
-      </h3>
-    </div>
-    <div class="panel-body" style=" margin: 15px 25px">
+<div class="col-lg-12">
+  <ul class="nav nav-tabs">
+    <li role="presentation" class="active" style="font-weight: bold; "><a style="color: #009640;">MODULOS</a></li>
+  </ul>
+</div>
+
+<div class="col-lg-12 " id="panelModulos" >
+  <div class="panel panel-default" style="border-top: 0; border-top-left-radius: 0; border-top-right-radius: 0;">
+    <div class="panel-body padding-t-30" >
       <div class="col-lg-12">
         {if isset($modulos) && count($modulos) > 0 }
           <table class="table" id="tblMisCursos">

@@ -15,6 +15,27 @@
     padding: 10px !important;
     border: 2px solid #02969b;
   }
+
+  .div_presentacion{
+    display: block;
+  }
+  .div_contenido{
+    display: none;
+  }
+  .div_parametros{
+    display: none;
+  }
+
+  .display-block{
+    display: block;
+  }
+
+  .nav-tabs > .active{
+    font-weight: bold;
+  }
+  .nav-tabs > li.active > a{
+    color: #009640 !important;
+  }
 </style>
 <link href="{$_url}gcurso/css/_view_finalizar_registro.css" rel="stylesheet" type="text/css"/>
 
@@ -22,14 +43,14 @@
 
 <div class="col-lg-12">
   <ul class="nav nav-tabs">
-    <li role="presentation" class="active"><a href="#">PRESENTACIÓN</a></li>
-    <li role="presentation"><a href="#">CONTENIDO</a></li>
-    <li role="presentation"><a href="#">PARAMETROS</a></li>
+    <li role="presentation" class="active" id="item_presentacion"><a href="#">PRESENTACIÓN</a></li>
+    <li role="presentation" id="item_contenido" ><a href="#">CONTENIDO</a></li>
+    <li role="presentation" id="item_parametros" ><a href="#">PARAMETROS</a></li>
   </ul>
 </div>
 
 <!-- PRESENTACION -->
-<div class="col-lg-12  ">
+<div {if isset($active) && $active == "pre" } class="col-lg-12  div_presentacion display-block" {else} class="col-lg-12  div_presentacion" {/if} >
   <div class="panel panel-default" style="border-top: 0; border-top-left-radius: 0; border-top-right-radius: 0;">
     
     <div class="panel-body form-horizontal"  id="panelImg">
@@ -98,15 +119,10 @@
 {include file='modules/elearning/views/uploader/uploader.tpl'}
 
 <!-- CONTENIDO -->
-<div class="col-lg-12 " >
-  <div class="panel panel-default">
-    <div class="panel-heading" tag="0" id="headerDetalle">
-      <h3 class="panel-title">
-        <i class="glyphicon glyphicon-list-alt"></i>&nbsp;&nbsp;
-        <strong>CONTENIDO</strong>
-      </h3>
-    </div>
-    <div class="panel-body" style=" margin: 15px 15px; display: none" id="panelDetalle">
+<div {if isset($active) && $active == "con" } class="col-lg-12  div_contenido display-block" {else} class="col-lg-12  div_contenido" {/if}  >
+  <div class="panel panel-default" style="border-top: 0; border-top-left-radius: 0; border-top-right-radius: 0;">
+    
+    <div class="panel-body"  id="panelDetalle">
       <form method="post" action="gcurso/_modificar_curso" id="frm_registro">
       <input hidden="hidden" name="id" value="{$curso.Cur_IdCurso}"/>
       <div class="col-lg-12"><h5><strong>Título del Curso</strong></h5></div>
@@ -156,15 +172,10 @@
 </div>
 
 <!-- PARAMETROS -->
-<div class="col-lg-12 ">
-  <div class="panel panel-default">
-    <div class="panel-heading" tag="0" id="headerParametros">
-      <h3 class="panel-title">
-        <i class="glyphicon glyphicon-list-alt"></i>&nbsp;&nbsp;
-        <strong>PARAMETROS</strong>
-      </h3>
-    </div>
-    <div class="panel-body" style=" margin: 15px 25px; display: none" id="panelParametros">
+<div {if isset($active) && $active == "par" } class="col-lg-12  div_parametros display-block" {else} class="col-lg-12  div_parametros" {/if}  >
+  <div class="panel panel-default" style="border-top: 0; border-top-left-radius: 0; border-top-right-radius: 0;">
+    
+    <div class="panel-body" id="panelParametros">
       <div class="col-lg-6">
         <label>Nota Minima</label>
         <input class="form-control" id="inParMinNota" type="number" value="{$parametros['Par_NotaMinima']}"/>

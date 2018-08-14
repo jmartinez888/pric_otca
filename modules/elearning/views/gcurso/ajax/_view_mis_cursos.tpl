@@ -71,8 +71,8 @@
         <div class="table-responsive" style="width: 100%">
             <table class="table" id="tblMisCursos">
                 <tr>
-                    <th>Curso</th>
-                    <th>Operaciones</th>
+                    <th>Mis Cursos</th>
+                    {if $_acl->permiso("editar_curso")} <th>Operaciones</th> {/if}
                 </tr>
                 {foreach from=$cursos item=c}
                     <tr>
@@ -112,10 +112,11 @@
                               </div>
                           </div> 
                         </td>
+
+                          {if $_acl->permiso("editar_curso") && $c.Inscrito == 0}
                         <td >
                           <input class="hidden_IdCurso estado" value="{$c.Cur_IdCurso}"/>
                           
-                          {if $_acl->permiso("editar_curso") && $c.Inscrito == 0}
                             {if $c.Moa_IdModalidad == 2}
                                 <button class="btn btn-sm btn-default btnGestion " data-toggle="tooltip" data-placement="bottom" title="Gestión de Alumnos" ><i class="fa fa-users "></i></button> 
                             {else}
@@ -130,10 +131,10 @@
                             {/if}
                             <button class="btn btn-sm btn-default btnCertificado" data-toggle="tooltip" data-placement="bottom" title="Diseñar Plantilla de Certificado"><i class="glyphicon glyphicon-picture"></i></button>
                             <button class="btn btn-sm btn-default btnEliminar" data-toggle="tooltip" data-placement="bottom" title="Eliminar Curso"><i class="glyphicon glyphicon-trash"></i></button>
-                          {/if}
-
                         </td>
+                        {/if}
                     </tr>
+
                 {/foreach}
             </table>
         </div>

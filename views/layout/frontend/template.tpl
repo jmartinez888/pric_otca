@@ -491,6 +491,7 @@
             var _root_ = '{$_layoutParams.root_clear}';
             var _root_lang = '{$_layoutParams.root}';
             var _root_archivo_fisico = '{$_layoutParams.root_archivo_fisico}';
+            var _root_socket = '{$_layoutParams.root_socket}';
             // $('.mitooltip').tooltip();
         </script>
         <!-- <script src="//code.jquery.com/jquery-1.11.2.min.js"></script> -->
