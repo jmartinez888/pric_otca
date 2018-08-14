@@ -67,12 +67,13 @@ class indexController extends foroController {
         //$this->_view->assign('cantidadporpagina',$registros);
         $this->_view->assign('paginacion', $paginador->getView('paginacion_ajax_s_filas'));
         $this->_view->renderizar('searchForo');
-    }
+    }    
 
     public function discussions() {
         $this->_view->setTemplate(LAYOUT_FRONTEND);
         $this->_view->assign('titulo', "Discusiones");
         $this->_view->setCss(array("jp-index"));
+        $this->_view->setJs(array('buscar_foro'));
         $lista_foros = $this->_model->getForos("forum");
         for ($i=0; $i < count($lista_foros); $i++) { 
             $lista_foros[$i]["tiempo"]= $this->getTiempo($lista_foros[$i]["For_FechaCreacion"]);
@@ -85,6 +86,7 @@ class indexController extends foroController {
         $this->_view->setTemplate(LAYOUT_FRONTEND);
         $this->_view->assign('titulo', "Consultas");
         $this->_view->setCss(array("jp-index"));
+        $this->_view->setJs(array('buscar_foro'));
         $lista_foros = $this->_model->getForos("query");
         for ($i=0; $i < count($lista_foros); $i++) { 
             $lista_foros[$i]["tiempo"]= $this->getTiempo($lista_foros[$i]["For_FechaCreacion"]);
@@ -96,6 +98,7 @@ class indexController extends foroController {
     public function webinar() {
         $this->_view->setTemplate(LAYOUT_FRONTEND);
         $this->_view->setCss(array("jp-index"));
+        $this->_view->setJs(array('buscar_foro'));
         $lista_foros = $this->_model->getForos("webinar");
         for ($i=0; $i < count($lista_foros); $i++) { 
             $lista_foros[$i]["tiempo"]= $this->getTiempo($lista_foros[$i]["For_FechaCreacion"]);
@@ -108,8 +111,40 @@ class indexController extends foroController {
         $this->_view->setTemplate(LAYOUT_FRONTEND);
         $this->_view->assign('titulo', "Workshop");
         $this->_view->setCss(array("jp-index"));
-        $this->_view->assign('lista_foros', $this->_model->getForos("workshop"));
+        $this->_view->setJs(array('buscar_foro'));
+        $lista_foros = $this->_model->getForos("workshop");
+        for ($i=0; $i < count($lista_foros); $i++) { 
+            $lista_foros[$i]["tiempo"]= $this->getTiempo($lista_foros[$i]["For_FechaCreacion"]);
+        }
+        $this->_view->assign('lista_foros', $lista_foros);
         $this->_view->renderizar('workshop');
+    }
+
+    public function _buscarForo($text_busqueda = false, $for_funcion=false, $ajax=false) {
+        $this->_view->setTemplate(LAYOUT_FRONTEND);
+        $text_busqueda = $this->getTexto('text_busqueda');
+        $for_funcion = $this->getTexto('for_funcion');
+        $ajax = $this->getTexto('ajax');
+
+        $this->_view->setJs(array('buscar_foro'));
+        // $this->_view->setCss(array("index"));
+        // $paginador = new Paginador();
+
+        $lista_foros = $this->_model->getForosPaginado($text_busqueda, $for_funcion);
+        for ($i=0; $i < count($lista_foros); $i++) { 
+            $lista_foros[$i]["tiempo"]= $this->getTiempo($lista_foros[$i]["For_FechaCreacion"]);
+        }
+        // $totalRegistros = $this->_model->getRowForos($filtro);
+
+        //$paginador->paginar($totalRegistros["For_NRow"], "listarForo", $filtro, $pagina = 0, CANT_REG_PAG, true);
+
+        $this->_view->assign('lista_foros', $lista_foros);
+
+        //$this->_view->assign('palabrabuscada', $text_busqueda);
+        //$this->_view->assign('numeropagina', $paginador->getNumeroPagina());
+        //$this->_view->assign('cantidadporpagina',$registros);
+        //$this->_view->assign('paginacion', $paginador->getView('paginacion_ajax_s_filas'));
+        $this->_view->renderizar('ajax/'.$ajax, false, true);
     }
 
     public function agenda() {
