@@ -102,6 +102,7 @@
 /*Estilo para Buscador de documentos*/
 .abc {
 	margin-top:10px;
+	margin-bottom: 10px;
 	display:inline-block;
 	vertical-align:top;
 	text-align:center;
@@ -109,16 +110,16 @@
 
 #letra {
 	font-size:2em;
-	cursor:pointer; 
-	text-decoration-line: underline; 
+	cursor:pointer;
 	padding: 0px 3px; 
-	color: #00a60fbf; 
+	color: #3c763d; 
 }
 #letra:hover,
 #letra:focus {
-	color: #080808bf;
+	color: #fff;
+	text-decoration-line: underline;
 }
 .abc .active{
-	font-size: 2.5em !important;
-	color: #080808bf !important;
+	color: #fff !important;
+	text-decoration-line: underline;
 }

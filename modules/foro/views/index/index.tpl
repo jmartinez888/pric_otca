@@ -64,15 +64,11 @@
                     <div class="col-lg-12">
                         {foreach from=$lista_foros item=foro}
                         <div class="row col-lg-12 tematica-foro">
-<<<<<<< HEAD
+
                             {if $foro.For_Tipo == 1}
                                 {if $foro.For_Estado != 0 && $foro.Row_Estado == 1} 
-                                    <div><a class="link-foro"  href="{$_layoutParams.root}foro/index/ficha/{$foro.For_IdForo}">
-                                    <h4 style="text-align: justify;">{$foro.For_Titulo}</h4></a></div>
-=======
                             <div><a class="link-foro"  href="{$_layoutParams.root}foro/index/ficha/{$foro.For_IdForo}">
                                     <h4 style="text-align: justify;"><strong>{$foro.For_Titulo}</strong></h4></a></div>
->>>>>>> aa976114709e62ef61ecd6a0583628fa8063e3f5
                                     {if !empty($foro.For_Resumen) && $foro.For_Resumen!=""}
                                     <div style="padding-bottom: 10px;">
                                          <p style="text-align: justify;">{$foro.For_Resumen|truncate:120:"..."}</p>

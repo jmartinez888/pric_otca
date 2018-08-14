@@ -47,7 +47,6 @@
 	font-size: 1.1em;
 }
 .title-resumen:hover{
-	text-decoration: underline;
 	color: #fff;
 }
 .list-group-item-jp{
@@ -65,14 +64,12 @@
 	color: #000;
 }
 .subtitle-resumen:hover{
-	text-decoration: none;
 	color: #3c763d;
-	font-weight: bold;
+	text-decoration: underline;
 }
 .resumen-busqueda{
 	padding-bottom: 10px;
 	border-bottom: 1px #ddd solid;
-	padding-left: 15px;
 }
 .side-menu{
 	border-left: 5px solid #355D3A;
@@ -118,7 +115,6 @@
 	border-bottom: 1px solid #ddd;
 }
 .padding-li2{
-	padding-top: 25px;
 	padding-bottom: 10px;
 	border-bottom: 1px solid #ddd;
 }

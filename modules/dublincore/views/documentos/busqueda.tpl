@@ -59,28 +59,35 @@
  </div>   
 
 <div class="row">    
-  <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
+  <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3">
       <div class="panel-group" id="accordion">
         <div class="side-menu2 col-md-12 p-rt-lt-0">
           <a data-toggle="collapse" data-parent="#accordion" href="#accordionOne">
-            <div class="side-menu">
-              <h4 class="panel-title">
-              <strong>{$lenguaje["menu_izquierdo1_documentos"]}
+            <div class="col-lg-12 side-menu">
+              <div class="col-md-9 col-lg-9 p-rt-lt-0">
+                <h4 class="panel-title">
+                  <strong>{$lenguaje["menu_izquierdo1_documentos"]}</strong>
+                </h4>
+              </div>
+              <div class="col-md-3 col-lg-3 p-rt-lt-0" style="position: absolute; top: 20%; right: 5%;">
                 {if isset($temadocumento) && count($temadocumento)}
-                    <span class="badge pull-right position-badge">{count($temadocumento)|default:0}</span> 
+                    <span class="badge pull-right">{count($temadocumento)|default:0}</span> 
                 {/if}
-              </strong>
-             </h4>
+              </div>
             </div>
           </a>       
-          <div id="accordionOne" class="panel-collapse collapse" >
+          <div id="accordionOne" class="panel-collapse collapse col-md-12 p-rt-lt-0" >
             <ul id="tematicas" class="list-group scroll"   style="max-height: 300px;overflow-y: auto; margin-bottom: 0px;">
                 {if isset($temadocumento) && count($temadocumento)}
                   {foreach item=datos from = $temadocumento}
-                       <li class="list-group-item-jp col-md-12 p-rt-lt-0 padding-li2">
-                      <span class="badge position-badge">{$datos.cantidad|default:0}</span>
-                      <a href="#{$datos.Ted_Descripcion}" style="cursor:pointer; color: #222;"><span class="temadocumento underline" id="temadocumento">{$datos.Ted_Descripcion}</span></a>
-                    </li>                            
+                      <li class="list-group-item-jp col-md-12 p-rt-lt-0 padding-li2">
+                        <div class="col-md-9 col-lg-9 p-rt-lt-0">
+                          <a href="#{$datos.Ted_Descripcion}" style="cursor:pointer; color: #222;"><span class="temadocumento underline" id="temadocumento">{$datos.Ted_Descripcion}</span></a>
+                        </div>
+                        <div class="col-md-3 col-lg-3 p-rt-lt-0" style="position: absolute; top: 30%; right: 5%;">
+                          <span class="badge pull-right" style="">{$datos.cantidad|default:0}</span>
+                        </div>
+                      </li>                            
                   {/foreach}
                   {/if}
             </ul>
@@ -88,23 +95,31 @@
         </div>
         <div class="side-menu2 col-md-12 p-rt-lt-0">
           <a data-toggle="collapse" data-parent="#accordion" href="#accordionOne2">
-            <div class="side-menu">
-              <h4 class="panel-title">
-               <strong>{$lenguaje["menu_izquierdo2_documentos"]}</strong> 
-               {if isset($tipodocumento) && count($tipodocumento)}
-                  <span class="badge pull-right position-badge">{count($tipodocumento)|default:0}</span>
+            <div class="col-lg-12 side-menu">
+              <div class="col-md-9 col-lg-9 p-rt-lt-0">
+                <h4 class="panel-title">
+                  <strong>{$lenguaje["menu_izquierdo2_documentos"]}</strong>
+                </h4>
+             </div>
+             <div class="col-md-3 col-lg-3 p-rt-lt-0" style="position: absolute; top: 20%; right: 5%;">
+                {if isset($tipodocumento) && count($tipodocumento)}
+                  <span class="badge pull-right">{count($tipodocumento)|default:0}</span>
                 {/if}
-             </h4>
+              </div>
             </div>
            </a>       
-          <div id="accordionOne2" class="panel-collapse collapse" >
+          <div id="accordionOne2" class="panel-collapse collapse col-md-12 p-rt-lt-0" >
             <ul id="tipodocumento" class="list-group scroll"   style="max-height: 300px;overflow-y: auto; margin-bottom: 0px;">
              {if isset($tipodocumento) && count($tipodocumento)}
               {foreach item=datos from = $tipodocumento}
                   <li class="list-group-item-jp col-md-12 p-rt-lt-0 padding-li2">
-                      <span class="badge position-badge">{$datos.cantidad|default:0}</span>
+                    <div class="col-md-9 col-lg-9 p-rt-lt-0">
                       <a href="#{$datos.Tid_Descripcion}" style="cursor:pointer; color: #222;"><span class="palabraclave underline" id="palabraclave">{$datos.Tid_Descripcion}</span></a>
-                    </li>        
+                    </div>
+                    <div class="col-md-3 col-lg-3 p-rt-lt-0" style="position: absolute; top: 30%; right: 5%;">
+                      <span class="badge pull-right">{$datos.cantidad|default:0}</span>
+                    </div>
+                  </li>        
                   {/foreach}
                   {/if}             
             </ul>
@@ -114,22 +129,30 @@
         <!-- Filtro Autor -->
         <div class="side-menu2 col-md-12 p-rt-lt-0">
           <a data-toggle="collapse" data-parent="#accordion" href="#accordionAutor">
-            <div class="side-menu">
-              <h4 class="panel-title">
-               <strong>{$lenguaje["autores_metadata_documentos"]}</strong> 
-               {if isset($autores) && count($autores)}
-                  <span class="badge pull-right position-badge">{count($autores)|default:0}</span>
+            <div class="col-lg-12 side-menu">
+              <div class="col-md-9 col-lg-9 p-rt-lt-0">
+                <h4 class="panel-title">
+                 <strong>{$lenguaje["autores_metadata_documentos"]}</strong>
+               </h4>
+             </div>
+             <div class="col-md-3 col-lg-3 p-rt-lt-0" style="position: absolute; top: 20%; right: 5%;">
+                {if isset($autores) && count($autores)}
+                  <span class="badge pull-right">{count($autores)|default:0}</span>
                 {/if}
-             </h4>
+             </div>
            </div>
           </a>       
-          <div id="accordionAutor" class="panel-collapse collapse" >
+          <div id="accordionAutor" class="panel-collapse collapse col-md-12 p-rt-lt-0" >
             <ul id="autor" class="list-group scroll"   style="max-height: 300px;overflow-y: auto; margin-bottom: 0px;">
                {if isset($autores) && count($autores)}
                 {foreach item=a from = $autores}
                 <li class="list-group-item-jp col-md-12 p-rt-lt-0 padding-li2">
-                    <span class="badge position-badge">{$a.cantidad|default:0}</span>
-                    <a href="#{$a.Aut_Nombre}" style="cursor:pointer; color: #222;"><span class="autordocumento underline" id="autorDocumento">{$a.Aut_Nombre}</span></a>
+                    <div class="col-md-9 col-lg-9 p-rt-lt-0">
+                      <a href="#{$a.Aut_Nombre}" style="cursor:pointer; color: #222;"><span class="autordocumento underline" id="autorDocumento">{$a.Aut_Nombre}</span></a>
+                    </div>
+                    <div class="col-md-3 col-lg-3 p-rt-lt-0" style="position: absolute; top: 30%; right: 5%;">
+                      <span class="badge pull-right">{$a.cantidad|default:0}</span>
+                    </div>
                   </li>        
                 {/foreach}
                 {/if}             
@@ -140,23 +163,31 @@
         <!-- Filtro Formato -->
         <div class="side-menu2 col-md-12 p-rt-lt-0">
           <a data-toggle="collapse" data-parent="#accordion" href="#accordionFormato">
-            <div class="side-menu">
-              <h4 class="panel-title">
-               <strong>{$lenguaje["tabla_campo_tipo_documentos"]}</strong> 
-               {if isset($formatos) && count($formatos)}
-                  <span class="badge pull-right position-badge">{count($formatos)|default:0}</span>
+            <div class="col-lg-12 side-menu">
+              <div class="col-md-9 col-lg-9 p-rt-lt-0">
+                <h4 class="panel-title">
+                 <strong>{$lenguaje["tabla_campo_tipo_documentos"]}</strong>
+               </h4>
+             </div>
+             <div class="col-md-3 col-lg-3 p-rt-lt-0" style="position: absolute; top: 20%; right: 5%;">
+                {if isset($formatos) && count($formatos)}
+                  <span class="badge pull-right">{count($formatos)|default:0}</span>
                 {/if}
-             </h4>
+             </div>
            </div>
           </a>     
-          <div id="accordionFormato" class="panel-collapse collapse" >
+          <div id="accordionFormato" class="panel-collapse collapse col-md-12 p-rt-lt-0" >
             <ul id="formato" class="list-group scroll"   style="max-height: 300px;overflow-y: auto;margin-bottom: 0px;">              
                {if isset($formatos) && count($formatos)}
                 {foreach item=t from = $formatos}
                 <li class="list-group-item-jp col-md-12 p-rt-lt-0 padding-li2">
-                    <span class="badge position-badge">{$t.cantidad|default:0}</span>
-                    <a href="#{$t.Taf_Descripcion}" style="cursor:pointer; color: #222;"><span class="formatodocumento underline" id="formatoDocumento">{$t.Taf_Descripcion}</span></a>
-                  </li>        
+                    <div class="col-md-9 col-lg-9 p-rt-lt-0">
+                      <a href="#{$t.Taf_Descripcion}" style="cursor:pointer; color: #222;"><span class="formatodocumento underline" id="formatoDocumento">{$t.Taf_Descripcion}</span></a>
+                    </div>
+                    <div class="col-md-3 col-lg-3 p-rt-lt-0" style="position: absolute; top: 30%; right: 5%;">
+                      <span class="badge pull-right">{$t.cantidad|default:0}</span>
+                    </div>
+                </li>        
                 {/foreach}
                 {/if}             
             </ul>
@@ -168,7 +199,7 @@
 
 
   <div id="resultados">
-     <div class="col-xs-12 col-sm-8 col-md-offset-0 col-md-9 col-lg-offset-0 col-lg-10" style="margin-bottom: 15px;">
+     <div class="col-xs-12 col-sm-8 col-md-offset-0 col-md-9 col-lg-offset-0 col-lg-9" style="margin-bottom: 15px;">
       <div class="">
         <div class="">
             <div class="row">
@@ -196,13 +227,15 @@
                   {/if}
 
                 </div>
-              </div>      
-              <div class="col-xs-12 text-center">
-                  {foreach item=abc from=LIST_ABC}
-                      <div class="abc" letra="{$abc}">
-                            <b  id="letra" {if isset($filtroLetra) && $filtroLetra == $abc} class="active" {/if}> {$abc} </b>
-                      </div>
-                  {/foreach}
+              </div>
+              <div class="col-md-12 col-lg-12">
+                <div class="col-xs-12 col-md-12 col-lg-12 text-center letras">
+                    {foreach item=abc from=LIST_ABC}
+                        <div class="abc" letra="{$abc}">
+                              <b  id="letra" {if isset($filtroLetra) && $filtroLetra == $abc} class="active" {/if}> {$abc} </b>
+                        </div>
+                    {/foreach}
+                </div>
               </div>
               <div class="col-md-12 text-center">
                 {if isset($paises) && count($paises)}

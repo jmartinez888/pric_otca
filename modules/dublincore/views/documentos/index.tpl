@@ -269,7 +269,7 @@
                </div>
                {/if}    
 
-
+                <div class="col-md-12 col-lg-12">
                 <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3 resumen-home">
                   <div class="">
                     <div class="cabecera-resumenes">
@@ -281,13 +281,17 @@
                         </strong>
                        </h4>
                     </div>       
-                    <div id="accordionOne" class="panel-collapse">
+                    <div id="accordionOne" class="panel-collapse col-md-12 p-rt-lt-0">
                       <ul id="tematicas" class="list-group scroll"   style="height: 400px;overflow-y: auto;">
                           {if isset($temadocumento) && count($temadocumento)}
                             {foreach item=datos from = $temadocumento}
-                                 <li class="list-group-item-jp padding-li">
-                                <span class="badge pull-right">{$datos.cantidad|default:0}</span>
-                                <a href="#{$datos.Ted_Descripcion}" style="cursor:pointer"><span class="temadocumento subtitle-resumen" id="temadocumento">{$datos.Ted_Descripcion}</span></a>
+                              <li class="list-group-item-jp col-md-12 p-rt-lt-0 padding-li">
+                                <div class="col-md-9 col-lg-9 p-rt-lt-0">
+                                  <a href="#{$datos.Ted_Descripcion}" style="cursor:pointer"><span class="temadocumento subtitle-resumen" id="temadocumento">{$datos.Ted_Descripcion}</span></a>
+                                </div>
+                                <div class="col-md-3 col-lg-3 p-rt-lt-0" style="position: absolute; top: 30%; right: 5%;">
+                                  <span class="badge pull-right">{$datos.cantidad|default:0}</span>
+                                </div>
                               </li>                            
                             {/foreach}
                             {/if}
@@ -306,14 +310,18 @@
                           {/if}
                        </h4>
                      </div>       
-                    <div id="accordionOne2" class="panel-collapse " >
+                    <div id="accordionOne2" class="panel-collapse col-md-12 p-rt-lt-0" >
                       <ul id="tipodocumento" class="list-group scroll"   style="height: 400px;overflow-y: auto;">
                        {if isset($tipodocumento) && count($tipodocumento)}
                         {foreach item=datos from = $tipodocumento}
-                            <li class="list-group-item-jp padding-li">
-                                <span class="badge pull-right">{$datos.cantidad|default:0}</span>
-                                <a href="#{$datos.Tid_Descripcion}" style="cursor:pointer"><span class="palabraclave subtitle-resumen" id="palabraclave">{$datos.Tid_Descripcion}</span></a>
-                              </li>        
+                            <li class="list-group-item-jp col-md-12 p-rt-lt-0 padding-li">
+                                <div class="col-md-9 col-lg-9 p-rt-lt-0">
+                                  <a href="#{$datos.Tid_Descripcion}" style="cursor:pointer"><span class="palabraclave subtitle-resumen" id="palabraclave">{$datos.Tid_Descripcion}</span></a>
+                                </div>
+                                <div class="col-md-3 col-lg-3 p-rt-lt-0" style="position: absolute; top: 30%; right: 5%;">
+                                  <span class="badge pull-right">{$datos.cantidad|default:0}</span>
+                                </div>
+                            </li>        
                             {/foreach}
                             {/if}             
                       </ul>
@@ -331,13 +339,17 @@
                           {/if}
                        </h4>
                      </div>       
-                    <div id="accordionAutor" class="panel-collapse " >
+                    <div id="accordionAutor" class="panel-collapse col-md-12 p-rt-lt-0" >
                       <ul id="autor" class="list-group scroll"   style="height: 400px;overflow-y: auto;">
                          {if isset($autores) && count($autores)}
                           {foreach item=a from = $autores}
-                          <li class="list-group-item-jp padding-li">
-                              <span class="badge pull-right">{$a.cantidad|default:0}</span>
-                              <a href="#{$a.Aut_Nombre}" style="cursor:pointer"><span class="autordocumento subtitle-resumen" id="autorDocumento">{$a.Aut_Nombre}</span></a>
+                          <li class="list-group-item-jp col-md-12 p-rt-lt-0 padding-li">
+                              <div class="col-md-9 col-lg-9 p-rt-lt-0">
+                                <a href="#{$a.Aut_Nombre}" style="cursor:pointer"><span class="autordocumento subtitle-resumen" id="autorDocumento">{$a.Aut_Nombre}</span></a>
+                              </div>
+                              <div class="col-md-3 col-lg-3 p-rt-lt-0" style="position: absolute; top: 30%; right: 5%;">
+                                <span class="badge pull-right">{$a.cantidad|default:0}</span>
+                              </div>
                             </li>        
                           {/foreach}
                           {/if}             
@@ -356,13 +368,17 @@
                           {/if}
                       </h4>
                     </div>       
-                    <div id="accordionFormato" class="panel-collapse" >
+                    <div id="accordionFormato" class="panel-collapse col-md-12 p-rt-lt-0" >
                       <ul id="formato" class="list-group scroll"   style="height: 400px;overflow-y: auto;">              
                           {if isset($formatos) && count($formatos)}
                           {foreach item=t from = $formatos}
-                          <li class="list-group-item-jp padding-li">
-                            <span class="badge pull-right">{$t.cantidad|default:0}</span>
-                            <a href="#{$t.Taf_Descripcion}" style="cursor:pointer"><span class="formatodocumento subtitle-resumen" id="formatoDocumento">{$t.Taf_Descripcion}</span></a>
+                          <li class="list-group-item-jp col-md-12 p-rt-lt-0 padding-li">
+                            <div class="col-md-9 col-lg-9 p-rt-lt-0">
+                              <a href="#{$t.Taf_Descripcion}" style="cursor:pointer"><span class="formatodocumento subtitle-resumen" id="formatoDocumento">{$t.Taf_Descripcion}</span></a>
+                            </div>
+                            <div class="col-md-3 col-lg-3 p-rt-lt-0" style="position: absolute; top: 30%; right: 5%;">
+                              <span class="badge pull-right">{$t.cantidad|default:0}</span>
+                            </div>
                           </li>        
                           {/foreach}
                           {/if}             
@@ -370,6 +386,7 @@
                     </div>
                   </div>
                 </div>
+              </div>
             </div>
           </div>
             <!-- <p>Some default panel content here.</p> -->

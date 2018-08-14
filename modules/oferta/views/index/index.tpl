@@ -12,23 +12,27 @@
 	</div>
 	<div class="row">
 		{if isset($busqueda) || isset($busquedaAvanzada)}
-		<div class="col-md-2" style="margin-top: 50px;">
+		<div class="col-md-3" style="margin-top: 66px;">
 			<h4 class="resumen-busqueda"><strong>{$lenguaje["busqueda_avanzada_label_resumen_busqueda"]}</strong></h4>
       		<div class="panel-group" id="accordion">
         		<div class="side-menu2 col-md-12 p-rt-lt-0">
               		<a data-toggle="collapse" data-parent="#accordion" href="#accordionOne">
-              			<div class="side-menu">
-              				<h4 class="panel-title">
-	              				{$lenguaje["busqueda_avanzada_label_tipo_ins"]}
-				                {if isset($cantidadResultados)}
-				                    <span class="badge pull-right position-badge">{$cantidadResultados}</span> 
+              			<div class="col-lg-12 side-menu">
+              				<div class="col-md-9 col-lg-9 p-rt-lt-0">
+	              				<h4 class="panel-title">
+		              				{$lenguaje["busqueda_avanzada_label_tipo_ins"]}
+				                </h4>
+				            </div>
+			                <div class="col-md-3 col-lg-3 p-rt-lt-0" style="position: absolute; top: 10%; right: 5%;">
+			                	{if isset($cantidadResultados)}
+				                    <span class="badge pull-right position-badge">{$cantidadResultados}</span>
 				                {/if}
-			                </h4>
+			                </div>
 			            </div>
               		</a>
              			
            			       
-		          	<div id="accordionOne" class="panel-collapse collapse" >
+		          	<div id="accordionOne" class="panel-collapse collapse col-md-12 p-rt-lt-0" >
 			            <ul id="tematicas" class="list-group scroll"   style="max-height: 300px;overflow-y: auto; margin-bottom: 0px;">
 			                {if isset($pais_buscado)}
 		    			{$BPais = $pais_buscado}
@@ -68,8 +72,12 @@
 			                {if isset($resumen1) && count($resumen1)}
 			                  	{foreach item=datos1 from = $resumen1}
 			                       	<li class="list-group-item-jp col-md-12 p-rt-lt-0 padding-li2">
-			                      		<span class="badge pull-right position-badge">{$datos1.CantidadRegistros}</span>
-			                      		<a href="" style="cursor:pointer; color: #222;"><span class="temadocumento underline" id="temadocumento">{$datos1.Ins_Tipo}</span></a>
+			                      		<div class="col-md-9 col-lg-9 p-rt-lt-0">
+			                      			<a href="" style="cursor:pointer; color: #222;"><span class="temadocumento underline" id="temadocumento">{$datos1.Ins_Tipo}</span></a>
+			                      		</div>
+			                      		<div class="col-md-3 col-lg-3 p-rt-lt-0" style="position: absolute; top: 20%; right: 5%;">
+			                      			<span class="badge pull-right">{$datos1.CantidadRegistros}</span>
+			                      		</div>
 			                    	</li>                            
 			                  	{/foreach}
 			                {/if}
@@ -78,24 +86,32 @@
         		</div>
 		        <div class="side-menu2 col-md-12 p-rt-lt-0">
 		            <a data-toggle="collapse" data-parent="#accordion" href="#accordionOne2">
-		            	<div class="side-menu">
-		            		<h4 class="panel-title">
-			               		{$lenguaje["busqueda_avanzada_label_proyectosR"]}
-			               		{if isset($rowcount2)}
+		            	<div class="col-lg-12 side-menu">
+		            		<div class="col-md-9 col-lg-9 p-rt-lt-0">
+			            		<h4 class="panel-title">
+				               		{$lenguaje["busqueda_avanzada_label_proyectosR"]}
+			                	</h4>
+			                </div>
+		                	<div class="col-md-3 col-lg-3 p-rt-lt-0" style="position: absolute; top: 20%; right: 5%;">
+		                		{if isset($rowcount2)}
 			                  		<span class="badge pull-right position-badge">{$rowcount2}</span>
 			                	{/if}
-		                	</h4>
+		                	</div>
 		                </div> 
 		            </a>
 		             	
 		                  
-		          	<div id="accordionOne2" class="panel-collapse collapse" >
+		          	<div id="accordionOne2" class="panel-collapse collapse col-md-12 p-rt-lt-0" >
 			            <ul id="tipodocumento" class="list-group scroll"   style="max-height: 300px;overflow-y: auto; margin-bottom: 0px;">
 			             	{if isset($resumen2) && count($resumen2)}
 			              		{foreach item=datos2 from = $resumen2}
 			                  	<li class="list-group-item-jp col-md-12 p-rt-lt-0 padding-li2">
-			                      <span class="badge pull-right position-badge">{$datos2.CantidadRegistros}</span>
-			                      <a href="" style="cursor:pointer; color: #222;"><span class="palabraclave underline" id="palabraclave">{$datos2.Tem_Nombre}</span></a>
+			                      <div class="col-md-9 col-lg-9 p-rt-lt-0">
+			                      	<a href="" style="cursor:pointer; color: #222;"><span class="palabraclave underline" id="palabraclave">{$datos2.Tem_Nombre}</span></a>
+			                      </div>
+			                      <div class="col-md-3 col-lg-3 p-rt-lt-0" style="position: absolute; top: 10%; right: 5%;">
+			                      	<span class="badge pull-right position-badge">{$datos2.CantidadRegistros}</span>
+			                      </div>
 			                    </li>        
 			                  	{/foreach}
 			                {/if}             
@@ -105,39 +121,48 @@
         		<!-- Filtro Autor -->
 				<div class="side-menu2 col-md-12 p-rt-lt-0">
 			        <a data-toggle="collapse" data-parent="#accordion" href="#accordionAutor">
-			            <div class="side-menu">
-			                <h4 class="panel-title">
-			                	{$lenguaje["busqueda_avanzada_label_ofertasR"]}
-				                {if isset($rowcount3)}
+			            <div class="col-lg-12 side-menu">
+			            	<div class="col-md-9 col-lg-9 p-rt-lt-0">
+				                <h4 class="panel-title">
+				                	{$lenguaje["busqueda_avanzada_label_ofertasR"]}
+					            </h4>
+					        </div>
+				            <div class="col-md-3 col-lg-3 p-rt-lt-0" style="position: absolute; top: 10%; right: 5%;">
+				            	{if isset($rowcount3)}
 				                	<span class="badge pull-right position-badge">{$rowcount3}</span>
 				                {/if}
-				            </h4>
+				            </div>
 				        </div>
 		        	</a>
 		        	    
 			               
-			        <div id="accordionAutor" class="panel-collapse collapse" >
+			        <div id="accordionAutor" class="panel-collapse collapse col-md-12 p-rt-lt-0" >
 			        	<ul id="autor" class="list-group scroll"   style="max-height: 300px;overflow-y: auto;margin-bottom: 0px;">
 			               {if isset($resumen3) && count($resumen3)}
 			                {foreach item=a from = $resumen3}
 			                <li class="list-group-item-jp col-md-12 p-rt-lt-0 padding-li2">
-			                    <span class="badge pull-right position-badge">{$a.CantidadRegistros}</span>
-			                    {if $a.Tipo == 'ESPECIALIZACION'}
-			                    	{$IR_e = 'especializaciones'}
-			                    {else}
-									{$IR_e = 'no'}
-			                    {/if}
-			                    {if $a.Tipo == 'MAESTRÍA'}
-			                    	{$IR_m = 'maestrias'}
-			                    {else}
-			                    	{$IR_m = 'no'}
-			                    {/if}
-			                    {if $a.Tipo == 'DOCTORADO'}
-			                    	{$IR_d = 'doctorados'}
-			                    {else}
-			                    	{$IR_d = 'no'}
-			                    {/if}
-			                    <a href="{$_layoutParams.root_clear}oferta/index/busquedaAvanzada/{$BPais}/{$BDatos}/{$BProyectos}/{$BOfertas}/{$IR_e}/{$IR_m}/{$IR_d}" style="cursor:pointer; color: #222;"><span class="autordocumento underline" id="autorDocumento">{$a.Tipo}</span></a>
+			                    
+				                    {if $a.Tipo == 'ESPECIALIZACION'}
+				                    	{$IR_e = 'especializaciones'}
+				                    {else}
+										{$IR_e = 'no'}
+				                    {/if}
+				                    {if $a.Tipo == 'MAESTRÍA'}
+				                    	{$IR_m = 'maestrias'}
+				                    {else}
+				                    	{$IR_m = 'no'}
+				                    {/if}
+				                    {if $a.Tipo == 'DOCTORADO'}
+				                    	{$IR_d = 'doctorados'}
+				                    {else}
+				                    	{$IR_d = 'no'}
+				                    {/if}
+				                <div class="col-md-9 col-lg-9 p-rt-lt-0">
+				                    <a href="{$_layoutParams.root_clear}oferta/index/busquedaAvanzada/{$BPais}/{$BDatos}/{$BProyectos}/{$BOfertas}/{$IR_e}/{$IR_m}/{$IR_d}" style="cursor:pointer; color: #222;"><span class="autordocumento underline" id="autorDocumento">{$a.Tipo}</span></a>
+				                </div>
+			                    <div class="col-md-3 col-lg-3 p-rt-lt-0" style="position: absolute; top: 10%; right: 5%;">
+			                    	<span class="badge pull-right position-badge">{$a.CantidadRegistros}</span>
+			                    </div>
 			                  </li>        
 			                {/foreach}
 			                {/if}             
@@ -147,7 +172,7 @@
       		</div>
   		</div>
   		{/if}
-  		<div {if isset($busqueda) || isset($busquedaAvanzada)} class="col-md-10" {else} class="col-lg-12"
+  		<div {if isset($busqueda) || isset($busquedaAvanzada)} class="col-md-9" {else} class="col-lg-12"
   		{/if} >
 				<div class="panel-body p-rt-lt-0">
 					<div class="row">
@@ -353,20 +378,24 @@
 				        		<div class="">
 				          			<div class="cabecera-resumenes">
 				              			<h4 class="panel-title">
-				              			<a class="title-resumen" data-toggle="collapse" data-parent="#accordion" href="">
+				              			<div class="title-resumen" data-toggle="collapse" data-parent="#accordion" href="">
 				              			<strong>{$lenguaje["busqueda_avanzada_label_ins_reg"]}
 						                    <span class="badge pull-right">{$cantidad}</span> 
 				              			</strong>  
-				              			</a>
+				              			</div>
 				             			</h4>
 				           			</div>       
-						          	<div id="accordionOne" class="" >
+						          	<div id="accordionOne" class="col-md-12 p-rt-lt-0" >
 							            <ul id="tematicas" class="list-group scroll"   style="height: auto;overflow-y: auto;">
 							                {if isset($resumen1) && count($resumen1)}
 							                  	{foreach item=datos1 from = $resumen1}
-							                       	<li class="list-group-item-jp padding-li">
-							                      		<span class="badge pull-right">{$datos1.CantidadRegistros}</span>
-							                      		<a class="subtitle-resumen" href="{$_layoutParams.root_clear}oferta/index/buscarporpalabras/{$datos1.Ins_Tipo}" style="cursor:pointer"><span class="temadocumento" id="temadocumento">{$datos1.Ins_Tipo}</span></a>
+							                       	<li class="list-group-item-jp col-md-12 p-rt-lt-0 padding-li">
+							                      		<div class="col-md-9 col-lg-9 p-rt-lt-0">
+							                      			<a class="subtitle-resumen" href="{$_layoutParams.root_clear}oferta/index/buscarporpalabras/{$datos1.Ins_Tipo}" style="cursor:pointer"><span class="temadocumento" id="temadocumento">{$datos1.Ins_Tipo}</span></a>
+							                      		</div>
+							                      		<div class="col-md-3 col-lg-3 p-rt-lt-0" style="position: absolute; top: 30%; right: 5%;">
+							                      			<span class="badge pull-right">{$datos1.CantidadRegistros}</span>
+							                      		</div>
 							                    	</li>                            
 							                  	{/foreach}
 							                {/if}
@@ -380,20 +409,24 @@
 				        		<div class="">
 				          			<div class="cabecera-resumenes">
 				              			<h4 class="panel-title">
-				              			<a class="title-resumen" data-toggle="collapse" data-parent="#accordion" href="">
+				              			<div class="title-resumen" data-toggle="collapse" data-parent="#accordion" href="">
 				              			<strong>{$lenguaje["busqueda_avanzada_label_proyectosR"]}
 						                    <span class="badge pull-right">{$rowcount2}</span> 
 				              			</strong>  
-				              			</a>
+				              			</div>
 				             			</h4>
 				           			</div>       
-						          	<div id="accordionOne" class="" >
+						          	<div id="accordionOne" class="col-md-12 p-rt-lt-0" >
 							            <ul id="tematicas" class="list-group scroll"   style="height: auto;overflow-y: auto;">
 							                {if isset($resumen2) && count($resumen2)}
 							                  	{foreach item=datos2 from = $resumen2}
-							                       	<li class="list-group-item-jp padding-li">
-							                      		<span class="badge pull-right">{$datos2.CantidadRegistros}</span>
-							                      		<a class="subtitle-resumen" href="{$_layoutParams.root_clear}oferta/index/buscarportematica/{$datos2.Tem_Nombre}" style="cursor:pointer"><span class="temadocumento" id="temadocumento">{$datos2.Tem_Nombre}</span></a>
+							                       	<li class="list-group-item-jp col-md-12 p-rt-lt-0 padding-li">
+							                      		<div class="col-md-9 col-lg-9 p-rt-lt-0">
+							                      			<a class="subtitle-resumen" href="{$_layoutParams.root_clear}oferta/index/buscarportematica/{$datos2.Tem_Nombre}" style="cursor:pointer"><span class="temadocumento" id="temadocumento">{$datos2.Tem_Nombre}</span></a>
+							                      		</div>
+							                      		<div class="col-md-3 col-lg-3 p-rt-lt-0" style="position: absolute; top: 30%; right: 5%;">
+							                      			<span class="badge pull-right">{$datos2.CantidadRegistros}</span>
+							                      		</div>
 							                    	</li>                            
 							                  	{/foreach}
 							                {/if}
@@ -407,35 +440,40 @@
 				        		<div class="">
 				          			<div class="cabecera-resumenes">
 				              			<h4 class="panel-title">
-				              			<a class="title-resumen" data-toggle="collapse" data-parent="#accordion" href="">
+				              			<div class="title-resumen" data-toggle="collapse" data-parent="#accordion" href="">
 				              			<strong>{$lenguaje["busqueda_avanzada_label_ofertasR"]}
 						                    <span class="badge pull-right">{$rowcount3}</span> 
 				              			</strong>  
-				              			</a>
+				              			</div>
 				             			</h4>
 				           			</div>       
-						          	<div id="accordionOne" class="" >
+						          	<div id="accordionOne" class="col-md-12 p-rt-lt-0" >
 							            <ul id="tematicas" class="list-group scroll"   style="height: auto;overflow-y: auto;">
 							                {if isset($resumen3) && count($resumen3)}
 							                  	{foreach item=datos from = $resumen3}
-							                       	<li class="list-group-item-jp padding-li">
-							                      		<span class="badge pull-right">{$datos.CantidadRegistros}</span>
-							                      		{if $datos.Tipo == 'ESPECIALIZACION'}
-									                    	{$IR_e = 'especializaciones'}
-									                    {else}
-															{$IR_e = 'no'}
-									                    {/if}
-									                    {if $datos.Tipo == 'MAESTRÍA'}
-									                    	{$IR_m = 'maestrias'}
-									                    {else}
-									                    	{$IR_m = 'no'}
-									                    {/if}
-									                    {if $datos.Tipo == 'DOCTORADO'}
-									                    	{$IR_d = 'doctorados'}
-									                    {else}
-									                    	{$IR_d = 'no'}
-									                    {/if}
-							                      		<a class="subtitle-resumen" href="{$_layoutParams.root_clear}oferta/index/busquedaAvanzada/all/all/all/all/{$IR_e}/{$IR_m}/{$IR_d}" style="cursor:pointer"><span class="temadocumento" id="temadocumento">{$datos.Tipo}</span></a>
+							                       	<li class="list-group-item-jp col-md-12 p-rt-lt-0 padding-li">
+							                      		
+								                      		{if $datos.Tipo == 'ESPECIALIZACION'}
+										                    	{$IR_e = 'especializaciones'}
+										                    {else}
+																{$IR_e = 'no'}
+										                    {/if}
+										                    {if $datos.Tipo == 'MAESTRÍA'}
+										                    	{$IR_m = 'maestrias'}
+										                    {else}
+										                    	{$IR_m = 'no'}
+										                    {/if}
+										                    {if $datos.Tipo == 'DOCTORADO'}
+										                    	{$IR_d = 'doctorados'}
+										                    {else}
+										                    	{$IR_d = 'no'}
+										                    {/if}
+										                <div class="col-md-9 col-lg-9 p-rt-lt-0">
+							                      			<a class="subtitle-resumen" href="{$_layoutParams.root_clear}oferta/index/busquedaAvanzada/all/all/all/all/{$IR_e}/{$IR_m}/{$IR_d}" style="cursor:pointer"><span class="temadocumento" id="temadocumento">{$datos.Tipo}</span></a>
+							                      		</div>
+							                      		<div class="col-md-3 col-lg-3 p-rt-lt-0" style="position: absolute; top: 30%; right: 5%;">
+							                      			<span class="badge pull-right">{$datos.CantidadRegistros}</span>
+							                      		</div>
 							                    	</li>                            
 							                  	{/foreach}
 							                {/if}
@@ -449,6 +487,7 @@
 			    		<div id="listarInstituciones">
 			    		{if (isset($listaIns) && count($listaIns))}
 			        		{foreach key=key from=$listaIns item=b}
+			        		<div class="col-md-12 col-lg-12">
 			        			<div class="row" style="border-bottom: 1px solid #ddd; padding-bottom: 10px;">
 				        			<div class="col-md-10">
 				        				<a class="underline" style="color: black;" href="{$_layoutParams.root_clear}oferta/instituciones/ficha/{$b.Ins_IdInstitucion}">
@@ -502,6 +541,7 @@
 										<img width="80" src="{$_layoutParams.root_clear}modules/oferta/views/instituciones/img/{$b.Ins_img}" alt="{$b.Ins_img}" class="pais " data-toggle="tooltip" style="padding-bottom: 5px;" data-original-title="{$b.Ins_Nombre}">
 				        			</div>
 			        			</div>
+			        		</div>
 				        	{/foreach}
 				        	{$paginacion|default:""}
 				        {else}

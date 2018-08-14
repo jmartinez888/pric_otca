@@ -1,4 +1,4 @@
-<div class="col-xs-12 col-sm-8 col-md-offset-0 col-md-9 col-lg-offset-0 col-lg-10" style="margin-bottom: 15px;">
+<div class="col-xs-12 col-sm-8 col-md-offset-0 col-md-9 col-lg-offset-0 col-lg-9" style="margin-bottom: 15px;">
       <div class="">
         <div class="">
             <div class="row">
@@ -26,13 +26,15 @@
                   {/if}
 
                 </div>
-              </div>      
-              <div class="col-xs-12 text-center">
-                  {foreach item=abc from=LIST_ABC}
-                      <div class="abc" letra="{$abc}">
-                            <b  id="letra" {if isset($filtroLetra) && $filtroLetra == $abc} class="active" {/if}> {$abc} </b>
-                      </div>
-                  {/foreach}
+              </div>
+              <div class="col-md-12 col-lg-12">
+                <div class="col-xs-12 col-md-12 col-lg-12 text-center letras">
+                    {foreach item=abc from=LIST_ABC}
+                        <div class="abc" letra="{$abc}">
+                              <b  id="letra" {if isset($filtroLetra) && $filtroLetra == $abc} class="active" {/if}> {$abc} </b>
+                        </div>
+                    {/foreach}
+                </div>
               </div>
               <div class="col-md-12 text-center">
                 {if isset($paises) && count($paises)}
