@@ -29,5 +29,19 @@ class acercadeController extends Controller{
         $this->_view->getLenguaje("index_inicio");      
         $this->_view->renderizar('ora');
     }
+    public function elProyecto()
+    {       
+        $this->validarUrlIdioma();
+        $this->_view->setTemplate(LAYOUT_FRONTEND); 
+        $this->_view->getLenguaje("index_inicio");      
+        $this->_view->renderizar('elProyecto');
+    }
+    public function contacto()
+    {       
+        $this->validarUrlIdioma();
+        $this->_view->setTemplate(LAYOUT_FRONTEND); 
+        $this->_view->getLenguaje("index_inicio");      
+        $this->_view->renderizar('contacto');
+    }
 }
 ?>

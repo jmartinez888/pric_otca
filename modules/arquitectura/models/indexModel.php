@@ -332,7 +332,7 @@ class indexModel extends Model {
         }
     }
 
-    public function getPaginaTraducida($condicion, $Idi_IdIdioma) {
+    public function getPaginaTraducida($condicion, $Idi_IdIdioma = "es") {
         try{
             $paginas = $this->_db->query(
                     "SELECT 

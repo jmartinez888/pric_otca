@@ -38,7 +38,7 @@ class indexController extends Controller
             $this->_view->setJs(array('index'));
             $condicion1 = '';
             $id = $this->filtrarInt($idPagina);
-
+// echo Cookie::lenguaje();
             $condicion1 .= " WHERE pa.Pag_Estado = 1 AND pa.Pag_IdPagina = $id ";
             $datos = $this->_pagina->getPaginaTraducida($condicion1, Cookie::lenguaje());
 

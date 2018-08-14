@@ -1,10 +1,7 @@
 <div id="texto" class="col-xs-8 font-tahoma11cinza-escuro" style="padding-top: 20px;padding-bottom: 20px">
 	<div class="row" style="padding-top: 20px;" >
 		
-		<div class="col-xs-2">
-			
-		</div>
-		<div class="container col-xs-8 border-1">
+		<div class="container col-xs-offset-1 col-xs-10 border-1">
 		<div>
 			<div style="padding-top: 10px">
 		              <p></p>
@@ -201,7 +198,7 @@
                             <p class="card-text" style="font-size: 12px;"><i class="fa fa-calendar"></i> Publicado: 22 de Marzo, 2018</p>
                         </div>
                     </div>
-                </a>
+                </a>  
                 <a href="{$_layoutParams.root}noticias/index/index/343" class="col-md-12 col-sm-12 col-xs-12  link-tabs-jsoft">
                     <div class="col-md-4 col-sm-4 col-xs-4  py-3 px-2">
                         <img src="{$_layoutParams.ruta_img}img-noti2.jpg" class="w-100">
