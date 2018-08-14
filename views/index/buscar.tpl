@@ -42,7 +42,7 @@
             <div class="panel-heading">
                 <h3 class="panel-title"><b>{$lenguaje.buscador_listado_titulo}</b></h3> 
             </div>
-            <div id="">                
+            <div id="ResulllltadoBusqueda">                
                 {if isset($resultadoBusqueda) && count($resultadoBusqueda)}
                     <div class="panel-body">
                         <div class="row">

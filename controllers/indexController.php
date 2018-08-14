@@ -391,7 +391,7 @@ class indexController extends Controller
         //$this->_jsonBusqueda = $listaBus;
         unset($listaBus);
         $paginador = new Paginador();
-        $this->_view->assign('resultadoBusqueda', $paginador->paginar($_SESSION['resultado'], "ResultadoBusqueda", "", false, 25));
+        $this->_view->assign('resultadoBusqueda', $paginador->paginar($_SESSION['resultado'], "ResultadoBusqueda", "", false, CANT_REG_PAG));
         $this->_view->assign('numeropagina', $paginador->getNumeroPagina());
         $this->_view->assign('cantidadporpagina', $registros);
         $this->_view->assign('paginacion', $paginador->getView('paginacion_ajax'));
@@ -454,13 +454,14 @@ class indexController extends Controller
     public function _paginacion_ResultadoBusqueda() 
     {
         $paginador = new Paginador();
+        $this->_dublinModel = $this->loadModel('documentos', 'dublincore');
         $this->_view->getLenguaje("index_inicio");
         $this->_view->getLenguaje("index_buscador");
         $registros = $this->getInt('registros');
         $pagina = $this->getPostParam('pagina');
         $idiomas = $this->_dublinModel->getIdiomas();
         //echo $pagina;
-        $this->_view->assign('resultadoBusqueda', $paginador->paginar($_SESSION['resultado'], "ResultadoBusqueda", "", $pagina, 25));
+        $this->_view->assign('resultadoBusqueda', $paginador->paginar($_SESSION['resultado'], "ResultadoBusqueda", "", $pagina, CANT_REG_PAG));
         $this->_view->assign('idiomas', $idiomas);
         $this->_view->assign('numeropagina', $paginador->getNumeroPagina());
         $this->_view->assign('cantidadporpagina', $registros);
