@@ -5,7 +5,7 @@
   <div class=" " style="margin-bottom: 0px !important">
     <div class="text-center text-bold" style="margin-bottom: 20px; color: #267161;">
       <h3 style="text-transform: uppercase; margin: 0; font-weight: bold;">
-        Titulo de Nuevo curso mooc
+<!--         Titulo de Nuevo curso mooc -->
                 </h3>
     </div>
   </div>
