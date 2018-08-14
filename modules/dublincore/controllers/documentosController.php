@@ -31,8 +31,8 @@ class documentosController extends Controller{
         //Para modal Adjuntar archivo
 
         $paginador = new Paginador();
-        $this->_view->setJs(array('documentos'));
-		$this->_view->setCss(array('listadocumentos'));
+        $this->_view->setJs(array('documentos', "jp-index"));
+		$this->_view->setCss(array('listadocumentos', "jp-index"));
 
         $condicion = " WHERE Dub_Estado = 1 ";
 
@@ -93,7 +93,7 @@ class documentosController extends Controller{
         $this->_view->getLenguaje("bdrecursos_registros");
         $this->_view->getLenguaje("bdrecursos_index");
 
-		$this->_view->setCss(array('listadocumentos'));
+		$this->_view->setCss(array('listadocumentos', "jp-index"));
         $this->_view->setJs(array('documentos'));
 		$pagina = $this->getInt('pagina');
         //$palabra = $this->getSql('palabra'); 
@@ -757,6 +757,7 @@ class documentosController extends Controller{
         $this->_view->getLenguaje("bd_documentos");
 		$this->_view->getLenguaje("bdrecursos_metadata");
 		$this->_view->setTemplate(LAYOUT_FRONTEND);
+        $this->_view->setCss(array("jp-index"));
 		$idioma = Cookie::lenguaje();
 		$e = $this->loadModel('bdrecursos', true);        
         $condicion = "";

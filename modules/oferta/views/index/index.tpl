@@ -29,7 +29,7 @@
              			
            			       
 		          	<div id="accordionOne" class="panel-collapse collapse" >
-			            <ul id="tematicas" class="list-group scroll"   style="height: auto;overflow-y: auto; margin-bottom: 0px;">
+			            <ul id="tematicas" class="list-group scroll"   style="max-height: 300px;overflow-y: auto; margin-bottom: 0px;">
 			                {if isset($pais_buscado)}
 		    			{$BPais = $pais_buscado}
 		    			{else}
@@ -90,7 +90,7 @@
 		             	
 		                  
 		          	<div id="accordionOne2" class="panel-collapse collapse" >
-			            <ul id="tipodocumento" class="list-group scroll"   style="height: auto;overflow-y: auto; margin-bottom: 0px;">
+			            <ul id="tipodocumento" class="list-group scroll"   style="max-height: 300px;overflow-y: auto; margin-bottom: 0px;">
 			             	{if isset($resumen2) && count($resumen2)}
 			              		{foreach item=datos2 from = $resumen2}
 			                  	<li class="list-group-item-jp col-md-12 p-rt-lt-0 padding-li2">
@@ -117,7 +117,7 @@
 		        	    
 			               
 			        <div id="accordionAutor" class="panel-collapse collapse" >
-			        	<ul id="autor" class="list-group scroll"   style="height: auto;overflow-y: auto;margin-bottom: 0px;">
+			        	<ul id="autor" class="list-group scroll"   style="max-height: 300px;overflow-y: auto;margin-bottom: 0px;">
 			               {if isset($resumen3) && count($resumen3)}
 			                {foreach item=a from = $resumen3}
 			                <li class="list-group-item-jp col-md-12 p-rt-lt-0 padding-li2">

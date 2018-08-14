@@ -1,11 +1,6 @@
-<div class="col-xs-12 col-sm-8 col-md-offset-0 col-md-9 col-lg-offset-0 col-lg-10">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-  <h4 class="panel-title">
-    <strong>{$lenguaje["titulo_resultados_documentos"]}</strong> 
-</h4>
-  </div>
-        <div class="panel-body">
+<div class="col-xs-12 col-sm-8 col-md-offset-0 col-md-9 col-lg-offset-0 col-lg-10" style="margin-bottom: 15px;">
+      <div class="">
+        <div class="">
             <div class="row">
               <div class="col-md-12">
                   <div class="row">
@@ -43,15 +38,20 @@
                 {if isset($paises) && count($paises)}
                     {foreach item=datos from=$paises}
                         <div {if isset($filtroPais) && $datos.Pai_Nombre == $filtroPais}
-                         style="margin-top:17px;display:inline-block;vertical-align:top;text-align:center; background: #40bc4bad;" 
+                         class="instituciones-paises-color" 
                          {else}
-                          style="margin-top:17px;display:inline-block;vertical-align:top;text-align:center;"
+                          class="instituciones-paises" 
                          {/if}
                            >
                             <img class="pais " data-toggle="tooltip" data-original-title="{$lenguaje['title_paises_buscar']}" style="cursor:pointer;width:40px" src="{$_layoutParams.root_clear}public/img/legal/{$datos.Pai_Nombre}.png" pais="{$datos.Pai_Nombre}" />
                             <br>
                             <b>{$datos.Pai_Nombre}</b>
-                            <p style="font-size:.8em">({$datos.cantidad|default:0})</p>
+                            <br>
+                            {if isset($filtroPais) && $datos.Pai_Nombre == $filtroPais}
+                            <span class="badge-jp" style="font-size:.8em">{$datos.cantidad|default:0}</span>
+                            {else}
+                            <span class="badge" style="font-size:.8em">{$datos.cantidad|default:0}</span>
+                            {/if}
                         </div>
                     {/foreach}
                {else}
@@ -64,49 +64,49 @@
                 {/if}
                 {if isset($filtrousuario)}
                 <input type="hidden" id= "filtrousuariodocumento" value="{$filtrousuario}">
-                <a class="badge" href="{$_layoutParams.root_clear}dublincore/documentos/busqueda/{$palabrabuscada|default:'all'}/all/{$filtroTipo|default:'all'}/{$filtroAutor|default:'all'}/{$filtroFormato|default:'all'}/{$filtroPais|default:'all'}/all">
+                <a class="badge" style="margin: 3px !important;" href="{$_layoutParams.root_clear}dublincore/documentos/busqueda/{$palabrabuscada|default:'all'}/all/{$filtroTipo|default:'all'}/{$filtroAutor|default:'all'}/{$filtroFormato|default:'all'}/{$filtroPais|default:'all'}/all">
                  Usuario: {$usuario}  <i class="fa fa-times"></i> 
                 </a>
                 {/if}
 
                 {if isset($filtroTema)}
                 <input type="hidden" id= "filtrotemadocumento" value="{$filtroTema}">
-                <a class="badge" href="{$_layoutParams.root_clear}dublincore/documentos/busqueda/{$palabrabuscada|default:'all'}/all/{$filtroTipo|default:'all'}/{$filtroAutor|default:'all'}/{$filtroFormato|default:'all'}/{$filtroPais|default:'all'}/{$filtrousuario|default:'all'}">
+                <a class="badge" style="margin: 3px !important;" href="{$_layoutParams.root_clear}dublincore/documentos/busqueda/{$palabrabuscada|default:'all'}/all/{$filtroTipo|default:'all'}/{$filtroAutor|default:'all'}/{$filtroFormato|default:'all'}/{$filtroPais|default:'all'}/{$filtrousuario|default:'all'}">
                  Tema: {$filtroTema}  <i class="fa fa-times"></i> 
                 </a>
                 {/if}
                 {if isset($filtroTipo)}
                 <input type="hidden" id= "filtrotipodocumento" value="{$filtroTipo}">
-                <a class="badge" href="{$_layoutParams.root_clear}dublincore/documentos/busqueda/{$palabrabuscada|default:'all'}/{$filtroTema|default:'all'}/all/{$filtroAutor|default:'all'}/{$filtroFormato|default:'all'}/{$filtroPais|default:'all'}/{$filtrousuario|default:'all'}">
+                <a class="badge" style="margin: 3px !important;" href="{$_layoutParams.root_clear}dublincore/documentos/busqueda/{$palabrabuscada|default:'all'}/{$filtroTema|default:'all'}/all/{$filtroAutor|default:'all'}/{$filtroFormato|default:'all'}/{$filtroPais|default:'all'}/{$filtrousuario|default:'all'}">
                  Tipo: {$filtroTipo} <i class="fa fa-times"></i>               
                 </a>
                 {/if}
                 {if isset($filtroAutor)}
                 <input type="hidden" id= "filtroautordocumento" value="{$filtroAutor}">
-                <a class="badge" href="{$_layoutParams.root_clear}dublincore/documentos/busqueda/{$palabrabuscada|default:'all'}/{$filtroTema|default:'all'}/{$filtroTipo|default:'all'}/all/{$filtroFormato|default:'all'}/{$filtroPais|default:'all'}/{$filtrousuario|default:'all'}">
+                <a class="badge" style="margin: 3px !important;" href="{$_layoutParams.root_clear}dublincore/documentos/busqueda/{$palabrabuscada|default:'all'}/{$filtroTema|default:'all'}/{$filtroTipo|default:'all'}/all/{$filtroFormato|default:'all'}/{$filtroPais|default:'all'}/{$filtrousuario|default:'all'}">
                  Autor: {$filtroAutor} <i class="fa fa-times"></i>               
                 </a>
                 {/if}
                 {if isset($filtroFormato)}
                 <input type="hidden" id= "filtroformatodocumento" value="{$filtroFormato}">
-                <a class="badge" href="{$_layoutParams.root_clear}dublincore/documentos/busqueda/{$palabrabuscada|default:'all'}/{$filtroTema|default:'all'}/{$filtroTipo|default:'all'}/{$filtroAutor|default:'all'}/all/{$filtroPais|default:'all'}/{$filtrousuario|default:'all'}">
+                <a class="badge" style="margin: 3px !important;" href="{$_layoutParams.root_clear}dublincore/documentos/busqueda/{$palabrabuscada|default:'all'}/{$filtroTema|default:'all'}/{$filtroTipo|default:'all'}/{$filtroAutor|default:'all'}/all/{$filtroPais|default:'all'}/{$filtrousuario|default:'all'}">
                  Formato: {$filtroFormato} <i class="fa fa-times"></i>               
                 </a>
                 {/if}
                 {if isset($filtroPais)}
                 <input type="hidden" id= "filtropaisdocumento" value="{$filtroPais}">
-                <a class="badge " href="{$_layoutParams.root_clear}dublincore/documentos/busqueda/{$palabrabuscada|default:'all'}/{$filtroTema|default:'all'}/{$filtroTipo|default:'all'}/{$filtroAutor|default:'all'}/{$filtroFormato|default:'all'}/all/{$filtrousuario|default:'all'}">
+                <a class="badge" style="margin: 3px !important;" href="{$_layoutParams.root_clear}dublincore/documentos/busqueda/{$palabrabuscada|default:'all'}/{$filtroTema|default:'all'}/{$filtroTipo|default:'all'}/{$filtroAutor|default:'all'}/{$filtroFormato|default:'all'}/all/{$filtrousuario|default:'all'}">
                  País: {$filtroPais} <i class="fa fa-times"></i>               
                 </a>
                 {/if}
                 {if isset($filtroLetra)}
                 <input type="hidden" id= "filtroletradocumento" value="{$filtroLetra}">
-                <a class="badge " href="{$_layoutParams.root_clear}dublincore/documentos/busqueda/{$palabrabuscada|default:'all'}/{$filtroTema|default:'all'}/{$filtroTipo|default:'all'}/{$filtroAutor|default:'all'}/{$filtroFormato|default:'all'}/{$filtroPais|default:'all'}/{$filtrousuario|default:'all'}/all">
+                <a class="badge" style="margin: 3px !important;" href="{$_layoutParams.root_clear}dublincore/documentos/busqueda/{$palabrabuscada|default:'all'}/{$filtroTema|default:'all'}/{$filtroTipo|default:'all'}/{$filtroAutor|default:'all'}/{$filtroFormato|default:'all'}/{$filtroPais|default:'all'}/{$filtrousuario|default:'all'}/all">
                  País: {$filtroLetra} <i class="fa fa-times"></i>               
                 </a>
                 {/if}
                 {if isset($filtroTema) OR isset($filtroTipo) OR isset($filtroAutor) OR isset($filtroFormato) OR isset($filtroPais) OR isset($filtroLetra)}
-                  <a class="badge" data-toggle="tooltip" data-placement="top" title="Quitar todos los filtros" style="background: #bd0000b5" href="{$_layoutParams.root_clear}dublincore/documentos/busqueda/{$palabrabuscada|default:'all'}/all/all/all/all/all/all">
+                  <a class="badge" style="margin: 3px !important;" data-toggle="tooltip" data-placement="top" title="Quitar todos los filtros" style="background: #bd0000b5" href="{$_layoutParams.root_clear}dublincore/documentos/busqueda/{$palabrabuscada|default:'all'}/all/all/all/all/all/all">
                    Quitar Filtros <i class="fa fa-times"></i>
                    </a>
                 {/if}
@@ -115,18 +115,23 @@
                    <div class="col-md-12">
                       <div class="row">
                         <div class="col-md-6">
-                        <b>Resultado de búsqueda</b> {if isset($resultPalabra) }{$resultPalabra}{/if}
-                      </div>
-                      <div class="col-md-6 text-right">
-                       <b><font size="-1">{$lenguaje["total_resultados_documentos"]}: {$totaldocumentos[0]}</font></b>
-                      </div>
+                          <h3>{$lenguaje["total_resultados_documentos"]}: {$totaldocumentos[0]}</h3>
+                        </div>
+                        <div class="col-md-6">
+                         {if isset($resultPalabra) }
+                          <b>Resultado de búsqueda</b>
+                         {$resultPalabra}{/if}
+                        </div>
+                        <div class="col-lg-12">
+                            <hr class="cursos-hr">
+                        </div>
                       </div>        
                    </div>
                    {/if}               
             </div>
             <!-- <p>Some default panel content here.</p> -->
         </div>
-    <div id="paginar">
+    <div id="paginar" style="float: inherit;">
         <div class="table-responsive">
           {if isset($documentos) && count($documentos)}
             <table class="table table-hover table-condensed table-filtros">
@@ -164,16 +169,17 @@
                          <!-- <td> <a class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" href="{$_layoutParams.root_clear}dublincore/documentos/metadata/{$datos.Dub_IdDublinCore}" target="_blank" title="{$lenguaje["tabla_campo_detalle_documentos"]}"><i class="glyphicon glyphicon-list-alt" ></i></a>
                         <a data-toggle="tooltip" data-placement="top" href="{$_layoutParams.root_clear}dublincore/documentos/descargar/{$datos.Arf_PosicionFisica}/{$datos.Dub_IdDublinCore}" target="_blank" title="{$lenguaje['icono_descargar_documentos']}" class="btn btn-default btn-sm" ><i class="glyphicon glyphicon-download-alt" ></i></a> 
  -->
+                        <td>
                         {if $_acl->permiso("editar_todos_los_documentos") || $_acl->Usu_IdUsuario() == $datos.Usu_IdUsuario}
                           {if $_acl->permiso("editar_documentos")}
-                              <a data-toggle="tooltip" data-placement="top" type="button" title="{$lenguaje['label_editar_bdrecursos']}" class="btn btn-default btn-sm glyphicon glyphicon-edit" href="{$_layoutParams.root}dublincore/editar/index/{$datos.Dub_IdDublinCore}" target="_blank">
+                              <a data-toggle="tooltip" data-placement="top" type="button" title="{$lenguaje['label_editar_bdrecursos']}" class="btn btn-primary btn-sm glyphicon glyphicon-edit" href="{$_layoutParams.root}dublincore/editar/index/{$datos.Dub_IdDublinCore}" target="_blank" style="margin: 3px;">
                               </a>
                           {/if}
                           {if $_acl->permiso("cambiar_estado_documentos")}
-                              <a data-toggle="tooltip" data-placement="top" class="btn btn-default btn-sm glyphicon glyphicon-refresh ce_dublin" id_dublin="{$datos.Dub_IdDublinCore}" estado_dublin="{if $datos.Dub_Estado==0}1{/if}{if $datos.Dub_Estado==1}2{/if}{if $datos.Dub_Estado==2}0{/if}"  title="{$lenguaje['cambiar_estado_bdrecursos']}" > </a>
+                              <a data-toggle="tooltip" data-placement="top" class="btn btn-success btn-sm glyphicon glyphicon-refresh ce_dublin" id_dublin="{$datos.Dub_IdDublinCore}" estado_dublin="{if $datos.Dub_Estado==0}1{/if}{if $datos.Dub_Estado==1}2{/if}{if $datos.Dub_Estado==2}0{/if}"  title="{$lenguaje['cambiar_estado_bdrecursos']}" style="margin: 3px;"> </a>
                           {/if}
                           {if $_acl->permiso("eliminar_documentos")}
-                               <a data-toggle="modal" data-target="#confirm-delete" href="#" type="button" title="{$lenguaje['label_eliminar_bdrecursos']}" data-id='{$datos.Dub_IdDublinCore}' data-nombre="{$datos.Dub_Titulo}" class="btn btn-default btn-sm glyphicon glyphicon-trash" >
+                               <a data-toggle="modal" data-target="#confirm-delete" href="#" type="button" title="{$lenguaje['label_eliminar_bdrecursos']}" data-id='{$datos.Dub_IdDublinCore}' data-nombre="{$datos.Dub_Titulo}" class="btn btn-danger btn-sm glyphicon glyphicon-trash" style="margin: 3px;">
                               </a>
                           {/if}
                         {/if}
