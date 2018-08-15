@@ -1,5 +1,5 @@
 {include file='modules/elearning/views/cursos/menu/lateral.tpl'}
-<div class="col-lg-9" style="margin-bottom: 20px">    
+<div class="col-lg-10" style="margin-bottom: 20px">    
     <div class="col-lg-12">
         <h3>Verificación de Certificados</h3>
         <hr class="cursos-hr">

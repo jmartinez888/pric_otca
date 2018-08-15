@@ -1,6 +1,6 @@
 <input id="hidden_url" value="{BASE_URL}elearning/" hidden="hidden"/>
 {include file='modules/elearning/views/cursos/menu/lateral.tpl'}
-<div class="col-lg-9">
+<div class="col-lg-10">
     <div class="row">
         <div class="col-lg-12">
             <h3>Calendario de Cursos</h3>
