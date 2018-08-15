@@ -202,11 +202,11 @@
         'thumbnail': '{$_layoutParams.ruta_img}slider_noticias/thumbnail/noticia1.JPG',
         'credit':'©  OTCA | foto ceremonia: Marcos Corrêa/PR',      
         'categoria': 'NOTICIA',
-        'headline': 'Secretaria General es condecorada con Orden de Rio Branco.',
+        'headline': 'Potencialidades - Plantas para uso medicinal ou cosmético.',
         // 'headline2': 'Urgen compromisos para su conservación',
         
         'href': '{$_layoutParams.root}noticias/index/index/341',
-        'storyTitle': 'La Secretaria General de la OTCA, Embajadora María Jacqueline Mendoza, ...'
+        'storyTitle': 'Potencialidades - Plantas para uso medicinal ou cosmético ...'
 
 
     }, 
@@ -216,12 +216,12 @@
         'thumbnail': '{$_layoutParams.ruta_img}slider_noticias/thumbnail/noticia2.jpg',
         'credit':'© OTCA',      
         'categoria': 'COMUNICADO',
-        'headline': 'OTCA celebra el Día Mundial del Agua con varias actividades en el 8º Foro Mundial de Agua.',
+        'headline': 'La selva amazónica: formada hace 20 millones de años',
         // 'headline2': 'WWF lanza Premio Periodístico en el Perú',
         
         //'href': 'http://www.otca-oficial.info/news/details/333',
         'href': '{$_layoutParams.root}noticias/index/index/333',
-        'storyTitle': 'OTCA celebra el Día Mundial del Agua con varias actividades en el 8º Foro...'
+        'storyTitle': 'La selva amazónica: formada hace 20 millones de años al surgir de los andes...'
     }, 
     {
         
@@ -229,12 +229,12 @@
         'thumbnail': '{$_layoutParams.ruta_img}slider_noticias/thumbnail/noticia3.jpg',
         'credit':'© OTCA',      
         'categoria': 'EVENTO',
-        'headline': '22 de abril: Día Internacional de la Madre Tierra.',
+        'headline': 'La atlántida amazónica.',
         // 'headline2': 'Iniciativa logra recuperar y reforestar suelos degradados',
         
         //'href': 'http://www.otca-oficial.info/news/details/338',
         'href': '{$_layoutParams.root}noticias/index/index/338',
-        'storyTitle': 'Hoy 22 de abril, se conmemora mundialmente el Día Internacional de la Madre Tierra, ...'
+        'storyTitle': 'La atlántida amazónica, nuevas pruebas sedimentarias sufieren que, hace millones de años, una parte de ...'
     }, 
     {
         
@@ -242,12 +242,12 @@
         'thumbnail': '{$_layoutParams.ruta_img}slider_noticias/thumbnail/noticia4.jpg',
         'credit':'© CAF | OTCA',        
         'categoria': 'INVESTIGACIÓN',
-        'headline': 'OTCA y CAF firman acuerdo para la promoción de la conservación ambiental.',
+        'headline': '¿Cuándo se formó el río Amazonas?',
         // 'headline2': 'Promoviendo su conservación en el litoral peruano',
         
         //'href': 'http://www.otca-oficial.info/news/details/328',
         'href': '{$_layoutParams.root}noticias/index/index/328',
-        'storyTitle': 'Fue firmado hoy, 19 de marzo, un Acuerdo Marco de Cooperación entre la Organización del Tratado de Cooperación Amazónica ...'
+        'storyTitle': 'Un nuevo estudio data el nacimiento del río más caudaloso del mundo en más de 9 millones de años ...'
     },
 
     
