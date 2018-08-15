@@ -125,11 +125,30 @@
 	vertical-align: baseline;
 	background-color: #fff;
 	border-radius: 10px;
-	min-width: 40px !important;
-	font-size: 15px !important;
+	min-width: 30px !important;
+	font-size: 12px !important;
 }
 .letras{
 	margin-top: 15px;
 	background-color: #40bc4bad;
 	border-radius: 5px;
+}
+.descripcion-documentos{
+    margin-bottom: 15px;
+    margin-top: 0px;
+    text-align: justify;
+}
+.badge-pais{
+	display: inline-block;
+	padding: 3px 7px;
+	font-weight: 700;
+	line-height: 1;
+	color: #fff;
+	text-align: center;
+	white-space: nowrap;
+	vertical-align: baseline;
+	background-color: #777;
+	border-radius: 10px;
+	min-width: 30px !important;
+	font-size: 12px !important;
 }

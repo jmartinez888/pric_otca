@@ -253,7 +253,7 @@
                             {if isset($filtroPais) && $datos.Pai_Nombre == $filtroPais}
                             <span class="badge-jp" style="font-size:.8em">{$datos.cantidad|default:0}</span>
                             {else}
-                            <span class="badge" style="font-size:.8em">{$datos.cantidad|default:0}</span>
+                            <span class="badge-pais" style="font-size:.8em">{$datos.cantidad|default:0}</span>
                             {/if}
                         </div>
                     {/foreach}
