@@ -21,6 +21,9 @@
                         {/if}
                     </div>
                 </div>
+                <div class="col-lg-12 p-rt-lt-0">
+                    <hr class="cursos-hr">
+                </div>
                 <div class="col col-lg-9">
                     <h3 class="titulo-ficha">{$foro.For_Titulo}</h3>
                 </div>
