@@ -1,6 +1,6 @@
 <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12">
     {include file='modules/foro/views/index/menu/lateral.tpl'}
-    <div  class="col-md-9 col-xs-12 col-sm-8 col-lg-9">
+    <div  class="col-md-10 col-xs-12 col-sm-8 col-lg-10">
         <div class="row ficha_foro">            
             <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 
@@ -122,14 +122,14 @@
                     {/if}
                     {if isset($foro.Sub_Foros.For_IdPadre)}
                         {if $foro.Row_Estado == 1 && $foro.For_Estado == 1}
-                        <div class="col-lg-1 pull-left">
+                        <div class="col-lg-2 pull-left">
                             <a type="button"  href="{$_layoutParams.root}foro/admin/form/new/forum/{$foro.For_IdForo}" class="btn btn-primary btn-sm" title="Nuevo Sub Foro">Nuevo</a>
                         </div>
                         {/if}
                     {else}
                         {if !isset($foro.For_IdPadre)}
                             {if $foro.Row_Estado == 1 && $foro.For_Estado == 1}
-                            <div class="col-lg-1 pull-left">
+                            <div class="col-lg-2 pull-left">
                                 <a type="button"  href="{$_layoutParams.root}foro/admin/form/new/forum/{$foro.For_IdForo}" class="btn btn-primary btn-sm" title="Nuevo Sub Foro">Nuevo</a>
                             </div>
                             {/if}
@@ -250,7 +250,7 @@
                                 {/if} 
                             {/if}                        
                         {else}
-                        <button data-toggle="modal" data-target="#modal-login" id="login-form-link" class="btn btn-default btn-comentar" style="margin-left: 64%;">
+                        <button data-toggle="modal" data-target="#modal-login" id="login-form-link" class="btn btn-default btn-comentar" style="margin-left: 60%;">
                             <i class="glyphicon glyphicon-comment"></i>
                         &nbsp;Comentar</button>
                         <button data-toggle="modal" data-target="#modal-login" id="login-form-link" class="btn-like btn pull-right">
@@ -963,13 +963,15 @@
                                         <img class="round" src="https://8share-production-my.s3.amazonaws.com/campaigns/4898/photos/profile/thumb_copy.png?1397732185" alt="Perfil">
                                     </div>
                                 </a>
-                                <div class="col-lg-8 legend-info p-rt-lt-0">
+                                <div class="col-lg-7 p-rt-lt-0">
                                     <a href="#" target="_blank">
                                         <strong class="underline">{$facilitador.Usu_Nombre} {$facilitador.Usu_Apellidos}</strong>
                                     </a>
-                                        <hr class="cursos-hr2">                                
+                                        <hr class="cursos-hr2">
+                                        <div class="">                               
                                         {$facilitador.Rol_Nombre} <br>
                                         {$facilitador.Usu_InstitucionLaboral}
+                                        </div>
                                 </div>
                                 
                             </li> 
@@ -1061,7 +1063,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                <button type="button" id_foro="52" class="btn btn-primary btn-md enviar_reporte" data-dismiss="modal" style="margin-left: 88%;">Enviar</button>
+                                <button type="button" id_foro="{$foro.For_IdForo}" class="btn btn-primary btn-md enviar_reporte" data-dismiss="modal" style="margin-left: 88%;">Enviar</button>
                                 </div>                               
                             </div>
                         </div>

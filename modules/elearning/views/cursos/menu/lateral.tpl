@@ -36,6 +36,11 @@
     box-shadow: 3px 3px 10px rgba(100, 100, 100, 0.6);
   }
 
+  .p-rt-lt-0{
+  padding-right: 0px;
+  padding-left: 0px;
+}
+
   .contenedor {
       padding-top: 10px ;
       background-color: #ffffff;
@@ -220,13 +225,20 @@
 
 
 
-  <div class="col col-md-3" >
+  <div class="col col-md-2" >
     <div class="col-md-12 menu-cursos" style="padding-top: 40px;">
-        <ul>
+        <ul class="col-md-12 p-rt-lt-0">
           <a href="{BASE_URL}elearning/cursos/" class="nounderline">
-          <div class="side-menu2"><li class="side-menu" style="position: relative">
-          <i class="glyphicon glyphicon-blackboard"></i>
-          <span> Cursos</span></li></div>
+          <div class="side-menu2 col-md-12 p-rt-lt-0">
+            <li class="side-menu col-md-12" style="position: relative">
+            <div class="col-md-2 p-rt-lt-0">
+              <i class="glyphicon glyphicon-blackboard"></i>
+            </div>
+            <div class="col-md-10 p-rt-lt-0">
+              <span> Cursos</span>
+            </div>
+          </li>
+        </div>
           </a>
         </ul>
         {if Session::get('id_usuario')}
@@ -237,11 +249,18 @@
             <span> Mis Cursos</span></li></div>
           </a>
         </ul> -->
-        <ul>
+        <ul class="col-md-12 p-rt-lt-0">
           <a href="{BASE_URL}elearning/gestion/_inicio" class="nounderline">
-            <div {if isset($active) && $active == 'mis_cursos'} class="side-menu2 active" {else} class="side-menu2 " {/if}><li class="side-menu" style="position: relative">
-            <i class="glyphicon glyphicon-book"></i>
-            <span> Mis Cursos </span></li></div>
+            <div {if isset($active) && $active == 'mis_cursos'} class="side-menu2 active col-md-12 p-rt-lt-0" {else} class="side-menu2 col-md-12 p-rt-lt-0" {/if}>
+              <li class="side-menu col-md-12" style="position: relative">
+              <div class="col-md-2 p-rt-lt-0">
+                <i class="glyphicon glyphicon-book"></i>
+              </div>
+              <div class="col-md-10 p-rt-lt-0">
+                <span> Mis Cursos </span>
+              </div>
+            </li>
+          </div>
           </a>
         </ul>
         <!-- <ul>
@@ -251,11 +270,18 @@
             <span> Bandeja de Entrada</span></li></div>
           </a>
         </ul> -->
-        <ul>
+        <ul class="col-md-12 p-rt-lt-0">
             <a href="{BASE_URL}elearning/certificado/miscertificados" class="nounderline">
-                <div class="side-menu2"><li class="side-menu" style="position: relative">
-                    <i class="glyphicon glyphicon-education"></i>
-                    <span>Mis Certificados</span></li></div>
+                <div class="side-menu2 col-md-12 p-rt-lt-0">
+                  <li class="side-menu col-md-12" style="position: relative">
+                    <div class="col-md-2 p-rt-lt-0" style="margin: 10px auto;">
+                      <i class="glyphicon glyphicon-education"></i>
+                    </div>
+                    <div class="col-md-10 p-rt-lt-0">
+                      <span>Mis Certificados</span>
+                    </div>
+                  </li>
+                </div>
             </a>
         </ul>
         {/if}
@@ -267,11 +293,18 @@
           </a>
         </ul> -->
 
-        <ul>
+        <ul class="col-md-12 p-rt-lt-0">
           <a href="{BASE_URL}elearning/certificado/verificar" class="nounderline">
-            <div class="side-menu2"><li class="side-menu" style="position: relative">
-            <i class="glyphicon glyphicon-education"></i>
-            <span>Verificar Certificados</span></li></div>
+            <div class="side-menu2 col-md-12 p-rt-lt-0">
+              <li class="side-menu col-md-12" style="position: relative">
+                <div class="col-md-2 p-rt-lt-0" style="margin: 10px auto;">
+                  <i class="glyphicon glyphicon-education"></i>
+                </div>
+                <div class="col-md-10 p-rt-lt-0">
+                  <span>Verificar Certificados</span>
+                </div>
+              </li>
+            </div>
           </a>
         </ul>
 

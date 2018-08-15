@@ -1,6 +1,6 @@
 <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12">
     {include file='modules/foro/views/index/menu/lateral.tpl'}
-    <div  class="col-md-9 col-xs-12 col-sm-8 col-lg-9">
+    <div  class="col-md-10 col-xs-12 col-sm-8 col-lg-10">
         <div class="row ficha_foro">
             
             <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
@@ -501,7 +501,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                <button type="button" id_foro="52" class="btn btn-primary btn-md enviar_reporte" data-dismiss="modal" style="margin-left: 88%;">Enviar</button>
+                                <button type="button" id_foro="{$foro.For_IdForo}" class="btn btn-primary btn-md enviar_reporte" data-dismiss="modal" style="margin-left: 88%;">Enviar</button>
                                 </div>                               
                             </div>
                         </div>

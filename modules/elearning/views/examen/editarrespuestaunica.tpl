@@ -1,5 +1,5 @@
 {include file='modules/elearning/views/cursos/menu/lateral.tpl'}
-<div class="col-lg-9">
+<div class="col-lg-10">
 <div class="col-lg-12">
     <div class="col-lg-12">
   <div class=" " style="margin-bottom: 0px !important">

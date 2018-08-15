@@ -1,18 +1,21 @@
-<div id="texto" class="col-xs-8 font-tahoma11cinza-escuro" style="padding-top: 20px;padding-bottom: 20px">
-	<br>
-	<img src="http://otca.info/portal/images-es/titulo-otca_03.png">
-	<br><br><br>
+<div id="texto" class="col-xs-8 font-tahoma11cinza-escuro" style=";padding-bottom: 20px">
+   <div class="row">
+        <div class="col-lg-12">
+            <h3>Organización del Tratado de Cooperación Amazónica</h3>
+            <hr class="cursos-hr">
+        </div>
+    </div>
    <div id="ft1" style="float: right; margin-left: 13px;"><img src="http://otca.info/portal/images/A-OTCA-ft1_03.png"></div>
-   <p class="full">Como organismo internacional, la Organización del Tratado de Cooperación Amazónica (OTCA) a través de su Secretaría Permanente, coordina los procedimientos en el marco del Tratado de Cooperación Amazónica (TCA) y dinamiza de la ejecución de sus decisiones.</p>
-   <p class="full">Las varias dimensiones de la actuación de la OTCA – político-diplomática, estratégica y técnica – corresponden a las diferentes instancias del Tratado y garantizan el cumplimiento de los propósitos tanto del TCA como de la propia Organización.</p>
-   <p class="full">Sin lugar a dudas, la OTCA es un instrumento contemporáneo del TCA con una amplia visión del proceso de cooperación Sur-Sur, que fortalece la vocación de sus gobiernos en construir sinergias con otros actores, naciones, organismos multilaterales, agencias de fomento, movimientos sociales, comunidad científica, sectores productivos y la sociedad en su conjunto.</p>
-   <p class="full">La OTCA coordina estudios y proyectos pilotos sobre las potencialidades económicas generadoras de renta y oportunidades para la región amazónica proporcionando así, la efectiva cooperación – integración de los Países Miembros del Tratado.</p>
-   <p class="full">Una de sus funciones como organismo regional es coordinarse con las demás iniciativas que existen en el espacio territorial que abarca la Amazonía, sea en materia de infraestructura, transporte o comunicaciones. Un elemento importante para conseguir este objetivo es una adecuada interrelación con las acciones de la Unión de Naciones Suramericanas (Unasur).</p>
+   <p style="text-align:justify">La Organización del Tratado de Cooperación Amazónica (OTCA) es una organización internacional cuyo objetivo es la promoción del desarrollo sostenible de la cuenca amazónica. Sus estados miembros son: Bolivia, Brasil, Colombia, Ecuador, Guyana, Perú, Surinam y Venezuela. El Tratado de Cooperación Amazónica (TCA) fue firmado el 3 de julio de 1978 y modificado en 1998. La OTCA se creó en 1995 para reforzar la aplicación del Tratado. La Secretaría Permanente se estableció posteriormente en Brasilia en 2002. La Secretaría Permanente de la Organización del Tratado de Cooperación Amazónica (SP/OTCA) es el órgano auxiliar ejecutivo de las instancias políticas del Tratado de Cooperación Amazónica (TCA).  Las varias dimensiones de la actuación de la OTCA – político-diplomática, estratégica y técnica – corresponden a las diferentes instancias del Tratado y garantizan el cumplimiento de los propósitos tanto del TCA como de la propia Organización.</p>
    <br>
-   <a href="http://www.otca-oficial.info/about/who_we_are" class="text-success" style="font-size: medium; font-weight: bold;" target="_blank"><i class="glyphicon glyphicon-globe"></i>Pagina Oficial</a>
+   <p style="text-align:justify">La OTCA tiene la convicción de que la Amazonía, al poseer uno de los más ricos patrimonios naturales y culturales del planeta, es estratégica para impulsar el futuro desarrollo de los países miembros y de la región, un patrimonio que debe ser preservado, pero, esencialmente, promovido, en consonancia con los principios del desarrollo sostenible. Entre sus actuaciones principales están la coordinación de estudios y proyectos sobre las potencialidades económicas generadoras de renta y oportunidades para la región amazónica proporcionando así, la efectiva cooperación e integración de los países miembros del Tratado.</p> 
+   <br> 
+   <p style="text-align: right;">
+        <a href="http://www.otca-oficial.info/about/who_we_are" target="_blank">Más Informacion</a>
+    </p>
 </div>
 
-<div class="col col-md-4 col-sm-12 col-xs-12 back-color-white" style="border-left: 1px solid #ebeaea; padding-left: 10px;">
+<div class="col col-md-4 col-sm-12 col-xs-12 back-color-white" style="padding-top: 20px;border-left: 1px solid #ebeaea; padding-left: 10px;">
         <ul class="nav nav-tabs jsoft-tabs bg-verde">
             <li class="active" ><a class=""  data-toggle="tab" href="#evento_interes">Eventos de Interés</a></li>
             <li><a data-toggle="tab" href="#dato_interes">Datos de Interés</a></li>

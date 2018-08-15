@@ -320,7 +320,7 @@
 		                          <br>
 		                          <b>{$datos.Nombre}</b>
 		                          <br>
-		                          <span class="badge" style="font-size:.8em">{$datos.Conteo|default:0}</span>
+		                          <span class="badge-pais" style="font-size:.8em">{$datos.Conteo|default:0}</span>
 				                </div>
 		        	        {/foreach}
 				        {/if}             
