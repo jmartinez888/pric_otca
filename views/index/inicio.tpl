@@ -215,7 +215,7 @@
         'backgroundImage': '{$_layoutParams.ruta_img}slider_noticias/noticia2.jpg',
         'thumbnail': '{$_layoutParams.ruta_img}slider_noticias/thumbnail/noticia2.jpg',
         'credit':'© OTCA',      
-        'categoria': 'Noticia',
+        'categoria': 'NOTICIA',
         'headline': 'La selva amazónica: formada hace 20 millones de años',
         // 'headline2': 'WWF lanza Premio Periodístico en el Perú',
         
@@ -228,7 +228,7 @@
         'backgroundImage': '{$_layoutParams.ruta_img}slider_noticias/noticia3.jpg',
         'thumbnail': '{$_layoutParams.ruta_img}slider_noticias/thumbnail/noticia3.jpg',
         'credit':'© OTCA',      
-        'categoria': 'Investigación',
+        'categoria': 'INVESTIGACIÓN',
         'headline': 'La atlántida amazónica.',
         // 'headline2': 'Iniciativa logra recuperar y reforestar suelos degradados',
         

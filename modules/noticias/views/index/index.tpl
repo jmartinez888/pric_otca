@@ -109,7 +109,7 @@
 <div class="col-lg-8">
 	<div class="row category-caption">
 		<div class="col-lg-12">
-			<h2 class="pull-left active2">Noticias</h2>
+			<h2 class="pull-left active2">INVESTIGACIÓN</h2>
 		</div>
 	</div> 
 	
@@ -235,7 +235,7 @@
 <div class="col-lg-8">
 	<div class="row category-caption">
 		<div class="col-lg-12">
-			<h2 class="pull-left active2">Noticias</h2>
+			<h2 class="pull-left active2">Noticia</h2>
 		</div>
 	</div>
 
