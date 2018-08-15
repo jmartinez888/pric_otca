@@ -135,7 +135,7 @@ class indexController extends Controller
             $this->validarUrlIdioma();
             $this->_view->setTemplate(LAYOUT_FRONTEND);
             $this->_view->setJs(array('index'));
-            $this->_view->setCss(array('buscar'));            
+            $this->_view->setCss(array('buscar', 'jp-buscar'));            
             //$palabraBuscada=$palabra;}
         }
 

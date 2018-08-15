@@ -1,0 +1,50 @@
+.cursos-hr{
+    margin-top: 0px;
+    padding: 0.2px;
+}
+.p-rt-lt-0{
+	padding-right: 0px;
+	padding-left: 0px;
+}
+.tipo-registro{
+	padding-bottom: 10px;
+	border-bottom: 1px #ddd solid;
+}
+.underline{
+	color: #000;
+}
+.underline:hover{
+	color: #000;
+}
+.list-shadow:hover{
+	border-left: 5px solid #355D3A;
+	-moz-box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.6);
+    -webkit-box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.6);
+    box-shadow: 3px 3px 10px rgba(100, 100, 100, 0.6);
+}
+.lista-registro{
+	border-bottom: 1px solid #ddd;
+	margin-bottom: 0px;
+	border-left: 5px solid #62af54;
+}
+.active2{
+	z-index: 2;
+	color: #fff;
+	background-color: #62af54;
+	border-left: 5px solid #355D3A;
+}
+.badge2{
+	background-color: #fff;
+	color: #62af54;
+}
+.busqueda-link{
+	color: #000;
+}
+.busqueda-link:hover{
+	color: #000;
+	text-decoration: underline;
+}
+.badge {
+    min-width: 40px !important;
+    font-size: 15px !important; 
+}
