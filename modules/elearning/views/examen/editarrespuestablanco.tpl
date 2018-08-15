@@ -28,7 +28,7 @@
            <!--  <div class="col-lg-12" style="margin-top: 15px;">
               <label class="col-lg-1">Puntos:</label>
               <div class="col-lg-3"> -->
-              <input placeholder="Puntos" class="form-control" name="puntos" id="puntos" type="number" min="0" max="{if $puntos_maximo>$preguntaedit.Pre_Puntos}{$puntos_maximo}{else}{$preguntaedit.Pre_Puntos+$puntos_maximo}{/if}" value="{$preguntaedit.Pre_Puntos}" type="hidden"/>
+              <input placeholder="Puntos" class="form-control" name="puntos" id="puntos" type="hidden" min="0" max="{if $puntos_maximo>$preguntaedit.Pre_Puntos}{$puntos_maximo}{else}{$preguntaedit.Pre_Puntos+$puntos_maximo}{/if}" value="{$preguntaedit.Pre_Puntos}" type="hidden"/>
 <!--               </div>
             </div> -->
             <div class="col-lg-12" style="margin-top: 15px;">
