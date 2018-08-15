@@ -14,30 +14,46 @@
             <div id="TipoRegistros">                
                 <ul class="list-group">
                     <a class="underline" {if $tipoRegistro == 1} style="color:#ffffff"  {/if}  href="{$_layoutParams.root}index/buscarPalabra/{$palabra1}/1/{$filtroPais|default:'all'}">
-                    <li class="list-group-item list-shadow lista-registro {if $tipoRegistro == 1} active2  {/if} ">
-                        <span style="margin: 20px auto;" class="badge {if $tipoRegistro == 1} badge2 {/if}">{if isset($cantPagina)}{$cantPagina}{/if}</span>
-                            {$lenguaje.buscador_tipo_registro1}   
+                    <li class="col-lg-12 list-group-item list-shadow lista-registro {if $tipoRegistro == 1} active2  {/if} ">    
+                        <div class="col-lg-9 p-rt-lt-0">
+                            {$lenguaje.buscador_tipo_registro1}
+                        </div>
+                        <div class="col-lg-3 p-rt-lt-0">
+                            <span class="badge {if $tipoRegistro == 1} badge2 {/if}">{if isset($cantPagina)}{$cantPagina}{/if}</span>
+                        </div>
                     </li>
                     </a>
 
                     <a class="underline" {if $tipoRegistro == 2} style="color:#ffffff"  {/if}  href="{$_layoutParams.root}index/buscarPalabra/{$palabra1}/2/{$filtroPais|default:'all'}">
-                    <li class="list-group-item list-shadow lista-registro {if $tipoRegistro == 2} active2  {/if}">
-                        <span style="margin: 20px auto;" class="badge {if $tipoRegistro == 2} badge2 {/if}"  >{if isset($cantDublin)}{$cantDublin}{/if}</span>
+                    <li class="col-lg-12 list-group-item list-shadow lista-registro {if $tipoRegistro == 2} active2  {/if}">
+                        <div class="col-lg-9 p-rt-lt-0">
                             {$lenguaje.buscador_tipo_registro2}
+                        </div>
+                        <div class="col-lg-3 p-rt-lt-0">
+                            <span class="badge {if $tipoRegistro == 2} badge2 {/if}"  >{if isset($cantDublin)}{$cantDublin}{/if}</span>
+                        </div>       
                     </li>
                     </a>
 
                     <a class="underline" {if $tipoRegistro == 3} style="color:#ffffff"  {/if}  href="{$_layoutParams.root}index/buscarPalabra/{$palabra1}/3/{$filtroPais|default:'all'}">
-                    <li class="list-group-item list-shadow lista-registro {if $tipoRegistro == 3} active2  {/if}">
-                        <span style="margin: 20px auto;" class="badge {if $tipoRegistro == 3} badge2 {/if}"  >{if isset($cantForo)}{$cantForo}{/if}</span>
+                    <li class="col-lg-12 list-group-item list-shadow lista-registro {if $tipoRegistro == 3} active2  {/if}">
+                        <div class="col-lg-9 p-rt-lt-0">
                             {$lenguaje.buscador_tipo_registro3}
+                        </div>
+                        <div class="col-lg-3 p-rt-lt-0">
+                            <span class="badge {if $tipoRegistro == 3} badge2 {/if}"  >{if isset($cantForo)}{$cantForo}{/if}</span>
+                        </div>
                     </li>
                     </a>
 
                     <a class="underline" {if $tipoRegistro == 4} style="color:#ffffff" {/if} href="{$_layoutParams.root}index/buscarPalabra/{$palabra1}/4/{$filtroPais|default:'all'}">
-                    <li class="list-group-item list-shadow lista-registro {if $tipoRegistro == 4} active2  {/if}">
-                        <span style="margin: 20px auto;" class="badge {if $tipoRegistro == 4} badge2 {/if}"  >{if isset($cantRecurso)}{$cantRecurso}{/if}</span>
+                    <li class="col-lg-12 list-group-item list-shadow lista-registro {if $tipoRegistro == 4} active2  {/if}">
+                        <div class="col-lg-9 p-rt-lt-0">
                             {$lenguaje.buscador_tipo_registro4}
+                        </div>
+                        <div class="col-lg-3 p-rt-lt-0">
+                            <span class="badge {if $tipoRegistro == 4} badge2 {/if}"  >{if isset($cantRecurso)}{$cantRecurso}{/if}</span>
+                        </div>   
                     </li>
                     </a>
                 </ul>                                   

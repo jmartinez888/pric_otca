@@ -45,6 +45,6 @@
 	text-decoration: underline;
 }
 .badge {
-    min-width: 40px !important;
+    min-width: 30px !important;
     font-size: 15px !important; 
 }
