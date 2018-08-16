@@ -200,24 +200,6 @@ class  indexController extends movilController {
             );
         }
     }  
-    public function insertarUsuario__($Usu_Nombre='',$Usu_Apellidos='',$Usu_Email='',$Usu_Usuario='',$Usu_Password='') {     
-        $retorno = $this->_model->insertarUsuario($Usu_Nombre,$Usu_Apellidos,$Usu_Email,$Usu_Usuario,$Usu_Password);        
-        if ($retorno) {
-            print json_encode(
-                    array(
-                        'estado' => 1,
-                        'mensaje' => 'Usuario registrado'
-                    )
-                );
-        }else{            
-            print json_encode(
-                array(
-                    'estado' => 2,
-                    'mensaje' => 'No se pudo registrar'
-                )
-            );
-        }
-    }  
     public function insertarValoracion() { 
         $body=json_decode(file_get_contents("php://input"),true);
         $Cur_IdCurso=$body['Cur_IdCurso'];
