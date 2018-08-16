@@ -6,7 +6,7 @@ class _gestionLeccionModel extends Model {
 
   public function insertLeccion($modulo, $tipo, $titulo, $descripcion){
     $sql = "INSERT INTO leccion(Moc_IdModuloCurso, Lec_Tipo, Lec_Titulo, Lec_Descripcion, Lec_LMSEstado, Lec_Estado)
-            VALUES({$modulo}, {$tipo}, '{$titulo}', '{$descripcion}', 0, 0)";
+            VALUES({$modulo}, {$tipo}, '{$titulo}', '{$descripcion}', 0, 1)";
     $this->execQuery($sql);
   }
 
