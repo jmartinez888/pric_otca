@@ -6,7 +6,7 @@ class indexModel extends Model {
     public function getCertificados($Usu_IdUsuario){
         try{             
             $sql = $this->_db->query(
-                "SELECT v.Cer_Codigo,  c.Cur_Titulo FROM certificado_curso v 
+                "SELECT v.Cer_Codigo,c.Cur_UrlBanner,  c.Cur_Titulo FROM certificado_curso v 
                 INNER JOIN usuario u ON u.Usu_IdUsuario = v.Usu_IdUsuario
                 INNER JOIN curso c ON c.Cur_IdCurso = v.Cur_IdCurso WHERE u.Usu_IdUsuario=$Usu_IdUsuario"
             );  

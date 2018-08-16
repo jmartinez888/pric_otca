@@ -11,8 +11,6 @@
                 <div class="col-lg-12" style="text-align: justify;">{html_entity_decode($h.CL_Descripcion)}</div>
               {/foreach}
             {/if}
-
-            <!--<span class="btn btn-success" style="">Pecho frio</span> -->
         </div>
       </div>
     </div>
