@@ -285,7 +285,7 @@
 										<label>{$lenguaje["busqueda_avanzada_label_tipo_ofertas"]}</label>
 									</div>
 									<div class="col-md-3">
-										<label for="esp">{$lenguaje["busqueda_avanzada_label_esp"]}</label>
+										<label for="esp">{$lenguaje["busqueda_avanzada_label_esp"]}</label><br>
 										<input id="esp" type="checkbox">
 									</div>
 									<div class="col-md-2">
