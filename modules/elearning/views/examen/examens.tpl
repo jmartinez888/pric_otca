@@ -55,14 +55,14 @@
 <!--                                     <td style=" text-align: center">{$rl.Cer_FechaReg}</td> -->
                                     {if $_acl->permiso("editar_rol")}
                                     <td style=" text-align: center">
-                                       <!--  {if  $rl.Emitido==0}
+                                        {if  $rl.Emitido==0}
                                         <a data-toggle="tooltip" data-placement="bottom" class="btn btn-default btn-sm glyphicon glyphicon-refresh estado-examen" title="{$lenguaje.tabla_opcion_cambiar_est}" id_examen="{$rl.Exa_IdExamen}" estado="{$rl.Exa_Estado}"> </a>
-                                        {/if} -->
-<!--                                         <a data-toggle="tooltip" data-placement="bottom" class="btn btn-default btn-sm glyphicon glyphicon-edit" id="btn-Editar" title="Editar" href=""></a> -->
+                                        {/if}
+                                        <a data-toggle="tooltip" data-placement="bottom" class="btn btn-default btn-sm glyphicon glyphicon-edit" id="btn-Editar" title="Editar" href=""></a>
 
                                          <a data-toggle="tooltip" data-placement="bottom" class="btn btn-default btn-sm glyphicon glyphicon-question-sign btn-preguntas" title="Preguntas" href="{$_layoutParams.root}elearning/examen/preguntas/{$idcurso}/{$rl.Exa_IdExamen}"></a>
 
-                                        <!-- {if  $rl.Emitido==0}
+                                        {if  $rl.Emitido==0}
                                         <a   
                                         {if $rl.Row_Estado==0}
                                             data-toggle="tooltip" 
@@ -73,7 +73,7 @@
                                             class="btn btn-default btn-sm  glyphicon glyphicon-trash confirmar-eliminar-examen" {/if}
                                         id_examen="{$rl.Exa_IdExamen}" data-placement="bottom" > </a>
                                         {/if}
-                                        {/if} -->
+                                        {/if}
                                     </td>
                                     
                                 </tr>

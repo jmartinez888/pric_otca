@@ -67,6 +67,19 @@ class examenModel extends Model {
         }
     }
 
+    public function insertProgreso($idusu, $idleccion)
+    {
+        try{
+            $sql = " INSERT INTO progreso_curso (Usu_IdUsuario,Lec_IdLeccion,Pro_Valor) VALUES($idusu,$idleccion,1) ";
+            $result = $this->_db->prepare($sql);
+            $result->execute();
+            return $result->rowCount(PDO::FETCH_ASSOC);
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("elearning(examenModel)", "insertProgreso", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
+
     public function getUltimoExamen($id, $idusuario)
     {
         try{
@@ -300,7 +313,7 @@ class examenModel extends Model {
     public function getPreguntas($examen)
     {
         try{
-            $sql = "  SELECT * FROM pregunta p WHERE p.Exa_IdExamen=$examen AND p.Pre_Estado=1 AND p.Row_Estado=1 ";
+            $sql = "  SELECT * FROM pregunta p WHERE p.Exa_IdExamen=$examen AND p.Pre_Estado=1 AND p.Row_Estado=1 order by rand()";
             $result = $this->_db->query($sql);
             $preguntas = $result->fetchAll(PDO::FETCH_ASSOC);    
             
@@ -557,15 +570,16 @@ class examenModel extends Model {
     //     }
     // }
 
-    public function insertRespuesta($Pre_IdPregunta, $Exl_IdExamenAlumno, $Alt_IdAlternativa,$iAlt_IdAlternativa_Relacion, $Res_Respuesta=""){
+    public function insertRespuesta($Pre_IdPregunta, $Exl_IdExamenAlumno, $Alt_IdAlternativa,$iAlt_IdAlternativa_Relacion, $Res_Respuesta, $puntos){
         try {             
-            $sql = "call s_i_respuesta(?,?,?,?,?)";
+            $sql = "call s_i_respuesta(?,?,?,?,?,?)";
             $result = $this->_db->prepare($sql);
             $result->bindParam(1, $Pre_IdPregunta, PDO::PARAM_INT);
             $result->bindParam(2, $Exl_IdExamenAlumno, PDO::PARAM_INT);
             $result->bindParam(3, $Alt_IdAlternativa, PDO::PARAM_INT); 
             $result->bindParam(4, $iAlt_IdAlternativa_Relacion, PDO::PARAM_INT); 
-            $result->bindParam(5, $Res_Respuesta, PDO::PARAM_STR);                   
+            $result->bindParam(5, $Res_Respuesta, PDO::PARAM_STR);
+            $result->bindParam(6, $puntos, PDO::PARAM_INT);                   
             $result->execute();
             return $result->fetch();
         } catch (PDOException $exception) {
