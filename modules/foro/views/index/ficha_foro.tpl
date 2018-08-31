@@ -24,7 +24,7 @@
                 <div class="col-lg-12 p-rt-lt-0">
                     <hr class="cursos-hr">
                 </div>
-                <div class="col col-lg-9">
+                <div class="col col-lg-12">
                     <h3 class="titulo-ficha">{$foro.For_Titulo}</h3>
                 </div>
                 {if Session::get('autenticado')} 
@@ -39,24 +39,24 @@
                         {if $foro.For_Estado == 2}
                             {if $i==0}
                                 <div class="col col-lg-1 text-center btn_opciones_foro pull-right" style="padding-top: 3%; padding-left: 3%;">
-                                    <a href="{$_layoutParams.root_clear}dublincore/registrar/index/{$foro.Rec_IdRecurso}/{$foro.For_IdForo}" title="Subir reporte de foro" id="btn-configuracion" class="btn btn-default btn-circle dropdown-toggle"><i class="glyphicon glyphicon-cloud-upload"></i>
+                                    <a href="{$_layoutParams.root_clear}dublincore/registrar/index/{$foro.Rec_IdRecurso}/{$foro.For_IdForo}" title="Subir reporte de foro" id="btn-configuracion" class="btn btn-primary btn-circle dropdown-toggle"><i class="glyphicon glyphicon-cloud-upload"></i>
                                     </a>
                                 </div>
                             {else}
                                 <div class="col col-lg-1 text-center btn_opciones_foro pull-right" style="padding-top: 3%; padding-left: 3%;">
-                                    <a href="{$_layoutParams.root_clear}dublincore/editar/index/{$foro.Rec_IdRecurso}/{$foro.For_IdForo}" title="Editar reporte de foro" id="btn-configuracion" class="btn btn-default btn-circle dropdown-toggle"><i class="glyphicon glyphicon-pencil"></i>
+                                    <a href="{$_layoutParams.root_clear}dublincore/editar/index/{$foro.Rec_IdRecurso}/{$foro.For_IdForo}" title="Editar reporte de foro" id="btn-configuracion" class="btn btn-primary btn-circle dropdown-toggle"><i class="glyphicon glyphicon-pencil"></i>
                                     </a>
                                 </div>
                                 <div class="col col-lg-1 text-center btn_opciones_foro pull-right" style="padding-top: 3%; padding-left: 3%;">
-                                    <a target="_blank" href="{$_layoutParams.root_archivo_fisico}{$file.Fif_NombreFile}" title="Descargar reporte de foro" id="btn-configuracion" class="btn btn-default btn-circle dropdown-toggle"><i class="glyphicon glyphicon-cloud-download"></i>
+                                    <a target="_blank" href="{$_layoutParams.root_archivo_fisico}{$file.Fif_NombreFile}" title="Descargar reporte de foro" id="btn-configuracion" class="btn btn-primary btn-circle dropdown-toggle"><i class="glyphicon glyphicon-cloud-download"></i>
                                     </a>
                                 </div>
                             {/if}
                         {/if}
                     <div class="col col-lg-1 text-center btn_opciones_foro pull-right" style="padding-left: 3%; padding-top: 3%;">
-                        <button  title="Administrar" id="btn-configuracion" class="btn btn-default btn-circle dropdown-toggle" data-toggle="dropdown" type="button"><i class="glyphicon glyphicon-cog"></i>
+                        <button  title="Administrar" id="btn-configuracion" class="btn btn-primary btn-circle dropdown-toggle" data-toggle="dropdown" type="button"><i class="glyphicon glyphicon-cog"></i>
                         </button>
-                         <ul class="dropdown-menu" style="left: -61%; margin-left: -13%;">
+                         <ul class="dropdown-menu" style="min-width: 200px;">
                             <li><a href="{$_layoutParams.root}foro/admin/form/edit/{$foro.For_Funcion}/{$foro.For_IdForo}" id_foro="{$foro.For_IdForo}" class="opciones_foro" style="cursor: pointer;">Editar<i class="i_opciones_foro glyphicon glyphicon-pencil pull-right"></i></a></li>
                             <li><a href="{$_layoutParams.root}foro/admin/members/{$foro.For_IdForo}" id_foro="{$foro.For_IdForo}" class="opciones_foro" style="cursor: pointer;">Ver Miembros<i class="i_opciones_foro glyphicon glyphicon-user pull-right"></i></a></li>
                             <li><a href="{$_layoutParams.root}foro/admin/actividad/{$foro.For_IdForo}" id_foro="{$foro.For_IdForo}" class="opciones_foro" style="cursor: pointer;">Ver Actividades<i class="i_opciones_foro glyphicon glyphicon-calendar pull-right"></i></a></li>
@@ -82,10 +82,14 @@
                 {/if}
                 <div class="col-lg-12 p-rt-lt-0" style="font-size: 12px;">
                     <div class="col-lg-6 p-rt-lt-0">
+                        <i class="glyphicon glyphicon-user" style="color: #777; text-align: center; vertical-align: middle; margin-bottom: 5px;"></i>
                     Creado hace {$tiempo} por <strong>{$nombre_usuario}</strong>
                     </div>
                     <div class="col-lg-6 p-rt-lt-0">
-                        <div class="pull-right">Comentarios: <strong>{$Numero_comentarios_x_idForo}</strong></div>
+                        <div class="pull-right">
+                            <i class="glyphicon glyphicon-comment" style="color: #777; text-align: center; vertical-align: middle; margin-bottom: 3px;"></i>
+                            Comentarios: <strong>{$Numero_comentarios_x_idForo}</strong>
+                        </div>
                     </div>
                 </div>
                 <div class="col-lg-12 p-rt-lt-0">
@@ -103,7 +107,7 @@
                                 {foreach from=$foro.Sub_Foros  item=sub_foro}
                                     <li class="clearfix">
                                         <div>
-                                            <a href="{$_layoutParams.root}foro/index/ficha/{$sub_foro.For_IdForo}" target="_blank">
+                                            <a class="link-foro" href="{$_layoutParams.root}foro/index/ficha/{$sub_foro.For_IdForo}" target="_blank">
                                                 <strong>{$sub_foro.For_Titulo}</strong>
                                             </a>                                        
                                             <br>
@@ -125,14 +129,14 @@
                     {/if}
                     {if isset($foro.Sub_Foros.For_IdPadre)}
                         {if $foro.Row_Estado == 1 && $foro.For_Estado == 1}
-                        <div class="col-lg-2 pull-left">
+                        <div class="col-lg-2 pull-left" style="margin-bottom: 10px; padding-left: 0px;">
                             <a type="button"  href="{$_layoutParams.root}foro/admin/form/new/forum/{$foro.For_IdForo}" class="btn btn-primary btn-sm" title="Nuevo Sub Foro">Nuevo</a>
                         </div>
                         {/if}
                     {else}
                         {if !isset($foro.For_IdPadre)}
                             {if $foro.Row_Estado == 1 && $foro.For_Estado == 1}
-                            <div class="col-lg-2 pull-left">
+                            <div class="col-lg-2 pull-left" style="margin-bottom: 10px; padding-left: 0px;">
                                 <a type="button"  href="{$_layoutParams.root}foro/admin/form/new/forum/{$foro.For_IdForo}" class="btn btn-primary btn-sm" title="Nuevo Sub Foro">Nuevo</a>
                             </div>
                             {/if}
@@ -142,7 +146,8 @@
                 <div class="col-lg-12 p-rt-lt-0" style="font-size: 12px;">
                     <div class="col-lg-7 p-rt-lt-0">
                         {if $foro.For_PalabrasClaves != ""}
-                        <div class="" style="width: fit-content;line-height: 250%;">Tags: 
+                        <div class="" style="width: fit-content;line-height: 250%;">
+                            <i class="glyphicon glyphicon-tags" style="font-size: 20px; color: #777; text-align: center; vertical-align: middle;"></i>&nbsp;&nbsp;
                             {$tags = explode(",", $foro.For_PalabrasClaves)}
                             {for $i=0; $i<count($tags); $i++}
                             <a class="regresar-tematica" href="{$_layoutParams.root}foro/index/searchForo/{trim($tags[$i])}">{trim($tags[$i])}</a>
@@ -150,14 +155,22 @@
                         </div>
                         {/if}
                         <br>
-                        <div class="participantes">Participantes: <strong>{$Numero_participantes_x_idForo}</strong></div>
-                    </div>                     
-                    <a class="pull-right regresar-tematica" href="#">Temática: {$linea_tematica}</a>
+                        <div class="participantes">
+                            <i class="fa fa-users" style="color: #777; text-align: center; vertical-align: middle;"></i>
+                            Participantes: <strong>{$Numero_participantes_x_idForo}</strong>
+                        </div>
+                    </div>
+                    <div class="col-lg-5 p-rt-lt-0">
+                        <a class="pull-right regresar-tematica2" href="#">
+                            <i class="glyphicon glyphicon-star" style="text-align: center; vertical-align: middle; margin-bottom: 3px;"></i>
+                            Temática: {$linea_tematica}
+                        </a>
+                    </div>
                 </div>                
                 
                 <div class="col-lg-12 p-rt-lt-0">
                     <hr class="cursos-hr">
-                    <div id="valoraciones_foro">                        
+                    <div class="col-lg-12 p-rt-lt-0 id="valoraciones_foro">                        
                         {if Session::get('autenticado')}
                             {if $foro.Row_Estado == 1 && $foro.For_Estado == 1}
                                 {if $valoracion_foro == 0}
@@ -253,10 +266,10 @@
                                 {/if} 
                             {/if}                        
                         {else}
-                        <button data-toggle="modal" data-target="#modal-login" id="login-form-link" class="btn btn-default btn-comentar" style="margin-left: 60%;">
+                        <button data-toggle="modal" data-target="#modal-login" id="login-form-link" class="btn btn-comentar col-md-offset-7" style="">
                             <i class="glyphicon glyphicon-comment"></i>
                         &nbsp;Comentar</button>
-                        <button data-toggle="modal" data-target="#modal-login" id="login-form-link" class="btn-like btn pull-right">
+                        <button data-toggle="modal" data-target="#modal-login" id="login-form-link" class="btn-like btn col-md-offset-1" style="">
                             <i class="glyphicon glyphicon-heart-empty"></i>
                             <strong>&nbsp;{$Nvaloraciones_foro}</strong>
                         </button>
@@ -374,7 +387,10 @@
                     </div>
                  
                 <div class="col-lg-12 p-rt-lt-0">
-                    <h4>Comentarios:</h4>
+                    <h4>
+                        <i class="glyphicon glyphicon-comment" style="color: #777; text-align: center; vertical-align: middle; margin-bottom: 3px;"></i>
+                        Comentarios:
+                    </h4>
                 </div>
                 <div class="col-lg-12 p-rt-lt-0">
                     <hr class="cursos-hr">
@@ -385,17 +401,17 @@
                         <div class="comment-box">
                             <div class="col-md-1 media-left">
                                 <a href="#">
-                                    <img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">
+                                    <img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png" alt="Perfil" style="border-radius: 50%;">
                                 </a>
                             </div>
                             <div class="col-md-11 media-body ">
-                                <h4 class="col-xs-12 media-heading">{$comentarios.Usu_Nombre|upper}
+                                <h4 class="col-xs-12 media-heading media-heading-jp">{$comentarios.Usu_Nombre|upper}
                                     <span> | {$comentarios.Com_Fecha|date_format:"%d-%m-%Y"}</span>    
                                     <div class="btn-group col-xs-1 pull-right">                                        
                                         {if Session::get('autenticado')}   
                                             <!-- para el usuario -->
                                             {if $Rol_Ckey=="participante_foro" && $_acl->Usu_IdUsuario() == $comentarios.Usu_IdUsuario}
-                                            <button title="Editar o Eliminar" class=" btn btn-default glyphicon glyphicon-option-horizontal dropdown-toggle opciones_comentario_{$comentarios.Com_IdComentario}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="right: 70%;">
+                                            <button title="Editar o Eliminar" class=" btn btn-success glyphicon glyphicon-option-horizontal dropdown-toggle opciones_comentario_{$comentarios.Com_IdComentario}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="right: 70%;">
                                             </button >
                                              <ul class="dropdown-menu" style="left: -490%; z-index: 100 !important; top: 100%;">
                                                 {if $foro.Row_Estado == 1 && $foro.For_Estado == 1}
@@ -407,7 +423,7 @@
                                             {/if} 
 
                                             {if $Rol_Ckey=="participante_foro" && $_acl->Usu_IdUsuario() != $comentarios.Usu_IdUsuario}
-                                            <button title="Editar o Eliminar" class=" btn btn-default glyphicon glyphicon-option-horizontal dropdown-toggle opciones_comentario_{$comentarios.Com_IdComentario}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="right: 70%;">
+                                            <button title="Editar o Eliminar" class=" btn btn-success glyphicon glyphicon-option-horizontal dropdown-toggle opciones_comentario_{$comentarios.Com_IdComentario}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="right: 70%;">
                                             </button >
                                             <ul class="dropdown-menu" style="left: -490%; z-index: 100 !important; top: 100%;">
                                                 {if $foro.Row_Estado == 1 && $foro.For_Estado == 1}
@@ -418,7 +434,7 @@
                                             {/if}
 
                                             {if $_acl->Usu_IdUsuario() != $comentarios.Usu_IdUsuario && $Rol_Ckey=="sin_rol"}
-                                            <button title="Editar o Eliminar" class=" btn btn-default glyphicon glyphicon-option-horizontal dropdown-toggle opciones_comentario_{$comentarios.Com_IdComentario}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="right: 70%;">
+                                            <button title="Editar o Eliminar" class=" btn btn-success glyphicon glyphicon-option-horizontal dropdown-toggle opciones_comentario_{$comentarios.Com_IdComentario}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="right: 70%;">
                                             </button >
                                             <ul class="dropdown-menu" style="left: -490%; z-index: 100 !important; top: 100%;">
                                                 {if $foro.Row_Estado == 1 && $foro.For_Estado == 1}
@@ -431,7 +447,7 @@
                                             
                                             <!-- para el Facilitador -->
                                             {if $Rol_Ckey=="facilitador_foro" && $_acl->Usu_IdUsuario() == $comentarios.Usu_IdUsuario}
-                                            <button title="Editar o Eliminar" class=" btn btn-default glyphicon glyphicon-option-horizontal dropdown-toggle opciones_comentario_{$comentarios.Com_IdComentario}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="right: 70%;">
+                                            <button title="Editar o Eliminar" class=" btn btn-success glyphicon glyphicon-option-horizontal dropdown-toggle opciones_comentario_{$comentarios.Com_IdComentario}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="right: 70%;">
                                             </button >
                                              <ul class="dropdown-menu" style="left: -490%; z-index: 100 !important; top: 100%;">
                                                 {if $foro.Row_Estado == 1 && $foro.For_Estado == 1}
@@ -443,7 +459,7 @@
                                             {/if} 
 
                                             {if $Rol_Ckey=="facilitador_foro" && $_acl->Usu_IdUsuario() != $comentarios.Usu_IdUsuario}
-                                            <button title="Editar o Eliminar" class=" btn btn-default glyphicon glyphicon-option-horizontal dropdown-toggle opciones_comentario_{$comentarios.Com_IdComentario}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="right: 70%;">
+                                            <button title="Editar o Eliminar" class=" btn btn-success glyphicon glyphicon-option-horizontal dropdown-toggle opciones_comentario_{$comentarios.Com_IdComentario}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="right: 70%;">
                                             </button >
                                             <ul class="dropdown-menu" style="left: -490%; z-index: 100 !important; top: 100%;">
                                                 {if $foro.Row_Estado == 1 && $foro.For_Estado == 1}
@@ -457,7 +473,7 @@
 
                                             <!-- para el Moderador -->
                                             {if $Rol_Ckey=="moderador_foro" && $_acl->Usu_IdUsuario() == $comentarios.Usu_IdUsuario}
-                                            <button title="Editar o Eliminar" class=" btn btn-default glyphicon glyphicon-option-horizontal dropdown-toggle opciones_comentario_{$comentarios.Com_IdComentario}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="right: 70%;">
+                                            <button title="Editar o Eliminar" class=" btn btn-success glyphicon glyphicon-option-horizontal dropdown-toggle opciones_comentario_{$comentarios.Com_IdComentario}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="right: 70%;">
                                             </button >
                                              <ul class="dropdown-menu" style="left: -490%; z-index: 100 !important; top: 100%;">
                                                 {if $foro.Row_Estado == 1 && $foro.For_Estado == 1}
@@ -469,7 +485,7 @@
                                             {/if} 
 
                                             {if $Rol_Ckey=="moderador_foro" && $_acl->Usu_IdUsuario() != $comentarios.Usu_IdUsuario}
-                                            <button title="Editar o Eliminar" class=" btn btn-default glyphicon glyphicon-option-horizontal dropdown-toggle opciones_comentario_{$comentarios.Com_IdComentario}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="right: 70%;">
+                                            <button title="Editar o Eliminar" class=" btn btn-success glyphicon glyphicon-option-horizontal dropdown-toggle opciones_comentario_{$comentarios.Com_IdComentario}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="right: 70%;">
                                             </button >
                                             <ul class="dropdown-menu" style="left: -490%; z-index: 100 !important; top: 100%;">
                                                 {if $foro.Row_Estado == 1 && $foro.For_Estado == 1}
@@ -483,7 +499,7 @@
 
                                             <!-- para el Lider -->
                                             {if $Rol_Ckey=="lider_foro" && $_acl->Usu_IdUsuario() == $comentarios.Usu_IdUsuario}
-                                            <button title="Editar o Eliminar" class=" btn btn-default glyphicon glyphicon-option-horizontal dropdown-toggle opciones_comentario_{$comentarios.Com_IdComentario}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="right: 70%;">
+                                            <button title="Editar o Eliminar" class=" btn btn-success glyphicon glyphicon-option-horizontal dropdown-toggle opciones_comentario_{$comentarios.Com_IdComentario}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="right: 70%;">
                                             </button >
                                              <ul class="dropdown-menu" style="left: -490%; z-index: 100 !important; top: 100%;">
                                                 {if $foro.Row_Estado == 1 && $foro.For_Estado == 1}
@@ -495,7 +511,7 @@
                                             {/if} 
 
                                             {if $Rol_Ckey=="lider_foro" && $_acl->Usu_IdUsuario() != $comentarios.Usu_IdUsuario}
-                                            <button title="Editar o Eliminar" class=" btn btn-default glyphicon glyphicon-option-horizontal dropdown-toggle opciones_comentario_{$comentarios.Com_IdComentario}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="right: 70%;">
+                                            <button title="Editar o Eliminar" class=" btn btn-success glyphicon glyphicon-option-horizontal dropdown-toggle opciones_comentario_{$comentarios.Com_IdComentario}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="right: 70%;">
                                             </button >
                                             <ul class="dropdown-menu" style="left: -490%; z-index: 100 !important; top: 100%;">
                                                 {if $foro.Row_Estado == 1 && $foro.For_Estado == 1}
@@ -509,7 +525,7 @@
 
                                             <!-- para el administrador de foros -->
                                             {if $Rol_Ckey=="administrador_foro" || $Rol_Ckey=="administrador" && $_acl->Usu_IdUsuario() == $comentarios.Usu_IdUsuario}
-                                            <button title="Editar o Eliminar" class=" btn btn-default glyphicon glyphicon-option-horizontal dropdown-toggle opciones_comentario_{$comentarios.Com_IdComentario}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="right: 70%;">
+                                            <button title="Editar o Eliminar" class=" btn btn-success glyphicon glyphicon-option-horizontal dropdown-toggle opciones_comentario_{$comentarios.Com_IdComentario}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="right: 70%;">
                                             </button >
                                              <ul class="dropdown-menu" style="left: -490%; z-index: 100 !important; top: 100%;">
                                                 <li><a comentario_="{$comentarios.Com_Descripcion}" id_comentario_editar="{$comentarios.Com_IdComentario}" id_foro="{$foro.For_IdForo}" class="editar_comentario_foro files_coment_editar" style="cursor: pointer;">Editar</a></li>
@@ -519,7 +535,7 @@
                                             {/if} 
 
                                             {if $Rol_Ckey=="administrador_foro" || $Rol_Ckey=="administrador" && $_acl->Usu_IdUsuario() != $comentarios.Usu_IdUsuario}
-                                            <button title="Editar o Eliminar" class=" btn btn-default glyphicon glyphicon-option-horizontal dropdown-toggle opciones_comentario_{$comentarios.Com_IdComentario}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="right: 70%;">
+                                            <button title="Editar o Eliminar" class=" btn btn-success glyphicon glyphicon-option-horizontal dropdown-toggle opciones_comentario_{$comentarios.Com_IdComentario}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="right: 70%;">
                                             </button >
                                             <ul class="dropdown-menu" style="left: -490%; z-index: 100 !important; top: 100%;">
                                                <li><a id_comentario_reportar="{$comentarios.Com_IdComentario}" class="reportar" style="cursor: pointer;" data-toggle="modal" data-target="#modal-reportar-comentario">Reportar</a></li>
@@ -529,7 +545,7 @@
                                             {/if} 
                                             <!-- hasta aca --> 
                                         {else}
-                                        <button title="Editar o Eliminar" class=" btn btn-default glyphicon glyphicon-option-horizontal dropdown-toggle opciones_comentario_{$comentarios.Com_IdComentario}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="right: 70%;">
+                                        <button title="Editar o Eliminar" class=" btn btn-success glyphicon glyphicon-option-horizontal dropdown-toggle opciones_comentario_{$comentarios.Com_IdComentario}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="right: 70%;">
                                         </button >
                                             <ul class="dropdown-menu" style="left: -504%; z-index: 100 !important; top: 100%;">
                                                 <li><a href="{$_layoutParams.root}foro/index/ficha_comentario_completo/{$foro.For_IdForo}/{$comentarios.Com_IdComentario}" target="_blank" comentario_="{$comentarios.Com_Descripcion}" id_comentario_editar="{$comentarios.Com_IdComentario}" id_foro="{$foro.For_IdForo}" class="" style="cursor: pointer;">Ver comentario en otra página</a></li>
@@ -537,7 +553,7 @@
                                         {/if}                             
                                     </div>
                                 </h4>
-                                <div class="col-xs-12 capa capa_{$comentarios.Com_IdComentario}" Rol_Ckey="{$Rol_Ckey}" id_comentario_capa="{$comentarios.Com_IdComentario}">
+                                <div class="col-xs-12 capa capa-jp capa_{$comentarios.Com_IdComentario}" Rol_Ckey="{$Rol_Ckey}" id_comentario_capa="{$comentarios.Com_IdComentario}">
                                     <span class="col-xs-12 capaVer1_{$comentarios.Com_IdComentario}">
                                         {if strlen($comentarios.Com_Descripcion)<=250}
                                             {$comentarios.Com_Descripcion}
@@ -678,17 +694,17 @@
                                     <div class="col-xs-12 media">
                                         <div class="col-md-1 media-left">
                                             <a href="#">
-                                                <img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">
+                                                <img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png" alt="Perfil" style="border-radius: 50%;">
                                             </a>
                                         </div>
                                         <div class="col-md-12 media-body">
-                                            <h4 class="col-xs-12 media-heading">{$hijo_comentarios.Usu_Nombre|upper}
+                                            <h4 class="col-xs-12 media-heading media-heading-jp-hijo">{$hijo_comentarios.Usu_Nombre|upper}
                                                 <span> | {$hijo_comentarios.Com_Fecha|date_format:"%d-%m-%Y"}</span>
                                                 <div class="btn-group col-xs-1 pull-right">   
                                                 {if Session::get('autenticado')}   
                                                 <!-- para el usuario -->
                                                     {if $Rol_Ckey=="participante_foro" && $_acl->Usu_IdUsuario() == $hijo_comentarios.Usu_IdUsuario}
-                                                    <button title="Editar o Eliminar" class=" btn btn-default glyphicon glyphicon-option-horizontal dropdown-toggle opciones_comentario_{$hijo_comentarios.Com_IdComentario}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="right: 18px;">
+                                                    <button title="Editar o Eliminar" class=" btn btn-primary glyphicon glyphicon-option-horizontal dropdown-toggle opciones_comentario_{$hijo_comentarios.Com_IdComentario}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="right: 18px;">
                                                     </button >
                                                     <ul class="dropdown-menu" style="left: -650%; z-index: 100 !important; top: 100%;">
                                                         {if $foro.Row_Estado == 1 && $foro.For_Estado == 1}
@@ -700,7 +716,7 @@
                                                     {/if} 
 
                                                     {if $Rol_Ckey=="participante_foro" && $_acl->Usu_IdUsuario() != $hijo_comentarios.Usu_IdUsuario}
-                                                    <button title="Editar o Eliminar" class=" btn btn-default glyphicon glyphicon-option-horizontal dropdown-toggle opciones_comentario_{$hijo_comentarios.Com_IdComentario}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="right: 18px;">
+                                                    <button title="Editar o Eliminar" class=" btn btn-primary glyphicon glyphicon-option-horizontal dropdown-toggle opciones_comentario_{$hijo_comentarios.Com_IdComentario}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="right: 18px;">
                                                     </button >
                                                     <ul class="dropdown-menu" style="left: -650%; z-index: 100 !important; top: 100%;">
                                                         {if $foro.Row_Estado == 1 && $foro.For_Estado == 1}
@@ -711,7 +727,7 @@
                                                     {/if}
                                                     
                                                     {if $_acl->Usu_IdUsuario() != $comentarios.Usu_IdUsuario && $Rol_Ckey=="sin_rol"}
-                                                    <button title="Editar o Eliminar" class=" btn btn-default glyphicon glyphicon-option-horizontal dropdown-toggle opciones_comentario_{$hijo_comentarios.Com_IdComentario}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="right: 18px;">
+                                                    <button title="Editar o Eliminar" class=" btn btn-primary glyphicon glyphicon-option-horizontal dropdown-toggle opciones_comentario_{$hijo_comentarios.Com_IdComentario}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="right: 18px;">
                                                     </button >
                                                     <ul class="dropdown-menu" style="left: -650%; z-index: 100 !important; top: 100%;">
                                                         {if $foro.Row_Estado == 1 && $foro.For_Estado == 1}
@@ -724,7 +740,7 @@
                                                     
                                                     <!-- para el Facilitador -->
                                                     {if $Rol_Ckey=="facilitador_foro" && $_acl->Usu_IdUsuario() == $hijo_comentarios.Usu_IdUsuario}
-                                                    <button title="Editar o Eliminar" class=" btn btn-default glyphicon glyphicon-option-horizontal dropdown-toggle opciones_comentario_{$hijo_comentarios.Com_IdComentario}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="right: 18px;">
+                                                    <button title="Editar o Eliminar" class=" btn btn-primary glyphicon glyphicon-option-horizontal dropdown-toggle opciones_comentario_{$hijo_comentarios.Com_IdComentario}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="right: 18px;">
                                                     </button >
                                                      <ul class="dropdown-menu" style="left: -650%; z-index: 100 !important; top: 100%;">
                                                         {if $foro.Row_Estado == 1 && $foro.For_Estado == 1}
@@ -736,7 +752,7 @@
                                                     {/if} 
 
                                                     {if $Rol_Ckey=="facilitador_foro" && $_acl->Usu_IdUsuario() != $hijo_comentarios.Usu_IdUsuario}
-                                                    <button title="Editar o Eliminar" class=" btn btn-default glyphicon glyphicon-option-horizontal dropdown-toggle opciones_comentario_{$hijo_comentarios.Com_IdComentario}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="right: 18px;">
+                                                    <button title="Editar o Eliminar" class=" btn btn-primary glyphicon glyphicon-option-horizontal dropdown-toggle opciones_comentario_{$hijo_comentarios.Com_IdComentario}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="right: 18px;">
                                                     </button >
                                                     <ul class="dropdown-menu" style="left: -650%; z-index: 100 !important; top: 100%;">
                                                         {if $foro.Row_Estado == 1 && $foro.For_Estado == 1}
@@ -750,7 +766,7 @@
 
                                                     <!-- para el Moderador -->
                                                     {if $Rol_Ckey=="moderador_foro" && $_acl->Usu_IdUsuario() == $hijo_comentarios.Usu_IdUsuario}
-                                                    <button title="Editar o Eliminar" class=" btn btn-default glyphicon glyphicon-option-horizontal dropdown-toggle opciones_comentario_{$hijo_comentarios.Com_IdComentario}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="right: 18px;">
+                                                    <button title="Editar o Eliminar" class=" btn btn-primary glyphicon glyphicon-option-horizontal dropdown-toggle opciones_comentario_{$hijo_comentarios.Com_IdComentario}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="right: 18px;">
                                                     </button >
                                                      <ul class="dropdown-menu" style="left: -650%; z-index: 100 !important; top: 100%;">
                                                         {if $foro.Row_Estado == 1 && $foro.For_Estado == 1}
@@ -762,7 +778,7 @@
                                                     {/if} 
 
                                                     {if $Rol_Ckey=="moderador_foro" && $_acl->Usu_IdUsuario() != $hijo_comentarios.Usu_IdUsuario}
-                                                    <button title="Editar o Eliminar" class=" btn btn-default glyphicon glyphicon-option-horizontal dropdown-toggle opciones_comentario_{$hijo_comentarios.Com_IdComentario}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="right: 18px;">
+                                                    <button title="Editar o Eliminar" class=" btn btn-primary glyphicon glyphicon-option-horizontal dropdown-toggle opciones_comentario_{$hijo_comentarios.Com_IdComentario}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="right: 18px;">
                                                     </button >
                                                     <ul class="dropdown-menu" style="left: -650%; z-index: 100 !important; top: 100%;">
                                                         {if $foro.Row_Estado == 1 && $foro.For_Estado == 1}
@@ -776,7 +792,7 @@
 
                                                     <!-- para el Lider -->
                                                     {if $Rol_Ckey=="lider_foro" && $_acl->Usu_IdUsuario() == $hijo_comentarios.Usu_IdUsuario}
-                                                    <button title="Editar o Eliminar" class=" btn btn-default glyphicon glyphicon-option-horizontal dropdown-toggle opciones_comentario_{$hijo_comentarios.Com_IdComentario}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="right: 18px;">
+                                                    <button title="Editar o Eliminar" class=" btn btn-primary glyphicon glyphicon-option-horizontal dropdown-toggle opciones_comentario_{$hijo_comentarios.Com_IdComentario}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="right: 18px;">
                                                     </button >
                                                      <ul class="dropdown-menu" style="left: -650%; z-index: 100 !important; top: 100%;">
                                                         {if $foro.Row_Estado == 1 && $foro.For_Estado == 1}
@@ -788,7 +804,7 @@
                                                     {/if} 
 
                                                     {if $Rol_Ckey=="lider_foro" && $_acl->Usu_IdUsuario() != $hijo_comentarios.Usu_IdUsuario}
-                                                    <button title="Editar o Eliminar" class=" btn btn-default glyphicon glyphicon-option-horizontal dropdown-toggle opciones_comentario_{$hijo_comentarios.Com_IdComentario}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="right: 18px;">
+                                                    <button title="Editar o Eliminar" class=" btn btn-primary glyphicon glyphicon-option-horizontal dropdown-toggle opciones_comentario_{$hijo_comentarios.Com_IdComentario}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="right: 18px;">
                                                     </button >
                                                     <ul class="dropdown-menu" style="left: -650%; z-index: 100 !important; top: 100%;">
                                                         {if $foro.Row_Estado == 1 && $foro.For_Estado == 1}
@@ -802,7 +818,7 @@
 
                                                     <!-- para el administrador de foros -->
                                                     {if $Rol_Ckey=="administrador_foro" || $Rol_Ckey=="administrador" && $_acl->Usu_IdUsuario() == $hijo_comentarios.Usu_IdUsuario}
-                                                    <button title="Editar o Eliminar" class=" btn btn-default glyphicon glyphicon-option-horizontal dropdown-toggle opciones_comentario_{$hijo_comentarios.Com_IdComentario}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="right: 18px;">
+                                                    <button title="Editar o Eliminar" class=" btn btn-primary glyphicon glyphicon-option-horizontal dropdown-toggle opciones_comentario_{$hijo_comentarios.Com_IdComentario}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="right: 18px;">
                                                     </button >
                                                      <ul class="dropdown-menu" style="left: -650%; z-index: 100 !important; top: 100%;">
                                                         <li><a comentario_="{$hijo_comentarios.Com_Descripcion}" id_comentario_editar="{$hijo_comentarios.Com_IdComentario}" id_foro="{$foro.For_IdForo}" class="editar_comentario_foro files_coment_editar" style="cursor: pointer;">Editar</a></li>
@@ -812,7 +828,7 @@
                                                     {/if} 
 
                                                     {if $Rol_Ckey=="administrador_foro" || $Rol_Ckey=="administrador" && $_acl->Usu_IdUsuario() != $hijo_comentarios.Usu_IdUsuario}
-                                                    <button title="Editar o Eliminar" class=" btn btn-default glyphicon glyphicon-option-horizontal dropdown-toggle opciones_comentario_{$hijo_comentarios.Com_IdComentario}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="right: 18px;">
+                                                    <button title="Editar o Eliminar" class=" btn btn-primary glyphicon glyphicon-option-horizontal dropdown-toggle opciones_comentario_{$hijo_comentarios.Com_IdComentario}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="right: 18px;">
                                                     </button >
                                                     <ul class="dropdown-menu" style="left: -650%; z-index: 100 !important; top: 100%;">
                                                        <li><a id_comentario_reportar="{$hijo_comentarios.Com_IdComentario}" style="cursor: pointer;" class="reportar" style="cursor: pointer;" data-toggle="modal" data-target="#modal-reportar-comentario">Reportar</a></li>  
@@ -822,7 +838,7 @@
                                                     {/if} 
                                                 <!-- hasta aca --> 
                                                 {else}
-                                                <button title="Editar o Eliminar" class=" btn btn-default glyphicon glyphicon-option-horizontal dropdown-toggle opciones_comentario_{$hijo_comentarios.Com_IdComentario}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="right: 18px;">
+                                                <button title="Editar o Eliminar" class=" btn btn-primary glyphicon glyphicon-option-horizontal dropdown-toggle opciones_comentario_{$hijo_comentarios.Com_IdComentario}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="right: 18px;">
                                                 </button >
                                                     <!--  <ul class="dropdown-menu" style="left: -670%; z-index: 100 !important; top: 100%;">
                                                         <li><a href="{$_layoutParams.root}foro/index/ficha_comentario_completo/{$foro.For_IdForo}/{$hijo_comentarios.Com_IdComentario}" target="_blank" comentario_="{$hijo_comentarios.Com_Descripcion}" id_comentario_editar="{$hijo_comentarios.Com_IdComentario}" id_foro="{$foro.For_IdForo}" class="" style="cursor: pointer;">Ver comentario en otra página</a></li>
@@ -833,7 +849,7 @@
                                                 {/if}
                                                 </div>
                                             </h4>
-                                            <div class="col-xs-12 capa capa_{$hijo_comentarios.Com_IdComentario}" id_comentario_capa="{$hijo_comentarios.Com_IdComentario}">
+                                            <div class="col-xs-12 capa capa-jp capa_{$hijo_comentarios.Com_IdComentario}" id_comentario_capa="{$hijo_comentarios.Com_IdComentario}">
                                                 <span class="col-xs-12 capaVer1_{$hijo_comentarios.Com_IdComentario}">
                                                     {if strlen($hijo_comentarios.Com_Descripcion)<=250}
                                                         {$hijo_comentarios.Com_Descripcion}
