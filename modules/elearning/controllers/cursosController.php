@@ -249,6 +249,16 @@ class cursosController extends elearningController {
       $final = count($lecciones) == $indice_leccion ? true : false;
 
       if($OLeccion==null){ $this->redireccionar("elearning/cursos"); }
+
+       $Tmodel = $this->loadModel("trabajo");
+      $TTmodel = $this->loadModel("tarea");
+      $tareas = $Tmodel->getTrabajoXLeccion($OLeccion["Lec_IdLeccion"]);
+
+      // if($tareas != null && count($tareas)>0){
+      //   for($i=0; $i<count($tareas);$i++){
+      //     $tareas[$i]["Archivos"] = $Tmodel->getArchivos($tareas[$i]["Tra_IdTrabajo"]);
+      //   }
+      // }
       if($OLeccion["Lec_Tipo"] == 1){
           //$Lmodel->RegistrarProgreso($OLeccion["Lec_IdLeccion"], Session::get("id_usuario"));
           $html = $Lmodel->getContenido($OLeccion["Lec_IdLeccion"]);
@@ -305,19 +315,7 @@ class cursosController extends elearningController {
       else if ($OLeccion["Lec_Tipo"] == 5){
         $this->redireccionar("elearning/clase/examen/" . $curso . "/" .$modulo  . "/" . $OLeccion["Lec_IdLeccion"]);
         exit;
-      }
-
-
-      $Tmodel = $this->loadModel("trabajo");
-      $TTmodel = $this->loadModel("tarea");
-      $tareas = $Tmodel->getTrabajoXLeccion($OLeccion["Lec_IdLeccion"]);
-
-      if($tareas != null && count($tareas)>0){
-        for($i=0; $i<count($tareas);$i++){
-          $tareas[$i]["Archivos"] = $Tmodel->getArchivos($tareas[$i]["Tra_IdTrabajo"]);
-        }
-      }
-    
+      } 
 
 
       $this->_view->setTemplate(LAYOUT_FRONTEND);

@@ -727,11 +727,22 @@
   });
 
   function ValidarFechas(fecha1, fecha2){
+
+    var separadores = ['/',' '];
+
     if(fecha1==null){
       fecha1 = new Date();
-    }else{
+    }
+
+    else{ 
+      var array=fecha1.split(new RegExp(separadores.join('|'),'g'));
+      fecha1=array[1]+'/'+array[0]+'/'+array[2]+' '+array[3];
       fecha1 = new Date(Date.parse(fecha1 + ":00"));
     }
+
+    var array2=fecha2.split(new RegExp(separadores.join('|'),'g'));
+    fecha2=array2[1]+'/'+array2[0]+'/'+array2[2]+' '+array2[3];
+
     fecha2 = new Date(Date.parse(fecha2 + ":00"));
     // alert(fecha1 + " //// " + fecha2);
     var diferencia = fecha2.getTime() - fecha1.getTime();
