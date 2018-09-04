@@ -1,15 +1,26 @@
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 p-rt-lt-0" style="background-image: url({BASE_URL}modules/foro/views/index/img/encabezado-foro.jpg); background-repeat: no-repeat;">
+    <div class="col-md-5 col-lg-5" style="color: #333; font-weight: bold; font-size: 18px;">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <h1 class="titulo">{$lenguaje.foro_index_label_titulo}</h1>
+            <div class="col-lg-12 p-rt-lt-0">
+                <hr class="cursos-hr-title-foro2">
+            </div>
+            <p class="descripcion-foro">{$lenguaje.foro_index_label_descripcion}</p>
+        </div>
+    </div>
+</div>
 <div  class="col-md-12 col-xs-12 col-sm-12 col-lg-12">
     {include file='modules/foro/views/index/menu/lateral.tpl'}
 
     <div  class="col-md-10 col-xs-12 col-sm-8 col-lg-10" style="margin-top: 10px;">       
-        <h2 class="titulo">{$lenguaje.foro_index_label_titulo}</h2>
+        <!-- <h2 class="titulo">{$lenguaje.foro_index_label_titulo}</h2>
         <div class="col-lg-12 p-rt-lt-0">
             <hr class="cursos-hr-title-foro">
         </div>
-        <p class="descripcion-foro">{$lenguaje.foro_index_label_descripcion}</p>   
+        <p class="descripcion-foro">{$lenguaje.foro_index_label_descripcion}</p> -->   
         
         <div class="row">
-            <div class="col-md-12" style="margin-bottom: 15px;">
+            <div class="col-md-12" style="margin-bottom: 15px; margin-top: 10px;">
                 <div class="input-group">
                     <input type ="text" class="form-control"  data-toggle="tooltip" data-original-title="Buscar Foro" placeholder="Buscar Foro" name="text_busqueda" id="text_busqueda" onkeypress="tecla_enter_foro(event)" value="{$palabrabuscada|default:''}">                  
                     <span class="input-group-btn">

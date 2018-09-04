@@ -1,5 +1,18 @@
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 p-rt-lt-0" style="background-image: url({BASE_URL}modules/oferta/views/index/img/encabezado-oferta.jpg); background-repeat: no-repeat;">
+    <div class="col-md-5 col-lg-5" style="color: white; font-weight: bold; font-size: 18px;">
+          <div class="col-lg-12">
+			<center><h1 class="titulo2">{$lenguaje["label_h1_titulo"]}</h1></center>
+		</div>
+		<div class="col-lg-12">
+			<hr class="cursos-hr3">
+		</div>
+		<div class="col-lg-12">
+			<p class="descripcion-oferta">{$lenguaje["label_h2_descripcion"]}</p>
+		</div>
+    </div>
+</div>
 <div class="container-fluid">
-	<div class="row">
+	<!-- <div class="row">
 		<div class="col-lg-12">
 			<center><h2 class="titulo2">{$lenguaje["label_h1_titulo"]}</h2></center>
 		</div>
@@ -9,7 +22,7 @@
 		<div class="col-lg-12">
 			<h4 class="descripcion-oferta">{$lenguaje["label_h2_descripcion"]}</h4>
 		</div>
-	</div>
+	</div> -->
 	<div class="row">
 		{if isset($busqueda) || isset($busquedaAvanzada)}
 		<div class="col-md-3" style="margin-top: 66px;">
@@ -198,7 +211,7 @@
 					</div>
 						
 					<div class="row">
-						<div class="col-lg-12">
+						<div class="col-lg-12" style="padding-top: 10px;">
 						<div class="pull-right">
 							<center><a id="activar_avanzado" onclick="mostrar_seccion()" style="cursor: pointer;"><button class="btn btn-success pull-right">{$lenguaje["activar_busqueda_avanzada"]}</button></a></center>
 							<center><a id="desactivar_avanzado" onclick="quitar_seccion()" style="cursor: pointer; display: none;"><button class="btn btn-success pull-right">{$lenguaje["desactivar_busqueda_avanzada"]}</button></a></center>

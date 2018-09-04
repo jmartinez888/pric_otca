@@ -45,9 +45,24 @@
   </ul>     
 </div> -->
 
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 p-rt-lt-0" style="background-image: url({BASE_URL}modules/dublincore/views/documentos/img/encabezado-repositorio.jpg); background-repeat: no-repeat;">
+    <div class="col-md-5 col-lg-5" style="color: #333; font-weight: bold; font-size: 18px;">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <center><h1 class="titulo2">Repositorio de Documentos</h1></center>
+          <div class="col-lg-12 p-rt-lt-0">
+            <hr class="cursos-hr2">
+          </div>
+          <div class="col-lg-12 p-rt-lt-0">
+            <p class="descripcion-documentos" style="text-align: justify;">El Repositorio de Documentos es la base de datos en línea del PRIC en donde se reúnen y depositan los diferentes recursos de información y datos provenientes de las instituciones que participan en la iniciativa.</p>
+          </div>
+          <input id="metodo" name="metodo" type="hidden" value="buscarporpalabras"/>
+          <input id="query" name="query" type="hidden"/>
+      </div>
+    </div>
+</div>
 
 <div class="container-fluid">
-<div class="row">
+<!-- <div class="row">
     <div class="col-md-12 col-lg-12">
     <center><h2 class="titulo2">Repositorio de Documentos</h2></center>
     <div class="col-lg-12 p-rt-lt-0">
@@ -59,7 +74,7 @@
     <input id="metodo" name="metodo" type="hidden" value="buscarporpalabras"/>
     <input id="query" name="query" type="hidden"/>
     </div>       
- </div>   
+ </div> -->   
 
 <div class="row">    
 
@@ -71,7 +86,7 @@
             <div class="row">
               <div class="col-md-12">
                   <div class="row">
-                    <div class="col-md-12 col-lg-12">
+                    <div class="col-md-12 col-lg-12" style="padding-top: 10px;">
                       <div class="pull-right">
                         <center><a id="activar_avanzado" onclick="mostrar_seccion()" style="cursor: pointer;"><button class="btn btn-success pull-right">Activar Búsqueda Avanzada</button></a></center>
                         <center><a id="desactivar_avanzado" onclick="quitar_seccion()" style="cursor: pointer; display: none;"><button class="btn btn-success pull-right">Desactivar Búsqueda Avanzada</button></a></center>

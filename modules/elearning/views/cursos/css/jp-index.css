@@ -88,6 +88,11 @@ label{
     padding: 0.2px;
     border-top: 1px solid #3c763d;
 }
+.cursos-hr-title-foro2{
+    margin-top: 0px;
+    padding: 0.2px;
+    border-top: 1px solid white;
+}
 /*................................*
 label:hover,
 label:hover ~ label {

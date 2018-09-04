@@ -1,7 +1,11 @@
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 p-rt-lt-0" style="background-image: url({BASE_URL}modules/elearning/views/cursos/img/encabezado-elearning.jpg); background-repeat: no-repeat;">
+    <div class="col-md-5 col-lg-5" style="color: white; font-weight: bold; font-size: 18px;">
+        {include file='modules/elearning/views/cursos/menu/descripcion.tpl'}
+    </div>
+</div>
 {include file='modules/elearning/views/cursos/menu/lateral.tpl'}
-<div class="col col-md-10" style="padding-bottom: 20px; padding-top: 20px">
-    {include file='modules/elearning/views/cursos/menu/descripcion.tpl'}
-    <div class="col-xs-12">
+<div class="col col-md-10 col-lg-10" style="padding-bottom: 20px; padding-top: 20px">
+    <div class="col-xs-12 col-md-12 col-lg-12">
         <form class="form-horizontal" method="post" action="{BASE_URL}elearning/cursos/cursos">
             <div class="form-group">
                 <div class="col-sm-6 col-md-3">

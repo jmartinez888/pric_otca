@@ -225,7 +225,7 @@
 
 
 
-  <div class="col col-md-2" >
+  <div class="col col-md-2 col-lg-2">
     <div class="col-md-12 menu-cursos" style="padding-top: 40px;">
         <ul class="col-md-12 p-rt-lt-0">
           <a href="{BASE_URL}elearning/cursos/" class="nounderline">
