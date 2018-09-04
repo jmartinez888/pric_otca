@@ -33,12 +33,11 @@ class Model {
             $modelo = new $modelo;
             return $modelo;
         } else {
-            throw new Exception('Error de modelo - Clase Model-'.$rutaModelo);
+            throw new Exception('Error de modelo - Clase Model -'.$rutaModelo);
         }
     }
   //Inserta en tabla bitacora y evento
-    public function insertarBitacora($iEve_Descripcion,$iEve_Tipo,$iBit_UserName,$iBit_NombrePagina,
-                                     $iBit_NombreMetodo,$iBit_Descripcion,$iBit_Estado)
+    public function insertarBitacora($iEve_Descripcion,$iEve_Tipo,$iBit_UserName,$iBit_NombrePagina, $iBit_NombreMetodo,$iBit_Descripcion,$iBit_Estado)
     {
          try {
 
