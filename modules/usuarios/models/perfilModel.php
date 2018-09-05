@@ -34,7 +34,7 @@ class perfilModel extends Model
                 return $usuarios->fetch();
             }
         } catch (PDOException $exception) {
-            $this->registrarBitacora("usuario(indexModel)", "getUsuarios", "Error Model", $exception);
+            $this->registrarBitacora("usuario(perfilModel)", "getUsuarios", "Error Model", $exception);
             return $exception->getTraceAsString();
         }        
     }
@@ -43,18 +43,29 @@ class perfilModel extends Model
     {
         try{
             $usuarios = $this->_db->query(
-                "select u.*,r.Rol_role from usuario u, rol r ".
-                "where u.Rol_IdRol = r.Rol_IdRol and u.Usu_IdUsuario = $usuarioID"
+                " SELECT u.* FROM usuario u  WHERE u.Usu_IdUsuario = $usuarioID"
             );
             return $usuarios->fetch();
         } catch (PDOException $exception) {
-            $this->registrarBitacora("usuario(indexModel)", "getUsuario", "Error Model", $exception);
+            $this->registrarBitacora("usuario(perfilModel)", "getUsuario", "Error Model", $exception);
             return $exception->getTraceAsString();
         }
     }
+
+    public function getRolesxUsuario($Usu_IdUsuario = '')
+    {
+        try{
+            $rol = $this->_db->query(
+                " SELECT Rol_IdRol FROM usuario_rol WHERE Usu_IdUsuario= $Usu_IdUsuario"
+            );           
+            return $rol->fetchAll();            
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("usuario(indexModel)", "getUsuariosRoles", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }        
+    }
     
-    public function editarUsuarioPerfil($iUsu_Nombre, $iUsu_Apellidos, $iUsu_DocumentoIdentidad, $iUsu_Direccion, $iUsu_Telefono,
-        	$iUsu_InstitucionLaboral, $iUsu_Cargo, $iUsu_Usuario, $iUsu_Email, $iUsu_IdUsuario
+    public function editarUsuarioPerfil($iUsu_Nombre, $iUsu_Apellidos, $iUsu_DocumentoIdentidad, $iUsu_Direccion, $iUsu_Telefono, $iUsu_InstitucionLaboral, $iUsu_Cargo, $iUsu_Usuario, $iUsu_Email, $iUsu_IdUsuario
            )
     {
             $iUsu_Password = Hash::getHash('sha1', $iUsu_Password, HASH_KEY);
@@ -75,7 +86,7 @@ class perfilModel extends Model
                 $result->execute();
                 return $result->rowCount(PDO::FETCH_ASSOC);
             } catch (PDOException $exception) {
-                $this->registrarBitacora("usuario(indexModel)", "editarUsuario(1)", "Error Model", $exception);
+                $this->registrarBitacora("usuario(perfilModel)", "editarUsuario(1)", "Error Model", $exception);
                 return $exception->getTraceAsString();
             }         
         

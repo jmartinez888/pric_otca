@@ -123,3 +123,43 @@
 	color: #fff !important;
 	text-decoration-line: underline;
 }
+/*Para Info User*/
+.t_info {
+    border-color: transparent;
+    border-bottom-color: #fff;
+    border-style: dashed dashed solid;
+    border-width: 0 8.5px 8.5px;
+    display: none;
+    position: absolute;
+    left: 8.5px;
+    top: 34px;
+    z-index: 1002;
+    height: 0;
+    width: 0;
+
+}
+.open>.t_info {
+    display: block;
+}
+.t_info_s {
+    border-color: transparent;
+    border-bottom-color: #373941;
+    border-style: dashed dashed solid;
+    border-width: 0 8.5px 8.5px;
+    display: none;
+    position: absolute;
+    left: 8.5px;
+    top: 33px;
+    z-index: 1001;
+    height: 0;
+    width: 0;
+
+}
+.open>.t_info_s {
+    display: block;
+}
+.navbar-nav .info_ul{
+	right: 0;
+	top: 140%;
+	left: auto;
+}

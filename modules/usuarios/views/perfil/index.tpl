@@ -4,7 +4,7 @@
         <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 col-xs-offset-0 col-sm-offset-0 col-md-offset-2 col-lg-offset-2 toppad" >
             <div class="panel panel-default ">
                 <div class="panel-heading " >
-                    <h3 class="panel-title"><i class="glyphicon glyphicon-user"></i>&nbsp;&nbsp;<strong>{$usuario.Rol_role|default:""}</strong>
+                    <h3 class="panel-title"><i class="glyphicon glyphicon-user"></i>&nbsp;&nbsp;<strong>{$usuario.Rol_Nombre|default:""}</strong>
                 </div>
                 <div class="panel-body">
                     <div class="row">
@@ -63,9 +63,28 @@
                             </table>      
                         </div>
                     </div>
+                    <div class="row">
+                        <div class=" col-md-12 "> 
+                        </div>
+                        <div class=" col-md-12 "> 
+                            <table class="table table-user-information">
+                                <tbody>
+                                    <tr>
+                                        <td class="text-bold">{$lenguaje.label_nombre} : </td>
+                                        <td>{$usuario.Usu_Nombre}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-bold">{$lenguaje.label_apellidos} : </td>
+                                        <td>{$usuario.Usu_Apellidos}</td>
+                                    </tr>
+                                    
+                                </tbody>
+                            </table>      
+                        </div>
+                    </div>
                 </div>
                 <div class="panel-footer ">                    
-                    <a style="background-color: #FFF" href="{$_layoutParams.root}usuarios/perfil/editarPerfil/{$usuario.Usu_IdUsuario}" data-original-title="Edit this user" data-toggle="tooltip" type="button" class="btn btn-default " ><i class="glyphicon glyphicon-edit"></i></a>
+                    <a style="background-color: #FFF" href="{$_layoutParams.root}usuarios/perfil/editarPerfil/{$usuario.Usu_IdUsuario}" data-original-title="Editar su Usuario" data-toggle="tooltip" type="button" class="btn btn-default " ><i class="glyphicon glyphicon-edit"></i></a>
                 </div>          
             </div>
         </div>

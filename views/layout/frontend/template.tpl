@@ -91,12 +91,58 @@
                                     <a class="nav-link txt-color-white f-z-14" href="{$_layoutParams.root_clear}acercade"> | Acerca de</a>
                                 </li>
                                 {if Session::get('autenticado')}
-                                    <li class="nav-item">
+                                    <!-- Perfil User -->
+                                    <li class="nav-item user user-menu ">
+                                        <a href="#" class="nav-link txt-color-white f-z-14 dropdown-toggle" data-toggle="dropdown" aria-expanded="true" style="float: left; padding: 5px 5px 2px;">
+                                            <img src="{$_layoutParams.ruta_img}/user2-160x160.jpg" class="user-image" alt="User Image">
+                                            <!-- <span class="hidden-xs">Alexander</span> -->
+                                        </a>
+                                        <div class="t_info"></div>
+                                        <div class="t_info_s"></div>
+                                        <ul class="dropdown-menu info_ul" style="box-shadow: 0 0 11px #222 !important;">
+                                            <!-- User image -->
+                                            <li class="user-header">
+                                                <img src="{$_layoutParams.ruta_img}/user2-160x160.jpg" class="img-circle" alt="User Image">
+                                                <p>
+                                                  Alexander Pierce - Web Developer
+                                                    <small>Member since Nov. 2012</small>
+                                                </p>
+                                            </li>
+                                            <!-- Menu Body -->
+                                            <li class="user-body">
+                                                <div class="row">
+                                                    <div class="col-xs-4 text-center">
+                                                        <a href="#">Followers</a>
+                                                    </div>
+                                                    <div class="col-xs-4 text-center">
+                                                        <a href="#">Sales</a>
+                                                    </div>
+                                                    <div class="col-xs-4 text-center">
+                                                        <a href="#">Friends</a>
+                                                    </div>
+                                                </div>
+                                                <!-- /.row -->
+                                            </li>
+                                            <!-- Menu Footer-->
+                                            <li class="user-footer">
+                                                <div class="pull-left">
+                                                    <a href="#" class="btn btn-default btn-flat">Profile</a>
+                                                </div>
+                                                <div class="pull-right">
+                                                    <a class="btn btn-default btn-flat" href="{$_layoutParams.root}usuarios/login/cerrar"  data-toggle="tooltip" data-placement="bottom" title="Cerrar Sesi&oacute;n"><i style="font-size:15px" class="glyphicon glyphicon-log-out"></i> {$lenguaje.text_cerrarsession}</a>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- Perfil User -->
+
+
+                                    <!-- <li class="nav-item">
                                         <a class="nav-link txt-color-white f-z-14" href="{$_layoutParams.root}acl"  data-toggle="tooltip" data-placement="bottom" title="Intranet"><i style="font-size:15px" class="glyphicon glyphicon-cog"></i> {$lenguaje.text_intranet}</a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link txt-color-white f-z-14" href="{$_layoutParams.root}usuarios/login/cerrar"  data-toggle="tooltip" data-placement="bottom" title="Cerrar Sesi&oacute;n"><i style="font-size:15px" class="glyphicon glyphicon-log-out"></i> {$lenguaje.text_cerrarsession}</a>
-                                    </li>
+                                    </li> -->
                                 {else}
                                     <li class="nav-item">
                                         <a class="nav-link txt-color-white f-z-14" href="#"  data-placement="bottom" class=" form-login" title="Intranet" data-toggle="modal" data-target="#modal-login"> | <i style="font-size:15px" class="glyphicon glyphicon-log-in"></i> Iniciar Sesión</a>

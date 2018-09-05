@@ -24,6 +24,7 @@ class perfilController extends usuariosController {
         $this->_view->setCss(array('perfil'));
         //echo $idUsuario;
         $usuario = $this->_perfil->getUsuario($idUsuario);
+        // $this->_view->assign('rolesUsuario', $this->_usuarios->getRolesxUsuario($idUsuario));
        // print_r($usuario);
        // echo $usuario;                exit;
         $this->_view->assign('usuario', $usuario);
