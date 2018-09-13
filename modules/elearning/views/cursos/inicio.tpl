@@ -22,8 +22,11 @@
                 <div class="col-sm-6 col-md-3 " id="div-margin-t-10">
                     <select class="form-control" name="_tipo_curso" id="_tipo_curso">
                         <option value="0" > Todos </option>
-                        <option value="1" {if $_tipo_curso == 1} selected="" {/if}> MOOC </option>
-                        <option value="2" {if $_tipo_curso == 2} selected="" {/if}> LMS </option>
+                        {if isset($modalidades) && count($modalidades) }
+                            {foreach from=$modalidades item=m}
+                            <option value="{$m.Con_Valor}" {if $m.Con_Valor == $_tipo_curso} selected="" {/if}> {$m.Con_Descripcion} </option>
+                            {/foreach}
+                        {/if}
                     </select>
                 </div>
 
@@ -85,7 +88,7 @@
                                     <h4 class="col-xs-9 curso-item-title">
                                         <strong>{$o.Cur_Titulo}</strong>
                                     </h4>
-                                    <div class="col-xs-3 curso-item-mod {if $o.Moa_IdModalidad==1} mooc {else} lms {/if}">{$o.Modalidad}</div>
+                                    <div class="col-xs-3 curso-item-mod {if $o.Moa_IdModalidad==1} mooc {/if} {if $o.Moa_IdModalidad==2} lms {/if} {if $o.Moa_IdModalidad==3} pres {/if}">{$o.Modalidad|truncate:5:"."}</div>
                                 </div>
                                 <hr class="cursos-hr">
 <!-- //desde aqui -->

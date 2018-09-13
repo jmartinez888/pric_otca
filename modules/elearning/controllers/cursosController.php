@@ -94,7 +94,7 @@ class cursosController extends elearningController {
       $paginador = new Paginador();
       $arrayRowCount = $model->getCursosRowCount($condicion);
       $totalRegistros = $arrayRowCount['CantidadRegistros'];
-      $cursos = $model->getCursosPaginado($pagina,CANT_REG_PAG,$condicion,$Usu_IdUsuario);
+      $cursos = $model->getCursosPaginado($pagina,CANT_REG_PAG,$condicion,$Usu_IdUsuario);      
       $paginador->paginar($totalRegistros,"listarCursos", "", $pagina, CANT_REG_PAG, true);
 
       $this->_view->assign('numeropagina', $paginador->getNumeroPagina());
@@ -108,7 +108,7 @@ class cursosController extends elearningController {
       $this->_view->assign("cursos", $cursos);
       $this->_view->assign("_mis_cursos",$_mis_cursos);
       $this->_view->assign("_tipo_curso",$_tipo_curso);
-      // $this->_view->assign("modalidades", $model->getConstante($condicion));
+      $this->_view->assign("modalidades", $model->getConstante(1000));
       $this->_view->assign("c",0);
       $this->_view->renderizar('inicio');
   }

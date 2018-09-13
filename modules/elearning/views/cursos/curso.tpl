@@ -15,6 +15,8 @@
               <img src="{BASE_URL}modules/elearning/views/cursos/img/portada/{$curso.Cur_UrlBanner}" />
               {if $curso.Moa_IdModalidad == 1}
               <div class="col-xs-12 text-center mooc" style="color: white; font-weight: bold; font-size: 18px;">MOOC</div>
+              {else}
+              <div class="col-xs-12 text-center pres" style="color: white; font-weight: bold; font-size: 18px;">PRESENCIAL</div>
               {/if}
             </div>
             <div class="col-lg-6">
@@ -47,23 +49,46 @@
 
           <div class="col-lg-4">
             <center class="panel panel-default col-lg-10 info-curso">
-
+              {if $curso.Moa_IdModalidad == 1}
               <div class="col-lg-12">
                 <i class="glyphicon glyphicon-time" style="color: #16B8AD; font-size: 25px"></i>
                 <br>
                 <strong style="color: #393939; font-size: 16px">{$curso.Cur_Duracion|default: $duracion}</strong>
                 <br><br>
               </div>
+              {/if}
 
+              {if $curso.Moa_IdModalidad == 1}
               <div class="col-lg-12" style="border-top: #ddd solid 0.2px; border-bottom: #ddd solid 0.2px;">
                 <br>
                 <i class="glyphicon glyphicon-user" style="color: #31A3BB; font-size: 25px"></i>
                 <br>
                 <strong style="color: #393939; font-size: 16px">{$inscritos}</strong>
                 <br>
+                {if $inscritos >= 2 }
                 <strong style="color: #393939; font-size: 16px">Alumnos</strong>
+                {else}
+                <strong style="color: #393939; font-size: 16px">Alumno</strong>                
+                {/if}
                 <br><br>
               </div>
+              {/if}
+              {if $curso.Moa_IdModalidad == 3}
+              <div class="col-lg-12" style=" border-bottom: #ddd solid 0.2px;">
+                <br>
+                <i class="glyphicon glyphicon-user" style="color: #31A3BB; font-size: 25px"></i>
+                <br>
+                <strong style="color: #393939; font-size: 16px">{$inscritos}</strong>
+                <br>
+                {if $inscritos >= 2 }
+                <strong style="color: #393939; font-size: 16px">Alumnos</strong>
+                {else}
+                <strong style="color: #393939; font-size: 16px">Alumno</strong>                
+                {/if}
+                <br><br>
+              </div>
+              {/if}
+              
               
               <div class="col-lg-12">
                 <br>
@@ -141,12 +166,24 @@
                     {/if}
                     {/if}
                   {/if}
-                  <center class="tag-inscrito">
-                    <span><strong>Inscrito:</strong>
-                    {$inscripcion[0].Mat_FechaReg}</span>
-                  </center>
 
-                  {if Session::get('id_usuario')}
+                  {if $curso.Moa_IdModalidad != 3}
+                      <center class="tag-inscrito">
+                        <span><strong>Inscrito:</strong>
+                        {$inscripcion[0].Mat_FechaReg}</span>
+                      </center>
+                  {else}
+                      <div class="col-lg-12 anuncio"> 
+                      <strong><i class="glyphicon glyphicon-warning-sign" style="font-size: 20px;"> </i>&nbsp; ¡Atención!</strong>
+                      Para inscribirte en el curso presencial debe llenar el formulario de inscripción.</div>
+                      <div class="col-lg-12">
+                        <a href="https://docs.google.com/forms/d/e/1FAIpQLSfnDPVqGFC2J6rMkuqAPi18G0w0KkSqueGtbgZXEEuDk7dg7w/viewform"  target="_blank" >
+                          <button class="btn btn-group btn-inscribir">Inscribirme</button>
+                        </a>
+                      </div>
+                  {/if}
+
+                  {if Session::get('id_usuario') && $curso.Moa_IdModalidad != 3}
                   <div class="col-lg-12 p-rt-lt-0">
                     <div class="progress progress-estilo">
                       <div class="progress-bar progress-bar-striped" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: {$progreso.Porcentaje}%">
@@ -171,22 +208,33 @@
                 {/if}
               {/if}
             {else}
-              <div class="col-lg-12 anuncio"> 
-              <strong><i class="glyphicon glyphicon-warning-sign" style="font-size: 20px;"> </i>&nbsp; ¡Atención!</strong>
-              Para inscribirte en el curso necesitas una cuenta.</div>
-              <div class="col-lg-12">
-                <button data-toggle="modal" data-target="#modal-login" class="btn btn-group btn-success ini-sesion">
-                <strong>Iniciar Sesión</strong>
-                <i class="glyphicon glyphicon-log-in"></i>
-              </button>
-              </div>
+              {if $curso.Moa_IdModalidad != 3}
+                <div class="col-lg-12 anuncio"> 
+                <strong><i class="glyphicon glyphicon-warning-sign" style="font-size: 20px;"> </i>&nbsp; ¡Atención!</strong>
+                Para inscribirte en el curso necesitas una cuenta.</div>
+                <div class="col-lg-12">
+                  <button data-toggle="modal" data-target="#modal-login" class="btn btn-group btn-success ini-sesion">
+                  <strong>Iniciar Sesión</strong>
+                  <i class="glyphicon glyphicon-log-in"></i>
+                </button>
+                </div>
+              {else}
+                <div class="col-lg-12 anuncio"> 
+                <strong><i class="glyphicon glyphicon-warning-sign" style="font-size: 20px;"> </i>&nbsp; ¡Atención!</strong>
+                Para inscribirte en el curso presencial debe llenar el formulario de inscripción.</div>
+                <div class="col-lg-12">
+                  <a href="https://docs.google.com/forms/d/e/1FAIpQLSfnDPVqGFC2J6rMkuqAPi18G0w0KkSqueGtbgZXEEuDk7dg7w/viewform" target="_blank">
+                    <button class="btn btn-group btn-inscribir">Inscribirme</button>
+                  </a>
+                </div>
+              {/if}
             {/if}
           </div>
 
           
 
 
-          {if $session==1 && count($modulo)>0 }
+          {if $session==1 && count($modulo)>0 && $curso.Moa_IdModalidad != 3 }
             <div class="col-lg-12">
               <div><h3 style="font-family: 'Gill Sans MT';">Módulos del curso</h3></div>
               <hr class="cursos-hr">

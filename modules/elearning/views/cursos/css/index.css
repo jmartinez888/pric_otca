@@ -65,12 +65,13 @@
 
 .mooc{
   background: #EF5350;
-
 }
 
 .lms{
   background: #2196F3;
-
+}
+.pres {
+   background: #009640;
 }
 
 .curso-item-lms-tab{
