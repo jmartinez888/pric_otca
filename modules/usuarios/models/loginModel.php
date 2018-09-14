@@ -10,9 +10,7 @@ class loginModel extends Model
     {
         try{
             $datos = $this->_db->query(
-                    "select * from usuario " .
-                    "where Usu_Usuario = '$usuario' " .
-                    "and Usu_Password = '" . Hash::getHash('sha1', $password, HASH_KEY) ."'"
+                    "SELECT * FROM usuario WHERE Usu_Usuario = '$usuario' AND Usu_Password = '" . Hash::getHash('sha1', $password, HASH_KEY) ."'"
                     );
             return $datos->fetch(PDO::FETCH_ASSOC);
         } catch (PDOException $exception) {

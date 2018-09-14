@@ -14,7 +14,7 @@ class perfilController extends usuariosController {
     public function index($idUsuario = false) {
         $this->_acl->acceso('ver_perfil');
         $this->validarUrlIdioma();
-        //$this->_view->setTemplate(LAYOUT_FRONTEND);
+        $this->_view->setTemplate(LAYOUT_FRONTEND);
         if (Session::get('id_usuario')!=$idUsuario){            
             $this->_acl->acceso('editar_usuario');
         }
@@ -26,6 +26,24 @@ class perfilController extends usuariosController {
         $usuario = $this->_perfil->getUsuario($idUsuario);
         // $this->_view->assign('rolesUsuario', $this->_usuarios->getRolesxUsuario($idUsuario));
        // print_r($usuario);
+
+
+        // $id = Session::get("id_usuario");
+        // $busqueda = $this->getTexto('busqueda');
+        $busqueda = "";
+        // $cursos = $this->curso->getCursoXDocente($id, $busqueda);
+        $cursos = $this->_perfil->getMisCursos($idUsuario, $busqueda);
+
+        //print_r($cursos); exit;
+        // $this->_view->setCss(array("jm-mis-cursos"));
+        // Session::set("learn_url_tmp", "gcurso/_view_mis_cursos");
+        $this->_view->getLenguaje("learn");
+        $this->_view->assign('cursos', $cursos);
+        // $this->_view->assign('busqueda', $busqueda);
+        // $this->_view->assign('curso', $this->getTexto("id"));
+        // $this->_view->renderizar('ajax/_view_mis_cursos', false, true);
+          
+          
        // echo $usuario;                exit;
         $this->_view->assign('usuario', $usuario);
         

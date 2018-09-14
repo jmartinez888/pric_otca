@@ -163,3 +163,14 @@
 	top: 140%;
 	left: auto;
 }
+.nav-item>ul>li>a {
+    color: #0f8723;
+    font-weight: bold;
+    font-size: 100%;
+}
+.nav-item>ul>li>a:hover {
+    /*color: #333;*/
+    color: #0f8723;
+    text-decoration: underline;
+    background-color: transparent;
+}

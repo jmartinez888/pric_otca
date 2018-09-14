@@ -53,6 +53,8 @@ class loginController extends Controller {
                 // Session::set('level', $row['Rol_IdRol']);
                 Session::set('usuario', $row['Usu_Usuario']);
                 Session::set('id_usuario', $row['Usu_IdUsuario']);
+                Session::set('Usu_Nombre', $row['Usu_Nombre']);
+                Session::set('Usu_Apellidos', $row['Usu_Apellidos']);
                 Session::set('tiempo', time());
 
 //                if (Session::get('level') == 5) {
@@ -114,6 +116,8 @@ class loginController extends Controller {
             // Session::set('level', $row['Rol_IdRol']);
             Session::set('usuario', $row['Usu_Usuario']);
             Session::set('id_usuario', $row['Usu_IdUsuario']);
+            Session::set('Usu_Nombre', $row['Usu_Nombre']);
+            Session::set('Usu_Apellidos', $row['Usu_Apellidos']);
             Session::set('tiempo', time());
 
             // $this->redireccionar($url_redirec);

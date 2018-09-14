@@ -70,7 +70,7 @@ class indexController extends usuariosController {
         // if($PermisoVacio){
         //     $this->_view->assign('_error', 'Error al editar Debe agregar permisos al Usuario');
         // }        
-        $this->_view->renderizar('index','usuarios');
+        $this->_view->renderizar('index');
     }
 
     public function _paginacion_listaregistros($txtBuscar = false) {
