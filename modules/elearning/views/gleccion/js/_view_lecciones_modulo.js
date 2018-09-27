@@ -1,6 +1,24 @@
 Menu(1);
 RefreshTagUrl();
 
+// Jhon Martinez
+$("#item_modulo").click(function() {
+  $(this).removeClass("active");
+  $("#item_lecciones").removeClass("active"); 
+  // $(this).css('font-weight', 'bold');
+  $(this).addClass("active");
+  $('.div_modulo').css('display', 'block');
+  $('.div_lecciones').css('display', 'none');
+});
+$("#item_lecciones").click(function() {
+  $(this).removeClass("active");
+  $("#item_modulo").removeClass("active");
+  // $(this).css('font-weight', 'bold');
+  $(this).addClass("active");
+  $('.div_lecciones').css('display', 'block');
+  $('.div_modulo').css('display', 'none');
+});
+
 $("#btn_nueva_leccion").click(function(){
   if($(this).html()=="Cancelar"){
     $("#panelNuevaLeccion").hide(100);

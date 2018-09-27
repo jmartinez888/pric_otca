@@ -10,7 +10,7 @@
 		        </div>
 		        <div class="panel-body">
 		        	<div class="col-lg-9">
-			        		<h2 class="font-docente" style="margin-top: 0px">{$usuario.Usu_Nombre} {$usuario.Usu_Apellidos}</h2>
+		        		<h2 class="font-docente" style="margin-top: 0px">{$usuario.Usu_Nombre} {$usuario.Usu_Apellidos}</h2>
 			        </div>
 			        <div class="col-lg-3">
 				    	<a href="{BASE_URL}elearning/cursos/curso/{$curso.Cur_IdCurso}">

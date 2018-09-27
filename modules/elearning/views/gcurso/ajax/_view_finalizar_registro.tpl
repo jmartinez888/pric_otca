@@ -50,7 +50,7 @@
 </div>
 
 <!-- PRESENTACION -->
-<div {if isset($active) && $active == "pre" } class="col-lg-12  div_presentacion display-block" {else} class="col-lg-12  div_presentacion" {/if} >
+<div {if isset($actives) && $actives == "pre" } class="col-lg-12  div_presentacion display-block" {else} class="col-lg-12  div_presentacion" {/if} >
   <div class="panel panel-default" style="border-top: 0; border-top-left-radius: 0; border-top-right-radius: 0;">
     
     <div class="panel-body form-horizontal"  id="panelImg">
@@ -119,7 +119,7 @@
 {include file='modules/elearning/views/uploader/uploader.tpl'}
 
 <!-- CONTENIDO -->
-<div {if isset($active) && $active == "con" } class="col-lg-12  div_contenido display-block" {else} class="col-lg-12  div_contenido" {/if}  >
+<div {if isset($actives) && $actives == "con" } class="col-lg-12  div_contenido display-block" {else} class="col-lg-12  div_contenido" {/if}  >
   <div class="panel panel-default" style="border-top: 0; border-top-left-radius: 0; border-top-right-radius: 0;">
     
     <div class="panel-body"  id="panelDetalle">
@@ -172,7 +172,7 @@
 </div>
 
 <!-- PARAMETROS -->
-<div {if isset($active) && $active == "par" } class="col-lg-12  div_parametros display-block" {else} class="col-lg-12  div_parametros" {/if}  >
+<div {if isset($actives) && $actives == "par" } class="col-lg-12  div_parametros display-block" {else} class="col-lg-12  div_parametros" {/if}  >
   <div class="panel panel-default" style="border-top: 0; border-top-left-radius: 0; border-top-right-radius: 0;">
     
     <div class="panel-body" id="panelParametros">

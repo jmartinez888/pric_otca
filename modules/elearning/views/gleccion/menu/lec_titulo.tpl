@@ -1,12 +1,12 @@
-<div class="col-lg-9">
-  <div class="panel panel-default margin-top-10">
-    <div class="panel-heading">
+<div class="col-lg-12  div_titulo">
+  <div class="panel panel-default " style="border-top: 0; border-top-left-radius: 0; border-top-right-radius: 0;">
+    <!-- <div class="panel-heading">
       <h3 class="panel-title">
         <i class="glyphicon glyphicon-list-alt"></i>&nbsp;&nbsp;
         <strong>Datos Lección</strong>
       </h3>
-    </div>
-    <div class="panel-body" style=" margin: 15px 25px">
+    </div> -->
+    <div class="panel-body" >
       <form></form>
       <form id="form-datos-leccion" action="gleccion/_actualizar_leccion" method="post">
       <label>Titulo</label>

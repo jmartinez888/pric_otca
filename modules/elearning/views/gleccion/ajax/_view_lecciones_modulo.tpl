@@ -1,12 +1,41 @@
+<style type="text/css">
+  .div_modulo{
+    display: block;
+  }
+  .div_lecciones{
+    display: none;
+  }
+
+  .display-block{
+    display: block;
+  }
+
+  .nav-tabs > .active{
+    font-weight: bold;
+  }
+  .nav-tabs > li.active > a{
+    color: #009640 !important;
+  }
+</style>
+
 {include file='modules/elearning/views/gestion/menu/tag_url.tpl'}
-<div class="col-lg-12 margin-top-10" id="panelModulos">
-  <div class="panel panel-default">
-    <div class="panel-heading">
+<!--  Tabs-->
+<div class="col-lg-12">
+  <ul class="nav nav-tabs">
+    <li role="presentation" class="active" id="item_modulo"><a href="#">MÓDULO</a></li>
+    <li role="presentation" id="item_lecciones" ><a href="#">LECCIONES</a></li>
+  </ul>
+</div>
+
+<!-- Modulo -->
+<div {if isset($active) && $active == "mod" } class="col-lg-12  div_modulo display-block" {else} class="col-lg-12  div_modulo" {/if} id="panelModulos">
+  <div class="panel panel-default" style="border-top: 0; border-top-left-radius: 0; border-top-right-radius: 0;">
+    <!-- <div class="panel-heading">
       <h3 class="panel-title">
         <i class="glyphicon glyphicon-list-alt"></i>&nbsp;&nbsp;
         <strong>{$modulo.Moc_Titulo}</strong>
       </h3>
-    </div>
+    </div> -->
     <div class="panel-body">
       <form id="frm-act-modulo" method="post" action="gmodulo/_actualizar_modulo">
       <div class="col-lg-12"><strong>Titulo</strong></div>
@@ -26,15 +55,16 @@
   </div>
 </div>
 
-<div class="col-lg-12 margin-top-10" id="panelModulos">
-  <div class="panel panel-default">
-    <div class="panel-heading">
+<!-- Lecciones -->
+<div class="col-lg-12 div_lecciones" id="panelModulos">
+  <div class="panel panel-default" style="border-top: 0; border-top-left-radius: 0; border-top-right-radius: 0;">
+    <!-- <div class="panel-heading">
       <h3 class="panel-title">
         <i class="glyphicon glyphicon-list-alt"></i>&nbsp;&nbsp;
         <strong>Lecciones del Módulo</strong>
       </h3>
-    </div>
-    <div class="panel-body" style=" margin: 15px 25px">
+    </div> -->
+    <div class="panel-body" >
       <div class="col-lg-12">
         {if isset($lecciones) && count($lecciones) > 0 }
           <table class="table" id="tblMisCursos">

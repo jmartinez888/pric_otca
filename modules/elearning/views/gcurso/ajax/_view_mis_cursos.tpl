@@ -113,7 +113,7 @@
                           </div> 
                         </td>
 
-                          {if $_acl->permiso("editar_curso") && $c.Inscrito == 0}
+                          {if $_acl->permiso("editar_curso") && $c.Usu_IdUsuario == Session::get("id_usuario")}
                         <td >
                           <input class="hidden_IdCurso estado" value="{$c.Cur_IdCurso}"/>
                           

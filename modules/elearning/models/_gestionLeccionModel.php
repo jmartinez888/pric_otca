@@ -178,9 +178,9 @@ class _gestionLeccionModel extends Model {
     $this->execQuery($sql);
   }
 
-  public function insertMaterial($leccion, $url, $descripcion){
-    $sql = "INSERT INTO material_leccion(Lec_IdLeccion, Mat_Enlace, Mat_Descripcion, Mat_FechaReg, Mat_Estado)
-            VALUES({$leccion}, '{$url}', '{$descripcion}', NOW(), 1)";
+  public function insertMaterial($leccion, $url, $tipo, $descripcion){
+    $sql = "INSERT INTO material_leccion(Lec_IdLeccion, Mat_Enlace, Mat_Descripcion, Mat_FechaReg, Mat_Tipo, Mat_Estado)
+            VALUES({$leccion}, '{$url}', '{$descripcion}', NOW(), $tipo, 1)";
     $this->execQuery($sql);
   }
 

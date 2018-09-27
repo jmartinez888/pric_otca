@@ -1,12 +1,12 @@
 <style>
-  .item-referencia{
+  /*.item-referencia{
     position: relative;
     margin-bottom: 10px;
     border-bottom: 1px solid #ddd;
-  }
-  .btnEliminar{
+  }*/
+  /*.btnEliminar{
     position: absolute; top: 0px; right: 0px;
-  }
+  }*/
   .cortar{
     width:98%;
     height:auto;
@@ -36,65 +36,158 @@
     right: 7px;
   }
 </style>
-<div class="col-lg-3">
-  <div class="panel panel-default margin-top-10">
-    <div class="panel-heading">
+<div class="col-lg-12  div_referencias">
+  <div class="panel panel-default " style="border-top: 0; border-top-left-radius: 0; border-top-right-radius: 0;">
+    <!-- <div class="panel-heading">
       <h3 class="panel-title">
         <i class="glyphicon glyphicon-list-alt"></i>&nbsp;&nbsp;
         <strong>Referencias</strong>
       </h3>
-    </div>
+    </div> -->
     <div class="panel-body">
       {if isset($referencias) && count($referencias) > 0 }
-        {foreach from=$referencias item=r}
-          <div class="item-referencia">
-            <input class="Hidden_IdReferencia" hidden="hidden" value="{$r.Ref_IdReferencia}" />
-            <strong>{$r.Ref_Titulo}</strong>
-            <div class="cortar">{$r.Ref_Descripcion}</div>
-            <button class="btnEliminar"><i class="glyphicon glyphicon-trash"></i></button>
-          </div>
-        {/foreach}
+        {$i = 1}
+        <table class="table table-hover table-condensed table-filtros text-center">
+            <thead class="bg-default">
+            <tr>
+            <th>#</th>
+            <th> Título </th>
+            <th> Fecha </th>
+            <th> Estado </th> 
+            <th> Opciones </th>
+              <tbody>
+                {foreach from=$referencias item=r}
+                {if $r.Row_Estado == 0}
+                <tr style="color: red">
+                {else}                
+                  {if $r.Ref_Estado == 0}
+                    <tr style="color: #999c99">
+                  {else}    
+                    <tr>
+                  {/if}
+                {/if}
+                  <td scope="row">{$i++}</td>
+                  <td style="text-align: left;">
+                    <span data-toggle="tooltip" data-placement="right" title="{$r.Ref_Titulo}">{$r.Ref_Titulo|truncate:250:"..."}</span>
+                  </td>
+                  <td>{$r.Ref_FechaReg}</td>
+                  <td>
+                      {if $r.Ref_Estado==0}
+                          <i data-toggle="tooltip" data-placement="top"  class="glyphicon glyphicon-remove-sign" title="Deshabilitado" style="color: #DD4B39;"/>
+                      {/if}
+                      {if $r.Ref_Estado==1}
+                          <i data-toggle="tooltip" data-placement="top"  class="glyphicon glyphicon-ok-sign" title="Habilitado" style="color: #088A08;"/>
+                      {/if}
+                      {if $r.Ref_Estado==2}
+                          <i data-toggle="tooltip" data-placement="top"  class="glyphicon glyphicon-info-sign" title="Privado" style="color: #f39c12;"/>
+                      {/if}
+                  </td>
+                  <td>
+                    <div class="item-referencia">
+                      <input class="Hidden_IdReferencia" hidden="hidden" value="{$r.Ref_IdReferencia}" /> 
+                      <input class="Hidden_IdEnlace" hidden="hidden" value="{$r.Ref_Descripcion}" />
+                      <input class="Hidden_TipoMaterial" hidden="hidden" value="1" />
+                      <button data-toggle="tooltip" data-placement="top" title="Ver enlace" class="btnAbrirEnlace btn btn-sm btn-primary"><i class="glyphicon glyphicon-link"></i></button>
+                      <button data-toggle="tooltip" data-placement="top" title="Eliminar Material" class="btnEliminar btn btn-sm btn-danger"><i class="glyphicon glyphicon-trash"></i></button>                    
+                    </div>
+                  </td>
+                {/foreach}
+
+              </tbody>
+        </table>
+
+
+
+
       {else}
         <div>No tienes referencias</div>
       {/if}
-      <button class="btn btn-default" id="btn_agregar_referencia">Agregar</button>
+      <button class="btn btn-success" id="btn_agregar_referencia">Agregar</button>
     </div>
-  </div>
 
-  <div class="panel panel-default margin-top-10">
-    <div class="panel-heading">
+  </div>
+</div>
+<div class="col-lg-12  div_materiales">
+  <div class="panel panel-default " style="border-top: 0; border-top-left-radius: 0; border-top-right-radius: 0;">
+    <!-- <div class="panel-heading">
       <h3 class="panel-title">
         <i class="glyphicon glyphicon-list-alt"></i>&nbsp;&nbsp;
         <strong>Material Didáctico</strong>
       </h3>
-    </div>
+    </div> -->
     <div class="panel-body">
-      {if isset($material) && count($material) > 0 }
-        {foreach from=$material item=r}
-          <div class="item-referencia">
-            <input class="Hidden_IdMaterial" hidden="hidden" value="{$r.Mat_IdMaterial}" />
-            <input class="Hidden_IdEnlace" hidden="hidden" value="{$r.Mat_Enlace}" />
-            <button class="btnAbrirEnlace">Abrir</button>
-            <strong>{substr($r.Mat_Descripcion, 0, 10)}...</strong>
-            <button class="btnEliminarMaterial"><i class="glyphicon glyphicon-trash"></i></button>
-          </div>
-        {/foreach}
-      {else}
-        <div>No tienes material didáctico</div>
-      {/if}
-      <button class="btn btn-default" id="btn_agregar_material">Agregar</button>
+      <div class="table-responsive">
+        {if isset($material) && count($material) > 0 }
+        {$i = 1}
+        <table class="table table-hover table-condensed table-filtros text-center">
+            <thead class="bg-default">
+            <tr>
+            <th>#</th>
+            <th class="cabecera"> Descripción </th>
+            <th> Fecha </th>
+            <th> Estado </th> 
+            <th> Opciones </th>
+              <tbody>
+                {foreach from=$material item=r}
+                {if $r.Row_Estado == 0}
+                <tr style="color: red">
+                {else}                
+                  {if $r.Mat_Estado == 0}
+                    <tr style="color: #999c99">
+                  {else}    
+                    <tr>
+                  {/if}
+                {/if}
+                  <td scope="row">{$i++}</td>
+                  <td style="text-align: left;">
+                    <span data-toggle="tooltip" data-placement="right" title="{$r.Mat_Descripcion}">{$r.Mat_Descripcion|truncate:250:"..."}</span>
+                  </td>
+                  <td>{$r.Mat_FechaReg}</td>
+                  <td>
+                      {if $r.Mat_Estado==0}
+                          <i data-toggle="tooltip" data-placement="top"  class="glyphicon glyphicon-remove-sign" title="Deshabilitado" style="color: #DD4B39;"/>
+                      {/if}
+                      {if $r.Mat_Estado==1}
+                          <i data-toggle="tooltip" data-placement="top"  class="glyphicon glyphicon-ok-sign" title="Habilitado" style="color: #088A08;"/>
+                      {/if}
+                      {if $r.Mat_Estado==2}
+                          <i data-toggle="tooltip" data-placement="top"  class="glyphicon glyphicon-info-sign" title="Privado" style="color: #f39c12;"/>
+                      {/if}
+                  </td>
+                  <td>
+                    <div class="item-referencia">
+                      <input class="Hidden_IdMaterial" hidden="hidden" value="{$r.Mat_IdMaterial}" />
+                      <input class="Hidden_IdEnlace" hidden="hidden" value="{$r.Mat_Enlace}" />
+                      <input class="Hidden_TipoMaterial" hidden="hidden" value="{$r.Mat_Tipo}" />
+                      {if $r.Mat_Tipo == 1}
+                        <button data-toggle="tooltip" data-placement="top" title="Ver enlace" class="btnAbrirEnlace btn btn-sm btn-primary"><i class="glyphicon glyphicon-link"></i></button>
+                      {else}
+                        <button data-toggle="tooltip" data-placement="top" title="Descargar Archivo" class="btnAbrirEnlace btn btn-sm btn-warning"><i class="glyphicon glyphicon-paperclip"></i></button>
+                      {/if}
+                      <button data-toggle="tooltip" data-placement="top" title="Eliminar Material" class="btnEliminarMaterial btn btn-sm btn-danger"><i class="glyphicon glyphicon-trash"></i></button>
+                    </div>
+                  </td>
+                {/foreach}
+
+              </tbody>
+        </table>
+        {else}
+          <div>No tienes material didáctico</div>
+        {/if}
+      </div>
+      <button class="btn btn-success" id="btn_agregar_material">Agregar</button>
     </div>
   </div>
-
+</div>
+<div class="col-lg-12  div_tareas">
   {if ($curso.Moa_IdModalidad==2)}
-
-  <div class="panel panel-default margin-top-10">
-    <div class="panel-heading">
+  <div class="panel panel-default " style="border-top: 0; border-top-left-radius: 0; border-top-right-radius: 0;">
+    <!-- <div class="panel-heading">
       <h3 class="panel-title">
         <i class="glyphicon glyphicon-list-alt"></i>&nbsp;&nbsp;
         <strong>Tareas</strong>
       </h3>
-    </div>
+    </div> -->
     <div class="panel-body">
       {if count($trabajo)}
         {$index = 1}
@@ -123,7 +216,6 @@
     </div>
   </div>
   {/if}
-
 </div>
 
 {include file='modules/elearning/views/uploader/uploader.tpl'}
@@ -156,7 +248,7 @@
     <div class="panel">
       <div class="panel-heading" style="background-color: #f5f5f5; color: #333">
         <span style="height: 20px; width: 20px; margin-right: 5px;" class="glyphicon glyphicon-list-alt"></span>
-        <strong>Agregar Matirial Didáctico</strong>
+        <strong>Agregar Material Didáctico</strong>
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="margin-top: 0px;">&times;</button>
       </div>
       <div class="panel-body">
@@ -166,10 +258,10 @@
           <div class="col-lg-12"><input class="form-control" name="link" id="inMatLink" /></div>
           <div class="col-lg-12 margin-top-10"><strong>Descripción</strong></div>
           <div class="col-lg-12"><textarea class="form-control" name="descripcion" id="inMatLinkDescripcion"></textarea></div>
-          <div class="col-lg-12 margin-top-10"><button class="btn btn-success pull-right" id="btn_registrar_material_link">Guardar</button></div>
+          <div class="col-lg-12 margin-top-10"><button class="btn btn-success pull-right" id="btn_registrar_material_link"><i class="glyphicon glyphicon-floppy-disk"></i> Guardar</button></div>
         <form>
         <div class="col-lg-12 margin-top-10"><input type="radio" value="1" name="opcion"/>Archivo local</div>
-        <div class="col-lg-12 margin-top-10"><button class="btn btn-success" id="btn_registrar_material_file" disabled="disabled">Subir archivo</button></div>
+        <div class="col-lg-12 margin-top-10"><button class="btn btn-success" id="btn_registrar_material_file" disabled="disabled"><i class="glyphicon glyphicon-open"></i> Subir archivo</button></div>
       </div>
     </div>
   </div>
@@ -297,19 +389,24 @@
 </div>
 
 <script type="text/javascript">
+  // Para que funcione el tooltip
+  $(function () {
+    $('[data-toggle="tooltip"]').tooltip();
+  })
+
   $("#btn_registrar_material_link").click(function(){
     var Link = $("#inMatLink").val();
     var Descripcion = $("#inMatLinkDescripcion").val();
     var Leccion =  $("#hidden_leccion").val();
 
     if(Link.length==0){
-      Mensaje("Ingrese el link", function(){
+      Mensaje("Ingrese el link.", function(){
         $("#inMatLink").focus();
       });
       return;
     }
     if(Descripcion.length==0){
-      Mensaje("Ingrese el link", function(){
+      Mensaje("Ingrese descripción.", function(){
         $("#inMatLinkDescripcion").focus();
       });
       return;
@@ -367,8 +464,13 @@
     });
   });
   $(".btnAbrirEnlace").click(function(){
-    var Link = $("#hidden_root").val() + "gleccion/_contenido/_material/";
-    Link += $(this).parent().find(".Hidden_IdEnlace").val();
+    
+    if ($(this).parent().find(".Hidden_TipoMaterial").val() == 1) {      
+      var Link = $(this).parent().find(".Hidden_IdEnlace").val();
+    } else {
+      var Link = $("#hidden_root").val() + "gleccion/_contenido/_material/";
+      Link += $(this).parent().find(".Hidden_IdEnlace").val();
+    }
 
     var a = document.createElement("a");
 		a.target = "_blank";

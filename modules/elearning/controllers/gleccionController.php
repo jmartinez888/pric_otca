@@ -156,10 +156,10 @@ class gleccionController extends elearningController {
         $view = "ajax/_view_2";
         break;
       case 3:
-        $examen = $model->insertExamenLeccion($leccion["Lec_IdLeccion"], "", 0, 0, 0);
-        $preguntas = $model->getPreguntas($examen[0]["Exa_IdExamen"]);
-        $this->_view->assign("examen", $examen[0]);
-        $this->_view->assign("preguntas", $preguntas);
+        // $examen = $model->insertExamenLeccion($leccion["Lec_IdLeccion"], "", 0, 0, 0);
+        // $preguntas = $model->getPreguntas($examen[0]["Exa_IdExamen"]);
+        // $this->_view->assign("examen", $examen[0]);
+        // $this->_view->assign("preguntas", $preguntas);
         $view = "ajax/_view_3";
         break;
       case 4:
@@ -275,10 +275,10 @@ class gleccionController extends elearningController {
       $url = json_decode($url, true);
 
       foreach ($url as $i) {
-        $model->insertMaterial($leccion, $i["url"], $descripcion);
+        $model->insertMaterial($leccion, $i["url"], 2, $descripcion);
       }
     }else{
-      $model->insertMaterial($leccion, $url, $descripcion);
+      $model->insertMaterial($leccion, $url, 1, $descripcion);
     }
     $this->service->Success("Se insertó los materiales");
     $this->service->Send();

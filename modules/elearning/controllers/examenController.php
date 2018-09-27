@@ -1228,8 +1228,6 @@ class examenController extends elearningController {
         }
         // echo $intento[0]; exit;
        
-       
-
         if ($this->botonPress("terminar")) {
 
             $puntos=0;

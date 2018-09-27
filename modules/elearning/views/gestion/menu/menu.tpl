@@ -438,7 +438,7 @@
         <div class="side-menu2">
           <li class="side-menu" style="position: relative">
             <i class="fa fa-book"></i>
-            <span> Mis modulos</span>
+            <span> Modulos </span>
           </li>
         </div>
     </ul>
@@ -452,7 +452,7 @@
     </ul>
 
     <!-- Jhon Martinez -->
-    <!-- <ul id="item-examen-curso">
+    <ul id="item-examen-curso">
       <div class="side-menu2">
         <li class="side-menu" style="position: relative">
           <i class="fa fa-edit"></i>
@@ -471,12 +471,12 @@
     <ul id="item-certificado-curso">
       <div class="side-menu2">
         <li class="side-menu" style="position: relative">
-          <i class="fa fa-users"></i>
+          <i class="glyphicon glyphicon-education"></i>
           <span> Certificado </span>
         </li>
       </div>
-    </ul> -->
-    <!-- {if $modalidad == 2}
+    </ul>
+
     <ul id="item-alumnos-curso">
       <div class="side-menu2">
         <li class="side-menu" style="position: relative">
@@ -485,15 +485,15 @@
         </li>
       </div>
     </ul>
-    {/if} -->
-    <!-- <ul id="item-calendario-curso">
+    
+    <ul id="item-calendario-curso">
       <div class="side-menu2">
         <li class="side-menu" style="position: relative">
           <i class="fa fa-calendar"></i>
           <span> Calendario </span>
         </li>
       </div>
-    </ul> -->
+    </ul>
 
     <!-- Jhon Martinez -->
 

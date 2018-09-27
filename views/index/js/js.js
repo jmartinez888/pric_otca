@@ -274,7 +274,7 @@ function initMap() {
 var contentString = '<div id="iw-container">'+
     '<div class="iw-title">Cobertura de Bosques</div>'+
     '<div class="iw-content">' +
-    '<div class="iw-subTitle"> 600000 Km<sup>2</sup> &nbsp;&nbsp;<a href="'+_root_ +'noticias/index/index/333" title="Ver más" '+
+    '<div class="iw-subTitle"> 600000 Km<sup>2</sup> &nbsp;&nbsp;<a href="'+_root_+'noticias/index/index/333" title="Ver más" '+
     'target="_blank" class="glyphicon glyphicon-share"></a></div>'
     '</div>';
 

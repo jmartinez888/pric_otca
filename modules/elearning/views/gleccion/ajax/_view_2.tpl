@@ -8,21 +8,52 @@
     border-bottom: 1px solid #ddd;
     padding-bottom: 10px;
   }
+  /*Tabs*/
+  .div_titulo{
+    display: block;
+  }
+  .div_contenido{
+    display: none;
+  }
+  .div_referencias{
+    display: none;
+  }
+  .div_materiales{
+    display: none;
+  }
+
 </style>
 
 {include file='modules/elearning/views/gestion/menu/tag_url.tpl'}
+
+<!--  Tabs-->
+<div class="col-lg-12">
+  <ul class="nav nav-tabs">
+    <li role="presentation" class="active" id="item_titulo"><a href="#">TÍTULO</a></li>
+    <li role="presentation" id="item_contenido" ><a href="#">CONTENIDO</a></li>
+    <li role="presentation" id="item_referencias"><a href="#">REFERENCIAS</a></li>
+    <li role="presentation" id="item_materiales" ><a href="#">MATERIAL DIDÁCTICO</a></li>
+    {if ($curso.Moa_IdModalidad==2)}
+    <li role="presentation" id="item_tareas" ><a href="#">TAREAS</a></li>
+    {/if}
+  </ul>
+</div>
+
+
 {include file='modules/elearning/views/gleccion/menu/lec_ref_mat.tpl'}
 {include file='modules/elearning/views/gleccion/menu/lec_titulo.tpl'}
 
-<div class="col-lg-9">
-  <div class="panel panel-default margin-top-10">
-    <div class="panel-heading">
+<!-- <div class="col-lg-9">
+  <div class="panel panel-default margin-top-10"> -->
+<div class="col-lg-12 div_contenido ">
+  <div class="panel panel-default " style="border-top: 0; border-top-left-radius: 0; border-top-right-radius: 0;">
+    <!-- <div class="panel-heading">
       <h3 class="panel-title">
         <i class="glyphicon glyphicon-list-alt"></i>&nbsp;&nbsp;
         <strong>{$leccion.Lec_Titulo}</strong>
       </h3>
-    </div>
-    <div class="panel-body" style=" margin: 15px 25px">
+    </div> -->
+    <div class="panel-body" >
       {if isset($contenido[0].CL_Descripcion) && count($contenido[0].CL_Descripcion) >0 }
       <div class="col-lg-12">
         <iframe width="100%" height="400" src="{$contenido[0].CL_Descripcion}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen> </iframe>
@@ -35,7 +66,7 @@
       </div>
       <div class="col-lg-12 margin-top-10">
         <label>Descripcion</label>
-        <textarea class="form-control"  id="in_descripcion_video" rows="5">{$leccion.Lec_Descripcion}</textarea>
+        <textarea class="form-control" id="in_descripcion_video" rows="5">{$leccion.Lec_Descripcion}</textarea>
       </div>
       <div class="col-lg-12 margin-top-10">
         <button class="btn btn-success pull-right" type="button" id="btn_nuevo_contenido">
