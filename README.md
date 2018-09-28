@@ -9,5 +9,5 @@ Revisar las configuraciones iniciales del framework en el siguiente link [framew
 
 ->Nombre de carpeta de proyecto: pric_otca
 
-terst napuche
+terst napuche asdasd
 
