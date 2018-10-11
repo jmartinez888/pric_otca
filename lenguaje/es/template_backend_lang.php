@@ -61,6 +61,8 @@ $lenguaje["menu_izquierdo_2_6_3"]="Importar desde Excel";
 $lenguaje["menu_izquierdo_2_6_4"]="Importar desde Web Services";
 $lenguaje["menu_izquierdo_2_6_5"]="Importar desde Pecari";
 
+$lenguaje["menu_izquierdo_2_7"]="FORO";
+
 $lenguaje["label_eliminar"]="Eliminar";
 $lenguaje["button_ok"]="Guardar";
 $lenguaje["button_cancel"]="Cancelar";
