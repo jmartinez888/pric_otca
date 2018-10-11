@@ -3,3 +3,4 @@ files/
 application/Config.php
 ./phpintel
 .phpintel
+/templates_c
