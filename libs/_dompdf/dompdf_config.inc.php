@@ -35,12 +35,12 @@ define("DOMPDF_LIB_DIR", DOMPDF_DIR . "/lib");
  */
 if( !isset($_SERVER['DOCUMENT_ROOT']) ) {
   $path = "";
-  
+
   if ( isset($_SERVER['SCRIPT_FILENAME']) )
     $path = $_SERVER['SCRIPT_FILENAME'];
   elseif ( isset($_SERVER['PATH_TRANSLATED']) )
     $path = str_replace('\\\\', '\\', $_SERVER['PATH_TRANSLATED']);
-    
+
   $_SERVER['DOCUMENT_ROOT'] = str_replace( '\\', '/', substr($path, 0, 0-strlen($_SERVER['PHP_SELF'])));
 }
 
@@ -316,7 +316,7 @@ def("DOMPDF_AUTOLOAD_PREPEND", true);
 /**
  * Use the more-than-experimental HTML5 Lib parser
  */
-def("DOMPDF_ENABLE_HTML5PARSER", false);
+def("DOMPDF_ENABLE_HTML5PARSER", true);
 require_once(DOMPDF_LIB_DIR . "/html5lib/Parser.php");
 
 // ### End of user-configurable options ###
