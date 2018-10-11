@@ -32,7 +32,8 @@
         <link href="{$_layoutParams.ruta_css}wwfslider.css" rel="stylesheet" type="text/css" />
         <link href="{$_layoutParams.root_clear}public/css/datetime-picker/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css">    <!-- RODRIGO 20180605  -->
         <!-- <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet"> -->
-
+        {block 'css'}
+        {/block}
         {if isset($_layoutParams.css) && count($_layoutParams.css)}
             {foreach item=css from=$_layoutParams.css}
                 <link href="{$css}" rel="stylesheet" type="text/css" />
@@ -204,8 +205,8 @@
                             {/foreach}
                         </div>
 
-                        {/if}  
-                        
+                        {/if}
+
                         <div class="buscador">
                             <!-- <form style="background: #fff;border: 2px solid #336b78;">
                                 <input type="search" style="border: 0;">
@@ -214,11 +215,11 @@
                             <form style="background: #fff;border: 2px solid #336b78;" class=" navbar-right form-horizontal " data-toggle="validator" id="form1" role="form" method="post" autocomplete="on">
                                     <input style="border: 0;"  data-toggle="tooltip" data-placement="bottom" title="Busca en Base de Datos Documentos, Base de Datos Foros, Base de Datos Recursos, Base de datos Cursos" type="search" id="textBuscar" name="textBuscar" placeholder="{$lenguaje.text_buscador|default}" value="{$palabra|default:''}" required="required" onkeypress="tecla_enter(event)" >
                                     <button style="background: transparent;border: 0;color: #22454e;max-width: 17%;padding: 0;" type="button" id="btnBuscar" name="btnBuscar" onclick="buscarPalabra('textBuscar')" value="" > <i class="glyphicon glyphicon-search"></i></button>
-                                                 
-                            </form>      
+
+                            </form>
                         </div>
-                        
-                    </div> 
+
+                    </div>
 
                 </nav>
             </div>
@@ -243,8 +244,11 @@
                     {$_mensaje}
                 </div>
             {/if}
-
-            {include file=$_contenido}
+            {if $_contenido != ''}
+                {include file=$_contenido}
+            {/if}
+            {block 'contenido'}
+            {/block}
         </div>
         <!-- CONTENIDO CENTRAL DE LA PAGINA -->
 
@@ -526,6 +530,8 @@
                 </div>
             </div>
         </div>
+        {block "template"}
+        {/block}
         <!--  Modal end -->
 
         <!-- <script src="{$_layoutParams.ruta_js}jquery-3.3.1.min.js" type="text/javascript"></script> -->
@@ -544,6 +550,7 @@
             var _root_ = '{$_layoutParams.root_clear}';
             var _root_lang = '{$_layoutParams.root}';
             var _root_archivo_fisico = '{$_layoutParams.root_archivo_fisico}';
+            var locale_set = '{Cookie::lenguaje()}';
             // $('.mitooltip').tooltip();
         </script>
         <!-- <script src="//code.jquery.com/jquery-1.11.2.min.js"></script> -->
@@ -587,8 +594,8 @@
                 });
         </script>
 
-
-
+        {block "js"}
+        {/block}
         {if isset($_layoutParams.js_plugin) && count($_layoutParams.js_plugin)}
             {foreach item=plg from=$_layoutParams.js_plugin}
                 <script src="{$plg}" type="text/javascript" defer></script>

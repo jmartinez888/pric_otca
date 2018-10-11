@@ -14,7 +14,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <link rel="shortcut icon" href="{$_layoutParams.ruta_img}favicon.ico" type="image/x-icon" />
         <!-- Bootstrap 3.3.4 -->
         <!-- <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" /> -->
-        <link href="{$_layoutParams.ruta_css}bootstrap.min.css" rel="stylesheet" type="text/css">  
+        <link href="{$_layoutParams.ruta_css}bootstrap.min.css" rel="stylesheet" type="text/css">
         <!-- Font Awesome Icons -->
     <!--    <link href="{$_layoutParams.root_clear}public/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
         <link rel="stylesheet" href="{$_layoutParams.ruta_css}ionicons.min.css">
@@ -43,21 +43,23 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <!--[if lt IE 9]>
             <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
             <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
-        <![endif]-->    
+        <![endif]-->
         <!-- REQUIRED JS SCRIPTS -->
 
-        <!-- jQuery 2.1.3 
+        <!-- jQuery 2.1.3
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script> -->
-       
 
 
+        {block 'css'}
+        {/block}
         {if isset($_layoutParams.css) && count($_layoutParams.css)}
-            {foreach item=css from=$_layoutParams.css}        
-                <link href="{$css}" rel="stylesheet" type="text/css" />        
+            {foreach item=css from=$_layoutParams.css}
+                <link href="{$css}" rel="stylesheet" type="text/css" />
             {/foreach}
         {/if}
 
-        <link href="{$_layoutParams.root_clear}public/css/util.css" rel="stylesheet" type="text/css"> 
+
+        <link href="{$_layoutParams.root_clear}public/css/util.css" rel="stylesheet" type="text/css">
         <style>
             .skin-green .sidebar-menu>li.header{
                 color: #E1E1E1;
@@ -129,11 +131,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
                     <!-- Sidebar user panel (optional) -->
                     {if Session::get('usuario')}
-                        <div class="user-panel">   
+                        <div class="user-panel">
                             <div class="pull-left user-panel" >
                                 <a class="image" style="  width: 100%; max-width: 45px; height: auto;" href="{$_layoutParams.root}usuarios/perfil/index/{Session::get('id_usuario')}">
                                     <img src="{$_layoutParams.ruta_img}/user2-160x160.jpg" class="img-circle" alt="User Image"><img/>
-                                </a>                                 
+                                </a>
                             </div>
                             <div class="pull-left info">
                                 <p>{Session::get('usuario')}</p>
@@ -162,28 +164,28 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                     <li><a href="{$_layoutParams.root}acl/index/roles">{$lenguaje.menu_izquierdo_1_3_2}</a></li>
                                     <li><a href="{$_layoutParams.root}acl/index/permisos">{$lenguaje.menu_izquierdo_1_3_3}</a></li>
                                     <li><a href="{$_layoutParams.root}acl/index/modulos">{$lenguaje.menu_izquierdo_1_3_4}</a></li>
-                                </ul>              
+                                </ul>
                             </li>
                             {/if}
                             {if $_acl->permiso("listar_bitacora")}
                             <li class="treeview">
-                                <a href="{$_layoutParams.root}bitacora"><i class='glyphicon glyphicon-list-alt'></i> <span>{$lenguaje.menu_izquierdo_1_4}</span></a>              
+                                <a href="{$_layoutParams.root}bitacora"><i class='glyphicon glyphicon-list-alt'></i> <span>{$lenguaje.menu_izquierdo_1_4}</span></a>
                             </li>
                             {/if}
                             {if $_acl->permiso("listar_visita") || $_acl->permiso("listar_descarga") || $_acl->permiso("listar_busqueda")}
                             <li class="treeview">
-                                <a href="#"><i class='glyphicon glyphicon-equalizer'></i> <span>{$lenguaje.menu_izquierdo_1_5}</span><i class="fa fa-angle-left pull-right"></i></a>              
+                                <a href="#"><i class='glyphicon glyphicon-equalizer'></i> <span>{$lenguaje.menu_izquierdo_1_5}</span><i class="fa fa-angle-left pull-right"></i></a>
                                 <ul class="treeview-menu">
                                     {if $_acl->permiso("listar_visita")}
                                     <li><a href="{$_layoutParams.root}visita">{$lenguaje.menu_izquierdo_1_5_1}</a></li>
-                                    {/if}   
+                                    {/if}
                                     {if $_acl->permiso("listar_visita")}
                                     <li><a href="{$_layoutParams.root}busqueda">{$lenguaje.menu_izquierdo_1_5_3}</a></li>
-                                    {/if} 
+                                    {/if}
                                     {if $_acl->permiso("listar_visita")}
                                     <li><a href="{$_layoutParams.root}descarga">{$lenguaje.menu_izquierdo_1_5_2}</a></li>
-                                    {/if}                            
-                                </ul> 
+                                    {/if}
+                                </ul>
                             </li>
                             {/if}
                         {/if}
@@ -192,10 +194,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             <li class="header">{$lenguaje.menu_izquierdo_2}</li>
                             {if $_acl->permiso("listar_estandar")}
                             <li class=""><a href="{$_layoutParams.root}estandar"><i class='fa fa-database'></i> <span>{$lenguaje.menu_izquierdo_2_3}</span></a></li>
-                            {/if}   
+                            {/if}
                             {if $_acl->permiso("listar_recurso")}
                             <li class=""><a href="{$_layoutParams.root}bdrecursos"><i class='glyphicon glyphicon-globe'></i> <span>{$lenguaje.menu_izquierdo_2_1}</span></a></li>
-                            {/if}  
+                            {/if}
                             {if $_acl->permiso("listar_documentosll")}
                             <li class=""><a href="{$_layoutParams.root}dublincore/documentos"><i class='glyphicon glyphicon-globe'></i> <span>{$lenguaje.menu_izquierdo_2_1}</span></a></li>
                             {/if}
@@ -210,11 +212,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                     <!-- <li><a href="{$_layoutParams.root}pecari/registrar/index/420">Pecari</a></li> -->
                                     <li><a href="{$_layoutParams.root}bdrecursos/import/rss/420">Importar RSS</a></li>
                                     <li><a href="{$_layoutParams.root}bdrecursos/import/json/420">Importar JSON</a></li>
-                                </ul>              
+                                </ul>
                             </li>
                             {/if}
-                        {/if} 
-                            
+                        {/if}
+
                     </ul>
                     <!-- /.sidebar-menu -->
                 </section>
@@ -254,9 +256,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 <a class="close" data-dismiss="alert">X</a>
                                 {$_mensaje}
                             </div>
-                        {/if}             
-                    </div>   
-                    {include file=$_contenido} 
+                        {/if}
+                    </div>
+                    {if $_contenido != ''}
+                        {include file=$_contenido}
+                    {/if}
+                    {block "contenido"}
+                    {/block}
+
                     <!-- Your Page Content Here -->
                 </section><!-- /.content -->
             </div><!-- /.content-wrapper -->
@@ -274,17 +281,22 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
             <!-- Add the sidebar's background. This div must be placed
                  immediately after the control sidebar -->
-            <div id="cargando">   
-                <div class="cargando"></div>   
+            <div id="cargando">
+                <div class="cargando"></div>
             </div>
         </div>
+
+        {block "template"}
+        {/block}
         <script type="text/javascript" src="{$_layoutParams.root_clear}public/js/jquery-1.11.2.min.js"></script>
-        
-        
+
+
+
+
         <!--<script src="plugins/jQuery/jQuery-2.1.3.min.js"></script>--
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>-->
         <!--Exportar Tabla a Excel-->
-                
+
         <!-- Bootstrap 3.3.2 JS -->
         <script src="{$_layoutParams.ruta_js}bootstrap.min.js" type="text/javascript"></script>
         <!-- AdminLTE App -->
@@ -297,21 +309,23 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <script type="text/javascript" src="{$_layoutParams.ruta_js}bootstrap-select.min.js"></script>
         <script type="text/javascript" src="{$_layoutParams.ruta_js}bootstrapValidator.js"></script>
 
-        <script type="text/javascript" src="{$_layoutParams.ruta_js}responsive.bootstrap.min.js"></script>
-        <script type="text/javascript" src="{$_layoutParams.ruta_js}dataTables.responsive.min.js"></script>
+        <!-- <script type="text/javascript" src="{$_layoutParams.ruta_js}responsive.bootstrap.min.js"></script> -->
+        <!-- <script type="text/javascript" src="{$_layoutParams.ruta_js}dataTables.responsive.min.js"></script> -->
 
         <script type="text/javascript" src="{$_layoutParams.ruta_js}select2.min.js"></script>
 
         <script type="text/javascript" src="{$_layoutParams.root_clear}public/js/highcharts.js"></script>
-        <script type="text/javascript" src="{$_layoutParams.root_clear}public/js/exporting.js"></script>    
-        
-        
+        <script type="text/javascript" src="{$_layoutParams.root_clear}public/js/exporting.js"></script>
+
+
         <!-- Estilos y escrips dinamicos-->
         <script type="text/javascript">
             var _root_ = '{$_layoutParams.root_clear}';
             var _root_lang = '{$_layoutParams.root}';
              var _root_archivo_fisico = '{$_layoutParams.root_archivo_fisico}';
         </script>
+        {block "js"}
+        {/block}
 
         {if isset($_layoutParams.js) && count($_layoutParams.js)}
             {foreach item=js from=$_layoutParams.js}
@@ -324,5 +338,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <script src="{$plg}" type="text/javascript" defer></script>
             {/foreach}
         {/if}
+
     </body>
 </html>
