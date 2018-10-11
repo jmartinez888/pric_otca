@@ -140,3 +140,9 @@
 	margin-bottom: 10px !important;
 	border-radius: 0px 0px 5px 5px !important;
 }
+
+.mentions-input-box .mentions {
+	padding: 20px;
+	letter-spacing: 0.3px;
+	font-family: 'Lato';
+}

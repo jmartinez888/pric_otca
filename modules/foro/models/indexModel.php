@@ -11,8 +11,8 @@ class indexModel extends Model {
             // $post = $this->_db->query(
             //         "SELECT f.*,(SELECT COUNT(Com_IdComentario) FROM comentarios c WHERE c.For_IdForo=f.For_IdForo) as For_TComentarios  FROM foro f WHERE f.For_Funcion LIKE '%$iFor_Funcion%' AND Row_Estado=1 ORDER BY f.For_FechaCreacion DESC");
             $post = $this->_db->query(
-                    "SELECT f.*,(SELECT COUNT(Com_IdComentario) FROM comentarios c 
-                                WHERE c.For_IdForo=f.For_IdForo) AS For_TComentarios, u.Usu_Usuario 
+                    "SELECT f.*,(SELECT COUNT(Com_IdComentario) FROM comentarios c
+                                WHERE c.For_IdForo=f.For_IdForo) AS For_TComentarios, u.Usu_Usuario
                     FROM foro f INNER JOIN usuario u ON u.Usu_IdUsuario=f.Usu_IdUsuario
                     WHERE f.For_Funcion LIKE '%$iFor_Funcion%' ORDER BY f.For_FechaCreacion DESC");
             return $post->fetchAll();
@@ -26,8 +26,8 @@ class indexModel extends Model {
         try {
             $post = $this->_db->query(
                     "SELECT f.For_IdForo,f.For_Titulo,f.For_Resumen,f.For_Funcion,f.For_FechaCreacion,f.For_FechaCierre,f.For_Update,(SELECT COUNT(*) FROM comentarios c WHERE c.For_IdForo =f.For_IdForo) AS For_NComentarios,
-                        (SELECT COUNT(uf.Usu_IdUsuario) FROM usuario_foro uf WHERE uf.For_IdForo = f.For_IdForo AND Usf_Estado=1 AND Row_Estado=1) AS For_NParticipantes, u.Usu_Usuario, u.Usu_Nombre, u.Usu_Apellidos, f.Idi_IdIdioma, f.For_Estado 
-                    FROM foro f 
+                        (SELECT COUNT(uf.Usu_IdUsuario) FROM usuario_foro uf WHERE uf.For_IdForo = f.For_IdForo AND Usf_Estado=1 AND Row_Estado=1) AS For_NParticipantes, u.Usu_Usuario, u.Usu_Nombre, u.Usu_Apellidos, f.Idi_IdIdioma, f.For_Estado
+                    FROM foro f
                     INNER JOIN usuario u ON u.Usu_IdUsuario = f.Usu_IdUsuario $Condicion ");
             return $post->fetchAll();
         } catch (PDOException $exception) {
@@ -41,8 +41,8 @@ class indexModel extends Model {
         try {
             $sql = " call s_s_foro_admin(?,?,?,?)";
             $result = $this->_db->prepare($sql);
-             $result->bindParam(1, $iFor_Filtros, PDO::PARAM_STR);   
-            $result->bindParam(2, $iFor_Filtros2, PDO::PARAM_STR);         
+             $result->bindParam(1, $iFor_Filtros, PDO::PARAM_STR);
+            $result->bindParam(2, $iFor_Filtros2, PDO::PARAM_STR);
             $result->bindParam(3, $iPagina, PDO::PARAM_INT);
             $result->bindParam(4, $iRegistrosXPagina, PDO::PARAM_INT);
 
@@ -56,10 +56,10 @@ class indexModel extends Model {
     public function getRowForos($iFor_Filtros = "", $iFor_Filtros2 = "") {
         try {
             $post = $this->_db->query(
-                    "SELECT COUNT(*) as For_NRow from foro f 
-                    WHERE (f.For_Titulo LIKE CONCAT('%','$iFor_Filtros','%') 
-                    OR f.For_Resumen LIKE CONCAT('%','$iFor_Filtros','%') 
-                    OR f.For_Descripcion LIKE CONCAT('%','$iFor_Filtros','%') 
+                    "SELECT COUNT(*) as For_NRow from foro f
+                    WHERE (f.For_Titulo LIKE CONCAT('%','$iFor_Filtros','%')
+                    OR f.For_Resumen LIKE CONCAT('%','$iFor_Filtros','%')
+                    OR f.For_Descripcion LIKE CONCAT('%','$iFor_Filtros','%')
                     OR f.For_PalabrasClaves LIKE CONCAT('%','$iFor_Filtros','%'))
                     AND f.For_Funcion LIKE CONCAT('%','$iFor_Filtros2','%') ORDER BY f.For_FechaCreacion DESC");
 
@@ -73,11 +73,11 @@ class indexModel extends Model {
     public function getForosRecientes($iFor_Funcion) {
         try {
             $post = $this->_db->query(
-                    "SELECT f.*,u.Usu_Usuario,(SELECT COUNT(Com_IdComentario) FROM comentarios c WHERE c.For_IdForo=f.For_IdForo) AS For_TComentarios,(SELECT COUNT(*) FROM usuario_foro uf WHERE uf.For_IdForo=f.For_IdForo AND uf.Row_Estado=1) AS For_TParticipantes  
-                    FROM foro f 
+                    "SELECT f.*,u.Usu_Usuario,(SELECT COUNT(Com_IdComentario) FROM comentarios c WHERE c.For_IdForo=f.For_IdForo) AS For_TComentarios,(SELECT COUNT(*) FROM usuario_foro uf WHERE uf.For_IdForo=f.For_IdForo AND uf.Row_Estado=1) AS For_TParticipantes
+                    FROM foro f
                     INNER JOIN usuario u ON u.Usu_IdUsuario=f.Usu_IdUsuario
-                    WHERE f.For_Funcion LIKE '%$iFor_Funcion%' AND f.Row_Estado=1   
-                    ORDER BY f.For_FechaCreacion DESC 
+                    WHERE f.For_Funcion LIKE '%$iFor_Funcion%' AND f.Row_Estado=1
+                    ORDER BY f.For_FechaCreacion DESC
                     LIMIT 5");
             return $post->fetchAll();
         } catch (PDOException $exception) {
@@ -111,7 +111,7 @@ class indexModel extends Model {
     public function getPropietario_foro($Usu_IdUsuario) {
         try {
             $post = $this->_db->query(
-                    "SELECT Usu_Nombre FROM usuario 
+                    "SELECT Usu_Nombre FROM usuario
                     WHERE Usu_IdUsuario = {$Usu_IdUsuario}");
             return $post->fetch();
         } catch (PDOException $exception) {
@@ -123,7 +123,10 @@ class indexModel extends Model {
     public function getLineaTematica($Lit_IdLineaTematica) {
         try {
             $post = $this->_db->query(
-                    "SELECT Lit_Nombre FROM linea_tematica
+                    "SELECT
+                        Lit_Nombre,
+                        Lit_IdLineaTematica
+                        FROM linea_tematica
                         WHERE Lit_IdLineaTematica = {$Lit_IdLineaTematica}");
             return $post->fetch();
         } catch (PDOException $exception) {
@@ -135,7 +138,7 @@ class indexModel extends Model {
     public function getNumero_comentarios_x_idForo($For_IdForo) {
         try {
             $post = $this->_db->query(
-                    "SELECT COUNT(*) AS Numero_comentarios FROM comentarios 
+                    "SELECT COUNT(*) AS Numero_comentarios FROM comentarios
                         WHERE For_IdForo = {$For_IdForo} AND Row_Estado = 1");
             return $post->fetch();
         } catch (PDOException $exception) {
@@ -148,7 +151,7 @@ class indexModel extends Model {
         try {
             $post = $this->_db->query(
                     "SELECT COUNT(*) AS numero_participantes FROM usuario_foro usr INNER JOIN rol r
-                        ON usr.Rol_IdRol = r.Rol_IdRol 
+                        ON usr.Rol_IdRol = r.Rol_IdRol
                         WHERE usr.For_IdForo = {$For_IdForo} AND usr.Row_Estado = 1");
             return $post->fetch();
         } catch (PDOException $exception) {
@@ -172,7 +175,7 @@ class indexModel extends Model {
         try {
             // $registroInicio = 0;
             // if ($iPagina > 0) {
-            //     $registroInicio = ($iPagina - 1) * $iRegistrosXPagina;                
+            //     $registroInicio = ($iPagina - 1) * $iRegistrosXPagina;
             // }
             // $post = $this->_db->query(
             //         "SELECT c.Com_IdComentario,c.Com_Descripcion,c.Com_Fecha,c.Com_Estado,c.For_IdForo,c.Idi_IdIdioma,c.Row_Estado,u.Usu_Nombre,u.Usu_Apellidos, u.Usu_IdUsuario FROM comentarios c INNER JOIN usuario u ON u.Usu_IdUsuario=c.Usu_IdUsuario WHERE c.For_IdForo={$iFor_IdForo} AND c.Row_Estado = 1 and Com_IdPadre IS NULL ORDER BY c.Com_Fecha DESC
@@ -223,7 +226,7 @@ class indexModel extends Model {
     {
         try{
             $permiso = $this->_db->query(
-                " DELETE FROM file_comentario WHERE Fim_IdForo = {$Fim_IdForo}"              
+                " DELETE FROM file_comentario WHERE Fim_IdForo = {$Fim_IdForo}"
                 );
             return $permiso->rowCount(PDO::FETCH_ASSOC);
         } catch (PDOException $exception) {
@@ -272,10 +275,10 @@ class indexModel extends Model {
     {
         try{
             $permiso = $this->_db->query(
-                " UPDATE comentarios SET Row_Estado = $Row_Estado WHERE Com_IdComentario = $iCom_IdComentario "               
+                " UPDATE comentarios SET Row_Estado = $Row_Estado WHERE Com_IdComentario = $iCom_IdComentario "
                 );
             // $permiso = $this->_db->query(
-            //     " DELETE FROM comentarios WHERE Com_IdComentario = $iCom_IdComentario "               
+            //     " DELETE FROM comentarios WHERE Com_IdComentario = $iCom_IdComentario "
             //     );
             return $permiso->rowCount(PDO::FETCH_ASSOC);
         } catch (PDOException $exception) {
@@ -288,7 +291,7 @@ class indexModel extends Model {
         try {
             $post = $this->_db->query(
                     "SELECT uf.*, r.Rol_Ckey FROM usuario_foro uf
-                    INNER JOIN rol r ON uf.Rol_IdRol = r.Rol_IdRol 
+                    INNER JOIN rol r ON uf.Rol_IdRol = r.Rol_IdRol
                     WHERE uf.Usu_IdUsuario = {$iUsu_IdUsuario} AND uf.For_IdForo = {$iFor_IdForo} AND uf.Row_Estado = 1");
             return $post->fetch();
         } catch (PDOException $exception) {
@@ -339,7 +342,7 @@ class indexModel extends Model {
     //         $this->registrarBitacora("foro(indexModel)", "Valorar_Foro", "Error Model", $exception);
     //         return $exception->getTraceAsString();
     //     }
-    // }    
+    // }
 
     public function getValoracion_personal($iUsu_IdUsuario, $iID) {
         try {
@@ -369,7 +372,7 @@ class indexModel extends Model {
 
     public function registrarValoracion_Comentario_Foro($iUsu_IdUsuario, $iID, $Valor) {
         try {
-            if ($Valor == 0) {                
+            if ($Valor == 0) {
                 $sql = "call s_i_like_comentario_foro(?,?)";
                 $result = $this->_db->prepare($sql);
                 $result->bindParam(1, $iUsu_IdUsuario, PDO::PARAM_INT);
@@ -451,11 +454,11 @@ class indexModel extends Model {
     {
         try {
             $post = $this->_db->query(
-                "SELECT usu.Usu_Email FROM usuario usu 
-                INNER JOIN (SELECT usf.Usu_IdUsuario 
+                "SELECT usu.Usu_Email FROM usuario usu
+                INNER JOIN (SELECT usf.Usu_IdUsuario
                     FROM usuario_foro usf INNER JOIN usuario usu
                     ON usf.Usu_IdUsuario = usu.Usu_IdUsuario INNER JOIN rol r ON usf.Rol_IdRol = r.Rol_IdRol
-                    WHERE usf.For_IdForo = {$For_IdForo} AND (r.Rol_Ckey = 'lider_foro' OR r.Rol_Ckey = 'moderador_foro' 
+                    WHERE usf.For_IdForo = {$For_IdForo} AND (r.Rol_Ckey = 'lider_foro' OR r.Rol_Ckey = 'moderador_foro'
                     OR r.Rol_Ckey = 'facilitador_foro')) usuarios_foro
                 ON usu.Usu_IdUsuario = usuarios_foro.Usu_IdUsuario");
             return $post->fetchAll();
@@ -514,11 +517,11 @@ class indexModel extends Model {
         try {
             $post = $this->_db->query(
                     "SELECT * FROM (
-                    (SELECT f.For_IdForo,f.For_Titulo,f.For_FechaCreacion,f.For_Funcion,f.For_Estado FROM foro f 
+                    (SELECT f.For_IdForo,f.For_Titulo,f.For_FechaCreacion,f.For_Funcion,f.For_Estado FROM foro f
                     WHERE f.For_Estado=1 AND f.Row_Estado=1 ORDER BY f.For_FechaCreacion DESC LIMIT 5)
                     UNION ALL
-                    (SELECT af.Acf_IdActividadForo,af.Acf_Titulo,Act_FechaInicio,'activity',af.Act_Estado FROM actividad_foro af 
-                    WHERE af.Act_Estado AND af.Row_Estado=1 ORDER BY Act_FechaInicio DESC LIMIT 5)) AS Agenda 
+                    (SELECT af.Acf_IdActividadForo,af.Acf_Titulo,Act_FechaInicio,'activity',af.Act_Estado FROM actividad_foro af
+                    WHERE af.Act_Estado AND af.Row_Estado=1 ORDER BY Act_FechaInicio DESC LIMIT 5)) AS Agenda
                     ORDER BY For_FechaCreacion DESC LIMIT 5");
             return $post->fetchAll();
         } catch (PDOException $exception) {
@@ -531,10 +534,10 @@ class indexModel extends Model {
         try {
             $post = $this->_db->query(
                     "SELECT a.For_IdForo id, a.For_Titulo title, a.For_FechaCreacion 'start',a.For_FechaCierre 'end',a.For_Funcion, a.For_Estado FROM (
-                    (SELECT f.For_IdForo,f.For_Titulo,f.For_FechaCreacion,IFNULL(f.For_FechaCierre,f.For_FechaCreacion) For_FechaCierre,f.For_Funcion,f.For_Estado FROM foro f 
+                    (SELECT f.For_IdForo,f.For_Titulo,f.For_FechaCreacion,IFNULL(f.For_FechaCierre,f.For_FechaCreacion) For_FechaCierre,f.For_Funcion,f.For_Estado FROM foro f
                     WHERE f.For_Estado=1 AND f.Row_Estado=1 ORDER BY f.For_FechaCreacion DESC)
                     UNION ALL
-                    (SELECT af.Acf_IdActividadForo,af.Acf_Titulo,Act_FechaInicio,Act_FechaFin,'activity',af.Act_Estado FROM actividad_foro af 
+                    (SELECT af.Acf_IdActividadForo,af.Acf_Titulo,Act_FechaInicio,Act_FechaFin,'activity',af.Act_Estado FROM actividad_foro af
                     WHERE af.Act_Estado AND af.Row_Estado=1 ORDER BY Act_FechaInicio DESC)) AS a
                     ORDER BY For_FechaCreacion DESC");
             return $post->fetchAll();
@@ -547,12 +550,12 @@ class indexModel extends Model {
     public function getHistorico() {
         try {
             $post = $this->_db->query(
-                    "SELECT f.For_IdForo,f.For_Titulo, f.For_FechaCreacion, f.For_FechaCierre, f.For_Funcion, u.Usu_Nombre, u.Usu_Apellidos, 
+                    "SELECT f.For_IdForo,f.For_Titulo, f.For_FechaCreacion, f.For_FechaCierre, f.For_Funcion, u.Usu_Nombre, u.Usu_Apellidos,
                     (SELECT COUNT(Com_IdComentario) FROM comentarios c WHERE c.For_IdForo=f.For_IdForo) AS For_TComentarios,
                     (SELECT COUNT(*) FROM usuario_foro uf WHERE uf.For_IdForo=f.For_IdForo) AS For_TParticipantes
-                    FROM foro f 
-                    INNER JOIN usuario u ON u.Usu_IdUsuario = f.Usu_IdUsuario 
-                    WHERE f.For_FechaCierre < TIMESTAMP(NOW()) AND f.For_Estado=2 AND f.Row_Estado=1 
+                    FROM foro f
+                    INNER JOIN usuario u ON u.Usu_IdUsuario = f.Usu_IdUsuario
+                    WHERE f.For_FechaCierre < TIMESTAMP(NOW()) AND f.For_Estado=2 AND f.Row_Estado=1
                     ORDER BY f.For_FechaCierre DESC ");
             return $post->fetchAll();
         } catch (PDOException $exception) {
@@ -560,10 +563,10 @@ class indexModel extends Model {
             return $exception->getTraceAsString();
         }
     }
-    
+
     public function getEstadistcaGeneral(){
         try {
-           
+
             $sql = "call s_s_foro_estadisticas_general()";
             $result = $this->_db->prepare($sql);
             $result->execute();
@@ -574,14 +577,14 @@ class indexModel extends Model {
             return $exception->getTraceAsString();
         }
     }
-    
+
      public function getComentario_x_Mes() {
         try {
             $post = $this->_db->query(
-                    "SELECT CONCAT(YEAR(Com_Fecha),MONTH(Com_Fecha),'-',MONTHNAME(Com_Fecha)) AS Com_FechaM,COUNT(Com_IdComentario) Com_CantidadComentario FROM comentarios 
+                    "SELECT CONCAT(YEAR(Com_Fecha),MONTH(Com_Fecha),'-',MONTHNAME(Com_Fecha)) AS Com_FechaM,COUNT(Com_IdComentario) Com_CantidadComentario FROM comentarios
                         WHERE Com_Estado=1 AND Row_Estado=1
-                        GROUP BY Com_FechaM 
-                        ORDER BY Com_FechaM 
+                        GROUP BY Com_FechaM
+                        ORDER BY Com_FechaM
                         ");
             return $post->fetchAll();
         } catch (PDOException $exception) {
@@ -589,14 +592,14 @@ class indexModel extends Model {
             return $exception->getTraceAsString();
         }
     }
-    
+
     public function getCantidaFuncionForo() {
         try {
             $post = $this->_db->query(
-                    "SELECT For_Funcion,COUNT(For_IdForo) For_CantidadForo FROM foro 
+                    "SELECT For_Funcion,COUNT(For_IdForo) For_CantidadForo FROM foro
                         WHERE For_Estado!=0 AND Row_Estado=1
-                        GROUP BY For_Funcion 
-                        ORDER BY For_Funcion 
+                        GROUP BY For_Funcion
+                        ORDER BY For_Funcion
                         ");
             return $post->fetchAll();
         } catch (PDOException $exception) {
@@ -604,7 +607,7 @@ class indexModel extends Model {
             return $exception->getTraceAsString();
         }
     }
-    
+
     public function getMiembrosPais() {
         try {
             $post = $this->_db->query(
@@ -620,32 +623,32 @@ class indexModel extends Model {
             return $exception->getTraceAsString();
         }
     }
-    
+
     public function getResumenLineTematica() {
         try {
             $post = $this->_db->query(
                     "SELECT lt.Lit_IdLineaTematica,lt.Lit_Nombre,
-(SELECT COUNT(For_IdForo) 
+(SELECT COUNT(For_IdForo)
 FROM foro f
-WHERE f.For_Funcion = 'forum' AND Lit_IdLineaTematica =lt.Lit_IdLineaTematica AND f.For_Estado!=0 AND f.Row_Estado=1 
+WHERE f.For_Funcion = 'forum' AND Lit_IdLineaTematica =lt.Lit_IdLineaTematica AND f.For_Estado!=0 AND f.Row_Estado=1
 GROUP BY f.For_Funcion) Lit_Discussions,
-(SELECT COUNT(For_IdForo) 
+(SELECT COUNT(For_IdForo)
 FROM foro f
-WHERE f.For_Funcion = 'query' AND Lit_IdLineaTematica =lt.Lit_IdLineaTematica AND f.For_Estado!=0 AND f.Row_Estado=1 
+WHERE f.For_Funcion = 'query' AND Lit_IdLineaTematica =lt.Lit_IdLineaTematica AND f.For_Estado!=0 AND f.Row_Estado=1
 GROUP BY f.For_Funcion) Lit_Query,
-(SELECT COUNT(For_IdForo) 
+(SELECT COUNT(For_IdForo)
 FROM foro f
-WHERE f.For_Funcion = 'webinar' AND Lit_IdLineaTematica =lt.Lit_IdLineaTematica AND f.For_Estado!=0 AND f.Row_Estado=1 
+WHERE f.For_Funcion = 'webinar' AND Lit_IdLineaTematica =lt.Lit_IdLineaTematica AND f.For_Estado!=0 AND f.Row_Estado=1
 GROUP BY f.For_Funcion) Lit_Webinar,
-(SELECT COUNT(For_IdForo) 
+(SELECT COUNT(For_IdForo)
 FROM foro f
-WHERE f.For_Funcion = 'workshop' AND Lit_IdLineaTematica =lt.Lit_IdLineaTematica AND f.For_Estado!=0 AND f.Row_Estado=1 
+WHERE f.For_Funcion = 'workshop' AND Lit_IdLineaTematica =lt.Lit_IdLineaTematica AND f.For_Estado!=0 AND f.Row_Estado=1
 GROUP BY f.For_Funcion) Lit_Workshop,
 (SELECT COUNT(DISTINCT(uf.Usu_IdUsuario)) FROM usuario_foro uf
 INNER JOIN foro f ON f.Usu_IdUsuario = uf.Usu_IdUsuario
 WHERE f.Lit_IdLineaTematica=lt.Lit_IdLineaTematica AND uf.Usf_Estado = 1 AND uf.Row_Estado=1 AND f.For_Estado!=0 AND f.Row_Estado=1
 GROUP BY f.Lit_IdLineaTematica) Lit_Members,
-(SELECT COUNT(c.Com_IdComentario) FROM  comentarios c 
+(SELECT COUNT(c.Com_IdComentario) FROM  comentarios c
 INNER JOIN foro f ON f.For_IdForo = c.For_IdForo
 WHERE f.Lit_IdLineaTematica=lt.Lit_IdLineaTematica AND c.Com_Estado=1 AND c.Row_Estado=1 AND f.For_Estado!=0 AND f.Row_Estado=1
 GROUP BY f.Lit_IdLineaTematica) Lit_Comentarios
@@ -657,8 +660,8 @@ WHERE lt.Lit_Estado =1 AND lt.Row_Estado = 1");
             return $exception->getTraceAsString();
         }
     }
-    
-    
+
+
 
 }
 

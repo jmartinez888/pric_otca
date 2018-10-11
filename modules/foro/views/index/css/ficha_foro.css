@@ -3,7 +3,7 @@ To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
 and open the template in the editor.
 */
-/* 
+/*
     Created on : 24/02/2018, 11:35:10 AM
     Author     : R-Cardenas-NA
 */
@@ -103,7 +103,8 @@ and open the template in the editor.
     margin-bottom: 5px;
 }
 .status-upload textarea {
-    background: none repeat scroll 0 0 #fff;
+    background: none repeat scroll 0 0;
+    background-color: transparent;
     border: medium none;
     -webkit-border-radius: 4px 4px 0 0;
     -moz-border-radius: 4px 4px 0 0;
@@ -183,7 +184,7 @@ and open the template in the editor.
 {
     display:block;
 }
-.status-upload .files .file_close 
+.status-upload .files .file_close
 {
     background: url(//ssl.gstatic.com/ui/v1/icons/common/x_8px.png) no-repeat 0 0;
     cursor: pointer;
@@ -434,7 +435,7 @@ and open the template in the editor.
     display: block;
     margin: 0 0 4px;
 }
- 
+
 
 .media, .media-body {
     overflow: inherit !important;
@@ -469,8 +470,8 @@ and open the template in the editor.
 }
 
 .alert-danger{
-    opacity: 0.87; 
-    background-color: #f2dede !important; 
+    opacity: 0.87;
+    background-color: #f2dede !important;
     border-color: #d73925;
 }
 

@@ -1,5 +1,13 @@
 <?php
 
+use App\ContenidoTraducido;
+use App\ForoTematica;
+use App\Idioma;
+use Illuminate\Database\Capsule\Manager as DB;
+use Illuminate\Support\Collection as TTT;
+// use Recursos\App\DataTables as DataTables;
+// use Illuminate\Support\DB as DB;
+// use Illuminate\Support\VarDumper;
 class adminController extends foroController
 {
 
@@ -59,7 +67,7 @@ class adminController extends foroController
 
         $paginador->paginar($totalRegistros, "listarForo", "$filtro", $pagina, $filas, true);
 
-        $lista_foros    = $this->_model->getForos($filtro, $filtro2, $pagina, $filas);        
+        $lista_foros    = $this->_model->getForos($filtro, $filtro2, $pagina, $filas);
 
         $this->_view->assign('lista_foros', $lista_foros);
 
@@ -90,19 +98,19 @@ class adminController extends foroController
     }
 
      public function _exportarDatos($formatoP)
-    {       
-        $filtro  = $this->getSql('text_busqueda');        
+    {
+        $filtro  = $this->getSql('text_busqueda');
         $filtro2 = $this->getSql('select_busqueda');
         $formato  = $formatoP;
 
         if (empty($filtro)) {
             $filtro  = "";
-        } 
+        }
         if(empty($filtro2)){
             $filtro2="";
-        }        
+        }
         $lista_foros = $this->_model->getForos($filtro, $filtro2, 1, CANT_REG_PAG);
-        
+
         if ($formato == "csv") {
             if (!empty($lista_foros)) {
                 error_reporting(0);
@@ -117,8 +125,8 @@ class adminController extends foroController
 
                 for ($i = 2; $i <= (count($lista_foros) + 1); $i++) {
                     // $fila11 = $lista_foros[$i - 2]['For_Titulo'];
-                    // $fila11 = mb_convert_encoding($fila11, 'UTF-16LE', 'UTF-8'); 
-                    // chr(255) . chr(254); 
+                    // $fila11 = mb_convert_encoding($fila11, 'UTF-16LE', 'UTF-8');
+                    // chr(255) . chr(254);
                     // echo $fila11; exit;
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(0, $i, $lista_foros[$i - 2]['For_Titulo']);
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(1, $i, $lista_foros[$i - 2]['For_NParticipantes']);
@@ -133,14 +141,14 @@ class adminController extends foroController
                 ob_end_clean();
                 ob_start();
                 //
-                header("Content-type: application/vnd.ms-excel"); 
-                header("Content-Disposition: attachment; filename='".$file_name."'"); 
-                header("Pragma: no-cache"); header("Expires: 0"); 
+                header("Content-type: application/vnd.ms-excel");
+                header("Content-Disposition: attachment; filename='".$file_name."'");
+                header("Pragma: no-cache"); header("Expires: 0");
                 echo "\xEF\xBB\xBF"; //UTF-8 BOM echo $out;
-                // 
+                //
                 header('Content-Disposition: attachment;filename="'.APP_NAME.'-OTCA_Descargas.csv"');
                 $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'CSV');
-                $objWriter -> setDelimiter ( ',' ) ; 
+                $objWriter -> setDelimiter ( ',' ) ;
                 $objWriter->save('php://output');
             }
             exit;
@@ -188,12 +196,12 @@ class adminController extends foroController
         if ($formato == "pdf") {
             ob_start();
             header("Content-Type: text/html;charset=utf-8");
-            
+
             $a = "
             <head>
                 <link href='views/layout/frontend/css/bootstrap.min.css' rel='stylesheet' type='text/css'>
-            </head>    
-            <body>                     
+            </head>
+            <body>
             <div class='table-responsive'>
             <h3 style='text-align: center; color:black; font-family: inherit;'>FOROS</h3>
                     <table class='table'>
@@ -211,7 +219,7 @@ class adminController extends foroController
                         <tbody>";
         $b = "";
         $i=1;
-            foreach ($lista_foros as $foro){      
+            foreach ($lista_foros as $foro){
                 $b .= "<tr>
                     <th scope='row'>".$i++."</th>
                     <td>" . utf8_decode($foro['For_Titulo']) . "</td>
@@ -219,10 +227,10 @@ class adminController extends foroController
                     <td>" . utf8_decode($foro['For_NComentarios']) . "</td>
                     <td>" . utf8_decode($foro['Usu_Usuario']) . "</td>
                     <td>" . utf8_decode($foro['For_FechaCreacion']) . "</td>
-                    <td>" . utf8_decode($foro['For_FechaCierre']) . "</td>                   
+                    <td>" . utf8_decode($foro['For_FechaCierre']) . "</td>
                 </tr>";
             };
-        $c =  
+        $c =
                      "</tbody>
                 </table>
             </div>
@@ -298,7 +306,10 @@ class adminController extends foroController
             $this->_view->setTemplate(LAYOUT_FRONTEND);
         }
 
-        if ($this->botonPress("bt_guardar")) { 
+        if ($this->botonPress("bt_guardar")) {
+            $datatemp['post'] = $_POST;
+            $datatemp['files'] = $_FILES;
+            // dd($datatemp);
             $iFor_Titulo          = $this->getTexto('text_titulo');
             $iFor_Descripcion     = $this->getTexto('text_descripcion');
             $iLit_IdLineaTematica = $this->getInt('s_lista_tematica');
@@ -329,7 +340,7 @@ class adminController extends foroController
                 $Rol_ckey = "lider_foro";
 
             }
-           
+
             $iFor_IdPadre  = $this->getInt('hd_id_padre');
             $iFile_foro    = html_entity_decode($this->getTexto('hd_file_form'));
             $aFile_foro    = json_decode($iFile_foro, true);
@@ -344,10 +355,14 @@ class adminController extends foroController
                 $id_recurso  = $result_rec[0];
                 $result_foro = $this->_model->insertarForo($iFor_Titulo, $iFor_Resumen, $iFor_Descripcion, $iFor_Palabras, $iFor_FechaCreacion, $iFor_FechaCierre, $iFor_Funcion, $iFor_Tipo, $iFor_Estado, $iFor_IdPadre, $iLit_IdLineaTematica, $iUsu_IdUsuario, $iEnt_IdEntidad, $id_recurso, $iIdi_IdIdioma);
                 $id_foro     = $result_foro[0];
+
                 $iRol_IdRol  = $this->_acl->getIdRol_x_ckey($Rol_ckey);
+                // dd($iRol_IdRol);
 
                 $model_index    = $this->loadModel('index');
+
                 $result_inscrip = $model_index->inscribir_participante_foro($result_foro[0], $iUsu_IdUsuario, $iRol_IdRol["Rol_IdRol"], 1);
+                // print_r($result_inscrip);
 
             } else {
 
@@ -390,26 +405,26 @@ class adminController extends foroController
             }
 
             if ($funcion == "query") {
-                $this->redireccionar("foro/index/query");
+                // $this->redireccionar("foro/index/query");
             } else {
-                $this->redireccionar("foro/index/ficha/" . $id_foro);
+                // $this->redireccionar("foro/index/ficha/" . $id_foro);
             }
         }
 
         $this->_view->getLenguaje("foro_admin_index");
         $lenguaje = Session::get("fileLenguaje");
 
-        if ($tipo == "edit") {   
+        if ($tipo == "edit") {
             // exit;
             $this->_view->assign('permiso', "editar_foro");
-            $this->_view->assign('titulo', "Foro: Editar Foro");  
+            $this->_view->assign('titulo', "Foro: Editar Foro");
             $this->_view->assign('idForo', $id_foro);
             // echo $foro['Idi_IdIdioma']; exit;
-            
+
             if (!empty($foro)) {
                 $_model_index     = $this->loadModel('index');
                 $foro["Archivos"] = $_model_index->getArchivos_x_idforo($id_foro);
-                
+
                 $this->_view->assign('IdiomaOriginal', $IdiomaOriginal);
                 $this->_view->assign('Idiomaseleccionado', $IdiomaOriginal);
                 $this->_view->assign('foro', $foro);
@@ -425,14 +440,16 @@ class adminController extends foroController
             }
 
         } else {
-            $this->_view->assign('permiso', "nuevo_foro");  
+            // dd('asd');
+            $this->_view->assign('permiso', "nuevo_foro");
             $this->_view->assign('titulo', $lenguaje["foro_admin_form_titulo"]);
             $this->_view->assign('start_date', date('d-m-Y H:m'));
             $this->_view->assign('end_date', date('d-m-Y H:m', strtotime('+1 day')));
         }
-        
-        $linea_tematica = $this->_model->getLineaTematicas();
-        $this->_view->assign('linea_tematica', $linea_tematica);
+
+        // $linea_tematica = $this->_model->getLineaTematicas();
+        // $this->_view->assign('linea_tematica', $linea_tematica);
+        $this->_view->assign('linea_tematica', ForoTematica::activos()->visibles()->get());
         $this->_view->assign('Form_Funcion', $funcion);
         $this->_view->setJs(array('form', array(BASE_URL . 'public/ckeditor/ckeditor.js'), array(BASE_URL . 'public/ckeditor/adapters/jquery.js'), array(BASE_URL . 'public/js/jquery-ui.min.js'), array(BASE_URL . 'public/js/jquery-ui-timepicker-addon.js')));
         $this->_view->setCss(array('form', array(BASE_URL . "public/css/jquery-ui-timepicker-addon.css"), array(BASE_URL . "public/css/jquery-ui.min.css")));
@@ -445,10 +462,400 @@ class adminController extends foroController
         $this->_view->assign('idiomaUrl',$Idi_IdIdioma);
         $this->_view->renderizar('form');
     }
+    private function _tematica_export ($query, $formato) {
+        $tematicas = $query->get();
+        switch ($formato) {
+            case 'pdf':
+                ob_start();
+                $this->_view->assign('tematicas', $tematicas);
+                $html = $this->_view->fetch(ROOT.'modules/foro/views/admin/pdf/pdf_tematicas.tpl');
+                // header("Content-Type: text/html;charset=utf-8");
+//                 $html = "
 
+// <!DOCTYPE html>
+// <html>
+//     <head>
+//         <link href='views/layout/backend/css/pdf.css' rel='stylesheet' type='text/css'>
+//     </head>
+//     <body>
+//         <div class='table-responsive'>
+//             <h3 style='text-align: center; color:black; font-family: inherit;'>ROLES DEL SISTEMA</h3>
+//             <table class='table'>
+//                 <thead>
+//                     <tr>
+//                         <th></th>
+//                         <th>Rol</th>
+//                         <th>".utf8_decode('Módulo')."</th>
+//                         <th>Estado</th>
+//                         <th>Row_Estado</th>
+//                     </tr>
+//                 </thead>
+//                 <tbody>
+//                     <tr>
+//                         <td>asd</td>
+//                         <td>asd</td>
+//                         <td>asd</td>
+//                         <td>asd</td>
+//                         <td>asd</td>
+//                     </tr>
+//                 </tbody>
+//             </table>
+//         </div>
+//     </body>
+// </html>
+
+                // ";
+                echo $html;
+                require_once("libs/_dompdf/dompdf_config.inc.php");
+
+                $dompdf = new DOMPDF();
+                $dompdf->set_paper('A4', 'landscape'); //esta es una forma de ponerlo horizontal
+                $dompdf->load_html(ob_get_clean());
+                $dompdf->render();
+                header("Content-type:application/pdf");
+                $pdf      = $dompdf->output();
+                $filename = "'".APP_NAME.'-OTCA_Descargas.pdf';
+                $dompdf->stream($filename, array("atachment" => 0));
+
+
+                // It will be called downloaded.pdf
+                // header("Content-Disposition:attachment;filename='".$filename."'");
+
+                // The PDF source is in original.pdf
+                // readfile("original.pdf");
+                break;
+        }
+    }
+    public function tematica ($method = 'index', $action = 'default') {
+        $this->_view->getLenguaje('foro_admin_tematica');
+        //  new DataTables();
+        // exit();
+        if ($method != 0 && is_numeric($method)) {
+            switch ($action) {
+                case 'edit':
+                    $tematica = ForoTematica::find($method);
+                    $data['mostrar_contenido'] = false;
+                    // dd($tematica);
+                    if ($tematica && +$tematica->Lit_IdLineaTematica != 0) {
+                        $data['mostrar_contenido'] = true;
+                        $this->_view->setJs(
+                            array(
+                                array(BASE_URL . 'public/js/axios/dist/axios.min.js'),
+                                array(BASE_URL . 'public/js/vuejs/vue.min.js'),
+                                'tematica_edit'
+                            ));
+                        $idiomas = Idioma::activos();
+
+                        $vars_idioma = [];
+                        $idiomas->map(function($item) use(&$vars_idioma, $tematica){
+                            if ($tematica->Idi_IdIdioma == $item->Idi_IdIdioma) {
+                                $vars_idioma['idioma_'.$item->Idi_IdIdioma] = [
+                                    'id' => $item->Idi_IdIdioma,
+                                    'tematica' => $tematica->Lit_Nombre,
+                                    'tematica_id' => $tematica->Lit_IdLineaTematica,
+                                    'default' => true,
+                                    'descripcion' => $tematica->Lit_Descripcion,
+                                ];
+                            } else {
+                                // DB::enableQueryLog();
+
+                                $traducido = ContenidoTraducido::getRow('linea_tematica', $tematica->Lit_IdLineaTematica, $item->Idi_IdIdioma);
+                                // var_dump($traducido);
+                                // dd(DB::getQueryLog());
+                                $vars_idioma['idioma_'.$item->Idi_IdIdioma] = [
+                                        'id' => $item->Idi_IdIdioma,
+                                        'tematica' => '',
+                                        'default' => false,
+                                        'descripcion' => ''
+                                    ];
+                                if ($traducido->count() > 0) {
+                                    $vars_idioma['idioma_'.$item->Idi_IdIdioma]['tematica'] = $traducido->where('Cot_Columna', 'Lit_Nombre')->first()->Cot_Traduccion;
+
+                                    $vars_idioma['idioma_'.$item->Idi_IdIdioma]['descripcion'] = $traducido->where('Cot_Columna', 'Lit_Descripcion')->first()->Cot_Traduccion;
+                                }
+                            }
+                        });
+                        // exit;
+                        // dd($vars_idioma);
+                        $data_vue = [
+                            'idiomas' => $vars_idioma,
+                            'tematica_id' => $tematica->Lit_IdLineaTematica,
+                            'estado' => $tematica->Lit_Estado == 1 ? true : false,
+                            'idioma_actual' => Cookie::lenguaje()
+                        ];
+
+                        $this->_view->assign('data_vue', json_encode($data_vue));
+                        $this->_view->assign('idiomas', $idiomas);
+                    }
+                    $this->_view->assign($data);
+                    $this->_view->render('tematica_edit');
+                    break;
+                case 'update':
+                    $res = ['success' => false, 'msg' => ''];
+                    $lenguaje = $this->_view->LoadLenguaje('foro_admin_tematica');
+                    $tematica = ForoTematica::find($method);
+                    // dd($tematica);
+                    if ($tematica && $tematica->Lit_IdLineaTematica != 0) {
+                        //si los updates están sugetos a aaciones
+                        if ($this->filledPost('accion')) {
+
+                            if ($this->getTexto('accion') == 'estado') {
+                                $estado = $this->getInt('estado');
+                                if ($estado == 1)
+                                    $mensaje = str_replace('%tematica%', $tematica->Lit_Nombre ,$lenguaje['foro_admin_tematica_update_estado_1']);
+                                else
+                                    $mensaje = str_replace('%tematica%', $tematica->Lit_Nombre ,$lenguaje['foro_admin_tematica_update_estado_0']);
+
+                                DB::transaction(function () use(&$tematica, &$res, $estado, $mensaje){
+                                    $tematica->Lit_Estado = $estado;
+                                    $tematica->save();
+                                    $res['success'] = true;
+                                    $res['msg'] = $mensaje;
+                                });
+                            }
+                        } else {
+                            //update de idiomas
+                            $post = file_get_contents('php://input');
+                            $post = json_decode($post);
+                            $this->setPut();
+                            // $tematica = ForoTematica::find($method);
+                            // dd($tematica);
+                            if ($tematica) {
+                                $idiomas = Idioma::activos();
+                                $self = $this;
+                                DB::transaction(function () use ($self, &$res, $post, $idiomas, $tematica, $lenguaje) {
+                                    // $tematica = new ForoTematica();
+                                    $opcionales = [];
+                                    foreach ($idiomas as $value) {
+                                        $idioma_var = "idioma_".$value->Idi_IdIdioma;
+                                        if (array_key_exists($idioma_var, $post->idiomas)) {
+                                            if ($post->idiomas->$idioma_var->default) {
+                                                //update en 'temtatica'
+                                                $tematica->Lit_Nombre = $post->idiomas->$idioma_var->tematica;
+                                                $tematica->Lit_Descripcion = $post->idiomas->$idioma_var->descripcion;
+                                                $tematica->Lit_Estado = $post->estado;
+                                                $tematica->save();
+
+                                            } else {
+                                                ContenidoTraducido::updateRow('linea_tematica', $tematica->Lit_IdLineaTematica, $value->Idi_IdIdioma, [
+                                                    'Lit_Nombre' => $post->idiomas->$idioma_var->tematica,
+                                                    'Lit_Descripcion' => $post->idiomas->$idioma_var->descripcion,
+                                                ], true);
+
+
+                                            }
+
+                                        }
+                                    }
+
+                                    $res['success'] = true;
+                                    $res['msg'] = str_replace('%tematica%', $tematica->Lit_Nombre, $lenguaje['foro_admin_tematica_update_success']);
+
+                                });
+                            }
+                        }
+                    }
+                    // $this->setPut();
+                    // dd($_POST);
+                    $this->_view->responseJson($res);
+                    break;
+                case 'delete':
+                    $res = ['success' => false, 'msg' => ''];
+                    if ($this->filledPost('id')) {
+                        $tematica = ForoTematica::find($this->getInt('id'));
+                        $lenguaje = $this->_view->LoadLenguaje('foro_admin_tematica');
+                        if ($tematica && $tematica->Lit_IdLineaTematica != 0) {
+                            DB::transaction(function () use(&$tematica, &$res, $lenguaje) {
+                                $tematica->Row_Estado = 0;
+                                $tematica->save();
+                                $res['success'] = true;
+                                $res['msg'] = str_replace('%tematica%', $tematica->Lit_Nombre, $lenguaje['foro_admin_tematica_delete_eliminado']);
+                            });
+                        }
+                    }
+                    $this->_view->responseJson($res);
+                    break;
+            }
+        } else {
+
+            switch ($method) {
+                case 'datatable':
+                    // dd(Cookie::lenguaje());
+
+                    DB::enableQueryLog();
+                    $tematicas = ForoTematica::visibles();
+                    $records_total = $tematicas->count();
+                    $records_total_filter = $records_total;
+                    if ($this->filledGet('buscar')) {
+                        $tematicas->where('Lit_Nombre', 'like', '%'.$_GET['buscar'].'%');
+                        $records_total_filter = $tematicas->count();
+                    }
+                    if ($this->filledGet('export')) {
+                        $this->_tematica_export($tematicas, $_GET['export']);
+                    } else {
+                        $datas = $tematicas->offset($_GET['start'])->limit($_GET['length'])->get();
+                        // dd($datas);
+                        // $datas = $datas->map(function($item) {
+                        //     if ($item->Idi_IdIdioma != Cookie::lenguaje()){
+                        //         $traducido = ContenidoTraducido::getRow('tematica', $item->Lit_IdLineaTematica, Cookie::lenguaje());
+                        //         if ($traducido->count() > 0) {
+                        //             $n_tematica = $traducido->where('Cot_Columna', 'Lit_Nombre')->first()->Cot_Traduccion;
+                        //             if (trim($n_tematica) != '') {
+                        //                 $item->Lit_Nombre = $traducido->where('Cot_Columna', 'Lit_Nombre')->first()->Cot_Traduccion;
+                        //                 $item->Lit_Descripcion = $traducido->where('Cot_Columna', 'Lit_Descripcion')->first()->Cot_Traduccion;
+                        //             } else
+                        //                 return $item;
+
+
+                        //         } else {
+
+                        //             // $item->Lit_Nombre = 'no_translate';
+                        //             // $item->Lit_Descripcion = 'no_translate';
+                        //         }
+                        //     }
+                        //     return $item;
+                        // });
+
+                        $data = [
+                            'draw' => +$_GET['draw'],
+                            'recordsTotal' => $records_total,
+                            'recordsFiltered' => $records_total_filter,
+                            'data' => $datas,
+                            'query' => $cosa = DB::getQueryLog()
+
+                        ];
+                        $this->_view->responseJson($data);
+                    }
+                    break;
+                case 'index':
+                    // $foro = ForoTematica::find(1);
+                    // dd($foro->foros->count());
+                    // dd($this->_view->LoadLenguaje('foro_admin_tematica'));
+                    $this->_view->setJs(
+                        array(
+                            array(BASE_URL . 'public/js/mustache/mustache.min.js'),
+                            array(BASE_URL . 'public/js/axios/dist/axios.min.js'),
+                            array(BASE_URL . 'public/js/vuejs/vue.min.js'),
+                            array(BASE_URL .  Cookie::lenguaje(). '/assets/js/datatables_lang.js'),
+                            array(BASE_URL . 'public/js/datatable/datatables.min.js'),
+                            'tematica'
+                        ));
+
+                    $idiomas = Idioma::activos();
+
+                    $vars_idioma = [];
+                    $idiomas->map(function($item) use(&$vars_idioma){
+                        $vars_idioma['idioma_'.$item->Idi_IdIdioma] = [
+                            'id' => $item->Idi_IdIdioma,
+                            'tematica' => '',
+                            'descripcion' => '',
+                        ];
+                    });
+                    $data_vue = [
+                        'idiomas' => $vars_idioma,
+                        'idioma_actual' => Cookie::lenguaje()
+                    ];
+
+                    $this->_view->assign('data_vue', json_encode($data_vue));
+                    $this->_view->assign('idiomas', $idiomas);
+                    $this->_view->render('tematica');
+                    break;
+                case 'store':
+                    $post = file_get_contents('php://input');
+                    $post = json_decode($post);
+                    // var_dump($post);
+                    $this->setStore();
+                    $lenguaje = $this->_view->LoadLenguaje('foro_admin_tematica');
+                    if ($this->isAjax()) {
+                        $res = ['success' => false, 'msg' => ''];
+                        $idiomas = Idioma::activos();
+                        $self = $this;
+                        DB::transaction(function () use ($self, &$res, $post, $idiomas, $lenguaje) {
+                            $tematica = new ForoTematica();
+                            $opcionales = [];
+                            foreach ($idiomas as $value) {
+                                $idioma_var = "idioma_".$value->Idi_IdIdioma;
+                                if (array_key_exists($idioma_var, $post->idiomas)) {
+                                    if ($value->Idi_IdIdioma == Cookie::lenguaje()) {
+                                        //por defecto agregar en el idioma actual
+                                        $tematica->Lit_Nombre = $post->idiomas->$idioma_var->tematica;
+                                        $tematica->Lit_Descripcion = $post->idiomas->$idioma_var->descripcion;
+                                        $tematica->row_estado = $post->estado;
+                                        $tematica->Idi_IdIdioma = Cookie::lenguaje();
+                                        $tematica->save();
+                                    } else {
+                                        $opcionales[] = [
+                                            'idioma' => $value->Idi_IdIdioma,
+                                            'tematica' => $post->idiomas->$idioma_var->tematica,
+                                            'descripcion' => $post->idiomas->$idioma_var->descripcion
+                                        ];
+                                    }
+                                }
+                            }
+
+                            if ($tematica->Lit_IdLineaTematica != 0) {
+                                foreach ($opcionales as  $value) {
+                                    $traducido = new ContenidoTraducido();
+                                    $traducido->Cot_Tabla ='tematica';
+                                    $traducido->Cot_IdRegistro = $tematica->Lit_IdLineaTematica;
+                                    $traducido->Cot_Columna ='Lit_Nombre';
+                                    $traducido->Cot_Traduccion = $value['tematica'];
+                                    $traducido->Idi_IdIdioma = $value['idioma'];
+                                    $traducido->save();
+
+                                    $traducido = new ContenidoTraducido();
+                                    $traducido->Cot_Tabla ='tematica';
+                                    $traducido->Cot_IdRegistro = $tematica->Lit_IdLineaTematica;
+                                    $traducido->Cot_Columna ='Lit_Descripcion';
+                                    $traducido->Cot_Traduccion = $value['descripcion'];
+                                    $traducido->Idi_IdIdioma = $value['idioma'];
+                                    $traducido->save();
+
+                                }
+
+                                $res['success'] = true;
+                                $res['msg'] = str_replace('%tematica%', $tematica->Lit_Nombre, $lenguaje['foro_admin_tematica_registro_success']);
+                            }
+
+
+                        });
+                    }
+                    // print_r($_POST);
+                    $this->_view->responseJson($res);
+                    break;
+                default:
+                    http_response_code(404);
+                    throw new Exception('Error de modelo - ');
+                    break;
+            }
+        }
+
+        // if ($this->isAjax()) {
+        //     $res = ['success' => false, 'msg' => ''];
+        //     // if ($this->filledPost(['nombre', 'estado'])) {
+        //     //     $self = $this;
+        //     //     DB::transaction(function () use ($self, &$res) {
+
+        //     //         $tematica = new ForoTematica();
+        //     //         $tematica->Lit_Nombre = $self->getTexto('nombre');
+        //     //         $tematica->row_estado = $self->getInt('estado');
+        //     //         $tematica->save();
+        //     //         if ($tematica->Lit_IdLineaTematica != 0)
+        //     //             $res['success'] = true;
+        //     //     });
+        //     // } else {
+        //     //     $res['msg'] = 'Faltan variables';
+        //     // }
+        //     $this->_view->responseJson($_POST);
+
+        // } else {
+
+        // }
+
+    }
     public function gestion_idiomas() {
-        //   
-        // exit;        
+        //
+        // exit;
         $this->_view->getLenguaje('template_backend');
         $condicion1 ='';
         $Idi_IdIdioma =  $this->getPostParam('idIdioma'); //idioma seleccionado en el nav
@@ -458,21 +865,21 @@ class adminController extends foroController
         // echo $Form_Funcion; exit;
         $id = $this->getPostParam('idforo');
         // echo $id; exit;
-        $condicion1 .= " WHERE fo.For_IdForo = $id ";            
+        $condicion1 .= " WHERE fo.For_IdForo = $id ";
         $foro = $this->_model->getPaginaTraducida($condicion1, $Idi_IdIdioma);
         // echo count($foro); exit;
         if ($foro["Idi_IdIdioma"]==$Idi_IdIdioma) {
-            $this->_view->assign('foro',$foro);    
+            $this->_view->assign('foro',$foro);
             // $this->_view->assign('contenido',$datos);
         }else{
             $foro["For_Titulo"]="";
             $foro["For_Resumen"]="";
             $foro["For_Descripcion"]="";
-            $foro["For_PalabrasClaves"]=""; 
+            $foro["For_PalabrasClaves"]="";
             $foro["Idi_IdIdioma"]=$Idi_IdIdioma;
-            $this->_view->assign('foro',$foro);    
-        }        
-  
+            $this->_view->assign('foro',$foro);
+        }
+
         $_model_index     = $this->loadModel('index');
         $foro["Archivos"] = $_model_index->getArchivos_x_idforo($id);
         $this->_view->assign('foro', $foro);
@@ -487,22 +894,22 @@ class adminController extends foroController
     public function members($id_foro = 0)
     {
         $this->_view->setTemplate(LAYOUT_FRONTEND);
-        $model_index = $this->loadModel('index');                
+        $model_index = $this->loadModel('index');
         if ($id_foro != 0) {
             $foro = $this->_model->getForos_x_Id($id_foro);
 
             $idUsuario = Session::get('id_usuario');
             if(!empty($idUsuario)){
-                $Rol_Ckey = $model_index->getRolForo(Session::get('id_usuario'), $id_foro); 
+                $Rol_Ckey = $model_index->getRolForo(Session::get('id_usuario'), $id_foro);
                 if(empty($Rol_Ckey)){
                     $Rol_Ckey = $model_index->getRol_Ckey(Session::get('id_usuario'));
                 }
-                $this->_view->assign('Rol_Ckey', $Rol_Ckey["Rol_Ckey"]); 
+                $this->_view->assign('Rol_Ckey', $Rol_Ckey["Rol_Ckey"]);
                 // echo $Rol_Ckey["Rol_Ckey"]; exit;
             }else{
-                $Rol_Ckey["Rol_Ckey"]="";   
-                $this->_view->assign('Rol_Ckey', "sin permiso"); 
-            }             
+                $Rol_Ckey["Rol_Ckey"]="";
+                $this->_view->assign('Rol_Ckey', "sin permiso");
+            }
 
             if (!empty($foro)) {
                 $this->_view->getLenguaje("foro_admin_members");
@@ -516,7 +923,7 @@ class adminController extends foroController
                 $totalRegistros = $this->_model->getRowMembers_x_Foro($id_foro, "lider_foro");
 
                 $paginador->paginar($totalRegistros["Usf_RowMembers"], "listaMembers", "", $pagina = 1, CANT_REG_PAG, true);
-               
+
                 $this->_view->assign('numeropagina', $paginador->getNumeroPagina());
                 $this->_view->assign('paginacion', $paginador->getView('paginacion_ajax_s_filas'));
                 $this->_view->assign('lista_members', $lista_members);
@@ -529,7 +936,7 @@ class adminController extends foroController
             }
         } else {
             return $this->redireccionar("foro/admin");
-        }        
+        }
     }
 
     public function actividad($id_foro = 0)
@@ -647,9 +1054,9 @@ class adminController extends foroController
     }
 
     public function _tab_members_buscar()
-    {        
+    {
         $id_foro    = $_SESSION['id_foro'];
-        $rol_member = $_SESSION['rol_member'];       
+        $rol_member = $_SESSION['rol_member'];
         $filtro = $this->getTexto('filtro');
         if(empty($filtro)){
             $filtro ="";
@@ -669,12 +1076,12 @@ class adminController extends foroController
         $this->_view->assign('numeropagina', $paginador->getNumeroPagina());
         //$this->_view->assign('cantidadporpagina',$registros);
         $this->_view->assign('paginacion', $paginador->getView('paginacion_ajax_s_filas'));
-        
-        
+
+
         $this->_view->assign('text_busqueda_miembro', $filtro);
         // Session::destroy('id_foro');
         // Session::destroy('rol_member');
-        $this->_view->renderizar('ajax/listaMembers', false, true); 
+        $this->_view->renderizar('ajax/listaMembers', false, true);
     }
 
     public function _cambiarEstadoMember()
@@ -723,11 +1130,12 @@ class adminController extends foroController
         $mensaje = $this->getTexto('mensaje');
 
         $result_inscrip = $model_index->inscribir_participante_foro($id_foro, $id_usuario, $id_rol, 1);
-         if(count($result_inscrip)>0){
+
+        if(count($result_inscrip)>0){
+            // dd($result_inscrip);
             $result = $model_index->getEmail_Usuario($id_usuario);
             $this->sendEmail($result, $mensaje);
         }
-
         $pagina    = 1;
         $paginador = new Paginador();
 
@@ -746,7 +1154,7 @@ class adminController extends foroController
     }
 
      public function sendEmail($Email, $mensaje)
-    { 
+    {
         $obj = new Request();
         // echo $obj->getModulo();exit;
 

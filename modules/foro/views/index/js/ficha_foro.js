@@ -1,17 +1,47 @@
-/* 
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 
+function iniciar_tag (target) {
+    autosize($(target));
+    $(target).mentionsInput({
+        elastic: false,
+        onCaret: true,
+        showAvatars: false,
+        onDataRequest:function (mode, query, callback) {
+          $.getJSON(_root_lang + 'foro/index/_mencionar_usuario?q=' + query, function(responseData) {
+            // console.log(responseData);
+            responseData = _.filter(responseData, function(item) { return item.name.toLowerCase().indexOf(query.toLowerCase()) > -1 });
+            callback.call(this, responseData);
+          });
+        }
+
+    });
+}
 $(document).on('ready', function () {
+    iniciar_tag('textarea.estilo-textarea');
 
     $('body').on('click', '.foro_coment', function () {
-        regitrar_comentario($(this).attr("id_foro"), $(this).attr("id_usuario"), $("#text_comentario_" + $(this).attr("id_foro") + "_" + $(this).attr("id_padre")).val(), $(this).attr("id_padre"));
-        $("#text_comentario_" + $(this).attr("id_foro") + "_" + $(this).attr("id_padre")).val("");
-        $("#div_loading_" + $(this).attr("id_foro") + "_" + $(this).attr("id_padre")).html("");
-        $("#div_loading_" + $(this).attr("id_foro") + "_" + $(this).attr("id_padre")).removeClass("d-block");
-        $("#div_loading_" + $(this).attr("id_foro") + "_" + $(this).attr("id_padre")).addClass("d-none");
+        let _this = this;
+        $("#text_comentario_" + $(this).attr("id_foro") + "_" + $(this).attr("id_padre")).mentionsInput('getMentions', function(data) {
+            console.log(data)
+
+          // JSON.stringify(data)
+            regitrar_comentario(
+                $(_this).attr("id_foro"),
+                $(_this).attr("id_usuario"),
+                $("#text_comentario_" + $(_this).attr("id_foro") + "_" + $(_this).attr("id_padre")).val(),
+                $(_this).attr("id_padre"),
+                data.map(v => v.id)
+                );
+            $("#text_comentario_" + $(_this).attr("id_foro") + "_" + $(_this).attr("id_padre")).val("");
+            $("#div_loading_" + $(_this).attr("id_foro") + "_" + $(_this).attr("id_padre")).html("");
+            $("#div_loading_" + $(_this).attr("id_foro") + "_" + $(_this).attr("id_padre")).removeClass("d-block");
+            $("#div_loading_" + $(_this).attr("id_foro") + "_" + $(_this).attr("id_padre")).addClass("d-none");
+            $("#text_comentario_" + $(_this).attr("id_foro") + "_" + $(_this).attr("id_padre")).mentionsInput('reset')
+        });
 
     });
 
@@ -39,12 +69,14 @@ $(document).on('ready', function () {
 
     $('body').on('click', '.coment_coment', function () {
         //$("#ocultar_responder"+$(this).attr("id_comentario")).toggle();
-        $("#comen_comen_" + $(this).attr("id_comentario")).css("display", "block");
+        let target = "#comen_comen_" + $(this).attr("id_comentario");
+        iniciar_tag(target + ' textarea.estilo-textarea');
+        $(target).css("display", "block");
     });
 
-    $('body').on('click', '.cancelar_responder_comentario_foro', function () {        
-        //$("#ocultar_responder"+$(this).attr("id_comentario_cancelar_responder")).toggle(); 
-        $("#comen_comen_" + $(this).attr("id_comentario_cancelar_responder")).css("display", "none");       
+    $('body').on('click', '.cancelar_responder_comentario_foro', function () {
+        //$("#ocultar_responder"+$(this).attr("id_comentario_cancelar_responder")).toggle();
+        $("#comen_comen_" + $(this).attr("id_comentario_cancelar_responder")).css("display", "none");
     });
 
     $('body').on('click', '.eliminar_comentario_foro', function () {
@@ -62,7 +94,7 @@ $(document).on('ready', function () {
             alert("Ocurrió un error, inténtalo nuevamente.")
         }else{
             eliminar_comentario($(this).attr("id_foro"), $(this).attr("id_comentario_delete"), tpl);
-        }        
+        }
     });
 
     $('body').on('click', '.btn_registro_user', function () {
@@ -76,7 +108,7 @@ $(document).on('ready', function () {
     $('body').on('click', '.inscribir_foro', function () {
         inscribir_participante_foro($(this).attr("id_foro"));
     });
-  
+
     $('body').on('change', '.files_coment', function () {
         load_files_coment($(this)[0].files, $($(($($(this).parent()).parent()).parent()).parent()).find(".load_files"));
     });
@@ -89,22 +121,22 @@ $(document).on('ready', function () {
         var ids = $("#Fim_IdForo_"+$(this).attr("idcomentario")).val();//
         var Fim_IdForo = $(this).attr('Fim_IdForo');
         if(ids==""){
-            $("#Fim_IdForo_"+$(this).attr("idcomentario")).val(Fim_IdForo);                      
+            $("#Fim_IdForo_"+$(this).attr("idcomentario")).val(Fim_IdForo);
         }else{
-            $("#Fim_IdForo_"+$(this).attr("idcomentario")).val(ids + ',' + Fim_IdForo);  
-        }//obtiene los id de los archivos quitados temporalmente       
+            $("#Fim_IdForo_"+$(this).attr("idcomentario")).val(ids + ',' + Fim_IdForo);
+        }//obtiene los id de los archivos quitados temporalmente
 
         $($($(this).parent())).hide();
-    }); 
+    });
 
     $('body').on('click', '.file_close2', function () {
         var ids = $("#Fim_IdForo_"+$(this).attr("idcomentario")).val();//
         var Fim_IdForo = $(this).attr('Fim_IdForo');
         if(ids==""){
-            $("#Fim_IdForo_"+$(this).attr("idcomentario")).val(Fim_IdForo);                      
+            $("#Fim_IdForo_"+$(this).attr("idcomentario")).val(Fim_IdForo);
         }else{
-            $("#Fim_IdForo_"+$(this).attr("idcomentario")).val(ids + ',' + Fim_IdForo);  
-        }//obtiene los id de los archivos quitados temporalmente       
+            $("#Fim_IdForo_"+$(this).attr("idcomentario")).val(ids + ',' + Fim_IdForo);
+        }//obtiene los id de los archivos quitados temporalmente
 
         $($($(this).parent()).parent()).hide();
     });
@@ -114,7 +146,7 @@ $(document).on('ready', function () {
 
     $('body').on('click', '.editar_comentario_foro', function () {
         $(".capa_"+$(this).attr("id_comentario_editar")).toggle(); // oculta/muestra el textarea original
-        
+
         var comentario = $(this).attr("comentario_");
         $("#edit_comentario_"+ $(this).attr("id_foro") + "_" + $(this).attr("id_comentario_editar")).val(comentario);
         $(".capaEditar_"+$(this).attr("id_comentario_editar")).toggle(); //muestra el texto obtenido en el nuevo textarea
@@ -122,25 +154,25 @@ $(document).on('ready', function () {
         $(".ocultar_archivos_list_" + $(this).attr("id_comentario_editar")).toggle();  //oculta/muestra los archivos originales
     });
 
-    $('body').on('click', '.cancelar_comentario_foro', function () {        
+    $('body').on('click', '.cancelar_comentario_foro', function () {
         $(".capa_"+$(this).attr("id_comentario_editar")).toggle();
-        $(".capaEditar_"+$(this).attr("id_comentario_editar")).toggle();  
-        $(".ocultar_archivos_list_" + $(this).attr("id_comentario_editar")).toggle();   
+        $(".capaEditar_"+$(this).attr("id_comentario_editar")).toggle();
+        $(".ocultar_archivos_list_" + $(this).attr("id_comentario_editar")).toggle();
 
-        $(".restaurar_mostrar_" + $(this).attr("id_comentario_editar")).show();//vuelve a mostrar los archivos quitados temporalmente    
-        
+        $(".restaurar_mostrar_" + $(this).attr("id_comentario_editar")).show();//vuelve a mostrar los archivos quitados temporalmente
+
     });
 
     $('body').on('click', '.ver_mas', function () {
         $(".capaVer1_"+$(this).attr("id_comentario_editar")).toggle();
-        $(".capaVer2_"+$(this).attr("id_comentario_editar")).toggle();   
+        $(".capaVer2_"+$(this).attr("id_comentario_editar")).toggle();
     });
-    $('body').on('click', '.ver_menos', function () {        
+    $('body').on('click', '.ver_menos', function () {
         $(".capaVer1_"+$(this).attr("id_comentario_editar")).toggle();
-        $(".capaVer2_"+$(this).attr("id_comentario_editar")).toggle();  
+        $(".capaVer2_"+$(this).attr("id_comentario_editar")).toggle();
     });
 
-    $('body').on('click', '.enviar_reporte', function () {        
+    $('body').on('click', '.enviar_reporte', function () {
         var ficha_foro = $("#ficha_foro").val();
         var comentario_completo = $("#comentario_completo").val();
         var tpl = "";
@@ -155,44 +187,44 @@ $(document).on('ready', function () {
             alert("Ocurrió un error, inténtalo nuevamente.")
         }else{
             enviarReporte($(this).attr("id_foro"), $('#idcomentario').val(), $("#ta_mensaje_reportar").val(), tpl);
-        } 
-        
+        }
+
     });
 
-    $('body').on('click', '.reportar', function () {       
-        var id = $(this).attr("id_comentario_reportar"); 
+    $('body').on('click', '.reportar', function () {
+        var id = $(this).attr("id_comentario_reportar");
         $('#modal-reportar-comentario').on('show.bs.modal', function (e) {
             $("#idcomentario").val(id);
         });
     });
 
     //para el like del foro
-    $('body').on('click', '#ValorarForo', function () {       
+    $('body').on('click', '#ValorarForo', function () {
         valorar_foro($(this).attr("id_usuario"), $(this).attr("id_foro"), $(this).attr("valor"), $(this).attr("ajaxtpl"));
-    });       
+    });
 
     //para el like del comentario del foro
-    $('body').on('click', '.valorar_comentario', function () {       
+    $('body').on('click', '.valorar_comentario', function () {
         valorar_comentario_foro($(this).attr("id_usuario"),$(this).attr("id_comentario"), $(this).attr("valor"), $(this).attr("ajaxtpl"));
-    });  
+    });
 
     $('body').on('click', '.cerrar_foro', function () {
-        $("#cargando").show();        
+        $("#cargando").show();
         cerrarForo($(this).attr('id_foro'), $(this).attr('estado'));
     });
 
     $('body').on('click', '.eliminar_foro', function () {
-        $("#cargando").show();        
+        $("#cargando").show();
         eliminarForo($(this).attr('id_foro'), $(this).attr('Row_Estado'));
     });
 
     $('body').on('click', '.deshablitarForo', function () {
-        $("#cargando").show();        
+        $("#cargando").show();
         deshablitarForo($(this).attr('id_foro'), $(this).attr('for_estado'));
     });
 
     $('body').on('click', '.hablitarForo', function () {
-        $("#cargando").show();        
+        $("#cargando").show();
         hablitarForo($(this).attr('id_foro'));
     });
 });
@@ -200,7 +232,7 @@ $(document).on('ready', function () {
 function hablitarForo(id_foro) {
     $.post(_root_ + 'foro/admin/_habilitarForo',
     {
-        id_foro:id_foro        
+        id_foro:id_foro
     }, function (data) {
         location.href = _root_+"foro/index/ficha/"+id_foro;
     });
@@ -211,7 +243,7 @@ function deshablitarForo(id_foro, estado_foro) {
     {
         id_foro:id_foro,
         estado_foro: estado_foro
-        
+
     }, function (data) {
         location.href = _root_+"foro/index/ficha/"+id_foro;
     });
@@ -222,7 +254,7 @@ function eliminarForo(id_foro, estado) {
     {
         id_foro:id_foro,
         estado:estado
-        
+
     }, function (data) {
         location.href = _root_+"foro/index/ficha/"+id_foro;
     });
@@ -233,7 +265,7 @@ function cerrarForo(id_foro, estado_foro) {
     {
         id_foro:id_foro,
         estado_foro:estado_foro
-        
+
     }, function (data) {
         location.href = _root_+"foro/index/ficha/"+id_foro;
     });
@@ -292,11 +324,11 @@ function enviarReporte(id_foro, iCom_IdComentario, mensaje, tpl) {
                 // $("#cargando").hide();
                 location.href = _root_ + "foro/index/ficha_comentario_completo/"+id_foro+"/"+iCom_IdComentario;
             });
-        }        
+        }
     }
 }
 
-function eliminar_comentario(id_foro, id_comentario, tpl) { 
+function eliminar_comentario(id_foro, id_comentario, tpl) {
     if(tpl == "ficha_foro"){
         $("#cargando").show();
         $.post(_root_ + 'foro/index/_eliminar_comentario',
@@ -321,11 +353,12 @@ function eliminar_comentario(id_foro, id_comentario, tpl) {
                 // $("#cargando").hide();
                 location.href = _root_ + "foro/index/ficha_comentario_completo/"+id_foro+"/"+id_comentario;
             });
-        }        
+        }
     }
 }
 
-function regitrar_comentario(id_foro, id_usuario, descripcion, id_padre) {
+function regitrar_comentario(id_foro, id_usuario, descripcion, id_padre, usuario_ref = []) {
+    console.log(descripcion)
     $("#cargando").show();
     var files={};
     jQuery.each($("[name=attach_"+id_padre+"]"), function (i, file) {
@@ -338,7 +371,8 @@ function regitrar_comentario(id_foro, id_usuario, descripcion, id_padre) {
                 id_usuario: id_usuario,
                 descripcion: descripcion,
                 id_padre: id_padre,
-                att_files:att_files
+                att_files:att_files,
+                tag_usuarios: usuario_ref
             }, function (data) {
         $("#lista_comentarios").html('');
         $("#cargando").hide();
@@ -346,7 +380,7 @@ function regitrar_comentario(id_foro, id_usuario, descripcion, id_padre) {
     });
 }
 
-function editar_comentario(id_foro, id_usuario, descripcion, id_padre, iCom_IdComentario, Fim_IdForo, tpl) {    
+function editar_comentario(id_foro, id_usuario, descripcion, id_padre, iCom_IdComentario, Fim_IdForo, tpl) {
     var files={};
     jQuery.each($("[name=attach_"+id_padre+"]"), function (i, file) {
         files[$(file).attr("id")]={"name":$(file).val(),"size":$(file).attr("f-size"),"type":$(file).attr("f-type")};
@@ -362,7 +396,7 @@ function editar_comentario(id_foro, id_usuario, descripcion, id_padre, iCom_IdCo
                     id_padre: id_padre,
                     att_files:att_files,
                     iCom_IdComentario: iCom_IdComentario,
-                    Fim_IdForo: Fim_IdForo, 
+                    Fim_IdForo: Fim_IdForo,
                     tpl: tpl
                 }, function (data) {
             $("#lista_comentarios").html('');
@@ -380,13 +414,13 @@ function editar_comentario(id_foro, id_usuario, descripcion, id_padre, iCom_IdCo
                     id_padre: id_padre,
                     att_files:att_files,
                     iCom_IdComentario: iCom_IdComentario,
-                    Fim_IdForo: Fim_IdForo, 
+                    Fim_IdForo: Fim_IdForo,
                     tpl: tpl
             }, function () {
                 // $("#cargando").hide();
                 location.href = _root_ + "foro/index/ficha_comentario_completo/"+id_foro+"/"+iCom_IdComentario;
             });
-        }        
+        }
     }
 }
 
@@ -439,7 +473,7 @@ function load_files_coment(file, div_conte) {
             result = JSON.parse(data);
             jQuery.each(result, function (i, file) {
                 id_file = file["id"];
-                $("#" + id_file).val(file["name"]);                
+                $("#" + id_file).val(file["name"]);
                 $("#" + id_file).attr("f-type", file["type"]);
                 $("#" + id_file).attr("f-size", file["size"]);
             });
@@ -451,12 +485,12 @@ function load_files_coment(file, div_conte) {
 //     // body...
 //     $(".capa").hover(function(){
 //         // $(".dropdown-menu").show();
-//         // if(($(this).attr("Rol_Ckey") == 'administrador_foro') || ($(this).attr("Rol_Ckey") == 'lider_foro') 
-//         //     || ($(this).attr("Rol_Ckey") == 'moderador_foro') || ($(this).attr("Rol_Ckey") == 'facilitador_foro') 
+//         // if(($(this).attr("Rol_Ckey") == 'administrador_foro') || ($(this).attr("Rol_Ckey") == 'lider_foro')
+//         //     || ($(this).attr("Rol_Ckey") == 'moderador_foro') || ($(this).attr("Rol_Ckey") == 'facilitador_foro')
 //         //     || ($(this).attr("Rol_Ckey") == 'participante_foro')) {
 //             $(".opciones_comentario_"+$(this).attr("id_comentario_capa")).show();
 //         // }
-       
+
 //     }, function(){
 //         // $(".dropdown-menu").hide();
 //         $(".opciones_comentario_"+$(this).attr("id_comentario_capa")).hide();
