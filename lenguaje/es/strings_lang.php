@@ -4,9 +4,10 @@
 	$lenguaje["str_cambiar_estado"] = "Cambiar estado";
 	$lenguaje["str_opciones"] = "Opciones";
 	$lenguaje["str_estado"] = "Estado";
-	$lenguaje["str_descripcion"] = "Descripcion";
+	$lenguaje["str_descripcion"] = "Descripción";
 	$lenguaje["str_guardar"] = "Guardar";
 	$lenguaje["str_cancelar"] = "Cancelar";
+	$lenguaje["str_descargas"] = "Descargas";
 	$lenguaje["str_activo"] = "Activo";
 	$lenguaje["str_buscar_en"] = "Buscar en";
 	$lenguaje["str_nombre"] = "Nombre";

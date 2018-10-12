@@ -1,13 +1,20 @@
 <?php
-	$lenguaje["foro_admin_tematica_titulo_registro"] = "TEMÁTICA FORO PT";
-	$lenguaje["foro_admin_tematica_update_estado_0"] = "[undefined]";
-	$lenguaje["foro_admin_tematica_update_estado_1"] = "[undefined]";
+	$lenguaje["foro_admin_tematica_titulo_registro"] = "TEMÁTICA FORO";
+	$lenguaje["foro_admin_tematica_update_estado_1"] = "Línea temática %tematica% ahora está activa";
+	$lenguaje["foro_admin_tematica_update_estado_0"] = "Línea temática %tematica% ahora está inactiva";
+	$lenguaje["foro_admin_tematica_registro_success"] = "Línea temática %tematica%, registrada con éxito";
+	$lenguaje["foro_admin_tematica_update_success"] = "Línea temática %tematica%,  actualizada con éxito";
+	//eliminar
+	$lenguaje["foro_admin_tematica_delete_eliminado"] = "Línea temática %tematica% eliminada";
 
-	$lenguaje["foro_admin_tematica_delete_eliminado"] = "[undefined]"
 
+	//index
 	$lenguaje["foro_admin_tematica_index_table_titulo"] = "LISTAR TEMÁTICA";
 	$lenguaje["foro_admin_tematica_index_table_th_tematica"] = "Temática";
-	$lenguaje["foro_admin_tematica_index_table_th_descripcion"] = "Descripción";
-	$lenguaje["foro_admin_tematica_index_table_th_estado"] = "Estado";
-	$lenguaje["foro_admin_tematica_index_table_th_opciones"] = "Opciones";
+	$lenguaje["foro_admin_tematica_index_panel_buscar"] = "BUSCAR TEMATICA";
+	$lenguaje["foro_admin_tematica_index_panel_nuevo"] = "NUEVO TEMATICA";
+
+	$lenguaje["foro_admin_tematica_index_inp_nombre_ph"] = "Nombre temática";
+	$lenguaje["foro_admin_tematica_index_inp_descr_ph"] = "Descripción temática";
+	// $lenguaje["foro_admin_tematica_index_table_] = "";
 ?>

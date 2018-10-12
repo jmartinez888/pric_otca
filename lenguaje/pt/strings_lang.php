@@ -7,6 +7,7 @@
 	$lenguaje["str_descripcion"] = "Descripcion";
 	$lenguaje["str_guardar"] = "Guardar";
 	$lenguaje["str_cancelar"] = "Cancelar";
+	$lenguaje["str_descargas"] = "Descargas";
 	$lenguaje["str_activo"] = "Activo";
 	$lenguaje["str_nombre"] = "Nombre";
 	$lenguaje["str_idioma"] = "Idioma";
