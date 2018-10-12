@@ -34,8 +34,13 @@ class ComposerStaticInit84839e5498f8332d12a5af3f61883576
             'Illuminate\\Contracts\\' => 21,
             'Illuminate\\Container\\' => 21,
         ),
+        'F' => 
+        array (
+            'FontLib\\' => 8,
+        ),
         'D' => 
         array (
+            'Dompdf\\' => 7,
             'Doctrine\\Common\\Inflector\\' => 26,
         ),
         'A' => 
@@ -89,6 +94,14 @@ class ComposerStaticInit84839e5498f8332d12a5af3f61883576
         array (
             0 => __DIR__ . '/..' . '/illuminate/container',
         ),
+        'FontLib\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/phenx/php-font-lib/src/FontLib',
+        ),
+        'Dompdf\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/dompdf/dompdf/src',
+        ),
         'Doctrine\\Common\\Inflector\\' => 
         array (
             0 => __DIR__ . '/..' . '/doctrine/inflector/lib/Doctrine/Common/Inflector',
@@ -105,8 +118,28 @@ class ComposerStaticInit84839e5498f8332d12a5af3f61883576
         0 => __DIR__ . '/..' . '/nesbot/carbon/src',
     );
 
+    public static $prefixesPsr0 = array (
+        'S' => 
+        array (
+            'Svg\\' => 
+            array (
+                0 => __DIR__ . '/..' . '/phenx/php-svg-lib/src',
+            ),
+            'Sabberworm\\CSS' => 
+            array (
+                0 => __DIR__ . '/..' . '/sabberworm/php-css-parser/lib',
+            ),
+        ),
+    );
+
     public static $classMap = array (
+        'Cpdf' => __DIR__ . '/..' . '/dompdf/dompdf/lib/Cpdf.php',
         'Datamatrix' => __DIR__ . '/..' . '/tecnickcom/tcpdf/include/barcodes/datamatrix.php',
+        'HTML5_Data' => __DIR__ . '/..' . '/dompdf/dompdf/lib/html5lib/Data.php',
+        'HTML5_InputStream' => __DIR__ . '/..' . '/dompdf/dompdf/lib/html5lib/InputStream.php',
+        'HTML5_Parser' => __DIR__ . '/..' . '/dompdf/dompdf/lib/html5lib/Parser.php',
+        'HTML5_Tokenizer' => __DIR__ . '/..' . '/dompdf/dompdf/lib/html5lib/Tokenizer.php',
+        'HTML5_TreeBuilder' => __DIR__ . '/..' . '/dompdf/dompdf/lib/html5lib/TreeBuilder.php',
         'PDF417' => __DIR__ . '/..' . '/tecnickcom/tcpdf/include/barcodes/pdf417.php',
         'QRcode' => __DIR__ . '/..' . '/tecnickcom/tcpdf/include/barcodes/qrcode.php',
         'TCPDF' => __DIR__ . '/..' . '/tecnickcom/tcpdf/tcpdf.php',
@@ -128,6 +161,7 @@ class ComposerStaticInit84839e5498f8332d12a5af3f61883576
             $loader->prefixLengthsPsr4 = ComposerStaticInit84839e5498f8332d12a5af3f61883576::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInit84839e5498f8332d12a5af3f61883576::$prefixDirsPsr4;
             $loader->fallbackDirsPsr4 = ComposerStaticInit84839e5498f8332d12a5af3f61883576::$fallbackDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit84839e5498f8332d12a5af3f61883576::$prefixesPsr0;
             $loader->classMap = ComposerStaticInit84839e5498f8332d12a5af3f61883576::$classMap;
 
         }, null, ClassLoader::class);
