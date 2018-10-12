@@ -44,6 +44,7 @@ class View extends Smarty
         if ($modulo)
         {
             $this->_rutas['view'] = ROOT . 'modules' . DS . $modulo . DS . 'views' . DS . $controlador . DS;
+            $this->_rutas['templates'] = ROOT . 'modules' . DS . $modulo . DS . 'views' . DS . 'templates' . DS;
             $this->_rutas['js'] = BASE_URL . 'modules/' . $modulo . '/views/' . $controlador . '/js/';
             $this->_rutas['css'] = BASE_URL . 'modules/' . $modulo . '/views/' . $controlador . '/css/';
             $this->_rutas['img'] = BASE_URL . 'modules/' . $modulo . '/views/' . $controlador . '/img/';
@@ -51,6 +52,7 @@ class View extends Smarty
         else
         {
             $this->_rutas['view'] = ROOT . 'views' . DS . $controlador . DS;
+            $this->_rutas['templates'] = ROOT  . 'views' . DS . 'templates' . DS;
             $this->_rutas['js'] = BASE_URL . 'views/' . $controlador . '/js/';
             $this->_rutas['css'] = BASE_URL . 'views/' . $controlador . '/css/';
             $this->_rutas['img'] = BASE_URL . 'views/' . $controlador . '/img/';
@@ -67,7 +69,8 @@ class View extends Smarty
         header('Content-type: application/json');
         echo json_encode($array);
     }
-    public function render($vista, $item = false, $noLayout = false) {
+
+    public function render($vista, $item = false, $en_cache = false) {
         if ($item)
         {
             self::$_item = $item;
@@ -119,6 +122,7 @@ class View extends Smarty
 
         $this->getLenguaje("template_".$this->_template);
         $this->addTemplateDir($this->_rutas['view']);
+        $this->addTemplateDir($this->_rutas['templates']);
         if (is_readable($this->_rutas['view'] . $vista . '.tpl'))
         {
 
@@ -132,7 +136,12 @@ class View extends Smarty
             // }
             $this->detectVisita();
             $this->assign('_contenido', '');
-            $this->display($this->_rutas['view'] . $vista . '.tpl');
+            if ($en_cache){
+                $this->setCaching(true);
+                return $this->fetch($this->_rutas['view'] . $vista . '.tpl');
+            }
+            else
+                $this->display($this->_rutas['view'] . $vista . '.tpl');
             exit;
         }
         else
