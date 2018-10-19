@@ -19,10 +19,10 @@ class Bootstrap
         $controller = $peticion->getControlador() . 'Controller';
         $metodo = $peticion->getMetodo();
         $args = $peticion->getArgs();
-         
+
         if($modulo){
                 $rutaModulo = ROOT . 'controllers' . DS . $modulo . 'Controller.php';
-                
+
                 if(is_readable($rutaModulo)){
                     require_once $rutaModulo;
                     $rutaControlador = ROOT . 'modules'. DS . $modulo . DS . 'controllers' . DS . $controller . '.php';
@@ -44,6 +44,10 @@ class Bootstrap
                     $metodo = $peticion->getMetodo();
                 }
                 else{
+                    if (isset($args))
+                        array_unshift($args, $metodo);
+                    else
+                        $args[] = $metodo;
                     $metodo = 'index';
                 }
 
@@ -54,7 +58,7 @@ class Bootstrap
                     call_user_func(array($controller, $metodo));
                 }
 
-            } else {                                
+            } else {
                 throw new Exception('Controlador no encontrado: '.$controller);
             }
        // }else{

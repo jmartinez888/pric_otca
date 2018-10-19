@@ -26,6 +26,10 @@ abstract class Controller
 
     abstract public function index();
 
+    public function vcomponent ($name) {
+        header('Content-type: application/javascript');
+        $this->_view->render('component/'.$name);
+    }
 
     protected function loadModel($modelo, $modulo = false)
     {
@@ -91,12 +95,38 @@ abstract class Controller
         }
 
     }
+
+    protected function setDelete () {
+        // header("Access-Control-Allow-Origin: *");
+        // header("Content-Type: application/json; charset=UTF-8");
+        // header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+        if (strtoupper($_SERVER['REQUEST_METHOD']) == 'DELETE') {
+            header("Access-Control-Allow-Methods: GET");
+            header("Access-Control-Max-Age: 3600");
+        } else {
+            http_response_code(404);
+            // header('Content-type: application/json');
+            echo json_encode(['msg' => 'error method, not is delete']);
+            die();
+        }
+
+    }
+
+    protected function isAcceptJson () {
+        $accept = explode(',', $_SERVER['HTTP_ACCEPT']);
+        foreach ($accept as $key => $value) {
+            $accept[$key] = trim($value);
+        }
+        return in_array('application/json', $accept);
+        // return strtolower($_SERVER['HTTP_ACCEPT']) == 'application/json';
+
+    }
     protected function setPut () {
         header("Access-Control-Allow-Origin: *");
         // header("Content-Type: application/json; charset=UTF-8");
         header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
         if (strtoupper($_SERVER['REQUEST_METHOD']) == 'PUT') {
-            header("Access-Control-Allow-Methods: PUT");
+            header("Access-Control-Allow-Methods: POST");
             header("Access-Control-Max-Age: 3600");
         } else {
             http_response_code(404);
@@ -165,6 +195,12 @@ abstract class Controller
         {
             $_POST[$clave] = filter_input(INPUT_POST, $clave, FILTER_VALIDATE_INT);
             return $_POST[$clave];
+        }
+
+        if(isset($_GET[$clave]) && !empty($_GET[$clave]))
+        {
+            $_GET[$clave] = filter_input(INPUT_GET, $clave, FILTER_VALIDATE_INT);
+            return $_GET[$clave];
         }
 
         return 0;

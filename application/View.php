@@ -99,6 +99,7 @@ class View extends Smarty
             $ruta_base=BASE_URL. Cookie::lenguaje()."/";
 
         $_params = array(
+            'rutas' => $this->_rutas,
             'ruta_css' => BASE_URL . 'views/layout/' . $this->_template . '/css/',
             'ruta_img' => BASE_URL . 'views/layout/' . $this->_template . '/img/',
             'ruta_js' => BASE_URL . 'views/layout/' . $this->_template . '/js/',
@@ -319,63 +320,83 @@ class View extends Smarty
     public function getLenguaje($archivo, $lang = false)
     {
 
-        if (!is_array($archivo))
-        {
-            $archivo = array($archivo);
-        }
+        // if (!is_array($archivo))
+        // {
+        //     $archivo = array($archivo);
+        // }
         try
         {
             $lenguaje = Session::get("fileLenguaje");
-            foreach ($archivo as $dato)
-            {
-                $temp;
-                if ($lang)
-                    $temp = $this->LoadLenguaje($dato, $lang);
-                else
-                    $temp = $this->LoadLenguaje($dato);
+            if ($lang)
+                $temp = $this->LoadLenguaje($archivo, $lang);
+            else
+                $temp = $this->LoadLenguaje($archivo);
 
-                //var_dump($temp);
-                $lenguaje = array_merge($lenguaje, $temp);
-            }
+            $lenguaje = array_merge($lenguaje, $temp);
+            // foreach ($archivo as $dato)
+            // {
+            //     $temp;
+            //     if ($lang)
+            //         $temp = $this->LoadLenguaje($dato, $lang);
+            //     else
+            //         $temp = $this->LoadLenguaje($dato);
 
+            //     //var_dump($temp);
+            //     $lenguaje = array_merge($lenguaje, $temp);
+            // }
             Session::set("fileLenguaje", $lenguaje);
             $this->assign('lenguaje', $lenguaje);
+            return $lenguaje;
         } catch (Exception $ex)
         {
             throw new Exception('Error Asignar File Lenguaje ' . $ex);
         }
     }
 
-    public function LoadLenguaje($archivo, $lang = false)
-    {
-
+    public function LoadLenguaje($archivo, $lang = false) {
         if ($lang)
         {
             $this->_lenguaje = (string) $lang;
-
         }
 
         setlocale(LC_ALL, "spanish");
-        $lenguaje_dir = ROOT . 'lenguaje' . DS . $this->_lenguaje . DS . $archivo . "_lang.php";
+
         $strings_path = ROOT . 'lenguaje' . DS . $this->_lenguaje . DS . 'strings' . "_lang.php";
+        if (is_array($archivo)) {
+            $lang_total = [];
 
-        if (is_readable($lenguaje_dir))
-        {
+            foreach ($archivo as $key => $value) {
+                $temp = ROOT . 'lenguaje' . DS . $this->_lenguaje . DS . $value.'_lang.php';
+                if (is_readable($temp))
+                    include $temp;
+                else
+                    throw new Exception('Error cargar lenguaje - '.$lenguaje_dir);
 
-            include $lenguaje_dir;
-            include $strings_path;
-
-            if (!isset($lenguaje) || empty($lenguaje))
-            {
-
-                $lenguaje = array();
             }
+            if (!isset($lenguaje) || empty($lenguaje))
+                $lenguaje = array();
+            include $strings_path;
             return $lenguaje;
+        } else {
+            $lenguaje_dir = ROOT . 'lenguaje' . DS . $this->_lenguaje . DS . $archivo . "_lang.php";
+            if (is_readable($lenguaje_dir)) {
+
+                include $lenguaje_dir;
+                include $strings_path;
+
+                if (!isset($lenguaje) || empty($lenguaje))
+                {
+
+                    $lenguaje = array();
+                }
+                return $lenguaje;
+            }
+            else
+            {
+                throw new Exception('Error cargar lenguaje - '. $lenguaje_dir);
+            }
         }
-        else
-        {
-            throw new Exception('Error cargar lenguaje');
-        }
+
     }
 
     public function widget($widget, $method, $options = array())
