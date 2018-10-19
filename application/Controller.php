@@ -1,5 +1,7 @@
 <?php
 
+use App\ODifusionLinkInteres;
+
 abstract class Controller
 {
     private $_registry;
@@ -22,8 +24,13 @@ abstract class Controller
         Session::set("fileLenguaje",array());
         if(isset($this->_url))
             $this->_view->assign('url', $this->_url);
-    }
 
+        $this->init();
+    }
+    private function init() {
+        $data['links_interes'] = ODifusionLinkInteres::activos()->limit(5)->get();
+        $this->_view->assign($data);
+    }
     abstract public function index();
 
     public function vcomponent ($name) {
