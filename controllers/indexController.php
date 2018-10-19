@@ -2,6 +2,7 @@
 
 use App\ODifusion;
 use App\ODifusionBanners;
+use App\ODifusionLinkInteres;
 
 class indexController extends Controller
 {
@@ -39,6 +40,7 @@ class indexController extends Controller
                 ];
                 // return $item;
             })->toJson();
+            // $data['links_interes'] = ODifusionLinkInteres::activos()->limit(5)->get();
             $this->_view->setTemplate(LAYOUT_FRONTEND);
             // $this->_view->setJs(array(
             //       "js", array('https://maps.googleapis.com/maps/api/js?key=AIzaSyBM7aMHbWEPvofhwPQuKPnijDmQ0_AAkrI', true)   ));

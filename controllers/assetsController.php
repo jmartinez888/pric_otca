@@ -19,6 +19,11 @@ class assetsController extends Controller
     public function js ($file) {
         header('Content-type: application/javascript');
         switch ($file) {
+            case 'datatable_utils.js':
+              $lenguaje = $this->_view->getLenguaje('datatables');
+
+              $this->_view->render('datatable_utils');
+              break;
             case 'datatables_lang.js':
 
                 $lenguaje = $this->_view->LoadLenguaje('datatables');
