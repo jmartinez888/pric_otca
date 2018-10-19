@@ -98,6 +98,9 @@
 	            	<li class=" side-menu2">
 	                	<a href="{$_layoutParams.root}difusion/cifras" aria-controls="banner"  class="nounderline"><span>Datos y cifras</span></a>
 	            	</li>
+	            	<li class=" side-menu2">
+	                	<a href="{$_layoutParams.root}difusion/link_interes" aria-controls="banner"  class="nounderline"><span>Links de interes</span></a>
+	            	</li>
 	            </ul>
 
 	        </div>

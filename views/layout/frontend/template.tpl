@@ -350,30 +350,15 @@
                     <div class="footer-enlaces col-md-3">
                         <h5 class="text-bold text-color-white">LINKS DE INTERES</h5>
                         <div class="list-group">
-                          <a href="https://www.cbd.int/" class="list-group-item" target="_blank">
-                            <h4 class="list-group-item-heading">Secretaría del CDB.</h4>
-                            <!-- <p class="list-group-item-text">Breve descripcion del enlace</p> -->
-                          </a>
-                           <a href="http://www.itto.int/es/" class="list-group-item" target="_blank">
-                            <h4 class="list-group-item-heading">La OIMT</h4>
-                            <!-- <p class="list-group-item-text">Breve descripcion del enlace</p> -->
-                          </a>
-                           <a href="http://tmfo.org/index.html" class="list-group-item" target="_blank">
-                            <h4 class="list-group-item-heading">El Observatorio de Bosques Manejados Tropicales</h4>
-                            <!-- <p class="list-group-item-text">Breve descripcion del enlace</p> -->
-                          </a>
-                           <a href="https://www.cites.org/" class="list-group-item" target="_blank">
-                            <h4 class="list-group-item-heading">CITES</h4>
-                            <!-- <p class="list-group-item-text">Breve descripcion del enlace</p> -->
-                          </a>
-                           <a href="http://www.fao.org/forestry/en/" class="list-group-item" target="_blank">
-                            <h4 class="list-group-item-heading">FAO-Bosques</h4>
-                            <!-- <p class="list-group-item-text">Breve descripcion del enlace</p> -->
-                          </a>
-                           <a href="http://www.un.org/sustainabledevelopment/" class="list-group-item" target="_blank">
-                            <h4 class="list-group-item-heading">Metas de Desarrollo Sostenible</h4>
-                            <!-- <p class="list-group-item-text">Breve descripcion del enlace</p> -->
-                          </a>
+                            {foreach $links_interes as $link}
+                              <a href="{$link->ODli_Url}" class="list-group-item" target="_blank">
+                                <h4 class="list-group-item-heading">{$link->ODli_Titulo}</h4>
+                                <!-- <p class="list-group-item-text">Breve descripcion del enlace</p> -->
+                              </a>
+                            {/foreach}
+                            <a href="{$_layoutParams.root}difusion/link_interes/all" class="list-group-item" target="_blank">
+                                <h4 class="list-group-item-heading text-center">{$lenguaje['str_ver_mas']}</h4>
+                              </a>
                         </div>
                     </div>
                 </div>
