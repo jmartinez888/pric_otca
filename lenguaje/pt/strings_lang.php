@@ -38,4 +38,14 @@
 	$lenguaje['str_longitud'] = 'Longitud';
 	$lenguaje['str_indicador'] = 'Indicador';
 
+	$lenguaje['str_habilitado'] = 'Habilitado';
+	$lenguaje['str_denegado'] = 'Denegado';
+
+	$lenguaje['str_ver_elemento'] = 'Ver elemento';
+	$lenguaje['str_crear'] = 'Crear';
+
+	$lenguaje['str_registro_success'] = 'Elemento "%elemento%" creado con éxito';
+	$lenguaje['str_ver_mas'] = 'Ver más';
+
+
  ?>
