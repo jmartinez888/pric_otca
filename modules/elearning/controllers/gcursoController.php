@@ -47,22 +47,26 @@ class gcursoController extends elearningController {
     $this->_view->renderizar('ajax/_view_registrar', false, true);
   }
 
-  public function _view_finalizar_registro()
+  public function _view_finalizar_registro($idcurso = 0)
   {
-    $id = $this->getTexto("id");
-    if(!is_numeric($id) && strlen($id)==0){ $id = Session::get("learn_param_curso"); }
-    if(strlen($id)==0){ exit; }
-    $datos = $this->curso->getCursoXId($id);
-    $parametros = $this->curso->getParametros($id);
+    // $id = $this->getTexto("id");
+    // $idcurso = 1;
+    $this->_view->setTemplate(LAYOUT_FRONTEND);
 
-    Session::set("learn_param_curso", $id);
+    if(!is_numeric($idcurso) && strlen($idcurso)==0){ $idcurso = Session::get("learn_param_curso"); }
+    if(strlen($idcurso)==0){ exit; }
+    $datos = $this->curso->getCursoXId($idcurso);
+    $parametros = $this->curso->getParametros($idcurso);
+
+    Session::set("learn_param_curso", $idcurso);
     Session::set("learn_url_tmp", "gcurso/_view_finalizar_registro");
 
     $this->_view->assign('modalidad', $datos["Moa_IdModalidad"]);
     $this->_view->assign('curso', $datos);
-    $this->_view->assign('idcurso', $id);
+    $this->_view->assign('menu', 'curso');
+    $this->_view->assign('idcurso', $idcurso);
     $this->_view->assign('parametros', $parametros);
-    $this->_view->renderizar('ajax/_view_finalizar_registro', false, true);
+    $this->_view->render('ajax/_view_finalizar_registro');
   }
 
   public function _registrar_curso()
@@ -172,6 +176,7 @@ class gcursoController extends elearningController {
 
   public function _partial_objetivos_especificos(){
     $id = $this->getTexto("id");
+    // echo $id; 
     $objetivos = $this->curso->getObjetivosXCurso($id, 0);
 
     $this->_view->assign('objetivos', $objetivos);
@@ -192,7 +197,9 @@ class gcursoController extends elearningController {
 
 
     $this->curso->updateBannerCurso($curso, $img);
-
+    $resultados = array();
+    array_push($resultados, array( "estado" => 1, "url" => $img ));
+    $this->service->Populate($resultados);
     $this->service->Success("Se actualizó el banner");
     $this->service->Send();
   }
@@ -211,6 +218,10 @@ class gcursoController extends elearningController {
 
 
     $this->curso->updateVideoCurso($curso, $video);
+
+    $resultados = array();
+    array_push($resultados, array( "estado" => 1, "url" => $video ));
+    $this->service->Populate($resultados);
 
     $this->service->Success("Se actualizó el Video de Presentación");
     $this->service->Send();

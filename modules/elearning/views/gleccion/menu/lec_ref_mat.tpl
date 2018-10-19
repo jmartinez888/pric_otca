@@ -108,13 +108,7 @@
   </div>
 </div>
 <div class="col-lg-12  div_materiales">
-  <div class="panel panel-default " style="border-top: 0; border-top-left-radius: 0; border-top-right-radius: 0;">
-    <!-- <div class="panel-heading">
-      <h3 class="panel-title">
-        <i class="glyphicon glyphicon-list-alt"></i>&nbsp;&nbsp;
-        <strong>Material Didáctico</strong>
-      </h3>
-    </div> -->
+  <div class="panel panel-default " style="border-top: 0; border-top-left-radius: 0; border-top-right-radius: 0;">    
     <div class="panel-body">
       <div class="table-responsive">
         {if isset($material) && count($material) > 0 }
@@ -168,7 +162,6 @@
                     </div>
                   </td>
                 {/foreach}
-
               </tbody>
         </table>
         {else}
@@ -180,42 +173,74 @@
   </div>
 </div>
 <div class="col-lg-12  div_tareas">
-  {if ($curso.Moa_IdModalidad==2)}
+  <!-- {if ($curso.Moa_IdModalidad==2)} -->
   <div class="panel panel-default " style="border-top: 0; border-top-left-radius: 0; border-top-right-radius: 0;">
-    <!-- <div class="panel-heading">
-      <h3 class="panel-title">
-        <i class="glyphicon glyphicon-list-alt"></i>&nbsp;&nbsp;
-        <strong>Tareas</strong>
-      </h3>
-    </div> -->
     <div class="panel-body">
-      {if count($trabajo)}
-        {$index = 1}
-        {foreach from=$trabajo item=t}
-          <div class="item-trabajo">
-            <input class="Hidden_IdTrabajo" hidden="hidden" value="{$t.Tra_IdTrabajo}" />
-            <input class="Hidden_Estado" hidden="hidden" value="{$t.Tra_Estado}" />
-            <strong>Tarea {$index}</strong>
-            <button class="btnEditarTrabajo"><i class="glyphicon glyphicon-edit"></i></button>
-            <button class="btnActivarTrabajo">
-              {if $t.Tra_Estado == '1' }
-              <i class="glyphicon glyphicon-remove"></i>
-              {else}
-              <i class="glyphicon glyphicon-ok"></i>
-              {/if}
-            </button>
-            <button class="btnEliminarTrabajo"><i class="glyphicon glyphicon-trash"></i></button>
-          </div>
-          {$index = $index + 1}
-        {/foreach}
+      <div class="table-responsive">
+        {if isset($trabajo) && count($trabajo)}
+        {$i = 1}
+        <table class="table table-hover table-condensed table-filtros text-center">
+          <thead class="bg-default">
+          <tr>
+          <th>#</th>
+          <th class="cabecera"> Título </th>
+          <th class="cabecera"> Descripción </th>
+          <th> Fecha Inicio </th>
+          <th> Fecha Final </th>
+          <th> Estado </th> 
+          <th> Opciones </th>
+          <tbody>
+          {foreach from=$trabajo item=t}
+            <tr >
+              <td scope="row">{$i++}</td>
+                <td style="text-align: left;">
+                  <span data-toggle="tooltip" data-placement="right" title="{$t.Tra_Titulo}">{$t.Tra_Titulo|truncate:250:"..."}</span>
+                </td>
+                <td style="text-align: left;">
+                  <span data-toggle="tooltip" data-placement="right" title="{$t.Tra_Descripcion}">{$t.Tra_Descripcion|truncate:250:"..."}</span>
+                </td>
+                <td>{$t.Tra_FechaDesde}</td>
+                <td>{$t.Tra_FechaHasta}</td>
+                <td>
+                    {if $t.Tra_Estado==0}
+                        <i data-toggle="tooltip" data-placement="top"  class="glyphicon glyphicon-remove-sign" title="Deshabilitado" style="color: #DD4B39;"/>
+                    {/if}
+                    {if $t.Tra_Estado==1}
+                        <i data-toggle="tooltip" data-placement="top"  class="glyphicon glyphicon-ok-sign" title="Habilitado" style="color: #088A08;"/>
+                    {/if}
+                </td>
+                <td>
+                  <div class="item-trabajo">
+                    <input class="Hidden_IdTrabajo" hidden="hidden" value="{$t.Tra_IdTrabajo}" />
+                    <input class="Hidden_Estado" hidden="hidden" value="{$t.Tra_Estado}" />
+                    <button data-toggle="tooltip" data-placement="top" title="Editar Tarea" class="btnEditarTrabajo btn btn-sm btn-primary"><i class="glyphicon glyphicon-edit"></i></button>
+                    
+                      {if $t.Tra_Estado == '1' }
+                      <button data-toggle="tooltip" data-placement="top" title="Deshabilitar Tarea" class="btnActivarTrabajo btn btn-sm btn-warning"> 
+                          <i class="glyphicon glyphicon-remove"></i>
+                      </button>
+                      {else}
+                      <button data-toggle="tooltip" data-placement="top" title="Habilitar Tarea" class="btnActivarTrabajo btn btn-sm btn-success"> 
+                          <i class="glyphicon glyphicon-ok"></i>
+                      </button>
+                      {/if}
+                    </button>
+                    <button data-toggle="tooltip" data-placement="top" title="Eliminar Tarea" class="btnEliminarTrabajo btn btn-sm btn-danger"><i class="glyphicon glyphicon-trash"></i></button>
+                  </div>
+                </td>
+              </tr>
+          {/foreach}
+          </tbody>
+        </table>
       {else}
         <div>No se ha registrado trabajos</div>
       {/if}
       <br/>
-      <button class="btn btn-default" id="btn_agregar_trabajo">Agregar</button>
+      <button class="btn btn-success" id="btn_agregar_trabajo">Agregar</button>
     </div>
   </div>
-  {/if}
+  </div>
+  <!-- {/if} -->
 </div>
 
 {include file='modules/elearning/views/uploader/uploader.tpl'}
@@ -234,7 +259,7 @@
           <input hidden="hidden" value="{$leccion.Lec_IdLeccion}" name="leccion"/>
           <div class="col-lg-12"><input class="form-control" name="titulo" id="inTituloRef" /></div>
           <div class="col-lg-12 margin-top-10"><strong>Referencia</strong></div>
-          <div class="col-lg-12"><input class="form-control" name="descripcion" id="inDescripcionRef" /></div>
+          <div class="col-lg-12"><input class="form-control" name="descripcionRef" id="inDescripcionRef" /></div>
           <div class="col-lg-12 margin-top-10"><button class="btn btn-success" id="btn_registrar_referencia">Registrar</button></div>
         <form>
       </div>
@@ -257,7 +282,7 @@
           <form id="frm_registro_material" method="post" action="gleccion/_registrar_material_link">
           <div class="col-lg-12"><input class="form-control" name="link" id="inMatLink" /></div>
           <div class="col-lg-12 margin-top-10"><strong>Descripción</strong></div>
-          <div class="col-lg-12"><textarea class="form-control" name="descripcion" id="inMatLinkDescripcion"></textarea></div>
+          <div class="col-lg-12"><textarea class="form-control" name="descripcionMat" id="inMatLinkDescripcion"></textarea></div>
           <div class="col-lg-12 margin-top-10"><button class="btn btn-success pull-right" id="btn_registrar_material_link"><i class="glyphicon glyphicon-floppy-disk"></i> Guardar</button></div>
         <form>
         <div class="col-lg-12 margin-top-10"><input type="radio" value="1" name="opcion"/>Archivo local</div>
@@ -317,7 +342,7 @@
           </div>
           <div class="col-lg-12 margin-top-10"><strong>Descripción</strong></div>
           <div class="col-lg-12">
-            <textarea class="form-control" name="descripcion" id="inDescTra" rows="4" maxlength="300"></textarea>
+            <textarea class="form-control" name="descripcionTra" id="inDescTra" rows="4" maxlength="300"></textarea>
           </div>
           <div class="col-lg-6" style="margin-top: 10px">
             <label>Activo desde: </label>
@@ -391,441 +416,457 @@
 <script type="text/javascript">
   // Para que funcione el tooltip
   $(function () {
-    $('[data-toggle="tooltip"]').tooltip();
-  })
+      $('[data-toggle="tooltip"]').tooltip();
+  });
+  $(document).ready(function(){
+    $("#btn_registrar_material_link").click(function(e){
+      e.preventDefault();
+      var Link = $("#inMatLink").val();
+      var Descripcion = $("#inMatLinkDescripcion").val();
+      var Leccion =  $("#hidden_leccion").val();
 
-  $("#btn_registrar_material_link").click(function(){
-    var Link = $("#inMatLink").val();
-    var Descripcion = $("#inMatLinkDescripcion").val();
-    var Leccion =  $("#hidden_leccion").val();
-
-    if(Link.length==0){
-      Mensaje("Ingrese el link.", function(){
-        $("#inMatLink").focus();
-      });
-      return;
-    }
-    if(Descripcion.length==0){
-      Mensaje("Ingrese descripción.", function(){
-        $("#inMatLinkDescripcion").focus();
-      });
-      return;
-    }
-    $.fn.Mensaje({
-      mensaje: "¿Desea guardar el material?",
-      tipo: "SiNo",
-      funcionSi: function(){
-        var params = { tipo: 1, url: Link, leccion: Leccion, descripcion: Descripcion };
-        AsincTaks("gleccion/_registrar_material", params, function(a){
-          $("#panelNuevoMaterialArchivo").modal("hide");
-
-          setTimeout(function(){
-            Mensaje("Material registrado", function(){
-              CargarPagina("gleccion/_view_leccion", {
-                curso: $("#hidden_curso").val(),
-                modulo : $("#hidden_modulo").val(),
-                leccion : $("#hidden_leccion").val(),
-              }, false, false);
-            });
-          }, 300);
+      if(Link.length==0){
+        Mensaje("Ingrese el link.", function(){
+          $("#inMatLink").focus();
         });
+        return;
       }
-    });
-  });
-
-  $("#btn_agregar_referencia").click(function(){
-    $("#panelNuevaReferencia").modal("show");
-    $("#inTituloRef").focus();
-  });
-  $("#btn_registrar_referencia").click(function(e){
-    e.preventDefault();
-    if( $("#inTituloRef").val().toString().length==0 ){
-      Mensaje("Ingrese datos", function(){
-        $("#inTituloRef").focus();
-      });
-      return;
-    }
-    if( $("#inDescripcionRef").val().toString().length==0 ){
-      Mensaje("Ingrese datos", function(){
-        $("#inDescripcionRef").focus();
-      });
-      return;
-    }
-    $.fn.Mensaje({ mensaje: "¿Desea registrar esta referencia?", tipo: "SiNo",
-      funcionSi: function(){
-        SubmitForm($("#frm_registro_referencia"), $(this), function(data, e){
-          CargarPagina("gleccion/_view_leccion", {
-            curso: $("#hidden_curso").val(),
-            modulo : $("#hidden_modulo").val(),
-            leccion : $("#hidden_leccion").val()
-          }, false, false);
+      if(Descripcion.length==0){
+        Mensaje("Ingrese descripción.", function(){
+          $("#inMatLinkDescripcion").focus();
         });
+        return;
       }
-    });
-  });
-  $(".btnAbrirEnlace").click(function(){
     
-    if ($(this).parent().find(".Hidden_TipoMaterial").val() == 1) {      
-      var Link = $(this).parent().find(".Hidden_IdEnlace").val();
-    } else {
-      var Link = $("#hidden_root").val() + "gleccion/_contenido/_material/";
-      Link += $(this).parent().find(".Hidden_IdEnlace").val();
-    }
-
-    var a = document.createElement("a");
-		a.target = "_blank";
-		a.href =  Link;
-		a.click();
-  });
-
-  $(".btnEliminar").click(function(){
-    var IdRef = $(this).parent().find(".Hidden_IdReferencia").val();
-    $.fn.Mensaje({ mensaje: "¿Seguro de quitar esta referencia?", tipo: "SiNo",
-      funcionSi: function(){
-        AsincTaks("gleccion/_eliminar_referencia", { id : IdRef }, function(a){
-          CargarPagina("gleccion/_view_leccion", {
-            curso: $("#hidden_curso").val(),
-            modulo : $("#hidden_modulo").val(),
-            leccion : $("#hidden_leccion").val(),
-          }, false, false);
-        }, null);
-      }
-    });
-  });
-
-
-  $(".btnEliminarMaterial").click(function(){
-    var IdMat = $(this).parent().find(".Hidden_IdMaterial").val();
-    $.fn.Mensaje({ mensaje: "¿Seguro de quitar este material adjunto?", tipo: "SiNo",
-      funcionSi: function(){
-        AsincTaks("gleccion/_eliminar_material", { id : IdMat }, function(a){
-          CargarPagina("gleccion/_view_leccion", {
-            curso: $("#hidden_curso").val(),
-            modulo : $("#hidden_modulo").val(),
-            leccion : $("#hidden_leccion").val(),
-          }, false, false);
-        }, null);
-      }
-    });
-  });
-  $("#btn_agregar_material").click(function(){
-    $("#panelNuevoMaterial").modal("show");
-  });
-  $("input[name=opcion]").change(function(){
-    var Value = $(this).val();
-    if(Value==1){
-      $("#inMatLink").prop("disabled", true);
-      $("#inMatLinkDescripcion").prop("disabled", true);
-      $("#btn_registrar_material_link").prop("disabled", true);
-      $("#btn_registrar_material_file").prop("disabled", false);
-    }else{
-      $("#inMatLink").prop("disabled", false);
-      $("#inMatLinkDescripcion").prop("disabled", false);
-      $("#btn_registrar_material_link").prop("disabled", false);
-      $("#btn_registrar_material_file").prop("disabled", true);
-      $("#inMatLink").focus();
-    }
-  });
-
-  $("#btn_registrar_material_file").click(function(e){
-    e.preventDefault();
-    $("#panelNuevoMaterial").modal("hide");
-    setTimeout(function(){
-
-      var params = {
-        route: "modules/elearning/views/gleccion/_contenido/_material",
-        pre: $("hidden_leccion").val()
-      };
-      InitUploader(function(a){
-        var DATA = JSON.parse(a);
-        $("#panelNuevoMaterialArchivo").modal("show");
-        var contenedor = $("#contenido-material-archivo");
-        contenedor.html("");
-        contenedor.append("<label>Archivos</label>");
-
-        var datos = '[';
-        DATA.data.forEach(function(row){
-          var tmp = row.url.split('\\');
-          tmp = tmp[tmp.length-1];
-          tmp = row.url.split('/');
-          tmp = tmp[tmp.length-1];
-
-          datos += '{ "url":"' + tmp + '"},';
-        });
-        datos = datos.substring(0, datos.length-1);
-        datos += "]";
-
-        contenedor.append("<input value='" + datos + "' id='tmp-archivo-local-url' hidden='hidden'/>");
-        DATA.data.forEach(function(row){
-          var tmp = row.url.split('\\');
-          tmp = tmp[tmp.length-1];
-          tmp = tmp.split('-');
-          tmp = tmp[tmp.length-1];
-
-          var texto =  "<input class='form-control margin-top-10' value='" + tmp + "' disabled='disabled'/>";
-          contenedor.append(texto);
-        });
-        contenedor.append("<label class='margin-top-10'>Descripción</label>");
-        contenedor.append("<input class='form-control' id='in_tmp_mat_arch'/>");
-
-        setTimeout(function(){ $("#in_tmp_mat_arch").focus(); }, 300);
-      }, params);
-    }, 300);
-  });
-
-  $("#btn_cancelar_material_file").click(function(){
-    $("#panelNuevoMaterialArchivo").modal("hide");
-  });
-  $("#btn_registrar_material_file2").click(function(){
-    var data = $("#tmp-archivo-local-url").val();
-    var descripcion = $("#in_tmp_mat_arch").val();
-    var Tipo = 2;
-    var leccion = $("#hidden_leccion").val();
-
-    if(descripcion.length==0){
-      Mensaje("Ingrese alguna descripción", function(){
-        $("#in_tmp_mat_arch").focus();
-      });
-      return;
-    }
-
-    $.fn.Mensaje({
-      mensaje: "¿Desea guardar el material?",
-      tipo: "SiNo",
-      funcionSi: function(){
-        var params = { tipo: Tipo, url: data, leccion: leccion, descripcion: descripcion };
-        AsincTaks("gleccion/_registrar_material", params, function(a){
-          $("#panelNuevoMaterialArchivo").modal("hide");
-          setTimeout(function(){
-            Mensaje("Material registrado", function(){
-              CargarPagina("gleccion/_view_leccion", {
-                curso: $("#hidden_curso").val(),
-                modulo : $("#hidden_modulo").val(),
-                leccion : $("#hidden_leccion").val()
-              }, false, false);
-            });
-          }, 300);
-        }, false, false);
-      }
-    });
-  });
-
-
-  $("#btn_agregar_trabajo").click(function(){
-    $('#inDesdeTraDate').datetimepicker({
-        language: 'es',format: "dd/mm/yyyy hh:ii"
-    });
-    $('#inHastaTraDate').datetimepicker({
-        language: 'es',format: "dd/mm/yyyy hh:ii"
-    });
-    $("#panelNuevoTrabajo").modal("show");
-  });
-  $("#btn_registrar_trabajo").click(function(e){
-    e.preventDefault();
-    if( $("#inTituloTra").val().toString().length==0 ){
-      Mensaje("Ingrese título", function(){ $("#inTituloTra").focus(); });
-      return;
-    }
-    if( $("#slTipoTra").val()==null || $("#slTipoTra").val()==-1 ){
-      Mensaje("Seleccione tipo de trabajo", function(){ $("#slTipoTra").focus(); });
-      return;
-    }
-    if( $("#inDescTra").val().toString().length==0 ){
-      Mensaje("Ingrese descripción del trabajo", function(){ $("#inDescTra").focus(); });
-      return;
-    }
-    if( $("#inDesdeTraDate").val().toString().length==0 ){
-      Mensaje("Ingrese la fecha de incio de recepción de trabajos", function(){ $("#inDesdeTraDate").focus(); });
-      return;
-    }
-    if( $("#inHastaTraDate").val().toString().length==0 ){
-      Mensaje("Ingrese la fecha de fin de recepción de trabajos", function(){ $("#inHastaTraDate").focus(); });
-      return;
-    }
-    if( !ValidarFechas(null, $("#inDesdeTraDate").val() ) ){
-      Mensaje("La fecha inicial debe ser mayor a la actual", function(){ $("#inDesdeTraDate").focus(); });
-      return;
-    }
-    if( !ValidarFechas(null, $("#inHastaTraDate").val() ) ){
-      Mensaje("La fecha final debe ser mayor a la actual", function(){ $("#inHastaTraDate").focus(); });
-      return;
-    }
-    if( !ValidarFechas($("#inDesdeTraDate").val(), $("#inHastaTraDate").val() ) ){
-      Mensaje("La fecha final debe ser mayor a la inicial", function(){ $("#inHastaTraDate").focus(); });
-      return;
-    }
-    $.fn.Mensaje({ mensaje: "¿Desea registrar la tarea?", tipo: "SiNo", tamano: "sm",
-      funcionSi: function(){
-        SubmitForm($("#frm_registro_trabajo"), $(this), function(data, e){
-          Mensaje("Se registró la tarea con éxito",
-            function(){
-              CargarPagina("gleccion/_view_leccion", {
-                curso: $("#hidden_curso").val(),
-                modulo : $("#hidden_modulo").val(),
-                leccion : $("#hidden_leccion").val()
-              }, false, false);
-          });
-        });
-      }
-    });
-  });
-  $(".btnEditarTrabajo").click(function(){
-    var Trabajo = $(this).parent().find(".Hidden_IdTrabajo").val();
-    AsincTaks(
-      "gtrabajo/_get_trabajo", { id: Trabajo },
-      function(a){
-        var data = JSON.parse(a);
-        if(data.estado==1){
-          $('#inUpdHastaTraDate').datetimepicker({
-              language: 'es',format: "dd/mm/yyyy hh:ii"
-          });
-          $('#inUpdDesdeTraDate').datetimepicker({
-              language: 'es',format: "dd/mm/yyyy hh:ii"
-          });
-          $("#inUpdIdTrabajo").val(data.data.Tra_IdTrabajo);
-          $("#inUpdTituloTra").val(data.data.Tra_Titulo);
-          $("#inUpdDescTra").val(data.data.Tra_Descripcion);
-          $("#slUpdTipoTra").val(data.data.Tra_Tipo);
-          $("#inUpdDesdeTraDate").val(data.data.Tra_FechaDesde);
-          $("#inUpdHastaTraDate").val(data.data.Tra_FechaHasta);
-
-
-          var Archivos = data.data.Archivos;
-          if(Archivos!=null){
-            $("#divArcAdjTrabajo").html("");
-            Archivos.forEach(function(item){
-              AddFileAdjunto(item);
-            });
-            $(".btnElimArcAdj").unbind("click").click(function(e){
-              e.preventDefault();
-              var Id = $(this).parent().find(".inIdArcAdj").val();
-              $.fn.Mensaje({
-                mensaje: "¿Desea eliminar el archivo?",
-                tipo: "SiNo", tamano: "sm",
-                funcionSi: function(){
-                  AsincTaks(
-                    "gtrabajo/_eliminar_archivo", { id: Id },
-                    function(a){
-                      Mensaje("Archivo eliminado", function(){
-                        CargarPagina("gleccion/_view_leccion", {
-                          curso: $("#hidden_curso").val(),
-                          modulo : $("#hidden_modulo").val(),
-                          leccion : $("#hidden_leccion").val()
-                        }, false, false);
-                      });
-                    },
-                    false, false
-                  );
-                }
+      $.fn.Mensaje({
+        mensaje: "¿Desea guardar el material?",
+        tipo: "SiNo",
+        funcionSi: function(){
+          var params = { tipo: 1, url: Link, leccion: Leccion, descripcion: Descripcion };
+          
+          AsincTaks("gleccion/_registrar_material", params, function(a){
+            $("#panelNuevoMaterialArchivo").modal("hide");
+            setTimeout(function(){
+              Mensaje("Material registrado", function(){
+                
+                location.href = _root_ + _modulo + "/gleccion/_view_leccion/" + $("#hidden_curso").val() + "/" + $("#hidden_modulo").val() + "/" + $("#hidden_leccion").val();
+                // CargarPagina("gleccion/_view_leccion", {
+                //   curso: $("#hidden_curso").val(),
+                //   modulo : $("#hidden_modulo").val(),
+                //   leccion : $("#hidden_leccion").val(),
+                // }, false, false);
               });
-            });
-          }
-
-          $("#panelEditarTrabajo").modal("show");
-
-        }else{
-          Mensaje("Existe un problema con la tarea seleccionada", null);
-        }
-      },
-      false, false
-    );
-  });
-  $(".btnActivarTrabajo").click(function(){
-    var Trabajo = $(this).parent().find(".Hidden_IdTrabajo").val();
-    var Estado = $(this).parent().find(".Hidden_Estado").val();
-    Estado = Estado == "1" ? "0" : "1";
-    AsincTaks(
-      "gtrabajo/_actualizar_estado_trabajo", { id: Trabajo, estado: Estado },
-      function(a){
-        CargarPagina("gleccion/_view_leccion", {
-          curso: $("#hidden_curso").val(),
-          modulo : $("#hidden_modulo").val(),
-          leccion : $("#hidden_leccion").val()
-        }, false, false);
-      },
-      false, false
-    );
-  });
-  $("#btn_actualizar_trabajo").click(function(e){
-    e.preventDefault();
-
-    $.fn.Mensaje({
-      tipo: "SiNo", tamano: "sm",
-      mensaje: "¿Desea actualizar esta tarea?",
-      funcionSi: function(){
-        SubmitForm($("#frm_actualizar_trabajo"), $(this), function(data, e){
-          Mensaje("Se actualizó la tarea con éxito",
-            function(){
-              CargarPagina("gleccion/_view_leccion", {
-                curso: $("#hidden_curso").val(),
-                modulo : $("#hidden_modulo").val(),
-                leccion : $("#hidden_leccion").val()
-              }, false, false);
+            }, 300);
           });
-        });
-      }
-    });
-  });
-  $(".btnEliminarTrabajo").click(function(){
-    var Trabajo = $(this).parent().find(".Hidden_IdTrabajo").val();
-
-    $.fn.Mensaje({
-      tipo: "SiNo", tamano: "sm",
-      mensaje: "¿Desea eliminar esta tarea?",
-      funcionSi: function(){
-        AsincTaks(
-          "gtrabajo/_eliminar_trabajo", { id: Trabajo },
-          function(a){
-            CargarPagina("gleccion/_view_leccion", {
-              curso: $("#hidden_curso").val(),
-              modulo : $("#hidden_modulo").val(),
-              leccion : $("#hidden_leccion").val()
-            }, false, false);
-          },
-          false, false
-        );
-      }
-    });
-  });
-  $("#btnAgregarArchivoTrabajo").click(function(e){
-    e.preventDefault();
-    var Archs = $(".item-arch-adj");
-    Archs = Archs.length || 0;
-    if(Archs > 2){
-      Mensaje("Solo puede adjuntar un máximo de 3 archivos", null);
-      return;
-    }
-    $("#panelEditarTrabajo").modal("hide");
-    setTimeout(function(){
-      var params = {
-        route: "modules/elearning/views/gleccion/_contenido/_trabajos",
-        pre: $("#inUpdIdTrabajo").val(),
-        validator: {
-          files: 3 - Archs,
-          maxSize: 10,
-          formats: ""
         }
-      };
+      });
+    });
 
-      InitUploader(function(a){
-        var DATA = JSON.parse(a);
+    $("#btn_agregar_referencia").click(function(){
+      $("#panelNuevaReferencia").modal("show");
+      $("#inTituloRef").focus();
+    });
+    $("#btn_registrar_referencia").click(function(e){
+      e.preventDefault();
+      if( $("#inTituloRef").val().toString().length==0 ){
+        Mensaje("Ingrese datos", function(){
+          $("#inTituloRef").focus();
+        });
+        return;
+      }
+      if( $("#inDescripcionRef").val().toString().length==0 ){
+        Mensaje("Ingrese datos", function(){
+          $("#inDescripcionRef").focus();
+        });
+        return;
+      }
+      $.fn.Mensaje({ mensaje: "¿Desea registrar esta referencia?", tipo: "SiNo",
+        funcionSi: function(){
+          SubmitForm($("#frm_registro_referencia"), $(this), function(data, e){
 
-        AsincTaks("gtrabajo/_registrar_archivo",
-          { id: $("#inUpdIdTrabajo").val(), archivos: JSON.stringify(DATA.data) },
-          function(result){
-            Mensaje("Se agregó el(los) archivo(s) adjunto(s) a la tarea", function(){
-              CargarPagina("gleccion/_view_leccion", {
-                curso: $("#hidden_curso").val(),
-                modulo : $("#hidden_modulo").val(),
-                leccion : $("#hidden_leccion").val()
-              }, false, false);
+            location.href = _root_ + _modulo + "/gleccion/_view_leccion/" + $("#hidden_curso").val() + "/" + $("#hidden_modulo").val() + "/" + $("#hidden_leccion").val();
+          });
+        }
+      });
+    });
+    $(".btnAbrirEnlace").click(function(){
+      
+      if ($(this).parent().find(".Hidden_TipoMaterial").val() == 1) {      
+        var Link = $(this).parent().find(".Hidden_IdEnlace").val();
+      } else {
+        var Link = _root_ + "modules/" + _modulo + "/views/gleccion/_contenido/_material/";
+        Link += $(this).parent().find(".Hidden_IdEnlace").val();
+      }
+
+      var a = document.createElement("a");
+  		a.target = "_blank";
+  		a.href =  Link;
+  		a.click();
+    });
+
+    $(".btnEliminar").click(function(){
+      var IdRef = $(this).parent().find(".Hidden_IdReferencia").val();
+      $.fn.Mensaje({ mensaje: "¿Seguro de quitar esta referencia?", tipo: "SiNo",
+        funcionSi: function(){
+          AsincTaks("gleccion/_eliminar_referencia", { id : IdRef }, function(a){
+            location.href = _root_ + _modulo + "/gleccion/_view_leccion/" + $("#hidden_curso").val() + "/" + $("#hidden_modulo").val() + "/" + $("#hidden_leccion").val();
+
+            // CargarPagina("gleccion/_view_leccion", {
+            //   curso: $("#hidden_curso").val(),
+            //   modulo : $("#hidden_modulo").val(),
+            //   leccion : $("#hidden_leccion").val(),
+            // }, false, false);
+          }, null);
+        }
+      });
+    });
+    $(".btnEliminarMaterial").click(function(){
+      var IdMat = $(this).parent().find(".Hidden_IdMaterial").val();
+      $.fn.Mensaje({ mensaje: "¿Seguro de quitar este material adjunto?", tipo: "SiNo",
+        funcionSi: function(){
+          AsincTaks("gleccion/_eliminar_material", { id : IdMat }, function(a){
+            location.href = _root_ + _modulo + "/gleccion/_view_leccion/" + $("#hidden_curso").val() + "/" + $("#hidden_modulo").val() + "/" + $("#hidden_leccion").val();
+
+            // CargarPagina("gleccion/_view_leccion", {
+            //   curso: $("#hidden_curso").val(),
+            //   modulo : $("#hidden_modulo").val(),
+            //   leccion : $("#hidden_leccion").val(),
+            // }, false, false);
+          }, null);
+        }
+      });
+    });
+    $("#btn_agregar_material").click(function(){
+      $("#panelNuevoMaterial").modal("show");
+    });
+    $("input[name=opcion]").change(function(){
+      var Value = $(this).val();
+      if(Value==1){
+        $("#inMatLink").prop("disabled", true);
+        $("#inMatLinkDescripcion").prop("disabled", true);
+        $("#btn_registrar_material_link").prop("disabled", true);
+        $("#btn_registrar_material_file").prop("disabled", false);
+      }else{
+        $("#inMatLink").prop("disabled", false);
+        $("#inMatLinkDescripcion").prop("disabled", false);
+        $("#btn_registrar_material_link").prop("disabled", false);
+        $("#btn_registrar_material_file").prop("disabled", true);
+        $("#inMatLink").focus();
+      }
+    })
+    $("#btn_registrar_material_file").click(function(e){
+      e.preventDefault();
+      $("#panelNuevoMaterial").modal("hide");
+      setTimeout(function(){
+
+        var params = {
+          route: "modules/elearning/views/gleccion/_contenido/_material",
+          pre: $("hidden_leccion").val()
+        };
+        InitUploader(function(a){
+          var DATA = JSON.parse(a);
+          $("#panelNuevoMaterialArchivo").modal("show");
+          var contenedor = $("#contenido-material-archivo");
+          contenedor.html("");
+          contenedor.append("<label>Archivos</label>");
+
+          var datos = '[';
+          DATA.data.forEach(function(row){
+            var tmp = row.url.split('\\');
+            tmp = tmp[tmp.length-1];
+            tmp = row.url.split('/');
+            tmp = tmp[tmp.length-1];
+
+            datos += '{ "url":"' + tmp + '"},';
+          });
+          datos = datos.substring(0, datos.length-1);
+          datos += "]";
+
+          contenedor.append("<input value='" + datos + "' id='tmp-archivo-local-url' hidden='hidden'/>");
+          DATA.data.forEach(function(row){
+            var tmp = row.url.split('\\');
+            tmp = tmp[tmp.length-1];
+            tmp = tmp.split('-');
+            tmp = tmp[tmp.length-1];
+
+            var texto =  "<input class='form-control margin-top-10' value='" + tmp + "' disabled='disabled'/>";
+            contenedor.append(texto);
+          });
+          contenedor.append("<label class='margin-top-10'>Descripción</label>");
+          contenedor.append("<input class='form-control' id='in_tmp_mat_arch'/>");
+
+          setTimeout(function(){ $("#in_tmp_mat_arch").focus(); }, 300);
+        }, params);
+      }, 300);
+    });
+    $("#btn_cancelar_material_file").click(function(){
+      $("#panelNuevoMaterialArchivo").modal("hide");
+    });
+    $("#btn_registrar_material_file2").click(function(e){
+      e.preventDefault();
+      var data = $("#tmp-archivo-local-url").val();
+      var descripcion = $("#in_tmp_mat_arch").val();
+      var Tipo = 2;
+      var leccion = $("#hidden_leccion").val();
+
+      if(descripcion.length==0){
+        Mensaje("Ingrese alguna descripción", function(){
+          $("#in_tmp_mat_arch").focus();
+        });
+        return;
+      }
+
+      $.fn.Mensaje({
+        mensaje: "¿Desea guardar el material?",
+        tipo: "SiNo",
+        funcionSi: function(){
+          var params = { tipo: Tipo, url: data, leccion: leccion, descripcion: descripcion };
+          AsincTaks("gleccion/_registrar_material", params, function(a){
+            $("#panelNuevoMaterialArchivo").modal("hide");
+            setTimeout(function(){
+              Mensaje("Material registrado", function(){
+                location.href = _root_ + _modulo + "/gleccion/_view_leccion/" + $("#hidden_curso").val() + "/" + $("#hidden_modulo").val() + "/" + $("#hidden_leccion").val();
+
+                // CargarPagina("gleccion/_view_leccion", {
+                //   curso: $("#hidden_curso").val(),
+                //   modulo : $("#hidden_modulo").val(),
+                //   leccion : $("#hidden_leccion").val()
+                // }, false, false);
+              });
+            }, 300);
+          }, false, false);
+        }
+      });
+    });
+    $("#btn_agregar_trabajo").click(function(){
+      $('#inDesdeTraDate').datetimepicker({
+          language: 'es',format: "dd/mm/yyyy hh:ii"
+      });
+      $('#inHastaTraDate').datetimepicker({
+          language: 'es',format: "dd/mm/yyyy hh:ii"
+      });
+      $("#panelNuevoTrabajo").modal("show");
+    });
+    $("#btn_registrar_trabajo").click(function(e){
+      e.preventDefault();
+      if( $("#inTituloTra").val().toString().length==0 ){
+        Mensaje("Ingrese título", function(){ $("#inTituloTra").focus(); });
+        return;
+      }
+      if( $("#slTipoTra").val()==null || $("#slTipoTra").val()==-1 ){
+        Mensaje("Seleccione tipo de trabajo", function(){ $("#slTipoTra").focus(); });
+        return;
+      }
+      if( $("#inDescTra").val().toString().length==0 ){
+        Mensaje("Ingrese descripción del trabajo", function(){ $("#inDescTra").focus(); });
+        return;
+      }
+      if( $("#inDesdeTraDate").val().toString().length==0 ){
+        Mensaje("Ingrese la fecha de incio de recepción de trabajos", function(){ $("#inDesdeTraDate").focus(); });
+        return;
+      }
+      if( $("#inHastaTraDate").val().toString().length==0 ){
+        Mensaje("Ingrese la fecha de fin de recepción de trabajos", function(){ $("#inHastaTraDate").focus(); });
+        return;
+      }
+      if( !ValidarFechas(null, $("#inDesdeTraDate").val() ) ){
+        Mensaje("La fecha inicial debe ser mayor a la actual", function(){ $("#inDesdeTraDate").focus(); });
+        return;
+      }
+      if( !ValidarFechas(null, $("#inHastaTraDate").val() ) ){
+        Mensaje("La fecha final debe ser mayor a la actual", function(){ $("#inHastaTraDate").focus(); });
+        return;
+      }
+      if( !ValidarFechas($("#inDesdeTraDate").val(), $("#inHastaTraDate").val() ) ){
+        Mensaje("La fecha final debe ser mayor a la inicial", function(){ $("#inHastaTraDate").focus(); });
+        return;
+      }
+      $.fn.Mensaje({ mensaje: "¿Desea registrar la tarea?", tipo: "SiNo", tamano: "sm",
+        funcionSi: function(){
+          SubmitForm($("#frm_registro_trabajo"), $(this), function(data, e){
+            Mensaje("Se registró la tarea con éxito",
+              function(){
+                location.href = _root_ + _modulo + "/gleccion/_view_leccion/" + $("#hidden_curso").val() + "/" + $("#hidden_modulo").val() + "/" + $("#hidden_leccion").val();
+
+                // CargarPagina("gleccion/_view_leccion", {
+                //   curso: $("#hidden_curso").val(),
+                //   modulo : $("#hidden_modulo").val(),
+                //   leccion : $("#hidden_leccion").val()
+                // }, false, false);
             });
-          },
-          false, false
-        );
+          });
+        }
+      });
+    });
+    $(".btnEditarTrabajo").click(function(){
+      var Trabajo = $(this).parent().find(".Hidden_IdTrabajo").val();
+      AsincTaks(
+        "gtrabajo/_get_trabajo", { id: Trabajo },
+        function(a){
+          var data = JSON.parse(a);
+          if(data.estado==1){
+            $('#inUpdHastaTraDate').datetimepicker({
+                language: 'es',format: "dd/mm/yyyy hh:ii"
+            });
+            $('#inUpdDesdeTraDate').datetimepicker({
+                language: 'es',format: "dd/mm/yyyy hh:ii"
+            });
+            $("#inUpdIdTrabajo").val(data.data.Tra_IdTrabajo);
+            $("#inUpdTituloTra").val(data.data.Tra_Titulo);
+            $("#inUpdDescTra").val(data.data.Tra_Descripcion);
+            $("#slUpdTipoTra").val(data.data.Tra_Tipo);
+            $("#inUpdDesdeTraDate").val(data.data.Tra_FechaDesde);
+            $("#inUpdHastaTraDate").val(data.data.Tra_FechaHasta);
 
-      }, params);
-    }, 300);
+
+            var Archivos = data.data.Archivos;
+            if(Archivos!=null){
+              $("#divArcAdjTrabajo").html("");
+              Archivos.forEach(function(item){
+                AddFileAdjunto(item);
+              });
+              $(".btnElimArcAdj").unbind("click").click(function(e){
+                e.preventDefault();
+                var Id = $(this).parent().find(".inIdArcAdj").val();
+                $.fn.Mensaje({
+                  mensaje: "¿Desea eliminar el archivo?",
+                  tipo: "SiNo", tamano: "sm",
+                  funcionSi: function(){
+                    AsincTaks(
+                      "gtrabajo/_eliminar_archivo", { id: Id },
+                      function(a){
+                        Mensaje("Archivo eliminado", function(){
+                          location.href = _root_ + _modulo + "/gleccion/_view_leccion/" + $("#hidden_curso").val() + "/" + $("#hidden_modulo").val() + "/" + $("#hidden_leccion").val();
+
+                          // CargarPagina("gleccion/_view_leccion", {
+                          //   curso: $("#hidden_curso").val(),
+                          //   modulo : $("#hidden_modulo").val(),
+                          //   leccion : $("#hidden_leccion").val()
+                          // }, false, false);
+                        });
+                      },
+                      false, false
+                    );
+                  }
+                });
+              });
+            }
+
+            $("#panelEditarTrabajo").modal("show");
+
+          }else{
+            Mensaje("Existe un problema con la tarea seleccionada", null);
+          }
+        },
+        false, false
+      );
+    });
+    $(".btnActivarTrabajo").click(function(){
+      var Trabajo = $(this).parent().find(".Hidden_IdTrabajo").val();
+      var Estado = $(this).parent().find(".Hidden_Estado").val();
+      Estado = Estado == "1" ? "0" : "1";
+      AsincTaks(
+        "gtrabajo/_actualizar_estado_trabajo", { id: Trabajo, estado: Estado },
+        function(a){
+          location.href = _root_ + _modulo + "/gleccion/_view_leccion/" + $("#hidden_curso").val() + "/" + $("#hidden_modulo").val() + "/" + $("#hidden_leccion").val();
+
+          // CargarPagina("gleccion/_view_leccion", {
+          //   curso: $("#hidden_curso").val(),
+          //   modulo : $("#hidden_modulo").val(),
+          //   leccion : $("#hidden_leccion").val()
+          // }, false, false);
+        },
+        false, false
+      );
+    });
+    $("#btn_actualizar_trabajo").click(function(e){
+      e.preventDefault();
+
+      $.fn.Mensaje({
+        tipo: "SiNo", tamano: "sm",
+        mensaje: "¿Desea actualizar esta tarea?",
+        funcionSi: function(){
+          SubmitForm($("#frm_actualizar_trabajo"), $(this), function(data, e){
+            Mensaje("Se actualizó la tarea con éxito",
+              function(){
+                location.href = _root_ + _modulo + "/gleccion/_view_leccion/" + $("#hidden_curso").val() + "/" + $("#hidden_modulo").val() + "/" + $("#hidden_leccion").val();
+
+                // CargarPagina("gleccion/_view_leccion", {
+                //   curso: $("#hidden_curso").val(),
+                //   modulo : $("#hidden_modulo").val(),
+                //   leccion : $("#hidden_leccion").val()
+                // }, false, false);
+            });
+          });
+        }
+      });
+    });
+    $(".btnEliminarTrabajo").click(function(){
+      var Trabajo = $(this).parent().find(".Hidden_IdTrabajo").val();
+
+      $.fn.Mensaje({
+        tipo: "SiNo", tamano: "sm",
+        mensaje: "¿Desea eliminar esta tarea?",
+        funcionSi: function(){
+          AsincTaks(
+            "gtrabajo/_eliminar_trabajo", { id: Trabajo },
+            function(a){
+              location.href = _root_ + _modulo + "/gleccion/_view_leccion/" + $("#hidden_curso").val() + "/" + $("#hidden_modulo").val() + "/" + $("#hidden_leccion").val();
+
+              // CargarPagina("gleccion/_view_leccion", {
+              //   curso: $("#hidden_curso").val(),
+              //   modulo : $("#hidden_modulo").val(),
+              //   leccion : $("#hidden_leccion").val()
+              // }, false, false);
+            },
+            false, false
+          );
+        }
+      });
+    });
+    $("#btnAgregarArchivoTrabajo").click(function(e){
+      e.preventDefault();
+      var Archs = $(".item-arch-adj");
+      Archs = Archs.length || 0;
+      if(Archs > 2){
+        Mensaje("Solo puede adjuntar un máximo de 3 archivos", null);
+        return;
+      }
+      $("#panelEditarTrabajo").modal("hide");
+      setTimeout(function(){
+        var params = {
+          route: "modules/elearning/views/gleccion/_contenido/_trabajos",
+          pre: $("#inUpdIdTrabajo").val(),
+          validator: {
+            files: 3 - Archs,
+            maxSize: 10,
+            formats: ""
+          }
+        };
+
+        InitUploader(function(a){
+          var DATA = JSON.parse(a);
+
+          AsincTaks("gtrabajo/_registrar_archivo",
+            { id: $("#inUpdIdTrabajo").val(), archivos: JSON.stringify(DATA.data) },
+            function(result){
+              Mensaje("Se agregó el(los) archivo(s) adjunto(s) a la tarea", function(){
+                location.href = _root_ + _modulo + "/gleccion/_view_leccion/" + $("#hidden_curso").val() + "/" + $("#hidden_modulo").val() + "/" + $("#hidden_leccion").val();
+
+                // CargarPagina("gleccion/_view_leccion", {
+                //   curso: $("#hidden_curso").val(),
+                //   modulo : $("#hidden_modulo").val(),
+                //   leccion : $("#hidden_leccion").val()
+                // }, false, false);
+              });
+            },
+            false, false
+          );
+
+        }, params);
+      }, 300);
+    });
+
   });
 
   function ValidarFechas(fecha1, fecha2){

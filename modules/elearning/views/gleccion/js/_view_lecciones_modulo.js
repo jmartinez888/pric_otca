@@ -1,4 +1,4 @@
-Menu(1);
+// Menu(1);
 RefreshTagUrl();
 
 // Jhon Martinez
@@ -39,58 +39,83 @@ $("#btn_nueva_leccion").click(function(){
   $("input[name=descripcion]").val("");
 });
 
-$("#btn_registrar_modulo").click(function(e){
+$("#btn_guardar_leccion").click(function(e){
   e.preventDefault();
   SubmitForm($("#frm_registro"), $(this), function(data, event){
     Mensaje("Lección registrada con éxito", function(){
-      CargarPagina("gleccion/_view_lecciones_modulo", { id: $("#hidden_modulo").val() }, false, false);
+      location.href = _root_ + _modulo + "/gleccion/_view_lecciones_modulo/" + $("#hidden_curso").val() + "/" + $("#hidden_modulo").val();
+      // CargarPagina("gleccion/_view_lecciones_modulo", { id: $("#hidden_modulo").val() }, false, false);
     })
   });
-});
+}); 
 
 $(".btnFinalizarReg").click(function(){
   var IdLeccion = $(this).parent().find(".hidden_IdLeccion").val();
   $("#hidden_leccion").val(IdLeccion);
-  CargarPagina("gleccion/_view_leccion", {
-    curso: $("#hidden_curso").val(),
-    modulo : $("#hidden_modulo").val(),
-    leccion : IdLeccion,
-  }, false, false);
+  location.href = _root_ + _modulo + "/gleccion/_view_leccion/" + $("#hidden_curso").val() + "/" + $("#hidden_modulo").val() + "/" + IdLeccion;
+  // CargarPagina("gleccion/_view_leccion", {
+  //   curso: $("#hidden_curso").val(),
+  //   modulo : $("#hidden_modulo").val(),
+  //   leccion : IdLeccion,
+  // }, false, false);
 });
 
+// $(".btnExamen").click(function(){
+//   var Curso = $(this).parent().find(".hidden_IdCurso").val();
+//   var Link = $("#hidden_url").val() + "examen/examens/" + Curso;
+//   location.href = Link;
+// });
 
 
 $(".btnEliminar").click(function(){
-  var Curso = $(this).parent().find(".hidden_IdLeccion").val();
+  var IdLeccion = $(this).parent().find(".hidden_IdLeccion").val();
 
   $.fn.Mensaje({
     mensaje: "¿Esta seguro de eliminar esta lección?",
     tipo: "SiNo",
     funcionSi: function(){
-      AsincTaks("gleccion/_eliminar_leccion", { id : Curso }, function(a){
-        CargarPagina("gleccion/_view_lecciones_modulo", {}, false, false);
+      AsincTaks("gleccion/_eliminar_leccion", { id : IdLeccion }, function(a){
+        setTimeout(function(){
+            Mensaje("Se Eliminó la Lección", function(){
+              location.href = _root_ + _modulo + "/gleccion/_view_lecciones_modulo/" + $("#hidden_curso").val() + "/" + $("#hidden_modulo").val();
+                // CargarPagina("gleccion/_view_lecciones_modulo", {}, false, false);
+            }, "Alerta", "alert");
+        }, 300); 
+        // CargarPagina("gleccion/_view_lecciones_modulo", {}, false, false);
       }, null);
     }
   });
 });
 
 $(".btnDeshabilitar").click(function(){
-  var Curso = $(this).parent().find(".hidden_IdLeccion").val();
-  ToggleEstado(Curso, "0");
+  var IdLeccion = $(this).parent().find(".hidden_IdLeccion").val();
+  ToggleEstado(IdLeccion, "0");
 });
 $(".btnHabilitar").click(function(){
-  var Curso = $(this).parent().find(".hidden_IdLeccion").val();
-  ToggleEstado(Curso, "1");
+  var IdLeccion = $(this).parent().find(".hidden_IdLeccion").val();
+  ToggleEstado(IdLeccion, "1");
 });
 
-function ToggleEstado(curso, _estado){
-  AsincTaks("gleccion/_estado_leccion", { id : curso, estado : _estado }, function(a){
+function ToggleEstado(IdLeccion, _estado){
+  AsincTaks("gleccion/_estado_leccion", { id : IdLeccion, estado : _estado }, function(a){
     var result = JSON.parse(a);
-    if(result.estado == 1){
-      CargarPagina("gleccion/_view_lecciones_modulo", {}, false, false);
-    }else{
-      Mensaje(result.mensaje, null);
+    if (_estado == 1) {
+      var _mensaje = "La lección ha sido Habilitado...!!!";
+      var _icon = "info-sign";
+    } else {
+      var _mensaje = "La lección ha sido Deshabilitado...!!!";
+      var _icon = "exclamation-sign";
     }
+    setTimeout(function(){
+      if(result.estado == 1){
+        Mensaje(_mensaje, function(){
+          location.href = _root_ + _modulo + "/gleccion/_view_lecciones_modulo/" + $("#hidden_curso").val() + "/" + $("#hidden_modulo").val();
+            // CargarPagina("gleccion/_view_lecciones_modulo", {}, false, false);
+        }, "",_icon);
+      }else{
+        Mensaje(result.mensaje, null);
+      }
+    }, 300); 
   });
 }
 
@@ -99,7 +124,8 @@ $("#btn_actualizar_modulo").click(function(e){
   e.preventDefault();
   SubmitForm($("#frm-act-modulo"), $(this), function(data, event){
     Mensaje("Datos actualizados", function(){
-      CargarPagina("gleccion/_view_lecciones_modulo", { id: $("#hidden_modulo").val() }, false, false);
+      location.href = _root_ + _modulo + "/gleccion/_view_lecciones_modulo/" + $("#hidden_curso").val() + "/" + $("#hidden_modulo").val();
+      // CargarPagina("gleccion/_view_lecciones_modulo", { id: $("#hidden_modulo").val() }, false, false);
     });
   });
 });

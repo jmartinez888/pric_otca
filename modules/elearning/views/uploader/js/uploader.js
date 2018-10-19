@@ -110,8 +110,9 @@ function InitUploader(post, params){
 
       $(".box__input").hide();
       $(".box__uploading").show();
+      // alert(ajaxData);
       $.ajax({
-        url: $("#hidden_url").val() + "uploader/post",
+        url: _root_ + _modulo + "/" + "uploader/post",
         data: ajaxData,
         processData: false,
         contentType: false,

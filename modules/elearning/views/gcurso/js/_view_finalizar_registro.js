@@ -1,4 +1,4 @@
-﻿Menu(1);
+﻿// Menu(1);
 
 // Jhon Martinez
 $("#item_presentacion").click(function() {
@@ -38,6 +38,7 @@ $("#btn_regresar").click(function(){
 
 function CargarObjetivosEspecificos(){
   $('[data-toggle="tooltip"]').tooltip(); 
+  // alert("aaaa"+$("#hidden_curso").val());
   CargarPagina("gcurso/_partial_objetivos_especificos/",
     { id : $("#hidden_curso").val() }, $("#divObjetivosEspecificos"), false);
     setTimeout(function(){
@@ -160,14 +161,15 @@ $("#btnNuevoObjetivo").click(function(e){
   }
 });
 
-
-
 $("#btn_registrar").click(function(e){
   e.preventDefault();
   SubmitForm($("#frm_registro"), $(this), function(data, e){
     var DATA = JSON.parse(data);
+    alert("acacaca");
     Mensaje(DATA.mensaje, function(){
-      CargarPagina("gcurso/_view_finalizar_registro/", { id: $("#hidden_curso").val() }, false, false);
+      alert("ooooooooo");
+      location.href = _root_ + _modulo + "/gcurso/_view_finalizar_registro/" + $("#hidden_curso").val();
+      // CargarPagina("gcurso/_view_finalizar_registro/", { id: $("#hidden_curso").val() }, false, false);
     });
   });
 });
@@ -301,7 +303,9 @@ $("#btn-subir-imagen").click(function(e){
     var parametros = { curso: $("#hidden_curso").val(), img : img };
     AsincTaks("gcurso/_actualizar_img", parametros, function(data){
       Mensaje("Se actualizó el banner", function(){
-        CargarPagina("gcurso/_view_finalizar_registro/", { id: $("hidden_curso").val() }, false, false);
+        var DATA = JSON.parse(data);
+        $("#img_banner_new").attr("src", _root_ + "modules/elearning/views/cursos/img/portada/" + DATA.data[0].url);
+        // CargarPagina("gcurso/_view_finalizar_registro/", { id: $("hidden_curso").val() }, false, false);
       });
     }, false, false);
   }, params);
@@ -311,10 +315,52 @@ $("#btn-guardarVideo").click(function(e){
     var parametros = { curso: $("#hidden_curso").val(), video : $("#Cur_UrlVideoPresentacion").val() };
     AsincTaks("gcurso/_actualizar_video", parametros, function(data){
       Mensaje("Se actualizó el Video", function(){
-        CargarPagina("gcurso/_view_finalizar_registro/", { id: $("hidden_curso").val() }, false, false);
+        var DATA = JSON.parse(data);
+        reloadObjet(DATA.data[0].url);
+        // $("#video_curso_param").val("http://www.youtube.com/v/" + DATA.data[0].url);
+        // $("#video_curso_embed").attr("src", "http://www.youtube.com/v/" + DATA.data[0].url);
+        // $("#img_banner_new").attr("src", _root_ + "modules/elearning/views/cursos/img/portada/" + DATA.data[0].url);
+        // CargarPagina("gcurso/_view_finalizar_registro/", { id: $("hidden_curso").val() }, false, false);
       });
     }, false, false);
 });
+
+function reloadObjet(url_video){
+  var div = document.getElementById('div_video')
+
+  var ooo = document.createElement('object')
+  ooo.width = '100%'
+  ooo.height = 344
+
+  var para = document.createElement('param')
+  para.name = 'movie'
+  para.value='http://www.youtube.com/v/' + url_video
+
+  var parb = document.createElement('param')
+  parb.name = 'allowFullScreen'
+  parb.value= true
+
+  var parc = document.createElement('param')
+  parc.name = 'allowscriptaccess'
+  parc.value='always'
+
+  var em = document.createElement('embed')
+  em.src = 'http://www.youtube.com/v/' + url_video
+  em.type='application/x-shockwave-flash'
+
+  em.allowscriptaccess="always" 
+  em.allowfullscreen=true 
+  em.width="100%" 
+  em.height=344
+
+  ooo.appendChild(para)
+  ooo.appendChild(parb)
+  ooo.appendChild(parc)
+  ooo.appendChild(em)
+  div.children[0].remove()
+  div.append(ooo)
+  $(div).removeClass("hidden");
+}
 
 setTimeout(function(){
   CargarDetalleCurso();

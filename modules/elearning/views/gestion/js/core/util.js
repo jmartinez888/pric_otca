@@ -69,7 +69,7 @@ window.onload = function(){
 (function ($) {
     $.fn.Mensaje = function (m) {
         m = m || {};
-        m.titulo = m.titulo || "Aviso";
+        m.titulo = m.titulo || "Atención";
         m.tamano = m.tamano || "";
         m.mensaje = m.mensaje || "";
         m.tipo = m.tipo || "Aceptar";

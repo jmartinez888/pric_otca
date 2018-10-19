@@ -1,9 +1,7 @@
-
-
-<div class="col-lg-12">
-  {include file='modules/elearning/views/gestion/menu/tag_url.tpl'}
-  {include file='modules/elearning/views/cursos/menu/lateral.tpl'}
-  <div class="col-lg-10" style="margin-top: 20px">
+{include file='modules/elearning/views/gestion/menu/menu.tpl'}
+<div class="col-lg-10" style="margin-top: 20px;">  
+{include file='modules/elearning/views/gestion/menu/tag_url.tpl'}
+  <div class=" col-lg-12" >
     {if $curso.Moa_IdModalidad == 2}
     <div class="panel panel-default">
       <div class="panel-heading cabecera-titulo">

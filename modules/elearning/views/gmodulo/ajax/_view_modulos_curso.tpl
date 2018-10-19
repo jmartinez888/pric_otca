@@ -1,3 +1,5 @@
+{extends 'index_elearning.tpl'}
+{block 'subcontenido'}
 {include file='modules/elearning/views/gestion/menu/tag_url.tpl'}
 <div class="col-lg-12">
   <ul class="nav nav-tabs">
@@ -23,7 +25,7 @@
                       <td>
                         <input class="hidden_IdModulo estado" value="{$c.Moc_IdModuloCurso}"/>
                         <button class="btnFinalizarReg"><i class="glyphicon glyphicon-pencil"></i></button>
-                        {if $c.Moc_Estado == 1 }
+                        {if $c.Moc_Estado == 0 }
                         <button class="btnDeshabilitar"><i class="glyphicon glyphicon-remove"></i></button>
                         {else}
                         <button class="btnHabilitar"><i class="glyphicon glyphicon-ok"></i></button>
@@ -46,8 +48,6 @@
   </div>
 </div>
 
-
-
 <div class="col-lg-12 margin-top-10" style="display: none" id="panelNuevoModulo">
   <div class="panel panel-default">
     <div class="panel-heading">
@@ -58,7 +58,7 @@
     </div>
     <div class="panel-body" style=" margin: 15px 25px">
       <form method="post" action="gmodulo/_registrar_modulo" id="frm_registro">
-        <input hidden="hidden" name="id" value="{$curso.Cur_IdCurso}" />
+        <input hidden="hidden" id="hidden_curso" name="id" value="{$curso.Cur_IdCurso}" />
         <div class="col-lg-12"><h5><strong>Titulo</strong></h5></div>
         <div class="col-lg-12">
           <input class="form-control" name="titulo" id="inTitulo" />
@@ -76,5 +76,11 @@
     </div>
   </div>
 </div>
+{/block}
 
+{block 'js' append}
+<!-- <script >
+  $("#hidden_curso").val("{Session::get('learn_param_curso')}");
+</script> -->
 <script type="text/javascript" src="{$_url}gmodulo/js/_view_modulos_curso.js"></script>
+{/block}

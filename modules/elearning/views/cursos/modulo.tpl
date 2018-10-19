@@ -34,12 +34,31 @@
             </button>
           </form>
           {else}
-            <a href="{BASE_URL}elearning/cursos/curso/{$curso}">
-              <button class="course-students-amount btn-regresar btn btn-group">
-                <span class="glyphicon glyphicon-hand-left" aria-hidden="true"></span>
-                Ir al curso
-              </button>
-            </a>
+            {if $leccion.Lec_Tipo == 3 }
+              {if isset($ultimoexamen) && count($ultimoexamen) }
+                {if $ultimoexamen.Exl_Nota*100/$examen.Exa_Peso>50}
+                <!-- Para siguiente modulo tiene que aprobar el examen -->
+                <form method="post" action="{BASE_URL}elearning/cursos/_next_leccion/" style="display: inline-block">
+                  <input value="{$curso}" name="curso" hidden="hidden"/>
+                  <input value="{$leccion.Lec_IdLeccion}" name="leccion" hidden="hidden"/>
+                  <button class="course-students-amount btn btn-next-previous">
+                    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                    Siguiente
+                  </button>
+                </form>
+                {/if}
+              {/if}
+            {else}
+            <!-- para el siguiente modulo -->
+              <form method="post" action="{BASE_URL}elearning/cursos/_next_leccion/" style="display: inline-block">
+                <input value="{$curso}" name="curso" hidden="hidden"/>
+                <input value="{$leccion.Lec_IdLeccion}" name="leccion" hidden="hidden"/>
+                <button class="course-students-amount btn btn-next-previous">
+                  <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                  Siguiente
+                </button>
+              </form>
+            {/if}
           {/if}
       </div>
       <div class="col-lg-2" style="margin-top: 5px !important">
@@ -81,8 +100,6 @@
     </div>
     {/if}
 
-
-
     {if $leccion["Lec_Tipo"]==2}
     <div class="col-lg-12" style="padding-left:0px; padding-right:0px;">
       <div class="panel panel-default">
@@ -104,10 +121,7 @@
     </div>
     {/if}
 
-
-
     {if $leccion["Lec_Tipo"]==3}
-
     <div class="col-lg-12" id="leccion-contenido" style="padding-left:0px; padding-right:0px;">
       <div class="panel panel-default">
           <div class="panel-heading cabecera-titulo">
@@ -127,7 +141,6 @@
                   </small>
                   <h3></h3>
               </div>
-
             </div> 
             <div class="col-lg-12 circulo">
               <div class="progress" data-toggle="tooltip" data-placement="top" title="" data-original-title="Your progress">

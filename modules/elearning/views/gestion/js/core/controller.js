@@ -16,8 +16,9 @@ function DrawPage(html, dom = false){
 }
 
 function AsincTaks(url, params, success, error, reintentar = false){
-	url = $("#hidden_url").val() + url;
-
+	url = _root_ + _modulo + "/" + url;
+	// console.log(params);
+	// alert(url);
 	$.ajax({
 		type: "post",
 		url: url,
@@ -102,11 +103,13 @@ function SubmitForm(form, dom, success, m = false){
 	}, null, false);
 }
 
-function Mensaje(mensaje, funcionCerrar){
+function Mensaje(mensaje, funcionCerrar, titulo, icono){
 	$.fn.Mensaje({
 		tamano: "sm",
 		mensaje: mensaje,
-		funcionCerrar: funcionCerrar
+		funcionCerrar: funcionCerrar,
+		titulo: titulo,
+		icon: icono
 	});
 }
 
@@ -137,7 +140,8 @@ function InputValidate(dom, longitud){
 
 
 function StartCalendarioPRIC(div, params, botones, view){
-  var base =  $("#hidden_url").val();
+  // var base =  $("#hidden_url").val();
+  var base =  _root_ + _modulo + "/" ;
   var fechaActual = new Date();
   var mes = (fechaActual.getMonth()+1);
   mes = mes < 10 ? "0" + mes.toString() : mes;

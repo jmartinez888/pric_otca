@@ -1,3 +1,5 @@
+{extends 'index_elearning.tpl'}
+{block 'css' append}
 <style type="text/css">
   .div_modulo{
     display: block;
@@ -17,7 +19,9 @@
     color: #009640 !important;
   }
 </style>
+{/block}
 
+{block 'subcontenido'}
 {include file='modules/elearning/views/gestion/menu/tag_url.tpl'}
 <!--  Tabs-->
 <div class="col-lg-12">
@@ -40,7 +44,8 @@
       <form id="frm-act-modulo" method="post" action="gmodulo/_actualizar_modulo">
       <div class="col-lg-12"><strong>Titulo</strong></div>
       <div class="col-lg-12">
-        <input name="id" hidden="hidden" value="{$modulo.Moc_IdModuloCurso}" />
+        <input hidden="hidden" id="hidden_curso" name="id_curso" value="{$curso.Cur_IdCurso}" />
+        <input name="id" id="hidden_modulo" hidden="hidden" value="{$modulo.Moc_IdModuloCurso}" />        
         <input class="form-control" name="titulo" value="{$modulo.Moc_Titulo}" />
       </div>
       <div class="col-lg-12  margin-top-10"><strong>Descripcion</strong></div>
@@ -81,11 +86,13 @@
                       <td>{substr($c.Lec_Descripcion, 0, 100)}...</td>
                       <td>
                         <input class="hidden_IdLeccion estado" value="{$c.Lec_IdLeccion}"/>
+                        
                         <button class="btnFinalizarReg"><i class="glyphicon glyphicon-pencil"></i></button>
+
                         {if $c.Lec_Estado == 1 }
-                        <button class="btnDeshabilitar"><i class="glyphicon glyphicon-remove"></i></button>
+                        <button class="btnDeshabilitar"><i class="glyphicon glyphicon-ok"></i></button>
                         {else}
-                        <button class="btnHabilitar"><i class="glyphicon glyphicon-ok"></i></button>
+                        <button class="btnHabilitar"><i class="glyphicon glyphicon-remove"></i></button>
                         {/if}
                         <button class="btnEliminar"><i class="glyphicon glyphicon-trash"></i></button>
                       </td>
@@ -106,9 +113,6 @@
     </div>
   </div>
 </div>
-
-
-
 
 <div class="col-lg-12 margin-top-10" style="display: none" id="panelNuevaLeccion">
   <div class="panel panel-default">
@@ -144,10 +148,13 @@
       </form>
       <div class="col-lg-12"></br></div>
       <div class="col-lg-12">
-        <button class="btn btn-success" id="btn_registrar_modulo">Registrar</button>
+        <button class="btn btn-success" id="btn_guardar_leccion">Registrar</button>
       </div>
     </div>
   </div>
 </div>
+{/block}
 
+{block 'js' append}
 <script type="text/javascript" src="{$_url}gleccion/js/_view_lecciones_modulo.js"></script>
+{/block}

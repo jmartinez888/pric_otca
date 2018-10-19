@@ -47,18 +47,13 @@ class examenController extends elearningController {
     }
 
     // public function examens($idcurso){
-     public function examens($idcurso=false){
+    public function examens($idcurso=false){
         // $codigo = $this->getTexto("certificado");
         // $this->_view->setCss(array("verificar"));
         $this->_view->setTemplate(LAYOUT_FRONTEND);
         $this->_view->setJs(array(array(BASE_URL . 'modules/elearning/views/gestion/js/core/util.js'),array(BASE_URL . 'modules/elearning/views/gestion/js/framework/lodash.js'),array(BASE_URL . 'modules/elearning/views/gestion/js/core/controller.js'),array(BASE_URL . 'modules/elearning/views/gestion/js/index.js'),array(BASE_URL . 'modules/elearning/views/gestion/js/core/view.js'), "index"));
         $this->_view->getLenguaje("index_inicio");
-        // if(strlen($idcurso)==0){ $idcurso = Session::get("learn_param_curso"); }
-        // if(strlen($idcurso)==0){ exit; }
-        // Session::set("learn_url_tmp", "examen/examens");
-        // Session::set("learn_param_curso", $idcurso);
-        
-        
+
         $pagina = $this->getInt('pagina');
 
         //Filtro por Activos/Eliminados
@@ -81,15 +76,14 @@ class examenController extends elearningController {
         $this->_view->assign('numeropagina', $paginador->getNumeroPagina());
         $this->_view->assign('paginacionexamens', $paginador->getView('paginacion_ajax_s_filas'));
         $this->_view->assign('porcentaje', $porcentaje['Porcentaje'] );
-        $this->_view->assign('titulo', 'Administracion de preguntas');
+        // $this->_view->assign('titulo', 'Administracion de preguntas');
         $this->_view->assign('idcurso', $idcurso);
         $this->_view->assign('titulo', $this->examen->getTituloCurso($idcurso));
         $this->_view->renderizar('examens');
     }
 
 
-    public function _paginacion_listarexamens($txtBuscar = false) 
-    {
+    public function _paginacion_listarexamens($txtBuscar = false){
         //$this->validarUrlIdioma();
         $pagina = $this->getInt('pagina');
         $filas=$this->getInt('filas');
@@ -131,9 +125,7 @@ class examenController extends elearningController {
         $this->_view->renderizar('ajax/listarexamens', false, true);
     }
 
-
-     public function _buscarexamens() 
-    {
+    public function _buscarexamens(){
         $txtBuscar = $this->getSql('palabra');
         $pagina = $this->getInt('pagina');
         $idcurso=$this->getInt('idcurso');
@@ -174,8 +166,7 @@ class examenController extends elearningController {
         $this->_view->renderizar('ajax/listarexamens', false, true);
     }
 
-
-   public function nuevoexamen($id){
+    public function nuevoexamen($id){
         // $this->_view->setCss(array("verificar"));
         // $id = $this->getTexto("id");
         $this->_view->setTemplate(LAYOUT_FRONTEND);
@@ -206,7 +197,36 @@ class examenController extends elearningController {
         $this->_view->assign('idcurso', $id);
         $this->_view->assign('titulo', $this->examen->getTituloCurso($id));
         $this->_view->renderizar('nuevoexamen', 'elearning');
+    }
 
+    public function editarexamen($id){
+        // $this->_view->setCss(array("verificar"));
+        // $id = $this->getTexto("id");
+        $this->_view->setTemplate(LAYOUT_FRONTEND);
+        $this->_view->setJs(array(array(BASE_URL . 'modules/elearning/views/gestion/js/core/util.js'), "index"));
+
+        if(strlen($id)==0){ $id = Session::get("learn_param_curso"); }
+        if(strlen($id)==0){ exit; }
+        Session::set("learn_url_tmp", "examen/editarexamen");
+        Session::set("learn_param_curso", $id);
+        // $lecciones=$this->examen->getLecciones($id);
+
+        $modulos=$this->examen->getModulos($id);
+
+        if ($this->botonPress("guardarEdit")) {
+            $examen = $this->examen->editExamen($id,$this->getSql("selectmodulo"), $this->getSql("titulo"), $this->getSql("porcentaje"), $this->getSql("puntaje"),  $this->getSql("intentos"), $this->getInt("selectleccion"));
+            if($examen){
+                $this->redireccionar('elearning/examen/preguntas/'.$id.'/'.$examen[0]);
+            }
+        }
+
+        // $porcentaje=$this->examen->getExamensPorcentaje($id);
+        // $this->_view->assign('porcentaje',100-$porcentaje['Porcentaje'] );
+        // $this->_view->assign('lecciones',$lecciones);
+        $this->_view->assign('modulos',$modulos);
+        $this->_view->assign('idcurso', $id);
+        $this->_view->assign('titulo', $this->examen->getTituloCurso($id));
+        $this->_view->renderizar('editarexamen', 'elearning');
     }
 
     public function actualizarlecciones(){
@@ -286,7 +306,6 @@ class examenController extends elearningController {
         $this->_view->assign('titulo', $this->examen->getTituloCurso($id));
     }
 
-
     public function _paginacion_listarpreguntas($txtBuscar = false) 
     {
         //$this->validarUrlIdioma();
@@ -336,7 +355,7 @@ class examenController extends elearningController {
     }
 
 
-     public function _cambiarEstadopreguntas(){
+    public function _cambiarEstadopreguntas(){
         $this->_acl->acceso('agregar_rol');
         // $this->_view->setJs(array(array(BASE_URL . 'public/js/util.js',true)));
 
@@ -419,7 +438,6 @@ class examenController extends elearningController {
         $this->_view->renderizar('ajax/listarpreguntas', false, true);
     }
    
-
     public function _buscarpregunta() 
     {
         $txtBuscar = $this->getSql('palabra');
@@ -466,7 +484,6 @@ class examenController extends elearningController {
         $this->_view->renderizar('ajax/listarpreguntas', false, true);
     }
 
-   
     public function _eliminar_pregunta()
     {
         $this->_acl->acceso('agregar_rol');
@@ -561,9 +578,8 @@ class examenController extends elearningController {
         $this->_view->assign('paginacionpreguntas', $paginador->getView('paginacion_ajax_s_filas'));
         $this->_view->renderizar('ajax/listarpreguntas', false, true);
     }
-
     
-     public function registrarRespuestaUnica($idExamen, $id){
+    public function registrarRespuestaUnica($idExamen, $id){
         // $this->_view->setCss(array("verificar"));
         $this->_view->setTemplate(LAYOUT_FRONTEND);
         $this->_view->setJs(array(array(BASE_URL . 'modules/elearning/views/gestion/js/core/util.js'), "index"));
@@ -617,7 +633,7 @@ class examenController extends elearningController {
         $this->_view->renderizar('respuestaunica', 'respuestaunica');
     }
 
-     public function editarRespuestaUnica($id, $idcurso){
+    public function editarRespuestaUnica($id, $idcurso){
         // $this->_view->setCss(array("verificar"));
         $this->_view->setTemplate(LAYOUT_FRONTEND);
         $this->_view->setJs(array(array(BASE_URL . 'modules/elearning/views/gestion/js/core/util.js'), "index"));
@@ -683,7 +699,6 @@ class examenController extends elearningController {
         $this->_view->renderizar('editarrespuestaunica');
     }
 
-
     public function registrarRespuestaMultiple($idExamen, $id){
         // $this->_view->setCss(array("verificar"));
         $this->_view->setTemplate(LAYOUT_FRONTEND);
@@ -737,8 +752,7 @@ class examenController extends elearningController {
         $this->_view->renderizar('respuestamultiple', 'elearning');
     }
 
-
-     public function editarRespuestaMultiple($id, $idcurso){
+    public function editarRespuestaMultiple($id, $idcurso){
         // $this->_view->setCss(array("verificar"));
         $this->_view->setTemplate(LAYOUT_FRONTEND);
         $this->_view->setJs(array(array(BASE_URL . 'modules/elearning/views/gestion/js/core/util.js'), "index"));
@@ -800,7 +814,6 @@ class examenController extends elearningController {
         $this->_view->renderizar('editarrespuestamultiple');
     }
 
-
     public function registrarRespuestaBlanco($idExamen, $id){
         $this->_view->setTemplate(LAYOUT_FRONTEND);
         $this->_view->setJs(array(array(BASE_URL . 'modules/elearning/views/gestion/js/core/util.js'), "index"));
@@ -844,7 +857,6 @@ class examenController extends elearningController {
         $this->_view->assign('idcurso', $id);
         $this->_view->renderizar('respuestablanco', 'elearning');
     }
-
 
     public function editarRespuestaBlanco($id, $idcurso){
         $this->_view->setTemplate(LAYOUT_FRONTEND);
@@ -896,7 +908,6 @@ class examenController extends elearningController {
         $this->_view->renderizar('editarrespuestablanco', 'elearning');
     }
 
-
     public function registrarRespuestaRelacionar($idExamen, $id){
         // $this->_view->setCss(array("verificar"));
         $this->_view->setTemplate(LAYOUT_FRONTEND);
@@ -944,7 +955,7 @@ class examenController extends elearningController {
         $this->_view->renderizar('respuestarelacionar', 'elearning');
     }
 
-     public function editarRespuestaRelacionar($id, $idcurso){
+    public function editarRespuestaRelacionar($id, $idcurso){
         // $this->_view->setCss(array("verificar"));
         $this->_view->setTemplate(LAYOUT_FRONTEND);
         $this->_view->setJs(array(array(BASE_URL . 'modules/elearning/views/gestion/js/core/util.js'), "index"));
@@ -1030,7 +1041,6 @@ class examenController extends elearningController {
         $this->_view->renderizar('respuestaabierta', 'elearning');
     }
 
-
     public function editarRespuestaAbierta($id, $idcurso){
         // $this->_view->setCss(array("verificar"));
         $this->_view->setTemplate(LAYOUT_FRONTEND);
@@ -1057,7 +1067,6 @@ class examenController extends elearningController {
         $this->_view->assign('preguntaedit', $preguntaedit);
         $this->_view->renderizar('editarrespuestaabierta', 'elearning');
     }
-
 
     public function registrarRespuestaZonasImagen($idExamen, $id){
         // $this->_view->setCss(array("verificar"));
@@ -1131,8 +1140,7 @@ class examenController extends elearningController {
         $this->_view->renderizar('respuestacombinacionexacta', 'elearning');
     }
 
-
-     public function editarRespuestaCombinacionExacta($id, $idcurso){
+    public function editarRespuestaCombinacionExacta($id, $idcurso){
         // $this->_view->setCss(array("verificar"));
         $this->_view->setTemplate(LAYOUT_FRONTEND);
         $this->_view->setJs(array(array(BASE_URL . 'modules/elearning/views/gestion/js/core/util.js'), "index"));
@@ -1186,7 +1194,6 @@ class examenController extends elearningController {
         $this->_view->assign('preguntaedit', $preguntaedit);
         $this->_view->renderizar('editarrespuestacombinacionexacta');
     }
-
 
     public function comenzarexamen($idexamen){
         // $this->_view->setCss(array("miscertificados"));
@@ -1357,7 +1364,6 @@ class examenController extends elearningController {
         $this->_view->renderizar('examen');
     }
 
-
     public function resultado($puntos=0, $peso=0){
         // $this->_view->setCss(array("miscertificados"));
         $this->_view->setTemplate(LAYOUT_FRONTEND);
@@ -1376,8 +1382,7 @@ class examenController extends elearningController {
         $this->_view->renderizar('resultado', 'elearning');
     }
 
-
-     public function corregirExamenAlumno($id){
+    public function corregirExamenAlumno($id){
         // $this->_view->setCss(array("miscertificados"));
         $this->_view->setTemplate(LAYOUT_FRONTEND);
         $this->_view->setJs(array(array(BASE_URL . 'modules/elearning/views/gestion/js/core/util.js'), "index"));
