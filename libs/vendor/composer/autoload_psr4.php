@@ -20,6 +20,6 @@ return array(
     'FontLib\\' => array($vendorDir . '/phenx/php-font-lib/src/FontLib'),
     'Dompdf\\' => array($vendorDir . '/dompdf/dompdf/src'),
     'Doctrine\\Common\\Inflector\\' => array($vendorDir . '/doctrine/inflector/lib/Doctrine/Common/Inflector'),
-    'App\\' => array($baseDir . '/../models/class', $baseDir . '/../modules/foro/class', $baseDir . '/../modules/usuarios/class'),
+    'App\\' => array($baseDir . '/../models/class', $baseDir . '/../modules/foro/class', $baseDir . '/../modules/usuarios/class', $baseDir . '/../modules/difusion/class'),
     '' => array($vendorDir . '/nesbot/carbon/src'),
 );

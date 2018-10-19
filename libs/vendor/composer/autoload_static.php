@@ -111,6 +111,7 @@ class ComposerStaticInit84839e5498f8332d12a5af3f61883576
             0 => __DIR__ . '/../..' . '/../models/class',
             1 => __DIR__ . '/../..' . '/../modules/foro/class',
             2 => __DIR__ . '/../..' . '/../modules/usuarios/class',
+            3 => __DIR__ . '/../..' . '/../modules/difusion/class',
         ),
     );
 
