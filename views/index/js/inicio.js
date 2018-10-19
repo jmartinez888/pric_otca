@@ -421,7 +421,7 @@ new Vue({
 
 	},
 	mounted: function () {
-		$('.mainstage').wwfMainstage(banners);
 		this.initMap()
+		$('.mainstage').wwfMainstage(banners);
 	}
 });
