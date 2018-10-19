@@ -1,4 +1,4 @@
-Menu(1);
+// Menu(1);
 RefreshTagUrl();
 
 // Jhon Martinez
@@ -78,7 +78,6 @@ $("#btn_nuevo_contenido").click(function(e){
             leccion : $("#hidden_leccion").val(),
           }, false, false);
         }, false, false);
-
       }
     });
 });

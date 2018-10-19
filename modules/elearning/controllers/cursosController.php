@@ -317,7 +317,6 @@ class cursosController extends elearningController {
         exit;
       } 
 
-
       $this->_view->setTemplate(LAYOUT_FRONTEND);
       $this->_view->assign("mod_datos", $datos_modulo);
       $this->_view->assign("modulo", $Mmodel->getModulo($modulo));
@@ -426,11 +425,11 @@ class cursosController extends elearningController {
         $model->RegistrarProgreso($leccion, Session::get("id_usuario"));
       }
 
-      $lecciones = $model->getLecciones($objeto["Moc_IdModuloCurso"], Session::get("id_usuario"));
+      $lecciones = $model->getLecciones($objeto["Moc_IdModuloCurso"], Session::get("id_usuario"));      
 
       $clave = array_search($objeto["Lec_IdLeccion"], array_column($lecciones, "Lec_IdLeccion"));
       $nextLeccion = $lecciones[$clave+1];
-
+      echo $clave; print_r($nextLeccion);print_r($lecciones); exit;
       if($nextLeccion["Progreso"]==1 && $nextLeccion["Lec_Tipo"]==3){
 
         if(count($lecciones) > $clave+2){

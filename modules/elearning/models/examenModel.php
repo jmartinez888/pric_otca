@@ -262,6 +262,25 @@ class examenModel extends Model {
         }
     }
 
+    public function editExamen($iCur_IdCurso,$iMoc_IdModulo, $iExa_Titulo, $iExa_Porcentaje, $iExa_Peso, $iExa_Intentos,$iLec_IdLeccion){
+        try {             
+            $sql = "call s_u_examen(?,?,?,?,?,?,?)";
+            $result = $this->_db->prepare($sql);
+            $result->bindParam(1, $iCur_IdCurso, PDO::PARAM_INT);
+            $result->bindParam(2, $iMoc_IdModulo, PDO::PARAM_INT);
+            $result->bindParam(3, $iExa_Titulo, PDO::PARAM_STR);
+            $result->bindParam(4, $iExa_Porcentaje, PDO::PARAM_INT); 
+            $result->bindParam(5, $iExa_Peso, PDO::PARAM_INT); 
+            $result->bindParam(6, $iExa_Intentos, PDO::PARAM_INT); 
+            $result->bindParam(7, $iLec_IdLeccion, PDO::PARAM_INT);                    
+            $result->execute();
+            return $result->fetch();
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("elearning(examenModel)", "inserteExamen", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
+
     public function getPreguntasAll($pagina = 1, $registrosXPagina = 1, $activos = 1)
     {
         try{

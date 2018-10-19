@@ -11,7 +11,9 @@
       <form id="form-datos-leccion" action="gleccion/_actualizar_leccion" method="post">
       <label>Titulo</label>
       <input name="titulo" class="form-control" value="{$leccion.Lec_Titulo}" />
-      <input name="id" hidden="hidden" value="{$leccion.Lec_IdLeccion}" />
+      <input hidden="hidden" id="hidden_curso" name="id_curso" value="{$curso.Cur_IdCurso}" />
+      <input name="id_modulo" id="hidden_modulo" hidden="hidden" value="{$modulo.Moc_IdModuloCurso}" />
+      <input name="id_leccion" id="hidden_leccion" hidden="hidden" value="{$leccion.Lec_IdLeccion}" />
       </form>
       <button class="btn btn-success pull-right margin-top-10" id="btn-actualizar-leccion">Actualizar</button>
     </div>
@@ -22,11 +24,12 @@
 $("#btn-actualizar-leccion").click(function(){
   SubmitForm( $("#form-datos-leccion"), $(this), function(data, e){
     Mensaje("Datos actualizados", function(){
-      CargarPagina("gleccion/_view_leccion", {
-        curso: $("#hidden_curso").val(),
-        modulo : $("#hidden_modulo").val(),
-        leccion : $("#hidden_leccion").val(),
-      }, false, false);
+      location.href = _root_ + _modulo + "/gleccion/_view_leccion/" + $("#hidden_curso").val() + "/" + $("#hidden_modulo").val() + "/" + $("#hidden_leccion").val();      
+      // CargarPagina("gleccion/_view_leccion", {
+      //   curso: $("#hidden_curso").val(),
+      //   modulo : $("#hidden_modulo").val(),
+      //   leccion : $("#hidden_leccion").val(),
+      // }, false, false);
     })
   });
 });

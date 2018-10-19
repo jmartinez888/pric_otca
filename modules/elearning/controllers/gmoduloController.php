@@ -15,21 +15,25 @@ class gmoduloController extends elearningController {
     $this->service = new ServiceResult();
   }
 
-  public function _view_modulos_curso(){
-    $id = $this->getTexto("id");
-    if(strlen($id)==0){ $id = Session::get("learn_param_curso"); }
-    if(strlen($id)==0){ exit; }
+  public function _view_modulos_curso($idcurso = 0){
+    // $idcurso = $this->getTexto("id");
+    $this->_view->setTemplate(LAYOUT_FRONTEND);
+    if(!is_numeric($idcurso) && strlen($idcurso)==0){ $idcurso = Session::get("learn_param_curso"); }
+    if(strlen($idcurso)==0){ exit; }
     $Cmodel = $this->loadModel("_gestionCurso");
     $Mmodel = $this->loadModel("_gestionModulo");
 
-    $curso = $Cmodel->getCursoXId($id);
-    $modulos = $Mmodel->getModulos($id);
+    $curso = $Cmodel->getCursoXId($idcurso);
+    $modulos = $Mmodel->getModulos($idcurso);
 
+    Session::set("learn_param_curso", $idcurso);
     Session::set("learn_url_tmp", "gmodulo/_view_modulos_curso");
-    Session::set("learn_param_curso", $id);
+
+    $this->_view->assign('menu', 'curso');
     $this->_view->assign("curso", $curso);
+    // $this->_view->assign('idcurso', $idcurso);
     $this->_view->assign("modulos", $modulos);
-    $this->_view->renderizar('ajax/_view_modulos_curso', false, true);
+    $this->_view->render('ajax/_view_modulos_curso');
   }
 
   public function _view_tareas_curso(){

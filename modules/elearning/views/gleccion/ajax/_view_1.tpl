@@ -1,3 +1,5 @@
+{extends 'index_elearning.tpl'}
+{block 'css' append}
 <style>
   .btnEditar{
     position: absolute;top: 0px; right: 0px;
@@ -22,6 +24,9 @@
   .div_materiales{
     display: none;
   }
+  .div_tareas{
+    display: none;
+  }
 
   .display-block{
     display: block;
@@ -33,9 +38,10 @@
     color: #009640 !important;
   }
 </style>
+{/block}
 
+{block 'subcontenido'}
 {include file='modules/elearning/views/gestion/menu/tag_url.tpl'}
-
 <!--  Tabs-->
 <div class="col-lg-12">
   <ul class="nav nav-tabs">
@@ -43,14 +49,12 @@
     <li role="presentation" id="item_contenido" ><a href="#">CONTENIDO</a></li>
     <li role="presentation" id="item_referencias"><a href="#">REFERENCIAS</a></li>
     <li role="presentation" id="item_materiales" ><a href="#">MATERIAL DIDÁCTICO</a></li>
-    {if ($curso.Moa_IdModalidad==2)}
+    <!-- {if ($curso.Moa_IdModalidad==2)} -->
     <li role="presentation" id="item_tareas" ><a href="#">TAREAS</a></li>
-    {/if}
+    <!-- {/if} -->
   </ul>
 </div>
-
 {include file='modules/elearning/views/gleccion/menu/lec_ref_mat.tpl'}
-
 {include file='modules/elearning/views/gleccion/menu/lec_titulo.tpl'}
 <div class="col-lg-12 div_contenido ">
   <div class="panel panel-default " style="border-top: 0; border-top-left-radius: 0; border-top-right-radius: 0;">
@@ -114,7 +118,6 @@
   </div>
 </div>
 
-
 <div class="modal" id="panelEditarContenido" role="dialog" aria-hidden="true" data-backdrop="static">
   <div class="modal-dialog modal-lg">
     <div class="panel panel-cmacm">
@@ -139,5 +142,8 @@
     </div>
   </div>
 </div>
+{/block}
 
+{block 'js' append}
 <script type="text/javascript" src="{$_url}gleccion/js/_view_1.js"></script>
+{/block}

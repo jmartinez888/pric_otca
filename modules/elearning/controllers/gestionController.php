@@ -21,7 +21,7 @@ class gestionController extends elearningController {
 
   public function index()
   {
-      if (!Session::get('autenticado')){ $this->redireccionar(); }
+        if (!Session::get('autenticado')){ $this->redireccionar(); }
 
       $this->_view->setJs(array('framework/lodash', 'core/util','core/controller', 'core/view', 'index'));
       $this->_view->setCss(array('principal'));
@@ -35,8 +35,8 @@ class gestionController extends elearningController {
       $this->_view->setTemplate(LAYOUT_FRONTEND);
       $this->_view->getLenguaje("index_inicio");
 
-      $this->_view->setJs(array(//array(BASE_URL . 'public/ckeditor/ckeditor.js'), 
-        array(BASE_URL . 'public/ckeditor/adapters/jquery.js')));
+      $this->_view->setJs(//array(//array(BASE_URL . 'public/ckeditor/ckeditor.js'), 
+        array(BASE_URL . 'public/ckeditor/adapters/jquery.js'));
       $this->_view->assign('learn_usuario', Session::get("login_usuario"));
       $this->_view->assign('learn_lenguaje', $this->_lenguaje ? $this->_lenguaje : "es");
       $this->_view->assign('learn_url', BASE_URL . $this->_request->getLenguaje() . "/" . $this->_request->getModulo() . "/");
@@ -78,55 +78,39 @@ class gestionController extends elearningController {
     $this->_view->setJs(array('anuncios'));
 
     $pagina = $this->getInt('pagina');
-        //$registros = $this->getInt('registros');
-        $nombre = $this->getSql('nombre');
+    $nombre = $this->getSql('nombre');
+    $condicion = " WHERE Cur_IdCurso = $id order by Anc_FechaReg desc, Row_Estado DESC ";
+    $soloActivos = 0;
+    if (!$this->_acl->permiso('ver_eliminados')) {
+        $soloActivos = 1;
+        $condicion = " WHERE Cur_IdCurso = $id and Row_Estado = $soloActivos order by Anc_FechaReg DESC";
+    }
 
-    //Filtro por Activos/Eliminados
+    $idUsuario=Session::get("id_usuario");
 
-        $condicion = " WHERE Cur_IdCurso = $id order by Anc_FechaReg desc, Row_Estado DESC ";
-        $soloActivos = 0;
-        if (!$this->_acl->permiso('ver_eliminados')) {
-            $soloActivos = 1;
-            $condicion = " WHERE Cur_IdCurso = $id and Row_Estado = $soloActivos order by Anc_FechaReg DESC";
-        }
+    if($tipo>0)
+        $condicion = " INNER JOIN anuncio_usuario au ON anc.Anc_IdAnuncioCurso=au.Anc_IdAnuncioCurso WHERE au.Usu_IdUsuario=$idUsuario AND anc.Cur_IdCurso = $id and Anc_Estado=1 and Row_Estado=1 order by Anc_FechaReg desc ";
 
-        $idUsuario=Session::get("id_usuario");
-
-        if($tipo>0)
-            $condicion = " INNER JOIN anuncio_usuario au ON anc.Anc_IdAnuncioCurso=au.Anc_IdAnuncioCurso WHERE au.Usu_IdUsuario=$idUsuario AND anc.Cur_IdCurso = $id and Anc_Estado=1 and Row_Estado=1 order by Anc_FechaReg desc ";
-
-        // echo $condicion; exit;
-        $arrayRowCount = $_model->getAnunciosRowCount($condicion);
-        // print_r($arrayRowCount);
-        $totalRegistros = $arrayRowCount['CantidadRegistros'];
-
-        $paginador = new Paginador();
-
-        // $this->_view->assign('usuarios', $this->_usuarios->getUsuariosPaginado($condicion));
-
-        $paginador->paginar( $totalRegistros,"listaranuncios", "", $pagina, CANT_REG_PAG, true);
+    $arrayRowCount = $_model->getAnunciosRowCount($condicion);
+    // print_r($arrayRowCount);
+    $totalRegistros = $arrayRowCount['CantidadRegistros'];
+    $paginador = new Paginador();
+    // $this->_view->assign('usuarios', $this->_usuarios->getUsuariosPaginado($condicion));
+    $paginador->paginar( $totalRegistros,"listaranuncios", "", $pagina, CANT_REG_PAG, true);
 
     $curso = $model->getCursoID($id);
     $anuncios = $_model->getAnunciosCondicion(1,CANT_REG_PAG,$condicion);
 
-    // if($tipo>0){
-    //     foreach ($anuncios as $a) {
-    //         $_model->cambiarEstadoLeido($a['Anc_IdAnuncioCurso'],Session::get("id_usuario"));
-    //     }
-    // }
-
-
     if ($this->botonPress("bt_guardar")) {
             $this->registrarAnuncio($id);                
     }
-
+    // print_r($curso);
     $this->_view->setTemplate(LAYOUT_FRONTEND);
-    // $this->_view->assign("curso", $curso[0]);
+    $this->_view->assign("curso", $curso[0]);
     $this->_view->assign("anuncios", $anuncios);
     $this->_view->assign("tipo", $tipo);
     $this->_view->assign("id", $id);
     $this->_view->assign('numeropagina', $paginador->getNumeroPagina());
-        //$this->_view->assign('cantidadporpagina',$registros);
     $this->_view->assign('paginacionanuncios', $paginador->getView('paginacion_ajax_s_filas'));
     $this->_view->renderizar("anuncios");
   }
@@ -164,7 +148,7 @@ class gestionController extends elearningController {
         }                
     }
 
-   public function _paginacion_listaranuncios($txtBuscar = false) 
+    public function _paginacion_listaranuncios($txtBuscar = false) 
     {
         //Variables de Ajax_JavaScript
         $_model = $this->loadModel("_gestionCurso");
@@ -196,7 +180,6 @@ class gestionController extends elearningController {
             }
         }
 
-
         $idUsuario=Session::get("id_usuario");
 
         if($tipo>0)
@@ -209,14 +192,6 @@ class gestionController extends elearningController {
         $paginador = new Paginador();
 
         $anuncios=$_model->getAnunciosCondicion($pagina,$filas, $condicion);
-
-        // if($tipo>0){
-        // foreach ($anuncios as $a) {
-        //     $_model->cambiarEstadoLeido($a['Anc_IdAnuncioCurso'],Session::get("id_usuario"));
-        // }
-    // }
-
-        // $this->_view->assign('anuncioes', $paginador->paginar($this->_aclm->getanuncioes($condicion), "listaranuncioes", "$nombre", $pagina, 25));
 
         $paginador->paginar( $totalRegistros,"listaranuncios", "$txtBuscar", $pagina, $filas, true);
 
@@ -237,6 +212,7 @@ class gestionController extends elearningController {
         $this->validarUrlIdioma();
         $this->_view->getLenguaje("index_inicio");
         $this->_view->setJs(array('anuncios'));
+        $model = $this->loadModel("curso");
         $_model = $this->loadModel("_gestionCurso");
         $anuncio = $_model->getAnuncio($this->filtrarInt($Anc_IdAnuncioCurso));
 
@@ -246,21 +222,23 @@ class gestionController extends elearningController {
 
         if ($this->botonPress("bt_editarAnuncio")) 
         {            
-                $id = $_model->editarAnuncio($this->filtrarInt($Anc_IdAnuncioCurso), $this->getSql('titulo'),$this->getSql('descripcion'));
-                if($id)
-                {
-                    $this->_view->assign('_mensaje', 'Anuncio editado Correctamente');
-                    $anuncio = $_model->getAnuncio($this->filtrarInt($Anc_IdAnuncioCurso));
-                }  
-                else 
-                {
-                    $this->_view->assign('_error', 'Error al editar anuncio');
-                }
+            $id = $_model->editarAnuncio($this->filtrarInt($Anc_IdAnuncioCurso), $this->getSql('titulo'),$this->getSql('descripcion'));
+            if($id)
+            {
+                $this->_view->assign('_mensaje', 'Anuncio editado Correctamente');
+                $anuncio = $_model->getAnuncio($this->filtrarInt($Anc_IdAnuncioCurso));
+            }  
+            else 
+            {
+                $this->_view->assign('_error', 'Error al editar anuncio');
+            }
         }        
-        // $this->_view->assign('idiomas',$this->_aclm->getIdiomas());        
-         $this->_view->setTemplate(LAYOUT_FRONTEND);
+        // $this->_view->assign('idiomas',$this->_aclm->getIdiomas());  
+        $curso = $model->getCursoID($anuncio['Cur_IdCurso']);      
+        $this->_view->setTemplate(LAYOUT_FRONTEND);
+        $this->_view->assign("curso", $curso[0]);
         $this->_view->assign('datos',$anuncio);
-        $this->_view->renderizar('ajax/editarAnuncio','anuncios');
+        $this->_view->renderizar('ajax/editarAnuncio');
     }
 
 

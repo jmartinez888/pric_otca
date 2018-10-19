@@ -1,3 +1,5 @@
+{extends 'index_elearning.tpl'}
+{block 'css' append}
 <style>
   .div-detalle{
     border: 1px solid gray;
@@ -37,29 +39,31 @@
     color: #009640 !important;
   }
 </style>
-<link href="{$_url}gcurso/css/_view_finalizar_registro.css" rel="stylesheet" type="text/css"/>
+<!-- <link href="{$_url}gcurso/css/_view_finalizar_registro.css" rel="stylesheet" type="text/css"/> -->
+{/block}
 
+
+{block 'subcontenido'}
 {include file='modules/elearning/views/gestion/menu/tag_url.tpl'}
-
 <div class="col-lg-12">
   <ul class="nav nav-tabs">
-    <li role="presentation" class="active" id="item_presentacion"><a href="#">PRESENTACIÓN</a></li>
-    <li role="presentation" id="item_contenido" ><a href="#">CONTENIDO</a></li>
-    <li role="presentation" id="item_parametros" ><a href="#">PARAMETROS</a></li>
+    <li role="presentation" class="active" id="item_presentacion"><a>PRESENTACIÓN</a></li>
+    <li role="presentation" id="item_contenido" ><a>CONTENIDO</a></li>
+    <li role="presentation" id="item_parametros" ><a>PARAMETROS</a></li>
   </ul>
 </div>
 
 <!-- PRESENTACION -->
 <div {if isset($actives) && $actives == "pre" } class="col-lg-12  div_presentacion display-block" {else} class="col-lg-12  div_presentacion" {/if} >
   <div class="panel panel-default" style="border-top: 0; border-top-left-radius: 0; border-top-right-radius: 0;">
-    
+
     <div class="panel-body form-horizontal"  id="panelImg">
-      
+
       <div class="form-group">
           <label class="col-md-3 control-label"> Imagen Icono : </label>
           <div class="col-md-6">
               {if strlen($curso.Cur_UrlBanner)>0 && $curso.Cur_UrlBanner != "default.jpg"}
-                  <img class="img-banner" src="{BASE_URL}modules/elearning/views/cursos/img/portada/{$curso.Cur_UrlBanner}" />
+                  <img class="img-banner" id="img_banner_new" src="{BASE_URL}modules/elearning/views/cursos/img/portada/{$curso.Cur_UrlBanner}" />
               {else}
                 <b class="col-xs-12 text-center">Imagen Default</b>
                   <img class="img-banner" style="opacity: 0.6" src="{BASE_URL}modules/elearning/views/cursos/img/portada/default.jpg" />
@@ -68,15 +72,15 @@
           <div class=" col-md-2">
             <button id="btn-subir-imagen" class="btn btn-info btn-sm">Seleccionar Imagen</button>
           </div>
-      </div> 
-      
+      </div>
+
       <!-- Jhon Martinez -->
       <!-- <div class="form-group">
           <label for="exampleInputFile" class="col-md-4 control-label"> Video Presentación </label>
           <div class="col-md-6">
               <input class="btn btn-success btn-sm" type="file" id="Arf_IdArchivoFisico" name="Arf_IdArchivoFisico">
           </div>
-      </div> -->   
+      </div> -->
       <div class="form-group">
           <label class="col-md-3 control-label"> Video Presentación : </label>
           <div class="col-md-6">
@@ -89,16 +93,25 @@
           <div class=" col-md-2">
               <button id="btn-guardarVideo" class=" form-control btn btn-success btn-sm"> <i class="glyphicon glyphicon-floppy-disk"></i> Guardar</button>
           </div>
-      </div> 
+      </div>
       <div class="form-group">
           {if strlen($curso.Cur_UrlVideoPresentacion)>0}
-              <div class="col-md-offset-3 col-md-6 " style="padding: 5px; border: 2px solid #00a65a;">
+              <div class="col-md-offset-3 col-md-6 " id="div_video" style="padding: 5px; border: 2px solid #00a65a;">
                   <object width="100%" height="344">
-                    <param name="movie" value="http://www.youtube.com/v/{$curso.Cur_UrlVideoPresentacion}"></param>
+                    <param name="movie" id="video_curso_param"  value="http://www.youtube.com/v/{$curso.Cur_UrlVideoPresentacion}"></param>
                     <param name="allowFullScreen" value="true"></param>
                     <param name="allowscriptaccess" value="always"></param>
-                    <embed src="http://www.youtube.com/v/{$curso.Cur_UrlVideoPresentacion}" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="100%" height="344"></embed>
-                  </object> 
+                    <embed id="video_curso_embed" src="http://www.youtube.com/v/{$curso.Cur_UrlVideoPresentacion}" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="100%" height="344"></embed>
+                  </object>
+              </div>
+          {else}
+              <div class="col-md-offset-3 col-md-6 hidden" id="div_video" style="padding: 5px; border: 2px solid #00a65a;">
+                  <object width="100%" height="344">
+                    <param name="movie" id="video_curso_param" value=""></param>
+                    <param name="allowFullScreen" value="true"></param>
+                    <param name="allowscriptaccess" value="always"></param>
+                    <embed id="video_curso_embed" src="" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="100%" height="344"></embed>
+                  </object>
               </div>
           {/if}
       </div>
@@ -109,9 +122,9 @@
             <param name="allowFullScreen" value="true"></param>
             <param name="allowscriptaccess" value="always"></param>
             <embed src="http://www.youtube.com/v/s-fjg7Stgb4&hl=es&fs=1&" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="425" height="344"></embed>
-          </object> 
+          </object>
       </div> -->
-      
+
     </div>
   </div>
 </div>
@@ -121,10 +134,10 @@
 <!-- CONTENIDO -->
 <div {if isset($actives) && $actives == "con" } class="col-lg-12  div_contenido display-block" {else} class="col-lg-12  div_contenido" {/if}  >
   <div class="panel panel-default" style="border-top: 0; border-top-left-radius: 0; border-top-right-radius: 0;">
-    
+
     <div class="panel-body"  id="panelDetalle">
       <form method="post" action="gcurso/_modificar_curso" id="frm_registro">
-      <input hidden="hidden" name="id" value="{$curso.Cur_IdCurso}"/>
+      <input hidden="hidden" id="hidden_curso" name="id" value="{$curso.Cur_IdCurso}"/>
       <div class="col-lg-12"><h5><strong>Título del Curso</strong></h5></div>
         <div class="col-lg-12">
           <input name="titulo" id="inTitulo" class="form-control" value="{$curso.Cur_Titulo}"/>
@@ -174,7 +187,7 @@
 <!-- PARAMETROS -->
 <div {if isset($actives) && $actives == "par" } class="col-lg-12  div_parametros display-block" {else} class="col-lg-12  div_parametros" {/if}  >
   <div class="panel panel-default" style="border-top: 0; border-top-left-radius: 0; border-top-right-radius: 0;">
-    
+
     <div class="panel-body" id="panelParametros">
       <div class="col-lg-6">
         <label>Nota Minima</label>
@@ -190,9 +203,12 @@
     </div>
   </div>
 </div>
+{/block}
 
-<script >
+{block 'js' append}
+<!-- <script >
   $("#hidden_curso").val("{Session::get('learn_param_curso')}");
-</script>
+</script> -->
 <script type="text/javascript" src="{$_url}gcurso/js/_view_finalizar_registro.js"></script>
 <script type="text/javascript" src="{$_url}gcurso/js/_view_finalizar_registro2.js"></script>
+{/block}

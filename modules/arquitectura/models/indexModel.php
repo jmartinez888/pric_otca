@@ -335,21 +335,21 @@ class indexModel extends Model {
     public function getPaginaTraducida($condicion, $Idi_IdIdioma = "es") {
         try{
             $paginas = $this->_db->query(
-                    "SELECT 
-                    pa.Pag_IdPagina,
-                    pa.Pag_IdPrincipal,
-                    pa.Pag_TipoPagina,
-                    pa.Pag_Sistema,
-                    fn_TraducirContenido('pagina','Pag_Nombre',pa.Pag_IdPagina,'$Idi_IdIdioma',pa.Pag_Nombre) Pag_Nombre,
-                    fn_TraducirContenido('pagina','Pag_Descripcion',pa.Pag_IdPagina,'$Idi_IdIdioma',pa.Pag_Descripcion) Pag_Descripcion,
-                    pa.Pag_Orden,
-                    fn_TraducirContenido('pagina','Pag_Contenido',pa.Pag_IdPagina,'$Idi_IdIdioma',pa.Pag_Contenido) Pag_Contenido,
-                    pa.Pag_Url,
-                    pa.Pag_Selectable,
-                    pa.Pag_Estado,
-                    fn_devolverIdioma('pagina',pa.Pag_IdPagina,'$Idi_IdIdioma',pa.Idi_IdIdioma) Idi_IdIdioma
+                "SELECT 
+                pa.Pag_IdPagina,
+                pa.Pag_IdPrincipal,
+                pa.Pag_TipoPagina,
+                pa.Pag_Sistema,
+                fn_TraducirContenido('pagina','Pag_Nombre',pa.Pag_IdPagina,'$Idi_IdIdioma',pa.Pag_Nombre) Pag_Nombre,
+                fn_TraducirContenido('pagina','Pag_Descripcion',pa.Pag_IdPagina,'$Idi_IdIdioma',pa.Pag_Descripcion) Pag_Descripcion,
+                pa.Pag_Orden,
+                fn_TraducirContenido('pagina','Pag_Contenido',pa.Pag_IdPagina,'$Idi_IdIdioma',pa.Pag_Contenido) Pag_Contenido,
+                pa.Pag_Url,
+                pa.Pag_Selectable,
+                pa.Pag_Estado,
+                fn_devolverIdioma('pagina',pa.Pag_IdPagina,'$Idi_IdIdioma',pa.Idi_IdIdioma) Idi_IdIdioma
 
-                    FROM pagina pa $condicion"
+                FROM pagina pa $condicion"
             );
             return $paginas->fetch();
         } catch (PDOException $exception) {

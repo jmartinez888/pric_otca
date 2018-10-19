@@ -535,6 +535,9 @@
             var _root_ = '{$_layoutParams.root_clear}';
             var _root_lang = '{$_layoutParams.root}';
             var _root_archivo_fisico = '{$_layoutParams.root_archivo_fisico}';
+            var _modulo = '{$_layoutParams.modulo}';
+            var _controlador = '{$_layoutParams.controlador}';
+            var _metodo = '{$_layoutParams.metodo}';            
             var locale_set = '{Cookie::lenguaje()}';
             // $('.mitooltip').tooltip();
         </script>
@@ -559,6 +562,7 @@
         <script type="text/javascript" src="{$_layoutParams.ruta_js}bootstrapValidator.js"></script>
         <!--<script type="text/javascript" src="{$_layoutParams.root_clear}public/js/highcharts.js"></script>-->
         <script type="text/javascript" src="{$_layoutParams.root_clear}public/ckeditor/ckeditor.js"></script>
+        <script type="text/javascript" src="{$_layoutParams.root_clear}public/ckeditor/adapters/jquery.js"></script>
 
         <script type="text/javascript" src="{$_layoutParams.root_clear}public/js/validator.js"></script>
         <script type="text/javascript" src="{$_layoutParams.root_clear}public/js/login.js"></script>

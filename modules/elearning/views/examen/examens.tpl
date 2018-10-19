@@ -1,4 +1,4 @@
-{include file='modules/elearning/views/cursos/menu/lateral.tpl'}
+{include file='modules/elearning/views/gestion/menu/menu.tpl'}
 <div class="col-lg-10">
 <div class="col-lg-12">
     <div class="col-lg-12">

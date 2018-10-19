@@ -18,6 +18,7 @@ class uploaderController extends elearningController {
   }
 
   public function post(){
+    // echo "string".$this->getTexto("route").$this->getTexto("pre");exit;
     $this->getLibrary("ServiceResult");
     $service = new ServiceResult();
     $ruta = $this->Route($this->getTexto("route"));

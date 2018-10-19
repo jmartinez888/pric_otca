@@ -17,160 +17,164 @@ class gleccionController extends elearningController {
     $this->service = new ServiceResult();
   }
 
-  public function _view_lecciones_modulo(){
-    $curso = $this->getTexto("curso");
-    $modulo = $this->getTexto("modulo");
+    public function _view_lecciones_modulo($id_curso = 0, $id_modulo = 0){
+        // $curso = $this->getTexto("curso");
+        // $modulo = $this->getTexto("modulo");
 
-    if(strlen($curso)==0){ $curso = Session::get("learn_param_curso"); }
-    if(strlen($modulo)==0){ $modulo = Session::get("learn_param_modulo"); }
-    if(strlen($curso)==0 || strlen($modulo)==0){ exit; }
+        $this->_view->setTemplate(LAYOUT_FRONTEND);
+        if(strlen($id_curso)==0){ $id_curso = Session::get("learn_param_curso"); }
+        if(strlen($id_modulo)==0){ $id_modulo = Session::get("learn_param_modulo"); }
+        if(strlen($id_curso)==0 || strlen($id_modulo)==0){ exit; }
 
-    Session::set("learn_param_curso", $curso);
-    Session::set("learn_param_modulo", $modulo);
+        Session::set("learn_param_curso", $id_curso);
+        Session::set("learn_param_modulo", $id_modulo);
 
-    $Lmodel = $this->loadModel("_gestionLeccion");
-    $Cmodel = $this->loadModel("_gestionCurso");
-    $Mmodel = $this->loadModel("_gestionModulo");
+        $Lmodel = $this->loadModel("_gestionLeccion");
+        $Cmodel = $this->loadModel("_gestionCurso");
+        $Mmodel = $this->loadModel("_gestionModulo");
 
-    $curso = $Cmodel->getCursoXId($curso);
-    $tipo = $Lmodel->getTipoLecccion( $curso["Moa_IdModalidad"]==2? " ": "" );
-    $lecciones = $Lmodel->getLecciones($modulo);
-    $modulo = $Mmodel->getModuloId($modulo);
+        $curso = $Cmodel->getCursoXId($id_curso);
+        $tipo = $Lmodel->getTipoLecccion( $curso["Moa_IdModalidad"]==2? " ": "" );
+        $lecciones = $Lmodel->getLecciones($id_modulo);
+        $modulo = $Mmodel->getModuloId($id_modulo);
 
-    Session::set("learn_url_tmp", "gleccion/_view_lecciones_modulo");
-    $this->_view->assign("tipo", $tipo);
-    $this->_view->assign("lecciones", $lecciones);
-    $this->_view->assign("modulo", $modulo);
-    $this->_view->assign("curso", $curso);
-    $this->_view->renderizar("ajax/_view_lecciones_modulo", false, true);
-  }
+        Session::set("learn_url_tmp", "gleccion/_view_lecciones_modulo");
+        $this->_view->assign("tipo", $tipo);
+        $this->_view->assign('menu', 'curso');
+        $this->_view->assign("lecciones", $lecciones);
+        $this->_view->assign("modulo", $modulo);
+        $this->_view->assign("curso", $curso);
+        $this->_view->render("ajax/_view_lecciones_modulo");
+    }
 
-  public function _registrar_leccion(){
-    $id = $this->getTexto("id");
-    $tipo = $this->getTexto("tipo");
-    $titulo = $this->getTexto("titulo");
-    $descripcion = $this->getTexto("descripcion");
+    public function _registrar_leccion(){
+        $id = $this->getTexto("id");
+        $tipo = $this->getTexto("tipo");
+        $titulo = $this->getTexto("titulo");
+        $descripcion = $this->getTexto("descripcion");
 
-    $Mmodel = $this->loadModel("_gestionLeccion");
-    $Mmodel->insertLeccion($id, $tipo, $titulo, $descripcion);
+        $Mmodel = $this->loadModel("_gestionLeccion");
+        $Mmodel->insertLeccion($id, $tipo, $titulo, $descripcion);
 
-    $this->service->Success("Se resgistó el módulo con exito");
-    $this->service->Send();
-  }
+        $this->service->Success("Se resgistó el módulo con exito");
+        $this->service->Send();
+    }
 
-  public function _estado_leccion(){
-    $id = $this->getTexto("id");
-    $estado = $this->getTexto("estado");
-    $model = $this->loadModel("_gestionLeccion");
+    public function _estado_leccion(){
+        $id = $this->getTexto("id");
+        $estado = $this->getTexto("estado");
+        $model = $this->loadModel("_gestionLeccion");
 
-    $leccion = $model->getLeccionId($id);
-    if ($leccion["Lec_Tipo"]==3 && $estado == 1){
-        $mensaje = $model->ValidarPreguntasExamen($id);
-        if(strlen($mensaje)!=0){
-            $this->service->error($mensaje);
-            $this->service->Send();
+        $leccion = $model->getLeccionId($id);
+        if ($leccion["Lec_Tipo"]==3 && $estado == 1){
+            $mensaje = $model->ValidarPreguntasExamen($id);
+            if(strlen($mensaje)!=0){
+                $this->service->error($mensaje);
+                $this->service->Send();
+            }else{
+                $model->updateEstadoLeccion($id, $estado);
+                $this->service->Success($estado);
+                $this->service->Send();
+            }
         }else{
             $model->updateEstadoLeccion($id, $estado);
             $this->service->Success($estado);
             $this->service->Send();
         }
-    }else{
-        $model->updateEstadoLeccion($id, $estado);
+    }
+
+    public function _eliminar_leccion(){
+        $id = $this->getTexto("id");
+        $model = $this->loadModel("_gestionLeccion");
+        $model->deleteLeccion($id);
+
         $this->service->Success($estado);
         $this->service->Send();
     }
-  }
 
-  public function _eliminar_leccion(){
-    $id = $this->getTexto("id");
-    $model = $this->loadModel("_gestionLeccion");
-    $model->deleteLeccion($id);
+    public function _eliminar_referencia(){
+        $id = $this->getTexto("id");
+        $model = $this->loadModel("_gestionLeccion");
+        $model->deleteReferencia($id);
 
-    $this->service->Success($estado);
-    $this->service->Send();
-  }
-
-  public function _eliminar_referencia(){
-    $id = $this->getTexto("id");
-    $model = $this->loadModel("_gestionLeccion");
-    $model->deleteReferencia($id);
-
-    $this->service->Success($estado);
-    $this->service->Send();
-  }
-
-  public function _eliminar_material(){
-    $id = $this->getTexto("id");
-    $model = $this->loadModel("_gestionLeccion");
-    $model->deleteMaterial($id);
-
-    $this->service->Success($estado);
-    $this->service->Send();
-  }
-
-  public function _view_leccion(){
-    $curso = $this->getTexto("curso");
-    $modulo = $this->getTexto("modulo");
-    $leccion = $this->getTexto("leccion");
-
-    if(strlen($curso)==0){ $curso = Session::get("learn_param_curso"); }
-    if(strlen($modulo)==0){ $modulo = Session::get("learn_param_modulo"); }
-    if(strlen($leccion)==0){ $leccion = Session::get("learn_param_leccion"); }
-    if(strlen($curso)==0 || strlen($modulo)==0 || strlen($leccion)==0){ exit; }
-
-    Session::set("learn_param_curso", $curso);
-    Session::set("learn_param_modulo", $modulo);
-    Session::set("learn_param_leccion", $leccion);
-    Session::set("learn_url_tmp", "gleccion/_view_leccion");
-
-    $Tmodel = $this->loadModel("trabajo"); //RODRIGO 20180605
-    $Cmodel = $this->loadModel("_gestionCurso");
-    $Mmodel = $this->loadModel("_gestionModulo");
-    $model = $this->loadModel("_gestionLeccion");
-    
-    $curso = $Cmodel->getCursoXId($curso);
-    $modulo = $Mmodel->getModuloId($modulo);
-    $leccion = $model->getLeccionId($leccion);
-    $referencias = $model->getReferenciaLeccion($leccion["Lec_IdLeccion"]);
-    $material = $model->getMaterialLeccion($leccion["Lec_IdLeccion"]);
-    $trabajo = $Tmodel->getTrabajoUsuario($leccion["Lec_IdLeccion"]); //RODRIGO 20180605
-    $tipo_trabajo = $Tmodel->getConstanteTrabajo(); //RODRIGO 20180605
-
-    $view = "";
-    $this->_view->assign("curso", $curso);
-    $this->_view->assign("modulo", $modulo);
-    $this->_view->assign("leccion", $leccion);
-    $this->_view->assign("referencias", $referencias);
-    $this->_view->assign("material", $material);
-    $this->_view->assign("trabajo", $trabajo); //RODRIGO 20180605
-    $this->_view->assign("tipo_trabajo", $tipo_trabajo); //RODRIGO 20180605
-    switch ($leccion["Lec_Tipo"]) {
-      case 1:
-        $contenido = $model->getContenidoLeccion($leccion["Lec_IdLeccion"]);
-        $this->_view->assign("contenido", $contenido);
-        $view = "ajax/_view_1";
-        break;
-      case 2:
-        $contenido = $model->getDetalleLeccion2($leccion["Lec_IdLeccion"]);
-        $this->_view->assign("contenido", $contenido);
-        $view = "ajax/_view_2";
-        break;
-      case 3:
-        // $examen = $model->insertExamenLeccion($leccion["Lec_IdLeccion"], "", 0, 0, 0);
-        // $preguntas = $model->getPreguntas($examen[0]["Exa_IdExamen"]);
-        // $this->_view->assign("examen", $examen[0]);
-        // $this->_view->assign("preguntas", $preguntas);
-        $view = "ajax/_view_3";
-        break;
-      case 4:
-        $piz = $this->loadModel("pizarra");
-        $pizarras = $piz->getPizarrasLeccion($leccion["Lec_IdLeccion"]);
-        $this->_view->assign("pizarras", $pizarras);
-        $view = "ajax/_view_4";
-        break;
+        $this->service->Success($estado);
+        $this->service->Send();
     }
-    $this->_view->renderizar($view, false, true);
-  }
+
+    public function _eliminar_material(){
+        $id = $this->getTexto("id");
+        $model = $this->loadModel("_gestionLeccion");
+        $model->deleteMaterial($id);
+
+        $this->service->Success($estado);
+        $this->service->Send();
+    }
+
+    public function _view_leccion($curso = 0, $modulo = 0, $leccion = 0){
+        // $curso = $this->getTexto("curso");
+        // $modulo = $this->getTexto("modulo");
+        // $leccion = $this->getTexto("leccion");
+        $this->_view->setTemplate(LAYOUT_FRONTEND);
+        if(strlen($curso)==0){ $curso = Session::get("learn_param_curso"); }
+        if(strlen($modulo)==0){ $modulo = Session::get("learn_param_modulo"); }
+        if(strlen($leccion)==0){ $leccion = Session::get("learn_param_leccion"); }
+        if(strlen($curso)==0 || strlen($modulo)==0 || strlen($leccion)==0){ exit; }
+
+        Session::set("learn_param_curso", $curso);
+        Session::set("learn_param_modulo", $modulo);
+        Session::set("learn_param_leccion", $leccion);
+        Session::set("learn_url_tmp", "gleccion/_view_leccion");
+
+        $Tmodel = $this->loadModel("trabajo"); //RODRIGO 20180605
+        $Cmodel = $this->loadModel("_gestionCurso");
+        $Mmodel = $this->loadModel("_gestionModulo");
+        $model = $this->loadModel("_gestionLeccion");
+
+        $curso = $Cmodel->getCursoXId($curso);
+        $modulo = $Mmodel->getModuloId($modulo);
+        $leccion = $model->getLeccionId($leccion);
+        $referencias = $model->getReferenciaLeccion($leccion["Lec_IdLeccion"]);
+        $material = $model->getMaterialLeccion($leccion["Lec_IdLeccion"]);
+        $trabajo = $Tmodel->getTrabajoUsuario($leccion["Lec_IdLeccion"]); //RODRIGO 20180605
+        $tipo_trabajo = $Tmodel->getConstanteTrabajo(); //RODRIGO 20180605
+
+        $view = "";
+        $this->_view->assign('menu', 'curso');
+        $this->_view->assign("curso", $curso);
+        $this->_view->assign("modulo", $modulo);
+        $this->_view->assign("leccion", $leccion);
+        $this->_view->assign("referencias", $referencias);
+        $this->_view->assign("material", $material);
+        $this->_view->assign("trabajo", $trabajo); //RODRIGO 20180605
+        $this->_view->assign("tipo_trabajo", $tipo_trabajo); //RODRIGO 20180605
+        switch ($leccion["Lec_Tipo"]) {
+          case 1:
+            $contenido = $model->getContenidoLeccion($leccion["Lec_IdLeccion"]);
+            $this->_view->assign("contenido", $contenido);
+            $view = "ajax/_view_1";
+            break;
+          case 2:
+            $contenido = $model->getDetalleLeccion2($leccion["Lec_IdLeccion"]);
+            $this->_view->assign("contenido", $contenido);
+            $view = "ajax/_view_2";
+            break;
+          case 3:
+            // $examen = $model->insertExamenLeccion($leccion["Lec_IdLeccion"], "", 0, 0, 0);
+            // $preguntas = $model->getPreguntas($examen[0]["Exa_IdExamen"]);
+            // $this->_view->assign("examen", $examen[0]);
+            // $this->_view->assign("preguntas", $preguntas);
+            // $view = "ajax/_view_3";
+            $this->redireccionar("/elearning/examen/examens/1");
+            break;
+          case 4:
+            $piz = $this->loadModel("pizarra");
+            $pizarras = $piz->getPizarrasLeccion($leccion["Lec_IdLeccion"]);
+            $this->_view->assign("pizarras", $pizarras);
+            $view = "ajax/_view_4";
+            break;
+        }
+        $this->_view->render($view);
+    }
 
   public function _modificar_contenido(){
     $id = $this->getTexto("id");
@@ -202,28 +206,28 @@ class gleccionController extends elearningController {
   }
 
 
-  public function _actualizar_leccion(){
-    $id = $this->getTexto("id");
-    $titulo = $this->getTexto("titulo");
+    public function _actualizar_leccion(){
+        $id = $this->getTexto("id_leccion");
+        $titulo = $this->getTexto("titulo");
 
-    $model = $this->loadModel("_gestionLeccion");
-    $model->updateLeccion($id, $titulo);
+        $model = $this->loadModel("_gestionLeccion");
+        $model->updateLeccion($id, $titulo);
 
-    $this->service->Success("Se resgistó el contenido con exito");
-    $this->service->Send();
-  }
+        $this->service->Success("Se resgistó el contenido con exito");
+        $this->service->Send();
+    }
 
-  public function _registrar_referencia(){
-    $leccion = $this->getTexto("leccion");
-    $titulo = $this->getTexto("titulo");
-    $descripcion = $this->getTexto("descripcion");
+    public function _registrar_referencia(){
+        $leccion = $this->getTexto("leccion");
+        $titulo = $this->getTexto("titulo");
+        $descripcion = $this->getTexto("descripcionRef");
 
-    $model = $this->loadModel("_gestionLeccion");
-    $model->insertReferencia($leccion, $titulo, $descripcion);
+        $model = $this->loadModel("_gestionLeccion");
+        $model->insertReferencia($leccion, $titulo, $descripcion);
 
-    $this->service->Success("Se resgistó el contenido con exito");
-    $this->service->Send();
-  }
+        $this->service->Success("Se resgistó el contenido con exito");
+        $this->service->Send();
+    }
 
   public function _fechas_leccion(){
     $anio = $this->getTexto("anio");
@@ -255,6 +259,12 @@ class gleccionController extends elearningController {
     $link = $this->getTexto("link");
     $descripcion = $this->getTexto("descripcion");
 
+    // Video YouTube
+    $cadena='watch?v=';  
+    $pos=strpos($link,$cadena);  
+    $pos= $pos + strlen($cadena);  
+    $link=substr($link,$pos,100);  
+
     $model = $this->loadModel("_gestionLeccion");
     $model->updateVideoLeccion($id, $link, $descripcion);
 
@@ -262,27 +272,27 @@ class gleccionController extends elearningController {
     $this->service->Send();
   }
 
-  public function _registrar_material(){
-    $tipo = $this->getTexto("tipo");
-    $leccion = $this->getTexto("leccion");
-    $url = $this->getTexto("url");
-    $descripcion = $this->getTexto("descripcion");
+    public function _registrar_material(){
+        $tipo = $this->getTexto("tipo");
+        $leccion = $this->getTexto("leccion");
+        $url = $this->getTexto("url");
+        $descripcion = $this->getTexto("descripcion");
 
-    $model = $this->loadModel("_gestionLeccion");
+        $model = $this->loadModel("_gestionLeccion");
 
-    if($tipo==2){
-      $url = html_entity_decode($url);
-      $url = json_decode($url, true);
+        if($tipo==2){
+          $url = html_entity_decode($url);
+          $url = json_decode($url, true);
 
-      foreach ($url as $i) {
-        $model->insertMaterial($leccion, $i["url"], 2, $descripcion);
-      }
-    }else{
-      $model->insertMaterial($leccion, $url, 1, $descripcion);
+          foreach ($url as $i) {
+            $model->insertMaterial($leccion, $i["url"], 2, $descripcion);
+          }
+        }else{
+          $model->insertMaterial($leccion, $url, 1, $descripcion);
+        }
+        $this->service->Success("Se insertó los materiales");
+        $this->service->Send();
     }
-    $this->service->Success("Se insertó los materiales");
-    $this->service->Send();
-  }
 
   public function _registrar_pregunta(){
     $leccion = $this->getTexto("leccion");
