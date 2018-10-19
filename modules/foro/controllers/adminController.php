@@ -3,6 +3,7 @@
 use App\ContenidoTraducido;
 use App\ForoTematica;
 use App\Idioma;
+use Dompdf\Dompdf;
 use Illuminate\Database\Capsule\Manager as DB;
 use Illuminate\Support\Collection as TTT;
 // use Recursos\App\DataTables as DataTables;
@@ -462,71 +463,128 @@ class adminController extends foroController
         $this->_view->assign('idiomaUrl',$Idi_IdIdioma);
         $this->_view->renderizar('form');
     }
+
     private function _tematica_export ($query, $formato) {
         $tematicas = $query->get();
         switch ($formato) {
             case 'pdf':
-                ob_start();
-                $this->_view->assign('tematicas', $tematicas);
-                $html = $this->_view->fetch(ROOT.'modules/foro/views/admin/pdf/pdf_tematicas.tpl');
+                $data = $tematica->map(function($item) {
+                    $item->Lit_Descripcion = str_limit($item->Lit_Descripcion, 100);
+                        return $item;
+                });
+                // ob_start();
+                $this->_view->assign('tematicas', $data);
+                // $html = $this->_view->fetch(ROOT.'modules/foro/views/admin/pdf/pdf_tematicas.tpl');
+                $html = $this->_view->render('pdf/pdf_tematicas', false, true);
+
                 // header("Content-Type: text/html;charset=utf-8");
-//                 $html = "
+                $dompdf = new Dompdf();
+                $dompdf->loadHtml($html);
 
-// <!DOCTYPE html>
-// <html>
-//     <head>
-//         <link href='views/layout/backend/css/pdf.css' rel='stylesheet' type='text/css'>
-//     </head>
-//     <body>
-//         <div class='table-responsive'>
-//             <h3 style='text-align: center; color:black; font-family: inherit;'>ROLES DEL SISTEMA</h3>
-//             <table class='table'>
-//                 <thead>
-//                     <tr>
-//                         <th></th>
-//                         <th>Rol</th>
-//                         <th>".utf8_decode('Módulo')."</th>
-//                         <th>Estado</th>
-//                         <th>Row_Estado</th>
-//                     </tr>
-//                 </thead>
-//                 <tbody>
-//                     <tr>
-//                         <td>asd</td>
-//                         <td>asd</td>
-//                         <td>asd</td>
-//                         <td>asd</td>
-//                         <td>asd</td>
-//                     </tr>
-//                 </tbody>
-//             </table>
-//         </div>
-//     </body>
-// </html>
+                // (Optional) Setup the paper size and orientation
+                $dompdf->setPaper('A4', 'landscape');
 
-                // ";
-                echo $html;
-                require_once("libs/_dompdf/dompdf_config.inc.php");
-
-                $dompdf = new DOMPDF();
-                $dompdf->set_paper('A4', 'landscape'); //esta es una forma de ponerlo horizontal
-                $dompdf->load_html(ob_get_clean());
+                // Render the HTML as PDF
                 $dompdf->render();
-                header("Content-type:application/pdf");
-                $pdf      = $dompdf->output();
-                $filename = "'".APP_NAME.'-OTCA_Descargas.pdf';
-                $dompdf->stream($filename, array("atachment" => 0));
+
+                // Output the generated PDF to Browser
+                $dompdf->stream();
+
+                // require_once("libs/_dompdf/dompdf_config.inc.php");
+
+                // $dompdf = new DOMPDF();
+                // $dompdf->set_paper('A4', 'landscape');
+                // $dompdf->load_html(ob_get_clean());
+                // $dompdf->render();
+                // header("Content-type:application/pdf");
+                // $pdf      = $dompdf->output();
+                // $filename = "'".APP_NAME.'-OTCA_Descargas.pdf';
+                // $dompdf->stream($filename, array("atachment" => 0));
 
 
-                // It will be called downloaded.pdf
-                // header("Content-Disposition:attachment;filename='".$filename."'");
+                break;
+            case 'csv':
+                $objPHPExcel = new PHPExcel();
 
-                // The PDF source is in original.pdf
-                // readfile("original.pdf");
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(0, 1, 'Usu_Usuario');
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(1, 1, 'Roles');
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(2, 1, 'Usu_Estado');
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(3, 1, 'Row_Estado');
+                $init = 2;
+                foreach ($tematicas as $key => $value) {
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(0, $init, $init - 1);
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(1, $init, $value->Lit_Nombre);
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(2, $init, $value->Lit_Estado);
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(3, $init, $value->Lit_Descripcion);
+                    $init++;
+                }
+                // for ($i = 2; $i <= (count($lista_datos) + 1); $i++) {
+                //     $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(0, $i, $lista_datos[$i - 2]['Usu_Usuario']);
+                //     foreach ($lista_datos[$i - 2]['Roles'] as $Roles) {
+                //         // echo count($Roles) . 'hola'; exit;
+                //         $roles .= $Roles['Rol_Nombre'] . ', ';
+                //     }
+                //     $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(1, $i, $roles);
+                //     // $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(1, $i, $lista_datos[$i - 2]['Roles']);
+                //     $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(2, $i, $lista_datos[$i - 2]['Usu_Estado']);
+                //     $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(3, $i, $lista_datos[$i - 2]['Row_Estado']);
+                // }
+                $objPHPExcel->getActiveSheet()->setTitle('ListaDeDescargas');
+                $objPHPExcel->setActiveSheetIndex(0);
+                ob_end_clean();
+                ob_start();
+                //
+                header("Content-type: application/vnd.ms-excel");
+                header("Pragma: no-cache"); header("Expires: 0");
+                echo "\xEF\xBB\xBF"; //UTF-8 BOM echo $out;
+                //
+                header('Content-Disposition: attachment;filename="'.APP_NAME.'-OTCA_Descargas.csv"');
+                header('Cache-Control: max-age=0');
+                $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'CSV');
+                $objWriter->save('php://output');
+                break;
+            case 'excel':
+                $objPHPExcel = new PHPExcel();
+                $data = $tematicas;
+                $lenguaje = $this->_view->LoadLenguaje('foro_admin_tematica');
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(0, 1, '#');
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(1, 1, $lenguaje['str_nombre']);
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(2, 1, $lenguaje['str_estado']);
+                // $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(3, 1, $lenguaje['str_idioma']);
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(3, 1, $lenguaje['str_descripcion']);
+                // dd($data->next());
+                $init = 2;
+                foreach ($data as $value) {
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(0, $init, $init - 1);
+                    // foreach ($lista_datos[$i - 2]['Roles'] as $Roles) {
+                    //     // echo count($Roles) . 'hola'; exit;
+                    //     $roles .= $Roles['Rol_Nombre'] . ', ';
+                    // }
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(1, $init, $value->Lit_Nombre);
+                    // $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(1, $i, $lista_datos[$i - 2]['Roles']);
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(2, $init, $value->Lit_Estado);
+                    // $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(3, $init, $value->Lit_Idio);
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(3, $init, $value->Lit_Descripcion);
+                    $init++;
+                }
+
+
+                $objPHPExcel->getActiveSheet()->setTitle($lenguaje['str_tematica']);
+                $objPHPExcel->setActiveSheetIndex(0);
+                ob_end_clean();
+                ob_start();
+                //Session::destroy('encabezado');
+                // Session::destroy('Descargar');
+                header('Content-Type: application/vnd.ms-excel');
+                header('Content-Disposition: attachment;filename="'.APP_NAME.'-OTCA_'.$lenguaje['str_descargas'].'.xls"');
+                header('Cache-Control: max-age=0');
+                $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
+                $objWriter->save('php://output');
                 break;
         }
     }
     public function tematica ($method = 'index', $action = 'default') {
+        // $this->_acl->acceso('gestion_foro_tematica');
         $this->_view->getLenguaje('foro_admin_tematica');
         //  new DataTables();
         // exit();
@@ -796,7 +854,7 @@ class adminController extends foroController
                             if ($tematica->Lit_IdLineaTematica != 0) {
                                 foreach ($opcionales as  $value) {
                                     $traducido = new ContenidoTraducido();
-                                    $traducido->Cot_Tabla ='tematica';
+                                    $traducido->Cot_Tabla ='linea_tematica';
                                     $traducido->Cot_IdRegistro = $tematica->Lit_IdLineaTematica;
                                     $traducido->Cot_Columna ='Lit_Nombre';
                                     $traducido->Cot_Traduccion = $value['tematica'];
@@ -804,7 +862,7 @@ class adminController extends foroController
                                     $traducido->save();
 
                                     $traducido = new ContenidoTraducido();
-                                    $traducido->Cot_Tabla ='tematica';
+                                    $traducido->Cot_Tabla ='linea_tematica';
                                     $traducido->Cot_IdRegistro = $tematica->Lit_IdLineaTematica;
                                     $traducido->Cot_Columna ='Lit_Descripcion';
                                     $traducido->Cot_Traduccion = $value['descripcion'];

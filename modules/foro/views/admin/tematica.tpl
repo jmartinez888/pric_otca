@@ -14,7 +14,7 @@
                     <div class="col-sm-8">
                         <form class="form-horizontal" data-toggle="validator"  role="form" @submit.prevent="onSubmit_registrarTematica" novalidate="true">
                             <div class="form-group">
-                                <label class="col-lg-2 control-label" for="nombre_tematica">{$lenguaje['str_idioma']} : </label>
+                                <label class="col-lg-2 control-label" >{$lenguaje['str_idioma']} : </label>
                                 <div class="col-lg-10">
                                     <div class="checkbox">
                                         {foreach $idiomas as $item}

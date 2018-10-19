@@ -61,23 +61,28 @@ var app = new Vue({
       }
     },
     onSubmit_exportTematica (e) {
-      console.log(e)
-      // window.location.href = _root_lang + '/foro/admin/tematica/datatable?' + $.param(this.dt_tbl_tematica.ajax.params() + '&export=' + e)
-      let p = this.dt_tbl_tematica.ajax.params()
-      p.export = e
-      axios({
-        url: _root_lang + '/foro/admin/tematica/datatable',
-        method: 'GET',
-        params: p,
-        responseType: 'blob', // important
-      }).then((response) => {
-        const url = window.URL.createObjectURL(new Blob([response.data]));
-        const link = document.createElement('a');
-        link.href = url;
-        link.setAttribute('download', 'file.pdf');
-        // document.body.appendChild(link);
-        link.click();
-      });
+      // console.log(e)
+      // switch (e) {
+      //   case ''
+      // }
+      window.location.href = _root_lang + 'foro/admin/tematica/datatable?' + $.param(this.dt_tbl_tematica.ajax.params())  + '&export=' + e
+
+
+      // let p = this.dt_tbl_tematica.ajax.params()
+      // p.export = e
+      // axios({
+      //   url: _root_lang + '/foro/admin/tematica/datatable',
+      //   method: 'GET',
+      //   params: p,
+      //   responseType: 'blob', // important
+      // }).then((response) => {
+      //   const url = window.URL.createObjectURL(new Blob([response.data]));
+      //   const link = document.createElement('a');
+      //   link.href = url;
+      //   link.setAttribute('download', 'file.pdf');
+      //   // document.body.appendChild(link);
+      //   link.click();
+      // });
     },
     onSubmit_filtrarTematica () {
       this.dt_tbl_tematica.draw()

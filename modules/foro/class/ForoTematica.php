@@ -29,8 +29,9 @@ class ForoTematica extends Eloquent
       static::addGlobalScope('translate', function (Builder $builder) {
       	$builder->select(
       		'*',
-          DB::raw("fn_TraducirContenido('linea_tematica','Lit_Nombre',linea_tematica.Lit_IdLineaTematica,'".\Cookie::lenguaje()."',linea_tematica.Lit_Nombre) Lit_Nombre")
-      		// DB::raw("fn_TraducirContenido('linea_tematica','Lit_Nombre',linea_tematica.Lit_IdLineaTematica,'".$_COOKIE['langsiigef']."',linea_tematica.Lit_Nombre) Lit_Nombre")
+          DB::raw("fn_TraducirContenido('linea_tematica','Lit_Nombre',linea_tematica.Lit_IdLineaTematica,'".\Cookie::lenguaje()."',linea_tematica.Lit_Nombre)  Lit_Nombre"),
+          DB::raw("fn_TraducirContenido('linea_tematica','Lit_Descripcion',linea_tematica.Lit_IdLineaTematica,'".\Cookie::lenguaje()."',linea_tematica.Lit_Descripcion)  Lit_Descripcion")
+
       	);
 
       });
