@@ -429,7 +429,7 @@ class cursosController extends elearningController {
 
       $clave = array_search($objeto["Lec_IdLeccion"], array_column($lecciones, "Lec_IdLeccion"));
       $nextLeccion = $lecciones[$clave+1];
-      echo $clave; print_r($nextLeccion);print_r($lecciones); exit;
+      // echo $clave; print_r($nextLeccion);print_r($lecciones); exit;
       if($nextLeccion["Progreso"]==1 && $nextLeccion["Lec_Tipo"]==3){
 
         if(count($lecciones) > $clave+2){
