@@ -16,11 +16,16 @@ class ContenidoTraducido extends Eloquent
   							->where('Idi_IdIdioma', $lenguaje)
   							->get();
   }
-  /**
-	  values = [
-	  	'columna'	 => 'new_value'
-	  ]
-  */
+
+  public static function setRow ($table, $id, $columna, $contenido, $idioma) {
+    $traducido = new ContenidoTraducido();
+    $traducido->Cot_Tabla = $table;
+    $traducido->Cot_IdRegistro = $id;
+    $traducido->Cot_Columna = $columna;
+    $traducido->Cot_Traduccion = $contenido;
+    $traducido->Idi_IdIdioma = $idioma;
+    $traducido->save();
+  }
   public static function updateRow ($table, $id, $idioma, $values, $create_new = false) {
   	foreach ($values as $key => $value) {
 	  	$temp = self::where('Cot_Tabla', $table)
