@@ -10,8 +10,9 @@
           <hr class="cursos-hr-title-foro">
       </div>
   </div>
+
 </div>
-<div class="container-fluid" id="difusion_gestion">
+<div class="row" id="difusion_gestion">
 	<form-contenido></form-contenido>
 </div>
 {/block}

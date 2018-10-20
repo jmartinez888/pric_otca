@@ -115,6 +115,7 @@ class link_interesController extends difusionController {
 		$this->_view->setTemplate(LAYOUT_FRONTEND);
 		$d = $this->_view->getLenguaje('difusion_contenido_index');
 		$data['idiomas'] = Idioma::activos();
+		$data['edit'] = false;
 		$data['idiomas']->map(function($item) use(&$vars_idioma){
         $vars_idioma['idioma_'.$item->Idi_IdIdioma] = [
             'id' => $item->Idi_IdIdioma,
@@ -124,7 +125,11 @@ class link_interesController extends difusionController {
     });
     $data['data_vue'] = [
         'idiomas' => $vars_idioma,
-        'idioma_actual' => Cookie::lenguaje()
+        'idioma_actual' => Cookie::lenguaje(),
+        'estado' => true,
+        'edit' => false,
+        'url' => '',
+        'elemento_id' => 0
     ];
     $data['titulo'] = $d['difusion_links_index_titulo'].' - '.$d['str_crear'];
 		$this->_view->assign($data);
@@ -165,11 +170,151 @@ class link_interesController extends difusionController {
 	}
 
 	public function show ($id) {
+		$g = 1;
+		// dd(is_numeric($g));
+		// $_POST['cc'] = '1';
+		if ($xx = $this->getInt('cc')) {
+			dd($xx);
+		} else {
+			echo 'asdxx';
+		}
+	}
+	public function edit ($id) {
+		$this->_view->setTemplate(LAYOUT_FRONTEND);
+		$d = $this->_view->getLenguaje('difusion_contenido_index');
+		$data['idiomas'] = Idioma::activos();
+		$data['edit'] = true;
+		if (is_numeric($id)) {
+			$row = ODifusionLinkInteres::find($id);
+			// dd($row);
+			if ($row) {
+				$data['row'] = true;
+				$vars_idioma = [];
+				$data['idiomas']->map(function($item) use(&$vars_idioma, $row){
+					if ($row->Idi_IdIdioma == $item->Idi_IdIdioma) {
+						$vars_idioma['idioma_'.$item->Idi_IdIdioma] = [
+		            'id' => $item->Idi_IdIdioma,
+		            'titulo' => $row->ODli_Titulo,
+		            'descripcion' => $row->ODli_Descripcion,
+		            'default' => 1
+		        ];
+					} else {
+						$traducido = ContenidoTraducido::getRow(
+							'ora_difusion_link_interes',
+							$row->ODli_IdDifLini,
+							$item->Idi_IdIdioma
+						);
+
+		        $vars_idioma['idioma_'.$item->Idi_IdIdioma] = [
+		            'id' => $item->Idi_IdIdioma,
+		            'titulo' => '',
+		            'descripcion' => '',
+		            'default' => 0
+		        ];
+
+		        if ($traducido->count() > 0) {
+		        	$vars_idioma['idioma_'.$item->Idi_IdIdioma]['titulo'] = $traducido->where(
+		        		'Cot_Columna',
+		        		'ODli_Titulo')->first()->Cot_Traduccion;
+
+		        	$vars_idioma['idioma_'.$item->Idi_IdIdioma]['descripcion'] = $traducido->where(
+		        		'Cot_Columna',
+		        		'ODli_Descripcion')->first()->Cot_Traduccion;
+		        }
+					}
+
+
+		    });
+				$data['data_vue'] = [
+		        'idiomas' => $vars_idioma,
+		        'idioma_actual' => Cookie::lenguaje(),
+		        'url' => $row->ODli_Url,
+		        'estado' => $row->ODli_Estado == 1 ? true : false,
+		        'edit' => true,
+		        'elemento_id' => $row->ODli_IdDifLini
+		    ];
+
+			} else {
+
+			}
+		}
+
+    $data['titulo'] = $d['difusion_links_index_titulo'].' - '.$d['str_editar'];
+		$this->_view->assign($data);
+		$this->_view->render('create');
+	}
+	private function _export ($query, $method){
 
 	}
 
-	private function _export ($query, $method){
+	public function update ($id, $modo = 'index') {
+		$res = ['success' => false, 'msg' => ''];
+		$lenguaje = $this->_view->loadLenguaje(['difusion_contenido_index', 'request']);
+		if ($this->isAcceptJson()) {
+			switch ($modo) {
+				case 'index':
+					// dd($_POST);
+					if ($this->has(['idiomas', 'estado', 'url', 'id'])) {
+						if (is_numeric($id)) {
+							$row = ODifusionLinkInteres::find($id);
+							if ($row) {
+								$idiomas = Idioma::activos();
 
+								$self = $this;
+								$post = $_POST;
+								DB::transaction( function() use ($self, &$res, $post, $idiomas, $row, $lenguaje) {
+									$opcionales = [];
+									foreach ($idiomas as $value) {
+                    $idioma_var = "idioma_".$value->Idi_IdIdioma;
+                    if (array_key_exists($idioma_var, $post['idiomas'])) {
+                        if ($post['idiomas'][$idioma_var]['default'] == 1) {
+                        	// dd($post['idiomas'][$idioma_var]);
+                            //update en 'temtatica'
+                            $row->ODli_Titulo = $post['idiomas'][$idioma_var]['titulo'];
+                            $row->ODli_Descripcion = $post['idiomas'][$idioma_var]['descripcion'];
+                            $row->ODli_Estado = $post['estado'];
+                            $row->ODli_Url = $post['url'];
+                            $row->save();
+
+                        } else {
+                            ContenidoTraducido::updateRow('ora_difusion_link_interes', $row->ODli_IdDifLini, $value->Idi_IdIdioma, [
+                                'ODli_Titulo' => $post['idiomas'][$idioma_var]['titulo'],
+                                'ODli_Descripcion' => $post['idiomas'][$idioma_var]['descripcion'],
+                            ], true);
+
+
+                        }
+                    }
+                  }
+
+                  $res['success'] = true;
+                  $res['msg'] = $lenguaje['str_elemento_actualizado'];
+
+								});
+							}
+						}
+					} else {
+						$res['msg'] = $lenguaje['str_parametro_falta'];
+					}
+					break;
+				case 'estado':
+					if ($this->has(['id', 'estado'])) {
+						if ($row_id = $this->getInt('id')) {
+							$row = ODifusionLinkInteres::find($row_id);
+							if ($row) {
+								$row->ODli_Estado = $this->getInt('estado');
+								$row->save();
+								$res['success'] = true;
+								$res['msg'] = $row->ODli_Estado == 1 ? $lenguaje['str_elemento_is_activo'] :  $lenguaje['str_elemento_is_inactivo'];
+							}
+						}
+					}
+					break;
+			}
+		} else {
+			$res['msg'] = 'method fail';
+		}
+		$this->_view->responseJson($res);
 	}
 	public function index ($id = 'index') {
 		if ($id == 'index') {

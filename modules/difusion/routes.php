@@ -9,9 +9,12 @@ $route = [
 	['{lang}/difusion/banner/{id}', 'banner', 'show'],
 	['{lang}/difusion/banner/{id}/delete', 'banner', 'delete'],
 
-	// ['{lang}/difusion/contenido/datatable', 'contenido', 'datatable'],
-	// ['{lang}/difusion/contenido/datos_cifras', 'contenido', 'datos_cifras'],
-	// ['{lang}/difusion/contenido/{id}', 'contenido', 'show'],
+	['{lang}/difusion/link_interes/{id}/edit', 'link_interes', 'edit'],
+	['{lang}/difusion/link_interes/{id}/update/{modo}', 'link_interes', 'update'],
+
+
+	['{lang}/difusion/tipo/{id}/edit', 'tipo', 'edit'],
+	['{lang}/difusion/tipo/{id}/update/{modo}', 'tipo', 'update'],
 ];
 
 ?>

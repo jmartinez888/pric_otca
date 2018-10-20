@@ -22,9 +22,9 @@
         <link rel="shortcut icon" href="{$_layoutParams.ruta_img}favicon.ico" type="image/x-icon" />
         <link href="{$_layoutParams.ruta_css}simple-sidebar.css" rel="stylesheet" type="text/css">
         <link href="{$_layoutParams.ruta_css}jmartinez.css" rel="stylesheet" type="text/css">
-        <link href="{$_layoutParams.root_clear}public/css/util.css" rel="stylesheet" type="text/css">
         <link href="{$_layoutParams.ruta_css}AdminLTE.min.css" rel="stylesheet" type="text/css" />
         <link href="{$_layoutParams.ruta_css}customAdminLTE.css" rel="stylesheet" type="text/css" />
+        <link href="{$_layoutParams.root_clear}public/css/util.css" rel="stylesheet" type="text/css">
 
         <link href="{$_layoutParams.ruta_css}jsoft.css" rel="stylesheet" type="text/css">
         <link href="{$_layoutParams.ruta_css}jsoft.config.css" rel="stylesheet" type="text/css">
@@ -230,20 +230,22 @@
         <div class="container back-color-white">
             <!-- <div class="col-xs-12"> <a class="text-success"> Link Uno / Link Dos / Link Tres </a></div> -->
             <noscript><p>Para el correcto funcionamiento debe tener el soporte para javascript habilitado</p></noscript>
-            {if isset($_error)}
-                <div id="_errl" class="alert alert-error ">
-                    <a class="close" data-dismiss="alert">x</a>
-                    {$_error}
+            <div style="position: fixed; top: 3em; z-index: 150">
+                {if isset($_error)}
+                    <div id="_errl" class="alert alert-error ">
+                        <a class="close" data-dismiss="alert">x</a>
+                        {$_error}
+                    </div>
+                {/if}
+                <div id="_mensaje" class="hide">
                 </div>
-            {/if}
-            <div id="_mensaje" class="hide">
+                {if isset($_mensaje)}
+                    <div id="_msgl" class="alert alert-success">
+                        {$_mensaje}
+                        <a class="close" data-dismiss="alert">x</a>
+                    </div>
+                {/if}
             </div>
-            {if isset($_mensaje)}
-                <div id="_msgl" class="alert alert-success">
-                    <a class="close" data-dismiss="alert">x</a>
-                    {$_mensaje}
-                </div>
-            {/if}
             {if $_contenido != ''}
                 {include file=$_contenido}
             {/if}
@@ -537,7 +539,7 @@
             var _root_archivo_fisico = '{$_layoutParams.root_archivo_fisico}';
             var _modulo = '{$_layoutParams.modulo}';
             var _controlador = '{$_layoutParams.controlador}';
-            var _metodo = '{$_layoutParams.metodo}';            
+            var _metodo = '{$_layoutParams.metodo}';
             var locale_set = '{Cookie::lenguaje()}';
             // $('.mitooltip').tooltip();
         </script>

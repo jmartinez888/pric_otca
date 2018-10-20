@@ -45,21 +45,23 @@ new Vue({
 			})
 		},
 		onClick_btnAccion: function (e) {
-			console.log(e.currentTarget)
-			this.nombre = e.currentTarget.dataset.nombre
-
-			let temp_dif = this.dt_tbl_datatable.ajax.json().data.find(v => {
-				return v.ODif_IdDifusion == e.currentTarget.dataset.id
-			})
-			if (temp_dif != undefined) {
-				this.editar_attr.estado = +temp_dif.ODif_Estado == 0 ? false : true
-				this.editar_attr.datos = +temp_dif.ODif_Datos == 0 ? false : true
-				this.editar_attr.evento = +temp_dif.ODif_Evento == 0 ? false : true
-				this.editar_attr.banner = +temp_dif.ODif_Banner == 0 ? false : true
-				this.editar_attr.id = +temp_dif.ODif_IdDifusion
-
-				$('#mod_estado').modal('show')
+			switch (e.currentTarget.dataset.accion) {
+				case 'estado':
+					let params = new FormData()
+					params.append('id', e.currentTarget.dataset.id)
+					params.append('estado', e.currentTarget.dataset.estado >= 1 ? 0 : 1)
+					axios.post(_root_lang + 'difusion/link_interes/' + e.currentTarget.dataset.id + '/update/estado', params).then( res => {
+						console.log(res)
+						if (res.data.success) {
+							msg.success(res.data.msg)
+							this.dt_tbl_datatable.draw(false)
+						}
+					})
+					break;
 			}
+
+
+
 
 		},
 		onSubmit_filtrarTematica: function () {
@@ -95,11 +97,6 @@ new Vue({
               estado: r.estado_item,
               url: r.url
             })
-            // return `
-            //     <button data-toggle="tooltip" data-accion="estado" class="btn btn-default btn-sm glyphicon glyphicon-refresh estado-rol btn-acciones" title="" data-estado="${r.Lit_Estado}" data-id="${d}"  data-original-title="${lenguaje.datatable.btns.estado.title}"> </button>
-            //     <a data-toggle="tooltip" data-placement="bottom" class="btn btn-default btn-sm glyphicon glyphicon-edit" title="" href="${_root_lang + 'foro/admin/tematica/' + d + '/edit'}" data-original-title="Editar Rol"></a>
-            //     <button data-id="${d}"  data-accion="eliminar" class="btn btn-default btn-sm  glyphicon glyphicon-trash confirmar-eliminar-rol btn-acciones" data-nombre="${r.Lit_Nombre}" title="Eliminar" data-placement="bottom"> </button>
-            //   `
           }}
         ]
       });

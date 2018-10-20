@@ -3,9 +3,9 @@ Vue.component('form-links', {
 	data: function () {
 		return {
 			...data_vue,
-			estado: true,
-			url: '',
-			difusion_id: 0,
+			// estado: true,
+			// url: '',
+			// difusion_id: 0,
 			buscar: ''
 		}
 	},
@@ -47,7 +47,10 @@ Vue.component('form-links', {
 
 			form.append('estado', this.estado ? 1 : 0)
 			form.append('url', this.url)
-			// form.append('tipo', this.tipo)
+			if (this.edit) {
+
+				form.append('id', this.elemento_id)
+			}
 			// form.append('linea_tematica', this.linea_tematica)
 			// form.append('imagen', this.$refs.imagen.files[0])
 
@@ -55,7 +58,7 @@ Vue.component('form-links', {
 			// form.append('evento', this.eventos_interes)
 
 			$.ajax({
-	          url: _root_lang + 'difusion/link_interes/store', // point to server-side controller method
+	          url: this.edit ? _root_lang + 'difusion/link_interes/' + this.elemento_id + '/update/index' : _root_lang + 'difusion/link_interes/store', // point to server-side controller method
 	          dataType: 'json', // what to expect back from the server
 	          cache: false,
 	          contentType: false,
@@ -66,7 +69,8 @@ Vue.component('form-links', {
 	              console.log(response)
 	              if (response.success) {
 	              	msg.success(response.msg)
-	              	this.resetForm()
+	              	if (!this.edit)
+	              		this.resetForm()
 	              }
 	          },
 	          error: function (response) {
@@ -79,6 +83,7 @@ Vue.component('form-links', {
 	},
 	created () {
 		console.log(this)
+		// axios.get(_root_lang + 'difusion/link_interes/' + )
 	},
 	mounted: function () {
 		// this.editor = $('#contenido').ckeditor();

@@ -326,6 +326,7 @@ class contenidoController extends difusionController {
 			$data['tematicas'] = ForoTematica::activos()->visibles()->get();
 			$lenguaje = $this->_view->getLenguaje('difusion_contenido_index');
 			$data['titulo'] = $lenguaje['difusion_contenido_index_titulo'];
+			$data['ruta'] = 'contenido';
 			$this->_view->assign($data);
 			$this->_view->render('index');
 		} else {

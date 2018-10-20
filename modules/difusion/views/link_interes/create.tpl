@@ -26,18 +26,20 @@
 	        </div>
 	    </div>
 		</div>
-	</div>
-	<div class="row">
-		<div class="col-sm-10">
-			<form-links></form-links>
+  	<div class="row">
+  		<div class="col-sm-10">
+  			<form-links></form-links>
 
-		</div>
-	</div>
+
+  		</div>
+  	</div>
+  </div>
 </div>
 {/block}
 {block 'template'}
 <template id="form_links">
   <div>
+    {if (($edit && isset($row)) || (!$edit))}
   		<form class="form-horizontal" data-toggle="validator"  role="form" @submit.prevent="onSubmit_registrar" novalidate="true">
                           <div class="form-group">
                               <label class="col-lg-2 control-label">{$lenguaje['str_idioma']} : </label>
@@ -100,7 +102,11 @@
                               </div>
                           </div>
       </form>
-
+    {else}
+      <div class="col-sm-12">
+        <h2>{$lenguaje['str_elemento_no_encontrado']}</h2>
+      </div>
+    {/if}
 
   </div>
 </template>

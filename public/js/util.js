@@ -17,8 +17,8 @@ var msg = {
 
 function mensaje(resultado) {
     console.log(resultado)
-    var error = "<div class='alert  alert-error '><a class='close' data-dismiss='alert'>x</a><label></label></div>"
-    var ok = "<div class='alert alert-success '><a class='close' data-dismiss='alert'>x</a><label></label></div>"
+    var error = "<div class='alert  alert-error alert-msg'><label class='label-msg'></label><a class='close' data-dismiss='alert'>x</a></div>"
+    var ok = "<div class='alert alert-success alert-msg'><label class='label-msg'></label><a class='close' data-dismiss='alert'>x</a></div>"
     $("#_mensaje").removeClass("hide");
 
     if ($.isArray(resultado) && (!$.isEmptyObject(resultado))) {

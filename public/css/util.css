@@ -51,3 +51,20 @@ table.table-minimal tr td{
     margin: 0px;
     padding: 4px 4px;
 }
+
+.alert-msg {
+
+}
+.alert-msg .label-msg {
+    padding: 2px 16px;
+}
+.alert-msg .close {
+    font-size: 16px;
+    font-weight: 800;
+    position: relative;
+    top: -14px;
+    right: -10px;
+    text-decoration: none;
+
+
+}
