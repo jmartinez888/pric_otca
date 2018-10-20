@@ -15,6 +15,22 @@ class difusionController extends Controller
     public function __construct($lang,$url)
     {
         parent::__construct($lang,$url);
+        if (!file_exists(ROOT.'files'.DS.'difusion'))
+            mkdir(ROOT.'files'.DS.'difusion');
+
+            if (!file_exists(ROOT.'files'.DS.'difusion'.DS.'contenido'.DS))
+                mkdir(ROOT.'files'.DS.'difusion'.DS.'contenido'.DS);
+
+            if (!file_exists(ROOT.'files'.DS.'difusion'.DS.'banner'.DS))
+                mkdir(ROOT.'files'.DS.'difusion'.DS.'banner'.DS);
+
+        else {
+            if (!file_exists(ROOT.'files'.DS.'difusion'.DS.'contenido'.DS))
+                mkdir(ROOT.'files'.DS.'difusion'.DS.'contenido'.DS);
+
+            if (!file_exists(ROOT.'files'.DS.'difusion'.DS.'banner'.DS))
+                mkdir(ROOT.'files'.DS.'difusion'.DS.'banner'.DS);
+        }
     }
     public function index()
     {

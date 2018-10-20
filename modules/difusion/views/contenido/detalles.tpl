@@ -30,7 +30,7 @@
                 <article class="col-lg-12 col-md-12">
                     <div class="picture">
                         <div class="category-image">
-                            <img src="{BASE_URL}files/difusion/contenido/{$difusion->ODif_IdDifusion}/{$difusion->ODif_Image}" class="img-responsive">
+                            <img src="{BASE_URL}files/difusion/contenido/{$difusion->ODif_IdDifusion}/{$difusion->ODif_BannerUrl}" class="img-responsive">
                         </div>
                     </div>
 
