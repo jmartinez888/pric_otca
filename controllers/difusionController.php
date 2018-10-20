@@ -15,6 +15,10 @@ class difusionController extends Controller
     public function __construct($lang,$url)
     {
         parent::__construct($lang,$url);
+        if (!file_exists(ROOT.'files'.DS)) {
+            mkdir(ROOT.'files'.DS);
+
+        }
         if (!file_exists(ROOT.'files'.DS.'difusion'))
             mkdir(ROOT.'files'.DS.'difusion');
 
