@@ -124,7 +124,8 @@ class View extends Smarty
         $this->getLenguaje("template_".$this->_template);
         $this->addTemplateDir($this->_rutas['view']);
         $this->addTemplateDir($this->_rutas['templates']);
-        if (is_readable($this->_rutas['view'] . $vista . '.tpl'))
+        $vv = realpath($this->_rutas['view'] . $vista . '.tpl');
+        if ($vv)
         {
 
             // echo 'asdasd';
@@ -139,10 +140,10 @@ class View extends Smarty
             $this->assign('_contenido', '');
             if ($en_cache){
                 $this->setCaching(true);
-                return $this->fetch($this->_rutas['view'] . $vista . '.tpl');
+                return $this->fetch($vv);
             }
             else
-                $this->display($this->_rutas['view'] . $vista . '.tpl');
+                $this->display($vv);
             exit;
         }
         else
