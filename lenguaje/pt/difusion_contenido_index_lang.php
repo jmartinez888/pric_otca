@@ -28,6 +28,7 @@
 	$lenguaje['difusion_cifras_index_titulo'] = 'Datos y cifras';
 	$lenguaje['difusion_banner_index_titulo'] = 'Banner';
 	$lenguaje['difusion_links_index_titulo'] = 'Link de interés';
+	$lenguaje['difusion_tipo_index_titulo'] = 'Tipo difusión';
 
 
  ?>
