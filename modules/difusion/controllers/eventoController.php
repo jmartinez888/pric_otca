@@ -6,9 +6,9 @@ use App\ODifusionTipo;
 
 class eventoController extends difusionController {
 
-	public function create () {
-		$this->prepareCreate('../contenido/create', 0, 1);
-	}
+public function create () {
+	$this->prepareCreate('..'.DS.'contenido'.DS.'create', 0, 1);
+}
   public function index () {
     $this->_view->setTemplate(LAYOUT_FRONTEND);
     $data['idiomas'] = Idioma::activos();
