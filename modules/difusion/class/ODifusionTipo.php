@@ -18,4 +18,15 @@ class ODifusionTipo extends Eloquent
   	return $query->where('Row_Estado', 1);
   }
 
+  public function formatToArray () {
+  	return [
+  		'id' => $this->ODit_IdTipoDifusion,
+  		'titulo' => $this->ODit_Tipo,
+  		'descripcion' => $this->ODit_Descripcion,
+  		'estado_item' => $this->ODit_Estado,
+  		'idioma_id' => $this->Idi_IdIdioma,
+  		'estado_row' => $this->Row_Estado
+  	];
+  }
+
 }
