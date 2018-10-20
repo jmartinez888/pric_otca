@@ -138,5 +138,5 @@
 <script type="text/javascript">
 var data_vue = {json_encode($data_vue)};
 </script>
-<script type="text/javascript" src="{BASE_URL}modules/difusion/views/contenido/js/create.js"></script>
+<script type="text/javascript" src="{BASE_URL}modules/difusion/views/templates/js/create.js"></script>
 {/block}

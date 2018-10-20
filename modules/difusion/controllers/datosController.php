@@ -36,7 +36,7 @@ class datosController extends difusionController {
 		// // $this->_view->getLenguaje('foro_admin_tematica');
 		// $this->_view->assign($data);
 		// $this->_view->render('../contenido/create');
-		$this->prepareCreate('../contenido/create', 1, 0);
+		$this->prepareCreate('create_difusion', 1, 0);
 
 	}
 	public function index () {
@@ -49,7 +49,7 @@ class datosController extends difusionController {
 		$lenguaje = $this->_view->getLenguaje('difusion_contenido_index');
 		$data['titulo'] = $lenguaje['difusion_datos_index_titulo'];
 		$this->_view->assign($data);
-		$this->_view->render('../contenido/index');
+		$this->_view->render('index_difusion');
 	}
 	// public function datatable () {
 	// 	$query = ODifusion::select()->where('ODif_Datos', 1);

@@ -124,35 +124,24 @@ class View extends Smarty
         $this->getLenguaje("template_".$this->_template);
         $this->addTemplateDir($this->_rutas['view']);
         $this->addTemplateDir($this->_rutas['templates']);
-        $vv = realpath($this->_rutas['view'] . $vista . '.tpl');
-        if ($vv)
-        {
 
-            // echo 'asdasd';
-            // if ($noLayout == true)
-            // {
-            //     // $this->template_dir = $this->_rutas['view'];
-            //     // $this->addTemplateDir($this->_rutas['view'], 'vistas');
-            //     $this->display($this->_rutas['view'] . $vista . '.tpl');
-            //     exit;
-            // }
-            $this->detectVisita();
-            $this->assign('_contenido', '');
-            if ($en_cache){
-                $this->setCaching(true);
-                return $this->fetch($vv);
-            }
-            else
-                $this->display($vv);
-            exit;
+        // if ($vv)
+        // {
+
+        $this->detectVisita();
+        $this->assign('_contenido', '');
+        if ($en_cache){
+            $this->setCaching(true);
+            return $this->fetch($vista.'.tpl');
         }
         else
-        {
-            throw new Exception('Error de vista : ' . $this->_rutas['view'] . $vista . '.tpl');
-        }
-        //echo $this->_rutas['view'] . $vista . '.tpl'; exit();
-
-        // $this->display('template.tpl');
+            $this->display($vista.'.tpl');
+        // exit;
+        // }
+        // else
+        // {
+        //     throw new Exception('Error de vista : ' . $this->_rutas['view'] . $vista . '.tpl');
+        // }
     }
     public function renderizar($vista, $item = false, $noLayout = false)
     {

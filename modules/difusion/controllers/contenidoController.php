@@ -312,7 +312,7 @@ class contenidoController extends difusionController {
 		// // $this->_view->getLenguaje('foro_admin_tematica');
 		// $this->_view->assign($data);
 		// $this->_view->render('create');
-		$this->prepareCreate('create');
+		$this->prepareCreate('create_difusion');
 	}
 	// public function show ()
 	public function index ($id = 'index', $accion = 'show') {
@@ -328,7 +328,7 @@ class contenidoController extends difusionController {
 			$data['titulo'] = $lenguaje['difusion_contenido_index_titulo'];
 			$data['ruta'] = 'contenido';
 			$this->_view->assign($data);
-			$this->_view->render('index');
+			$this->_view->render('index_difusion');
 		} else {
 		// 	switch ($accion) {
 		// 		case 'show':

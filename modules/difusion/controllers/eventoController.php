@@ -7,7 +7,7 @@ use App\ODifusionTipo;
 class eventoController extends difusionController {
 
 public function create () {
-	$this->prepareCreate('..'.DS.'contenido'.DS.'create', 0, 1);
+	$this->prepareCreate('create_difusion', 0, 1);
 }
   public function index () {
     $this->_view->setTemplate(LAYOUT_FRONTEND);
@@ -19,7 +19,7 @@ public function create () {
     $lenguaje = $this->_view->getLenguaje('difusion_contenido_index');
     $data['titulo'] = $lenguaje['difusion_evento_index_titulo'];
     $this->_view->assign($data);
-    $this->_view->render('../contenido/index');
+    $this->_view->render('index_difusion');
   }
 }
  ?>
