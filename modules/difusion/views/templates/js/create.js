@@ -10,18 +10,29 @@ Vue.component('form-contenido', {
 			dt_tbl_difusion: null,
 			editor: null,
 			nombre: '',
-			difusion_id: 0,
-			buscar: '',
-			editar_attr: {
-				estado: false,
-				datos: false,
-				banner: false,
-				evento: false,
-				id: 0
-			}
+			change_image: false
+			// difusion_id: 0,
+		}
+	},
+	watch: {
+		idioma_actual: function (nv, ov) {
+			this.saveContenidoByIdioma(ov)
+			this.loadContenidoByIdioma(nv)
 		}
 	},
 	methods: {
+		onChange_image: function () {
+			var files = this.$refs.imagen.files;
+      var file;
+      if (files && files.length) {
+        file = files[0];
+        if (/^image\/\w+/.test(file.type)) {
+          this.$refs.image.src = uploadedImageURL = URL.createObjectURL(file);
+          this.change_image = true
+        }
+      }
+
+		},
 		resetForm: function () {
       for (var x in this.idiomas) {
         this.idiomas[x].titulo = ''
@@ -62,13 +73,16 @@ Vue.component('form-contenido', {
 			form.append('estado', this.estado ? 1 : 0)
 			form.append('tipo', this.tipo)
 			form.append('linea_tematica', this.linea_tematica)
-			form.append('imagen', this.$refs.imagen.files[0])
+			form.append('id', this.elemento_id)
+
+			if (this.change_image)
+				form.append('imagen', this.$refs.imagen.files[0])
 
 			form.append('datos', this.datos_interes)
 			form.append('evento', this.eventos_interes)
 
 			$.ajax({
-	          url: _root_lang + 'difusion/contenido/store', // point to server-side controller method
+	          url: _root_lang + (this.edit ? 'difusion/contenido/' + this.elemento_id + '/update?metodo=index' : 'difusion/contenido/store'), // point to server-side controller method
 	          dataType: 'json', // what to expect back from the server
 	          cache: false,
 	          contentType: false,
@@ -79,7 +93,8 @@ Vue.component('form-contenido', {
 	              console.log(response)
 	              if (response.success) {
 	              	msg.success(response.msg)
-	              	this.resetForm()
+	              	if (!this.edit)
+	              		this.resetForm()
 	              }
 	          },
 	          error: function (response) {
@@ -95,6 +110,9 @@ Vue.component('form-contenido', {
 	},
 	mounted: function () {
 		this.editor = $('#contenido').ckeditor();
+		this.$refs.imagen.onchange = this.onChange_image
+		this.loadContenidoByIdioma(this.idioma_actual)
+
 	}
 })
 

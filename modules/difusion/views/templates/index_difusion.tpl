@@ -53,10 +53,10 @@
                 <thead>
                     <tr>
                         <th>{$lenguaje['str_titulo']}</th>
-                        <th style=" text-align: center">{$lenguaje['str_descripcion']}</th>
-                        <th style=" text-align: left">{$lenguaje['str_estado']}</th>
-                        <th style=" text-align: left">{$lenguaje['str_parametros']}</th>
-                        <th style=" text-align: center" width="200">{$lenguaje['str_opciones']}</th>
+                        <th>{$lenguaje['str_descripcion']}</th>
+                        <th>{$lenguaje['str_estado']}</th>
+                        <th>{$lenguaje['str_parametros']}</th>
+                        <th width="200">{$lenguaje['str_opciones']}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -128,5 +128,5 @@
     var zone_datatable = 0;
     {/if}
 </script>
-<script type="text/javascript" src="{BASE_URL}modules/difusion/views/contenido/js/index.js"></script>
+<script type="text/javascript" src="{BASE_URL}modules/difusion/views/templates/js/index.js"></script>
 {/block}

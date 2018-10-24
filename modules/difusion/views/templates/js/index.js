@@ -26,6 +26,7 @@ new Vue({
 		}
 	},
 	methods: {
+
 		onSubmit_export: function (e) {
 			window.location.href = _root_lang + 'difusion/contenido/datatable?zone='+zone_datatable+'&' + $.param(this.dt_tbl_difusion.ajax.params())  + '&export=' + e
 		},
@@ -53,20 +54,28 @@ new Vue({
 		},
 		onClick_btnAccion: function (e) {
 			console.log(e.currentTarget)
-			this.nombre = e.currentTarget.dataset.nombre
-
-			let temp_dif = this.dt_tbl_difusion.ajax.json().data.find(v => {
-				return v.ODif_IdDifusion == e.currentTarget.dataset.id
-			})
-			if (temp_dif != undefined) {
-				this.editar_attr.estado = +temp_dif.ODif_Estado == 0 ? false : true
-				this.editar_attr.datos = +temp_dif.ODif_Datos == 0 ? false : true
-				this.editar_attr.evento = +temp_dif.ODif_Evento == 0 ? false : true
-				this.editar_attr.banner = +temp_dif.ODif_Banner == 0 ? false : true
-				this.editar_attr.id = +temp_dif.ODif_IdDifusion
-
-				$('#mod_estado').modal('show')
+			let params = new FormData()
+			switch (e.currentTarget.dataset.accion) {
+				case 'estado':
+					let temp_dif = this.dt_tbl_difusion.ajax.json().data.find(v => {
+						return v.ODif_IdDifusion == e.currentTarget.dataset.id
+					})
+					if (temp_dif != undefined) {
+						params.append('estado', temp_dif.ODif_Estado >= 1 ? 0 : 1)
+						params.append('id', temp_dif.ODif_IdDifusion)
+						axios.post(_root_lang + 'difusion/contenido/' + temp_dif.ODif_IdDifusion + '/update?metodo=estado', params).then( res => {
+							if (res.data.success) {
+								msg.success(res.data.msg)
+								this.dt_tbl_difusion.draw(false)
+							}
+						})
+						// $('#mod_estado').modal('show')
+					}
+					break;
 			}
+
+
+
 
 		},
 		onSubmit_filtrarTematica: function () {
@@ -124,6 +133,10 @@ new Vue({
             //     <button data-id="${d}"  data-accion="eliminar" class="btn btn-default btn-sm  glyphicon glyphicon-trash confirmar-eliminar-rol btn-acciones" data-nombre="${r.Lit_Nombre}" title="Eliminar" data-placement="bottom"> </button>
             //   `
           }}
+        ],
+        columnDefs: [
+        	{className: 'text-center',  targets: [2, 3, 4]},
+        	{className: 'text-left',  targets: [0, 1]},
         ]
       });
     this.dt_tbl_difusion.on('draw', () => {

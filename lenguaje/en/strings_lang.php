@@ -45,9 +45,12 @@
 	$lenguaje['str_crear'] = 'Crear';
 
 	$lenguaje['str_registro_success'] = 'Elemento "%elemento%" creado con éxito';
+	$lenguaje['str_registro_b_success'] = 'Elemento creado con éxito';
 	$lenguaje['str_ver_mas'] = 'Ver más';
 	$lenguaje['str_elemento_is_activo'] = 'Elemento ahora está activo';
 	$lenguaje['str_elemento_is_inactivo'] = 'Elemento ahora está inactivo';
+
+	$lenguaje['str_elemento_eliminado'] = 'Elemento eliminado';
 
 	$lenguaje['str_elemento_no_encontrado'] = 'Elemento no encontrado';
 	$lenguaje['str_elemento_actualizado'] = 'Elemento actualizado';

@@ -24,6 +24,7 @@ new Vue({
 			})
 		},
 		onSubmit_buscar: function () {
+			this.start = 0
 			this.loadResult()
 		},
 		onCLick_verMas: function () {

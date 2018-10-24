@@ -1,6 +1,7 @@
 ﻿<!DOCTYPE html>
 <html lang="es">
     <head>
+        <script type="text/javascript" data-pace-options='{ "ajax": true }' src="{$_layoutParams.root_clear}public/vendors/pace/pace.min.js"></script>
         <title>{$titulo|default:"Sin t&iacute;tulo"}</title>
         <meta charset="utf-8">
         <meta name="google-signin-client_id" content="684672950066-oqa176688bh3tpbftvohouguabu3dpi6.apps.googleusercontent.com">
@@ -29,6 +30,8 @@
         <link href="{$_layoutParams.ruta_css}jsoft.css" rel="stylesheet" type="text/css">
         <link href="{$_layoutParams.ruta_css}jsoft.config.css" rel="stylesheet" type="text/css">
         <link href="{$_layoutParams.ruta_css}jsoft.responsive.css" rel="stylesheet" type="text/css">
+        {* <link href="{$_layoutParams.root_clear}public/vendors/pace/templates/pace-theme-center-circle.tmpl.css" rel="stylesheet" type="text/css"> *}
+        <link href="{$_layoutParams.root_clear}public/vendors/pace/themes/blue/pace-theme-minimal.css" rel="stylesheet" type="text/css">
         <link href="{$_layoutParams.ruta_css}wwfslider.css" rel="stylesheet" type="text/css" />
         <link href="{$_layoutParams.root_clear}public/css/datetime-picker/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css">    <!-- RODRIGO 20180605  -->
         <!-- <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet"> -->
@@ -555,6 +558,7 @@
         <!-- <script type="text/javascript" src="{$_layoutParams.ruta_js}app.min.js" ></script> -->
 
         <script type="text/javascript" src="{$_layoutParams.root_clear}public/js/util.js"></script>
+
         <script type="text/javascript" src="{$_layoutParams.root_clear}public/js/jquery.slimscroll.min.js"></script>
         <script type="text/javascript" src="{$_layoutParams.ruta_js}jquery.PrintArea.js"></script>
         <script type="text/javascript" src="{$_layoutParams.ruta_js}bootstrap.min.js" ></script>

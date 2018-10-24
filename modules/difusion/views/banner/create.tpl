@@ -26,11 +26,12 @@
           </div>
       </div>
     </div>
-  </div>
-  <div class="row">
-    <div class="col-sm-10">
-      <form-banner></form-banner>
 
+    <div class="row">
+      <div class="col-sm-10">
+        <form-banner></form-banner>
+
+      </div>
     </div>
   </div>
 </div>
@@ -118,7 +119,7 @@
                                       <tbody>
                                         <tr>
                                           <td>
-                                            <img id="image" src="" ref="image" v-model="image_banner">
+                                            <img id="image" :src="image_banner" ref="image">
                                             {* <img id="image" src="http://local.github/pric_otca/views/layout/frontend/img/slider_noticias/noticia1.jpg" ref="image" v-model="image_banner"> *}
                                           </td>
                                         </tr>
@@ -137,7 +138,7 @@
                               </div>
                           </div>
       </form>
-
+{*
       <div class="modal fade" id="mod_difusion" tabindex="-1" role="dialog" aria-labelledby="mod_difusion">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -179,7 +180,9 @@
                 </div>
             </div>
         </div>
-      </div>
+      </div> *}
+
+      {include 'mod_difusion.tpl'}
 
   </div>
 </template>

@@ -136,7 +136,7 @@ class link_interesController extends difusionController {
 		$this->_view->render('create');
 	}
 	public function datatable () {
-		$query = ODifusionLinkInteres::select();
+		$query = ODifusionLinkInteres::visibles();
 
 		$records_total = $query->count();
 		$records_total_filter = $records_total;
@@ -168,7 +168,30 @@ class link_interesController extends difusionController {
 
 		}
 	}
+	public function delete ($id) {
+		// dd($_POST);
+		$res = ['success' => false, 'msg' => ''];
+		$lenguaje = $this->_view->loadLenguaje(['difusion_contenido_index', 'request']);
+		if ($this->isAcceptJson()) {
+			if ($this->has(['id'])) {
+				if ($row_id = $this->getInt('id')) {
+					$row = ODifusionLinkInteres::find($row_id);
+					if ($row) {
+						$row->Row_Estado = 0;
+						$row->save();
+						$res['success'] = true;
+						$res['msg'] = $lenguaje['str_elemento_eliminado'];
+					}
+				}
+			} else {
+				$res['msg'] = $lenguaje['str_parametro_falta'];
+			}
+		} else {
+			$res['msg'] = 'method fail';
+		}
+		$this->_view->responseJson($res);
 
+	}
 	public function show ($id) {
 		$g = 1;
 		// dd(is_numeric($g));

@@ -5,13 +5,13 @@
 {block 'subcontenido'}
 <div class="row">
   <div class="col-sm-12">
-      <h2 class="titulo">{$lenguaje.difusion_contenido_index_titulo}</h2>
+      <h2 class="titulo">{$titulo}</h2>
       <div class="col-lg-12 p-rt-lt-0">
           <hr class="cursos-hr-title-foro">
       </div>
   </div>
 </div>
-<div class="container-fluid" id="difusion_gestion">
+<div class="container-fluid" id="vue_container">
 	<form-contenido></form-contenido>
 </div>
 {/block}
@@ -36,34 +36,29 @@
                   </div>
               </div>
           </div>
+
           <div class="form-group">
-              <label class="col-lg-2 control-label" for="titulo">{$lenguaje['str_titulo']} : </label>
+              <label class="col-lg-2 control-label" for="difusion">{$lenguaje['str_difusion']} : </label>
               <div class="col-lg-10">
-                  {foreach $idiomas as $item}
-                  <input v-if="idioma_actual == '{$item->Idi_IdIdioma}'" class="form-control" id="titulo" type="text" name="titulo" placeholder="{$lenguaje['difusion_contenido_index_inp_titulo_ph']}" required="" v-model="idiomas.idioma_{$item->Idi_IdIdioma}.titulo">
-                  {/foreach}
+                <div class="input-group">
+                  <input  class="form-control" id="difusion" type="text" name="difusion" placeholder="{$lenguaje['str_seleccione_buscar']}"  required="" v-model="nombre_difusion" ref="difusion">
+                  <span class="input-group-btn"><button @click="onClick_openModDifusion" class="btn btn-default" type="button"><i class="fa fa-search"></i></button></span>
+                </div>
+
+
               </div>
           </div>
           <div class="form-group">
-              <label class="col-lg-2 control-label" for="tipo">{$lenguaje['str_tipo']} : </label>
+              <label class="col-lg-2 control-label" for="indicador">{$lenguaje['str_indicador']} : </label>
               <div class="col-lg-10">
-                  <select  name="tipo" id="tipo" class="form-control" required="required" v-model="tipo">
-                      {foreach $tipo_difusion as $tipo}
-                      <option value="{$tipo->ODit_IdTipoDifusion}">{$tipo->ODit_Tipo}</option>
+                  <select  name="indicador" id="indicador" class="form-control" required="required" v-model="indicador">
+                      {foreach $indicadores as $item}
+                      <option value="{$item->OInd_IdIndicadores}">{$item->OInd_Titulo}</option>
                       {/foreach}
                   </select>
               </div>
           </div>
-          <div class="form-group">
-              <label class="col-lg-2 control-label" for="tematica">{$lenguaje['str_tematica']} : </label>
-              <div class="col-lg-10">
-                  <select name="tematica" id="tematica" class="form-control" required="required" v-model="linea_tematica">
-                      {foreach $tematicas as $tema}
-                      <option value="{$tema->Lit_IdLineaTematica}">{$tema->Lit_Nombre}</option>
-                      {/foreach}
-                  </select>
-              </div>
-          </div>
+
           <div class="form-group">
               <label class="col-lg-2 control-label" for="descripcion">{$lenguaje['str_descripcion']} : </label>
               <div class="col-lg-10">
@@ -73,19 +68,24 @@
               </div>
           </div>
           <div class="form-group">
-              <label class="col-lg-2 control-label" for="palabras_clave">{$lenguaje['str_palabras_clave']} : </label>
+              <label class="col-lg-2 control-label" for="url_ref">Url : </label>
               <div class="col-lg-10">
-                  {foreach $idiomas as $item}
-                  <input v-if="idioma_actual == '{$item->Idi_IdIdioma}'" class="form-control" id="palabras_clave" type="text" name="palabras_clave" placeholder="{$lenguaje['difusion_contenido_index_inp_titulo_ph']}" required="" v-model="idiomas.idioma_{$item->Idi_IdIdioma}.palabras_clave">
-                  {/foreach}
+                  <input  class="form-control" id="url_ref" type="text" name="url_ref" placeholder="Url" required="" v-model="url">
               </div>
           </div>
           <div class="form-group">
-              <label class="col-lg-2 control-label" for="imagen">{$lenguaje['str_imagen']} : </label>
+              <label class="col-lg-2 control-label" for="latitude">{$lenguaje['str_latitud']} : </label>
               <div class="col-lg-10">
-                  <input type="file" ref="imagen" class="form-control" id="imagen" type="text" name="imagen" required="" v-model="imagen">
+                  <input  class="form-control" id="latitude" type="text" name="latitude" placeholder="{$lenguaje['str_latitud']}" required="" v-model="latitude">
               </div>
           </div>
+          <div class="form-group">
+              <label class="col-lg-2 control-label" for="longitude">{$lenguaje['str_longitud']} : </label>
+              <div class="col-lg-10">
+                  <input  class="form-control" id="longitude" type="text" name="longitude" placeholder="{$lenguaje['str_longitud']}" required="" v-model="longitude">
+              </div>
+          </div>
+
           <div class="form-group">
               <label class="col-lg-2 control-label">{$lenguaje['str_activo']} : </label>
               <div class="col-lg-10">
@@ -98,25 +98,16 @@
               </div>
           </div>
           <div class="form-group">
-              <label class="col-lg-2 control-label" for="contenido">{$lenguaje['str_contenido']} : </label>
-              <div class="col-lg-10">
-                  {* {foreach $idiomas as $item} *}
-                  {* <div class="guarder_{$item->Idi_Idioma}" v-if="idioma_actual == '{$item->Idi_IdIdioma}'" > *}
-                      <textarea rows="2"  class="form-control contenidos" id="contenido" type="text" name="contenido_{$item->Idi_Idioma}" required=""></textarea>
-                  {* </div> *}
-                  {* {/foreach} *}
-              </div>
-          </div>
-          <div class="form-group">
               <div class="col-lg-offset-2 col-lg-10">
                   <button class="btn btn-success" type="submit" id="bt_guardarRol" name="bt_guardarRol" ><i class="glyphicon glyphicon-floppy-disk"> </i>&nbsp; {$lenguaje['str_guardar']}</button>
               </div>
           </div>
       </form>
+      {include 'mod_difusion.tpl'}
   </div>
 </template>
 <template id="botones_test">
-    <a target="_blank" data-toggle="tooltip" data-placement="bottom" class="btn btn-default  btn-sm glyphicon glyphicon-eye-open" title="" href="{$_layoutParams.root}difusion/contenido/{literal}{{id}}{/literal}" data-original-title="Ver Ficha "></a>
+    <a target="_blank" data-toggle="tooltip" data-placement="bottom" class="btn btn-default  btn-sm glyphicon glyphicon-eye-open" title="" href="{$_layoutParams.root}difusion/cifras/{literal}{{id}}{/literal}" data-original-title="{$lenguaje['str_ver_elemento']}"></a>
     <button data-toggle="tooltip" data-placement="bottom" data-accion="estado" class="btn btn-default btn-sm glyphicon glyphicon-refresh estado-rol btn-acciones"  data-estado="{literal}{{estado}}{/literal}" data-id="{literal}{{id}}{/literal}"  data-nombre="{literal}{{nombre}}{/literal}" title="{$lenguaje['str_cambiar_estado']}"> </button>
     <a data-toggle="tooltip" data-placement="bottom" class="btn btn-default btn-acciones btn-sm glyphicon glyphicon-edit" title="{$lenguaje['str_editar']}" href="{literal} {{url}} {/literal}"></a>
     <button data-toggle="tooltip" data-id="{literal} {{id}} {/literal}"  data-accion="eliminar" class="btn btn-default btn-sm  glyphicon glyphicon-trash confirmar-eliminar-rol btn-acciones" data-nombre="{literal}{{nombre}}{/literal}" title="{$lenguaje['str_eliminar']}" data-placement="bottom"> </button>
@@ -137,5 +128,5 @@
 <script type="text/javascript">
 var data_vue = {json_encode($data_vue)};
 </script>
-<script type="text/javascript" src="{BASE_URL}modules/difusion/views/contenido/js/create.js"></script>
+<script type="text/javascript" src="{$_layoutParams.rutas.js}create.js"></script>
 {/block}

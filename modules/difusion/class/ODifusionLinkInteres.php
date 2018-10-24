@@ -26,7 +26,11 @@ class ODifusionLinkInteres extends Eloquent
   }
 
   public function scopeActivos ($query) {
-  	return $query->where('ODli_Estado', 1);
+    return $query->where('ODli_Estado', 1);
+  }
+
+  public function scopeVisibles ($query) {
+  	return $query->where('Row_Estado', 1);
   }
 
 }

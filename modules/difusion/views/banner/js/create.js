@@ -4,16 +4,17 @@ Vue.component('form-banner', {
     return {
       ...data_vue,
       estado: true,
-      image_banner: null,
-      nombre_difusion: '',
+      // image_banner: null,
+      // nombre_difusion: '',
       cropper: null,
       cropper_opciones: {
         aspectRatio: 21/7.2
       },
       image_blob: null,
       difusiones: [],
-      difusion_id: 0,
-      difusion_selected: null
+      // difusion_id: 0,
+      difusion_selected: null,
+      image_change: false
     }
   },
   watch: {
@@ -54,7 +55,6 @@ Vue.component('form-banner', {
       })
     },
     onClick_openModDifusion: function (e) {
-      console.log(e)
       $('#mod_difusion').modal('show')
     },
     onClick_btnAccion: function (e) {
@@ -104,7 +104,7 @@ Vue.component('form-banner', {
       this.findIdioma(idioma).contenido = this.editor.val();
     },
     onSubmit_registrar: function () {
-      if (this.difusion_id != 0 && this.difusion_selected != null && this.difusion_selected.ODif_IdDifusion != 0) {
+      if (this.difusion_id != 0) {
         let form = new FormData();
 
         for(var i in this.idiomas) {
@@ -112,11 +112,13 @@ Vue.component('form-banner', {
             form.append('idiomas['+i+']['+s+']', this.idiomas[i][s])
         }
         form.append('estado', this.estado ? 1 : 0)
-        form.append('difusion', this.difusion_selected.ODif_IdDifusion)
-        form.append('imagen', this.image_blob)
+        form.append('difusion', this.difusion_id)
+        form.append('id', this.elemento_id)
+        if (this.image_change)
+          form.append('imagen', this.image_blob)
 
         $.ajax({
-              url: _root_lang + 'difusion/banner/store', // point to server-side controller method
+              url: _root_lang + (this.edit ? 'difusion/banner/' + this.elemento_id + '/update/index' : 'difusion/banner/store'), // point to server-side controller method
               dataType: 'json', // what to expect back from the server
               cache: false,
               contentType: false,
@@ -127,8 +129,10 @@ Vue.component('form-banner', {
                   console.log(response)
                   if (response.success) {
                     msg.success(response.msg)
-                    this.resetForm()
-                    this.nombre_difusion = ''
+                    if (!this.edit) {
+                      this.resetForm()
+                      this.nombre_difusion = ''
+                    }
                   }
                   else
                     msg.error(response.msg)
@@ -137,26 +141,17 @@ Vue.component('form-banner', {
                   console.log(response)
               }
           });
+      } else {
+        console.log('no se pue')
       }
 
     },
     onChange_imagenBanner (e, i) {
-      console.log(this.$refs.input_banner.files)
-
       var files = this.$refs.input_banner.files;
       var file;
-
       if (files && files.length) {
         file = files[0];
-
         if (/^image\/\w+/.test(file.type)) {
-          // uploadedImageType = file.type;
-          // uploadedImageName = file.name;
-
-          // if (uploadedImageURL) {
-          //   URL.revokeObjectURL(uploadedImageURL);
-          // }
-
           this.$refs.image.src = uploadedImageURL = URL.createObjectURL(file);
           if (this.cropper != null) {
             console.log('destroy')
@@ -164,7 +159,7 @@ Vue.component('form-banner', {
           }
           this.cropper = new Cropper(this.$refs.image, this.cropper_opciones);
           this.$refs.input_banner.value = null
-
+          this.image_change = true
         } else {
           window.alert('Please choose an image file.');
         }

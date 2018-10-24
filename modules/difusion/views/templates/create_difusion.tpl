@@ -5,7 +5,7 @@
 {block 'subcontenido'}
 <div class="row">
   <div class="col-sm-12">
-      <h2 class="titulo">{$lenguaje.difusion_contenido_index_titulo}</h2>
+      <h2 class="titulo">{$titulo}</h2>
       <div class="col-lg-12 p-rt-lt-0">
           <hr class="cursos-hr-title-foro">
       </div>
@@ -85,6 +85,20 @@
               <label class="col-lg-2 control-label" for="imagen">{$lenguaje['str_imagen']} : </label>
               <div class="col-lg-10">
                   <input type="file" ref="imagen" class="form-control" id="imagen" type="text" name="imagen" required="" v-model="imagen">
+              </div>
+          </div>
+          <div class="form-group">
+              <label class="col-lg-2 control-label" for="imagen"></label>
+              <div class="col-lg-10">
+                <table>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <img id="image" :src="image" ref="image">
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
           </div>
           <div class="form-group">

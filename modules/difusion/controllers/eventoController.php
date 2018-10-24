@@ -5,7 +5,10 @@ use App\Idioma;
 use App\ODifusionTipo;
 
 class eventoController extends difusionController {
-
+public function edit ($id) {
+    $lenguaje = $this->_view->LoadLenguaje('difusion_contenido_index');
+    $this->prepareEdit($id, 'create_difusion', $lenguaje['difusion_evento_index_titulo'].' - '.$lenguaje['str_editar'], 0, 1);
+}
 public function create () {
 	$this->prepareCreate('create_difusion', 0, 1);
 }

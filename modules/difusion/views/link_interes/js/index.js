@@ -45,12 +45,23 @@ new Vue({
 			})
 		},
 		onClick_btnAccion: function (e) {
+			let params = new FormData()
 			switch (e.currentTarget.dataset.accion) {
 				case 'estado':
-					let params = new FormData()
+
 					params.append('id', e.currentTarget.dataset.id)
 					params.append('estado', e.currentTarget.dataset.estado >= 1 ? 0 : 1)
 					axios.post(_root_lang + 'difusion/link_interes/' + e.currentTarget.dataset.id + '/update/estado', params).then( res => {
+						console.log(res)
+						if (res.data.success) {
+							msg.success(res.data.msg)
+							this.dt_tbl_datatable.draw(false)
+						}
+					})
+					break;
+				case 'eliminar':
+					params.append('id', e.currentTarget.dataset.id)
+					axios.post(_root_lang + 'difusion/link_interes/' + e.currentTarget.dataset.id + '/delete', params).then( res => {
 						console.log(res)
 						if (res.data.success) {
 							msg.success(res.data.msg)

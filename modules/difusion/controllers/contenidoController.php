@@ -127,28 +127,105 @@ class contenidoController extends difusionController {
 
 		}
 	}
-	private function update ($id) {
+	public function update ($id) {
 		$res = ['success' => false, 'msg' => ''];
 		if ($this->has('metodo')) {
 			$metodo = $this->getTExto('metodo');
-			$lenguaje = $this->_view->LoadLenguaje('difusion_contenido_index');
+			$lenguaje = $this->_view->LoadLenguaje(['difusion_contenido_index', 'request']);
 			switch ($metodo) {
-				case 'estado':
-					if ($this->has(['estado', 'datos', 'banner', 'evento', 'id'])) {
-						$row = ODifusion::find($this->getInt('id'));
-						if ($row) {
-							DB::transaction(function() use ($row, $lenguaje, &$res) {
-								$row->ODif_Estado = $this->getInt('estado');
-								$row->ODif_Datos = $this->getInt('datos');
-								$row->ODif_Evento = $this->getInt('evento');
-								$row->ODif_Banner = $this->getInt('banner');
-								$row->save();
-								$res['msg'] = $lenguaje['str_success_update'];
-								$res['success'] = true;
-							});
+				case 'index':
+					// dd($_POST);
+					if ($this->has(['idiomas', 'estado', 'id', 'datos', 'evento', 'tipo', 'linea_tematica'])) {
+						if (is_numeric($id) && $id == $this->getInt('id')) {
+							$row = ODifusion::find($id);
+							if ($row) {
+								$idiomas = Idioma::activos();
+								$self = $this;
+								$post = $_POST;
+								$image = null;
+								if (!empty($_FILES["imagen"]) && in_array($_FILES['imagen']['type'], $this->image_types))
+									$image = $_FILES['imagen'];
+								DB::transaction( function() use ($self, &$res, $post, $idiomas, $lenguaje, $image, $row) {
+									$opcionales = [];
+									foreach ($idiomas as $value) {
+										$idioma_var = "idioma_".$value->Idi_IdIdioma;
+                  	if (array_key_exists($idioma_var, $post['idiomas'])) {
+                  		if ($post['idiomas'][$idioma_var]['default'] == 1) {
+                      	// dd($post['idiomas'][$idioma_var]);
+                          //update en 'temtatica'
+                          $row->ODif_Titulo = $post['idiomas'][$idioma_var]['titulo'];
+                          $row->ODif_Descripcion = $post['idiomas'][$idioma_var]['descripcion'];
+                          $row->ODif_Contenido = $post['idiomas'][$idioma_var]['contenido'];
+                          $row->ODif_Palabras = $post['idiomas'][$idioma_var]['palabras_clave'];
+                          $row->ODit_IdTipoDifusion = $post['tipo'];
+                          $row->ODif_Datos = $post['datos'];
+
+
+                          $row->ODif_Evento = $post['evento'];
+                          $row->ODif_Estado = $post['estado'];
+                          $row->Lit_IdLineaTematica = $post['linea_tematica'];
+
+                          $row->save();
+
+                      } else {
+                          ContenidoTraducido::updateRow('ora_difusion', $row->ODif_IdDifusion, $value->Idi_IdIdioma, [
+                              'ODif_Titulo' => $post['idiomas'][$idioma_var]['titulo'],
+                              'ODif_Descripcion' => $post['idiomas'][$idioma_var]['descripcion'],
+                              'ODif_Contenido' => $post['idiomas'][$idioma_var]['contenido'],
+                              'ODif_Palabras' => $post['idiomas'][$idioma_var]['palabras_clave'],
+                          ], true);
+
+
+                      }
+
+                      if ($image != null) {
+                      	 	$path = $self->ruta_images.$row->ODif_IdDifusion.DS;
+										      if (!file_exists($path))
+							              mkdir($path);
+							            $ext = explode('/', $image['type']);
+							            $namefinal = md5($image['name'].$row->ODif_IdDifusion).'.'.end($ext);
+							            $destino_path = $path.$namefinal;
+							            // $destino_path = $path.rawurlencode($image['name']);
+							            if (move_uploaded_file($image['tmp_name'], $destino_path)) {
+							            	$name_thumb = md5($image['name']).'.jpg';
+							            	Helper::create_thumbnail_image($destino_path, $path.$name_thumb);
+							            }
+
+            							$row->ODif_BannerUrl = $namefinal;
+							            // $row->ODif_BannerUrl = $image['name'];
+							            $row->ODif_Image = $name_thumb;
+							            $row->save();
+                      }
+
+                      $res['success'] = true;
+                			$res['msg'] = $lenguaje['str_elemento_actualizado'];
+
+                  	}
+									}
+								});
+							}
 
 						}
-					}
+					} else
+						$res['msg'] = $lenguaje['str_parametro_falta'];
+					break;
+				case 'estado':
+					if ($this->has(['estado', 'id'])) {
+						if ($row_id = $this->getInt('id')) {
+							$row = ODifusion::find($this->getInt('id'));
+							if ($row) {
+								DB::transaction(function() use ($row, $lenguaje, &$res) {
+									$row->ODif_Estado = $this->getInt('estado');
+									$row->save();
+									$res['msg'] = $lenguaje['str_success_update'];
+									$res['success'] = true;
+								});
+
+							}
+						}
+					} else
+						$res['msg'] = $lenguaje['str_parametro_falta'];
+
 					break;
 			}
 		}
@@ -236,14 +313,17 @@ class contenidoController extends difusionController {
 			      $path = $self->ruta_images.$difusion->ODif_IdDifusion.DS;
 			      if (!file_exists($path))
               mkdir($path);
-            $destino_path = $path.rawurlencode($image['name']);
+            $ext = explode('/', $image['type']);
+            $namefinal = md5($image['name'].$row->ODif_IdDifusion).'.'.end($ext);
+            $destino_path = $path.$namefinal;
+            // $destino_path = $path.rawurlencode($image['name']);
 
             if (move_uploaded_file($image['tmp_name'], $destino_path)) {
             	$name_thumb = md5($image['name']).'.jpg';
             	Helper::create_thumbnail_image($destino_path, $path.$name_thumb);
             }
-
-            $difusion->ODif_BannerUrl = $image['name'];
+            $ext = explode('/', $image['type']);
+            $difusion->ODif_BannerUrl = md5($image['name'].$row->ODif_IdDifusion).'.'.end($ext);
             $difusion->ODif_Image = $name_thumb;
             $difusion->save();
 
@@ -258,7 +338,8 @@ class contenidoController extends difusionController {
     $this->_view->responseJson($res);
 	}
 	public function edit ($id) {
-		echo 'edit'.$id;
+		$lenguaje = $this->_view->LoadLenguaje('difusion_contenido_index');
+		$this->prepareEdit($id, 'create_difusion', $lenguaje['difusion_contenido_index_titulo'].' - '.$lenguaje['str_editar']);
 	}
 	public function show ($id) {
 		$difusion = ODifusion::find($id);
@@ -312,7 +393,8 @@ class contenidoController extends difusionController {
 		// // $this->_view->getLenguaje('foro_admin_tematica');
 		// $this->_view->assign($data);
 		// $this->_view->render('create');
-		$this->prepareCreate('create_difusion');
+		$lenguaje = $this->_view->LoadLenguaje('difusion_contenido_index');
+		$this->prepareCreate('create_difusion', $lenguaje['difusion_contenido_index_titulo'].' - '.$lenguaje['str_crear']);
 	}
 	// public function show ()
 	public function index ($id = 'index', $accion = 'show') {
@@ -351,6 +433,7 @@ class contenidoController extends difusionController {
 		// echo 'asd'.$id[0];
 	}
 	public function buscar ($query) {
+		// DB::enableQueryLog();
 		$rows = ODifusion::buscarByTitulo($query)->limit(5)->get();
 		$datares = [];
 		$rows->map(function ($item) use (&$datares){
@@ -359,6 +442,9 @@ class contenidoController extends difusionController {
 				'ODif_Titulo' => $item->ODif_Titulo
 			];
 		});
+		// $data = ['data' => $datares, 'query' => DB::getQueryLog()];
+		// $datares[] = DB::getQueryLog();
+		// $datares[] = $rows->count();
 		$this->_view->responseJson($datares);
 	}
 	public function datos_cifras () {

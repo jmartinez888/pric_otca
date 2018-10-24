@@ -28,7 +28,7 @@ abstract class Controller
         $this->init();
     }
     private function init() {
-        $data['links_interes'] = ODifusionLinkInteres::activos()->limit(5)->get();
+        $data['links_interes'] = ODifusionLinkInteres::activos()->visibles()->limit(5)->get();
         $this->_view->assign($data);
     }
     abstract public function index();

@@ -90,7 +90,7 @@ new Vue({
         serverSide: true,
         columns: [
           {data: 'descripcion'},
-          {data: 'indicador_id'},
+          {data: 'indicador.titulo'},
           {data: 'latitude'},
           {data: 'longitude'},
           {data: 'estado_item', render: (d, t, r) => {

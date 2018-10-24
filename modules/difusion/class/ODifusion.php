@@ -12,6 +12,20 @@ class ODifusion extends Eloquent
   protected $primaryKey = 'ODif_IdDifusion';
   public $timestamps = false;
 
+
+  public function formatToArray ($exclude = []) {
+    return [
+      'id' => $this->ODif_IdDifusion,
+      'titulo' => $this->ODif_Titulo,
+      'descripcion' => $this->ODif_Descripcion,
+      'estado_item' => $this->ODif_Estado,
+      'estado_row' => $this->Row_Estado,
+      'idioma_id' => $this->Idi_IdIdioma,
+      // 'latitude' => $this->ODii_PosLatitude,
+      // 'longitude' => $this->ODii_PosLongitude
+    ];
+  }
+
   public function tipo () {
     return $this->belongsTo('App\ODifusionTipo', 'ODit_IdTipoDifusion');
   }
@@ -43,7 +57,8 @@ class ODifusion extends Eloquent
     return $query->where('Row_Estado', 1);
   }
   public function  scopeBuscarByTitulo($query, $value) {
-    return $query->where('ODif_Titulo', 'like', '%'.$value.'%');
+    // return $query->where('ODif_Titulo', 'like', '%'.$value.'%');
+    return $query->where(DB::raw("fn_TraducirContenido('ora_difusion','ODif_Titulo',ora_difusion.ODif_IdDifusion,'".\Cookie::lenguaje()."',ora_difusion.ODif_Titulo)"), 'like', "%".$value."%");
   }
   public function getPalabrasClaves () {
     $palabras = $this->ODif_Palabras;

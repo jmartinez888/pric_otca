@@ -2,13 +2,13 @@
 
     var tpl = `
             <div class="thumbnail" :id="'banner-' + banner.id">
-                <img :src="banner.image" alt="adasd">
+                <img :src="banner.image" alt="" style="width: 100%">
                 <div class="caption">
-                    <h3>{literal}{{banner.titulo}}{/literal}</h3>
+                    <h3 style="margin-top: 0px; margin-bottom: 0px">{literal}{{banner.titulo}}{/literal}</h3>
                     <p>{literal}{{banner.descripcion}}{/literal}</p>
                     <p >
                         <button data-toggle="tooltip" data-placement="bottom" data-accion="estado" class="btn btn-default btn-sm glyphicon glyphicon-trash estado-rol btn-acciones"  data-estado="" :data-id="banner.id"  data-nombre="" title="{$lenguaje['str_cambiar_estado']}"  @click="onClick_btnEiminar(banner.id)"> </button>
-                        <a data-toggle="tooltip" data-placement="bottom" class="btn btn-default btn-acciones btn-sm glyphicon glyphicon-edit" title="{$lenguaje['str_editar']}" href=""></a></p>
+                        <a data-toggle="tooltip" data-placement="bottom" class="btn btn-default btn-acciones btn-sm glyphicon glyphicon-edit" title="{$lenguaje['str_editar']}" :href="'{$_layoutParams.root}difusion/banner/' + banner.id +'/edit'"></a></p>
                   </div>
             </div>
         `;
