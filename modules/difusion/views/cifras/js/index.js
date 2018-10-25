@@ -52,21 +52,21 @@ new Vue({
 			})
 		},
 		onClick_btnAccion: function (e) {
-			console.log(e.currentTarget)
-			this.nombre = e.currentTarget.dataset.nombre
+			// console.log(e.currentTarget)
+			// this.nombre = e.currentTarget.dataset.nombre
 
-			let temp_dif = this.dt_tbl_difusion.ajax.json().data.find(v => {
-				return v.ODif_IdDifusion == e.currentTarget.dataset.id
-			})
-			if (temp_dif != undefined) {
-				this.editar_attr.estado = +temp_dif.ODif_Estado == 0 ? false : true
-				this.editar_attr.datos = +temp_dif.ODif_Datos == 0 ? false : true
-				this.editar_attr.evento = +temp_dif.ODif_Evento == 0 ? false : true
-				this.editar_attr.banner = +temp_dif.ODif_Banner == 0 ? false : true
-				this.editar_attr.id = +temp_dif.ODif_IdDifusion
+			// let temp_dif = this.dt_tbl_difusion.ajax.json().data.find(v => {
+			// 	return v.ODif_IdDifusion == e.currentTarget.dataset.id
+			// })
+			// if (temp_dif != undefined) {
+			// 	this.editar_attr.estado = +temp_dif.ODif_Estado == 0 ? false : true
+			// 	this.editar_attr.datos = +temp_dif.ODif_Datos == 0 ? false : true
+			// 	this.editar_attr.evento = +temp_dif.ODif_Evento == 0 ? false : true
+			// 	this.editar_attr.banner = +temp_dif.ODif_Banner == 0 ? false : true
+			// 	this.editar_attr.id = +temp_dif.ODif_IdDifusion
 
-				$('#mod_estado').modal('show')
-			}
+			// 	$('#mod_estado').modal('show')
+			// }
 
 		},
 		onSubmit_filtrarTematica: function () {
@@ -104,7 +104,8 @@ new Vue({
               id: d,
               nombre: r.descripcon,
               estado: r.estado_item,
-              url: _root_lang + 'difusion/contenido/' + r.difusion_id + '/edit'
+              url_edit: _root_lang + 'difusion/cifras/' + r.difusion_id + '/edit',
+              url_view: _root_lang + 'difusion/cifras/' + r.difusion_id
             })
           }}
         ],

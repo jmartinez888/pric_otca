@@ -356,6 +356,7 @@ class contenidoController extends difusionController {
 
 			$date = new Carbon($difusion->ODif_FechaPublicacion);
 			$date->setLocale('es');
+			$data['titulo'] = $difusion->ODif_Titulo;
 			// dd($date->format('l jS \\of F Y h:i:s A'));
 			// dd($difusion->getRelacionado());
 			$data['difusion'] = $difusion;
