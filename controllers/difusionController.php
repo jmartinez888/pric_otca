@@ -42,10 +42,6 @@ class difusionController extends Controller
     {
        $this->validarUrlIdioma();
     }
-    public function casa($id, $asdasd) {
-        echo $id.'-'.$asdasd;
-        echo '-asdasd casa';
-    }
 
     public function prepareCreate ($view, $titulo, $datos = 0, $eventos = 0) {
         $this->_view->setTemplate(LAYOUT_FRONTEND);

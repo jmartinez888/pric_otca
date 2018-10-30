@@ -60,6 +60,7 @@ Vue.component('form-contenido', {
 			this.findIdioma(idioma).contenido = this.editor.val();
 		},
 	  onSubmit_registrar: function () {
+	  	loading.show()
 	  	this.saveContenidoByIdioma(this.idioma_actual)
 	  	console.log(this.$refs.imagen.files[0])
 
@@ -90,15 +91,15 @@ Vue.component('form-contenido', {
 	          data: form,
 	          type: 'post',
 	          success: (response) => {
-	              console.log(response)
 	              if (response.success) {
 	              	msg.success(response.msg)
 	              	if (!this.edit)
 	              		this.resetForm()
 	              }
+	              loading.hide()
 	          },
 	          error: function (response) {
-	              console.log(response)
+	              loading.hide()
 	          }
 	      });
 

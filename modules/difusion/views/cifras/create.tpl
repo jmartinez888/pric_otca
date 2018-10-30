@@ -18,6 +18,7 @@
 {block 'template'}
 <template id="form_contenido">
 	  <div class="col-sm-9">
+      <form  id="frm_buscar_difusion" @submit.prevent="onSubmit_buscarDifusion"></form>
       <form class="form-horizontal" data-toggle="validator"  role="form" @submit.prevent="onSubmit_registrar" novalidate="true">
           <div class="form-group">
               <label class="col-lg-2 control-label">{$lenguaje['str_idioma']} : </label>
@@ -36,17 +37,25 @@
                   </div>
               </div>
           </div>
-
           <div class="form-group">
-              <label class="col-lg-2 control-label" for="difusion">{$lenguaje['str_difusion']} : </label>
-              <div class="col-lg-10">
-                <div class="input-group">
-                  <input  class="form-control" id="difusion" type="text" name="difusion" placeholder="{$lenguaje['str_seleccione_buscar']}"  required="" v-model="nombre_difusion" ref="difusion">
-                  <span class="input-group-btn"><button @click="onClick_openModDifusion" class="btn btn-default" type="button"><i class="fa fa-search"></i></button></span>
-                </div>
+            <label class="col-lg-2 control-label" for="difusion">{$lenguaje['str_difusion']} : </label>
+            <div class="col-lg-10">
+              <div class="input-group">
+                <input form="frm_buscar_difusion"  class="form-control" id="difusion" type="text" name="difusion" placeholder="{$lenguaje['str_seleccione_buscar']}"  required="" v-model="nombre_difusion" ref="difusion" :readonly="difusion_id != 0">
+                <span class="input-group-btn">
 
-
+                  <button v-if="difusion_id == 0" form="frm_buscar_difusion" class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
+                  <button v-else @click="resetBuscar" form="frm_buscar_difusion" class="btn btn-default" type="button"><i class="fa fa-edit" ></i></button>
+                </span>
               </div>
+            </div>
+          </div>
+          <div class="form-group" v-if="difusion_id != 0 && saved_difusion">
+            <div class="col-lg-10 col-lg-offset-2">
+              <blockquote style="font-size:1em">
+                <p>{literal}{{descripcion_difusion}}{/literal}</p>
+              </blockquote>
+            </div>
           </div>
           <div class="form-group">
               <label class="col-lg-2 control-label" for="indicador">{$lenguaje['str_indicador']} : </label>
@@ -114,6 +123,7 @@
 <script>moment.locale('{Cookie::lenguaje()}')</script>
 <script src="{BASE_URL}public/js/mustache/mustache.min.js" type="text/javascript"></script>
 <script src="{BASE_URL|cat:Cookie::lenguaje()}/assets/js/datatables_lang.js" type="text/javascript"></script>
+<script src="{BASE_URL}public/vendors/autosize/autosize.min.js" type="text/javascript"></script>
 <script type="text/javascript" src="{BASE_URL}public/js/datatable/datatables.min.js"></script>
 <script type="text/javascript" src="{BASE_URL}public/ckeditor/ckeditor.js"></script>
 <script type="text/javascript" src="{BASE_URL}public/ckeditor/adapters/jquery.js"></script>

@@ -94,6 +94,8 @@ class contenidoController extends difusionController {
 	}
 	public function datatable () {
 		$query = ODifusion::select();
+		$query = $query->visibles();
+
 		if ($this->has('zone')) {
 			if ($this->getInt('zone') == 1)
 				$query->where('ODif_Datos', 1);
@@ -126,6 +128,33 @@ class contenidoController extends difusionController {
 			$this->_view->responseJson($data);
 
 		}
+	}
+
+	public function relations () {
+
+	}
+	public function delete ($id) {
+		$res = ['success' => false, 'msg' => ''];
+		$lenguaje = $this->_view->loadLenguaje(['difusion_contenido_index', 'request']);
+		if ($this->isAcceptJson()) {
+			if ($this->has(['id'])) {
+				if ($row_id = $this->getInt('id')) {
+					if ($row_id != 0 && $row_id == $id)
+					$row = ODifusion::find($row_id);
+					if ($row) {
+						$row->Row_Estado = 0;
+						$row->save();
+						$res['success'] = true;
+						$res['msg'] = $lenguaje['str_elemento_eliminado'];
+					}
+				}
+			} else {
+				$res['msg'] = $lenguaje['str_parametro_falta'];
+			}
+		} else {
+			$res['msg'] = 'method fail';
+		}
+		$this->_view->responseJson($res);
 	}
 	public function update ($id) {
 		$res = ['success' => false, 'msg' => ''];
@@ -360,6 +389,7 @@ class contenidoController extends difusionController {
 			// dd($date->format('l jS \\of F Y h:i:s A'));
 			// dd($difusion->getRelacionado());
 			$data['difusion'] = $difusion;
+
 			$this->_view->assign($data);
 			$this->_view->render('detalles');
 		}
@@ -440,7 +470,9 @@ class contenidoController extends difusionController {
 		$rows->map(function ($item) use (&$datares){
 			$datares[] = [
 				'ODif_IdDifusion' => $item->ODif_IdDifusion,
-				'ODif_Titulo' => $item->ODif_Titulo
+				'ODif_Titulo' => $item->ODif_Titulo,
+				'ODif_Descripcion' => str_limit($item->ODif_Descripcion, 200)
+
 			];
 		});
 		// $data = ['data' => $datares, 'query' => DB::getQueryLog()];

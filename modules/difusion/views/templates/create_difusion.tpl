@@ -128,7 +128,7 @@
               </div>
           </div>
       </form>
-  </div>
+    </div>
 </template>
 <template id="botones_test">
     <a target="_blank" data-toggle="tooltip" data-placement="bottom" class="btn btn-default  btn-sm glyphicon glyphicon-eye-open" title="" href="{$_layoutParams.root}difusion/contenido/{literal}{{id}}{/literal}" data-original-title="Ver Ficha "></a>

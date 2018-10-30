@@ -78,24 +78,7 @@
         </div>
         <!-- EVENTOS E INTERESES -->
         <div class="col col-md-4 col-sm-12 col-xs-12 back-color-white" style="border-left: 1px solid #ebeaea; padding-left: 10px;">
-            <ul class="nav nav-tabs jsoft-tabs bg-verde">
-                <li class="active" ><a class=""  data-toggle="tab" href="#evento_interes">Eventos de Interés</a></li>
-                <li><a data-toggle="tab" href="#dato_interes">Datos de Interés</a></li>
-            </ul>
-            <div class="tab-content">
-                <div id="evento_interes" class="tab-pane fade  active in scroll">
-                    {foreach $interes_evento as $item}
-                        <interes id="{$item->ODif_IdDifusion}"></interes>
-                    {/foreach}
-                    <a href="#" class="col-md-12 col-sm-12 col-xs-12 mas-jsoft">VER MÁS</a>
-                </div>
-                <div id="dato_interes" class="tab-pane fade scroll">
-                    {foreach $interes_datos as $item}
-                        <interes id="{$item->ODif_IdDifusion}"></interes>
-                    {/foreach}
-                    <a href="#" class="col-md-12 col-sm-12 col-xs-12 mas-jsoft">VER MÁS</a>
-                </div>
-            </div>
+            {include 'tab_interes.tpl'}
         </div>
 
         <div class="col col-md-12 col-sm-12 col-xs-12">

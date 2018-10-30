@@ -26,10 +26,16 @@ new Vue({
 		}
 	},
 	methods: {
+		findItem (id) {
+			return this.dt_tbl_difusion.ajax.json().data.find( item => {
+				return item.id == id
+			})
+		},
 		onSubmit_export: function (e) {
 			window.location.href = _root_lang + 'difusion/contenido/datatable?zone='+zone_datatable+'&' + $.param(this.dt_tbl_difusion.ajax.params())  + '&export=' + e
 		},
 		onSubmit_actualizar_attr: function() {
+
 			$.post(_root_lang + 'difusion/contenido/' + this.editar_attr.id + '/update?metodo=estado', {
 				estado: +this.editar_attr.estado ? 1 : 0,
 				datos: +this.editar_attr.datos ? 1 : 0,
@@ -52,6 +58,38 @@ new Vue({
 			})
 		},
 		onClick_btnAccion: function (e) {
+			let item = this.findItem(e.currentTarget.dataset.id)
+			switch (e.currentTarget.dataset.accion) {
+				case 'estado':
+					if (item != undefined) {
+						let params = new FormData()
+						params.append('id', e.currentTarget.dataset.id)
+						loading.show()
+						axios.post(_root_lang + 'difusion/cifras/' + e.currentTarget.dataset.id + '/update/estado', params).then( res => {
+							if (res.data.success) {
+								msg.success(res.data.msg)
+								this.dt_tbl_difusion.draw(false)
+							}
+							loading.hide()
+						})
+					}
+					break
+				case 'eliminar':
+
+					if (item != undefined) {
+						let params = new FormData()
+						params.append('id', e.currentTarget.dataset.id)
+						loading.show()
+						axios.post(_root_lang + 'difusion/cifras/' + e.currentTarget.dataset.id + '/delete', params).then( res => {
+							if (res.data.success) {
+								msg.success(res.data.msg)
+								this.dt_tbl_difusion.draw(false)
+							}
+							loading.hide()
+						})
+					}
+					break
+			}
 			// console.log(e.currentTarget)
 			// this.nombre = e.currentTarget.dataset.nombre
 
@@ -74,49 +112,45 @@ new Vue({
     },
 	},
 	mounted: function () {
-
 		this.tbl_difusion = $('#tbl_difusion')
     this.dt_tbl_difusion = this.tbl_difusion.DataTable({
-        language: datatables_lenguaje,
-        data: [],
-        dom: "<'table-responsive't><'text-center'p>",
-        processing: true,
-        ajax: {
-          url: _root_lang + '/difusion/cifras/datatable',
-          data: d => {
-            d.buscar = this.buscar
-          }
-        },
-        serverSide: true,
-        columns: [
-          {data: 'descripcion'},
-          {data: 'indicador.titulo'},
-          {data: 'latitude'},
-          {data: 'longitude'},
-          {data: 'estado_item', render: (d, t, r) => {
-            if (+d == 0)
-              return `<p data-toggle="tooltip" data-placement="bottom" class="glyphicon glyphicon-remove-sign " title="Denegado" style="color: #DD4B39;"></p>`
-          else
-            return `<p data-toggle="tooltip" data-placement="bottom" class="glyphicon glyphicon-ok-sign " title="" style="color: #088A08;" data-original-title="Habilitado"></p>`
-          }},
-          {data: 'id', render: (d, t, r) => {
-            return Mustache.render(document.getElementById('botones_test').innerHTML, {
-              id: d,
-              nombre: r.descripcon,
-              estado: r.estado_item,
-              url_edit: _root_lang + 'difusion/cifras/' + r.difusion_id + '/edit',
-              url_view: _root_lang + 'difusion/cifras/' + r.difusion_id
-            })
-          }}
-        ],
-        columnDefs: [
-        	{className: 'text-center',  targets: [1, 4, 5]},
-        	{className: 'text-left',  targets: [0]},
-        	{className: 'text-right',  targets: [2, 3]},
-        ]
-      });
-    this.dt_tbl_difusion.on('draw', () => {
-      // $('#tbl_difusion .btn-acciones').tooltip();
+      language: datatables_lenguaje,
+      data: [],
+      dom: "<'table-responsive't><'text-center'p>",
+      processing: true,
+      ajax: {
+        url: _root_lang + '/difusion/cifras/datatable',
+        data: d => {
+          d.buscar = this.buscar
+        }
+      },
+      serverSide: true,
+      columns: [
+        {data: 'descripcion'},
+        {data: 'indicador.titulo'},
+        {data: 'latitude'},
+        {data: 'longitude'},
+        {data: 'estado_item', render: (d, t, r) => {
+          if (+d == 0)
+            return `<p data-toggle="tooltip" data-placement="bottom" class="glyphicon glyphicon-remove-sign " title="Denegado" style="color: #DD4B39;"></p>`
+        else
+          return `<p data-toggle="tooltip" data-placement="bottom" class="glyphicon glyphicon-ok-sign " title="" style="color: #088A08;" data-original-title="Habilitado"></p>`
+        }},
+        {data: 'id', render: (d, t, r) => {
+          return Mustache.render(document.getElementById('botones_test').innerHTML, {
+            id: d,
+            nombre: r.descripcon,
+            estado: r.estado_item,
+            url_edit: _root_lang + 'difusion/cifras/' + d + '/edit',
+            url_view: _root_lang + 'difusion/cifras/' + d
+          })
+        }}
+      ],
+      columnDefs: [
+      	{className: 'text-center',  targets: [1, 4, 5]},
+      	{className: 'text-left',  targets: [0]},
+      	{className: 'text-center',  targets: [2, 3]},
+      ]
     })
     this.tbl_difusion.on('click', '.btn-acciones', this.onClick_btnAccion);
     this.tbl_difusion.tooltip({

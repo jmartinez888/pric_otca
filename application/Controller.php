@@ -128,6 +128,19 @@ abstract class Controller
         // return strtolower($_SERVER['HTTP_ACCEPT']) == 'application/json';
 
     }
+    protected function setPostRequest () {
+        header("Access-Control-Allow-Origin: *");
+        // header("Content-Type: application/json; charset=UTF-8");
+        header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+        if (strtoupper($_SERVER['REQUEST_METHOD']) == 'POST') {
+            header("Access-Control-Allow-Methods: POST");
+        } else {
+            http_response_code(404);
+            // header('Content-type: application/json');
+            echo json_encode(['msg' => 'error method, not is post']);
+            die();
+        }
+    }
     protected function setPut () {
         header("Access-Control-Allow-Origin: *");
         // header("Content-Type: application/json; charset=UTF-8");
@@ -302,6 +315,19 @@ abstract class Controller
             }
 
             return trim($_POST[$clave]);
+        }
+
+        if(isset($_GET[$clave]) && !empty($_GET[$clave]))
+        {
+            $_GET[$clave] = strip_tags($_GET[$clave]);
+
+            if(!get_magic_quotes_gpc())
+            {
+                #$_GET[$clave] = mysqli_escape_string($_GET[$clave]);
+                $_GET[$clave] = ($_GET[$clave]);
+            }
+
+            return trim($_GET[$clave]);
         }
     }
 

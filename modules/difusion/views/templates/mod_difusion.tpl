@@ -3,23 +3,23 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Estado</h4>
+        <h4 class="modal-title">{$lenguaje['str_seleccionar']}</h4>
       </div>
       <div class="modal-body">
-        <form class="form-horizontal" data-toggle="validator" @submit.prevent="onSubmit_buscarDifusion"  role="form"  novalidate="true" id="actualizar_attr">
-          <div class="form-group">
-            <div class="col-sm-8">
-              <input type="text" ref="filter_difusion_name" name="filter_difusion_name" id="filter_difusion_name" class="form-control" value="" required="required"  placeholder="Buscar difusión">
-            </div>
-            <div class="col-sm-4">
-              <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i>&nbsp;Buscar</button>
-            </div>
-          </div>
+        {* <form class="form-horizontal" data-toggle="validator" @submit.prevent="onSubmit_buscarDifusion"  role="form"  novalidate="true" id="actualizar_attr"> *}
+          {* <div class="form-group"> *}
+            {* <div class="col-sm-8">
+              <input type="text" ref="filter_difusion_name" name="filter_difusion_name" id="filter_difusion_name" class="form-control" value="" required="required"  placeholder="{$lenguaje['str_buscar']} {$lenguaje['str_difusion']}">
+            </div> *}
+           {*  <div class="col-sm-4">
+              <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i>&nbsp;{$lenguaje['str_buscar']}</button>
+            </div> *}
+          {* </div> *}
           <table class="table table-hover table-minimal">
             <thead>
               <tr>
                 <th width="40">#</th>
-                <th>Disufio</th>
+                <th>{$lenguaje['str_difusion']}</th>
               </tr>
             </thead>
             <tbody>
@@ -29,11 +29,11 @@
               </tr>
             </tbody>
           </table>
-        </form>
+        {* </form> *}
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-        <button type="button"  class="btn btn-primary" @click="onClick_saveDifusion">Guardar</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">{$lenguaje['str_cancelar']}</button>
+        <button type="button"  class="btn btn-primary" @click="onClick_saveDifusion">{$lenguaje['str_seleccionar']}</button>
       </div>
     </div>
   </div>

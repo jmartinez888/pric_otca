@@ -103,9 +103,9 @@
                           </div>
       </form>
     {else}
-      <div class="col-sm-12">
+      {* <div class="col-sm-12"> *}
         <h2>{$lenguaje['str_elemento_no_encontrado']}</h2>
-      </div>
+      {* </div> *}
     {/if}
 
   </div>

@@ -12,7 +12,10 @@ public function edit ($id) {
 public function create () {
 	$this->prepareCreate('create_difusion', 0, 1);
 }
-  public function index () {
+public function all () {
+
+}
+public function index () {
     $this->_view->setTemplate(LAYOUT_FRONTEND);
     $data['idiomas'] = Idioma::activos();
     $data['zone'] = 2;//evento

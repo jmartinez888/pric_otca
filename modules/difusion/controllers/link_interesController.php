@@ -8,7 +8,7 @@ class link_interesController extends difusionController {
 
 	public function all () {
 		if ($this->isAcceptJson()) {
-			$rows = ODifusionLinkInteres::select();
+			$rows = ODifusionLinkInteres::activos()->visibles()->select();
 			if ($this->filledGet('buscar')) {
 				$rows->where('ODli_Titulo', 'like', '%'.$this->getTexto('buscar').'%');
 				$rows->orWhere('ODli_Descripcion', 'like', '%'.$this->getTexto('buscar').'%');

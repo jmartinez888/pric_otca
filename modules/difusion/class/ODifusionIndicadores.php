@@ -30,7 +30,12 @@ class ODifusionIndicadores extends Eloquent
   public function indicador () {
   	return $this->belongsTo('App\OIndicadores', 'OInd_IdIndicadores');
   }
-
+  public function scopeActivos ($query) {
+    return $query->where('ODii_Estado', 1);
+  }
+  public function scopeVisibles ($query) {
+    return $query->where('Row_Estado', 1);
+  }
   public function formatToArray ($include = [], $exclude = [], $with = []) {
     $res = [];
     if (count($include) > 0) {

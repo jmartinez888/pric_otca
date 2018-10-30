@@ -9,7 +9,7 @@ class tipoController extends difusionController {
 	public function datatable () {
 		$query = ODifusionTipo::select();
 
-		$query->activos();
+		$query->visibles();
 
 		$records_total = $query->count();
 		$records_total_filter = $records_total;
@@ -175,7 +175,31 @@ class tipoController extends difusionController {
 		$this->_view->assign($data);
 		$this->_view->render('create');
 	}
+	public function delete ($id) {
+		// dd($_POST);
+		$res = ['success' => false, 'msg' => ''];
+		$lenguaje = $this->_view->loadLenguaje(['difusion_contenido_index', 'request']);
+		if ($this->isAcceptJson()) {
+			if ($this->has(['id'])) {
+				if ($row_id = $this->getInt('id')) {
+					if ($row_id != 0 && $row_id == $id)
+					$row = ODifusionTipo::find($row_id);
+					if ($row) {
+						$row->Row_Estado = 0;
+						$row->save();
+						$res['success'] = true;
+						$res['msg'] = $lenguaje['str_elemento_eliminado'];
+					}
+				}
+			} else {
+				$res['msg'] = $lenguaje['str_parametro_falta'];
+			}
+		} else {
+			$res['msg'] = 'method fail';
+		}
+		$this->_view->responseJson($res);
 
+	}
 	public function update ($id, $modo = 'index') {
 		$res = ['success' => false, 'msg' => ''];
 		$lenguaje = $this->_view->loadLenguaje(['difusion_contenido_index', 'request']);

@@ -62,7 +62,8 @@ class bannerController extends difusionController {
 		        'edit' => true,
 		        'elemento_id' => $row->ODib_IdDifBanner,
 		        'difusion_id' => $row->ODif_IdDifusion,
-		        'nombre_difusion' => $row->difusion->ODif_Titulo
+		        'nombre_difusion' => $row->difusion->ODif_Titulo,
+		        'descripcion_difusion' => $row->difusion->ODif_Descripcion
 		    ];
 
 			} else {
@@ -98,10 +99,20 @@ class bannerController extends difusionController {
 		$res = ['success' => false, 'msg'  => ''];
 		switch ($modo) {
 			case 'index':
-				$rows = ODifusionBanners::all()->map(function ($item) {
+				$build = ODifusionBanners::orderParaGestor();
+				if ($this->has(['l', 's'])) {
+					$query = $this->getSql('q');
+					if ($query && $query != '') {
+						$build->where('ODib_Titulo', 'like', '%'.$query.'%');
+					}
+					$build->offset($this->getInt('s'))->limit($this->getInt('l'));
+				}
+				$rows =  $build->get()->map(function ($item) {
 					return [
 						'id' => $item->ODib_IdDifBanner,
 						'titulo' => $item->ODib_Titulo,
+						'estado_item' => $item->ODib_Estado,
+						'estado_row' => $item->Row_Estado,
 						'descripcion' => $item->ODib_Descripcion,
 						'image' => BASE_URL.'files/difusion/banner/'.$item->ODib_IdDifBanner.'/'.$item->ODib_Banner
 					];
@@ -183,6 +194,36 @@ class bannerController extends difusionController {
 				} else {
 					$res['msg'] = $lenguaje['str_parametro_falta'];
 				}
+				break;
+			case 'ocultar':
+				$this->setPostRequest();
+				if ($this->has(['id'])) {
+					if (is_numeric($id) && $id == $this->getInt('id')) {
+						$row = ODifusionBanners::find($id);
+						if ($row) {
+							$row->ODib_Estado = 0;
+							$row->save();
+							$res['success'] = true;
+							$res['msg'] = $lenguaje['str_elemento_actualizado'];
+						}
+					}
+				} else
+					$res['msg'] = $lenguaje['str_parametro_falta'];
+				break;
+			case 'mostrar':
+				$this->setPostRequest();
+				if ($this->has(['id'])) {
+					if (is_numeric($id) && $id == $this->getInt('id')) {
+						$row = ODifusionBanners::find($id);
+						if ($row) {
+							$row->ODib_Estado = 1;
+							$row->save();
+							$res['success'] = true;
+							$res['msg'] = $lenguaje['str_elemento_actualizado'];
+						}
+					}
+				} else
+					$res['msg'] = $lenguaje['str_parametro_falta'];
 				break;
 		}
 
@@ -285,7 +326,8 @@ class bannerController extends difusionController {
         'image_banner' => '',
         'elemento_id' => 0,
         'difusion_id' => 0,
-        'nombre_difusion' => ''
+        'nombre_difusion' => '',
+        'descripcion_difusion' => ''
     ];
 		$this->_view->assign($data);
 		$this->_view->render('create');

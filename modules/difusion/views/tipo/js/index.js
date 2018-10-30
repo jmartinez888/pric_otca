@@ -45,17 +45,32 @@ new Vue({
 			})
 		},
 		onClick_btnAccion: function (e) {
+			let params = new FormData()
 			switch (e.currentTarget.dataset.accion) {
 				case 'estado':
-					let params = new FormData()
+					loading.show()
 					params.append('id', e.currentTarget.dataset.id)
 					params.append('estado', e.currentTarget.dataset.estado >= 1 ? 0 : 1)
+
 					axios.post(_root_lang + 'difusion/tipo/' + e.currentTarget.dataset.id + '/update/estado', params).then( res => {
 						console.log(res)
 						if (res.data.success) {
 							msg.success(res.data.msg)
 							this.dt_tbl_datatable.draw(false)
 						}
+						loading.hide()
+					})
+					break;
+				case 'eliminar':
+					loading.show()
+					params.append('id', e.currentTarget.dataset.id)
+					axios.post(_root_lang + 'difusion/tipo/' + e.currentTarget.dataset.id + '/delete', params).then( res => {
+						console.log(res)
+						if (res.data.success) {
+							msg.success(res.data.msg)
+							this.dt_tbl_datatable.draw(false)
+						}
+						loading.hide()
 					})
 					break;
 			}
@@ -97,7 +112,10 @@ new Vue({
               url: r.url
             })
           }}
-        ]
+        ],
+	      columnDefs: [
+	      	{className: 'text-center',  targets: [2, 3]}
+	      ]
       });
     this.dt_tbl_datatable.on('draw', () => {
       // $('#tbl_datatable .btn-acciones').tooltip();

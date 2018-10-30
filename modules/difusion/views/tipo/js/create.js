@@ -23,6 +23,7 @@ Vue.component('form-template', {
 			}
 		},
 	  onSubmit_registrar: function () {
+	  	loading.show()
 	  	let form = new FormData();
 
 	    for(var i in this.idiomas) {
@@ -42,15 +43,15 @@ Vue.component('form-template', {
 	          data: form,
 	          type: 'post',
 	          success: (response) => {
-	              console.log(response)
 	              if (response.success) {
 	              	msg.success(response.msg)
 	              	if (!this.edit)
 	              		this.resetForm()
 	              }
+	              loading.hide()
 	          },
 	          error: function (response) {
-	              console.log(response)
+	              loading.hide()
 	          }
 	      });
 

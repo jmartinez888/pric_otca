@@ -26,8 +26,8 @@ class indexController extends Controller
             // $this->_view->getLenguaje("template_frontend");
             // Cookie::set('idioma', 1);
             // dd(ODifusion::eventos_interes()->get());
-            $data['interes_evento'] = ODifusion::eventos_interes()->get();
-            $data['interes_datos'] = ODifusion::datos_interes()->get();
+            // $data['interes_evento'] = ODifusion::eventos_interes()->limit(5)->get();
+            // $data['interes_datos'] = ODifusion::datos_interes()->limit(5)->get();
             $data['banners'] = ODifusionBanners::all()->map(function($item) {
                 return [
                     'backgroundImage' => BASE_URL.'files/difusion/banner/'.$item->ODib_IdDifBanner.'/'.$item->ODib_Banner,
@@ -44,7 +44,7 @@ class indexController extends Controller
             $this->_view->setTemplate(LAYOUT_FRONTEND);
             // $this->_view->setJs(array(
             //       "js", array('https://maps.googleapis.com/maps/api/js?key=AIzaSyBM7aMHbWEPvofhwPQuKPnijDmQ0_AAkrI', true)   ));
-
+            $this->_view->addViews('modules'.DS.'difusion'.DS.'views'.DS.'contenido'.DS);
             $this->_view->assign('titulo', 'Bienvenido a la PRIC');
             $this->_view->assign($data);
             // $this->_view->renderizar('inicio', 'inicio');

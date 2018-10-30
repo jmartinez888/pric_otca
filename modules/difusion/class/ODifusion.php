@@ -69,16 +69,16 @@ class ODifusion extends Eloquent
     return $array;
   }
 
-  public function getRelacionado () {
+  public function getRelacionado ($length = 5, $start = 0) {
     $palabras = $this->getPalabrasClaves();
     if (count($palabras) > 0) {
       $q = ODifusion::whereNotIn('ODif_IdDifusion', [$this->ODif_IdDifusion]);
       $q->where(function($query) use ($palabras) {
-
         foreach ($palabras as $value) {
           $query->orWhere('ODif_Palabras', 'like', '%'.$value.'%');
         }
       });
+      $q->offset($start)->limit($length);
       return $q->get();
     }
     return [];

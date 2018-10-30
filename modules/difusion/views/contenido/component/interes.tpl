@@ -25,10 +25,8 @@
         template: tpl,
         created () {
             axios.get(_root_lang + 'difusion/contenido/' + this.id).then(res => {
-                console.log(res.data)
                 this.difusion = res.data.data
             })
-            console.log(this.id)
         }
     })
 }(Vue))

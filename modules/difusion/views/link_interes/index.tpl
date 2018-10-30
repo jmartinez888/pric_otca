@@ -32,7 +32,7 @@
                     <form @submit.prevent="onSubmit_filtrarTematica" class="pull-left">
                         <div style="display:inline-block;padding-right:2em">
                             <input class="form-control" placeholder="{$lenguaje['str_buscar']}" style="width: 150px; float: left; margin-right: 4px;" v-model="buscar">
-                            <button class="btn btn-success" style=" float: left" type="button" id="buscar"><i class="glyphicon glyphicon-search"></i></button>
+                            <button class="btn btn-success" style=" float: left" type="submit" id="buscar"><i class="glyphicon glyphicon-search"></i></button>
 
                         </div>
                         <!-- <p style="direction: rtl"><a class="btn btn-primary" href="http://local.github/pric_otca/es/acl/index/nuevo_role"><i class="glyphicon glyphicon-plus-sign"></i> Agregar</a> </p> -->
@@ -48,11 +48,11 @@
         <table class="table" id="tbl_datatable" width="100%">
             <thead>
                 <tr>
-                    <th>{$lenguaje['str_titulo']}</th>
-                    <th>{$lenguaje['str_descripcion']}</th>
-                    <th>Url</th>
-                    <th>{$lenguaje['str_estado']}</th>
-                    <th width="200">{$lenguaje['str_opciones']}</th>
+                    <th class="text-center">{$lenguaje['str_titulo']}</th>
+                    <th class="text-center">{$lenguaje['str_descripcion']}</th>
+                    <th class="text-center">Url</th>
+                    <th class="text-center">{$lenguaje['str_estado']}</th>
+                    <th class="text-center" width="200">{$lenguaje['str_opciones']}</th>
                 </tr>
             </thead>
             <tbody>

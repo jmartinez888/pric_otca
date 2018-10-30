@@ -5,28 +5,36 @@
  */
 
 var msg = {
+    count: 0,
     success: function (text, stringify = false) {
         if (text)
-            mensaje([['ok', stringify ? JSON.stringify(text) : text]])
+            mensaje([['ok', stringify ? JSON.stringify(text) : text, , this.count++]])
     },
     error: function (text, stringify = false) {
         if (text)
-            mensaje([['error', stringify ? JSON.stringify(text) : text]])
+            mensaje([['error', stringify ? JSON.stringify(text) : text, this.count++]])
     }
 }
-
+var loading = {
+    el: $('#cargando'),
+    show: function () {
+        this.el.show()
+    },
+    hide: function () {
+      this.el.hide()
+    }
+}
 function mensaje(resultado) {
-    console.log(resultado)
     var error = "<div class='alert  alert-error alert-msg'><label class='label-msg'></label><a class='close' data-dismiss='alert'>x</a></div>"
     var ok = "<div class='alert alert-success alert-msg'><label class='label-msg'></label><a class='close' data-dismiss='alert'>x</a></div>"
     $("#_mensaje").removeClass("hide");
 
     if ($.isArray(resultado) && (!$.isEmptyObject(resultado))) {
         $.each(resultado, function(key, value) {
-
+            var div;
             if ($.isArray(value) && (!$.isEmptyObject(value))) {
                 if (value[0] == "error") {
-                    var div=$(error)
+                    div=$(error)
                     div.find('label').html(value[1]);
                     $("#_mensaje").append(div);
                 } else if (value[0] == "ok") {
@@ -35,7 +43,7 @@ function mensaje(resultado) {
                      $("#_mensaje").append(div);
                 }
             } else {
-                var div=$(error)
+                div=$(error)
                 if (value == "") {
                      div.find('label').html("Ocurrio un error vuelva a intentarlo luego: Error: " + value);
                 } else {
@@ -43,6 +51,10 @@ function mensaje(resultado) {
                 }
                  $("#_mensaje").append(div);
             }
+
+            setTimeout(() => {
+                div.remove()
+            }, 5000)
         });
     } else {
         $("#_mensaje").html(error);

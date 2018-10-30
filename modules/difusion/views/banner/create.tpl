@@ -39,6 +39,7 @@
 {block 'template'}
 <template id="form_banner">
   <div>
+    <form  id="frm_buscar_difusion" @submit.prevent="onSubmit_buscarDifusion"></form>
       <form class="form-horizontal" data-toggle="validator"  role="form" @submit.prevent="onSubmit_registrar" novalidate="true">
                           <div class="form-group">
                               <label class="col-lg-2 control-label">{$lenguaje['str_idioma']} : </label>
@@ -69,12 +70,24 @@
                               <label class="col-lg-2 control-label" for="difusion">{$lenguaje['str_difusion']} : </label>
                               <div class="col-lg-10">
                                 <div class="input-group">
-                                  <input  class="form-control" id="difusion" type="text" name="difusion" placeholder="{$lenguaje['str_seleccione_buscar']}"  required="" v-model="nombre_difusion" ref="difusion">
-                                  <span class="input-group-btn"><button @click="onClick_openModDifusion" class="btn btn-default" type="button"><i class="fa fa-search"></i></button></span>
+                                  <input form="frm_buscar_difusion"  class="form-control" id="difusion" type="text" name="difusion" placeholder="{$lenguaje['str_seleccione_buscar']}"  required="" v-model="nombre_difusion" ref="difusion" :readonly="difusion_id != 0">
+                                  <span class="input-group-btn">
+
+                                    <button v-if="difusion_id == 0" form="frm_buscar_difusion" class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
+                                    <button v-else @click="resetBuscar" form="frm_buscar_difusion" class="btn btn-default" type="button"><i class="fa fa-edit" ></i></button>
+                                  </span>
                                 </div>
 
 
                               </div>
+                          </div>
+
+                          <div class="form-group" v-if="difusion_id != 0 && saved_difusion">
+                            <div class="col-lg-10 col-lg-offset-2">
+                              <blockquote style="font-size:1em">
+                                <p>{literal}{{descripcion_difusion}}{/literal}</p>
+                              </blockquote>
+                            </div>
                           </div>
 
 
@@ -138,50 +151,6 @@
                               </div>
                           </div>
       </form>
-{*
-      <div class="modal fade" id="mod_difusion" tabindex="-1" role="dialog" aria-labelledby="mod_difusion">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Estado</h4>
-                </div>
-                <div class="modal-body">
-                    <form class="form-horizontal" data-toggle="validator" @submit.prevent="onSubmit_buscarDifusion"  role="form"  novalidate="true" id="actualizar_attr">
-                        <div class="form-group">
-                            <div class="col-sm-8">
-                              <input type="text" ref="filter_difusion_name" name="filter_difusion_name" id="filter_difusion_name" class="form-control" value="" required="required"  placeholder="Buscar difusión">
-                            </div>
-                            <div class="col-sm-4">
-                              <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i>&nbsp;Buscar</button>
-                            </div>
-
-                        </div>
-                        <table class="table table-hover table-minimal">
-                          <thead>
-                            <tr>
-                              <th width="40">#</th>
-                              <th>Disufio</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr v-for="item in difusiones">
-                              <td><input type="radio" name="difusion_selected" :value="item.ODif_IdDifusion" v-model="difusion_id"></td>
-                              <td>{literal}{{item.ODif_Titulo}}{/literal}</td>
-                            </tr>
-                          </tbody>
-                        </table>
-                    </form>
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                    <button type="button"  class="btn btn-primary" @click="onClick_saveDifusion">Guardar</button>
-                </div>
-            </div>
-        </div>
-      </div> *}
-
       {include 'mod_difusion.tpl'}
 
   </div>

@@ -51,22 +51,25 @@ new Vue({
 
 					params.append('id', e.currentTarget.dataset.id)
 					params.append('estado', e.currentTarget.dataset.estado >= 1 ? 0 : 1)
+					loading.show()
 					axios.post(_root_lang + 'difusion/link_interes/' + e.currentTarget.dataset.id + '/update/estado', params).then( res => {
-						console.log(res)
 						if (res.data.success) {
 							msg.success(res.data.msg)
 							this.dt_tbl_datatable.draw(false)
 						}
+						loading.hide()
 					})
 					break;
 				case 'eliminar':
 					params.append('id', e.currentTarget.dataset.id)
+					loading.show()
 					axios.post(_root_lang + 'difusion/link_interes/' + e.currentTarget.dataset.id + '/delete', params).then( res => {
 						console.log(res)
 						if (res.data.success) {
 							msg.success(res.data.msg)
 							this.dt_tbl_datatable.draw(false)
 						}
+						loading.hide()
 					})
 					break;
 			}
@@ -109,7 +112,11 @@ new Vue({
               url: r.url
             })
           }}
-        ]
+        ],
+	      columnDefs: [
+	      	{className: 'text-center',  targets: [3, 4]}
+	      ]
+
       });
     this.dt_tbl_datatable.on('draw', () => {
       // $('#tbl_datatable .btn-acciones').tooltip();

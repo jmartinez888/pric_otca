@@ -23,7 +23,7 @@ class View extends Smarty
     private $lenguaje = [];
     private static $_item;
     private $_widget;
-
+    private $_load_templates = [];
     public function __construct(Request $peticion, ACL $_acl)
     {
         parent::__construct();
@@ -58,7 +58,21 @@ class View extends Smarty
             $this->_rutas['img'] = BASE_URL . 'views/' . $controlador . '/img/';
         }
     }
-
+    public function addViews ($path) {
+        if (is_array($path)) {
+            foreach ($path as $key => $value) {
+                // $part = explode('/', $value);
+                // $temp = implode(DS, $part);
+                // $this->addTemplateDir(ROOT.$value);
+                $this->_load_templates[] = ROOT.$value;
+            }
+        } else {
+            // $part = explode('/', $path);
+            // $temp = implode(DS, $part);
+            // $this->addTemplateDir(ROOT.$path);
+            $this->_load_templates[] = ROOT.$path;
+        }
+    }
     public static function getViewId()
     {
         return self::$_item;
@@ -122,6 +136,10 @@ class View extends Smarty
         $this->assign('_layoutParams', $_params);
 
         $this->getLenguaje("template_".$this->_template);
+
+        foreach ($this->_load_templates as $key => $value) {
+            $this->addTemplateDir($value);
+        }
         $this->addTemplateDir($this->_rutas['view']);
         $this->addTemplateDir($this->_rutas['templates']);
 

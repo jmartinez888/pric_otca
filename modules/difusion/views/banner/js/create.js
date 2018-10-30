@@ -14,7 +14,8 @@ Vue.component('form-banner', {
       difusiones: [],
       // difusion_id: 0,
       difusion_selected: null,
-      image_change: false
+      image_change: false,
+      saved_difusion: false
     }
   },
   watch: {
@@ -36,35 +37,40 @@ Vue.component('form-banner', {
     }
   },
   methods: {
+    resetBuscar: function () {
+      this.difusion_id = 0
+      this.nombre_difusion = ''
+      this.descripcion_difusion = ''
+      this.difusiones = []
+      this.saved_difusion = false
+    },
     onClick_saveDifusion: function () {
+      this.saved_difusion = true
       $('#mod_difusion').modal('hide')
-      // this.nombre_difusion
       this.difusiones = []
       this.nombre_difusion = this.difusion_selected.ODif_Titulo
-      this.$refs.filter_difusion_name.value = ''
-      //ostrar en el menu principal
+      this.descripcion_difusion = this.difusion_selected.ODif_Descripcion
     },
     onSubmit_buscarDifusion: function () {
-      axios.get(_root_lang + 'difusion/contenido/buscar/' + this.$refs.filter_difusion_name.value).then(res => {
-        console.log(res.data)
+      loading.show();
+      axios.get(_root_lang + 'difusion/contenido/buscar/' + this.nombre_difusion).then(res => {
         this.difusiones = res.data;
-        if (res.data.length > 0)
+        if (res.data.length > 0) {
+          $('#mod_difusion').modal('show')
           this.difusion_id = res.data[0].ODif_IdDifusion
-      }).catch(err => {
-        console.log(err.response)
+        }
+        loading.hide();
       })
     },
     onClick_openModDifusion: function (e) {
-      $('#mod_difusion').modal('show')
+      // $('#mod_difusion').modal('show')
     },
     onClick_btnAccion: function (e) {
-      console.log(e.currentTarget.dataset.accion)
 
       switch (e.currentTarget.dataset.accion) {
         case 'ok':
           if (this.$refs.image.cropper != undefined) {
             this.cropper.getCroppedCanvas().toBlob((blob) => {
-              console.log(blob)
               this.image_blob = blob
               this.$refs.image.src = this.cropper.getCroppedCanvas().toDataURL('image/jpeg').toString();
               this.cropper.destroy();
@@ -86,6 +92,10 @@ Vue.component('form-banner', {
       this.difusiones = []
       this.difusion_id = 0
       this.difusion_selected = null
+      this.image_blob = null
+      this.nombre_difusion = ''
+      this.descripcion_difusion = ''
+      this.$refs.input_banner.value = null
       this.$refs.image.src = ''
       this.cropper = null
     },
@@ -116,31 +126,34 @@ Vue.component('form-banner', {
         form.append('id', this.elemento_id)
         if (this.image_change)
           form.append('imagen', this.image_blob)
-
-        $.ajax({
-              url: _root_lang + (this.edit ? 'difusion/banner/' + this.elemento_id + '/update/index' : 'difusion/banner/store'), // point to server-side controller method
-              dataType: 'json', // what to expect back from the server
-              cache: false,
-              contentType: false,
-              processData: false,
-              data: form,
-              type: 'post',
-              success: (response) => {
-                  console.log(response)
-                  if (response.success) {
-                    msg.success(response.msg)
-                    if (!this.edit) {
-                      this.resetForm()
-                      this.nombre_difusion = ''
+        // if (this.image_blob != null) {
+          $('#cargando').show();
+          $.ajax({
+                url: _root_lang + (this.edit ? 'difusion/banner/' + this.elemento_id + '/update/index' : 'difusion/banner/store'), // point to server-side controller method
+                dataType: 'json', // what to expect back from the server
+                cache: false,
+                contentType: false,
+                processData: false,
+                data: form,
+                type: 'post',
+                success: (response) => {
+                  $('#cargando').hide();
+                    console.log(response)
+                    if (response.success) {
+                      msg.success(response.msg)
+                      if (!this.edit) {
+                        this.resetForm()
+                        this.nombre_difusion = ''
+                      }
                     }
-                  }
-                  else
-                    msg.error(response.msg)
-              },
-              error: function (response) {
-                  console.log(response)
-              }
+                    else
+                      msg.error(response.msg)
+                },
+                error: function (response) {
+                    console.log(response)
+                }
           });
+
       } else {
         console.log('no se pue')
       }
@@ -174,6 +187,11 @@ Vue.component('form-banner', {
     $('.btn-acciones').on('click', this.onClick_btnAccion)
     // this.image_banner = this.$refs.image;
     this.$refs.input_banner.onchange = this.onChange_imagenBanner
+    autosize(document.getElementById('descripcion'))
+    $('#mod_difusion').on('hidden.bs.modal',  (e) => {
+      if (!this.saved_difusion)
+        this.resetBuscar()
+    })
     // new Cropper(this.$refs.image, {
     //   aspectRatio: 16/9,
     //   crop: function (event) {

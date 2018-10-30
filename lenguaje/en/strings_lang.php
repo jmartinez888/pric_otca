@@ -4,11 +4,16 @@
 	$lenguaje["str_cambiar_estado"] = "Cambiar estado";
 	$lenguaje["str_opciones"] = "Opciones";
 	$lenguaje["str_estado"] = "Estado";
+	$lenguaje["str_anterior"] = "Anterior";
+	$lenguaje["str_siguiente"] = "Siguiente";
 	$lenguaje["str_descripcion"] = "Descripción";
 	$lenguaje["str_guardar"] = "Guardar";
 	$lenguaje["str_cancelar"] = "Cancelar";
 	$lenguaje["str_contenido"] = "Contenido";
+	$lenguaje["str_contenido_relacionado"] = "Contenido relacionado";
+	$lenguaje["str_seleccionar"] = "Seleccionar";
 	$lenguaje["str_descargas"] = "Descargas";
+	$lenguaje["str_difusion"] = "Difusion";
 	$lenguaje["str_activo"] = "Activo";
 	$lenguaje["str_inactivo"] = "Inactivo";
 	$lenguaje["str_buscar_en"] = "Buscar en";
@@ -16,6 +21,8 @@
 	$lenguaje["str_nombre"] = "Nombre";
 	$lenguaje["str_idioma"] = "Idioma";
 	$lenguaje["str_imagen"] = "Imagen";
+	$lenguaje["str_visible"] = "Visible";
+	$lenguaje["str_oculto"] = "Oculto";
 	$lenguaje["str_inactivo"] = "Inactivo";
 	$lenguaje["str_palabras_clave"] = "Palabras clave";
 	$lenguaje["str_parametros"] = "Parametros";
@@ -30,6 +37,8 @@
 	$lenguaje['str_importar_imagen'] = 'Importar imagen';
 	$lenguaje['str_guardar_imagen'] = 'Guardar imagen';
 	$lenguaje['str_ingrese_texto'] = 'Ingrese texto';
+	$lenguaje['str_eventos_interes'] = 'Eventos de interés';
+	$lenguaje['str_datos_interes'] = 'Datos de interés';
 	$lenguaje['str_elemento_no_encontrado'] = 'Elemento no encontrado';
 	$lenguaje['str_seleccione_buscar'] = 'Seleccione buscar';
 	$lenguaje['str_nuevo'] = 'Nuevo';

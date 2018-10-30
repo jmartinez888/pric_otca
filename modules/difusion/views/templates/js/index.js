@@ -53,7 +53,7 @@ new Vue({
 			})
 		},
 		onClick_btnAccion: function (e) {
-			console.log(e.currentTarget)
+			loading.show()
 			let params = new FormData()
 			switch (e.currentTarget.dataset.accion) {
 				case 'estado':
@@ -68,9 +68,21 @@ new Vue({
 								msg.success(res.data.msg)
 								this.dt_tbl_difusion.draw(false)
 							}
+							loading.hide()
 						})
 						// $('#mod_estado').modal('show')
 					}
+					break;
+				case 'eliminar':
+					params.append('id', e.currentTarget.dataset.id)
+					loading.show()
+					axios.post(_root_lang + 'difusion/contenido/' + e.currentTarget.dataset.id + '/delete', params).then( res => {
+						if (res.data.success) {
+							msg.success(res.data.msg)
+							this.dt_tbl_difusion.draw(false)
+						}
+						loading.hide()
+					})
 					break;
 			}
 

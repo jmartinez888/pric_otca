@@ -37,7 +37,7 @@
                         <form @submit.prevent="onSubmit_filtrarTematica" class="pull-left">
                             <div style="display:inline-block;padding-right:2em">
                                 <input class="form-control" placeholder="{$lenguaje['str_buscar']}" style="width: 150px; float: left; margin-right: 4px;" v-model="buscar">
-                                <button class="btn btn-success" style=" float: left" type="button" id="buscar"><i class="glyphicon glyphicon-search"></i></button>
+                                <button class="btn btn-success" style=" float: left" type="submit" id="buscar"><i class="glyphicon glyphicon-search"></i></button>
 
                             </div>
                             <!-- <p style="direction: rtl"><a class="btn btn-primary" href="http://local.github/pric_otca/es/acl/index/nuevo_role"><i class="glyphicon glyphicon-plus-sign"></i> Agregar</a> </p> -->
@@ -52,11 +52,11 @@
             <table class="table" id="tbl_difusion" width="100%">
                 <thead>
                     <tr>
-                        <th>{$lenguaje['str_titulo']}</th>
-                        <th>{$lenguaje['str_descripcion']}</th>
-                        <th>{$lenguaje['str_estado']}</th>
-                        <th>{$lenguaje['str_parametros']}</th>
-                        <th width="200">{$lenguaje['str_opciones']}</th>
+                        <th class="text-center">{$lenguaje['str_titulo']}</th>
+                        <th class="text-center">{$lenguaje['str_descripcion']}</th>
+                        <th class="text-center">{$lenguaje['str_estado']}</th>
+                        <th class="text-center">{$lenguaje['str_parametros']}</th>
+                        <th class="text-center" width="200">{$lenguaje['str_opciones']}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -107,10 +107,10 @@
 {/block}
 {block 'template'}
 <template id="botones_test">
-    <a target="_blank" data-toggle="tooltip" data-placement="bottom" class="btn btn-default  btn-sm glyphicon glyphicon-eye-open" title="" href="{$_layoutParams.root}difusion/contenido/{literal}{{id}}{/literal}" data-original-title="Ver Ficha "></a>
+    <a target="_blank" data-toggle="tooltip" data-placement="bottom" class="btn btn-default  btn-sm glyphicon glyphicon-eye-open" title="" href="{$_layoutParams.root}difusion/contenido/{literal}{{id}}{/literal}" data-original-title="{$lenguaje['str_ver_elemento']}"></a>
     <button data-toggle="tooltip" data-placement="bottom" data-accion="estado" class="btn btn-default btn-sm glyphicon glyphicon-refresh btn-acciones"  data-estado="{literal}{{estado}}{/literal}" data-id="{literal}{{id}}{/literal}"  data-nombre="{literal}{{nombre}}{/literal}"  title="{$lenguaje['str_cambiar_estado']}"> </button>
-    <a data-toggle="tooltip" data-placement="bottom" class="btn btn-default btn-acciones btn-sm glyphicon glyphicon-edit" title="{$lenguaje['str_editar']}" href="{literal} {{url}} {/literal}"></a>
-    <button data-toggle="tooltip" data-id="{literal} {{id}} {/literal}"  data-accion="eliminar" class="btn btn-default btn-sm  glyphicon glyphicon-trash confirmar-eliminar-rol btn-acciones" data-nombre="{literal}{{nombre}}{/literal}" title="{$lenguaje['str_eliminar']}" data-placement="bottom"> </button>
+    <a data-toggle="tooltip" data-placement="bottom" class="btn btn-default btn-acciones btn-sm glyphicon glyphicon-edit" title="{$lenguaje['str_editar']}" href="{literal}{{url}}{/literal}"></a>
+    <button data-toggle="tooltip" data-id="{literal}{{id}}{/literal}"  data-accion="eliminar" class="btn btn-default btn-sm  glyphicon glyphicon-trash confirmar-eliminar-rol btn-acciones" data-nombre="{literal}{{nombre}}{/literal}" title="{$lenguaje['str_eliminar']}" data-placement="bottom"> </button>
 </template>
 {/block}
 {block 'js' append}

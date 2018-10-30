@@ -68,3 +68,15 @@ table.table-minimal tr td{
 
 
 }
+
+.tab-content.content-interes a.ver-mas{
+    text-align: center;
+    background-color: rgba(55, 57, 65, 0.1);
+    padding: 2px 0px;
+    text-transform: lowercase;
+    text-decoration: none;
+    color: rgba(55, 57, 65, 1);
+    margin-top: 8px;
+    font-weight: 600;
+}
+

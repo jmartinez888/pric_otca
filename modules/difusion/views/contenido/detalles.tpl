@@ -30,7 +30,7 @@
                 <article class="col-lg-12 col-md-12">
                     <div class="picture">
                         <div class="category-image">
-                            <img src="{BASE_URL}files/difusion/contenido/{$difusion->ODif_IdDifusion}/{$difusion->ODif_BannerUrl}" class="img-responsive">
+                            <img src="{BASE_URL}files/difusion/contenido/{$difusion->ODif_IdDifusion}/{$difusion->ODif_BannerUrl}" class="img-responsive" style="width: 100%">
                         </div>
                     </div>
 
@@ -48,78 +48,60 @@
                     </div>
                     <hr>
 
-                    <div class="col-lg-12 p-rt-lt-0" style="margin-bottom: 8px">
+
+                    <div class="col-lg-8 p-rt-lt-0" style="font-size: 12px;">
+                            <div class="col-lg-12 p-rt-lt-0">
+                                <div class="" style="width: fit-content;line-height: 250%;">
+                                    <i class="glyphicon glyphicon-tags" style="font-size: 20px; color: #777; text-align: center; vertical-align: middle;"></i>&nbsp;&nbsp;
+                                    {foreach $difusion->getPalabrasClaves() as $palabras}
+                                        <a class="regresar-tematica" href="{$_layoutParams.root}difusion/contenido/buscar/{$palabras}">{$palabras}</a>
+                                    {/foreach}
+                                    </div>
+                                <br>
+
+                            </div>
+                    </div>
+                    <div class="col-lg-4 p-rt-lt-0" style="">
                         <a class="pull-right regresar-tematica2" href="{$_layoutParams.root}foro/tematica/detalles/{$difusion->tematica->Lit_IdLineaTematica}" style="color: white;">
                             <i class="glyphicon glyphicon-star" style="text-align: center; vertical-align: middle; margin-bottom: 3px;"></i>
                             Temática: {$difusion->tematica->Lit_Nombre}
                         </a>
                     </div>
-                    <div class="source"><b>Fuente</b>
-                        <ul>
-                        {foreach $difusion->referencias as $ref}
-                                <li>
+                    <div class="clearfix"></div>
+                    <hr>
+                    <div class="col-sm-12">
+                        <div class="source"><b>Fuente</b>
+                            <ul>
+                            {foreach $difusion->referencias as $ref}
+                                    <li>
 
-                        <a href="{$ref->ODir_Url}" class="" target="_blank">{$ref->ODir_Titulo} </a>
-                        {* {$ref->ODir_Titulo} <a href="{$ref->ODir_Url}" class="btn btn-success btn-sm " target="_blank">Ir a Noticia</a> *}
-                                </li>
+                            <a href="{$ref->ODir_Url}" class="" target="_blank">{$ref->ODir_Titulo} </a>
+                            {* {$ref->ODir_Titulo} <a href="{$ref->ODir_Url}" class="btn btn-success btn-sm " target="_blank">Ir a Noticia</a> *}
+                                    </li>
 
-                        {/foreach}
-                        </ul>
+                            {/foreach}
+                            </ul>
+                        </div>
                     </div>
+
                     <hr>
 
                 </article>
             </div>
         </div>
-        <div class="col col-md-4 col-sm-12 col-xs-12 back-color-white" style="padding-top: 15px; border-left: 1px solid #ebeaea; padding-left: 10px;">
+        <div class="col col-md-4 col-sm-12 col-xs-12 back-color-white" style="padding-top: 29px; border-left: 1px solid #ebeaea; padding-left: 10px;">
+            {include 'tab_interes.tpl'}
 
+            <hr>
             <ul class="nav nav-tabs jsoft-tabs bg-verde">
-                <li class="active" ><a class=""  data-toggle="tab" href="#evento_interes">Eventos de Interés</a></li>
-                <li><a data-toggle="tab" href="#dato_interes">Datos de Interés</a></li>
+                <li class="active" ><a class=""  data-toggle="tab" href="#evento_interes">{$lenguaje['str_contenido_relacionado']}</a></li>
             </ul>
-            <div class="tab-content">
-
-                <div id="evento_interes" class="tab-pane fade  active in scroll">
-                    {foreach $interes_evento as $item}
-                        <interes id="{$item->ODif_IdDifusion}"></interes>
-                    {/foreach}
-                    <a href="#" class="col-md-12 col-sm-12 col-xs-12 mas-jsoft">VER MÁS</a>
-                </div>
-                <div id="dato_interes" class="tab-pane fade scroll">
-                    {foreach $interes_datos as $item}
-                        <interes id="{$item->ODif_IdDifusion}"></interes>
-                    {/foreach}
-                    <a href="#" class="col-md-12 col-sm-12 col-xs-12 mas-jsoft">VER MÁS</a>
-                </div>
-
-            </div>
-            <div class="col-lg-12 p-rt-lt-0" style="font-size: 12px; margin-top: 12px">
-                    <div class="col-lg-12 p-rt-lt-0">
-                                                <div class="" style="width: fit-content;line-height: 250%;">
-                                                    <i class="glyphicon glyphicon-tags" style="font-size: 20px; color: #777; text-align: center; vertical-align: middle;"></i>&nbsp;&nbsp;
-                                                    {foreach $difusion->getPalabrasClaves() as $palabras}
-                                                        <a class="regresar-tematica" href="{$_layoutParams.root}difusion/contenido/buscar/{$palabras}">{$palabras}</a>
-                                                    {/foreach}
-                                                    </div>
-                                                <br>
-
-                    </div>
-                    {* <div class="col-lg-12 p-rt-lt-0" style="margin-bottom: 8px">
-                        <a class="pull-right regresar-tematica2" href="http://local.github/pric_otca/es/foro/tematica/detalles/1">
-                            <i class="glyphicon glyphicon-star" style="text-align: center; vertical-align: middle; margin-bottom: 3px;"></i>
-                            Temática: {$difusion->tematica->Lit_Nombre}
-                        </a>
-                    </div> *}
-            </div>
-            <ul class="nav nav-tabs jsoft-tabs bg-verde">
-                <li class="active" ><a class=""  data-toggle="tab" href="#evento_interes">Contenido relacionado</a></li>
-            </ul>
-            <div class="tab-content">
+            <div class="tab-content content-interes">
                 <div id="evento_interes" class="tab-pane fade  active in scroll">
                     {foreach $difusion->getRelacionado() as $item}
                         <interes id="{$item->ODif_IdDifusion}"></interes>
                     {/foreach}
-                    <a href="#" class="col-md-12 col-sm-12 col-xs-12 mas-jsoft">VER MÁS</a>
+                    <a href="{$_layoutParams.root}difusion/contenido/{$difusion->ODif_IdDifusion}/relations" class="col-md-12 col-sm-12 col-xs-12 ver-mas">{$lenguaje['str_ver_mas']}</a>
                 </div>
 
 
