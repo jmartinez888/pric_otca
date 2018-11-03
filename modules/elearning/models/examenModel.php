@@ -441,7 +441,6 @@ class examenModel extends Model {
         }
     }
 
-
     public function updatePregunta($pregunta, $descripcion, $valor, $puntos){
         try {             
             $sql = "UPDATE pregunta SET
@@ -459,6 +458,23 @@ class examenModel extends Model {
         }
     }
 
+    public function updatePregunta2($pregunta, $descripcion, $descripcion2, $valor, $puntos){
+        try {             
+            $sql = "UPDATE pregunta SET
+              Pre_Descripcion = '$descripcion',
+              Pre_Descripcion2 = '$descripcion2',
+              Pre_Valor = '$valor',
+              Pre_Puntos = $puntos,
+              Pre_FechaReg = NOW()
+            WHERE Pre_IdPregunta = $pregunta";
+            $result = $this->_db->prepare($sql);                
+            $result->execute();
+            return $result->rowCount(PDO::FETCH_ASSOC);
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("elearning(examenModel)", "updatePregunta2", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
     public function insertAlternativa($pregunta, $valor, $descripcion, $relacion=0, $check=0, $puntos=0){
         try {             
             $sql = "call s_i_alternativa(?,?,?,?,?,?)";

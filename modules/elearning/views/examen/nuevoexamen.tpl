@@ -1,11 +1,11 @@
-{include file='modules/elearning/views/cursos/menu/lateral.tpl'}
+{include file='modules/elearning/views/gestion/menu/menu.tpl'}
 <div class="col-lg-10">
 <div class="col-lg-12">
     <div class="col-lg-12">
   <div class=" " style="margin-bottom: 0px !important">
     <div class="text-center text-bold" style="margin-top: 20px; margin-bottom: 20px; color: #267161;">
       <h3 style="text-transform: uppercase; margin: 0; font-weight: bold;">
-        Titulo de Nuevo curso mooc
+        {$titulo}
                 </h3>
     </div>
   </div>

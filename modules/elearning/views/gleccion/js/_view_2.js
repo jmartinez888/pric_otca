@@ -7,48 +7,70 @@ $("#item_titulo").click(function() {
   $("#item_contenido").removeClass("active"); 
   $("#item_referencias").removeClass("active");
   $("#item_materiales").removeClass("active");
+  $("#item_tareas").removeClass("active");
   // $(this).css('font-weight', 'bold');
   $(this).addClass("active");
   $('.div_titulo').css('display', 'block');
   $('.div_contenido').css('display', 'none');
   $('.div_referencias').css('display', 'none');
   $('.div_materiales').css('display', 'none');
+  $('.div_tareas').css('display', 'none');
 });
 $("#item_contenido").click(function() {
   $(this).removeClass("active");
   $("#item_titulo").removeClass("active"); 
   $("#item_referencias").removeClass("active");
   $("#item_materiales").removeClass("active");
+  $("#item_tareas").removeClass("active");
   // $(this).css('font-weight', 'bold');
   $(this).addClass("active");
   $('.div_contenido').css('display', 'block');
   $('.div_titulo').css('display', 'none');
   $('.div_referencias').css('display', 'none');
   $('.div_materiales').css('display', 'none');
+  $('.div_tareas').css('display', 'none');
 });
 $("#item_referencias").click(function() {
   $(this).removeClass("active");
   $("#item_titulo").removeClass("active"); 
   $("#item_contenido").removeClass("active");
   $("#item_materiales").removeClass("active");
+  $("#item_tareas").removeClass("active");
   // $(this).css('font-weight', 'bold');
   $(this).addClass("active");
   $('.div_referencias').css('display', 'block');
   $('.div_titulo').css('display', 'none');
   $('.div_contenido').css('display', 'none');
   $('.div_materiales').css('display', 'none');
+  $('.div_tareas').css('display', 'none');
 });
 $("#item_materiales").click(function() {
   $(this).removeClass("active");
   $("#item_titulo").removeClass("active"); 
   $("#item_contenido").removeClass("active");
   $("#item_referencias").removeClass("active");
+  $("#item_tareas").removeClass("active");
   // $(this).css('font-weight', 'bold');
   $(this).addClass("active");
   $('.div_materiales').css('display', 'block');
   $('.div_titulo').css('display', 'none');
   $('.div_contenido').css('display', 'none');
   $('.div_referencias').css('display', 'none');
+  $('.div_tareas').css('display', 'none');
+});
+$("#item_tareas").click(function() {
+  $(this).removeClass("active");
+  $("#item_titulo").removeClass("active"); 
+  $("#item_contenido").removeClass("active");
+  $("#item_referencias").removeClass("active");
+  $("#item_materiales").removeClass("active");
+  // $(this).css('font-weight', 'bold');
+  $(this).addClass("active");
+  $('.div_tareas').css('display', 'block');
+  $('.div_titulo').css('display', 'none');
+  $('.div_contenido').css('display', 'none');
+  $('.div_referencias').css('display', 'none');
+  $('.div_materiales').css('display', 'none');
 });
 // Jhon Martinez   
 

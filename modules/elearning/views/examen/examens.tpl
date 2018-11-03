@@ -5,7 +5,7 @@
   <div class=" " style="margin-bottom: 0px !important">
     <div class="text-center text-bold" style="margin-top: 20px; margin-bottom: 20px; color: #267161;">
       <h3 style="text-transform: uppercase; margin: 0; font-weight: bold;">
-        {$titulo.Cur_Titulo}
+        {$titulo}
                 </h3>
     </div>
   </div>
@@ -25,13 +25,11 @@
             </div>
             <div id="listarexamens">
             <div class="col-lg-12">
-
-
-                 {if $porcentaje<100}
-                 <a href="{$_layoutParams.root}elearning/examen/nuevoexamen/{$idcurso}" class="btn btn-primary margin-top-10 glyphicon glyphicon-plus" id="btn_nuevo"> Nuevo</a>
-            {else}
-             <a data-toggle="modal"  data-target="#msj-invalido" class="btn btn-danger margin-top-10 glyphicon glyphicon-plus" data-placement="bottom" > Nuevo</a>
-            {/if}
+                {if $porcentaje<100}
+                 <a href="{$_layoutParams.root}elearning/examen/nuevoexamen/{$idcurso}" class="btn btn-primary margin-top-10 glyphicon glyphicon-plus" id="btn_nuevo" > Nuevo</a>
+                {else}
+                 <a data-toggle="modal"  data-target="#msj-invalido" class="btn btn-danger margin-top-10 glyphicon glyphicon-plus" data-placement="bottom" > Nuevo</a>
+                {/if}
             
                 {if isset($examens) && count($examens)}
                     <div class="table-responsive">

@@ -1,17 +1,17 @@
-{include file='modules/elearning/views/cursos/menu/lateral.tpl'}
+{include file='modules/elearning/views/gestion/menu/menu.tpl'}
 <div class="col-lg-10">
-<div class="col-lg-12">
     <div class="col-lg-12">
-  <div class=" " style="margin-bottom: 0px !important">
-    <div class="text-center text-bold" style="margin-top: 20px; margin-bottom: 20px; color: #267161;">
-      <h3 style="text-transform: uppercase; margin: 0; font-weight: bold;">
-        <!-- Titulo de Nuevo curso mooc -->
-                </h3>
-    </div>
-  </div>
-</div>
-        <h3>Añadir pregunta: Respuesta Relacionada</h3>
-        <hr class="cursos-hr">
+      <div class="col-lg-12">
+        <div class=" " style="margin-bottom: 0px !important">
+          <div class="text-center text-bold" style="margin-top: 20px; margin-bottom: 20px; color: #267161;">
+            <h3 style="text-transform: uppercase; margin: 0; font-weight: bold;">
+              {$titulo}
+            </h3>
+          </div>
+        </div>
+      </div>
+      <h3>Añadir pregunta: Respuesta Relacionada</h3>
+      <hr class="cursos-hr">
     </div>
     <div class="col-lg-12">
         <div class="panel-body">
@@ -26,8 +26,6 @@
                </div>
                             <br>
               <input type="hidden" class="form-control" name="contador" id="contador" value="2"/>
-            
-
             <div id="alt" class="col-lg-12" style="margin-top:10px;">
             <input type="hidden" class="form-control" name="nextinput" id="nextinput" value="3"/>
                 <label class="">Respuestas</label>

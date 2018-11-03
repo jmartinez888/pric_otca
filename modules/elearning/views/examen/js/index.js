@@ -3,17 +3,20 @@ var _Per_IdPermiso_ = 0;
 var nextinput = $("#nextinput").val();
 var contadorinputs = nextinput-1;
 var contblanco=1;
+if ($("#contblanco").val() > 0) {
+    contblanco = $("#contblanco").val();
+}
 
 
 // Menu(1);
 $(document).on('ready', function () {   
-    $('#form1').validator().on('submit', function (e) {
-    if (e.isDefaultPrevented()) {
+    // $('#form1').validator().on('submit', function (e) {
+    //     if (e.isDefaultPrevented()) {
 
-    } else {
+    //     } else {
 
-    }
-    });
+    //     }
+    // });
 // RefreshTagUrl();
     
     $("#hidden_curso").val($("#idcurso").val());
@@ -36,15 +39,14 @@ $(document).on('ready', function () {
      
     $("body").on('change', "#selectmodulo", function () {      
         $("#cargando").show();
-    $.post(_root_ + 'elearning/examen/actualizarlecciones',
-    {
-        id:$("#selectmodulo").val() 
-        
-    }, function (data) {
-        $("#completar").html('');
-        $("#cargando").hide();
-        $("#completar").html(data);
-    });
+        $.post(_root_ + 'elearning/examen/actualizarlecciones',
+        {
+            id:$("#selectmodulo").val() 
+        }, function (data) {
+            $("#completar").html('');
+            $("#cargando").hide();
+            $("#completar").html(data);
+        });
     });
 
     var paginacion = function (pagina, nombrelista, datos,total_registros) {
@@ -98,35 +100,26 @@ $(document).on('ready', function () {
         }
 
         oldVal = currentVal;
-
-        var texto=' '+$(this).val();
-
+        var texto = ' ' + $(this).val();
         var textoseparado = texto.split("|");
-
         $("#alt").html("");
-
         var j=1;
-
         var cabecera = "<div class='table-responsive'><table id='tabla' class='table' style='margin: 20px auto'><tr><th style='text-align: center'>Nº</th><th style='text-align: center'>Respuesta</th><th class='col-lg-3' style='text-align: center'>Puntos</th></tr></table></div>";
-
         $("#alt").append(cabecera);
-
         contblanco=1;
-
         for(var i=0; i< textoseparado.length; i++){
             if(i%2!=0 &&i!=textoseparado.length-1){
                 // var campo = "<input type='text' id='espacio"+j+"' value='"+textoseparado[i]+"'>";
-                var campo = "<tr style='text-align: center'><td><b>"+j+".</b></td><td>"+textoseparado[i]+"</td><td><input placeholder='Puntos' class='form-control puntos_blanco' name='puntos"+j+"' id='puntos"+j+"' type='number' min='0' max='"+$("#maximo").val()+"' value='0'/></td></tr>";
+                var campo = "<tr style='text-align: center'><td><b>"+j+".</b></td><td>"+textoseparado[i]+"</td><td><input placeholder='Puntos' class='form-control puntos_blanco' data-toggle='tooltip' data-placement='bottom' title='El valor debe ser inferior o igual a "+$("#maximo").val()+"' name='puntos"+j+"' id='puntos"+j+"' type='number' min='0' max='"+$("#maximo").val()+"' value='0'/></td></tr>";
                 $("#tabla").append(campo);
                 j++;
                 contblanco++;
+                // Select all elements with data-toggle="tooltips" in the document
+                $('[data-toggle="tooltip"]').tooltip(); 
             }
         }
-
         // var cierre ="</table></div>"
-
         // $("#alt").append(cierre);
-
         if(j==1)
             $("#alt").html("Por favor defina un espacio en blanco con estos separadores <b>|...|</b>");
     });
@@ -140,23 +133,53 @@ $(document).on('ready', function () {
 
         // oldVal2 = currentVal;
 
-        var suma=0;
-
+        var suma = 0;
         for(var i=1; i< contblanco; i++){
-            suma=suma+ parseInt($("#puntos"+i).val());
+            suma = suma + parseInt($("#puntos"+i).val());
         }
-
 
         $("#puntos").val(suma);
         $("#puntoslabel").text("Puntos: "+ suma);
-
-        var maximo=parseInt($("#maximo").val())-parseInt(suma);
+        var maximo = parseInt($("#maximo").val())-parseInt(suma);
         // $("#maximo").val(maximo);
-
         for(var i=1; i< contblanco; i++){
-            if("puntos"+i!=this.id)
+            // if("puntos"+i!=this.id)
+            if($("#puntos"+i).val()==0)
+            {
                 $("#puntos"+i).attr('max', parseInt(maximo));
+                $("#puntos"+i).attr('data-original-title', "El valor debe ser inferior o igual a " + maximo);
+            } else {
+                var _max = parseInt(maximo)+ parseInt($("#puntos"+i).val());
+                $("#puntos"+i).attr('max', parseInt(_max));
+                $("#puntos"+i).attr('data-original-title', "El valor debe ser inferior o igual a " + _max);
+            }
         }        
+    });
+    $("body").on('click', "#btn_asignar_puntos", function (e) {
+        e.preventDefault();
+        $("#puntos").val();
+        var maximo = $("#maximo").val();
+        var numAlternativas = (contblanco-1);
+        var puntosRestantes = maximo%numAlternativas; //Lo que sobra(residuo)
+        var puntosEnteros = Math.floor(maximo/numAlternativas);
+
+        for (var i = 1; i < contblanco; i++){
+            // if("puntos"+i!=this.id)            
+            $("#puntos"+i).val(puntosEnteros);
+            $("#puntos"+i).attr('max', puntosEnteros);
+            $("#puntos"+i).attr('data-original-title', "El valor debe ser inferior o igual a " + puntosEnteros);
+        } 
+        for (var j = 1; j < contblanco; j++) {
+            if (puntosRestantes > 0) {
+                var _max = parseInt($("#puntos"+j).attr('max')) + 1;
+                $("#puntos"+j).val(_max);
+                $("#puntos"+j).attr('max', _max);
+                $("#puntos"+j).attr('data-original-title', "El valor debe ser inferior o igual a " + _max);
+            } 
+            puntosRestantes--;            
+        }
+        $("#puntos").val(maximo);
+        $("#puntoslabel").text("Puntos: "+ maximo);
     });
 
     $('#confirm-delete').on('show.bs.modal', function(e) { 
@@ -166,6 +189,15 @@ $(document).on('ready', function () {
 
     
     //preguntaS
+    $("body").on('click', ".nueva_pregunta", function () { 
+        // $("#cargando").show(); 
+        if ($("#puntos").val() > 0) {
+            location.href = $(this).attr("_href");
+        }else{
+            $("#msj-invalido").modal("show");
+        }
+        // buscarpregunta($("#palabrapregunta").val(), $("#idexamen").val());
+    }); 
     $("body").on('click', "#buscarpregunta", function () { 
         $("#cargando").show();       
         buscarpregunta($("#palabrapregunta").val(), $("#idexamen").val());
@@ -211,16 +243,7 @@ $(document).on('ready', function () {
         });
     });
 
-     $("body").on('click', '.estado-pregunta', function() {
-        $("#cargando").show();
-        if (_post && _post.readyState != 4) {
-            _post.abort();
-        }
-
-        _id_pregunta = $(this).attr("id_pregunta");
-        if (_id_pregunta === undefined) {
-            _id_pregunta = 0;
-        }
+    $("body").on('click', '.estado-pregunta', function() {
         _estado = $(this).attr("estado");
         if (_estado === undefined) {
             _estado = 0;
@@ -228,25 +251,47 @@ $(document).on('ready', function () {
         if (!_estado) {
             _estado = 0;
         }
+        if (($("#puntos").val() > 0 && $(this).attr("Pre_Puntos") <= $("#puntos").val()) || _estado == 1) {
+            $("#cargando").show();
+            if (_post && _post.readyState != 4) {
+                _post.abort();
+            }
 
-        _post = $.post(_root_ + 'elearning/examen/_cambiarEstadopreguntas',
-                {                    
-                    _Mod_Idpregunta: _id_pregunta,
-                    _Mod_Estado: _estado,
-                    pagina: $(".pagination .active span").html(),
-                    palabra: $("#palabrapregunta").val(),
-                    filas:$("#s_filas_"+'listarpreguntas').val(),
-                    idexamen:$("#idexamen").val()
-                },
-        function(data) {
-            $("#listarpreguntas").html('');
-            $("#cargando").hide();
-            $("#listarpreguntas").html(data);
-            // mensaje(JSON.parse(data));
-        });
+            _id_pregunta = $(this).attr("id_pregunta");
+            if (_id_pregunta === undefined) {
+                _id_pregunta = 0;
+            }
+
+            _post = $.post(_root_ + 'elearning/examen/_cambiarEstadopreguntas',
+                    {                    
+                        _Mod_Idpregunta: _id_pregunta,
+                        _Mod_Estado: _estado,
+                        idcurso: $("#idcurso").val(),
+                        pagina: $(".pagination .active span").html(),
+                        palabra: $("#palabrapregunta").val(),
+                        filas:$("#s_filas_"+'listarpreguntas').val(),
+                        idexamen:$("#idexamen").val()
+                    },
+            function(data) {
+                $("#listarpreguntas").html('');
+                $("#cargando").hide();
+                $("#listarpreguntas").html(data);
+                // mensaje(JSON.parse(data));
+                // Select all elements with data-toggle="tooltips" in the document
+                $('[data-toggle="tooltip"]').tooltip(); 
+            });
+        } else {
+            if ($("#puntos").val() == 0) { 
+                mensaje([["error"," Ya se ha alcanzado todos los puntos del peso del examen con las preguntas registradas...!! "]]);
+            } else {
+                if ($(this).attr("Pre_Puntos") > $("#puntos").val()) { 
+                    mensaje([["error"," El puntaje de la pregunta que quiere habilitar supera los puntos del peso del examen...!! "]]);
+                }                
+            }
+        }
     });
 
-      $("body").on('click', '.confirmar-eliminar-pregunta', function() {
+    $("body").on('click', '.confirmar-eliminar-pregunta', function() {
         
         if (_post && _post.readyState != 4) {
             _post.abort();
@@ -261,8 +306,7 @@ $(document).on('ready', function () {
         _Row_Estado_ = 0;
     });
 
-
-       $("body").on('click', '.confirmar-habilitar-pregunta', function() {
+    $("body").on('click', '.confirmar-habilitar-pregunta', function() {
         $("#cargando").show();
         if (_post && _post.readyState != 4) {
             _post.abort();
@@ -289,10 +333,12 @@ $(document).on('ready', function () {
             $("#listarpreguntas").html('');
             $("#cargando").hide();
             $("#listarpreguntas").html(data);
+            // Select all elements with data-toggle="tooltips" in the document
+            $('[data-toggle="tooltip"]').tooltip(); 
         });
     });
 
-     $("body").on('click', '.eliminar_pregunta', function() {
+    $("body").on('click', '.eliminar_pregunta', function() {
         $("#cargando").show();
         // _Per_IdPermiso = _eliminar;
         _post = $.post(_root_ + 'elearning/examen/_eliminar_pregunta',
@@ -308,6 +354,8 @@ $(document).on('ready', function () {
             $("#listarpreguntas").html('');
             $("#cargando").hide();
             $("#listarpreguntas").html(data);
+            // Select all elements with data-toggle="tooltips" in the document
+            $('[data-toggle="tooltip"]').tooltip(); 
         });
     });
 });
@@ -357,47 +405,50 @@ function gestionIdiomas(idrol, idIdiomaOriginal, idIdioma) {
 }
 
 $("#btn_añadir1").click(function(){
-
     if(contadorinputs<6){
-      // var campo = "<div><div class='col-lg-10'><input placeholder='Alternativa' class='form-control margin-top-10' name='alt"+nextinput+"' id='inPreg"+nextinput+"'/></div><div class='col-lg-1'><input type='radio' value='"+nextinput+"' class='radioalt margin-top-10' name='valor_preg'/></div><div class='col-lg-1'><button class='btn btn-danger glyphicon pull-right margin-top-10 glyphicon-minus' class='btn_quitar' id='btn_quitar"+nextinput+"'></button></div></div>";
-      var campo = "<div><div class='col-lg-10'><input style='margin-top:10px;' placeholder='Alternativa' class='form-control margin-top-10' name='alt"+nextinput+"' id='inPreg"+nextinput+"'/></div><div class='col-lg-1'><input style='margin-top:10px;' type='radio' value='"+nextinput+"' class='radioalt margin-top-10' name='valor_preg'/></div><a style='margin-top:10px;' href='javascript:void(0);' class='remove_button btn btn-danger pull-right margin-top-10 ' title='Remove field'><i class='glyphicon glyphicon-minus'></i></a></div>";
-      // var campo = "<div class='col-lg-11'><input placeholder='Alternativa "+nextinput+"' class='form-control margin-top-10' name='alt"+nextinput+"' id='inPreg"+nextinput+"'/></div><div class='col-lg-1'><input type='radio' value='"+nextinput+"' class='radioalt margin-top-10' name='valor_preg'/></div>";
-      $("#alt").append(campo);
-      $("#contador").val(nextinput);
-      nextinput++;
-      contadorinputs++;
+        // var campo = "<div><div class='col-lg-10'><input placeholder='Alternativa' class='form-control margin-top-10' name='alt"+nextinput+"' id='inPreg"+nextinput+"'/></div><div class='col-lg-1'><input type='radio' value='"+nextinput+"' class='radioalt margin-top-10' name='valor_preg'/></div><div class='col-lg-1'><button class='btn btn-danger glyphicon pull-right margin-top-10 glyphicon-minus' class='btn_quitar' id='btn_quitar"+nextinput+"'></button></div></div>";
+        var campo = "<div class='col col-sm-12'><div class='col-sm-10'><input style='margin-top:10px;' placeholder='Alternativa' class='form-control margin-top-10' name='alt"+nextinput+"' id='inPreg"+nextinput+"'/></div><div class='col-sm-1'><input style='margin-top:10px;' type='radio' value='"+nextinput+"' class='radioalt margin-top-10' name='valor_preg'/></div><div class='col-sm-1'> <a style='margin-top:10px;' href='javascript:void(0);' class='remove_button btn btn-danger pull-right margin-top-10 ' data-toggle='tooltip' data-placement='right'  title='Eliminar Alternativa'><i class='glyphicon glyphicon-minus'></i></a></div></div>";
+        // var campo = "<div class='col-lg-11'><input placeholder='Alternativa "+nextinput+"' class='form-control margin-top-10' name='alt"+nextinput+"' id='inPreg"+nextinput+"'/></div><div class='col-lg-1'><input type='radio' value='"+nextinput+"' class='radioalt margin-top-10' name='valor_preg'/></div>";
+        $("#alt").append(campo);
+        $("#contador").val(nextinput);
+        nextinput++;
+        contadorinputs++;
+        // Select all elements with data-toggle="tooltips" in the document
+        $('[data-toggle="tooltip"]').tooltip(); 
     }
 });
 
-
 $("#btn_añadir2").click(function(){
-
     if(contadorinputs<6){
-      // var campo = "<div><div class='col-lg-10'><input placeholder='Alternativa' class='form-control margin-top-10' name='alt"+nextinput+"' id='inPreg"+nextinput+"'/></div><div class='col-lg-1'><input type='radio' value='"+nextinput+"' class='radioalt margin-top-10' name='valor_preg'/></div><div class='col-lg-1'><button class='btn btn-danger glyphicon pull-right margin-top-10 glyphicon-minus' class='btn_quitar' id='btn_quitar"+nextinput+"'></button></div></div>";
-      var campo = "<div><div class='col-lg-10'><input style='margin-top:10px;' placeholder='Alternativa' class='form-control margin-top-10' name='alt"+nextinput+"' id='inPreg"+nextinput+"'/></div><div class='col-lg-1'><input style='margin-top:10px;' type='checkbox' value='"+nextinput+"' class='radioalt margin-top-10' name='ckb"+nextinput+"' id='ckb"+nextinput+"' /></div><a style='margin-top:10px;' href='javascript:void(0);' class='remove_button btn btn-danger pull-right margin-top-10 ' title='Remove field'><i class='glyphicon glyphicon-minus'></i></a></div>";
-      // var campo = "<div class='col-lg-11'><input placeholder='Alternativa "+nextinput+"' class='form-control margin-top-10' name='alt"+nextinput+"' id='inPreg"+nextinput+"'/></div><div class='col-lg-1'><input type='radio' value='"+nextinput+"' class='radioalt margin-top-10' name='valor_preg'/></div>";
-      $("#alt").append(campo);
-      $("#contador").val(nextinput);
-      nextinput++;
-      contadorinputs++;
+        // var campo = "<div><div class='col-lg-10'><input placeholder='Alternativa' class='form-control margin-top-10' name='alt"+nextinput+"' id='inPreg"+nextinput+"'/></div><div class='col-lg-1'><input type='radio' value='"+nextinput+"' class='radioalt margin-top-10' name='valor_preg'/></div><div class='col-lg-1'><button class='btn btn-danger glyphicon pull-right margin-top-10 glyphicon-minus' class='btn_quitar' id='btn_quitar"+nextinput+"'></button></div></div>";
+        var campo = "<div class='col col-sm-12'> <div class='col-sm-10'><input style='margin-top:10px;' placeholder='Alternativa' class='form-control margin-top-10' name='alt"+nextinput+"' id='inPreg"+nextinput+"'/></div><div class='col-sm-1'><input style='margin-top:10px;' type='checkbox' value='"+nextinput+"' class='radioalt margin-top-10' name='ckb"+nextinput+"' id='ckb"+nextinput+"' /></div><div class='col-sm-1'><a style='margin-top:10px;' href='javascript:void(0);' class='remove_button btn btn-danger pull-right margin-top-10 ' data-toggle='tooltip' data-placement='right'  title='Eliminar Alternativa'><i class='glyphicon glyphicon-minus'></i></a></div> </div>";
+        // var campo = "<div class='col-lg-11'><input placeholder='Alternativa "+nextinput+"' class='form-control margin-top-10' name='alt"+nextinput+"' id='inPreg"+nextinput+"'/></div><div class='col-lg-1'><input type='radio' value='"+nextinput+"' class='radioalt margin-top-10' name='valor_preg'/></div>";
+        $("#alt").append(campo);
+        $("#contador").val(nextinput);
+        nextinput++;
+        contadorinputs++;
+        // Select all elements with data-toggle="tooltips" in the document
+        $('[data-toggle="tooltip"]').tooltip(); 
     }
 });
 
 $("#btn_añadir4").click(function(){
-  // var campo = "<div><div class='col-lg-10'><input placeholder='Alternativa' class='form-control margin-top-10' name='alt"+nextinput+"' id='inPreg"+nextinput+"'/></div><div class='col-lg-1'><input type='radio' value='"+nextinput+"' class='radioalt margin-top-10' name='valor_preg'/></div><div class='col-lg-1'><button class='btn btn-danger glyphicon pull-right margin-top-10 glyphicon-minus' class='btn_quitar' id='btn_quitar"+nextinput+"'></button></div></div>";
-  if(contadorinputs<6){
-  var campo = "<div><label class='' style='margin-top:20px;'>Enunciado:</label><input placeholder='Enunciado' class='form-control' name='enu"+nextinput+"' id='enu"+nextinput+"'/><label class=''>Corresponde a:</label><input placeholder='Respuesta relacionada' class='form-control' name='rpta"+nextinput+"' id='rpta"+nextinput+"'/><a href='javascript:void(0);' class='remove_button btn btn-danger pull-right margin-top-10 ' title='Remove field'><i class='glyphicon glyphicon-minus'></i></a></div>";
-  // var campo = "<div class='col-lg-11'><input placeholder='Alternativa "+nextinput+"' class='form-control margin-top-10' name='alt"+nextinput+"' id='inPreg"+nextinput+"'/></div><div class='col-lg-1'><input type='radio' value='"+nextinput+"' class='radioalt margin-top-10' name='valor_preg'/></div>";
-  $("#alt").append(campo);
-   $("#contador").val(nextinput);
-      nextinput++;
-      contadorinputs++;
-  }
+    // var campo = "<div><div class='col-lg-10'><input placeholder='Alternativa' class='form-control margin-top-10' name='alt"+nextinput+"' id='inPreg"+nextinput+"'/></div><div class='col-lg-1'><input type='radio' value='"+nextinput+"' class='radioalt margin-top-10' name='valor_preg'/></div><div class='col-lg-1'><button class='btn btn-danger glyphicon pull-right margin-top-10 glyphicon-minus' class='btn_quitar' id='btn_quitar"+nextinput+"'></button></div></div>";
+    if(contadorinputs<6){
+        var campo = "<div class='col col-sm-12'> <div class='col-sm-10'><label class='' style='margin-top:20px;'>Enunciado:</label><input placeholder='Enunciado' class='form-control' name='enu"+nextinput+"' id='enu"+nextinput+"'/><label class=''>Corresponde a:</label><input placeholder='Respuesta relacionada' class='form-control' name='rpta"+nextinput+"' id='rpta"+nextinput+"'/><a href='javascript:void(0);' class='remove_button btn btn-danger pull-right margin-top-10 ' data-toggle='tooltip' data-placement='right'  title='Eliminar Alternativa'><i class='glyphicon glyphicon-minus'></i></a></div> </div>";
+    // var campo = "<div class='col-lg-11'><input placeholder='Alternativa "+nextinput+"' class='form-control margin-top-10' name='alt"+nextinput+"' id='inPreg"+nextinput+"'/></div><div class='col-lg-1'><input type='radio' value='"+nextinput+"' class='radioalt margin-top-10' name='valor_preg'/></div>";
+        $("#alt").append(campo);
+        $("#contador").val(nextinput);
+        nextinput++;
+        contadorinputs++;
+    // Select all elements with data-toggle="tooltips" in the document
+        $('[data-toggle="tooltip"]').tooltip(); 
+    }
 });
 
 $("#alt").on('click', '.remove_button', function(e){ //Once remove button is clicked
     e.preventDefault();
-    $(this).parent('div').remove(); //Remove field html //Decrement field counter
+    $(this).parent('div').parent('div').remove(); //Remove field html //Decrement field counter
     contadorinputs--;
 });
 

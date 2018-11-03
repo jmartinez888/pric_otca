@@ -203,6 +203,7 @@
       padding-top: 20px;
       width: 100%;
       padding-right: 0px;
+      padding-bottom: 40px;
   }
   .side-menu {
       list-style: none;
@@ -253,9 +254,6 @@
       border-radius: 10px;
 
   }
-
-
-
   .course-title {
       text-align: left;
       padding-left: 2px;
@@ -416,13 +414,13 @@
 
 <!-- {include file='modules/elearning/views/cursos/menu/descripcion.tpl'} -->
 {if isset($curso) && count($curso)}
-<input hidden="hidden" id="hidden_curso" name="id___" value="{$curso.Cur_IdCurso}"/>
+<input hidden="hidden" id="hidden_curso" name="hidden_curso" value="{$curso.Cur_IdCurso}"/>
 {else}
-  {if isset($idCurso)}
-    <input hidden="hidden" id="hidden_curso" name="id___" value="{$idCurso}"/>
+  {if isset($idcurso)}
+    <input hidden="hidden" id="hidden_curso" name="hidden_curso" value="{$idcurso}"/>
   {/if}
 {/if}
-<div class="col-lg-2" >
+<div class="col-sm-2" >
   <div class="sidebar-left">
     <ul id="item-lista-curso">
         <div {if $active = 'mis_cursos'} class="side-menu2 active" {else} class="side-menu2 " {/if} >
@@ -507,21 +505,29 @@
 </div>
 
 <script type="text/javascript">
+  var idcurso = "";
+  if ($("#hidden_curso").val() != "") {
+    idcurso = $("#hidden_curso").val();
+  } else {
+    idcurso = $("#hidden_curso").attr("value");
+  }
+
+
   setTimeout(function(){
     $("#item-lista-curso").click(function(){
       location.href = _root_ + _modulo + "/gestion/_inicio";
       // CargarPagina("gcurso/_view_mis_cursos", { id: $("#hidden_curso").val() }, false, $(this));
     });
     $("#item-ficha-curso").click(function(){
-      location.href = _root_ + _modulo + '/gcurso/_view_finalizar_registro/' + $("#hidden_curso").val();
+      location.href = _root_ + _modulo + '/gcurso/_view_finalizar_registro/' + idcurso;
       // CargarPagina("gcurso/_view_finalizar_registro", { id: $("#hidden_curso").val() }, false, $(this)); 
     });
     $("#item-modulos-curso").click(function(){
-      location.href = _root_ + _modulo + '/gmodulo/_view_modulos_curso/' + $("#hidden_curso").val();
+      location.href = _root_ + _modulo + '/gmodulo/_view_modulos_curso/' + idcurso;
       // CargarPagina("gmodulo/_view_modulos_curso", { id: $("#hidden_curso").val() }, false, $(this));
     });
     $("#item-tareas-curso").click(function(){
-      CargarPagina("gmodulo/_view_tareas_curso", { id: $("#hidden_curso").val() }, false, $(this));
+      CargarPagina("gmodulo/_view_tareas_curso", { id: idcurso }, false, $(this));
     });
     //  $("#item-examen-curso").click(function(){
     //     // location.href = "{$_layoutParams.root}elearning/examen/examens/"+$("#hidden_curso").val();
@@ -532,30 +538,30 @@
   $("#item-examen-curso").click(function(){
     // location.href = "{$_layoutParams.root}elearning/examen/examens/"+$("#hidden_curso").val();
     // CargarPagina("examen/examens", { id: $("#hidden_curso").val() }, false, $(this));
-    var Curso =  $("#hidden_curso").val();
-    var Link = _root_ + _modulo + "/examen/examens/" + Curso;
+    // var Curso =  $("#hidden_curso").val();
+    var Link = _root_ + _modulo + "/examen/examens/" + idcurso;
     location.href = Link;
   });
 
   $("#item-anuncios-curso").click(function(){
     // location.href = "{$_layoutParams.root}elearning/examen/examens/"+$("#hidden_curso").val();
     // CargarPagina("examen/examens", { id: $("#hidden_curso").val() }, false, $(this));
-    var Curso =  $("#hidden_curso").val();
-    var Link = _root_ + _modulo + "/gestion/anuncios/" + Curso;
+    // var Curso =  $("#hidden_curso").val();
+    var Link = _root_ + _modulo + "/gestion/anuncios/" + idcurso;
     location.href = Link;
   });
 
   $("#item-certificado-curso").click(function(){
     // location.href = "{$_layoutParams.root}elearning/examen/examens/"+$("#hidden_curso").val();
     // CargarPagina("examen/examens", { id: $("#hidden_curso").val() }, false, $(this));
-    var Curso =  $("#hidden_curso").val();
-    var Link = _root_ + _modulo + "/certificado/plantilla_opcion/" + Curso;
+    // var Curso =  $("#hidden_curso").val();
+    var Link = _root_ + _modulo + "/certificado/plantilla_opcion/" + idcurso;
     location.href = Link;
   });
 
   $("#item-alumnos-curso").click(function(){
-    var Curso =  $("#hidden_curso").val();
-    var Link = _root_ + _modulo + "/gestion/matriculados/" + Curso;
+    // var Curso =  $("#hidden_curso").val();
+    var Link = _root_ + _modulo + "/gestion/matriculados/" + idcurso;
     location.href = Link;
   });
 

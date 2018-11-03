@@ -93,7 +93,6 @@ $(document).ready(function(){
           //   modulo : $("#hidden_modulo").val(),
           //   leccion : $("#hidden_leccion").val(),
           // }, false, false);
-
         });
       }
     });

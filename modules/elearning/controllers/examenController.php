@@ -14,7 +14,7 @@ class examenController extends elearningController {
         parent::__construct($lang,$url);
         $this->getLibrary("ServiceResult");
         $this->service = new ServiceResult();
-        $this->examen = $this->loadModel("examen");
+        $this->examen = $this->loadModel("examen");        
     }
 
     public function index(){  }
@@ -72,13 +72,14 @@ class examenController extends elearningController {
         $paginador->paginar( $arrayRowCount['CantidadRegistros'],"listarexamens", "", $pagina, CANT_REG_PAG, true);
 
         $porcentaje=$this->examen->getExamensPorcentaje($idcurso);
-
+        $titulo = $this->examen->getTituloCurso($idcurso);
         $this->_view->assign('numeropagina', $paginador->getNumeroPagina());
         $this->_view->assign('paginacionexamens', $paginador->getView('paginacion_ajax_s_filas'));
         $this->_view->assign('porcentaje', $porcentaje['Porcentaje'] );
         // $this->_view->assign('titulo', 'Administracion de preguntas');
         $this->_view->assign('idcurso', $idcurso);
-        $this->_view->assign('titulo', $this->examen->getTituloCurso($idcurso));
+        // $this->_view->assign('titulo_Curso', $titulo);
+        $this->_view->assign('titulo', $titulo["Cur_Titulo"]);
         $this->_view->renderizar('examens');
     }
 
@@ -166,7 +167,7 @@ class examenController extends elearningController {
         $this->_view->renderizar('ajax/listarexamens', false, true);
     }
 
-    public function nuevoexamen($id){
+    public function nuevoexamen($id = 0){
         // $this->_view->setCss(array("verificar"));
         // $id = $this->getTexto("id");
         $this->_view->setTemplate(LAYOUT_FRONTEND);
@@ -190,12 +191,16 @@ class examenController extends elearningController {
             }
         }
 
+        // echo "string".$id;
+        // print_r($this->examen->getTituloCurso($id));
+        $titulo = $this->examen->getTituloCurso($id);
         // $porcentaje=$this->examen->getExamensPorcentaje($id);
         // $this->_view->assign('porcentaje',100-$porcentaje['Porcentaje'] );
         // $this->_view->assign('lecciones',$lecciones);
         $this->_view->assign('modulos',$modulos);
         $this->_view->assign('idcurso', $id);
-        $this->_view->assign('titulo', $this->examen->getTituloCurso($id));
+        // $this->_view->assign('titulo_Curso', $titulo);
+        $this->_view->assign('titulo', $titulo["Cur_Titulo"]);
         $this->_view->renderizar('nuevoexamen', 'elearning');
     }
 
@@ -236,20 +241,6 @@ class examenController extends elearningController {
                 
         $this->_view->renderizar('ajax/listarlecciones', false, true);
     }
-
-    // public function registrarexamen(){
-    //     // echo 'hola'; exit;
-    //     $id = $this->getTexto("idcurso");
-
-    //     $examen=$this->examen->insertExamen($id, $this->getTexto("selectmodulo"), $this->getTexto("titulo"), $this->getTexto("porcentaje"), $this->getTexto("puntaje"),  $this->getTexto("intentos"), $this->getTexto("selectleccion"));
-
-    //     $this->service->Success("Se resgistó el examen con exito");
-    //     $this->service->Send();
-
-    //     // if($examen){
-    //     //     preguntas($examen[0],$id);
-    //     // }
-    // }
 
     public function preguntas($id,$idExamen){
 
@@ -296,14 +287,15 @@ class examenController extends elearningController {
         $puntos_maximo=$peso['Exa_Peso']-$puntos_pregunta['puntos_pregunta'];
         // echo $puntos_pregunta['puntos_pregunta']; exit;
 
+        $titulo =  $this->examen->getTituloCurso($id);
         $this->_view->assign('numeropagina', $paginador->getNumeroPagina());
         $this->_view->assign('paginacionpreguntas', $paginador->getView('paginacion_ajax_s_filas'));
         $this->_view->assign('puntos_maximo', $puntos_maximo);
-        $this->_view->assign('titulo', 'Administracion de preguntas');
+        // $this->_view->assign('titulo', 'Administracion de preguntas');
+        $this->_view->assign('titulo', $titulo["Cur_Titulo"]);
         $this->_view->assign('examen', $idExamen);
         $this->_view->assign('idcurso', $id);
         $this->_view->renderizar('preguntas', 'preguntas');
-        $this->_view->assign('titulo', $this->examen->getTituloCurso($id));
     }
 
     public function _paginacion_listarpreguntas($txtBuscar = false) 
@@ -336,7 +328,6 @@ class examenController extends elearningController {
             }
         }         
 
-
         $paginador = new Paginador();
         // $arrayRowCount = $this->_aclm->getpreguntasRowCount$arrayRowCount = 0,($condicion);
 
@@ -354,7 +345,6 @@ class examenController extends elearningController {
         $this->_view->renderizar('ajax/listarpreguntas', false, true);
     }
 
-
     public function _cambiarEstadopreguntas(){
         $this->_acl->acceso('agregar_rol');
         // $this->_view->setJs(array(array(BASE_URL . 'public/js/util.js',true)));
@@ -371,6 +361,7 @@ class examenController extends elearningController {
         $Mod_Idpregunta = $this->getInt('_Mod_Idpregunta');
         $Mod_Estado = $this->getInt('_Mod_Estado');
         $idExamen=$this->getInt('idexamen');
+        $idcurso=$this->getInt('idcurso');
         // echo $Per_Estado."//".$Per_Idpregunta; exit;
 
         if(!$Mod_Idpregunta){            
@@ -391,9 +382,8 @@ class examenController extends elearningController {
             } else {
                 $contenido = 'Error de variable(s) en consulta..!!'; 
                 $mensaje = "error";
-                array_push($resultado, array(0 => $mensaje, 1 => $contenido)); 
+                array_push($resultado, array(0 => $mensaje, 1 => $contenido));
             }        
-
         }
         $mensaje_json = json_encode($resultado);
         // echo($mensaje_json); exit();
@@ -432,7 +422,8 @@ class examenController extends elearningController {
         $puntos_pregunta= $this->examen->getPuntosPregunta($idExamen);
         $puntos_maximo=$peso['Exa_Peso']-$puntos_pregunta['puntos_pregunta'];
         $this->_view->assign('puntos_maximo', $puntos_maximo);
-
+        $this->_view->assign('idcurso', $idcurso);
+        $this->_view->assign('examen',$idExamen);
         $this->_view->assign('numeropagina', $paginador->getNumeroPagina());
         $this->_view->assign('paginacionpreguntas', $paginador->getView('paginacion_ajax_s_filas'));
         $this->_view->renderizar('ajax/listarpreguntas', false, true);
@@ -479,6 +470,7 @@ class examenController extends elearningController {
         $puntos_maximo=$peso['Exa_Peso']-$puntos_pregunta['puntos_pregunta'];
         $this->_view->assign('puntos_maximo', $puntos_maximo);
 
+        $this->_view->assign('examen',$idExamen);
         $this->_view->assign('numeropagina', $paginador->getNumeroPagina());
         $this->_view->assign('paginacionpreguntas', $paginador->getView('paginacion_ajax_s_filas'));
         $this->_view->renderizar('ajax/listarpreguntas', false, true);
@@ -508,18 +500,17 @@ class examenController extends elearningController {
                 $mensaje = "error";
                 array_push($resultado, array(0 => $mensaje, 1 => $contenido));          
             } else {
-                            $rowCount = $this->examen->eliminarHabilitarpregunta($Mod_Idpregunta,$Row_Estado);
-                            if($rowCount)
-                            {
-                                $contenido = 'El pregunta fue eliminado correctamente...!!!'; 
-                                $mensaje = "ok";
-                                array_push($resultado, array(0 => $mensaje, 1 => $contenido));
-                            } else {
-                                $contenido = 'No se pudo eliminar pregunta error en consulta...!!!'; 
-                                $mensaje = "error";
-                                array_push($resultado, array(0 => $mensaje, 1 => $contenido));
-                            }
-                           
+                $rowCount = $this->examen->eliminarHabilitarpregunta($Mod_Idpregunta,$Row_Estado);
+                if($rowCount)
+                {
+                    $contenido = 'El pregunta fue eliminado correctamente...!!!'; 
+                    $mensaje = "ok";
+                    array_push($resultado, array(0 => $mensaje, 1 => $contenido));
+                } else {
+                    $contenido = 'No se pudo eliminar pregunta error en consulta...!!!'; 
+                    $mensaje = "error";
+                    array_push($resultado, array(0 => $mensaje, 1 => $contenido));
+                }                           
             }
         } else {
             $rowCount = $this->examen->eliminarHabilitarpregunta($Mod_Idpregunta,$Row_Estado);
@@ -536,11 +527,10 @@ class examenController extends elearningController {
             }
         }
 
-        
         $mensaje_json = json_encode($resultado);
         $this->_view->assign('_mensaje_json', $mensaje_json);
 
-       $condicion = " ";
+        $condicion = " ";
         $soloActivos = 0;
         if ($txtBuscar) 
         {
@@ -574,6 +564,7 @@ class examenController extends elearningController {
         $puntos_maximo=$peso['Exa_Peso']-$puntos_pregunta['puntos_pregunta'];
         $this->_view->assign('puntos_maximo', $puntos_maximo);
 
+        $this->_view->assign('examen',$idExamen);
         $this->_view->assign('numeropagina', $paginador->getNumeroPagina());
         $this->_view->assign('paginacionpreguntas', $paginador->getView('paginacion_ajax_s_filas'));
         $this->_view->renderizar('ajax/listarpreguntas', false, true);
@@ -627,6 +618,8 @@ class examenController extends elearningController {
             }
         }
        
+        $titulo =  $this->examen->getTituloCurso($id);
+        $this->_view->assign('titulo', $titulo["Cur_Titulo"]);
         $this->_view->assign('puntos_maximo', $puntos_maximo );
         $this->_view->assign('examen', $idExamen );
         $this->_view->assign('idcurso', $id);
@@ -689,6 +682,9 @@ class examenController extends elearningController {
         $puntos_pregunta= $this->examen->getPuntosPregunta($preguntaedit['Exa_IdExamen']);
         $puntos_maximo=$peso['Exa_Peso']-$puntos_pregunta['puntos_pregunta'];
 
+
+        $titulo =  $this->examen->getTituloCurso($idcurso);
+        $this->_view->assign('titulo', $titulo["Cur_Titulo"]);
         $this->_view->assign('puntos_maximo', $puntos_maximo );
         $this->_view->assign('examen', $preguntaedit['Exa_IdExamen'] );
         $this->_view->assign('idcurso', $idcurso);
@@ -746,6 +742,8 @@ class examenController extends elearningController {
             }
         }
         
+        $titulo =  $this->examen->getTituloCurso($id);
+        $this->_view->assign('titulo', $titulo["Cur_Titulo"]);
         $this->_view->assign('puntos_maximo', $puntos_maximo );
         $this->_view->assign('examen', $idExamen );
         $this->_view->assign('idcurso', $id);
@@ -769,7 +767,6 @@ class examenController extends elearningController {
             $contador = $this->getTexto("contador");
 
             $pregunta =$this->examen->updatePregunta($id, $pregunta, 0,$this->getInt("puntos"));
-
 
              if($pregunta){
 
@@ -805,6 +802,8 @@ class examenController extends elearningController {
         $puntos_pregunta= $this->examen->getPuntosPregunta($preguntaedit['Exa_IdExamen']);
         $puntos_maximo=$peso['Exa_Peso']-$puntos_pregunta['puntos_pregunta'];
 
+        $titulo =  $this->examen->getTituloCurso($id);
+        $this->_view->assign('titulo', $titulo["Cur_Titulo"]);
         $this->_view->assign('puntos_maximo', $puntos_maximo );
         $this->_view->assign('examen', $preguntaedit['Exa_IdExamen'] );
         $this->_view->assign('idcurso', $idcurso);
@@ -844,7 +843,6 @@ class examenController extends elearningController {
                         $alternativa =$this->examen->insertAlternativa($pregunta[0], $i, $arrayalt[$i] ,0,0, $this->getInt("puntos".$j));
                     }
                 }
-              
 
                 if($alternativa)
                     $this->redireccionar("elearning/examen/preguntas/$id/$idExamen");
@@ -852,6 +850,8 @@ class examenController extends elearningController {
             
         }
         
+        $titulo =  $this->examen->getTituloCurso($id);
+        $this->_view->assign('titulo', $titulo["Cur_Titulo"]);
         $this->_view->assign('puntos_maximo', $puntos_maximo );
         $this->_view->assign('examen', $idExamen );
         $this->_view->assign('idcurso', $id);
@@ -867,37 +867,38 @@ class examenController extends elearningController {
         $preguntaedit =$this->examen->getValorPregunta($id);
 
         if ($this->botonPress("btn_registrar_pregunta")) {
+            // dd($_POST);
             $pregunta = $this->getSql("in_pregunta");
-            $pregunta2 =" ". $this->getSql("in_pregunta4");
+            $pregunta2 = " ". $this->getSql("in_pregunta4");
 
             $countrpta=$this->examen->deleteAlternativa($id);
 
-            $pregunta =$this->examen->updatePregunta($id, $pregunta, 0,$this->getInt("puntos"));
+            $pregunta = $this->examen->updatePregunta2($id, $pregunta,$pregunta2, 0,$this->getInt("puntos"));
 
-             if($pregunta){
-
+            if($pregunta){
                 $alternativa=0;
                 $arrayalt=explode('|', $pregunta2);
-
-                $j=1;
-
-                for ($i=0; $i < count($arrayalt); $i++) { 
+                // $j=1;
+                $t = 1;
+                for ($i=0; $i < count($arrayalt); $i++) {
                     if($i%2!=0 && $i!=count($arrayalt)-1){
-                        $alternativa =$this->examen->insertAlternativa($id, $i, $arrayalt[$i] ,0,0, $this->getInt("puntos".$j));
+                        //echo($this->getInt("puntos".$t++));
+                        $alternativa =$this->examen->insertAlternativa($id, $t, $arrayalt[$i],0,0, $this->getInt("puntos".$t));
+                        $t++;
                     }
-                }
-              
-
+                }          
+                //exit;
                 if($alternativa)
                      $this->redireccionar("elearning/examen/preguntas/$idcurso/".$preguntaedit['Exa_IdExamen']);
             }
-            
         }
 
         $peso= $this->examen->getExamenPeso($preguntaedit['Exa_IdExamen']);
         $puntos_pregunta= $this->examen->getPuntosPregunta($preguntaedit['Exa_IdExamen']);
         $puntos_maximo=$peso['Exa_Peso']-$puntos_pregunta['puntos_pregunta'];
         
+        $titulo =  $this->examen->getTituloCurso($idcurso);
+        $this->_view->assign('titulo', $titulo["Cur_Titulo"]);
         $this->_view->assign('puntos_maximo', $puntos_maximo );
         $this->_view->assign('examen', $preguntaedit['Exa_IdExamen']);
         $this->_view->assign('idcurso', $idcurso);
@@ -949,6 +950,8 @@ class examenController extends elearningController {
             }
         }
        
+        $titulo =  $this->examen->getTituloCurso($id);
+        $this->_view->assign('titulo', $titulo["Cur_Titulo"]);
         $this->_view->assign('puntos_maximo', $puntos_maximo );
         $this->_view->assign('examen', $idExamen );
         $this->_view->assign('idcurso', $id);

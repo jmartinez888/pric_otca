@@ -23,6 +23,17 @@
   .div_materiales{
     display: none;
   }
+  .div_tareas{
+    display: none;
+  }
+
+  
+  .nav-tabs > .active{
+    font-weight: bold;
+  }
+  .nav-tabs > li.active > a{
+    color: #009640 !important;
+  }
 </style>
 {/block}
 
