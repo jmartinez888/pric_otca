@@ -21,6 +21,12 @@ class ODifusionBanners extends Eloquent
   	return $query->orderBy('ODib_Estado', 'desc');
   }
 
+  public function scopeActivos ($query) {
+    return $query->where('ODib_Estado', 1);
+  }
+  public function scopeVisibles ($query) {
+    return $query->where('Row_Estado', 1);
+  }
   protected $formated = [
       'id' => 'ODib_IdDifBanner',
       'difusion_id' => 'ODif_IdDifusion',

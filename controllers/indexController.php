@@ -28,7 +28,7 @@ class indexController extends Controller
             // dd(ODifusion::eventos_interes()->get());
             // $data['interes_evento'] = ODifusion::eventos_interes()->limit(5)->get();
             // $data['interes_datos'] = ODifusion::datos_interes()->limit(5)->get();
-            $data['banners'] = ODifusionBanners::all()->map(function($item) {
+            $data['banners'] = ODifusionBanners::activos()->visibles()->get()->map(function($item) {
                 return [
                     'backgroundImage' => BASE_URL.'files/difusion/banner/'.$item->ODib_IdDifBanner.'/'.$item->ODib_Banner,
                     'thumbnail' => BASE_URL.'files/difusion/banner/'.$item->ODib_IdDifBanner.'/'.$item->ODib_Banner,
