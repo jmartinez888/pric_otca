@@ -7,8 +7,8 @@ class ofertaController extends Controller
     {
         parent::__construct($lang, $url);
     }
-    public function index($idPagina = 1){
-    	$this->validarUrlIdioma();
-    }
+    // public function index($idPagina = 1){
+    // 	$this->validarUrlIdioma();
+    // }
 }
 ?>

@@ -435,7 +435,7 @@ $("#btn_añadir2").click(function(){
 $("#btn_añadir4").click(function(){
     // var campo = "<div><div class='col-lg-10'><input placeholder='Alternativa' class='form-control margin-top-10' name='alt"+nextinput+"' id='inPreg"+nextinput+"'/></div><div class='col-lg-1'><input type='radio' value='"+nextinput+"' class='radioalt margin-top-10' name='valor_preg'/></div><div class='col-lg-1'><button class='btn btn-danger glyphicon pull-right margin-top-10 glyphicon-minus' class='btn_quitar' id='btn_quitar"+nextinput+"'></button></div></div>";
     if(contadorinputs<6){
-        var campo = "<div class='col col-sm-12'> <div class='col-sm-10'><label class='' style='margin-top:20px;'>Enunciado:</label><input placeholder='Enunciado' class='form-control' name='enu"+nextinput+"' id='enu"+nextinput+"'/><label class=''>Corresponde a:</label><input placeholder='Respuesta relacionada' class='form-control' name='rpta"+nextinput+"' id='rpta"+nextinput+"'/><a href='javascript:void(0);' class='remove_button btn btn-danger pull-right margin-top-10 ' data-toggle='tooltip' data-placement='right'  title='Eliminar Alternativa'><i class='glyphicon glyphicon-minus'></i></a></div> </div>";
+        var campo = "<div class='col col-sm-12'> <div class='col col-sm-11 margin-t-10'><label class=''>Enunciado "+nextinput+":</label><input placeholder='Enunciado "+nextinput+"' class='form-control' name='enu"+nextinput+"' id='enu"+nextinput+"'/><label class=''>Corresponde a:</label><input placeholder='Respuesta relacionada' class='form-control' name='rpta"+nextinput+"' id='rpta"+nextinput+"'/></div><div class='col col-sm-1' ><a href='javascript:void(0);' class='remove_button btn btn-danger pull-right' style='margin-top:100%;' data-toggle='tooltip' data-placement='right'  title='Eliminar Alternativa'><i class='glyphicon glyphicon-minus'></i></a></div></div>";
     // var campo = "<div class='col-lg-11'><input placeholder='Alternativa "+nextinput+"' class='form-control margin-top-10' name='alt"+nextinput+"' id='inPreg"+nextinput+"'/></div><div class='col-lg-1'><input type='radio' value='"+nextinput+"' class='radioalt margin-top-10' name='valor_preg'/></div>";
         $("#alt").append(campo);
         $("#contador").val(nextinput);
@@ -451,5 +451,3 @@ $("#alt").on('click', '.remove_button', function(e){ //Once remove button is cli
     $(this).parent('div').parent('div').remove(); //Remove field html //Decrement field counter
     contadorinputs--;
 });
-
-

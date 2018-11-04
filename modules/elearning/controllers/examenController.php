@@ -962,13 +962,10 @@ class examenController extends elearningController {
         // $this->_view->setCss(array("verificar"));
         $this->_view->setTemplate(LAYOUT_FRONTEND);
         $this->_view->setJs(array(array(BASE_URL . 'modules/elearning/views/gestion/js/core/util.js'), "index"));
-
         $alternativas =$this->examen->getAlternativas($id);
-
         $preguntaedit =$this->examen->getValorPregunta($id);
 
         if ($this->botonPress("btn_registrar_pregunta")) {
-
             $countrpta=$this->examen->deleteAlternativa($id);
             $pregunta = $this->getSql("in_pregunta");
             $contador = $this->getTexto("contador");
@@ -976,33 +973,28 @@ class examenController extends elearningController {
             $pregunta =$this->examen->updatePregunta($id, $pregunta, 0,  $this->getInt("puntos"));
 
             if($pregunta){
-
                 $alternativa=0;
                 $j=1;
-
                 for($i=1;$i<=$contador;$i++)
-
                 if($this->getSql("enu".$i)!=null){
-
                     $alternativa =$this->examen->insertAlternativa($id, $j, $this->getSql("enu".$i),0,1,$this->getInt("puntos")/$contador);
                     $alternativa2 =$this->examen->insertAlternativa($id, $j, $this->getSql("rpta".$i),$alternativa[0],1);
 
                     $this->examen->updateRelacionAlternativa($alternativa[0], $alternativa2[0]);
-
-
                     $j++;
                 }
                 
                 if($alternativa)
                      $this->redireccionar("elearning/examen/preguntas/$idcurso/".$preguntaedit['Exa_IdExamen']);
             }
-
         }
 
         $peso= $this->examen->getExamenPeso($preguntaedit['Exa_IdExamen']);
         $puntos_pregunta= $this->examen->getPuntosPregunta($preguntaedit['Exa_IdExamen']);
         $puntos_maximo=$peso['Exa_Peso']-$puntos_pregunta['puntos_pregunta'];
         
+        $titulo =  $this->examen->getTituloCurso($idcurso);
+        $this->_view->assign('titulo', $titulo["Cur_Titulo"]);
         $this->_view->assign('puntos_maximo', $puntos_maximo );
         $this->_view->assign('examen', $preguntaedit['Exa_IdExamen']);
         $this->_view->assign('idcurso', $idcurso);
@@ -1038,6 +1030,8 @@ class examenController extends elearningController {
             
         }
 
+        $titulo =  $this->examen->getTituloCurso($id);
+        $this->_view->assign('titulo', $titulo["Cur_Titulo"]);
         $this->_view->assign('puntos_maximo', $puntos_maximo );
         $this->_view->assign('examen', $idExamen );
         $this->_view->assign('idcurso', $id);
@@ -1064,13 +1058,16 @@ class examenController extends elearningController {
         $peso= $this->examen->getExamenPeso($preguntaedit['Exa_IdExamen']);
         $puntos_pregunta= $this->examen->getPuntosPregunta($preguntaedit['Exa_IdExamen']);
         $puntos_maximo=$peso['Exa_Peso']-$puntos_pregunta['puntos_pregunta'];
+
+        $titulo =  $this->examen->getTituloCurso($idcurso);
+        $this->_view->assign('titulo', $titulo["Cur_Titulo"]);
         $this->_view->assign('idcurso', $idcurso);
         $this->_view->assign('puntos_maximo', $puntos_maximo );
         $this->_view->assign('examen', $preguntaedit['Exa_IdExamen']);
         $this->_view->assign('preguntaedit', $preguntaedit);
         $this->_view->renderizar('editarrespuestaabierta', 'elearning');
     }
-
+    // No por ahora
     public function registrarRespuestaZonasImagen($idExamen, $id){
         // $this->_view->setCss(array("verificar"));
         $this->_view->setTemplate(LAYOUT_FRONTEND);
@@ -1136,7 +1133,8 @@ class examenController extends elearningController {
                     $this->redireccionar("elearning/examen/preguntas/$id/$idExamen");
             }
         }
-       
+        $titulo =  $this->examen->getTituloCurso($id);
+        $this->_view->assign('titulo', $titulo["Cur_Titulo"]);
         $this->_view->assign('puntos_maximo', $puntos_maximo );
         $this->_view->assign('examen', $idExamen );
         $this->_view->assign('idcurso', $id);

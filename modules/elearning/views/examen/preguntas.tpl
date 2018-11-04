@@ -77,8 +77,8 @@
                                     {/if}
                                 {/if} >
                                 <td style=" text-align: center">{$numeropagina++}</td>
-                                <td style=" text-align: center"><label data-toggle="tooltip" data-placement="bottom" title="{$rl.Pre_Descripcion}" >{$rl.Pre_Descripcion|truncate:100:"..."}
-                                </label> 
+                                <td style=" text-align: center"><p data-toggle="tooltip" data-placement="bottom" title="{$rl.Pre_Descripcion}" >{$rl.Pre_Descripcion|truncate:100:"..."}
+                                </p> 
                                 </td>
                                 <td style=" text-align: center">{if $rl.Pre_Tipo==1}Respuesta Única{/if}{if $rl.Pre_Tipo==2}Respuesta Múltiple{/if}{if $rl.Pre_Tipo==3}Rellenar blancos{/if}{if $rl.Pre_Tipo==4}Respuestas Relacionadas{/if}{if $rl.Pre_Tipo==5}Respuesta Abierta{/if}{if $rl.Pre_Tipo==6}Respuesta con Zonas de Imagen{/if}{if $rl.Pre_Tipo==7}Combinación Exacta{/if}</td>
                                 <td style=" text-align: center">{$rl.Pre_Puntos}</td>

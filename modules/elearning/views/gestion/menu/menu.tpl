@@ -420,7 +420,7 @@
     <input hidden="hidden" id="hidden_curso" name="hidden_curso" value="{$idcurso}"/>
   {/if}
 {/if}
-<div class="col-sm-2" >
+<div class="col-sm-3 col-md-2" >
   <div class="sidebar-left">
     <ul id="item-lista-curso">
         <div {if $active = 'mis_cursos'} class="side-menu2 active" {else} class="side-menu2 " {/if} >
