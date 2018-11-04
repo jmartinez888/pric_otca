@@ -33,6 +33,10 @@ Vue.component('form-contenido', {
       }
 
 		},
+
+    addReferencia: function () {
+    	this.referencias.push(this.ref_clean)
+    },
 		resetForm: function () {
       for (var x in this.idiomas) {
         this.idiomas[x].titulo = ''

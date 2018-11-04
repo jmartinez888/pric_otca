@@ -137,7 +137,8 @@ class difusionController extends Controller
             'elemento_id' => 0,
             'eventos_interes' => $eventos,
             'image' => '',
-            'referencias' => $refs
+            'referencias' => $refs,
+            'ref_clean' => $refs[0],
 
         ];
 
