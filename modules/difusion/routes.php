@@ -24,6 +24,10 @@ $route = [
 	['{lang}/difusion/link_interes/{id}/update/{modo}', 'link_interes', 'update'],
 	['{lang}/difusion/link_interes/{id}/delete', 'link_interes', 'delete'],
 
+	['{lang}/difusion/indicadores/{id}/edit', 'indicadores', 'edit'],
+	['{lang}/difusion/indicadores/{id}/update/{modo}', 'indicadores', 'update'],
+	['{lang}/difusion/indicadores/{id}/delete', 'indicadores', 'delete'],
+
 
 	['{lang}/difusion/tipo/{id}/edit', 'tipo', 'edit'],
 	['{lang}/difusion/tipo/{id}/update/{modo}', 'tipo', 'update'],

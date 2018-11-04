@@ -20,28 +20,28 @@ header{
 	padding-bottom: 20px;
 }
 .back-color-black{
-	background-color: #373941;	
+	background-color: #373941;
 }
 .txt-color-black{
-	color: #373941;	
+	color: #373941;
 }
 .back-color-grey{
-	background-color: #F2F2F2;	
+	background-color: #F2F2F2;
 }
 .txt-color-grey{
-	color: #F2F2F2;	
+	color: #F2F2F2;
 }
 .back-color-blue{
-	background-color: #51758D;	
+	background-color: #51758D;
 }
 .txt-color-blue{
-	color: #51758D;	
+	color: #51758D;
 }
 .back-color-white{
-	background-color: #FFFFFF;	
+	background-color: #FFFFFF;
 }
 .txt-color-white{
-	color: #FFFFFF;	
+	color: #FFFFFF;
 }
 .margin-0{
 	margin: 0 !important;
@@ -107,13 +107,13 @@ header{
 	display: inline-block;
 }
 .display-block{
-	display: block;	
+	display: block;
 }
 .text-align-center{
 	text-align: center;
 }
 .text-align-left{
-	text-align: left;	
+	text-align: left;
 }
 .text-align-right{
 	text-align: right;
@@ -219,7 +219,7 @@ header.active .fondo-header-active {position: fixed;top: 0;right: 0;background: 
 /*Responsive Jsoft*/
 
 img{
-	max-width: 100%;
+	/*max-width: 100%;*/
 }
 
 /*header.active img {
@@ -525,7 +525,7 @@ padding: 5px 0;
 	background: #fff;
 }*/
 #publicacion_relevante, #publicacion_reciente,#evento_interes,#dato_interes, #agenda{
-	max-height: 420px; 
+	max-height: 420px;
 	overflow-y: auto;
 	background: #fff;
 	padding-top: 0px;
@@ -546,7 +546,7 @@ padding: 5px 0;
 #publicacion_relevante .container:hover,
 #publicacion_reciente .container:hover,
 #evento_interes .container:hover,
-#dato_interes .container:hover, 
+#dato_interes .container:hover,
 #agenda .container:hover{
 	background:#d4cfcfc2;
 }
@@ -603,18 +603,18 @@ padding: 5px 0;
 	color: #fff;
 	text-decoration: none;
 	width: 100%;
-	padding-bottom:2px; 
+	padding-bottom:2px;
 	border-bottom: 1px solid;
 	display:block;
 }
 .logo_otca{
-	
+
 position: absolute;
-	
+
 max-width: 263px;
-	
+
 right: 0%;
-	
+
 top: 28%;
 }
 .tit-main{
@@ -656,7 +656,7 @@ p{
 /*
 .link-tabs-jsoft{
 	color: #000;
-	
+
 }*/
 .link-tabs-jsoft{
 	color: #000;
@@ -674,7 +674,7 @@ p{
 	/* box-shadow: 0 0 10px black; */
 	font-weight: bold;
 	/* width: 500px; */
-	
+
 }
 
 .mas-jsoft{
@@ -711,7 +711,7 @@ a.mas-jsoft {
     -o-transform:scale(1.25);
     transform:scale(1.25);
 }*/
-    
+
 .img-zoom{
     -webkit-transition:all .9s ease; /* Safari y Chrome */
 	-moz-transition:all .9s ease; /* Firefox */
@@ -884,7 +884,7 @@ a.mas-jsoft {
 	display: block;
 }
 .item-cont{
-	
+
     box-shadow: 2px 2px 3px rgba(0,0,0,.6);
     display: none;
 }
@@ -909,7 +909,7 @@ a.mas-jsoft {
 	    bottom: 39%;
 }
 .element-animation{
- 
+
 }
 
 @keyframes animationFrames{
@@ -1109,7 +1109,7 @@ a.mas-jsoft {
 }
 .iw-content img {
 	float: right;
-	margin: 0 5px 5px 10px;	
+	margin: 0 5px 5px 10px;
 }
 .iw-subTitle {
     font-size: 20px;
@@ -1127,5 +1127,5 @@ a.mas-jsoft {
 	background: -webkit-linear-gradient(top, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%);
 	background: -moz-linear-gradient(top, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%);
 	background: -ms-linear-gradient(top, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%);
-}	
+}
 

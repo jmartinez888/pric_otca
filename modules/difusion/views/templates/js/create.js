@@ -66,7 +66,6 @@ Vue.component('form-contenido', {
 	  onSubmit_registrar: function () {
 	  	loading.show()
 	  	this.saveContenidoByIdioma(this.idioma_actual)
-	  	console.log(this.$refs.imagen.files[0])
 
 	  	let form = new FormData();
 

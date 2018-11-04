@@ -69,7 +69,16 @@ class ODifusion extends Eloquent
     }
     return $array;
   }
-
+  public static function getPorPalabraClave ($value, $length = 5, $start = 0) {
+    $res = ['count' => 0, 'data' => []];
+    $q = ODifusion::visibles()->activos();
+    $q->orWhere('ODif_Palabras', 'like', '%'.$value.'%');
+    $res['palabras'] = $value;
+    $res['count'] = $q->count();
+    $q->offset($start)->limit($length);
+    $res['data'] = $q->get();
+    return $res;
+  }
   public function getRelacionado ($length = 5, $start = 0) {
     $palabras = $this->getPalabrasClaves();
     $res = ['count' => 0, 'data' => []];

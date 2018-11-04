@@ -155,3 +155,21 @@ table.table-minimal tr td{
 .mb-4{
     margin-bottom: 4px !important;
 }
+
+
+
+.ma-wi-100 {
+    max-width: 100% !important;
+}
+
+.ma-w-100 {
+    max-width: 100%;
+}
+
+.wi-100 {
+    width: 100% !important;
+}
+
+.w-100 {
+    width: 100%;
+}

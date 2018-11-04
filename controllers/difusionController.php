@@ -15,6 +15,7 @@ class difusionController extends Controller
 
     protected $ruta_images = ROOT.'files'.DS.'difusion'.DS.'contenido'.DS;
     protected $ruta_banners = ROOT.'files'.DS.'difusion'.DS.'banner'.DS;
+    protected $ruta_indicadores = ROOT.'files'.DS.'difusion'.DS.'indicador'.DS;
     protected $image_types = ['image/jpeg', 'image/png'];
 
     public function __construct($lang,$url)
@@ -59,17 +60,24 @@ class difusionController extends Controller
             $start = ($this->getInt('page') - 1)*$length;
         }
         if ($id == 0) {
-
-            $build  = ODifusion::select();
-            if ($datos == 1) {
-                $build = $build->datos_interes();
+            if (is_numeric($id)) {
+                $build  = ODifusion::select();
+                if ($datos == 1) {
+                    $build = $build->datos_interes();
+                }
+                if ($eventos == 1) {
+                    $build = $build->eventos_interes();
+                }
+                $total = $build->count();
+                $rows = $build->offset($start)->limit($length)->get();
+                $data['no_existe'] = false;
+            } else {
+                $data['no_existe'] = false;
+                $pre = ODifusion::getPorPalabraClave($id, $length, $start);
+                $rows = $pre['data'];
+                $total = $pre['count'];
+                $data['palabras'] = $pre['palabras'];
             }
-            if ($eventos == 1) {
-                $build = $build->eventos_interes();
-            }
-            $total = $build->count();
-            $rows = $build->offset($start)->limit($length)->get();
-            $data['no_existe'] = false;
         } else {
             $row = ODifusion::find($id);
             if ($row != null) {

@@ -30,6 +30,7 @@
 	$lenguaje["str_tematica"] = "Temática";
 	$lenguaje["str_titulo"] = "Título";
 	$lenguaje["str_tipo"] = "Tipo";
+	$lenguaje["str_tipo_contenido"] = "Tipo contenido";
 	$lenguaje["str_eliminar_titulo"] = "Confirmación de Eliminación";
 	$lenguaje["str_eliminar_pregunta"] = "Estás a punto de borrar un item, este procedimiento es irreversible";
 	$lenguaje["str_eliminar_continuar"] = "¿Deseas Continuar?";
@@ -37,7 +38,9 @@
 	$lenguaje['str_importar_imagen'] = 'Importar imagen';
 	$lenguaje['str_guardar_imagen'] = 'Guardar imagen';
 	$lenguaje['str_ingrese_texto'] = 'Ingrese texto';
+	$lenguaje['str_evento'] = 'Evento';
 	$lenguaje['str_eventos_interes'] = 'Eventos de interés';
+	$lenguaje['str_datos_y_cifras'] = 'Datos y cifras';
 	$lenguaje['str_datos_interes'] = 'Datos de interés';
 	$lenguaje['str_elemento_no_encontrado'] = 'Elemento no encontrado';
 	$lenguaje['str_seleccione_buscar'] = 'Seleccione buscar';
@@ -46,6 +49,7 @@
 	$lenguaje['str_latitud'] = 'Latitud';
 	$lenguaje['str_longitud'] = 'Longitud';
 	$lenguaje['str_indicador'] = 'Indicador';
+	$lenguaje['str_indicadores'] = 'Indicadores';
 
 	$lenguaje['str_habilitado'] = 'Habilitado';
 	$lenguaje['str_denegado'] = 'Denegado';

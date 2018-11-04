@@ -49,6 +49,7 @@
 	$lenguaje['str_latitud'] = 'Latitud';
 	$lenguaje['str_longitud'] = 'Longitud';
 	$lenguaje['str_indicador'] = 'Indicador';
+	$lenguaje['str_indicadores'] = 'Indicadores';
 
 	$lenguaje['str_habilitado'] = 'Habilitado';
 	$lenguaje['str_denegado'] = 'Denegado';

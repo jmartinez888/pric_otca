@@ -96,7 +96,7 @@
             <ul class="nav nav-tabs jsoft-tabs bg-verde">
                 <li class="active" ><a class=""  data-toggle="tab" href="#evento_interes">{$lenguaje['str_contenido_relacionado']}</a></li>
             </ul>
-            <div class="tab-content content-interes pl-4 pr-4">
+            <div class="tab-content content-interes pl-4 pr-4 pb-4">
                 <div id="evento_interes" class="tab-pane fade  active in scroll">
                     {foreach $relacionado  as $item}
                         <interes id="{$item->ODif_IdDifusion}"></interes>
@@ -106,6 +106,7 @@
 
 
             </div>
+            <hr>
         </div>
 
 </div>
