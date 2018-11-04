@@ -1,3 +1,5 @@
+{extends 'index_elearning.tpl'}
+{block 'subcontenido'}
 {include file='modules/elearning/views/gestion/menu/tag_url.tpl'}
 {if $curso.Moa_IdModalidad == 2}
 <div class="col-lg-12" style="margin-top: 10px">
@@ -64,6 +66,9 @@
   </div>
 </div>
 {/if}
+{/block}
+
+{block 'js' append}
 <script type="text/javascript">
   $(document).ready(function(){
     $(".btnTarea").click(function(e){
@@ -73,3 +78,4 @@
     });
   });
 </script>
+{/block}
