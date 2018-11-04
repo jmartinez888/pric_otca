@@ -66,7 +66,8 @@ class ODifusionIndicadores extends Eloquent
           }
         } else {
           $temp = $this->$value;
-          $www = $temp->formatToArray($value);
+          // $www = $temp->formatToArray($value);
+          $www = $temp->formatToArray();
         }
         $res[$value] = $www;
       }

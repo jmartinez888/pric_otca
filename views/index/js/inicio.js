@@ -341,8 +341,8 @@ new Vue({
 		    strokeColor: '#ffffff',
 		    strokeWeight: 2
 		  });
-			var iconBase = _root_ + 'views/layout/frontend/img/frontend/';
-
+			var iconBase = _root_ + 'files/difusion/indicador/';
+			console.log(iconBase);
 			axios.get(_root_lang + 'difusion/contenido/datos_cifras').then(res => {
 				console.log(res.data)
 
@@ -362,7 +362,7 @@ new Vue({
 						var marker = new google.maps.Marker({
 						    position: new google.maps.LatLng(item.ODii_PosLatitude, item.ODii_PosLongitude),
 						    title: item.indicador.OInd_Titulo,
-						    icon: iconBase + item.indicador.OInd_IconoPath
+						    icon: iconBase + item.indicador.OInd_IdIndicadores + '/' + item.indicador.OInd_IconoPath
 						});
 
 						marker.setMap(map);
@@ -384,7 +384,8 @@ new Vue({
 						    // infowindow3.close();
 						    // infowindow4.close();
 						    infowindow.open(map, marker);
-						    marker.setIcon(iconBase + 'ic-marker-1_hover.png');
+						    marker.setIcon(iconBase + item.indicador.OInd_IdIndicadores + '/' + item.indicador.OInd_IconoPath);
+						    // marker.setIcon(iconBase + 'ic-marker-1_hover.png');
 						    _this.animacionMarker(marker);
 						});
 						marker.addListener('mouseover', function(event) {
@@ -395,7 +396,7 @@ new Vue({
 						      strokeColor: '#008000',
 						      strokeWeight: 2
 						    });
-						    marker.setIcon(iconBase + item.indicador.OInd_IconoPath);
+						    marker.setIcon(iconBase + item.indicador.OInd_IdIndicadores + '/' + item.indicador.OInd_IconoPath);
 						    // marker.setIcon(iconBase + 'ic-marker-1_hover.png');
 						    _this.animacionMarker(marker);
 						});
@@ -409,7 +410,7 @@ new Vue({
 						    });
 						    marker.setAnimation(null);
 						    // marker.setIcon(iconBase + 'ic-marker-1.png');
-						    marker.setIcon(iconBase + item.indicador.OInd_IconoPath);
+						    marker.setIcon(iconBase + item.indicador.OInd_IdIndicadores + '/' + item.indicador.OInd_IconoPath);
 						});
 
 				})

@@ -32,6 +32,7 @@ class OIndicadores extends Eloquent
     return $query->orderBy('OInd_Estado', 'desc');
   }
   public function formatToArray ($include = [], $exclude = [], $with = []) {
+    // dd($include);
     $res = [];
     if (count($include) > 0) {
       foreach ($include as $key => $value) {

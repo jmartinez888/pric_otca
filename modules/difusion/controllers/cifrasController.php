@@ -174,14 +174,18 @@ class cifrasController extends difusionController {
 	}
 	public function store () {
 		// dd($_POST);
+
 		$lenguaje = $this->_view->LoadLenguaje(['difusion_contenido_index', 'request']);
 		$res = ['success' => false, 'msg' => ''];
     $idiomas = Idioma::activos();
     $self = $this;
     if ($this->has(['idiomas', 'estado', 'url', 'difusion', 'indicador', 'latitude', 'longitude'])) {
     	$post = $_POST;
-    	if ($post['indicador'] =! 0 && $post['difusion'] != 0 && trim($post['url']) != '') {
+
+    	if ($post['indicador'] != 0 && $post['difusion'] != 0 && trim($post['url']) != '') {
+
 				DB::transaction(function () use ($self, &$res, $post, $idiomas, $lenguaje) {
+
 			      $new = new ODifusionIndicadores();
 			      $opcionales = [];
 			      foreach ($idiomas as $value) {
@@ -191,7 +195,7 @@ class cifrasController extends difusionController {
 			                  //por defecto agregar en el idioma actual
 			                  // $new->ODii_Titulo = $post['idiomas'][$idioma_var]['titulo'];
 			                  $new->ODif_IdDifusion = +$post['difusion'];
-			                  $new->OInd_IdIndicadores = +$post['indicador'];
+			                  $new->OInd_IdIndicadores = $post['indicador'];
 			                  $new->ODii_Descripcion = $post['idiomas'][$idioma_var]['descripcion'];
 			                  $new->ODii_RefUrl = $post['url'];
 			                  $new->ODii_Estado = +$post['estado'];
@@ -207,6 +211,7 @@ class cifrasController extends difusionController {
 			              }
 			          }
 			      }
+
 
 			      if ($new->ODii_IdDifIndi != 0) {
 			          foreach ($opcionales as  $value) {
@@ -281,7 +286,9 @@ class cifrasController extends difusionController {
 		} else {
 			$rows = $query->offset($_GET['start'])->limit($_GET['length'])->get();
 			$rows = $rows->map(function($item) {
-				return $item->formatToArray([], [], ['indicador']);
+				$temp = $item->formatToArray([], [], ['indicador']);
+				// dd($temp);
+				return $temp;
 			});
 			$data = [
 				'draw' => +$_GET['draw'],

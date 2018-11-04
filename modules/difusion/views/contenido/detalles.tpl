@@ -54,7 +54,7 @@
                                 <div class="" style="width: fit-content;line-height: 250%;">
                                     <i class="glyphicon glyphicon-tags" style="font-size: 20px; color: #777; text-align: center; vertical-align: middle;"></i>&nbsp;&nbsp;
                                     {foreach $difusion->getPalabrasClaves() as $palabras}
-                                        <a class="regresar-tematica" href="{$_layoutParams.root}difusion/contenido/buscar/{$palabras}">{$palabras}</a>
+                                        <a class="regresar-tematica" href="{$_layoutParams.root}difusion/contenido/tag/{$palabras}">{$palabras}</a>
                                     {/foreach}
                                     </div>
                                 <br>

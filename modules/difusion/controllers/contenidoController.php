@@ -579,7 +579,26 @@ class contenidoController extends difusionController {
 		// echo 'asd'.$id[0];
 	}
 
-	public function buscar ($id) {
+
+	public function buscar ($query) {
+		// DB::enableQueryLog();
+		$rows = ODifusion::buscarByTitulo($query)->limit(5)->get();
+		$datares = [];
+		$rows->map(function ($item) use (&$datares){
+			$datares[] = [
+				'ODif_IdDifusion' => $item->ODif_IdDifusion,
+				'ODif_Titulo' => $item->ODif_Titulo,
+				'ODif_Descripcion' => str_limit($item->ODif_Descripcion, 200)
+
+			];
+		});
+		// $data = ['data' => $datares, 'query' => DB::getQueryLog()];
+		// $datares[] = DB::getQueryLog();
+		// $datares[] = $rows->count();
+		$this->_view->responseJson($datares);
+	}
+
+	public function tag ($id) {
 		$lenguaje = $this->_view->getLenguaje('difusion_contenido_index');
     $data['titulo'] = $lenguaje['str_contenido_relacionado'];
     $data['titulo_base'] = $lenguaje['str_contenido_relacionado'];
@@ -587,7 +606,7 @@ class contenidoController extends difusionController {
     $this->prepareAll('show_all', 0, 0, $id);
 	}
 	public function datos_cifras () {
-		$datos = ODifusionIndicadores::with(['difusion', 'indicador'])->get();
+		$datos = ODifusionIndicadores::with(['difusion', 'indicador'])->visibles()->activos()->get();
 		$this->_view->responseJson($datos);
 	}
 }
