@@ -6,7 +6,8 @@ use App\ODifusionTipo;
 class datosController extends difusionController {
 
 	public function create () {
-		$this->prepareCreate('create_difusion', 1, 0);
+		$lenguaje = $this->_view->LoadLenguaje('difusion_contenido_index');
+		$this->prepareCreate('create_difusion', $lenguaje['str_datos_interes'] ,1, 0);
 
 	}
 

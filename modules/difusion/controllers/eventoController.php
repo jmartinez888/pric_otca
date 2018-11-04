@@ -10,7 +10,8 @@ class eventoController extends difusionController {
         $this->prepareEdit($id, 'create_difusion', $lenguaje['difusion_evento_index_titulo'].' - '.$lenguaje['str_editar'], 0, 1);
     }
     public function create () {
-    	$this->prepareCreate('create_difusion', 0, 1);
+        $lenguaje = $this->_view->LoadLenguaje('difusion_contenido_index');
+    	$this->prepareCreate('create_difusion', $lenguaje['str_eventos_interes'] , 0, 1);
     }
     public function all () {
         $lenguaje = $this->_view->getLenguaje('difusion_contenido_index');
