@@ -5,7 +5,7 @@ new Vue({
 			banners: [],
 			buscar: '',
 			start: 0,
-			length: 3,
+			length: 9,
 			page: 0,
 			disable: {
 				prev: true,
