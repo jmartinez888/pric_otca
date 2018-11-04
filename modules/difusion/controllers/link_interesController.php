@@ -8,10 +8,14 @@ class link_interesController extends difusionController {
 
 	public function all () {
 		if ($this->isAcceptJson()) {
+			// DB::enableQueryLog();
+
 			$rows = ODifusionLinkInteres::activos()->visibles()->select();
 			if ($this->filledGet('buscar')) {
-				$rows->where('ODli_Titulo', 'like', '%'.$this->getTexto('buscar').'%');
-				$rows->orWhere('ODli_Descripcion', 'like', '%'.$this->getTexto('buscar').'%');
+				$rows->where(function($query) {
+					$query->where('ODli_Titulo', 'like', '%'.$this->getTexto('buscar').'%');
+					$query->orWhere('ODli_Descripcion', 'like', '%'.$this->getTexto('buscar').'%');
+				});
 			}
 			if ($this->has(['start', 'length'])) {
 				$rows->offset($this->getInt('start'))->limit($this->getInt('length'));
@@ -20,17 +24,18 @@ class link_interesController extends difusionController {
 			$rows = $rows->map(function($item) {
 				return $item->formatToArray();
 			});
+			// $rows['data'] = DB::getQueryLog();
 			$this->_view->responseJson($rows);
 		} else {
 			$this->_view->setTemplate(LAYOUT_FRONTEND);
 			$d = $this->_view->getLenguaje('difusion_contenido_index');
 			$data['idiomas'] = Idioma::activos();
 			$data['idiomas']->map(function($item) use(&$vars_idioma){
-	        $vars_idioma['idioma_'.$item->Idi_IdIdioma] = [
-	            'id' => $item->Idi_IdIdioma,
-	            'titulo' => '',
-	            'descripcion' => ''
-	        ];
+        $vars_idioma['idioma_'.$item->Idi_IdIdioma] = [
+          'id' => $item->Idi_IdIdioma,
+          'titulo' => '',
+          'descripcion' => ''
+        ];
 	    });
 	    $data['data_vue'] = [
 	        'idiomas' => $vars_idioma,

@@ -9,6 +9,15 @@ class datosController extends difusionController {
 		$this->prepareCreate('create_difusion', 1, 0);
 
 	}
+
+	public function all () {
+	    $lenguaje = $this->_view->getLenguaje('difusion_contenido_index');
+	    $data['titulo'] = $lenguaje['str_datos_interes'];
+	    $data['titulo_base'] = $lenguaje['str_datos_interes'];
+	    $this->_view->assign($data);
+	    $this->prepareAll('show_all', 1, 0);
+
+	}
 	public function index () {
 		$this->_view->setTemplate(LAYOUT_FRONTEND);
 		$data['idiomas'] = Idioma::activos();

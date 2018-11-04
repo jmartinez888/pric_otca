@@ -35,7 +35,7 @@ Vue.component('form-template', {
 				form.append('id', this.elemento_id)
 			}
 			$.ajax({
-	          url: this.edit ? _root_lang + 'difusion/tipo/' + this.elemento_id + '/update/index' : _root_lang + 'difusion/tipo/store', // point to server-side controller method
+	          url: this.edit ? _root_lang + 'difusion/tipo/' + this.elemento_id + '/update/index' : _root_lang + 'difusion/tipo/store',
 	          dataType: 'json', // what to expect back from the server
 	          cache: false,
 	          contentType: false,

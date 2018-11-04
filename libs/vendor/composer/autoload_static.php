@@ -14,6 +14,10 @@ class ComposerStaticInit84839e5498f8332d12a5af3f61883576
     );
 
     public static $prefixLengthsPsr4 = array (
+        'v' => 
+        array (
+            'voku\\helper\\' => 12,
+        ),
         'S' => 
         array (
             'Symfony\\Polyfill\\Php72\\' => 23,
@@ -26,6 +30,10 @@ class ComposerStaticInit84839e5498f8332d12a5af3f61883576
         array (
             'Psr\\SimpleCache\\' => 16,
             'Psr\\Container\\' => 14,
+        ),
+        'J' => 
+        array (
+            'Jenssegers\\Date\\' => 16,
         ),
         'I' => 
         array (
@@ -50,6 +58,10 @@ class ComposerStaticInit84839e5498f8332d12a5af3f61883576
     );
 
     public static $prefixDirsPsr4 = array (
+        'voku\\helper\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/phpclasses/php-paginator/src/voku/helper',
+        ),
         'Symfony\\Polyfill\\Php72\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-php72',
@@ -77,6 +89,10 @@ class ComposerStaticInit84839e5498f8332d12a5af3f61883576
         'Psr\\Container\\' => 
         array (
             0 => __DIR__ . '/..' . '/psr/container/src',
+        ),
+        'Jenssegers\\Date\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/jenssegers/date/src',
         ),
         'Illuminate\\Support\\' => 
         array (
@@ -134,6 +150,7 @@ class ComposerStaticInit84839e5498f8332d12a5af3f61883576
     );
 
     public static $classMap = array (
+        'BasicPagination' => __DIR__ . '/..' . '/phpclasses/basic-paginator/BasicPagination.class.php',
         'Cpdf' => __DIR__ . '/..' . '/dompdf/dompdf/lib/Cpdf.php',
         'Datamatrix' => __DIR__ . '/..' . '/tecnickcom/tcpdf/include/barcodes/datamatrix.php',
         'HTML5_Data' => __DIR__ . '/..' . '/dompdf/dompdf/lib/html5lib/Data.php',

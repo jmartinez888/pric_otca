@@ -2,7 +2,10 @@
 	"require": {
 		"spipu/html2pdf":"^5.1",
 		"illuminate/database": "^5.7",
-		"dompdf/dompdf": "^0.8.2"
+		"dompdf/dompdf": "^0.8.2",
+		"phpclasses/basic-paginator": ">=1.2",
+		"phpclasses/php-paginator": ">=1.0.6",
+		"jenssegers/date": "3.4.0"
 	},
 	"autoload": {
 		"psr-4": {

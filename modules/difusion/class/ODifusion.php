@@ -26,6 +26,7 @@ class ODifusion extends Eloquent
     ];
   }
 
+
   public function tipo () {
     return $this->belongsTo('App\ODifusionTipo', 'ODit_IdTipoDifusion');
   }
@@ -71,6 +72,7 @@ class ODifusion extends Eloquent
 
   public function getRelacionado ($length = 5, $start = 0) {
     $palabras = $this->getPalabrasClaves();
+    $res = ['count' => 0, 'data' => []];
     if (count($palabras) > 0) {
       $q = ODifusion::whereNotIn('ODif_IdDifusion', [$this->ODif_IdDifusion]);
       $q->where(function($query) use ($palabras) {
@@ -78,10 +80,13 @@ class ODifusion extends Eloquent
           $query->orWhere('ODif_Palabras', 'like', '%'.$value.'%');
         }
       });
+      $res['palabras'] = implode(', ', $palabras);
+      $res['count'] = $q->count();
       $q->offset($start)->limit($length);
-      return $q->get();
+      $res['data'] = $q->get();
+
     }
-    return [];
+    return $res;
 
   }
 

@@ -5,7 +5,7 @@
     <li class="active" ><a class=""  data-toggle="tab" href="#evento_interes">{$lenguaje['str_eventos_interes']}</a></li>
     <li><a data-toggle="tab" href="#dato_interes">{$lenguaje['str_datos_interes']}</a></li>
 </ul>
-<div class="tab-content content-interes">
+<div class="tab-content content-interes pl-4 pr-4">
     <div id="evento_interes" class="tab-pane fade  active in scroll">
         {foreach App\ODifusion::eventos_interes()->limit(5)->get() as $item}
             <interes id="{$item->ODif_IdDifusion}"></interes>

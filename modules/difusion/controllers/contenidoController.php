@@ -5,6 +5,7 @@ use App\ForoTematica;
 use App\Idioma;
 use App\ODifusion;
 use App\ODifusionIndicadores;
+use App\ODifusionReferencias;
 use App\ODifusionTipo;
 use Dompdf\Dompdf;
 use Illuminate\Database\Capsule\Manager as DB;
@@ -95,7 +96,6 @@ class contenidoController extends difusionController {
 	public function datatable () {
 		$query = ODifusion::select();
 		$query = $query->visibles();
-
 		if ($this->has('zone')) {
 			if ($this->getInt('zone') == 1)
 				$query->where('ODif_Datos', 1);
@@ -104,7 +104,6 @@ class contenidoController extends difusionController {
 		}
 		$records_total = $query->count();
 		$records_total_filter = $records_total;
-
 		if ($this->filledGet('buscar')) {
 			$query->where(function($q) {
 				$q->orWhere('ODif_Titulo', 'like', '%'.$_GET['buscar'].'%')
@@ -112,26 +111,26 @@ class contenidoController extends difusionController {
 			});
 			$records_total_filter = $query->count();
 		}
-
 		if ($this->filledGet('export')) {
 			$this->_export($query, $this->getTexto('export'));
 		} else {
 			$rows = $query->offset($_GET['start'])->limit($_GET['length'])->get();
-
 			$data = [
 				'draw' => +$_GET['draw'],
 				'recordsTotal' => $records_total,
         'recordsFiltered' => $records_total_filter,
         'data' => $rows
 			];
-
 			$this->_view->responseJson($data);
-
 		}
 	}
 
-	public function relations () {
-
+	public function relations ($id) {
+		$lenguaje = $this->_view->getLenguaje('difusion_contenido_index');
+    $data['titulo'] = $lenguaje['str_contenido_relacionado'];
+    $data['titulo_base'] = $lenguaje['str_contenido_relacionado'];
+    $this->_view->assign($data);
+    $this->prepareAll('show_all', 0, 0, $id);
 	}
 	public function delete ($id) {
 		$res = ['success' => false, 'msg' => ''];
@@ -203,35 +202,93 @@ class contenidoController extends difusionController {
                               'ODif_Contenido' => $post['idiomas'][$idioma_var]['contenido'],
                               'ODif_Palabras' => $post['idiomas'][$idioma_var]['palabras_clave'],
                           ], true);
-
-
                       }
-
-                      if ($image != null) {
-                      	 	$path = $self->ruta_images.$row->ODif_IdDifusion.DS;
-										      if (!file_exists($path))
-							              mkdir($path);
-							            $ext = explode('/', $image['type']);
-							            $namefinal = md5($image['name'].$row->ODif_IdDifusion).'.'.end($ext);
-							            $destino_path = $path.$namefinal;
-							            // $destino_path = $path.rawurlencode($image['name']);
-							            if (move_uploaded_file($image['tmp_name'], $destino_path)) {
-							            	$name_thumb = md5($image['name']).'.jpg';
-							            	Helper::create_thumbnail_image($destino_path, $path.$name_thumb);
-							            }
-
-            							$row->ODif_BannerUrl = $namefinal;
-							            // $row->ODif_BannerUrl = $image['name'];
-							            $row->ODif_Image = $name_thumb;
-							            $row->save();
-                      }
-
-                      $res['success'] = true;
-                			$res['msg'] = $lenguaje['str_elemento_actualizado'];
 
                   	}
 									}
+									if ($row->referencias()->count() > 0) {
+
+										foreach ($post['referencias'] as $valueref) {
+							      	$obj_ref = ODifusionReferencias::find($valueref['elemento_id']);
+							      	$opcionales_ref = [];
+							      	if ($obj_ref) {
+									      foreach ($idiomas as $value) {
+									          $idioma_var = "idioma_".$value->Idi_IdIdioma;
+									          if (array_key_exists($idioma_var, $valueref['idiomas'])) {
+
+
+									          	if ($valueref['idiomas'][$idioma_var]['default'] == 1) {
+									          		$obj_ref->ODir_Titulo = $valueref['idiomas'][$idioma_var]['text'];
+							                  $obj_ref->ODir_Url = $valueref['url'];
+							                  $obj_ref->save();
+
+								              } else {
+								              	ContenidoTraducido::updateRow('ora_difusion_referencias', $obj_ref->ODir_IdRefDif, $value->Idi_IdIdioma, [
+								              		'ODir_Titulo' => $valueref['idiomas'][$idioma_var]['text']
+								              	]);
+								              }
+									          }
+									      }
+							      	}
+
+							      }
+									} else {
+
+					          foreach ($post['referencias'] as $valueref) {
+							      	$obj_ref = new ODifusionReferencias();
+							      	$opcionales_ref = [];
+								      foreach ($idiomas as $value) {
+								          $idioma_var = "idioma_".$value->Idi_IdIdioma;
+								          if (array_key_exists($idioma_var, $valueref['idiomas'])) {
+								              if ($value->Idi_IdIdioma == Cookie::lenguaje()) {
+								                  //por defecto agregar en el idioma actual
+								                  $obj_ref->ODir_Titulo = $valueref['idiomas'][$idioma_var]['text'];
+								                  $obj_ref->ODir_Url = $valueref['url'];
+								                  $obj_ref->ODif_IdDifusion = $row->ODif_IdDifusion;
+
+								                  // $row->Usu_IdUsuario =
+								                  $obj_ref->Idi_IdIdioma = Cookie::lenguaje();
+								                  $obj_ref->save();
+								              } else {
+								                  $opcionales_ref[] = [
+								                      'idioma' => $value->Idi_IdIdioma,
+								                      'text' => $valueref['idiomas'][$idioma_var]['text'],
+								                  ];
+								              }
+								          }
+								      }
+								      if ($obj_ref->ODir_IdRefDif != 0) {
+								          foreach ($opcionales_ref as  $value) {
+								          	ContenidoTraducido::setRow('ora_difusion_referencias', $obj_ref->ODir_IdRefDif, 'ODir_Titulo', $value['text'], $value['idioma']);
+								          }
+								      }
+							      }
+
+									}
+
 								});
+
+								if ($image != null) {
+                	 	$path = $self->ruta_images.$row->ODif_IdDifusion.DS;
+							      if (!file_exists($path))
+				              mkdir($path);
+				            $ext = explode('/', $image['type']);
+				            $namefinal = md5($image['name'].$row->ODif_IdDifusion).'.'.end($ext);
+				            $destino_path = $path.$namefinal;
+				            // $destino_path = $path.rawurlencode($image['name']);
+				            if (move_uploaded_file($image['tmp_name'], $destino_path)) {
+				            	$name_thumb = md5($image['name']).'.jpg';
+				            	Helper::create_thumbnail_image($destino_path, $path.$name_thumb);
+				            }
+
+      							$row->ODif_BannerUrl = $namefinal;
+				            // $row->ODif_BannerUrl = $image['name'];
+				            $row->ODif_Image = $name_thumb;
+				            $row->save();
+                }
+
+                $res['success'] = true;
+          			$res['msg'] = $lenguaje['str_elemento_actualizado'];
 							}
 
 						}
@@ -261,6 +318,7 @@ class contenidoController extends difusionController {
 		$this->_view->responseJson($res);
 	}
 	public function store () {
+		// dd($_POST);
 		// $this->setStore();
 		// $post = file_get_contents('php://input');
 
@@ -282,10 +340,10 @@ class contenidoController extends difusionController {
 			$res = ['success' => false, 'msg' => ''];
 	    $idiomas = Idioma::activos();
 	    $self = $this;
-	    if ($this->has(['idiomas', 'estado', 'evento', 'datos', 'tipo', 'linea_tematica'])) {
+	    if ($this->has(['idiomas', 'estado', 'evento', 'datos', 'tipo', 'linea_tematica', 'referencias'])) {
 	    	$post = $_POST;
 				DB::transaction(function () use ($self, &$res, $post, $idiomas, $lenguaje, $image) {
-			      $difusion = new ODifusion();
+			      $row = new ODifusion();
 			      $opcionales = [];
 
 
@@ -295,24 +353,24 @@ class contenidoController extends difusionController {
 			          if (array_key_exists($idioma_var, $post['idiomas'])) {
 			              if ($value->Idi_IdIdioma == Cookie::lenguaje()) {
 			                  //por defecto agregar en el idioma actual
-			                  $difusion->ODif_Titulo = $post['idiomas'][$idioma_var]['titulo'];
-			                  $difusion->ODif_Descripcion = $post['idiomas'][$idioma_var]['descripcion'];
-			                  $difusion->ODif_Contenido = $post['idiomas'][$idioma_var]['contenido'];
-			                  $difusion->ODif_Palabras = $post['idiomas'][$idioma_var]['palabras_clave'];
-			                  $difusion->ODit_IdTipoDifusion = $post['tipo'];
-			                  $difusion->ODif_Estado = $post['estado'];
+			                  $row->ODif_Titulo = $post['idiomas'][$idioma_var]['titulo'];
+			                  $row->ODif_Descripcion = $post['idiomas'][$idioma_var]['descripcion'];
+			                  $row->ODif_Contenido = $post['idiomas'][$idioma_var]['contenido'];
+			                  $row->ODif_Palabras = $post['idiomas'][$idioma_var]['palabras_clave'];
+			                  $row->ODit_IdTipoDifusion = $post['tipo'];
+			                  $row->ODif_Estado = $post['estado'];
 
-			                  $difusion->ODif_Evento = $post['evento'];
-			                  $difusion->ODif_Datos = $post['datos'];
+			                  $row->ODif_Evento = $post['evento'];
+			                  $row->ODif_Datos = $post['datos'];
 
-			                  $difusion->Lit_IdLineaTematica = $post['linea_tematica'];
-			                  $difusion->ODif_FechaPublicacion = Carbon::now();
-			                  // $difusion->ODif_BannerUrl = 'http://local.github/pric_otca/views/layout/frontend/img/slider_noticias/noticia1.jpg';
-			                  // $difusion->ODif_Image = 'http://local.github/pric_otca/views/layout/frontend/img/img-noti1.jpg';
+			                  $row->Lit_IdLineaTematica = $post['linea_tematica'];
+			                  $row->ODif_FechaPublicacion = Carbon::now();
+			                  // $row->ODif_BannerUrl = 'http://local.github/pric_otca/views/layout/frontend/img/slider_noticias/noticia1.jpg';
+			                  // $row->ODif_Image = 'http://local.github/pric_otca/views/layout/frontend/img/img-noti1.jpg';
 
-			                  // $difusion->Usu_IdUsuario =
-			                  $difusion->Idi_IdIdioma = Cookie::lenguaje();
-			                  $difusion->save();
+			                  // $row->Usu_IdUsuario =
+			                  $row->Idi_IdIdioma = Cookie::lenguaje();
+			                  $row->save();
 			              } else {
 			                  $opcionales[] = [
 			                      'idioma' => $value->Idi_IdIdioma,
@@ -325,21 +383,48 @@ class contenidoController extends difusionController {
 			          }
 			      }
 
-			      if ($difusion->ODif_IdDifusion != 0) {
+			      if ($row->ODif_IdDifusion != 0) {
 			          foreach ($opcionales as  $value) {
-			          	ContenidoTraducido::setRow('ora_difusion', $difusion->ODif_IdDifusion, 'ODif_Titulo', $value['titulo'], $value['idioma']);
-			          	ContenidoTraducido::setRow('ora_difusion', $difusion->ODif_IdDifusion, 'ODif_Descripcion', $value['descripcion'], $value['idioma']);
-			          	ContenidoTraducido::setRow('ora_difusion', $difusion->ODif_IdDifusion, 'ODif_Contenido', $value['contenido'], $value['idioma']);
-			          	ContenidoTraducido::setRow('ora_difusion', $difusion->ODif_IdDifusion, 'ODif_Palabras', $value['palabras_clave'], $value['idioma']);
-
-
+			          	ContenidoTraducido::setRow('ora_difusion', $row->ODif_IdDifusion, 'ODif_Titulo', $value['titulo'], $value['idioma']);
+			          	ContenidoTraducido::setRow('ora_difusion', $row->ODif_IdDifusion, 'ODif_Descripcion', $value['descripcion'], $value['idioma']);
+			          	ContenidoTraducido::setRow('ora_difusion', $row->ODif_IdDifusion, 'ODif_Contenido', $value['contenido'], $value['idioma']);
+			          	ContenidoTraducido::setRow('ora_difusion', $row->ODif_IdDifusion, 'ODif_Palabras', $value['palabras_clave'], $value['idioma']);
 			          }
+			          foreach ($post['referencias'] as $valueref) {
+					      	$obj_ref = new ODifusionReferencias();
+					      	$opcionales_ref = [];
+						      foreach ($idiomas as $value) {
+						          $idioma_var = "idioma_".$value->Idi_IdIdioma;
+						          if (array_key_exists($idioma_var, $valueref['idiomas'])) {
+						              if ($value->Idi_IdIdioma == Cookie::lenguaje()) {
+						                  //por defecto agregar en el idioma actual
+						                  $obj_ref->ODir_Titulo = $valueref['idiomas'][$idioma_var]['text'];
+						                  $obj_ref->ODir_Url = $valueref['url'];
+						                  $obj_ref->ODif_IdDifusion = $row->ODif_IdDifusion;
 
+						                  // $row->Usu_IdUsuario =
+						                  $obj_ref->Idi_IdIdioma = Cookie::lenguaje();
+						                  $obj_ref->save();
+						              } else {
+						                  $opcionales_ref[] = [
+						                      'idioma' => $value->Idi_IdIdioma,
+						                      'text' => $valueref['idiomas'][$idioma_var]['text'],
+						                  ];
+						              }
+						          }
+						      }
+						      if ($obj_ref->ODir_IdRefDif != 0) {
+						          foreach ($opcionales_ref as  $value) {
+						          	ContenidoTraducido::setRow('ora_difusion_referencias', $obj_ref->ODir_IdRefDif, 'ODir_Titulo', $value['text'], $value['idioma']);
+						          }
+						      }
+					      }
 			          $res['success'] = true;
-			          $res['msg'] = str_replace('%contenido%', $difusion->ODif_Titulo, $lenguaje['difusion_contenido_index_registro_success']);
+			          $res['msg'] = str_replace('%contenido%', $row->ODif_Titulo, $lenguaje['difusion_contenido_index_registro_success']);
 			      }
 
-			      $path = $self->ruta_images.$difusion->ODif_IdDifusion.DS;
+
+			      $path = $self->ruta_images.$row->ODif_IdDifusion.DS;
 			      if (!file_exists($path))
               mkdir($path);
             $ext = explode('/', $image['type']);
@@ -352,9 +437,9 @@ class contenidoController extends difusionController {
             	Helper::create_thumbnail_image($destino_path, $path.$name_thumb);
             }
             $ext = explode('/', $image['type']);
-            $difusion->ODif_BannerUrl = md5($image['name'].$row->ODif_IdDifusion).'.'.end($ext);
-            $difusion->ODif_Image = $name_thumb;
-            $difusion->save();
+            $row->ODif_BannerUrl = md5($image['name'].$row->ODif_IdDifusion).'.'.end($ext);
+            $row->ODif_Image = $name_thumb;
+            $row->save();
 
 
 			  });
@@ -366,6 +451,7 @@ class contenidoController extends difusionController {
 
     $this->_view->responseJson($res);
 	}
+
 	public function edit ($id) {
 		$lenguaje = $this->_view->LoadLenguaje('difusion_contenido_index');
 		$this->prepareEdit($id, 'create_difusion', $lenguaje['difusion_contenido_index_titulo'].' - '.$lenguaje['str_editar']);
@@ -382,7 +468,7 @@ class contenidoController extends difusionController {
       $data['interes_datos'] = ODifusion::datos_interes()->get();
       // $data['contenido_relacionado'] = $difusion->getRelacionado();
 			$this->_view->setTemplate(LAYOUT_FRONTEND);
-
+			$data['relacionado'] = $difusion->getRelacionado()['data'];
 			$date = new Carbon($difusion->ODif_FechaPublicacion);
 			$date->setLocale('es');
 			$data['titulo'] = $difusion->ODif_Titulo;

@@ -82,6 +82,21 @@
               </div>
           </div>
           <div class="form-group">
+              <label class="col-lg-2 control-label" for="palabras_clave">ref : </label>
+              <div class="col-lg-10">
+
+                    {* {foreach $referencias as $ref} *}
+                      <div v-for="item in referencias">
+                        {foreach $idiomas as $item}
+                        <input v-if="idioma_actual == '{$item->Idi_IdIdioma}'" class="form-control" id="" type="text" name="palabras_clave" placeholder="{$lenguaje['difusion_contenido_index_inp_titulo_ph']}" required="" v-model="item.idiomas.idioma_{$item->Idi_IdIdioma}.text">
+                        {/foreach}
+                        <input type="text" class="form-control" placeholder="URL" class="idi" name="" v-model="item.url">
+                      </div>
+                    {* {/foreach} *}
+
+              </div>
+          </div>
+          <div class="form-group">
               <label class="col-lg-2 control-label" for="imagen">{$lenguaje['str_imagen']} : </label>
               <div class="col-lg-10">
                   <input type="file" ref="imagen" class="form-control" id="imagen" type="text" name="imagen" required="" v-model="imagen">
@@ -129,6 +144,10 @@
           </div>
       </form>
     </div>
+</template>
+<template >
+  <input v-if="idioma_actual == '{$item->Idi_IdIdioma}'" class="form-control" id="" type="text" name="palabras_clave" placeholder="{$lenguaje['difusion_contenido_index_inp_titulo_ph']}" required="" v-model="item.idiomas.idioma_{$item->Idi_IdIdioma}.texto">
+  <input type="text" placeholder="URL" class="idi" name="" v-model="item.idiomas.url">
 </template>
 <template id="botones_test">
     <a target="_blank" data-toggle="tooltip" data-placement="bottom" class="btn btn-default  btn-sm glyphicon glyphicon-eye-open" title="" href="{$_layoutParams.root}difusion/contenido/{literal}{{id}}{/literal}" data-original-title="Ver Ficha "></a>

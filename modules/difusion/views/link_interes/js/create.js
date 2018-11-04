@@ -1,4 +1,4 @@
-Vue.component('form-links', {
+-Vue.component('form-links', {
 	template: '#form_links',
 	data: function () {
 		return {

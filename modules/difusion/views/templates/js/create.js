@@ -71,6 +71,17 @@ Vue.component('form-contenido', {
 	    		form.append('idiomas['+i+']['+s+']', this.idiomas[i][s])
 	    }
 
+	    this.referencias.forEach((v, index) => {
+    		form.append('referencias['+index+'][url]', v.url)
+    		if (this.edit)
+    			form.append('referencias['+index+'][elemento_id]', v.elemento_id)
+	    	for (var i in v.idiomas) {
+	    		for (var s in v.idiomas[i])
+	    			form.append('referencias['+index+'][idiomas]['+i+']['+s+']', v.idiomas[i][s])
+		    }
+	    })
+
+
 			form.append('estado', this.estado ? 1 : 0)
 			form.append('tipo', this.tipo)
 			form.append('linea_tematica', this.linea_tematica)

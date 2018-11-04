@@ -82,27 +82,27 @@
 	        <div class="side-menu">
 	            <ul role="" class="">
 	            	<li class=" side-menu2">
-	                	<a href="{$_layoutParams.root}difusion/contenido" aria-controls="contenido"  class="nounderline"><span>Contenido</span></a>
+	                	<a href="{$_layoutParams.root}difusion/contenido" aria-controls="contenido"  class="nounderline"><span>{$lenguaje['str_contenido']}</span></a>
 
 	            	</li>
 	            	<li class="side-menu2 submenu2">
-	                <a href="{$_layoutParams.root}difusion/evento" aria-controls="evento"  class="nounderline"><span>Evento</span></a>
+	                <a href="{$_layoutParams.root}difusion/evento" aria-controls="evento"  class="nounderline"><span>{$lenguaje['str_eventos_interes']}</span></a>
 	            	</li>
 
 	            	<li class="side-menu2 submenu2">
-	                <a href="{$_layoutParams.root}difusion/datos" aria-controls="datos"  class="nounderline"><span>Datos</span></a>
+	                <a href="{$_layoutParams.root}difusion/datos" aria-controls="datos"  class="nounderline"><span>{$lenguaje['str_datos_interes']}</span></a>
 	            	</li>
 	            	<li class="side-menu2 submenu2">
-	                <a href="{$_layoutParams.root}difusion/tipo" aria-controls="tipo"  class="nounderline"><span>Tipo</span></a>
+	                <a href="{$_layoutParams.root}difusion/tipo" aria-controls="tipo"  class="nounderline"><span>{$lenguaje['str_tipo_contenido']}</span></a>
 	            	</li>
 	            	<li class=" side-menu2">
 	                	<a href="{$_layoutParams.root}difusion/banner" aria-controls="banner"  class="nounderline"><span>Banner</span></a>
 	            	</li>
 	            	<li class=" side-menu2">
-	                	<a href="{$_layoutParams.root}difusion/cifras" aria-controls="cifras"  class="nounderline"><span>Datos y cifras</span></a>
+	                	<a href="{$_layoutParams.root}difusion/cifras" aria-controls="cifras"  class="nounderline"><span>{$lenguaje['difusion_cifras_index_titulo']}</span></a>
 	            	</li>
 	            	<li class=" side-menu2">
-	                	<a href="{$_layoutParams.root}difusion/link_interes" aria-controls="link_interes"  class="nounderline"><span>Links de interes</span></a>
+	                	<a href="{$_layoutParams.root}difusion/link_interes" aria-controls="link_interes"  class="nounderline"><span>{$lenguaje['difusion_links_index_titulo']}</span></a>
 	            	</li>
 	            </ul>
 

@@ -39,7 +39,7 @@
     <div class="col-sm-offset-6 col-sm-6">
         <form action="" @submit.prevent="onSubmit_buscar">
                 <div class="input-group">
-                    <input type="text" class="form-control" data-toggle="tooltip" data-original-title="Buscar" placeholder="Buscar" name="text_busqueda" id="text_busqueda" onkeypress="tecla_enter_foro(event)" value="" v-model="buscar">
+                    <input type="text" class="form-control" data-toggle="tooltip" data-original-title="Buscar" placeholder="Buscar" name="text_busqueda" id="text_busqueda" value="" v-model="buscar">
                     <span class="input-group-btn">
                         <button class="btn  btn-success btn-buscador" for_funcion="workshop"  type="submit" id=""><i class="glyphicon glyphicon-search"></i></button>
                     </span>
@@ -72,7 +72,7 @@
               <div style="padding-bottom: 4px;">
                   <p style="text-align: justify;">{literal}{{descripcion}}{/literal}</p>
               </div>
-              <div style="padding-bottom: 4x;">
+              <div style="padding-bottom: 4px;">
                   <a :href="url">{literal}{{url}}{/literal}</a>
               </div>
               <div class="detalles-act-reciente">

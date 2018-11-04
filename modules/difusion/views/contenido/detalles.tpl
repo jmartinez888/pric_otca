@@ -96,9 +96,9 @@
             <ul class="nav nav-tabs jsoft-tabs bg-verde">
                 <li class="active" ><a class=""  data-toggle="tab" href="#evento_interes">{$lenguaje['str_contenido_relacionado']}</a></li>
             </ul>
-            <div class="tab-content content-interes">
+            <div class="tab-content content-interes pl-4 pr-4">
                 <div id="evento_interes" class="tab-pane fade  active in scroll">
-                    {foreach $difusion->getRelacionado() as $item}
+                    {foreach $relacionado  as $item}
                         <interes id="{$item->ODif_IdDifusion}"></interes>
                     {/foreach}
                     <a href="{$_layoutParams.root}difusion/contenido/{$difusion->ODif_IdDifusion}/relations" class="col-md-12 col-sm-12 col-xs-12 ver-mas">{$lenguaje['str_ver_mas']}</a>
