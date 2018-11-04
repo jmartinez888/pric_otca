@@ -111,6 +111,7 @@ class difusionController extends Controller
         $refs_difu = [];
         $data['idiomas']->map(function($item) use(&$vars_idioma, &$refs_difu){
             $refs_difu['idioma_'.$item->Idi_IdIdioma] = [
+                'id' => $item->Idi_IdIdioma,
                 'text' => ''
             ];
             $vars_idioma['idioma_'.$item->Idi_IdIdioma] = [
@@ -215,11 +216,17 @@ class difusionController extends Controller
                     }
                 });
                 $refs = [];
+                $ref_clean = [];
                 // dd($refs_difu);
                 if (count($refs_difu) > 0) {
+                    $ref_for_clean = [];
                     foreach ($refs_difu as  $row_ref) {
                         $vars_idioma_ref = [];
-                        $data['idiomas']->map(function($item) use(&$vars_idioma_ref, $row_ref) {
+                        $data['idiomas']->map(function($item) use(&$vars_idioma_ref, $row_ref, &$ref_for_clean) {
+                            $ref_for_clean['idioma_'.$item->Idi_IdIdioma] = [
+                                'id' => $item->Idi_IdIdioma,
+                                'text' => ''
+                            ];
                             if ($row_ref->Idi_IdIdioma == $item->Idi_IdIdioma) {
                                 $vars_idioma_ref['idioma_'.$item->Idi_IdIdioma] = [
                                     'id' => $item->Idi_IdIdioma,
@@ -247,25 +254,21 @@ class difusionController extends Controller
                         });
                         $refs[] = ['elemento_id' => $row_ref->ODir_IdRefDif, 'url' => $row_ref->ODir_Url, 'idiomas' => $vars_idioma_ref];
                     }
+                    $ref_clean = ['elemento_id' => 0, 'url' => '', 'idiomas' => $ref_for_clean];
                 } else {
                     $vars_idioma_ref = [];
                     $refs_difu = [];
                     $data['idiomas']->map(function($item) use(&$vars_idioma_ref, &$refs_difu){
                         $refs_difu['idioma_'.$item->Idi_IdIdioma] = [
-                            'text' => ''
-                        ];
-                        $vars_idioma_ref['idioma_'.$item->Idi_IdIdioma] = [
                             'id' => $item->Idi_IdIdioma,
-                            'titulo' => '',
-                            'descripcion' => '',
-                            'palabras_clave' => '',
-                            'contenido' => ''
+                            'text' => ''
                         ];
                     });
                     $refs = [
                         ['elemento_id' => 0, 'url' => '', 'idiomas' => $refs_difu]
                         // ['url' => '', 'idiomas' => $idiomas_refs]
                     ];
+                    $ref_clean = $refs[0];
                 }
 
                 $data['data_vue'] = [
@@ -281,7 +284,8 @@ class difusionController extends Controller
                     'eventos_interes' => $row->ODif_Evento,
                     'elemento_id' => $row->ODif_IdDifusion,
                     'image' => BASE_URL.'files/difusion/contenido/'.$row->ODif_IdDifusion.'/'.$row->ODif_BannerUrl,
-                    'referencias' => $refs
+                    'referencias' => $refs,
+                    'ref_clean' => $ref_clean
                 ];
             }
         }

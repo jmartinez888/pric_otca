@@ -82,18 +82,12 @@
               </div>
           </div>
           <div class="form-group">
-              <label class="col-lg-2 control-label" for="palabras_clave">ref : </label>
+              <label class="col-lg-2 control-label" for="palabras_clave">Referencias Url : </label>
               <div class="col-lg-10">
                  <div class="row">
                     <div class="col-sm-12">
                       <div id="opciones-imagen">
-                        <button type="button" style="padding: 7px 10px" data-toggle="tooltip" data-placement="top" data-accion="ok" class="btn btn-default btn-sm fa fa-save estado-rol btn-acciones"  title="{$lenguaje['str_guardar_imagen']}" @click="addReferencia"></button>
-                        <label class="btn btn-default btn-sm" for="input_banner"  data-toggle="tooltip" title="{$lenguaje['str_importar_imagen']}" data-placement="top">
-                          <input type="file" class="sr-only" id="input_banner" ref="input_banner" name="input_banner" accept="image/*">
-                          <span class="docs-tooltip"  >
-                            <span class="fa fa-upload"></span>
-                          </span>
-                        </label>
+                        <button type="button" style="padding: 7px 10px" data-toggle="tooltip" data-placement="top" data-accion="ok" class="btn btn-default btn-sm  estado-rol btn-acciones"  title="{$lenguaje['str_guardar_imagen']}" @click="addReferencia">Agregar</button>
                       </div>
                     </div>
                   </div>
@@ -101,7 +95,7 @@
 
                       <div v-for="item in referencias" class="col-sm-12 mt-4">
                         {foreach $idiomas as $item}
-                        <input v-if="idioma_actual == '{$item->Idi_IdIdioma}'" class="form-control" id="" type="text" name="palabras_clave" placeholder="{$lenguaje['difusion_contenido_index_inp_titulo_ph']}" required="" v-model="item.idiomas.idioma_{$item->Idi_IdIdioma}.text">
+                        <input v-if="idioma_actual == '{$item->Idi_IdIdioma}'" class="form-control" id="" type="text" name="palabras_clave" placeholder="{$lenguaje['str_titulo']}" required="" v-model="item.idiomas.idioma_{$item->Idi_IdIdioma}.text">
                         {/foreach}
                         <input type="text" class="form-control" placeholder="URL" class="idi" name="" v-model="item.url">
                       </div>
@@ -182,7 +176,7 @@
 <script type="text/javascript" src="{BASE_URL}public/js/datatable/datatables.min.js"></script>
 <script type="text/javascript" src="{BASE_URL}public/ckeditor/ckeditor.js"></script>
 <script type="text/javascript" src="{BASE_URL}public/ckeditor/adapters/jquery.js"></script>
-<script type="text/javascript" src="{BASE_URL}public/js/jquery-ui.min.js"></script>
+
 <script type="text/javascript" src="{BASE_URL}public/js/jquery-ui-timepicker-addon.js"></script>
 <script type="text/javascript">
 var data_vue = {json_encode($data_vue)};

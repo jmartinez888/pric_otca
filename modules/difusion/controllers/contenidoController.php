@@ -206,6 +206,7 @@ class contenidoController extends difusionController {
 
                   	}
 									}
+
 									if ($row->referencias()->count() > 0) {
 
 										foreach ($post['referencias'] as $valueref) {
@@ -227,6 +228,34 @@ class contenidoController extends difusionController {
 								              		'ODir_Titulo' => $valueref['idiomas'][$idioma_var]['text']
 								              	]);
 								              }
+									          }
+									      }
+							      	} else {
+							      		$obj_ref = new ODifusionReferencias();
+								      	$opcionales_ref = [];
+									      foreach ($idiomas as $value) {
+									          $idioma_var = "idioma_".$value->Idi_IdIdioma;
+									          if (array_key_exists($idioma_var, $valueref['idiomas'])) {
+									              if ($value->Idi_IdIdioma == Cookie::lenguaje()) {
+									                  //por defecto agregar en el idioma actual
+									                  $obj_ref->ODir_Titulo = $valueref['idiomas'][$idioma_var]['text'];
+									                  $obj_ref->ODir_Url = $valueref['url'];
+									                  $obj_ref->ODif_IdDifusion = $row->ODif_IdDifusion;
+
+									                  // $row->Usu_IdUsuario =
+									                  $obj_ref->Idi_IdIdioma = Cookie::lenguaje();
+									                  $obj_ref->save();
+									              } else {
+									                  $opcionales_ref[] = [
+									                      'idioma' => $value->Idi_IdIdioma,
+									                      'text' => $valueref['idiomas'][$idioma_var]['text'],
+									                  ];
+									              }
+									          }
+									      }
+									      if ($obj_ref->ODir_IdRefDif != 0) {
+									          foreach ($opcionales_ref as  $value) {
+									          	ContenidoTraducido::setRow('ora_difusion_referencias', $obj_ref->ODir_IdRefDif, 'ODir_Titulo', $value['text'], $value['idioma']);
 									          }
 									      }
 							      	}
