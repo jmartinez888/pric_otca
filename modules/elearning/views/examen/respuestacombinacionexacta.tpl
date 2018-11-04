@@ -25,10 +25,10 @@
             <input data-toggle="tooltip" data-placement="bottom" title="El valor debe ser inferior o igual a {$puntos_maximo}" placeholder="Puntos" class="form-control" name="puntos" id="puntos" type="number" min="0" max="{$puntos_maximo}"/>
           </div>
           <input type="hidden" class="form-control" name="contador" id="contador" value="2"/>
-          <div class="col-xs-9" style="margin-top:10px;">
+          <div class="col-xs-10" style="margin-top:10px;">
             <label class="">Alternativas</label>
           </div>
-          <div class="col-xs-3" style="margin-top:10px;">
+          <div class="col-xs-2" style="margin-top:10px;">
             <label class="">Correcto</label>
           </div>
           <div id="alt" style="margin-top:10px;">

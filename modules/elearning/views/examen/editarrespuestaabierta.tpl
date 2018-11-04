@@ -30,7 +30,7 @@
               </div>
             </div>            
             <div class="col-xs-12" style="margin-top: 15px">
-              <a  data-toggle="tooltip" data-placement="bottom" title="Cancelar registro" href="{$_layoutParams.root}elearning/examen/preguntas/{$idcurso}/{$examen}" class="btn btn-danger">Cancelar</a>
+              <a data-toggle="tooltip" data-placement="bottom" title="Cancelar registro" href="{$_layoutParams.root}elearning/examen/preguntas/{$idcurso}/{$examen}" class="btn btn-danger">Cancelar</a>
               <button data-toggle="tooltip" data-placement="bottom" title="Guardar cambios" class="btn btn-success" name="btn_registrar_pregunta" id="btn_registrar_pregunta">Guardar</button>
             </div>
         </form>

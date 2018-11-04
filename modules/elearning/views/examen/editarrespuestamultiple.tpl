@@ -1,7 +1,7 @@
 {include file='modules/elearning/views/gestion/menu/menu.tpl'}
-<div class="col-sm-10" style="padding-bottom: 40px;">
-    <div class="col-lg-12">
-        <div class="col-lg-12">
+<div class="col-xs-10" style="padding-bottom: 40px;">
+    <div class="col-xs-12">
+        <div class="col-xs-12">
       <div class=" " style="margin-bottom: 0px !important">
         <div class="text-center text-bold" style="margin-top: 20px; margin-bottom: 20px; color: #267161;">
           <h3 style="text-transform: uppercase; margin: 0; font-weight: bold;">
@@ -13,39 +13,39 @@
         <h3>Editar pregunta: Respuesta Múltiple</h3>
         <hr class="cursos-hr">
     </div>
-    <div class="col-lg-12">
+    <div class="col-xs-12">
         <div class="panel-body">
         <form method="POST">
          <input type="hidden" name="idcurso" id="idcurso" value="{$idcurso}">
             <input type="hidden" name="hidden_curso" id="hidden_curso" value="{$idcurso}">
             <input type="hidden" name="idexamen" id="idexamen" value="{$examen}">
-            <label class="col-sm-10">Pregunta</label>
-            <label class="col-sm-2">Puntos</label>
-            <div class="col-sm-10">
+            <label class="col-xs-10">Pregunta</label>
+            <label class="col-xs-2">Puntos</label>
+            <div class="col-xs-10">
               <input placeholder="Pregunta" class="form-control" name="in_pregunta" id="in_pregunta" value="{$preguntaedit.Pre_Descripcion}"/>
             </div>
-            <div class="col-sm-2">
+            <div class="col-xs-2">
              <input data-toggle="tooltip" data-placement="bottom" title="El valor debe ser inferior o igual a {if $preguntaedit.Pre_Estado == 0}{$puntos_maximo}{else}{$preguntaedit.Pre_Puntos+$puntos_maximo}{/if}" placeholder="Puntos" class="form-control" name="puntos" id="puntos" type="number" min="0" max="{if $preguntaedit.Pre_Estado == 0}{$puntos_maximo}{else}{$preguntaedit.Pre_Puntos+$puntos_maximo}{/if}" value="{$preguntaedit.Pre_Puntos}"/>
             </div>
             <br>
             <input type="hidden" class="form-control" name="contador" id="contador" value="{$nextinput-1}"/>
-            <div class="col-sm-10" style="margin-top:10px;">
-              <label class="margin-top-10">Alternativas</label>
+            <div class="col-xs-10" style="margin-top:10px;">
+              <label class="">Alternativas</label>
             </div>
-            <div class="col-sm-2" style="margin-top:10px;">
-              <label class="margin-top-10">Correcto</label>
+            <div class="col-xs-2" style="margin-top:10px;">
+              <label class="">Correcto</label>
             </div>
 
             <div id="alt">
               <input type="hidden" class="form-control" name="nextinput" id="nextinput" value="{$nextinput}"/>
               {$i=1}
               {foreach item=rl from=$alternativas}
-                <div>
-                <div class="col-sm-10"><input placeholder="Alternativa" class="form-control margin-top-10" name="alt{$i}" id="inPreg{$i}" style="margin-top:10px;" value="{$rl.Alt_Etiqueta}" type="text"/></div>
-                <div class="col-sm-1"><input type="checkbox" value="{$i}" class="radioalt margin-top-10" name="ckb{$i}" id='ckb{$i}'  {if $rl.Alt_Check==1} checked {/if} style="margin-top:10px;"/></div>
+                <div class="col col-xs-12">
+                <div class="col-xs-10"><input placeholder="Alternativa" class="form-control " name="alt{$i}" id="inPreg{$i}" style="margin-top:10px;" value="{$rl.Alt_Etiqueta}" type="text"/></div>
+                <div class="col-xs-1"><input type="checkbox" value="{$i}" class="radioalt " name="ckb{$i}" id='ckb{$i}'  {if $rl.Alt_Check==1} checked {/if} style="margin-top:10px;"/></div>
                   {if $i>2}
-                    <div class='col-sm-1'>
-                      <a href='javascript:void(0);' data-toggle='tooltip' data-placement='right' title='Eliminar alternativa' class='remove_button btn btn-danger pull-right margin-top-10 ' title='Remove field'><i class='glyphicon glyphicon-minus'></i></a>
+                    <div class='col-xs-1'>
+                      <a href='javascript:void(0);' data-toggle='tooltip' data-placement='right' title='Eliminar alternativa' class='remove_button btn btn-danger pull-right '><i class='glyphicon glyphicon-minus'></i></a>
                     </div>
                   {/if}
                 </div>

@@ -1,28 +1,28 @@
 {include file='modules/elearning/views/gestion/menu/menu.tpl'}
-<div class="col-sm-10" style="padding-bottom: 40px;">
-  <div class="col-lg-12">
-    <div class="col-lg-12">
-      <div class=" " style="margin-bottom: 0px !important">
-        <div class="text-center text-bold" style="margin-top: 20px; margin-bottom: 20px; color: #267161;">
-          <h3 style="text-transform: uppercase; margin: 0; font-weight: bold;">
-            {$titulo}
-          </h3>
+<div class="col-sm-9 col-md-10">
+    <div class="col-xs-12">
+      <div class="col-xs-12">
+        <div class=" " style="margin-bottom: 0px !important">
+          <div class="text-center text-bold" style="margin-top: 20px; margin-bottom: 20px; color: #267161;">
+            <h3 style="text-transform: uppercase; margin: 0; font-weight: bold;">
+              {$titulo}
+            </h3>
+          </div>
         </div>
       </div>
-    </div>
         <h3>Editar pregunta: Rellenar blancos</h3>
         <hr class="cursos-hr">
     </div>
-    <div class="col col-lg-12">
+    <div class="col col-xs-12">
         <div class="panel-body">
         <form method="POST">
          <input type="hidden" name="idcurso" id="idcurso" value="{$idcurso}">
             <input type="hidden" name="hidden_curso" id="hidden_curso" value="{$idcurso}">
             <input type="hidden" name="idexamen" id="idexamen" value="{$examen}">
           <input type="hidden" value="{$puntos_maximo}" id="maximo"/>
-            <div class="col-lg-12">
-              <label class="col col-sm-10">Pregunta:</label>
-              <label class="col col-sm-2 text-right" id="puntoslabel">Total de Puntos: {$preguntaedit.Pre_Puntos}</label>
+            <div class="col-xs-12">
+              <label class="col col-xs-9 ">Pregunta:</label>
+              <label class="col col-xs-3 text-right" id="puntoslabel">Total de Puntos: {$preguntaedit.Pre_Puntos}</label>
               <textarea rows="5" placeholder="Pregunta" class="form-control" name="in_pregunta" id="in_pregunta">{$preguntaedit.Pre_Descripcion}</textarea>
             </div>
            <!--  <div class="col-lg-12" style="margin-top: 15px;">
@@ -31,15 +31,15 @@
               <input class="form-control" name="puntos" id="puntos" type="hidden" value="{$preguntaedit.Pre_Puntos}"/>
 <!--               </div>
             </div> -->
-            <div class="col-sm-12" style="margin-top: 15px;">
+            <div class="col-xs-12" style="margin-top: 15px;">
               <label class="">(Escriba el texto debajo, y use estos separadores |...| para definir uno o más espacios en blanco): </label>
               <textarea rows="5" placeholder="Conservemos el |medio ambiente| para que el |mundo| este sano." class="form-control" name="in_pregunta4" id="in_pregunta4">{$preguntaedit.Pre_Descripcion2}</textarea>
             </div>
 
-            <div class="col-lg-12" style="margin-top: 15px">
+            <div class="col-xs-12" style="margin-top: 15px">
             <b>Respuestas en blanco: </b>
 
-              <div class="col col-lg-12" style="margin-top: 15px" id="alt">
+              <div class="col col-xs-12" style="margin-top: 15px" id="alt">
                 <div class='table-responsive'>
                   <table id='tabla' class='table' style='margin: 20px auto'>
                     <tr>
