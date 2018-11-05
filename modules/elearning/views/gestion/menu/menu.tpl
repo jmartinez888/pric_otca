@@ -527,7 +527,8 @@
       // CargarPagina("gmodulo/_view_modulos_curso", { id: $("#hidden_curso").val() }, false, $(this));
     });
     $("#item-tareas-curso").click(function(){
-      CargarPagina("gmodulo/_view_tareas_curso", { id: idcurso }, false, $(this));
+      location.href = _root_ + _modulo + '/gmodulo/_view_tareas_curso/' + idcurso;
+      // CargarPagina("gmodulo/_view_tareas_curso", { id: idcurso }, false, $(this));
     });
     //  $("#item-examen-curso").click(function(){
     //     // location.href = "{$_layoutParams.root}elearning/examen/examens/"+$("#hidden_curso").val();
