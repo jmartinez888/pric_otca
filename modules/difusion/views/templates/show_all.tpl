@@ -46,7 +46,7 @@
 				<div class="picture">
 					<div class="thumbnail-pic zoom-hover">
 						<a href="{$_layoutParams.root}difusion/contenido/{$item->ODif_IdDifusion}">
-							<img src="{$_layoutParams.root_clear}files/difusion/contenido/{$item->ODif_IdDifusion}/{$item->ODif_BannerUrl}">
+							<img src="{$_layoutParams.root_clear}files/difusion/contenido/{$item->ODif_IdDifusion}/{$item->ODif_BannerUrl}" class="w-100">
 						</a>
 					</div>
 				</div>

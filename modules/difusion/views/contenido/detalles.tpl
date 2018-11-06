@@ -30,7 +30,7 @@
                 <article class="col-lg-12 col-md-12">
                     <div class="picture">
                         <div class="category-image">
-                            <img src="{BASE_URL}files/difusion/contenido/{$difusion->ODif_IdDifusion}/{$difusion->ODif_BannerUrl}" class="img-responsive" style="width: 100%">
+                            <img src="{BASE_URL}files/difusion/contenido/{$difusion->ODif_IdDifusion}/{$difusion->ODif_BannerUrl}" class="img-responsive w-100" >
                         </div>
                     </div>
 
@@ -62,7 +62,7 @@
                             </div>
                     </div>
                     <div class="col-lg-4 p-rt-lt-0" style="">
-                        <a class="pull-right regresar-tematica2" href="{$_layoutParams.root}foro/tematica/detalles/{$difusion->tematica->Lit_IdLineaTematica}" style="color: white;">
+                        <a class="pull-right regresar-tematica2" href="{$_layoutParams.root}difusion/contenido/tematica/{$difusion->tematica->Lit_IdLineaTematica}" style="color: white;">
                             <i class="glyphicon glyphicon-star" style="text-align: center; vertical-align: middle; margin-bottom: 3px;"></i>
                             Temática: {$difusion->tematica->Lit_Nombre}
                         </a>

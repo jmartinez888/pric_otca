@@ -600,10 +600,18 @@ class contenidoController extends difusionController {
 
 	public function tag ($id) {
 		$lenguaje = $this->_view->getLenguaje('difusion_contenido_index');
-    $data['titulo'] = $lenguaje['str_contenido_relacionado'];
-    $data['titulo_base'] = $lenguaje['str_contenido_relacionado'];
+    $data['titulo'] = 'Tags';
+    $data['titulo_base'] = 'Tags';
     $this->_view->assign($data);
     $this->prepareAll('show_all', 0, 0, $id);
+	}
+
+	public function tematica ($id) {
+		$lenguaje = $this->_view->getLenguaje('difusion_contenido_index');
+    $data['titulo'] = $lenguaje['str_tematica'];
+    $data['titulo_base'] = $lenguaje['str_tematica'];
+    $this->_view->assign($data);
+    $this->prepareAll('show_all', 0, 0, 0, $id);
 	}
 	public function datos_cifras () {
 		// DB::enableQueryLog();

@@ -46,7 +46,7 @@ class difusionController extends Controller
     {
        $this->validarUrlIdioma();
     }
-    public function prepareAll ($view, $datos = 0, $eventos = 0, $id = 0) {
+    public function prepareAll ($view, $datos = 0, $eventos = 0, $id = 0, $tematica = 0) {
         $this->_view->setTemplate(LAYOUT_FRONTEND);
         $this->_view->addViews('modules'.DS.'difusion'.DS.'views'.DS.'contenido'.DS);
         // $lenguaje = $this->_view->getLenguaje('difusion_contenido_index');
@@ -59,33 +59,41 @@ class difusionController extends Controller
         if ($this->has('page')) {
             $start = ($this->getInt('page') - 1)*$length;
         }
-        if ($id == 0) {
-            if (is_numeric($id)) {
-                $build  = ODifusion::select();
-                if ($datos == 1) {
-                    $build = $build->datos_interes();
-                }
-                if ($eventos == 1) {
-                    $build = $build->eventos_interes();
-                }
-                $total = $build->count();
-                $rows = $build->offset($start)->limit($length)->get();
-                $data['no_existe'] = false;
-            } else {
-                $data['no_existe'] = false;
-                $pre = ODifusion::getPorPalabraClave($id, $length, $start);
-                $rows = $pre['data'];
-                $total = $pre['count'];
-                $data['palabras'] = $pre['palabras'];
-            }
+        if ($tematica != 0) {
+            $data['no_existe'] = false;
+            $pre = ODifusion::getPorTematica($tematica, $length, $start);
+            $rows = $pre['data'];
+            $total = $pre['count'];
+            $data['palabras'] = $pre['tematica'];
         } else {
-            $row = ODifusion::find($id);
-            if ($row != null) {
-                $data['no_existe'] = false;
-                $pre = $row->getRelacionado($length, $start);
-                $rows = $pre['data'];
-                $total = $pre['count'];
-                $data['palabras'] = $pre['palabras'];
+            if ($id == 0) {
+                if (is_numeric($id)) {
+                    $build  = ODifusion::select();
+                    if ($datos == 1) {
+                        $build = $build->datos_interes();
+                    }
+                    if ($eventos == 1) {
+                        $build = $build->eventos_interes();
+                    }
+                    $total = $build->count();
+                    $rows = $build->offset($start)->limit($length)->get();
+                    $data['no_existe'] = false;
+                } else {
+                    $data['no_existe'] = false;
+                    $pre = ODifusion::getPorPalabraClave($id, $length, $start);
+                    $rows = $pre['data'];
+                    $total = $pre['count'];
+                    $data['palabras'] = $pre['palabras'];
+                }
+            } else {
+                $row = ODifusion::find($id);
+                if ($row != null) {
+                    $data['no_existe'] = false;
+                    $pre = $row->getRelacionado($length, $start);
+                    $rows = $pre['data'];
+                    $total = $pre['count'];
+                    $data['palabras'] = $pre['palabras'];
+                }
             }
         }
         Date::setLocale(Cookie::lenguaje());

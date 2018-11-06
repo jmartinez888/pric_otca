@@ -79,6 +79,17 @@ class ODifusion extends Eloquent
     $res['data'] = $q->get();
     return $res;
   }
+
+  public static function getPorTematica ($value, $length = 5, $start = 0) {
+    $res = ['count' => 0, 'data' => []];
+    $q = ODifusion::visibles()->activos();
+    $q->where('Lit_IdLineaTematica', $value);
+    $res['count'] = $q->count();
+    $q->offset($start)->limit($length);
+    $res['data'] = $q->get();
+    $res['tematica'] = $res['data']->count() > 0 ? $res['data'][0]->tematica->Lit_Nombre : '';
+    return $res;
+  }
   public function getRelacionado ($length = 5, $start = 0) {
     $palabras = $this->getPalabrasClaves();
     $res = ['count' => 0, 'data' => []];
