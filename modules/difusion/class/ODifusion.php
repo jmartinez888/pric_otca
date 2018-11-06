@@ -72,7 +72,7 @@ class ODifusion extends Eloquent
   public static function getPorPalabraClave ($value, $length = 5, $start = 0) {
     $res = ['count' => 0, 'data' => []];
     $q = ODifusion::visibles()->activos();
-    $q->orWhere('ODif_Palabras', 'like', '%'.$value.'%');
+    $q->where('ODif_Palabras', 'like', '%'.$value.'%');
     $res['palabras'] = $value;
     $res['count'] = $q->count();
     $q->offset($start)->limit($length);
