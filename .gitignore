@@ -4,3 +4,5 @@ application/Config.php
 ./phpintel
 .phpintel
 /templates_c
+/libs/vendor/dompdf/dompdf/lib/fonts/
+libs/vendor/dompdf/dompdf/lib/fonts/
