@@ -306,7 +306,7 @@ class indexController extends foroController {
         $tiempo = $this->getTiempo($foro["For_FechaCreacion"]);
         $Nvaloraciones_foro = $this->_model->getNvaloraciones($iFor_IdForo);
 
-        $this->_view->assign('Nvaloraciones_foro', $Nvaloraciones_foro["Nvaloraciones"]);
+        $this->_view->assign('Nvaloraciones_foro', +$Nvaloraciones_foro["Nvaloraciones"]);
         $this->_view->assign('Numero_participantes_x_idForo', $Numero_participantes_x_idForo["numero_participantes"]);
         $this->_view->assign('Numero_comentarios_x_idForo', $Numero_comentarios_x_idForo["Numero_comentarios"]);
         $this->_view->assign('nombre_usuario', $Nombre_propietario["Usu_Nombre"]);

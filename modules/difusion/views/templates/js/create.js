@@ -124,6 +124,7 @@ Vue.component('form-contenido', {
 		console.log(this)
 	},
 	mounted: function () {
+		autosize(document.getElementById('descripcion'))
 		this.editor = $('#contenido').ckeditor();
 		this.$refs.imagen.onchange = this.onChange_image
 		this.loadContenidoByIdioma(this.idioma_actual)

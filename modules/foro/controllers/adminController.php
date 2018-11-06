@@ -465,43 +465,26 @@ class adminController extends foroController
     }
 
     private function _tematica_export ($query, $formato) {
+        $lenguaje = $this->_view->getLenguaje('difusion_contenido_index');
+
         $tematicas = $query->get();
+        // dd($tematicas);
         switch ($formato) {
             case 'pdf':
-                $data = $tematica->map(function($item) {
+                $data = $tematicas->map(function($item) {
                     $item->Lit_Descripcion = str_limit($item->Lit_Descripcion, 100);
                         return $item;
                 });
                 // ob_start();
-                $this->_view->assign('tematicas', $data);
+
+                $this->_view->assign('tematicas', $data->toArray());
                 // $html = $this->_view->fetch(ROOT.'modules/foro/views/admin/pdf/pdf_tematicas.tpl');
                 $html = $this->_view->render('pdf/pdf_tematicas', false, true);
-
-                // header("Content-Type: text/html;charset=utf-8");
                 $dompdf = new Dompdf();
                 $dompdf->loadHtml($html);
-
-                // (Optional) Setup the paper size and orientation
                 $dompdf->setPaper('A4', 'landscape');
-
-                // Render the HTML as PDF
                 $dompdf->render();
-
-                // Output the generated PDF to Browser
                 $dompdf->stream();
-
-                // require_once("libs/_dompdf/dompdf_config.inc.php");
-
-                // $dompdf = new DOMPDF();
-                // $dompdf->set_paper('A4', 'landscape');
-                // $dompdf->load_html(ob_get_clean());
-                // $dompdf->render();
-                // header("Content-type:application/pdf");
-                // $pdf      = $dompdf->output();
-                // $filename = "'".APP_NAME.'-OTCA_Descargas.pdf';
-                // $dompdf->stream($filename, array("atachment" => 0));
-
-
                 break;
             case 'csv':
                 $objPHPExcel = new PHPExcel();
@@ -752,27 +735,6 @@ class adminController extends foroController
                         $this->_tematica_export($tematicas, $_GET['export']);
                     } else {
                         $datas = $tematicas->offset($_GET['start'])->limit($_GET['length'])->get();
-                        // dd($datas);
-                        // $datas = $datas->map(function($item) {
-                        //     if ($item->Idi_IdIdioma != Cookie::lenguaje()){
-                        //         $traducido = ContenidoTraducido::getRow('tematica', $item->Lit_IdLineaTematica, Cookie::lenguaje());
-                        //         if ($traducido->count() > 0) {
-                        //             $n_tematica = $traducido->where('Cot_Columna', 'Lit_Nombre')->first()->Cot_Traduccion;
-                        //             if (trim($n_tematica) != '') {
-                        //                 $item->Lit_Nombre = $traducido->where('Cot_Columna', 'Lit_Nombre')->first()->Cot_Traduccion;
-                        //                 $item->Lit_Descripcion = $traducido->where('Cot_Columna', 'Lit_Descripcion')->first()->Cot_Traduccion;
-                        //             } else
-                        //                 return $item;
-
-
-                        //         } else {
-
-                        //             // $item->Lit_Nombre = 'no_translate';
-                        //             // $item->Lit_Descripcion = 'no_translate';
-                        //         }
-                        //     }
-                        //     return $item;
-                        // });
 
                         $data = [
                             'draw' => +$_GET['draw'],

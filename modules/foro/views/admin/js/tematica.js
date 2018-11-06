@@ -34,6 +34,7 @@ var app = new Vue({
       console.log(data)
       switch (data.accion) {
         case 'estado':
+          loading.show();
           let estado = 0
           if (+data.estado == 0)
             estado = 1
@@ -42,14 +43,18 @@ var app = new Vue({
           formData.append('estado', estado);
           formData.append('accion', 'estado');
 
-          axios.post(_root_lang + '/foro/admin/tematica/' + data.id + '/update', formData).then(res => {
+          axios.post(_root_lang + 'foro/admin/tematica/' + data.id + '/update', formData).then(res => {
             console.log(res)
             if (res.data.success) {
               msg.success(res.data.msg)
               this.dt_tbl_tematica.draw(false)
+
             } else {
               msg.success(res.data.msg)
             }
+            loading.hide()
+          }).cathc(err => {
+            loading.hide()
           })
           break;
         case 'eliminar':
@@ -106,6 +111,7 @@ var app = new Vue({
       return false
     },
   	onSubmit_registrarTematica () {
+      loading.show()
   		if (this.anyFill()) {
         var formData = {
           nombre: this.nombre,
@@ -127,18 +133,23 @@ var app = new Vue({
             } else {
               msg.error(res.data.msg)
             }
+            loading.hide()
 					}).catch(err => {
             console.log(err)
 						console.log(err.response)
             msg.error(err.response.data, true)
+            loading.hide()
 					})
-  		}
+  		} else {
+        loading.hide()
+      }
   	}
   },
   created () {
     console.log(this)
   },
   mounted () {
+    autosize(document.getElementById('descripcion_tematica'))
     // axios.get(_root_lang + '/foro/admin/tematica/datatable').then(res => {
       this.tbl_tematica = $('#tbl_tematica')
       this.dt_tbl_tematica = this.tbl_tematica.DataTable({

@@ -342,16 +342,14 @@ new Vue({
 		    strokeWeight: 2
 		  });
 			var iconBase = _root_ + 'files/difusion/indicador/';
-			console.log(iconBase);
 			axios.get(_root_lang + 'difusion/contenido/datos_cifras').then(res => {
-				console.log(res.data)
 
 				res.data.forEach(item => {
 					var contentString = `
 						<div id="iw-container">
 				    	<div class="iw-title">${item.indicador.OInd_Titulo}</div>
 				    	<div class="iw-content">
-				    		<div class="iw-subTitle">${item.ODii_Descripcion}<sup>2</sup> &nbsp;&nbsp;<a href="${_root_lang + 'difusion/contenido/' + item.difusion.ODif_IdDifusion}" title="Ver más" target="_blank" class="glyphicon glyphicon-share"></a>
+				    		<div class="iw-subTitle">${item.ODii_Descripcion}&nbsp;&nbsp;<a href="${_root_lang + 'difusion/contenido/' + item.difusion.ODif_IdDifusion}" title="Ver más" target="_blank" class="glyphicon glyphicon-share"></a>
 				    	</div>
 				    </div>`;
 

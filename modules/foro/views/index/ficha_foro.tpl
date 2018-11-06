@@ -176,34 +176,34 @@
                                 {if $valoracion_foro == 0}
                                 <button title="Me gusta" class="btn-like btn pull-right" {if $foro.Row_Estado == 1 && $foro.For_Estado == 1}id="ValorarForo" name="ValorarForo"{/if} id_foro="{$foro.For_IdForo}" id_usuario="{Session::get('id_usuario')}" valor="{$valoracion_foro}" ajaxtpl="valoraciones_foro">
                                     <i class="glyphicon glyphicon-heart-empty"></i>
-                                    {if count($Nvaloraciones_foro)<1000000}
+                                    {if Nvaloraciones_foro<1000000}
                                     <strong>&nbsp;{$Nvaloraciones_foro}</strong>
                                     {else}
-                                        {if count($Nvaloraciones_foro)>=1000000 && count($Nvaloraciones_foro)<2000000}
+                                        {if Nvaloraciones_foro>=1000000 && Nvaloraciones_foro<2000000}
                                         <strong>&nbsp;1M</strong>
                                         {else}
-                                            {if count($Nvaloraciones_foro)>=2000000 && count($Nvaloraciones_foro)<3000000}
+                                            {if Nvaloraciones_foro>=2000000 && Nvaloraciones_foro<3000000}
                                             <strong>&nbsp;2M</strong>
                                             {else}
-                                                {if count($Nvaloraciones_foro)>=3000000 && count($Nvaloraciones_foro)<4000000}
+                                                {if Nvaloraciones_foro>=3000000 && Nvaloraciones_foro<4000000}
                                                 <strong>&nbsp;3M</strong>
                                                 {else}
-                                                    {if count($Nvaloraciones_foro)>=4000000 && count($Nvaloraciones_foro)<5000000}
+                                                    {if Nvaloraciones_foro>=4000000 && Nvaloraciones_foro<5000000}
                                                     <strong>&nbsp;4M</strong>
                                                     {else}
-                                                        {if count($Nvaloraciones_foro)>=5000000 && count($Nvaloraciones_foro)<6000000}
+                                                        {if Nvaloraciones_foro>=5000000 && Nvaloraciones_foro<6000000}
                                                         <strong>&nbsp;5M</strong>
                                                         {else}
-                                                            {if count($Nvaloraciones_foro)>=6000000 && count($Nvaloraciones_foro)<7000000}
+                                                            {if Nvaloraciones_foro>=6000000 && Nvaloraciones_foro<7000000}
                                                             <strong>&nbsp;6M</strong>
                                                             {else}
-                                                                {if count($Nvaloraciones_foro)>=7000000 && count($Nvaloraciones_foro)<8000000}
+                                                                {if Nvaloraciones_foro>=7000000 && Nvaloraciones_foro<8000000}
                                                                 <strong>&nbsp;7M</strong>
                                                                 {else}
-                                                                    {if count($Nvaloraciones_foro)>=8000000 && count($Nvaloraciones_foro)<9000000}
+                                                                    {if Nvaloraciones_foro>=8000000 && Nvaloraciones_foro<9000000}
                                                                     <strong>&nbsp;8M</strong>
                                                                     {else}
-                                                                        {if count($Nvaloraciones_foro)>=9000000 && count($Nvaloraciones_foro)<10000000}
+                                                                        {if Nvaloraciones_foro>=9000000 && Nvaloraciones_foro<10000000}
                                                                         <strong>&nbsp;9M</strong>
                                                                         {else}
                                                                             <strong>&nbsp;más de 10 millones</strong>
@@ -221,34 +221,34 @@
                                 {else}
                                 <button title="Ya no me gusta" class="btn btn-info pull-right" id="ValorarForo" name="ValorarForo" id_foro="{$foro.For_IdForo}" id_usuario="{Session::get('id_usuario')}" valor="{$valoracion_foro}" ajaxtpl="valoraciones_foro">
                                     <i class="glyphicon glyphicon-heart-empty"></i>
-                                    {if count($Nvaloraciones_foro)<1000000}
+                                    {if Nvaloraciones_foro<1000000}
                                     <strong>&nbsp;{$Nvaloraciones_foro}</strong>
                                     {else}
-                                        {if count($Nvaloraciones_foro)>=1000000 && count($Nvaloraciones_foro)<2000000}
+                                        {if Nvaloraciones_foro>=1000000 && Nvaloraciones_foro<2000000}
                                         <strong>&nbsp;1M</strong>
                                         {else}
-                                            {if count($Nvaloraciones_foro)>=2000000 && count($Nvaloraciones_foro)<3000000}
+                                            {if Nvaloraciones_foro>=2000000 && Nvaloraciones_foro<3000000}
                                             <strong>&nbsp;2M</strong>
                                             {else}
-                                                {if count($Nvaloraciones_foro)>=3000000 && count($Nvaloraciones_foro)<4000000}
+                                                {if Nvaloraciones_foro>=3000000 && Nvaloraciones_foro<4000000}
                                                 <strong>&nbsp;3M</strong>
                                                 {else}
-                                                    {if count($Nvaloraciones_foro)>=4000000 && count($Nvaloraciones_foro)<5000000}
+                                                    {if Nvaloraciones_foro>=4000000 && Nvaloraciones_foro<5000000}
                                                     <strong>&nbsp;4M</strong>
                                                     {else}
-                                                        {if count($Nvaloraciones_foro)>=5000000 && count($Nvaloraciones_foro)<6000000}
+                                                        {if Nvaloraciones_foro>=5000000 && Nvaloraciones_foro<6000000}
                                                         <strong>&nbsp;5M</strong>
                                                         {else}
-                                                            {if count($Nvaloraciones_foro)>=6000000 && count($Nvaloraciones_foro)<7000000}
+                                                            {if Nvaloraciones_foro>=6000000 && Nvaloraciones_foro<7000000}
                                                             <strong>&nbsp;6M</strong>
                                                             {else}
-                                                                {if count($Nvaloraciones_foro)>=7000000 && count($Nvaloraciones_foro)<8000000}
+                                                                {if Nvaloraciones_foro>=7000000 && Nvaloraciones_foro<8000000}
                                                                 <strong>&nbsp;7M</strong>
                                                                 {else}
-                                                                    {if count($Nvaloraciones_foro)>=8000000 && count($Nvaloraciones_foro)<9000000}
+                                                                    {if Nvaloraciones_foro>=8000000 && Nvaloraciones_foro<9000000}
                                                                     <strong>&nbsp;8M</strong>
                                                                     {else}
-                                                                        {if count($Nvaloraciones_foro)>=9000000 && count($Nvaloraciones_foro)<10000000}
+                                                                        {if Nvaloraciones_foro>=9000000 && Nvaloraciones_foro<10000000}
                                                                         <strong>&nbsp;9M</strong>
                                                                         {else}
                                                                             <strong>&nbsp;más de 10 millones</strong>

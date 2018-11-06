@@ -25,7 +25,6 @@ class ForoTematica extends Eloquent
   }
  	protected static function boot() {
       parent::boot();
-
       static::addGlobalScope('translate', function (Builder $builder) {
       	$builder->select(
       		'*',

@@ -2,8 +2,9 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model as Eloquent;
 use Illuminate\Database\Capsule\Manager as DB;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model as Eloquent;
 
 class OIndicadores extends Eloquent
 {
@@ -65,6 +66,20 @@ class OIndicadores extends Eloquent
         $res[$value] = $www;
       }
     return $res;
+  }
+
+  protected static function boot() {
+      parent::boot();
+
+      static::addGlobalScope('translate', function (Builder $builder) {
+        $builder->select(
+          '*',
+          DB::raw("fn_TraducirContenido('ora_indicadores','OInd_Titulo',ora_indicadores.OInd_IdIndicadores,'".\Cookie::lenguaje()."',ora_indicadores.OInd_Titulo)  OInd_Titulo"),
+          DB::raw("fn_TraducirContenido('ora_indicadores','OInd_Descripcion',ora_indicadores.OInd_IdIndicadores,'".\Cookie::lenguaje()."',ora_indicadores.OInd_Descripcion)  OInd_Descripcion")
+
+        );
+
+      });
   }
 
 

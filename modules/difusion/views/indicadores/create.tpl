@@ -88,9 +88,11 @@
                               </div>
                           </div>
                           <div class="form-group">
-                              <label class="col-lg-2 control-label" for="imagen">{$lenguaje['str_descripcion']} : </label>
+                              <label class="col-lg-2 control-label" for="imagen">{$lenguaje['str_imagen']} : </label>
                               <div class="col-lg-10">
-                                  <input type="file" ref="imagen" class="form-control" id="imagen" type="text" name="imagen" required="" v-model="imagen">
+                                  <input type="file" ref="imagen" class="form-control" id="imagen" type="text" name="imagen" required="" v-model="imagen" accept="image/png">
+                                  <p>{$lenguaje['str_msg_imagen_regla']}</p>
+                                  <p id="error_img" class="hidden"><span class="label label-danger">{$lenguaje['str_imagen_no_valida']}</span></p>
                               </div>
                           </div>
                           <div class="form-group">

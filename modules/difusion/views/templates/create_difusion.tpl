@@ -82,7 +82,7 @@
               </div>
           </div>
           <div class="form-group">
-              <label class="col-lg-2 control-label" for="palabras_clave">Referencias Url : </label>
+              <label class="col-lg-2 control-label" for="referencias_url">Referencias Url : </label>
               <div class="col-lg-10">
                  <div class="row">
                     <div class="col-sm-12">
@@ -95,7 +95,7 @@
 
                       <div v-for="item in referencias" class="col-sm-12 mt-4">
                         {foreach $idiomas as $item}
-                        <input v-if="idioma_actual == '{$item->Idi_IdIdioma}'" class="form-control" id="" type="text" name="palabras_clave" placeholder="{$lenguaje['str_titulo']}" required="" v-model="item.idiomas.idioma_{$item->Idi_IdIdioma}.text">
+                        <input v-if="idioma_actual == '{$item->Idi_IdIdioma}'" class="form-control"  type="text" name="palabras_clave" placeholder="{$lenguaje['str_titulo']}" required="" v-model="item.idiomas.idioma_{$item->Idi_IdIdioma}.text">
                         {/foreach}
                         <input type="text" class="form-control" placeholder="URL" class="idi" name="" v-model="item.url">
                       </div>
@@ -119,7 +119,7 @@
                   <tbody>
                     <tr>
                       <td>
-                        <img id="image" :src="image" ref="image">
+                        <img id="image" :src="image" ref="image" class="w-100">
                       </td>
                     </tr>
                   </tbody>
@@ -172,12 +172,13 @@
 <script src="{BASE_URL}public/js/moment/moment.js" type="text/javascript"></script>
 <script>moment.locale('{Cookie::lenguaje()}')</script>
 <script src="{BASE_URL}public/js/mustache/mustache.min.js" type="text/javascript"></script>
+<script src="{BASE_URL}public/vendors/autosize/autosize.min.js" type="text/javascript"></script>
 <script src="{BASE_URL|cat:Cookie::lenguaje()}/assets/js/datatables_lang.js" type="text/javascript"></script>
 <script type="text/javascript" src="{BASE_URL}public/js/datatable/datatables.min.js"></script>
 <script type="text/javascript" src="{BASE_URL}public/ckeditor/ckeditor.js"></script>
 <script type="text/javascript" src="{BASE_URL}public/ckeditor/adapters/jquery.js"></script>
 
-<script type="text/javascript" src="{BASE_URL}public/js/jquery-ui-timepicker-addon.js"></script>
+{* <script type="text/javascript" src="{BASE_URL}public/js/jquery-ui-timepicker-addon.js"></script> *}
 <script type="text/javascript">
 var data_vue = {json_encode($data_vue)};
 </script>

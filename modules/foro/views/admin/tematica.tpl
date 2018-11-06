@@ -41,10 +41,10 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-lg-2 control-label" for="nombre_tematica">{$lenguaje['str_descripcion']} : </label>
+                                <label class="col-lg-2 control-label" for="descripcion_tematica">{$lenguaje['str_descripcion']} : </label>
                                 <div class="col-lg-10">
                                     {foreach $idiomas as $item}
-                                    <textarea v-if="idioma_actual == '{$item->Idi_IdIdioma}'" rows="2" class="form-control" id="nombre_tematica"  name="nombre_tematica" placeholder="{$lenguaje['foro_admin_tematica_index_inp_descr_ph']}"  v-model="idiomas.idioma_{$item->Idi_IdIdioma}.descripcion"></textarea>
+                                    <textarea v-if="idioma_actual == '{$item->Idi_IdIdioma}'" rows="2" class="form-control" id="descripcion_tematica"  name="descripcion_tematica" placeholder="{$lenguaje['foro_admin_tematica_index_inp_descr_ph']}"  v-model="idiomas.idioma_{$item->Idi_IdIdioma}.descripcion"></textarea>
                                     {/foreach}
                                 </div>
                             </div>
@@ -148,6 +148,7 @@
 {/block}
 
 {block "js"}
+    <script src="{BASE_URL}public/vendors/autosize/autosize.min.js" type="text/javascript"></script>
     <script>
         var data_vue = {$data_vue};
     </script>

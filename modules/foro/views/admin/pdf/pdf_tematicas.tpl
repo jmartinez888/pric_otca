@@ -18,8 +18,8 @@
 				<tbody>
 					{foreach $tematicas as $item}
 					    <tr>
-								<td>{$item->Lit_Nombre}</td>
-								<td>{$item->Lit_Descripcion}</td>
+								<td>{$item['Lit_Nombre']}</td>
+								<td>{$item['Lit_Descripcion']}</td>
 							</tr>
 					{/foreach}
 

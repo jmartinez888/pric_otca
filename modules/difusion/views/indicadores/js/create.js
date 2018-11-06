@@ -3,7 +3,7 @@ Vue.component('form-banner', {
   data: function () {
     return {
       ...data_vue,
-      estado: true,
+      // estado: true,
       // image_banner: null,
       // nombre_difusion: '',
 
@@ -160,8 +160,22 @@ Vue.component('form-banner', {
       if (files && files.length) {
         file = files[0];
         if (/^image\/\w+/.test(file.type)) {
-          this.$refs.image.src = uploadedImageURL = URL.createObjectURL(file);
-          this.change_image = true
+
+          let t = new Image();
+          t.onload = () => {
+            if ((t.width.toFixed(0) >= 32 && t.width.toFixed(0) <=64) && (t.height.toFixed(0) <= 64 && t.height.toFixed(0) >= 32)) {
+              this.$refs.image.src  = URL.createObjectURL(file);
+              this.change_image = true
+            } else {
+              $('#error_img').removeClass('hidden')
+              setTimeout(() => {
+                $('#error_img').addClass('hidden')
+              }, 2000)
+            }
+          }
+          t.src = URL.createObjectURL(file)
+
+
         }
       }
     }

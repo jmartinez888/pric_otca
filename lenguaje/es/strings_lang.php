@@ -29,6 +29,7 @@
 	$lenguaje["str_success_update"] = "Actualizado con éxito";
 	$lenguaje["str_tematica"] = "Temática";
 	$lenguaje["str_titulo"] = "Título";
+	$lenguaje["str_msg_imagen_regla"] = "La imagen seleccionada debe estar en formato PNG y entre 32x32 a 64x64 de dimensión";
 	$lenguaje["str_tipo"] = "Tipo";
 	$lenguaje["str_tipo_contenido"] = "Tipo contenido";
 	$lenguaje["str_eliminar_titulo"] = "Confirmación de Eliminación";
@@ -45,6 +46,7 @@
 	$lenguaje['str_elemento_no_encontrado'] = 'Elemento no encontrado';
 	$lenguaje['str_seleccione_buscar'] = 'Seleccione buscar';
 	$lenguaje['str_nuevo'] = 'Nuevo';
+	$lenguaje['str_imagen_no_valida'] = 'Imagen no válida';
 
 	$lenguaje['str_latitud'] = 'Latitud';
 	$lenguaje['str_longitud'] = 'Longitud';
@@ -64,9 +66,11 @@
 	$lenguaje['str_elemento_is_inactivo'] = 'Elemento ahora está inactivo';
 
 	$lenguaje['str_elemento_eliminado'] = 'Elemento eliminado';
+	$lenguaje['str_elemento_eliminado_titulo'] = 'Elemento "%elemento%" eliminado';
 
 	$lenguaje['str_elemento_no_encontrado'] = 'Elemento no encontrado';
 	$lenguaje['str_elemento_actualizado'] = 'Elemento actualizado';
+	$lenguaje['str_elemento_actualizado_titulo'] = 'Elemento "%elemento%" actualizado';
 
 
  ?>

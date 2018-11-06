@@ -158,7 +158,7 @@ class contenidoController extends difusionController {
 	public function update ($id) {
 		$res = ['success' => false, 'msg' => ''];
 		if ($this->has('metodo')) {
-			$metodo = $this->getTExto('metodo');
+			$metodo = $this->getTexto('metodo');
 			$lenguaje = $this->_view->LoadLenguaje(['difusion_contenido_index', 'request']);
 			switch ($metodo) {
 				case 'index':
@@ -297,7 +297,7 @@ class contenidoController extends difusionController {
 
 								});
 
-								if ($image != null) {
+								if ($image != null && $res['success']) {
                 	 	$path = $self->ruta_images.$row->ODif_IdDifusion.DS;
 							      if (!file_exists($path))
 				              mkdir($path);
@@ -606,7 +606,13 @@ class contenidoController extends difusionController {
     $this->prepareAll('show_all', 0, 0, $id);
 	}
 	public function datos_cifras () {
-		$datos = ODifusionIndicadores::with(['difusion', 'indicador'])->visibles()->activos()->get();
+		// DB::enableQueryLog();
+		$build = ODifusionIndicadores::with(['difusion', 'indicador' => function($query) {
+			$query->activos()->visibles();
+		}])->visibles()->activos();
+
+		$datos = $build->get();
+		// $datos[] = DB::getQueryLog();
 		$this->_view->responseJson($datos);
 	}
 }

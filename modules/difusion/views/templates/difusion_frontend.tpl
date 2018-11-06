@@ -95,6 +95,9 @@
 	            	<li class="side-menu2 submenu2">
 	                <a href="{$_layoutParams.root}difusion/tipo" aria-controls="tipo"  class="nounderline"><span>{$lenguaje['str_tipo_contenido']}</span></a>
 	            	</li>
+	            	<li class="side-menu2 submenu2">
+	                <a href="{$_layoutParams.root}difusion/indicadores" aria-controls="tipo"  class="nounderline"><span>{$lenguaje['str_indicadores']}</span></a>
+	            	</li>
 	            	<li class=" side-menu2">
 	                	<a href="{$_layoutParams.root}difusion/banner" aria-controls="banner"  class="nounderline"><span>Banner</span></a>
 	            	</li>
