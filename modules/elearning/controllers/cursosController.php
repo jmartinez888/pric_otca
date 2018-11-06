@@ -46,7 +46,7 @@ class cursosController extends elearningController {
       $_mis_cursos = $this->getInt('_mis_cursos');
       $busqueda = $this->getTexto("busqueda");
       $pagina = $this->getInt('pagina');
-      
+
       $busqueda = $this->filtrarTexto($busqueda);
       if (Session::get("autenticado")) {
           $Usu_IdUsuario = Session::get("id_usuario");
@@ -57,11 +57,11 @@ class cursosController extends elearningController {
       $condicion = " WHERE cr.Cur_Estado = 1 ";
       $soloActivos = 0;
       if (!$this->_acl->permiso('ver_eliminados')) {
-          $soloActivos = 1; 
+          $soloActivos = 1;
           $condicion .= " AND cr.Row_Estado = $soloActivos ";
       }
       //Filtro por Activos/Eliminados
-      
+
       // $condicion = "";
       if($busqueda != ""){
           $condicion .= " AND cr.Cur_Titulo LIKE '%" . $busqueda . "%' AND cr.Cur_Descripcion LIKE '%" . $busqueda . "%' ";
@@ -73,19 +73,19 @@ class cursosController extends elearningController {
           //     // $cursos = $model->getCursos(false,$busqueda);
           //     // $cursos = $model->getCursosPaginado($pagina,CANT_REG_PAG,$condicion,false);
           // }
-      } 
+      }
       if ($_mis_cursos == 1) {
           $condicion .= " AND mt.Usu_IdUsuario = " . Session::get("id_usuario");
       }
       if ($_mis_cursos == 2) {
           $condicion .= " AND cr.Usu_IdUsuario = " . Session::get("id_usuario");
       }
-      
+
       if ($_tipo_curso > 0) {
           $condicion .= " AND cr.Moa_IdModalidad =  $_tipo_curso";
       }
-      
-      if ($soloActivos == 0) { 
+
+      if ($soloActivos == 0) {
           $condicion .= " GROUP BY cr.Cur_IdCurso ORDER BY cr.Row_Estado DESC ";
       } else {
           $condicion .= " GROUP BY cr.Cur_IdCurso ";
@@ -94,7 +94,7 @@ class cursosController extends elearningController {
       $paginador = new Paginador();
       $arrayRowCount = $model->getCursosRowCount($condicion);
       $totalRegistros = $arrayRowCount['CantidadRegistros'];
-      $cursos = $model->getCursosPaginado($pagina,CANT_REG_PAG,$condicion,$Usu_IdUsuario);      
+      $cursos = $model->getCursosPaginado($pagina,CANT_REG_PAG,$condicion,$Usu_IdUsuario);
       $paginador->paginar($totalRegistros,"listarCursos", "", $pagina, CANT_REG_PAG, true);
 
       $this->_view->assign('numeropagina', $paginador->getNumeroPagina());
@@ -315,7 +315,7 @@ class cursosController extends elearningController {
       else if ($OLeccion["Lec_Tipo"] == 5){
         $this->redireccionar("elearning/clase/examen/" . $curso . "/" .$modulo  . "/" . $OLeccion["Lec_IdLeccion"]);
         exit;
-      } 
+      }
 
       $this->_view->setTemplate(LAYOUT_FRONTEND);
       $this->_view->assign("mod_datos", $datos_modulo);
@@ -425,7 +425,7 @@ class cursosController extends elearningController {
         $model->RegistrarProgreso($leccion, Session::get("id_usuario"));
       }
 
-      $lecciones = $model->getLecciones($objeto["Moc_IdModuloCurso"], Session::get("id_usuario"));      
+      $lecciones = $model->getLecciones($objeto["Moc_IdModuloCurso"], Session::get("id_usuario"));
 
       $clave = array_search($objeto["Lec_IdLeccion"], array_column($lecciones, "Lec_IdLeccion"));
       $nextLeccion = $lecciones[$clave+1];
@@ -536,28 +536,28 @@ class cursosController extends elearningController {
 
       // if ($this->botonPress("export_data_pdf")) {
           $b = "";
-          $c= "";   
+          $c= "";
           $d= "";
           $cuerpo="";
           $img=BASE_URL.$plantilla['Plc_UrlImg'];
            $a = "
               <head>
                   <link href='views/layout/frontend/css/bootstrap.min.css' rel='stylesheet' type='text/css'>
-                  <STYLE type='text/css'>             
+                  <STYLE type='text/css'>
                   @page {
                               margin: 0;
                           }
                    </STYLE>
-              </head>    
-              <body>                   
+              </head>
+              <body>
                 <div class='col-lg-12 col-xs-12' style='position: relative; display: inline-block; text-align:center; height:100%; padding:0px;'>
                     <img src='".$img."' style='width:100%; height:21cm'>
                     <div class='' style=' ".$plantilla['Plc_StyleNombre']."border:0; '><b>".$certificado[0]['Usu_Nombre']." ".$certificado[0]['Usu_Apellidos']."</b></div>
                     <div class='col-lg-12 hidden-xs' style='".$plantilla['Plc_StyleCurso']."border:0; '><b>".$certificado[0]['Cur_Titulo']."</b></div>
-                    <div class='col-lg-12 hidden-xs' style='".$plantilla['Plc_StyleFecha']."border:0; '>".$certificado[0]['Fecha_completa']."<br/></div> 
-                     <div class='col-lg-12 hidden-xs' style='".$plantilla['Plc_StyleHora']."border:0; '>".$certificado[0]['Cur_Duracion']."</div> 
+                    <div class='col-lg-12 hidden-xs' style='".$plantilla['Plc_StyleFecha']."border:0; '>".$certificado[0]['Fecha_completa']."<br/></div>
+                     <div class='col-lg-12 hidden-xs' style='".$plantilla['Plc_StyleHora']."border:0; '>".$certificado[0]['Cur_Duracion']."</div>
                     <div class='col-lg-12 col-xs-12' style='position: absolute; bottom:0; left: 5%;'><span style='font-size:13px'>Certificación de aprobación online</span><br/><span style='font-size:12px'>Código:".$certificado[0]['Cer_Codigo']."</span></div>
-                    </div> 
+                    </div>
               <script type='text/javascript' src='views/layout/frontend/js/bootstrap.min.js' ></script>
           </body>";
 
@@ -565,27 +565,27 @@ class cursosController extends elearningController {
           // <html>
           //     <head>
           //         <link href='views/layout/frontend/css/bootstrap.min.css' rel='stylesheet' type='text/css'>
-          //     </head>    
-          //     <body style='width:100vw'>                   
+          //     </head>
+          //     <body style='width:100vw'>
           //       <div class='col-lg-12 col-xs-12' style='background-image: url(".$img."); background-size: contain; width: 100%; height:100%; position: fixed;  background-repeat:no-repeat; background-position:center center;'>
           //           <div class='' style=' ".$plantilla['Plc_StyleNombre']."border:0; '><b>".$certificado[0]['Usu_Nombre']." ".$certificado[0]['Usu_Apellidos']."</b><br/></div>
           //           <div class='' style='".$plantilla['Plc_StyleCurso']."border:0; '><span style='font-size:30px'><b>".$certificado[0]['Cur_Titulo']."</b></span><br/></div>
-          //           <div class='' style='".$plantilla['Plc_StyleFecha']."border:0; '><span style='font-size:20px'>".$certificado[0]['Fecha_completa']."</span><br/></div> 
+          //           <div class='' style='".$plantilla['Plc_StyleFecha']."border:0; '><span style='font-size:20px'>".$certificado[0]['Fecha_completa']."</span><br/></div>
           //           <div class='' style='position: absolute; bottom:0; left: 5%;'><span style='font-size:13px'>Certificación de aprobación online</span><br/><span style='font-size:12px'>Código:".$certificado[0]['Cer_Codigo']."</span></div>
-          //           </div> 
+          //           </div>
           //     <script type='text/javascript' src='views/layout/frontend/js/bootstrap.min.js' ></script>
-          //     </body></html>";   
-          // echo $a.$cuerpo.$e; exit;         
-              
+          //     </body></html>";
+          // echo $a.$cuerpo.$e; exit;
+
               require_once("libs/autoload.inc.php");
-              $dompdf = new Dompdf(array('enable_remote' => true)); 
+              $dompdf = new Dompdf(array('enable_remote' => true));
               $dompdf->set_paper('A4', 'landscape'); //esta es una forma de ponerlo horizontal
               $dompdf->set_option('isHtml5ParserEnabled', true);
               $dompdf->loadHtml("$a.$cuerpo");
               $dompdf->render();
               $dompdf->stream("'".APP_NAME.'-OTCA_Descargas.pdf');
       // }
-      
+
       // $this->_view->assign("modulo", $modulo);
       // $this->_view->assign("certificado", $certificado);
       // $this->_view->assign("plantilla", $plantilla);
@@ -601,6 +601,7 @@ class cursosController extends elearningController {
       $mCert = $this->loadModel("certificado");
 
       $certificado =$mCert->getCertificado_Id($id);
+      // dd($certificado);
       $plantilla =$mCert->getPlantillaCertificado($certificado[0]["Cur_IdCurso"]);
 
 
@@ -613,7 +614,7 @@ class cursosController extends elearningController {
         $plantilla['Plc_StyleFecha']="position: absolute; top: 562px; left: 741px; transform: translate(0%, -50%); font-size: 22px; z-index: 1000; border: 2px solid black; text-align: center; width: 30%;";
 
       }
-    
+
       $modulo = $mModulo->getModulosCurso_Id($certificado[0]["Cur_IdCurso"]);
 
       $this->_view->setTemplate(LAYOUT_FRONTEND);
@@ -622,28 +623,28 @@ class cursosController extends elearningController {
 
       if ($this->botonPress("export_data_pdf")) {
           $b = "";
-          $c= "";   
+          $c= "";
           $d= "";
           $cuerpo="";
           $img=BASE_URL.$plantilla['Plc_UrlImg'];
            $a = "
               <head>
                   <link href='views/layout/frontend/css/bootstrap.min.css' rel='stylesheet' type='text/css'>
-                  <STYLE type='text/css'>             
+                  <STYLE type='text/css'>
                   @page {
                               margin: 0;
                           }
                    </STYLE>
-              </head>    
-              <body>                   
+              </head>
+              <body>
                 <div class='col-lg-12 col-xs-12' style='position: relative; display: inline-block; text-align:center; height:100%; padding:0px;'>
                     <img src='".$img."' style='width:100%; height:21cm'>
                     <div class='' style=' ".$plantilla['Plc_StyleNombre']."border:0; '><b>".$certificado[0]['Usu_Nombre']." ".$certificado[0]['Usu_Apellidos']."</b></div>
                     <div class='col-lg-12 hidden-xs' style='".$plantilla['Plc_StyleCurso']."border:0; '><b>".$certificado[0]['Cur_Titulo']."</b></div>
-                    <div class='col-lg-12 hidden-xs' style='".$plantilla['Plc_StyleFecha']."border:0; '>".$certificado[0]['Fecha_completa']."<br/></div> 
-                     <div class='col-lg-12 hidden-xs' style='".$plantilla['Plc_StyleHora']."border:0; '>".$certificado[0]['Cur_Duracion']."</div> 
+                    <div class='col-lg-12 hidden-xs' style='".$plantilla['Plc_StyleFecha']."border:0; '>".$certificado[0]['Fecha_completa']."<br/></div>
+                     <div class='col-lg-12 hidden-xs' style='".$plantilla['Plc_StyleHora']."border:0; '>".$certificado[0]['Cur_Duracion']."</div>
                     <div class='col-lg-12 col-xs-12' style='position: absolute; bottom:0; left: 5%;'><span style='font-size:13px'>Certificación de aprobación online</span><br/><span style='font-size:12px'>Código:".$certificado[0]['Cer_Codigo']."</span></div>
-                    </div> 
+                    </div>
               <script type='text/javascript' src='views/layout/frontend/js/bootstrap.min.js' ></script>
           </body>";
 
@@ -651,32 +652,40 @@ class cursosController extends elearningController {
           // <html>
           //     <head>
           //         <link href='views/layout/frontend/css/bootstrap.min.css' rel='stylesheet' type='text/css'>
-          //     </head>    
-          //     <body style='width:100vw'>                   
+          //     </head>
+          //     <body style='width:100vw'>
           //       <div class='col-lg-12 col-xs-12' style='background-image: url(".$img."); background-size: contain; width: 100%; height:100%; position: fixed;  background-repeat:no-repeat; background-position:center center;'>
           //           <div class='' style=' ".$plantilla['Plc_StyleNombre']."border:0; '><b>".$certificado[0]['Usu_Nombre']." ".$certificado[0]['Usu_Apellidos']."</b><br/></div>
           //           <div class='' style='".$plantilla['Plc_StyleCurso']."border:0; '><span style='font-size:30px'><b>".$certificado[0]['Cur_Titulo']."</b></span><br/></div>
-          //           <div class='' style='".$plantilla['Plc_StyleFecha']."border:0; '><span style='font-size:20px'>".$certificado[0]['Fecha_completa']."</span><br/></div> 
+          //           <div class='' style='".$plantilla['Plc_StyleFecha']."border:0; '><span style='font-size:20px'>".$certificado[0]['Fecha_completa']."</span><br/></div>
           //           <div class='' style='position: absolute; bottom:0; left: 5%;'><span style='font-size:13px'>Certificación de aprobación online</span><br/><span style='font-size:12px'>Código:".$certificado[0]['Cer_Codigo']."</span></div>
-          //           </div> 
+          //           </div>
           //     <script type='text/javascript' src='views/layout/frontend/js/bootstrap.min.js' ></script>
-          //     </body></html>";   
-          // echo $a.$cuerpo.$e; exit;         
-            
+          //     </body></html>";
+          // echo $a.$cuerpo.$e; exit;
+
           require_once("libs/autoload.inc.php");
-          $dompdf = new Dompdf(array('enable_remote' => true)); 
+          $dompdf = new Dompdf(array('enable_remote' => true));
           $dompdf->set_paper('A4', 'landscape'); //esta es una forma de ponerlo horizontal
           $dompdf->set_option('isHtml5ParserEnabled', true);
           $dompdf->loadHtml("$a.$cuerpo");
           $dompdf->render();
           $dompdf->stream("'".APP_NAME.'-OTCA_Descargas.pdf');
       }
-    
+
+
       $this->_view->assign("modulo", $modulo);
       $this->_view->assign("certificado", $certificado);
       $this->_view->assign("plantilla", $plantilla);
       // $this->_view->assign("detalle", $model->getDetalleCurso($curso["Cur_IdCurso"]));
       $this->_view->assign("session",Session::get("autenticado"));
-      $this->_view->renderizar('certificado_curso');
+      if ($this->getTexto('view') == 'app') {
+
+        $this->_view->render('certificado_curso');
+      } else {
+        $this->_view->renderizar('certificado_curso');
+      }
+
+
   }
 }
