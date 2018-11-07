@@ -177,7 +177,7 @@
                     <img class="margin-t-10 max-width-390" src="{$_layoutParams.ruta_img}frontend/img-banderas.png">
                 </div>
                 <div class="col col-md-3 col-sm-2 col-xs-3 padding-10 text-align-right">
-                    <img src="{$_layoutParams.ruta_img}frontend/logo_otca.png">
+                    <img style="max-width: 100%;" src="{$_layoutParams.ruta_img}frontend/logo_otca.png">
                 </div>
                 <div class="fondo-header-active"></div>
             </div>
