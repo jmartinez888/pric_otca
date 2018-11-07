@@ -120,15 +120,14 @@ Vue.component('form-contenido', {
 		          data: form,
 		          type: 'post',
 		          success: (response) => {
+		          		loading.hide()
 		              if (response.success) {
-		              	msg.success(response.msg)
+		              	msg.success(response.msg, false, _root_lang + 'difusion/cifras')
 		              	if (!this.edit)
 		              		this.resetForm()
 		              }
-		              loading.hide()
 		          },
 		          error: function (response) {
-		              console.log(response)
 		              msg.error(response.msg)
 		              loading.hide()
 		          }

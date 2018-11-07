@@ -6,13 +6,15 @@
 
 var msg = {
     count: 0,
-    success: function (text, stringify = false) {
+    success: function (text, stringify = false, redirect = '') {
         if (text)
-            mensaje([['ok', stringify ? JSON.stringify(text) : text, , this.count++]])
+            mensaje([['ok', stringify ? JSON.stringify(text) : text, this.count++, redirect]])
     },
-    error: function (text, stringify = false) {
+    error: function (text, stringify = false, redirect = '') {
         if (text)
-            mensaje([['error', stringify ? JSON.stringify(text) : text, this.count++]])
+            mensaje([[
+                'error',
+                stringify ? JSON.stringify(text) : text, this.count++, redirect]])
     }
 }
 var loading = {
@@ -54,6 +56,11 @@ function mensaje(resultado) {
 
             setTimeout(() => {
                 div.remove()
+                console.log(value)
+                if (value[3] != ''){
+                    console.log('vere')
+                    window.location.href = value[3]
+                }
             }, 5000)
         });
     } else {

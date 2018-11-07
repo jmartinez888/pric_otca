@@ -31,10 +31,10 @@ class ODifusionIndicadores extends Eloquent
   	return $this->belongsTo('App\OIndicadores', 'OInd_IdIndicadores');
   }
   public function scopeActivos ($query) {
-    return $query->where('ODii_Estado', 1);
+    return $query->where('ora_difusion_indicadores.ODii_Estado', 1);
   }
   public function scopeVisibles ($query) {
-    return $query->where('Row_Estado', 1);
+    return $query->where('ora_difusion_indicadores.Row_Estado', 1);
   }
   public function formatToArray ($include = [], $exclude = [], $with = []) {
     $res = [];

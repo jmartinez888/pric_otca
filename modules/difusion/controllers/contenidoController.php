@@ -582,12 +582,19 @@ class contenidoController extends difusionController {
 
 	public function buscar ($query) {
 		// DB::enableQueryLog();
+		$lenguaje = $this->_view->LoadLenguaje();
 		$rows = ODifusion::buscarByTitulo($query)->limit(5)->get();
 		$datares = [];
-		$rows->map(function ($item) use (&$datares){
+		$rows->map(function ($item) use (&$datares, $lenguaje){
+			$modo = '';
+			if ($item->ODif_Datos == 1)
+				$modo = $lenguaje['str_datos_interes'];
+			if ($item->ODif_Evento == 1)
+				$modo = $lenguaje['str_eventos_interes'];
 			$datares[] = [
 				'ODif_IdDifusion' => $item->ODif_IdDifusion,
 				'ODif_Titulo' => $item->ODif_Titulo,
+				'modo' => $modo,
 				'ODif_Descripcion' => str_limit($item->ODif_Descripcion, 200)
 
 			];
@@ -614,13 +621,13 @@ class contenidoController extends difusionController {
     $this->prepareAll('show_all', 0, 0, 0, $id);
 	}
 	public function datos_cifras () {
-		// DB::enableQueryLog();
-		$build = ODifusionIndicadores::with(['difusion', 'indicador' => function($query) {
-			$query->activos()->visibles();
-		}])->visibles()->activos();
+		DB::enableQueryLog();
+		$build = ODifusionIndicadores::with(['difusion', 'indicador'])
+			->join('ora_indicadores', 'ora_difusion_indicadores.OInd_IdIndicadores', 'ora_indicadores.OInd_IdIndicadores')
+			->visibles()->activos()->where('ora_indicadores.OInd_Estado', 1)->where('ora_indicadores.Row_Estado', 1);
 
 		$datos = $build->get();
-		// $datos[] = DB::getQueryLog();
+		$datos[] = DB::getQueryLog();
 		$this->_view->responseJson($datos);
 	}
 }

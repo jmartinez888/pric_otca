@@ -27,49 +27,49 @@ new Vue({
 		cssInfoWindows: function(infowindowLocal){
 		    google.maps.event.addListener(infowindowLocal, 'domready', function() {
 
-		      // Reference to the DIV that wraps the bottom of infowindow
-		      var iwOuter = $('.gm-style-iw');
+		      // // Reference to the DIV that wraps the bottom of infowindow
+		      // var iwOuter = $('.gm-style-iw');
 
-		      iwOuter.css({'background-color': '#fff', 'box-shadow': '0 1px 6px rgba(24, 83, 14, 0.98)', 'border': '1px solid 3c763d', 'border-radius': '2px 2px 10px 10px'});
-		      /* Since this div is in a position prior to .gm-div style-iw.
-		       * We use jQuery and create a iwBackground variable,
-		       * and took advantage of the existing reference .gm-style-iw for the previous div with .prev().
-		      */
-		      var iwBackground = iwOuter.prev();
+		      // iwOuter.css({'background-color': '#fff', 'box-shadow': '0 1px 6px rgba(24, 83, 14, 0.98)', 'border': '1px solid 3c763d', 'border-radius': '2px 2px 10px 10px'});
+		      // /* Since this div is in a position prior to .gm-div style-iw.
+		      //  * We use jQuery and create a iwBackground variable,
+		      //  * and took advantage of the existing reference .gm-style-iw for the previous div with .prev().
+		      // */
+		      // var iwBackground = iwOuter.prev();
 
-		      // Removes background shadow DIV
-		      iwBackground.children(':nth-child(2)').css({'display' : 'none'});
+		      // // Removes background shadow DIV
+		      // iwBackground.children(':nth-child(2)').css({'display' : 'none'});
 
-		      // Removes white background DIV
-		      iwBackground.children(':nth-child(4)').css({'display' : 'none'});
+		      // // Removes white background DIV
+		      // iwBackground.children(':nth-child(4)').css({'display' : 'none'});
 
-		      // Moves the infowindow 115px to the right.
-		      iwOuter.parent().parent().css({left: '0px'});
+		      // // Moves the infowindow 115px to the right.
+		      // iwOuter.parent().parent().css({left: '0px'});
 
-		      // Moves the shadow of the arrow 76px to the left margin.
-		      iwBackground.children(':nth-child(1)').attr('style', function(i,s){ return s + 'left: 76px !important;'});
+		      // // Moves the shadow of the arrow 76px to the left margin.
+		      // iwBackground.children(':nth-child(1)').attr('style', function(i,s){ return s + 'left: 76px !important;'});
 
-		      // Moves the arrow 76px to the left margin.
-		      iwBackground.children(':nth-child(3)').attr('style', function(i,s){ return s + 'left: 76px !important;'});
+		      // // Moves the arrow 76px to the left margin.
+		      // iwBackground.children(':nth-child(3)').attr('style', function(i,s){ return s + 'left: 76px !important;'});
 
-		      // Changes the desired tail shadow color.
-		      iwBackground.children(':nth-child(3)').find('div').children().css({'box-shadow': '0 1px 6px rgba(24, 83, 14, 0.98)', 'z-index' : '1'});
+		      // // Changes the desired tail shadow color.
+		      // iwBackground.children(':nth-child(3)').find('div').children().css({'box-shadow': '0 1px 6px rgba(24, 83, 14, 0.98)', 'z-index' : '1'});
 
-		      // Reference to the div that groups the close button elements.
-		      var iwCloseBtn = iwOuter.next();
+		      // // Reference to the div that groups the close button elements.
+		      // var iwCloseBtn = iwOuter.next();
 
-		      // Apply the desired effect to the close button
-		      iwCloseBtn.css({width: '25px', height: '25px', opacity: '1', right: '0px', top: '2px', border: '6px solid #5aa609', 'border-radius': '15px', 'box-shadow': '0 0px 5px rgba(24, 83, 14, 0.98)'});
+		      // // Apply the desired effect to the close button
+		      // iwCloseBtn.css({width: '25px', height: '25px', opacity: '1', right: '0px', top: '2px', border: '6px solid #5aa609', 'border-radius': '15px', 'box-shadow': '0 0px 5px rgba(24, 83, 14, 0.98)'});
 
-		      // If the content of infowindow not exceed the set maximum height, then the gradient is removed.
-		      if($('.iw-content').height() < 140){
-		        $('.iw-bottom-gradient').css({display: 'none'});
-		      }
+		      // // If the content of infowindow not exceed the set maximum height, then the gradient is removed.
+		      // if($('.iw-content').height() < 140){
+		      //   $('.iw-bottom-gradient').css({display: 'none'});
+		      // }
 
-		      // The API automatically applies 0.7 opacity to the button after the mouseout event. This function reverses this event to the desired value.
-		      iwCloseBtn.mouseout(function(){
-		        $(this).css({opacity: '1'});
-		      });
+		      // // The API automatically applies 0.7 opacity to the button after the mouseout event. This function reverses this event to the desired value.
+		      // iwCloseBtn.mouseout(function(){
+		      //   $(this).css({opacity: '1'});
+		      // });
 		    });
 		},
 		animacionMarker : function(markerAnimar){
@@ -349,13 +349,24 @@ new Vue({
 						<div id="iw-container">
 				    	<div class="iw-title">${item.indicador.OInd_Titulo}</div>
 				    	<div class="iw-content">
-				    		<div class="iw-subTitle">${item.ODii_Descripcion}&nbsp;&nbsp;<a href="${_root_lang + 'difusion/contenido/' + item.difusion.ODif_IdDifusion}" title="Ver más" target="_blank" class="glyphicon glyphicon-share"></a>
+				    		<div class="iw-subTitle">
+				    			${item.ODii_Descripcion}&nbsp;&nbsp;<a href="${_root_lang + 'difusion/contenido/' + item.difusion.ODif_IdDifusion}" title="Ver más" target="_blank" class="glyphicon glyphicon-share"></a>
+
 				    	</div>
 				    </div>`;
 
-				    var infowindow = new google.maps.InfoWindow({
-						  content: contentString
-						});
+				  //   var infowindow = new google.maps.InfoWindow({
+						//   content: contentString
+						// });
+
+						var infowindow = new InfoBubble({
+		          maxWidth: 250,
+		          minWidth: 250,
+		          minHeight: 200,
+		          content: contentString,
+		          // hideCloseButton: true,
+		          backgroundClassName: 'container-bubble',
+		        });
 
 						var marker = new google.maps.Marker({
 						    position: new google.maps.LatLng(item.ODii_PosLatitude, item.ODii_PosLongitude),
@@ -365,6 +376,7 @@ new Vue({
 
 						marker.setMap(map);
 						this.cssInfoWindows(infowindow);
+
 
 						marker.addListener('click', function(event) {
 						  // infowindow.open(map, marker);
@@ -410,6 +422,7 @@ new Vue({
 						    // marker.setIcon(iconBase + 'ic-marker-1.png');
 						    marker.setIcon(iconBase + item.indicador.OInd_IdIndicadores + '/' + item.indicador.OInd_IconoPath);
 						});
+						console.log(infowindow);
 
 				})
 			})

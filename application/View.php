@@ -361,7 +361,7 @@ class View extends Smarty
         }
     }
 
-    public function LoadLenguaje($archivo, $lang = false) {
+    public function LoadLenguaje($archivo = '', $lang = false) {
         if ($lang)
         {
             $this->_lenguaje = (string) $lang;
@@ -386,22 +386,27 @@ class View extends Smarty
             include $strings_path;
             return $lenguaje;
         } else {
-            $lenguaje_dir = ROOT . 'lenguaje' . DS . $this->_lenguaje . DS . $archivo . "_lang.php";
-            if (is_readable($lenguaje_dir)) {
+            if ($archivo != '') {
+                $lenguaje_dir = ROOT . 'lenguaje' . DS . $this->_lenguaje . DS . $archivo . "_lang.php";
+                if (is_readable($lenguaje_dir)) {
 
-                include $lenguaje_dir;
-                include $strings_path;
+                    include $lenguaje_dir;
+                    include $strings_path;
 
-                if (!isset($lenguaje) || empty($lenguaje))
-                {
+                    if (!isset($lenguaje) || empty($lenguaje))
+                    {
 
-                    $lenguaje = array();
+                        $lenguaje = array();
+                    }
+                    return $lenguaje;
                 }
+                else
+                {
+                    throw new Exception('Error cargar lenguaje - '. $lenguaje_dir);
+                }
+            } else {
+                include $strings_path;
                 return $lenguaje;
-            }
-            else
-            {
-                throw new Exception('Error cargar lenguaje - '. $lenguaje_dir);
             }
         }
 

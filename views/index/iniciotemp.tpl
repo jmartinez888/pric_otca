@@ -122,6 +122,7 @@
 {block 'js'}
     <script src="{BASE_URL}public/js/axios/dist/axios.min.js" type="text/javascript"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBM7aMHbWEPvofhwPQuKPnijDmQ0_AAkrI" type="text/javascript"></script>
+    <script src="{BASE_URL}public/vendors/js-info-bubble/src/infobubble-compiled.js" type="text/javascript"></script>
     <script src="{BASE_URL}public/js/moment/moment.js" type="text/javascript"></script>
     <script src="{BASE_URL}public/js/vuejs/vue.min.js" type="text/javascript"></script>
     <script src="{$_layoutParams.ruta_js}global.js" type="text/javascript"></script>

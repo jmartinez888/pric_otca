@@ -20,12 +20,14 @@
               <tr>
                 <th width="40">#</th>
                 <th>{$lenguaje['str_difusion']}</th>
+                <th width="150">{$lenguaje['str_tipo']}</th>
               </tr>
             </thead>
             <tbody>
               <tr v-for="item in difusiones">
                 <td><input type="radio" name="difusion_selected" :value="item.ODif_IdDifusion" v-model="difusion_id"></td>
                 <td>{literal}{{item.ODif_Titulo}}{/literal}</td>
+                <td>{literal}{{item.modo}}{/literal}</td>
               </tr>
             </tbody>
           </table>
