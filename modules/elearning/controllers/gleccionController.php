@@ -69,10 +69,12 @@ class gleccionController extends elearningController {
         if ($leccion["Lec_Tipo"]==3 && $estado == 1){
             $mensaje = $model->ValidarPreguntasExamen($id);
             if(strlen($mensaje)!=0){
+                // echo "a";exit;
                 $this->service->error($mensaje);
                 $this->service->Send();
             }else{
                 $model->updateEstadoLeccion($id, $estado);
+                 // echo "aca";exit;
                 $this->service->Success($estado);
                 $this->service->Send();
             }

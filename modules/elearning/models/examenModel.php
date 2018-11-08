@@ -121,7 +121,7 @@ class examenModel extends Model {
 
     public function getLecciones($id){
         try{
-            $sql = " SELECT * FROM leccion WHERE Moc_IdModuloCurso = $id AND Lec_Estado = 1 AND Row_Estado = 1 AND Lec_Tipo=3 ORDER BY Lec_IdLeccion ASC ";
+            $sql = " SELECT * FROM leccion WHERE Moc_IdModuloCurso = $id AND Row_Estado = 1 AND Lec_Tipo=3 ORDER BY Lec_IdLeccion ASC ";
             $result = $this->_db->prepare($sql);
             $result->execute();
             return $result->fetchAll(PDO::FETCH_ASSOC);
@@ -143,10 +143,26 @@ class examenModel extends Model {
         }
     }
 
+    public function updateExamen($id)
+    {
+        try{           
+            $sql = "UPDATE examen SET
+              Exa_Estado = 1
+            WHERE Exa_IdExamen = $id";
+            $result = $this->_db->prepare($sql);
+
+            $result->execute();
+            return $result->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("elearning(examenModel)", "updateExamen", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
+
     public function getExamenPeso($id)
     {
         try{
-            $sql = " SELECT Exa_Peso FROM examen WHERE Exa_IdExamen=$id ";
+            $sql = " SELECT Exa_Peso, Exa_Estado FROM examen WHERE Exa_IdExamen=$id ";
             $result = $this->_db->prepare($sql);
             $result->execute();
             return $result->fetch(PDO::FETCH_ASSOC);

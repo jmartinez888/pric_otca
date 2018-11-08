@@ -282,10 +282,13 @@ class examenController extends elearningController {
 
         $paginador->paginar( $arrayRowCount['CantidadRegistros'],"listarpreguntas", "", $pagina, CANT_REG_PAG, true);
 
-        $peso= $this->examen->getExamenPeso($idExamen);
-        $puntos_pregunta= $this->examen->getPuntosPregunta($idExamen);
-        $puntos_maximo=$peso['Exa_Peso']-$puntos_pregunta['puntos_pregunta'];
+        $peso = $this->examen->getExamenPeso($idExamen);
+        $puntos_pregunta = $this->examen->getPuntosPregunta($idExamen);
+        $puntos_maximo = $peso['Exa_Peso'] - $puntos_pregunta['puntos_pregunta'];
         // echo $puntos_pregunta['puntos_pregunta']; exit;
+        if ($peso['Exa_Estado'] == 0 && $puntos_maximo == 0) {
+            $habilitaExamen = $this->examen->updateExamen($idExamen);
+        }         
 
         $titulo =  $this->examen->getTituloCurso($id);
         $this->_view->assign('numeropagina', $paginador->getNumeroPagina());
