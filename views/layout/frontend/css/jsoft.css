@@ -4,7 +4,7 @@ body{
 	background-size: cover;
 	/*font-family: "Bahnschrift", Helvetica;*/
 	font-family: "arial", sans-serif;
-	font-size: 14px;
+	font-size: 1.6rem;
 	background-color: #f2f2f2;
 }
 header{
@@ -529,7 +529,7 @@ padding: 5px 0;
 	background: #fff;
 }*/
 #publicacion_relevante, #publicacion_reciente,#evento_interes,#dato_interes, #agenda{
-	max-height: 420px;
+	max-height: 465px;
 	overflow-y: auto;
 	background: #fff;
 	padding-top: 0px;
