@@ -77,7 +77,8 @@
                 {foreach from=$cursos item=c}
                     <tr>
                         <td>
-                          <div class="col-xs-2" style="border-right: 1px solid #c1bcbc; "><img class="img-banner w-100" style="border: 1px solid #c1bcbc;" src="{BASE_URL}modules/elearning/views/cursos/img/portada/{$c.Cur_UrlBanner}" />
+                          <div class="col-xs-2" style="border-right: 1px solid #c1bcbc; "><img class="img-banner ma-w-100 " style="border: 1px solid #c1bcbc;" src="{BASE_URL}modules/elearning/views/cursos/img/portada/{$c.Cur_UrlBanner}" />
+
                             {if $c.Moa_IdModalidad == 1}
                             <div class="col-xs-12 text-center " style=" background: #EF5350; color: white; font-weight: bold; font-size: 10px;">MOOC</div>
                             {/if}
