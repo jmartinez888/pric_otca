@@ -654,8 +654,9 @@ top: 28%;
 	background-color: black;
 	color: #fff;
 }
-p{
-	margin-bottom: 0;
+p {
+    line-height: 1.5;
+    margin-bottom: 1em;
 }
 /*
 .link-tabs-jsoft{

@@ -1,6 +1,10 @@
 {extends 'template.tpl'}
 {block "css" append}
 <style type="text/css">
+#enlaces img{
+      max-width: 100%; 
+}
+
 #raizaMenu {
 padding-top: 10px;
 }
