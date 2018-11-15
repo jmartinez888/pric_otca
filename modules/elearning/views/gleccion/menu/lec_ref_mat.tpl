@@ -53,16 +53,16 @@
             <th>#</th>
             <th> Título </th>
             <th> Fecha </th>
-            <th> Estado </th> 
+            <th> Estado </th>
             <th> Opciones </th>
               <tbody>
                 {foreach from=$referencias item=r}
                 {if $r.Row_Estado == 0}
                 <tr style="color: red">
-                {else}                
+                {else}
                   {if $r.Ref_Estado == 0}
                     <tr style="color: #999c99">
-                  {else}    
+                  {else}
                     <tr>
                   {/if}
                 {/if}
@@ -84,11 +84,11 @@
                   </td>
                   <td>
                     <div class="item-referencia">
-                      <input class="Hidden_IdReferencia" hidden="hidden" value="{$r.Ref_IdReferencia}" /> 
+                      <input class="Hidden_IdReferencia" hidden="hidden" value="{$r.Ref_IdReferencia}" />
                       <input class="Hidden_IdEnlace" hidden="hidden" value="{$r.Ref_Descripcion}" />
                       <input class="Hidden_TipoMaterial" hidden="hidden" value="1" />
                       <button data-toggle="tooltip" data-placement="top" title="Ver enlace" class="btnAbrirEnlace btn btn-sm btn-primary"><i class="glyphicon glyphicon-link"></i></button>
-                      <button data-toggle="tooltip" data-placement="top" title="Eliminar Material" class="btnEliminar btn btn-sm btn-danger"><i class="glyphicon glyphicon-trash"></i></button>                    
+                      <button data-toggle="tooltip" data-placement="top" title="Eliminar Material" class="btnEliminar btn btn-sm btn-danger"><i class="glyphicon glyphicon-trash"></i></button>
                     </div>
                   </td>
                 {/foreach}
@@ -108,7 +108,7 @@
   </div>
 </div>
 <div class="col-lg-12  div_materiales">
-  <div class="panel panel-default " style="border-top: 0; border-top-left-radius: 0; border-top-right-radius: 0;">    
+  <div class="panel panel-default " style="border-top: 0; border-top-left-radius: 0; border-top-right-radius: 0;">
     <div class="panel-body">
       <div class="table-responsive">
         {if isset($material) && count($material) > 0 }
@@ -119,16 +119,16 @@
             <th>#</th>
             <th class="cabecera"> Descripción </th>
             <th> Fecha </th>
-            <th> Estado </th> 
+            <th> Estado </th>
             <th> Opciones </th>
               <tbody>
                 {foreach from=$material item=r}
                 {if $r.Row_Estado == 0}
                 <tr style="color: red">
-                {else}                
+                {else}
                   {if $r.Mat_Estado == 0}
                     <tr style="color: #999c99">
-                  {else}    
+                  {else}
                     <tr>
                   {/if}
                 {/if}
@@ -187,7 +187,7 @@
           <th class="cabecera"> Descripción </th>
           <th> Fecha Inicio </th>
           <th> Fecha Final </th>
-          <th> Estado </th> 
+          <th> Estado </th>
           <th> Opciones </th>
           <tbody>
           {foreach from=$trabajo item=t}
@@ -214,13 +214,13 @@
                     <input class="Hidden_IdTrabajo" hidden="hidden" value="{$t.Tra_IdTrabajo}" />
                     <input class="Hidden_Estado" hidden="hidden" value="{$t.Tra_Estado}" />
                     <button data-toggle="tooltip" data-placement="top" title="Editar Tarea" class="btnEditarTrabajo btn btn-sm btn-primary"><i class="glyphicon glyphicon-edit"></i></button>
-                    
+
                       {if $t.Tra_Estado == '1' }
-                      <button data-toggle="tooltip" data-placement="top" title="Deshabilitar Tarea" class="btnActivarTrabajo btn btn-sm btn-warning"> 
+                      <button data-toggle="tooltip" data-placement="top" title="Deshabilitar Tarea" class="btnActivarTrabajo btn btn-sm btn-warning">
                           <i class="glyphicon glyphicon-remove"></i>
                       </button>
                       {else}
-                      <button data-toggle="tooltip" data-placement="top" title="Habilitar Tarea" class="btnActivarTrabajo btn btn-sm btn-success"> 
+                      <button data-toggle="tooltip" data-placement="top" title="Habilitar Tarea" class="btnActivarTrabajo btn btn-sm btn-success">
                           <i class="glyphicon glyphicon-ok"></i>
                       </button>
                       {/if}
@@ -313,105 +313,11 @@
     </div>
   </div>
 </div>
+{include 'res/mod_agregar_trabajo.tpl'}
+{include 'res/mod_editar_trabajo.tpl'}
 
 
-<div class="modal fade" id="panelNuevoTrabajo" role="dialog" aria-hidden="true" data-backdrop="static">
-  <div class="modal-dialog modal-xs">
-    <div class="panel panel-cmacm">
-      <div class="panel-heading" style="background-color: #f5f5f5; color: #333">
-        <span style="height: 20px; width: 20px; margin-right: 5px;" class="glyphicon glyphicon-list-alt"></span>
-        <strong>Agregar Tarea</strong>
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="margin-top: 0px;">&times;</button>
-      </div>
-      <div class="panel-body">
-        <form></form>
-        <form id="frm_registro_trabajo" method="POST" action="gtrabajo/_registrar_trabajo">
-          <div class="col-lg-12 margin-top-10"><strong>Titulo</strong></div>
-          <input hidden="hidden" value="{$leccion.Lec_IdLeccion}" name="leccion"/>
-          <div class="col-lg-12">
-            <input class="form-control" name="titulo" id="inTituloTra" />
-          </div>
-          <div class="col-lg-12 margin-top-10"><strong>Tipo Tarea</strong></div>
-          <div class="col-lg-12">
-            <select class="form-control" name="tipo" id="slTipoTra">
-              <option value="-1" selected="selected" disabled="disabled">Seleccione una opción</option>
-              {foreach from=$tipo_trabajo item=c}
-              <option value="{$c.Con_Valor}">{$c.Con_Descripcion}</option>
-              {/foreach}
-            </select>
-          </div>
-          <div class="col-lg-12 margin-top-10"><strong>Descripción</strong></div>
-          <div class="col-lg-12">
-            <textarea class="form-control" name="descripcionTra" id="inDescTra" rows="4" maxlength="300"></textarea>
-          </div>
-          <div class="col-lg-6" style="margin-top: 10px">
-            <label>Activo desde: </label>
-            <input class="form-control" name="desde" id="inDesdeTraDate" readonly="true" style="cursor: pointer;"/>
-          </div>
-          <div class="col-lg-6" style="margin-top: 10px">
-            <label>Activo hasta: </label>
-            <input class="form-control" name="hasta" id="inHastaTraDate" readonly="true" style="cursor: pointer;"/>
-          </div>
-          <div class="col-lg-12 margin-top-10">
-            <button class="btn btn-success" id="btn_registrar_trabajo">Registrar</button>
-          </div>
-        <form>
-      </div>
-    </div>
-  </div>
-</div>
 
-
-<div class="modal fade" id="panelEditarTrabajo" role="dialog" aria-hidden="true" data-backdrop="static">
-  <div class="modal-dialog modal-xs">
-    <div class="panel panel-cmacm">
-      <div class="panel-heading" style="background-color: #f5f5f5; color: #333">
-        <span style="height: 20px; width: 20px; margin-right: 5px;" class="glyphicon glyphicon-list-alt"></span>
-        <strong>Modificar Tarea</strong>
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="margin-top: 0px;">&times;</button>
-      </div>
-      <div class="panel-body">
-        <form></form>
-        <form id="frm_actualizar_trabajo" method="POST" action="gtrabajo/_actualizar_trabajo">
-          <div class="col-lg-12 margin-top-10"><strong>Titulo</strong></div>
-          <input hidden="hidden" id="inUpdIdTrabajo" name="trabajo"/>
-          <div class="col-lg-12">
-            <input class="form-control" name="titulo" id="inUpdTituloTra" />
-          </div>
-          <div class="col-lg-12 margin-top-10"><strong>Tipo Tarea</strong></div>
-          <div class="col-lg-12">
-            <select class="form-control" name="tipo" id="slUpdTipoTra">
-              <option value="-1" selected="selected" disabled="disabled">Seleccione una opción</option>
-              {foreach from=$tipo_trabajo item=c}
-              <option value="{$c.Con_Valor}">{$c.Con_Descripcion}</option>
-              {/foreach}
-            </select>
-          </div>
-          <div class="col-lg-12 margin-top-10"><strong>Descripción</strong></div>
-          <div class="col-lg-12">
-            <textarea class="form-control" name="descripcion" id="inUpdDescTra" rows="4" maxlength="300"></textarea>
-          </div>
-          <div class="col-lg-6" style="margin-top: 10px">
-            <label>Activo desde: </label>
-            <input class="form-control" name="desde" id="inUpdDesdeTraDate" readonly="true" style="cursor: pointer;"/>
-          </div>
-          <div class="col-lg-6" style="margin-top: 10px">
-            <label>Activo hasta: </label>
-            <input class="form-control" name="hasta" id="inUpdHastaTraDate" readonly="true" style="cursor: pointer;"/>
-          </div>
-          <div class="col-lg-12" style="margin-top: 10px">
-            <label>Archivos adjuntos: </label>
-            <div id="divArcAdjTrabajo"></div>
-            <button class="btn btn-default" id="btnAgregarArchivoTrabajo">Adjuntar archivo</button>
-          </div>
-          <div class="col-lg-12 margin-top-10">
-            <button class="btn btn-success" id="btn_actualizar_trabajo">Actualizar</button>
-          </div>
-        <form>
-      </div>
-    </div>
-  </div>
-</div>
 
 <script type="text/javascript">
   // Para que funcione el tooltip
@@ -437,18 +343,18 @@
         });
         return;
       }
-    
+
       $.fn.Mensaje({
         mensaje: "¿Desea guardar el material?",
         tipo: "SiNo",
         funcionSi: function(){
           var params = { tipo: 1, url: Link, leccion: Leccion, descripcion: Descripcion };
-          
+
           AsincTaks("gleccion/_registrar_material", params, function(a){
             $("#panelNuevoMaterialArchivo").modal("hide");
             setTimeout(function(){
               Mensaje("Material registrado", function(){
-                
+
                 location.href = _root_ + _modulo + "/gleccion/_view_leccion/" + $("#hidden_curso").val() + "/" + $("#hidden_modulo").val() + "/" + $("#hidden_leccion").val();
                 // CargarPagina("gleccion/_view_leccion", {
                 //   curso: $("#hidden_curso").val(),
@@ -490,8 +396,8 @@
       });
     });
     $(".btnAbrirEnlace").click(function(){
-      
-      if ($(this).parent().find(".Hidden_TipoMaterial").val() == 1) {      
+
+      if ($(this).parent().find(".Hidden_TipoMaterial").val() == 1) {
         var Link = $(this).parent().find(".Hidden_IdEnlace").val();
       } else {
         var Link = _root_ + "modules/" + _modulo + "/views/gleccion/_contenido/_material/";
@@ -877,7 +783,7 @@
       fecha1 = new Date();
     }
 
-    else{ 
+    else{
       var array=fecha1.split(new RegExp(separadores.join('|'),'g'));
       fecha1=array[1]+'/'+array[0]+'/'+array[2]+' '+array[3];
       fecha1 = new Date(Date.parse(fecha1 + ":00"));

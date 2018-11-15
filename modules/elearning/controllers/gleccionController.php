@@ -262,10 +262,10 @@ class gleccionController extends elearningController {
     $descripcion = $this->getTexto("descripcion");
 
     // Video YouTube
-    $cadena='watch?v=';  
-    $pos=strpos($link,$cadena);  
-    $pos= $pos + strlen($cadena);  
-    $link=substr($link,$pos,100);  
+    $cadena='watch?v=';
+    $pos=strpos($link,$cadena);
+    $pos= $pos + strlen($cadena);
+    $link=substr($link,$pos,100);
 
     $model = $this->loadModel("_gestionLeccion");
     $model->updateVideoLeccion($id, $link, $descripcion);
@@ -375,7 +375,7 @@ class gleccionController extends elearningController {
      else if($tipo==5){
         $pregunta = $this->getTexto("pregunta");
         $valor = $this->getTexto("valor");
-        
+
         $model = $this->loadModel("_gestionLeccion");
         $pregunta = $model->insertPregunta($leccion, $pregunta, $valor, $tipo);
     }
