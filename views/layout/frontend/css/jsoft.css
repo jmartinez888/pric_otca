@@ -246,6 +246,10 @@ img{
     height: 25px;
     z-index: 5;
 }*/
+.navbar-collapse.in {
+    overflow-y: visible;
+    margin-left: 36px;
+}
 .navbar-toggler{
 	background: transparent;
 	margin: 5px;
@@ -273,11 +277,11 @@ img{
 	min-height:  20px;
 }
 .buscador{
-	position: absolute;
-	z-index: 0;
-	top: 6%;
-	padding-top: 9px;
-	right: 12%;
+	/* position: absolute; */
+	/* z-index: 0; */
+	/* top: 6%; */
+	/* padding-top: 9px; */
+	/* right: 12%; */
 } /*10px*/
 .buscador input[type="search"]{
 	max-width:85%;

@@ -7,9 +7,9 @@
                 else : echo $this->_link.$this->_tree[$i]['Pag_Url']; endif;?>"
                 <?php if (isset($this->_tree[$i]["hijo"]) && sizeof($this->_tree[$i]["hijo"]) > 0): ?> 
                         href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                        class="nav-link dropdown-toggle text-color-white padding-10"
+                        class="nav-link dropdown-toggle txt-color-black padding-10"
                 <?php else : ?>
-                        class="nav-link text-color-white padding-10" 
+                        class="nav-link txt-color-black padding-10" 
                 <?php endif; ?>
                 title="<?php echo $this->_tree[$i]['Pag_Descripcion'] ?>" > 
 
