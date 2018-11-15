@@ -70,13 +70,13 @@
                         <div class="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul class="nav navbar-nav">
                                 <li class="nav-item" style="background: #565656;">
-                                    <a class="nav-link txt-color-white f-z-14" href="#">Español</a>
+                                    <a class="nav-link txt-color-white f-z-14" href="{$_layoutParams.root_clear}index/_loadLang/es">Español</a>
                                 </li>
                                 <li class="nav-item" style="background: #565656;">
-                                    <a class="nav-link txt-color-white f-z-14" href="#"> | Portugués</a>
+                                    <a class="nav-link txt-color-white f-z-14" href="{$_layoutParams.root_clear}index/_loadLang/pt"> | Portugués</a>
                                 </li>
                                 <li class="nav-item" style="background: #565656;">
-                                    <a class="nav-link txt-color-white f-z-14" href="#"> | Inglés</a>
+                                    <a class="nav-link txt-color-white f-z-14" href="{$_layoutParams.root_clear}index/_loadLang/en"> | Inglés</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link txt-color-white f-z-14" href="{$_layoutParams.root_clear}acercade/contacto"> | Contácto</a>
