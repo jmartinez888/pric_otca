@@ -28,10 +28,10 @@ class examenModel extends Model {
       return $this->getArray($sql);
     }
 
-    public function getExamenxLeccion($id)
+    public function getExamenxLeccion($Lec_IdLeccion)
     {
         try{
-            $sql = " SELECT * FROM examen WHERE Lec_IdLeccion=$id ";
+            $sql = " SELECT * FROM examen WHERE Lec_IdLeccion = $Lec_IdLeccion ";
             $result = $this->_db->prepare($sql);
             $result->execute();
             return $result->fetch(PDO::FETCH_ASSOC);
@@ -63,6 +63,36 @@ class examenModel extends Model {
             return $result->fetch(PDO::FETCH_ASSOC);
         } catch (PDOException $exception) {
             $this->registrarBitacora("elearning(examenModel)", "getTituloCurso", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
+
+    public function getExamenesPorcentaje($Cur_IdCurso = 0)
+    {
+        try{
+            $sql = " SELECT SUM(e.Exa_Porcentaje) as Exa_PorcentajeTotal FROM examen e WHERE e.Cur_IdCurso = $Cur_IdCurso AND e.Exa_Estado = 1 AND e.Row_Estado = 1  ";
+            $result = $this->_db->prepare($sql);
+            $result->execute();
+            return $result->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("elearning(examenModel)", "getExamenesPorcentaje", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
+
+    public function getTrabajosPorcentaje($Cur_IdCurso = 0)
+    {
+        try{
+            $sql = " SELECT SUM(tra.Tra_Porcentaje) AS Tra_PorcentajeTotal FROM trabajo_leccion tra 
+                INNER JOIN leccion lec ON tra.Lec_IdLeccion = lec.Lec_IdLeccion 
+                INNER JOIN modulo_curso moc ON lec.Moc_IdModuloCurso = moc.Moc_IdModuloCurso 
+                INNER JOIN curso cur ON moc.Cur_IdCurso = cur.Cur_IdCurso 
+                WHERE cur.Cur_IdCurso = $Cur_IdCurso AND tra.Tra_Estado = 1 AND tra.Row_Estado = 1 ";
+            $result = $this->_db->prepare($sql);
+            $result->execute();
+            return $result->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("elearning(examenModel)", "getTrabajosPorcentaje", "Error Model", $exception);
             return $exception->getTraceAsString();
         }
     }
@@ -278,9 +308,9 @@ class examenModel extends Model {
         }
     }
 
-    public function editExamen($iCur_IdCurso,$iMoc_IdModulo, $iExa_Titulo, $iExa_Porcentaje, $iExa_Peso, $iExa_Intentos,$iLec_IdLeccion){
+    public function editExamen($iCur_IdCurso,$iMoc_IdModulo, $iExa_Titulo, $iExa_Porcentaje, $iExa_Peso, $iExa_Intentos,$iLec_IdLeccion, $iExa_IdExamen){
         try {             
-            $sql = "call s_u_examen(?,?,?,?,?,?,?)";
+            $sql = "call s_u_examen(?,?,?,?,?,?,?,?)";
             $result = $this->_db->prepare($sql);
             $result->bindParam(1, $iCur_IdCurso, PDO::PARAM_INT);
             $result->bindParam(2, $iMoc_IdModulo, PDO::PARAM_INT);
@@ -289,8 +319,9 @@ class examenModel extends Model {
             $result->bindParam(5, $iExa_Peso, PDO::PARAM_INT); 
             $result->bindParam(6, $iExa_Intentos, PDO::PARAM_INT); 
             $result->bindParam(7, $iLec_IdLeccion, PDO::PARAM_INT);                    
+            $result->bindParam(8, $iExa_IdExamen, PDO::PARAM_INT);
             $result->execute();
-            return $result->fetch();
+            return $result->rowCount();
         } catch (PDOException $exception) {
             $this->registrarBitacora("elearning(examenModel)", "inserteExamen", "Error Model", $exception);
             return $exception->getTraceAsString();

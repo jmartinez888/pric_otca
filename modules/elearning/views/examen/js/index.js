@@ -41,11 +41,13 @@ $(document).on('ready', function () {
         $("#cargando").show();
         $.post(_root_ + 'elearning/examen/actualizarlecciones',
         {
-            id:$("#selectmodulo").val() 
+            id:$("#selectmodulo").val(),
+            idCurso:$("#idcurso").val()  
         }, function (data) {
             $("#completar").html('');
             $("#cargando").hide();
             $("#completar").html(data);
+            $('[data-toggle="tooltip"]').tooltip();
         });
     });
 
@@ -227,18 +229,20 @@ $(document).on('ready', function () {
         }
 
         _post = $.post(_root_ + 'elearning/examen/_cambiarEstadoexamens',
-                {                    
-                    _Mod_Idexamen: _id_examen,
-                    _Mod_Estado: _estado,
-                    pagina: $(".pagination .active span").html(),
-                    palabra: $("#palabraexamen").val(),
-                    filas:$("#s_filas_"+'listarexamens').val(),
-                    idexamen:$("#idexamen").val()
-                },
+            {                    
+                _Mod_Idexamen: _id_examen,
+                _Mod_Estado: _estado,
+                pagina: $(".pagination .active span").html(),
+                palabra: $("#palabraexamen").val(),
+                filas:$("#s_filas_"+'listarexamens').val(),
+                // idexamen:$("#idexamen").val()
+                
+            },
         function(data) {
             $("#listarexamens").html('');
             $("#cargando").hide();
             $("#listarexamens").html(data);
+            $('[data-toggle="tooltip"]').tooltip(); 
             // mensaje(JSON.parse(data));
         });
     });

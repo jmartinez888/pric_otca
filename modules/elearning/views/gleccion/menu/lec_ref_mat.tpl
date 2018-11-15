@@ -38,12 +38,6 @@
 </style>
 <div class="col-lg-12  div_referencias">
   <div class="panel panel-default " style="border-top: 0; border-top-left-radius: 0; border-top-right-radius: 0;">
-    <!-- <div class="panel-heading">
-      <h3 class="panel-title">
-        <i class="glyphicon glyphicon-list-alt"></i>&nbsp;&nbsp;
-        <strong>Referencias</strong>
-      </h3>
-    </div> -->
     <div class="panel-body">
       {if isset($referencias) && count($referencias) > 0 }
         {$i = 1}
@@ -173,7 +167,6 @@
   </div>
 </div>
 <div class="col-lg-12  div_tareas">
-  <!-- {if ($curso.Moa_IdModalidad==2)} -->
   <div class="panel panel-default " style="border-top: 0; border-top-left-radius: 0; border-top-right-radius: 0;">
     <div class="panel-body">
       <div class="table-responsive">
@@ -240,7 +233,6 @@
     </div>
   </div>
   </div>
-  <!-- {/if} -->
 </div>
 
 {include file='modules/elearning/views/uploader/uploader.tpl'}
