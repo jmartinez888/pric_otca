@@ -36,7 +36,7 @@ class pageController extends Controller
         }
         else
         {
-            $raiz = " <li>/</li><li> <a href='".BASE_URL."index/index/".$href."'>".$Pag_Nombre." </a> </li> :: ";
+            $raiz = " <li>/</li><li> <a href='".BASE_URL."page/item/".$href."'>".$Pag_Nombre." </a> </li> :: ";
             $padre .= $raiz;
         }
 
