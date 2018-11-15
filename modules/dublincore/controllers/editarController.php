@@ -16,13 +16,12 @@ class editarController extends Controller {
         if ($For_IdForo) {
             $this->_view->setTemplate(LAYOUT_FRONTEND);
         }
-        $this->_view->getLenguaje("index_inicio");
+         $this->_view->getLenguaje("index_inicio");
         $this->_view->getLenguaje("bdrecursos_metadata");
         $this->_view->setJs(array('dublincore'));
 
-
-        if ($this->botonPress("editarDublin")) {
-            // echo "aaa";exit;
+        if ($this->botonPress("editarDublin")) 
+        {
             $this->editarDublin($this->filtrarInt($registros));
         }
 
@@ -34,15 +33,33 @@ class editarController extends Controller {
         $paises = $this->_editar->getPaises($this->filtrarInt($registros));
         $valor_paises = "";
         $i = 1;
-        foreach ($paises as $pais) {
-            if ($i == 1) {
+
+        foreach ($paises as $pais) 
+        {
+            if ($i == 1) 
+            {
                 $valor_paises = $pais[0];
                 $i++;
-            } else {
+            } 
+            else 
+            {
                 $valor_paises = $valor_paises . ', ' . $pais[0];
             }
         }
-        
+        //Cargar Datos de Recurso
+        $bdrecurso_model = $this->loadModel('indexbd', 'bdrecursos');
+        $metadatarecurso = $bdrecurso_model->getRecursoCompletoXid($datos['Rec_IdRecurso']);
+        $this->_view->assign('recurso', $metadatarecurso);
+
+        $idestandar = $this->_registrar->getEstandarRecurso($this->filtrarInt($datos['Rec_IdRecurso']));
+        $this->_view->assign('ficha', $this->_registrar->getFichaLegislacion($idestandar[0][0], Cookie::lenguaje()));
+        $this->_view->assign('idiomas', $this->_registrar->getIdiomas());
+        $this->_view->assign('autores', $this->_registrar->getAutores());
+        $this->_view->assign('palabraclave', $this->_registrar->getPalabrasClaves(Cookie::lenguaje()));
+        $this->_view->assign('tipodublin', $this->_registrar->getTiposDublin(Cookie::lenguaje()));
+        $this->_view->assign('temadublin', $this->_registrar->getTemasDublin(Cookie::lenguaje()));
+        $this->_view->assign('formatos_archivos', $this->_registrar->getFormatoArchivo());
+        $this->_view->assign('paises', $valor_paises);
         $this->_view->assign('datos', $datos);
 
         $this->_view->assign('titulo', 'Editar Registro');
