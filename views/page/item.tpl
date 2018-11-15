@@ -64,6 +64,9 @@ background-color: #40b0ff;
 .sharepost .google-plus {
 background-color: #ce4438;
 }
+#publicacion_relevante, #publicacion_reciente, #evento_interes, #dato_interes, #agenda {
+    max-height: none !important;
+    }
 </style>
 {/block}
 {block "contenido"}
