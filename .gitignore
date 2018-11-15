@@ -1,8 +1,15 @@
-tmp/
-files/
+/tmp/*
+.tmp/*
+/tmp/*/*
+/files/*
+/public/ckeditor/kcfinder/upload/*
+/application/Config.php
+.application/Config.php
 application/Config.php
 ./phpintel
 .phpintel
 /templates_c
+/vendor/*
+/config/app.php
 /libs/vendor/dompdf/dompdf/lib/fonts/
 libs/vendor/dompdf/dompdf/lib/fonts/
