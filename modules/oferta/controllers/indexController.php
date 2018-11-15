@@ -6,7 +6,7 @@ class indexController extends ofertaController
 	
 	public function __construct($lang, $url) {
         parent::__construct($lang, $url);
-        $this->_inst=$this->loadModel('instituciones');
+        $this->_inst = $this->loadModel('instituciones');
     }
 
     public function index() {

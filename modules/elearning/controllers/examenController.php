@@ -194,8 +194,7 @@ class examenController extends elearningController {
         // echo "string".$id;
         // print_r($this->examen->getTituloCurso($id));
         $titulo = $this->examen->getTituloCurso($id);
-        // $porcentaje=$this->examen->getExamensPorcentaje($id);
-        // $this->_view->assign('porcentaje',100-$porcentaje['Porcentaje'] );
+        
         // $this->_view->assign('lecciones',$lecciones);
         $this->_view->assign('modulos',$modulos);
         $this->_view->assign('idcurso', $id);
@@ -204,7 +203,7 @@ class examenController extends elearningController {
         $this->_view->renderizar('nuevoexamen', 'elearning');
     }
 
-    public function editarexamen($id){
+    public function editarexamen($id, $idExamen){
         // $this->_view->setCss(array("verificar"));
         // $id = $this->getTexto("id");
         $this->_view->setTemplate(LAYOUT_FRONTEND);
@@ -219,34 +218,47 @@ class examenController extends elearningController {
         $modulos=$this->examen->getModulos($id);
 
         if ($this->botonPress("guardarEdit")) {
-            $examen = $this->examen->editExamen($id,$this->getSql("selectmodulo"), $this->getSql("titulo"), $this->getSql("porcentaje"), $this->getSql("puntaje"),  $this->getSql("intentos"), $this->getInt("selectleccion"));
+            $examen = $this->examen->editExamen($id,$this->getSql("selectmodulo"), $this->getSql("titulo"), $this->getSql("porcentaje"), $this->getSql("puntaje"),  $this->getSql("intentos"), $this->getInt("selectleccion"), $idExamen);
             if($examen){
-                $this->redireccionar('elearning/examen/preguntas/'.$id.'/'.$examen[0]);
+                $this->redireccionar('elearning/examen/preguntas/'.$id.'/'.$idExamen);
             }
         }
 
-        // $porcentaje=$this->examen->getExamensPorcentaje($id);
-        // $this->_view->assign('porcentaje',100-$porcentaje['Porcentaje'] );
-        // $this->_view->assign('lecciones',$lecciones);
-        $this->_view->assign('modulos',$modulos);
+        $titulo = $this->examen->getTituloCurso($id);
+        $examen = $this->examen->getExamen($idExamen);
+        $Exa_Porcentaje = $this->examen->getExamenesPorcentaje($id);
+        $Tra_Porcentaje = $this->examen->getTrabajosPorcentaje($id);
+        $Porcentaje = 100 - $Exa_Porcentaje['Exa_PorcentajeTotal'] - $Tra_Porcentaje['Tra_PorcentajeTotal'] + $examen['Exa_Porcentaje'];
+        // echo $Porcentaje.'//'.$Exa_Porcentaje['Exa_PorcentajeTotal'].'//'.$Tra_Porcentaje['Tra_PorcentajeTotal'].'//'.$examen['Exa_Porcentaje']
+        // ; 
+
+        $this->_view->assign('titulo', $titulo["Cur_Titulo"]);
+        $this->_view->assign('modulos', $modulos);
+        $this->_view->assign('examen', $examen);
+        $this->_view->assign('porcentaje', $Porcentaje);
+        $this->_view->assign('lecciones', $this->examen->getLecciones($examen['Moc_IdModulo']));
         $this->_view->assign('idcurso', $id);
-        $this->_view->assign('titulo', $this->examen->getTituloCurso($id));
         $this->_view->renderizar('editarexamen', 'elearning');
     }
-
+    
     public function actualizarlecciones(){
-        $id = $this->getInt('id');
-         
-        $this->_view->assign('lecciones', $this->examen->getLecciones($id));
-                
+        $idModulo = $this->getInt('id');
+        $idCurso = $this->getInt('idCurso');
+
+        $Exa_Porcentaje = $this->examen->getExamenesPorcentaje($idCurso);
+        $Tra_Porcentaje = $this->examen->getTrabajosPorcentaje($idCurso);
+        $Porcentaje = 100 - $Exa_Porcentaje['Exa_PorcentajeTotal'] - $Tra_Porcentaje['Tra_PorcentajeTotal'];
+
+        $this->_view->assign('porcentaje',$Porcentaje);
+
+        $this->_view->assign('lecciones', $this->examen->getLecciones($idModulo));
+        
         $this->_view->renderizar('ajax/listarlecciones', false, true);
     }
 
     public function preguntas($id,$idExamen){
-
         // $id = $this->getTexto("id");
         // $idLeccion = $this->getTexto("idleccion");
-
         if(strlen($id)==0){ $id = Session::get("learn_param_curso"); }
         if(strlen($id)==0){ exit; }
         Session::set("learn_url_tmp", "examen/preguntas");

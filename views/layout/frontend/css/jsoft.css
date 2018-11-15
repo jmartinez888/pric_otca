@@ -4,7 +4,7 @@ body{
 	background-size: cover;
 	/*font-family: "Bahnschrift", Helvetica;*/
 	font-family: "arial", sans-serif;
-	font-size: 14px;
+	font-size: 1.5rem;
 	background-color: #f2f2f2;
 }
 header{
@@ -246,6 +246,10 @@ img{
     height: 25px;
     z-index: 5;
 }*/
+.navbar-collapse.in {
+    overflow-y: visible;
+    margin-left: 36px;
+}
 .navbar-toggler{
 	background: transparent;
 	margin: 5px;
@@ -273,11 +277,11 @@ img{
 	min-height:  20px;
 }
 .buscador{
-	position: absolute;
-	z-index: 0;
-	top: 6%;
-	padding-top: 9px;
-	right: 12%;
+	/* position: absolute; */
+	/* z-index: 0; */
+	/* top: 6%; */
+	/* padding-top: 9px; */
+	/* right: 12%; */
 } /*10px*/
 .buscador input[type="search"]{
 	max-width:85%;
@@ -525,7 +529,7 @@ padding: 5px 0;
 	background: #fff;
 }*/
 #publicacion_relevante, #publicacion_reciente,#evento_interes,#dato_interes, #agenda{
-	max-height: 420px;
+	max-height: 465px;
 	overflow-y: auto;
 	background: #fff;
 	padding-top: 0px;
@@ -650,8 +654,9 @@ top: 28%;
 	background-color: black;
 	color: #fff;
 }
-p{
-	margin-bottom: 0;
+p {
+    line-height: 1.5;
+    margin-bottom: 1em;
 }
 /*
 .link-tabs-jsoft{

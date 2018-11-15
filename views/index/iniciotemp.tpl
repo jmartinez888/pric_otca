@@ -40,7 +40,7 @@
         <div class="col col-md-8 col-sm-12 col-xs-12 ">
             <div class="cont-recursos row">
                 <div class="tit-float-left-top">
-                    Servicios PRICasd
+                    Servicios PRIC
 
                 </div>
 

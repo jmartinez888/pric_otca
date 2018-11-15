@@ -21,8 +21,8 @@
 {else}
 	<div >SIN MENU</div>
 {/if}
-<div class="col col-lg-10" style="padding-top: 20px">
-	<div class="col col-lg-12">
+<div class="col col-xs-10" style="padding-top: 20px">
+	<div class="col col-xs-12">
         <div id="learn_content_main">
         	{block 'subcontenido'}
         	{/block}
