@@ -69,7 +69,7 @@
 	                                        </form>
 	                                </div>
 	                                <div class="col-sm-6">
-	                                    <a href="{$_layoutParams.root}difusion/{$ruta}/create" class="btn btn-success pull-right" style=" float: left" type="button" id="">{$lenguaje['str_titulo']}</a>
+	                                    <button  @click.prevent="onClick_generateFile({$elemento->Idif_IdIdiomaFile})" class="btn btn-success pull-right" style=" float: left" type="button" id="">{$lenguaje['str_titulo']}</button>
 	                                </div>
 	                            </div>
 	                        </div>
@@ -114,7 +114,7 @@
 <template id="botones_opcion">
     {* <a target="_blank" data-toggle="tooltip" data-placement="bottom" class="btn btn-default  btn-sm glyphicon glyphicon-list-alt" title="" href="{$_layoutParams.root}idiomas/lenguajes/{literal}{{id}}{/literal}" data-original-title="{$lenguaje['str_ver_elemento']}"></a> *}
     {* <button data-toggle="tooltip" data-placement="bottom" data-accion="estado" class="btn btn-default btn-sm glyphicon glyphicon-refresh btn-acciones"  data-estado="{literal}{{estado}}{/literal}" data-id="{literal}{{id}}{/literal}"  data-nombre="{literal}{{nombre}}{/literal}"  title="{$lenguaje['str_cambiar_estado']}"> </button> *}
-    <button data-toggle="tooltip" data-placement="bottom" class="btn btn-default  btn-sm btn-acciones glyphicon glyphicon-edit" title="{$lenguaje['str_editar']}" data-accion="editar"></button>
+    <button data-toggle="tooltip" data-placement="bottom" data-id="{literal}{{id}}{/literal}" class="btn btn-default  btn-sm btn-acciones glyphicon glyphicon-edit" title="{$lenguaje['str_editar']}" data-accion="editar"></button>
     <button data-toggle="tooltip" data-id="{literal}{{id}}{/literal}"  data-accion="eliminar" class="btn btn-default btn-sm  glyphicon glyphicon-trash confirmar-eliminar-rol btn-acciones" data-nombre="{literal}{{nombre}}{/literal}" title="{$lenguaje['str_eliminar']}" data-placement="bottom"> </button>
 </template>
 {/block}

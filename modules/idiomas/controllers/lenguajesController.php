@@ -6,7 +6,74 @@ use App\IdiomaFilesVars;
 use App\IdiomaFilesVarsBody;
 use Illuminate\Database\Capsule\Manager as DB;
 class lenguajesController extends idiomasController {
+	public function generate_files () {
+		$res = ['success' => false, 'msg' => ''];
+		if ($this->isAcceptJson()) {
+			$res = IdiomaFiles::generate_files();
+		}
+		$this->_view->responseJson($res);
 
+	}
+	public function delete ($id) {
+		$res = ['success' => false, 'msg' => ''];
+		$lenguaje = $this->_view->loadLenguaje(['request']);
+		if ($this->isAcceptJson()) {
+			if ($this->has(['file_id'])) {
+				DB::transaction(function () use(&$res, $lenguaje) {
+					try{
+						$row = IdiomaFiles::find($this->getInt('file_id'));
+				    if ($row) {
+				    	$prename = $row->Idif_FileName;
+				    	if ($row->vars()->count() == 0) {
+				    		$res['success'] = $row->delete();
+				    	} else {
+
+				    	}
+              $res['msg'] = str_replace('%elemento%', $prename, $lenguaje['str_elemento_eliminado_titulo']);
+				    }
+					} catch (Exception $e) {
+						//$res['msg'] = str_replace('%elemento%', $prename, $lenguaje['str_elemento_ya_registrado']);
+					}
+
+				});
+			} else {
+				$res['msg'] = $lenguaje['str_parametro_falta'];
+			}
+		} else {
+			$res['msg'] = 'method fail';
+		}
+		$this->_view->responseJson($res);
+	}
+	public function update ($id) {
+		$res = ['success' => false, 'msg' => ''];
+		$lenguaje = $this->_view->loadLenguaje(['request']);
+		if ($this->isAcceptJson()) {
+			if ($this->has(['nombre', 'descripcion', 'file_id'])) {
+				DB::transaction(function () use(&$res, $lenguaje) {
+					$prename = $this->getTexto('nombre');
+					try{
+						$row = IdiomaFiles::find($this->getInt('file_id'));
+				    if ($row) {
+				    	$row->Idif_FileName = $prename;
+				    	$row->Idif_Descripcion = $this->getTexto('descripcion');
+				    	$row->save();
+				    	$res['success'] = true;
+              $res['msg'] = str_replace('%elemento%', $prename, $lenguaje['str_elemento_actualizado_titulo']);
+				    }
+					} catch (Exception $e) {
+						$res['msg'] = str_replace('%elemento%', $prename, $lenguaje['str_elemento_ya_registrado']);
+					}
+
+				});
+			} else {
+				$res['msg'] = $lenguaje['str_parametro_falta'];
+			}
+		} else {
+			$res['msg'] = 'method fail';
+		}
+		$this->_view->responseJson($res);
+
+	}
 	public function datatable_file ($id) {
 		if (is_numeric($id)) {
 			$query = IdiomaFilesVars::byFile($id);
@@ -66,69 +133,8 @@ class lenguajesController extends idiomasController {
 			$this->_view->responseJson($data);
 		}
 	}
-	public function generate_files () {
-
-	}
-	public function generate_local_files () {
-
-		// foreach ($idiomas as $key_idioma => $idioma) {
-		// 	$temp = ['idioma' => $idioma->Idi_IdIdioma, 'files' => []];
-		// 	$vars = IdiomaFilesVarsBody::getParentsValue()->getByIdioma($idioma->Idi_IdIdioma)->get();
-		// 	// dd($vars);
-		// 	foreach ($vars as $key_var => $var) {
-		// 		// $var->var->file;
-		// 		if (count($temp['files']) == 0) {
-		// 			$temp['files'][] = ['file' => $var->Idif_FileName, 'vars' => []];
-
-		// 		}
-
-		// 		$new_row_file = true;
-
-		// 		foreach ($temp['files'] as $key_files => $file) {
-		// 			if ($file['file'] == $var->Idif_FileName) {
-		// 				$new_row_file = false;
-		// 				break;
-		// 			}
-		// 		}
-
-		// 		if ($new_row_file) {
-		// 			$temp['files'][] = ['file' => $var->Idif_FileName, 'vars' => []];
-		// 		}
 
 
-
-
-
-		// 	}
-
-		// 	$res[] = $temp;
-		// }
-
-		// dd($res);
-		// $lenguajes = Idioma::getAllLenguajes();
-		// $res = [];
-		// $files_final = [];
-		// foreach ($files as $key_file => $file) {
-		// 	foreach ($file->vars as $key_var => $var) {
-
-		// 	}
-		// }
-
-		// $lenguajes->map(function($files) use ($idiomas, &$files_final){
-		// 	$pre = ['idioma' => '', 'files' => []];
-		// 	$files->vars->map(function($itemd) use ($idiomas, $files, &$files_final){
-
-		// 		foreach ($itemd->body as $key => $value) {
-		// 			foreach ($idiomas as $idi) {
-		// 				if ($idi->Idi_IdIdioma == $idi->Idi_IdIdioma) {
-
-		// 				}
-		// 			}
-		// 		}
-		// 	});
-		// });
-
-	}
 	public function create () {
 
 	}
@@ -160,26 +166,35 @@ class lenguajesController extends idiomasController {
 
 	public function show ($id) {
 		$row = IdiomaFiles::find($id);
-		$idiomas = Idioma::activos();
-		$vars_idioma = [];
-		$idiomas->map(function($item) use(&$vars_idioma) {
-			$vars_idioma['idioma_'.$item->Idi_IdIdioma] = '';
-		});
-		$data_vue = [
-			'idiomas' => $vars_idioma,
-			'file_id' => $row->Idif_IdIdiomaFile
-		];
-		$data['elemento'] = $row;
-		$data['idiomas'] = $idiomas;
-		$data['data_vue'] = $data_vue;
-		$this->_view->assign($data);
-		$this->_view->render('detalles');
+		if ($this->isAcceptJson()) {
+			$res = ['success' => $row != null, 'data' => null];
+			$res['data'] = $row->formatToArray();
+			$this->_view->responseJson($res);
+		} else {
+			$idiomas = Idioma::activos();
+			$vars_idioma = [];
+			$idiomas->map(function($item) use(&$vars_idioma) {
+				$vars_idioma['idioma_'.$item->Idi_IdIdioma] = '';
+			});
+			$data_vue = [
+				'idiomas' => $vars_idioma,
+				'file_id' => $row->Idif_IdIdiomaFile
+			];
+			$data['elemento'] = $row;
+			$data['idiomas'] = $idiomas;
+			$data['data_vue'] = $data_vue;
+			$this->_view->assign($data);
+			$this->_view->render('detalles');
+		}
 	}
 	public function index ($id = 'index') {
 		if ($id == 'index' || !is_numeric($id)) {
 			$data['titulo'] = 'asd';
+
+
 			$this->_view->assign($data);
 			$this->_view->render('index');
+			// dd($this->_view);
 		} else {
 
 			$this->show($id);
