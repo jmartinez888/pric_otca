@@ -1,7 +1,7 @@
 <?php
 
-$lenguaje["label_h1_titulo"]="Directorio Institucional";
-$lenguaje["label_h2_descripcion"]="Esta guía facilita el acceso a información de las instituciones académicas y de investigación de los países miembros de la OTCA con relevancia al tema amazónico. La herramienta presenta una recopilación de datos suministrados por las instituciones académicas y de investigación y han sido organizados  según las áreas temáticas coincidentes en cuanto a los programas que cada institución nacional ejecuta en la respectiva región del territorio nacional.";
+$lenguaje["label_h1_titulo"]="Directorio Académico";
+$lenguaje["label_h2_descripcion"]="Esta guía facilita el acceso a información de las instituciones académicas y de investigación de los países miembros de la OTCA con relevancia en la conservación de biodiversidad y manejo sustentable del bosque amazónico. La herramienta presenta una recopilación de datos suministrados por las instituciones académicas y de investigación y han sido organizados  según las áreas temáticas coincidentes en cuanto a los programas que cada institución nacional ejecuta en la respectiva región del territorio nacional.";
 $lenguaje["label_p_titulo"]="Instituciones";
 $lenguaje["placeholder_buscador_general"]="Buscar Institución por Datos Generales";
 $lenguaje["activar_busqueda_avanzada"]="Activar Búsqueda Avanzada";

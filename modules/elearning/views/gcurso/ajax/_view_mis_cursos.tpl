@@ -37,7 +37,7 @@
     line-height: unset;
     font-weight: bold;
 }
-</style>                                                                                                                
+</style>
 
 <div class="col col-lg-12 ">
   <!-- <div class="panel panel-default"> -->
@@ -77,22 +77,23 @@
                 {foreach from=$cursos item=c}
                     <tr>
                         <td>
-                          <div class="col-xs-2" style="border-right: 1px solid #c1bcbc; "><img class="img-banner " style="border: 1px solid #c1bcbc;" src="{BASE_URL}modules/elearning/views/cursos/img/portada/{$c.Cur_UrlBanner}" />
+                          <div class="col-xs-2" style="border-right: 1px solid #c1bcbc; "><img class="img-banner ma-w-100 " style="border: 1px solid #c1bcbc;" src="{BASE_URL}modules/elearning/views/cursos/img/portada/{$c.Cur_UrlBanner}" />
+
                             {if $c.Moa_IdModalidad == 1}
                             <div class="col-xs-12 text-center " style=" background: #EF5350; color: white; font-weight: bold; font-size: 10px;">MOOC</div>
                             {/if}
                             {if $c.Moa_IdModalidad == 2}
                             <div class="col-xs-12 text-center " style="background: #2196F3; color: white; font-weight: bold; font-size: 10px;">LMS</div>
                             {/if}
-                          </div> 
+                          </div>
                           <div class="col-xs-10" {if $_acl->permiso("editar_curso") && $c.Inscrito == 0} style="border-right: 1px solid #c1bcbc;" {/if}>
-                              <div class="col col-xs-12 titulo"> 
+                              <div class="col col-xs-12 titulo">
                                 <a href="{BASE_URL}elearning/cursos/curso/{$c.Cur_IdCurso}" class="text-primary h3" style="text-transform: uppercase;">{$c.Cur_Titulo}</a>
                               </div>
-                              <div class="col col-xs-12"> 
-                                <a href="{BASE_URL}elearning/cursos/ficha/{$c.Cur_IdCurso}" class="text-success"><i class="glyphicon glyphicon-user"></i> {$c.Docente} </a>                                
+                              <div class="col col-xs-12">
+                                <a href="{BASE_URL}elearning/cursos/ficha/{$c.Cur_IdCurso}" class="text-success"><i class="glyphicon glyphicon-user"></i> {$c.Docente} </a>
                               </div>
-                              <div class="col col-xs-12"> 
+                              <div class="col col-xs-12">
                                 <div class="col-xs-5 clasificacion h5">
                                     <span class="contador">{$c.Valoraciones}&nbsp; </span>
                                     {$foo=1}
@@ -110,17 +111,17 @@
                                     <i class="fa fa-users icon-alumnos"> {$c.Matriculados} {if $c.Matriculados == 1} Alumno {else} Alumnos {/if} </i>
                                 </div>
                               </div>
-                          </div> 
+                          </div>
                         </td>
 
                           {if $_acl->permiso("editar_curso") && $c.Usu_IdUsuario == Session::get("id_usuario")}
                         <td >
                           <input class="hidden_IdCurso estado" value="{$c.Cur_IdCurso}"/>
-                          
+
                             {if $c.Moa_IdModalidad == 2}
-                                <button class="btn btn-sm btn-default btnGestion " data-toggle="tooltip" data-placement="bottom" title="Gestión de Alumnos" ><i class="fa fa-users "></i></button> 
+                                <button class="btn btn-sm btn-default btnGestion " data-toggle="tooltip" data-placement="bottom" title="Gestión de Alumnos" ><i class="fa fa-users "></i></button>
                             {else}
-                                <button class="btn btn-sm btn-default disabled btnGestion"  data-toggle="tooltip" data-placement="bottom" data-original-title="Gestión de Alumnos" ><i class="fa fa-users "></i></button> 
+                                <button class="btn btn-sm btn-default disabled btnGestion"  data-toggle="tooltip" data-placement="bottom" data-original-title="Gestión de Alumnos" ><i class="fa fa-users "></i></button>
                             {/if}
                             <button class="btn btn-sm btn-default btnAnuncios" data-toggle="tooltip" data-placement="bottom" title="Anuncios de Curso"><i class="glyphicon glyphicon-envelope"></i></button>
                             <button class="btn btn-sm btn-default btnFinalizarReg"  data-toggle="tooltip" data-placement="bottom" title="Editar Curso"><i class="glyphicon glyphicon-pencil"></i></button>

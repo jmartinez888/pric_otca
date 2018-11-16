@@ -1,9 +1,14 @@
+{extends 'index_elearning.tpl'}
+{block 'css' append}
 <style>
   .radioalt{
     margin-top: 20px !important;
     margin-left: -10px !important;
   }
 </style>
+{/block}
+
+{block 'subcontenido'}
 {include file='modules/elearning/views/gestion/menu/tag_url.tpl'}
 {include file='modules/elearning/views/gleccion/menu/lec_titulo.tpl'}
 <div class="col-lg-12">
@@ -289,11 +294,8 @@
   </div>
 </div>
 
+{/block}
 
-
-
-
-
-
-
+{block 'js' append}
 <script type="text/javascript" src="{$_url}gleccion/js/_view_3.js"></script>
+{/block}

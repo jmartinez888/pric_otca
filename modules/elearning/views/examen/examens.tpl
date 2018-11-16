@@ -1,7 +1,7 @@
 {include file='modules/elearning/views/gestion/menu/menu.tpl'}
-<div class="col-lg-10">
-<div class="col-lg-12">
-    <div class="col-lg-12">
+<div class="col-xs-10">
+<div class="col-xs-12">
+    <div class="col-xs-12">
   <div class=" " style="margin-bottom: 0px !important">
     <div class="text-center text-bold" style="margin-top: 20px; margin-bottom: 20px; color: #267161;">
       <h3 style="text-transform: uppercase; margin: 0; font-weight: bold;">
@@ -13,7 +13,7 @@
         <h3>Examenes</h3>
         <hr class="cursos-hr">
     </div>
-    <div class="col-lg-12">
+    <div class="col-xs-12">
         <div class="panel-body">           
             <div class="row" style="text-align:right">
                 <div style="display:inline-block;padding-right:2em">
@@ -24,13 +24,12 @@
                 </div>
             </div>
             <div id="listarexamens">
-            <div class="col-lg-12">
+            <div class="col-xs-12">
                 {if $porcentaje<100}
                  <a href="{$_layoutParams.root}elearning/examen/nuevoexamen/{$idcurso}" class="btn btn-primary margin-top-10 glyphicon glyphicon-plus" id="btn_nuevo" > Nuevo</a>
                 {else}
                  <a data-toggle="modal"  data-target="#msj-invalido" class="btn btn-danger margin-top-10 glyphicon glyphicon-plus" data-placement="bottom" > Nuevo</a>
-                {/if}
-            
+                {/if}            
                 {if isset($examens) && count($examens)}
                     <div class="table-responsive">
                         <table class="table" style="  margin: 20px auto">
@@ -39,6 +38,7 @@
                                 <th style=" text-align: center">Título</th>
                                 <th style=" text-align: center">Intentos</th>
                                 <th style=" text-align: center">Porcentaje</th>
+                                <th style=" text-align: center">Estado</th>
 <!--                                 <th style=" text-align: center">Fecha</th>
                                     {if $_acl->permiso("editar_rol")} -->
                                 <th style=" text-align: center">Opciones</th>
@@ -50,13 +50,20 @@
                                     <td style=" text-align: center">{$rl.Exa_Titulo}</td>
                                     <td style=" text-align: center">{$rl.Exa_Intentos}</td>
                                     <td style=" text-align: center">{$rl.Exa_Porcentaje}%</td>
-<!--                                     <td style=" text-align: center">{$rl.Cer_FechaReg}</td> -->
+                                    <td style=" text-align: center">  
+                                    {if $rl.Exa_Estado==0}
+                                        <p data-toggle="tooltip" data-placement="bottom" class="glyphicon glyphicon-remove-sign " title="{$lenguaje.label_deshabilitado}" style="color: #DD4B39;"></p>
+                                    {/if}        
+                                    {if $rl.Exa_Estado==1}
+                                        <p data-toggle="tooltip" data-placement="bottom" class="glyphicon glyphicon-ok-sign " title="{$lenguaje.label_habilitado}" style="color: #088A08;"></p>
+                                    {/if}
+                                    </td>
                                     {if $_acl->permiso("editar_rol")}
                                     <td style=" text-align: center">
                                         {if  $rl.Emitido==0}
                                         <a data-toggle="tooltip" data-placement="bottom" class="btn btn-default btn-sm glyphicon glyphicon-refresh estado-examen" title="{$lenguaje.tabla_opcion_cambiar_est}" id_examen="{$rl.Exa_IdExamen}" estado="{$rl.Exa_Estado}"> </a>
                                         {/if}
-                                        <a data-toggle="tooltip" data-placement="bottom" class="btn btn-default btn-sm glyphicon glyphicon-edit" id="btn-Editar" title="Editar" href=""></a>
+                                        <a data-toggle="tooltip" data-placement="bottom" class="btn btn-default btn-sm glyphicon glyphicon-edit" id="btn-Editar" title="Editar" href="{$_layoutParams.root}elearning/examen/editarexamen/{$idcurso}/{$rl.Exa_IdExamen}"></a>
 
                                          <a data-toggle="tooltip" data-placement="bottom" class="btn btn-default btn-sm glyphicon glyphicon-question-sign btn-preguntas" title="Preguntas" href="{$_layoutParams.root}elearning/examen/preguntas/{$idcurso}/{$rl.Exa_IdExamen}"></a>
 
@@ -87,7 +94,6 @@
 
     </div>
 </div></div></div>
-
 
 <div class="modal " id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">

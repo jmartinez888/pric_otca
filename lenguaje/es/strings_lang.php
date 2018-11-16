@@ -69,6 +69,8 @@
 	$lenguaje['str_elemento_eliminado_titulo'] = 'Elemento "%elemento%" eliminado';
 
 	$lenguaje['str_elemento_no_encontrado'] = 'Elemento no encontrado';
+	$lenguaje['str_elemento_ya_registrado'] = 'Elemento "%elemento%" ya está registrado';
+	$lenguaje['str_elemento_no_registrado'] = 'Elemento no registrado';
 	$lenguaje['str_elemento_actualizado'] = 'Elemento actualizado';
 	$lenguaje['str_elemento_actualizado_titulo'] = 'Elemento "%elemento%" actualizado';
 

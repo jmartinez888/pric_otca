@@ -6,16 +6,16 @@
  */
 class gleccionController extends elearningController {
 
-  protected $_link;
-  protected $service;
+    protected $_link;
+    protected $service;
 
-  public function __construct($lang,$url)
-  {
-    parent::__construct($lang,$url);
-    $this->_view->assign('_url', BASE_URL . "modules/" . $this->_request->getModulo() . "/views/");
-    $this->getLibrary("ServiceResult");
-    $this->service = new ServiceResult();
-  }
+    public function __construct($lang,$url)
+    {
+        parent::__construct($lang,$url);
+        $this->_view->assign('_url', BASE_URL . "modules/" . $this->_request->getModulo() . "/views/");
+        $this->getLibrary("ServiceResult");
+        $this->service = new ServiceResult();
+    }
 
     public function _view_lecciones_modulo($id_curso = 0, $id_modulo = 0){
         // $curso = $this->getTexto("curso");
@@ -161,12 +161,24 @@ class gleccionController extends elearningController {
             $view = "ajax/_view_2";
             break;
           case 3:
+
+            $ExaModel = $this->loadModel("examen");
+            $examen = $ExaModel->getExamenxLeccion($leccion["Lec_IdLeccion"]);
+
+            // if ($examen && count($examen) > 0) {
+            // // print_r($examen);exit;
+            //     $this->redireccionar("elearning/examen/editarexamen/".$examen["Cur_IdCurso"]."/".$examen["Exa_IdExamen"]);
+            // } else {
+            //     $this->redireccionar("/elearning/examen/nuevoexamen/".$curso["Cur_IdCurso"]);
+            // }
+
+            
             // $examen = $model->insertExamenLeccion($leccion["Lec_IdLeccion"], "", 0, 0, 0);
             // $preguntas = $model->getPreguntas($examen[0]["Exa_IdExamen"]);
-            // $this->_view->assign("examen", $examen[0]);
-            // $this->_view->assign("preguntas", $preguntas);
-            // $view = "ajax/_view_3";
-            $this->redireccionar("/elearning/examen/examens/1");
+            $this->_view->assign("examen", $examen);
+            // $this->_view->assign("preguntas", $preguntas); 
+            $view = "ajax/_view_3";
+            
             break;
           case 4:
             $piz = $this->loadModel("pizarra");
@@ -262,10 +274,10 @@ class gleccionController extends elearningController {
     $descripcion = $this->getTexto("descripcion");
 
     // Video YouTube
-    $cadena='watch?v=';  
-    $pos=strpos($link,$cadena);  
-    $pos= $pos + strlen($cadena);  
-    $link=substr($link,$pos,100);  
+    $cadena='watch?v=';
+    $pos=strpos($link,$cadena);
+    $pos= $pos + strlen($cadena);
+    $link=substr($link,$pos,100);
 
     $model = $this->loadModel("_gestionLeccion");
     $model->updateVideoLeccion($id, $link, $descripcion);
@@ -375,7 +387,7 @@ class gleccionController extends elearningController {
      else if($tipo==5){
         $pregunta = $this->getTexto("pregunta");
         $valor = $this->getTexto("valor");
-        
+
         $model = $this->loadModel("_gestionLeccion");
         $pregunta = $model->insertPregunta($leccion, $pregunta, $valor, $tipo);
     }

@@ -46,9 +46,7 @@
     <li role="presentation" id="item_contenido" ><a href="#">CONTENIDO</a></li>
     <li role="presentation" id="item_referencias"><a href="#">REFERENCIAS</a></li>
     <li role="presentation" id="item_materiales" ><a href="#">MATERIAL DIDÁCTICO</a></li>
-    <!-- {if ($curso.Moa_IdModalidad==2)} -->
     <li role="presentation" id="item_tareas" ><a href="#">TAREAS</a></li>
-    <!-- {/if} -->
   </ul>
 </div>
 {include file='modules/elearning/views/gleccion/menu/lec_ref_mat.tpl'}

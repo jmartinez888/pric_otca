@@ -24,7 +24,7 @@
 {block 'subcontenido'}
 {include file='modules/elearning/views/gestion/menu/tag_url.tpl'}
 <!--  Tabs-->
-<div class="col-lg-12">
+<div class="col-xs-12">
   <ul class="nav nav-tabs">
     <li role="presentation" class="active" id="item_modulo"><a href="#">MÓDULO</a></li>
     <li role="presentation" id="item_lecciones" ><a href="#">LECCIONES</a></li>
@@ -32,7 +32,7 @@
 </div>
 
 <!-- Modulo -->
-<div {if isset($active) && $active == "mod" } class="col-lg-12  div_modulo display-block" {else} class="col-lg-12  div_modulo" {/if} id="panelModulos">
+<div {if isset($active) && $active == "mod" } class="col-xs-12  div_modulo display-block" {else} class="col-xs-12  div_modulo" {/if} id="panelModulos">
   <div class="panel panel-default" style="border-top: 0; border-top-left-radius: 0; border-top-right-radius: 0;">
     <!-- <div class="panel-heading">
       <h3 class="panel-title">
@@ -42,18 +42,18 @@
     </div> -->
     <div class="panel-body">
       <form id="frm-act-modulo" method="post" action="gmodulo/_actualizar_modulo">
-      <div class="col-lg-12"><strong>Titulo</strong></div>
-      <div class="col-lg-12">
+      <div class="col-xs-12"><strong>Titulo</strong></div>
+      <div class="col-xs-12">
         <input hidden="hidden" id="hidden_curso" name="id_curso" value="{$curso.Cur_IdCurso}" />
         <input name="id" id="hidden_modulo" hidden="hidden" value="{$modulo.Moc_IdModuloCurso}" />        
         <input class="form-control" name="titulo" value="{$modulo.Moc_Titulo}" />
       </div>
-      <div class="col-lg-12  margin-top-10"><strong>Descripcion</strong></div>
-      <div class="col-lg-12">
+      <div class="col-xs-12  margin-t-10"><strong>Descripcion</strong></div>
+      <div class="col-xs-12">
         <textarea class="form-control" name="descripcion">{$modulo.Moc_Descripcion}</textarea>
       </div>
       </form>
-      <div class="col-lg-12 margin-top-10">
+      <div class="col-xs-12 margin-t-10">
         <button id="btn_actualizar_modulo" class="btn btn-success">Actualizar Datos</button>
       </div>
     </div>
@@ -61,7 +61,7 @@
 </div>
 
 <!-- Lecciones -->
-<div class="col-lg-12 div_lecciones" id="panelModulos">
+<div class="col-xs-12 div_lecciones" id="panelModulos">
   <div class="panel panel-default" style="border-top: 0; border-top-left-radius: 0; border-top-right-radius: 0;">
     <!-- <div class="panel-heading">
       <h3 class="panel-title">
@@ -70,7 +70,7 @@
       </h3>
     </div> -->
     <div class="panel-body" >
-      <div class="col-lg-12">
+      <div class="col-xs-12">
         {if isset($lecciones) && count($lecciones) > 0 }
           <table class="table" id="tblMisCursos">
               <tr>
@@ -103,7 +103,7 @@
           <div>Aun no registraste ninguna lección al módulo</div>
         {/if}
         
-        <div class="col-lg-12">
+        <div class="col-xs-12">
           <button class="btn btn-success pull-right" type="button" id="btn_nueva_leccion">
             <i class="glyphicon glyphicon-book"></i> Nueva Lección
           </button>
@@ -114,7 +114,7 @@
   </div>
 </div>
 
-<div class="col-lg-12 margin-top-10" style="display: none" id="panelNuevaLeccion">
+<div class="col-xs-12 margin-top-10" style="display: none" id="panelNuevaLeccion">
   <div class="panel panel-default">
     <div class="panel-heading">
       <h3 class="panel-title">
@@ -125,29 +125,29 @@
     <div class="panel-body" style=" margin: 15px 25px">
       <form method="post" action="gleccion/_registrar_leccion" id="frm_registro">
         <input hidden="hidden" name="id" value="{$modulo.Moc_IdModuloCurso}" />
-        <div class="col-lg-12"><h5><strong>Titulo</strong></h5></div>
-        <div class="col-lg-12">
+        <div class="col-xs-12"><h5><strong>Titulo</strong></h5></div>
+        <div class="col-xs-12">
           <input class="form-control" name="titulo" id="inTitulo" />
         </div>
-        <div class="col-lg-12"><h5><strong>Tipo Lección</strong></h5></div>
+        <div class="col-xs-12"><h5><strong>Tipo Lección</strong></h5></div>
 
-        <div class="col-lg-4">
+        <div class="col-xs-4">
           <select class="form-control" name="tipo">
             {foreach from=$tipo item=t}
             <option value="{$t.Id}">{$t.Titulo}</option>
             {/foreach}
           </select>
         </div>
-        <div class="col-lg-8">
+        <div class="col-xs-8">
           Aca se describe la leccion
         </div>
-        <div class="col-lg-12"><h5><strong>Descripción</strong></h5></div>
-        <div class="col-lg-12">
+        <div class="col-xs-12"><h5><strong>Descripción</strong></h5></div>
+        <div class="col-xs-12">
           <textarea class="form-control" name="descripcion" id="inDescripcion" rows="10"></textarea>
         </div>
       </form>
-      <div class="col-lg-12"></br></div>
-      <div class="col-lg-12">
+      <div class="col-xs-12"></br></div>
+      <div class="col-xs-12">
         <button class="btn btn-success" id="btn_guardar_leccion">Registrar</button>
       </div>
     </div>
