@@ -10,6 +10,10 @@ class IdiomaFilesVars extends Eloquent
   protected $primaryKey = 'Ifv_IdFileVar';
   public $timestamps = false;
 
+  public static function get_var_by_name ($name) {
+    return IdiomaFilesVars::where('Ifv_VarName', $name)->first();
+  }
+
   public function scopeByFile($query, $file_id) {
   	return $query->where('Idif_IdIdiomaFile', $file_id);
   }

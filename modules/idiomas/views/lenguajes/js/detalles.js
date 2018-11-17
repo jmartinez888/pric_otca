@@ -138,5 +138,7 @@ new Vue({
     this.tbl_datatable.tooltip({
       selector: '[data-toggle="tooltip"]'
     });
+    $('#container_vue').removeClass('hidden')
 	}
+
 })

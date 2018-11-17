@@ -61,6 +61,27 @@ class View extends Smarty
             $this->_rutas['css'] = BASE_URL . 'views/' . $controlador . '/css/';
             $this->_rutas['img'] = BASE_URL . 'views/' . $controlador . '/img/';
         }
+
+
+
+        function get_lenguaje_in_template($params, $smarty)
+        {
+            $res = 'null';
+            if (isset($smarty->tpl_vars['lenguaje']->value[$params["v"]])) {
+               $res = $smarty->tpl_vars['lenguaje']->value[$params["v"]];
+            } else {
+                $res = '['.$params['v'].']';
+            }
+
+            // if(empty($params["v"])) {
+            //     $v = "%b %e, %Y";
+            // } else {
+            //     $v = $params["v"];
+            // }
+            return $res;
+        }
+
+        $this->registerPlugin("function","lenguaje", "get_lenguaje_in_template");
     }
     public function setShowError ($show ) {
         $this->_show_error = $show;
@@ -332,7 +353,7 @@ class View extends Smarty
         }
     }
 
-    public function getLenguaje($archivo, $lang = false)
+    public function getLenguaje($archivo, $lang = false, $res_class = false)
     {
 
         // if (!is_array($archivo))
@@ -362,14 +383,17 @@ class View extends Smarty
             // }
             Session::set("fileLenguaje", $lenguaje);
             $this->assign('lenguaje', $lenguaje);
-            return $lenguaje;
+            if ($res_class) {
+                return new LenguajeManager($lenguaje);
+            } else
+                return $lenguaje;
         } catch (Exception $ex)
         {
             throw new Exception('Error Asignar File Lenguaje ' . $ex);
         }
     }
 
-    public function LoadLenguaje($archivo = '', $lang = false) {
+    public function LoadLenguaje($archivo = '', $lang = false, $res_class = false) {
         if ($lang)
         {
             $this->_lenguaje = (string) $lang;
@@ -423,7 +447,10 @@ class View extends Smarty
 
             $lenguaje = array();
         }
-        return $lenguaje;
+        if ($res_class) {
+            return new LenguajeManager($lenguaje);
+        } else
+            return $lenguaje;
 
     }
 

@@ -9,7 +9,12 @@ class IdiomaFiles extends Eloquent
   protected $table = 'idiomas_files';
   protected $primaryKey = 'Idif_IdIdiomaFile';
   public $timestamps = false;
-
+  public static function existe_file ($name) {
+    return IdiomaFiles::where('Idif_FileName', $name)->get()->count() == 0 ? false : true;
+  }
+  public static function get_file_by_name ($name) {
+    return IdiomaFiles::where('Idif_FileName', $name)->first();
+  }
   public  function generate_file ($file_id) {
     $idiomas = Idioma::all();
     $res = [];

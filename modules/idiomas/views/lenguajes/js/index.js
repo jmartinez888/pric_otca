@@ -19,6 +19,9 @@ new Vue({
 			this.file_id = 0
 			this.edit = false
 		},
+		onSubmit_filtrarDatatable: function () {
+			this.dt_tbl_datatable.draw();
+		},
 		onClick_generateFiles: function () {
 
 			loading.show();
@@ -133,5 +136,6 @@ new Vue({
     this.tbl_datatable.tooltip({
       selector: '[data-toggle="tooltip"]'
     });
+    $('#container_vue').removeClass('hidden')
 	}
 })

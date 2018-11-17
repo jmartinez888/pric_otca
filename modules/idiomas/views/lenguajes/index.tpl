@@ -1,10 +1,13 @@
 {extends 'template.tpl'}
 
 {block 'contenido'}
-<div id="container_vue">
+<div id="container_vue" class="hidden">
+    <div class="row" style="padding-left: 1.3em; padding-bottom: 20px;">
+        <h4 class="titulo-view">{lenguaje v='idiomas_lenguajes_titulo'}</h4>
+    </div>
      <div class="panel panel-default">
                 <div class="panel-heading jsoftCollap">
-                    <h3 aria-expanded="true" data-toggle="collapse" href="#collapse_registro" class="panel-title collapsed"><i class="glyphicon glyphicon-edit"></i>&nbsp;&nbsp;<strong>{$lenguaje['str_titulo']}</strong></h3>
+                    <h3 aria-expanded="true" data-toggle="collapse" href="#collapse_registro" class="panel-title collapsed"><i class="glyphicon glyphicon-edit"></i>&nbsp;&nbsp;<strong v-if="edit == false">{lenguaje v='str_nuevo'}</strong><strong v-else>{lenguaje v='str_editar'}</strong></h3>
                 </div>
 
                 <div style="height: 0px;" aria-expanded="false" id="collapse_registro" class="panel-collapse collapse">
@@ -36,7 +39,7 @@
             </div>
     <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title"><i class="glyphicon glyphicon-list-alt"></i>&nbsp;&nbsp;<strong>{$lenguaje['str_titulo']}</strong>
+                    <h3 class="panel-title"><i class="glyphicon glyphicon-list-alt"></i>&nbsp;&nbsp;<strong>{lenguaje v='idiomas_lenguajes_lista_ficheros'}</strong>
                     </h3>
                 </div>
                 <div class="panel-body" style=" margin: 15px">
@@ -63,7 +66,7 @@
                                         </form>
                                 </div>
                                 <div class="col-sm-6">
-                                    <button @click.prevent="onClick_generateFiles" class="btn btn-success pull-right" style=" float: left" type="button" id="">{$lenguaje['str_titulo']}</button>
+                                    <button @click.prevent="onClick_generateFiles" class="btn btn-success pull-right" style=" float: left" type="button" id="">{lenguaje v='idiomas_lenguajes_generar_fichero_global'}</button>
                                 </div>
                             </div>
                         </div>
