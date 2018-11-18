@@ -40,10 +40,11 @@ class gtrabajoController extends elearningController {
 		$tipo = $this->getTexto("tipo");
 	    $titulo = $this->getTexto("titulo");
 	    $descripcion = $this->getTexto("descripcion");
+		$porcentaje = $this->getInt("porcentaje");
 	    $desde = $this->getPostParam("desde");
 	    $hasta = $this->getPostParam("hasta");
+	    
 	    $obj = $this->trabajo->insertTrabajo($id, $tipo, $titulo, $descripcion, $desde, $hasta);
-
 	    $this->service->Populate($obj);
 	    $this->service->Success("Se registró el trabajo");
 	    $this->service->Send();

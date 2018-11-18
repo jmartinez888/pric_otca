@@ -12,10 +12,17 @@ class Idioma extends Eloquent
   public $timestamps = false;
 
 
+
   public static function activos () {
   	return self::where('Idi_Estado', 1)->get();
   }
-  // public function scopeActivos () {
 
-  // }
+
+  public static function getAllLenguajes () {
+  	$files = IdiomaFiles::all();
+  	return $files;
+  	// $build = self::where('Idi_Estado', 1);
+
+
+  }
 }

@@ -1,4 +1,4 @@
-autosize(document.getElementById('descripcion'));
+
 new Vue({
 	el: '#container_vue',
 	data: function () {
@@ -8,8 +8,9 @@ new Vue({
 			descripcion: '',
 			buscar: '',
 			tbl_datatable: null,
-			dt_tbl_datatable: null
-
+			dt_tbl_datatable: null,
+			edit: false,
+			variable_id: 0
 		}
 	},
 	methods: {
@@ -18,35 +19,67 @@ new Vue({
 			for (var x in this.idiomas) {
 				this.idiomas[x] = ''
 			}
+			this.variable_id = 0
+			this.edit = false
+
+		},
+		onClick_generateFile: function (file_id) {
+			loading.show();
+			axios.get(_root_lang + 'idiomas/variables/generate_file/' + file_id).then( res => {
+				if (res.data.success) {
+					msg.success(res.data.msg)
+				} else {
+					msg.error(res.data.msg)
+				}
+				loading.hide()
+			}).catch( err => {
+				loading.hide()
+			})
 		},
 		onClick_btnAccion: function (e) {
 			console.log(e)
 			let dataset = e.currentTarget.dataset;
 			switch (dataset.accion) {
 				case 'editar':
-					this.loadDataElement()
+					this.loadDataElement(dataset.id)
 					break;
 				case 'eliminar':
 					break;
 			}
 		},
 		loadDataElement (variable_id) {
-			axios.get(_root_lang + 'idiomas/variables/' + variable_id).then( res => {
-				console.log(res)
-			})
+			this.variable_id = variable_id
+			if (this.variable_id != 0) {
+				axios.get(_root_lang + 'idiomas/variables/' + variable_id).then( res => {
+					if (res.data.success) {
+						this.nombre = res.data.data.variable
+						res.data.data.body.forEach(v => {
+							this.idiomas['idioma_' + v.idioma_id] = v.body
+							// console.log(v)
+						})
+						$('#collapse_registro').collapse('show')
+						this.edit = true
+						// for(var x in this.idiomas) {
+						// 	this.idiomas[x] =
+						// }
+					}
+				})
+			}
 		},
 		onSubmit_registrar: function () {
 			loading.show()
 			let params = new FormData();
 			params.append('nombre', this.nombre)
 			params.append('file_id', this.file_id)
+			params.append('variable_id', this.variable_id)
 			let i = 0;
 			for(var x in this.idiomas) {
 				params.append('idiomas[' + i + '][idioma]', x)
 				params.append('idiomas[' + i + '][body]', this.idiomas[x])
 				i++;
 			}
-			axios.post(_root_lang + 'idiomas/variables/store', params).then( res => {
+			let url = this.edit ? _root_lang + 'idiomas/variables/update/' + this.variable_id : _root_lang + 'idiomas/variables/store'
+			axios.post(url, params).then( res => {
 				loading.hide()
 				if (res.data.success) {
 					this.dt_tbl_datatable.draw(false)
@@ -105,5 +138,7 @@ new Vue({
     this.tbl_datatable.tooltip({
       selector: '[data-toggle="tooltip"]'
     });
+    $('#container_vue').removeClass('hidden')
 	}
+
 })

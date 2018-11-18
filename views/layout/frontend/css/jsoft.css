@@ -19,6 +19,32 @@ header{
 	max-height: 150px;
 	padding-bottom: 20px;
 }
+.texto-header h2{
+	margin-top:8px;
+}
+h3.sub-title {
+    display: table;
+    white-space: nowrap;
+    margin-top: -10px;
+    font-style: oblique;
+    color: #225248;
+    margin-bottom: 6px;
+    padding: 0px 9px 0px 9px;
+}
+h3.sub-title:before, h3.sub-title:after {
+    border-top: 2px solid green;
+    content: '';
+    display: table-cell;
+    position: relative;
+    top: 0.5em;
+    width: 45%;
+    }
+h3.sub-title:before {
+    right: 1.5%;
+    }
+h3.sub-title:after {
+    left: 1.5%;
+    }
 .back-color-black{
 	background-color: #373941;
 }
@@ -83,7 +109,7 @@ header{
 	padding-bottom: 10px !important;
 }
 .padding-l-10{
-	padding-left: 10px !important;
+	/* padding-left: 10px !important; */
 }
 .padding-r-10{
 	padding-right: 10px !important;
@@ -139,9 +165,7 @@ width: 130px;
 .width-220{
  width: 220px;
 }
-.width-250{
-width: 250px;
-}
+.width-250{width: 100%;}
 .width-280{
 width: 280px;
 }
@@ -151,9 +175,7 @@ width: 320px;
 .max-width-350{
 width: 350px;
 }
-.max-width-390{
-width: 390px;
-}
+.max-width-390{width: 390px;}
 .border-left-1{
 	border-left: 1px solid;
 }

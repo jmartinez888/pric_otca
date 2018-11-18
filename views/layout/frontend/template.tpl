@@ -156,14 +156,18 @@
         <div class="container-fluid back-color-white" >
             <header class="container">
                 <div class="row">
-                    <div class="col col-md-3 col-sm-2 col-xs-3 padding-10">
+                    <div class="col-xs-6 col-sm-3 col-md-3 col-lg-3 padding-10">
                         <img  class="width-250" src="{$_layoutParams.ruta_img}frontend/logo.png" alt="EL PRIC" title="PRIC">
                     </div>
-                    <div class="col col-md-6 col-sm-8 col-xs-6 hidden-xs  texto-header  border-left-1 txt-color-grey padding-l-10">
-                        <h2 class="txt-color-black display-block text-bold ">Plataforma Regional de Intercambio de Información y Conocimientos</h2>
-                        <img class="margin-t-10 max-width-390" src="{$_layoutParams.ruta_img}frontend/img-banderas.png">
+                    <div class="col-xs-8 col-sm-6 col-md-6 col-lg-6 hidden-xs  texto-header  txt-color-grey padding-l-10">
+                        <h2 class="txt-color-black text-justify display-block text-bold">Plataforma Regional de Intercambio de Información y Conocimientos</h2>
+                        <h3 class="sub-title txt-color-black  display-block text-bold pull-right" >Sobre Bósques y Biodiversidad</h3>
+                        <div class=" text-center">
+                            <img class="max-width-390" src="{$_layoutParams.ruta_img}frontend/img-banderas.png">
+                        </div>
+                        
                     </div>
-                    <div class="col col-md-3 col-sm-2 col-xs-3 padding-10 text-align-right">
+                    <div class="col-xs-6 col-sm-3 col-md-3 col-lg-3 padding-10 text-align-right">
                         <img class="width-250"  src="{$_layoutParams.ruta_img}frontend/logo_otca.png">
                     </div>
                     <div class="fondo-header-active"></div>

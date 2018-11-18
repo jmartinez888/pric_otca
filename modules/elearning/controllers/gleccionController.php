@@ -131,6 +131,11 @@ class gleccionController extends elearningController {
         $Cmodel = $this->loadModel("_gestionCurso");
         $Mmodel = $this->loadModel("_gestionModulo");
         $model = $this->loadModel("_gestionLeccion");
+        $examen = $this->loadModel("examen");
+
+        $Exa_Porcentaje = $examen->getExamenesPorcentaje($curso);
+        $Tra_Porcentaje = $examen->getTrabajosPorcentaje($curso);
+        $Porcentaje = 100 - $Exa_Porcentaje['Exa_PorcentajeTotal'] - $Tra_Porcentaje['Tra_PorcentajeTotal'];
 
         $curso = $Cmodel->getCursoXId($curso);
         $modulo = $Mmodel->getModuloId($modulo);
@@ -141,6 +146,7 @@ class gleccionController extends elearningController {
         $tipo_trabajo = $Tmodel->getConstanteTrabajo(); //RODRIGO 20180605
 
         $view = "";
+        $this->_view->assign('porcentaje', $Porcentaje);
         $this->_view->assign('menu', 'curso');
         $this->_view->assign("curso", $curso);
         $this->_view->assign("modulo", $modulo);
@@ -161,7 +167,6 @@ class gleccionController extends elearningController {
             $view = "ajax/_view_2";
             break;
           case 3:
-
             $ExaModel = $this->loadModel("examen");
             $examen = $ExaModel->getExamenxLeccion($leccion["Lec_IdLeccion"]);
 

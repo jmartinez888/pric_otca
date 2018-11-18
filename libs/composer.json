@@ -15,7 +15,10 @@
 				"../modules/usuarios/class/",
 				"../modules/difusion/class/"
 			]
-    }
+    },
+    "files": [
+        "./helpers.php"
+    ]
 	},
 	"require-dev": {
 		"symfony/var-dumper": "^4.1"

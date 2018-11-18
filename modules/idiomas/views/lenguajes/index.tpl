@@ -1,10 +1,13 @@
 {extends 'template.tpl'}
 
 {block 'contenido'}
-<div id="container_vue">
+<div id="container_vue" class="hidden">
+    <div class="row" style="padding-left: 1.3em; padding-bottom: 20px;">
+        <h4 class="titulo-view">{lenguaje v='idiomas_lenguajes_titulo'}</h4>
+    </div>
      <div class="panel panel-default">
                 <div class="panel-heading jsoftCollap">
-                    <h3 aria-expanded="true" data-toggle="collapse" href="#collapse_registro" class="panel-title collapsed"><i class="glyphicon glyphicon-edit"></i>&nbsp;&nbsp;<strong>{$lenguaje['str_titulo']}</strong></h3>
+                    <h3 aria-expanded="true" data-toggle="collapse" href="#collapse_registro" class="panel-title collapsed"><i class="glyphicon glyphicon-edit"></i>&nbsp;&nbsp;<strong v-if="edit == false">{lenguaje v='str_nuevo'}</strong><strong v-else>{lenguaje v='str_editar'}</strong></h3>
                 </div>
 
                 <div style="height: 0px;" aria-expanded="false" id="collapse_registro" class="panel-collapse collapse">
@@ -36,19 +39,19 @@
             </div>
     <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title"><i class="glyphicon glyphicon-list-alt"></i>&nbsp;&nbsp;<strong>{$lenguaje['str_titulo']}</strong>
+                    <h3 class="panel-title"><i class="glyphicon glyphicon-list-alt"></i>&nbsp;&nbsp;<strong>{lenguaje v='idiomas_lenguajes_lista_ficheros'}</strong>
                     </h3>
                 </div>
                 <div class="panel-body" style=" margin: 15px">
                     <div class="row" id="vue_container">
-                        <div class="col-sm-12" style="text-align:right">
+                        {* <div class="col-sm-12" style="text-align:right">
                             <div id="botones" class="btn-group pull-right">
                                 <button type="button" @click="onSubmit_export('excel')" id="export_data_excel" name="export_data_excel" class="btn btn-info">EXCEL</button>
                                 <button type="button" @click="onSubmit_export('csv')"  id="export_data_csv" name="export_data_csv" class="btn btn-info">CSV</button>
                                 <button type="button" @click="onSubmit_export('pdf')"  id="export_data_pdf" name="export_data_pdf" class="btn btn-info">PDF</button>
                             </div>
 
-                        </div>
+                        </div> *}
                         <div class="col-sm-12" style="margin-top: 8px">
                             <div class="row">
 
@@ -63,7 +66,7 @@
                                         </form>
                                 </div>
                                 <div class="col-sm-6">
-                                    <a href="{$_layoutParams.root}difusion/{$ruta}/create" class="btn btn-success pull-right" style=" float: left" type="button" id="">{$lenguaje['str_titulo']}</a>
+                                    <button @click.prevent="onClick_generateFiles" class="btn btn-success pull-right" style=" float: left" type="button" id="">{lenguaje v='idiomas_lenguajes_generar_fichero_global'}</button>
                                 </div>
                             </div>
                         </div>
@@ -89,9 +92,9 @@
 {/block}
 {block 'template'}
 <template id="botones_opcion">
-    <a target="_blank" data-toggle="tooltip" data-placement="bottom" class="btn btn-default  btn-sm glyphicon glyphicon-list-alt" title="" href="{$_layoutParams.root}idiomas/lenguajes/{literal}{{id}}{/literal}" data-original-title="{$lenguaje['str_ver_elemento']}"></a>
+    <a  data-toggle="tooltip" data-placement="bottom" class="btn btn-default  btn-sm glyphicon glyphicon-list-alt" title="" href="{$_layoutParams.root}idiomas/lenguajes/{literal}{{id}}{/literal}" data-original-title="{$lenguaje['str_ver_elemento']}"></a>
     {* <button data-toggle="tooltip" data-placement="bottom" data-accion="estado" class="btn btn-default btn-sm glyphicon glyphicon-refresh btn-acciones"  data-estado="{literal}{{estado}}{/literal}" data-id="{literal}{{id}}{/literal}"  data-nombre="{literal}{{nombre}}{/literal}"  title="{$lenguaje['str_cambiar_estado']}"> </button> *}
-    <button data-toggle="tooltip" data-placement="bottom" class="btn btn-default  btn-sm btn-acciones glyphicon glyphicon-edit" title="{$lenguaje['str_editar']}"></button>
+    <button data-toggle="tooltip" data-placement="bottom" data-id="{literal}{{id}}{/literal}" data-accion="editar" class="btn btn-default  btn-sm btn-acciones glyphicon glyphicon-edit" title="{$lenguaje['str_editar']}"></button>
     <button data-toggle="tooltip" data-id="{literal}{{id}}{/literal}"  data-accion="eliminar" class="btn btn-default btn-sm  glyphicon glyphicon-trash confirmar-eliminar-rol btn-acciones" data-nombre="{literal}{{nombre}}{/literal}" title="{$lenguaje['str_eliminar']}" data-placement="bottom"> </button>
 </template>
 {/block}

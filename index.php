@@ -3,6 +3,7 @@
 date_default_timezone_set('America/Sao_Paulo');//Definir Zona Horaria, Brasil.
 
 define('DS', DIRECTORY_SEPARATOR);
+define('LANG_PATH', 'lang');
 define('ROOT', realpath(dirname(__FILE__)) . DS);
 define('APP_PATH', ROOT . 'application' . DS);
 
