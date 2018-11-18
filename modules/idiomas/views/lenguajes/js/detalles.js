@@ -23,6 +23,9 @@ new Vue({
 			this.edit = false
 
 		},
+		onSubmit_filtrarDatatable: function () {
+			this.dt_tbl_datatable.draw()
+		},
 		onClick_generateFile: function (file_id) {
 			loading.show();
 			axios.get(_root_lang + 'idiomas/variables/generate_file/' + file_id).then( res => {
