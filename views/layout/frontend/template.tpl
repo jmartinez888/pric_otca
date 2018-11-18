@@ -130,7 +130,7 @@
                                                 <a class="btn btn-default btn-flat" href="{$_layoutParams.root}acl"  data-toggle="tooltip" data-placement="bottom" title="Intranet"><i style="font-size:15px" class="glyphicon glyphicon-cog"></i> {$lenguaje.text_intranet}</a>
                                             </div>
                                             <div class="pull-right">
-                                                <a class="btn btn-default btn-flat" href="{$_layoutParams.root}usuarios/login/cerrar"  data-toggle="tooltip" data-placement="bottom" title="Cerrar Sesi&oacute;n"><i style="font-size:15px" class="glyphicon glyphicon-log-out"></i> {$lenguaje.text_cerrarsession}</a>
+                                                <a class="btn btn-default btn-flat" href="{$_layoutParams.root}usuarios/login/cerrar"  data-toggle="tooltip" data-placement="bottom" title="Cerrar Sesi&oacute;n"><i style="font-size:15px" class="glyphicon glyphicon-log-out"></i> {$lenguaje.frontend_text_cerrarsession}</a>
                                             </div>
                                         </li>
                                     </ul>
@@ -140,7 +140,7 @@
                                     <a class="nav-link txt-color-white f-z-14" href="{$_layoutParams.root}acl"  data-toggle="tooltip" data-placement="bottom" title="Intranet"><i style="font-size:15px" class="glyphicon glyphicon-cog"></i> {$lenguaje.text_intranet}</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link txt-color-white f-z-14" href="{$_layoutParams.root}usuarios/login/cerrar"  data-toggle="tooltip" data-placement="bottom" title="Cerrar Sesi&oacute;n"><i style="font-size:15px" class="glyphicon glyphicon-log-out"></i> {$lenguaje.text_cerrarsession}</a>
+                                    <a class="nav-link txt-color-white f-z-14" href="{$_layoutParams.root}usuarios/login/cerrar"  data-toggle="tooltip" data-placement="bottom" title="Cerrar Sesi&oacute;n"><i style="font-size:15px" class="glyphicon glyphicon-log-out"></i> {$lenguaje.frontend_text_cerrarsession}</a>
                                 </li> -->
                                 {else}
                                 <li class="nav-item">
