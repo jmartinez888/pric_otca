@@ -73,16 +73,16 @@
                                     <a class="nav-link txt-color-white f-z-14" href="{$_layoutParams.root_clear}index/_loadLang/es">Español</a>
                                 </li>
                                 <li class="nav-item" style="background: #565656;">
-                                    <a class="nav-link txt-color-white f-z-14" href="{$_layoutParams.root_clear}index/_loadLang/pt"> | Portugués</a>
+                                    <a class="nav-link txt-color-white f-z-14" href="{$_layoutParams.root_clear}index/_loadLang/pt"> | Portugues</a>
                                 </li>
                                 <li class="nav-item" style="background: #565656;">
-                                    <a class="nav-link txt-color-white f-z-14" href="{$_layoutParams.root_clear}index/_loadLang/en"> | Inglés</a>
+                                    <a class="nav-link txt-color-white f-z-14" href="{$_layoutParams.root_clear}index/_loadLang/en"> | English</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link txt-color-white f-z-14" href="{$_layoutParams.root_clear}acercade/contacto"> | Contácto</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link txt-color-white f-z-14" href="{$_layoutParams.root_clear}acercade"> | Acerca de</a>
+                                    <a class="nav-link txt-color-white f-z-14" href="{$_layoutParams.root_clear}acercade"> | {$lenguaje.frontend_text_acercade}</a>
                                 </li>
                                 {if Session::get('autenticado')}
                                 <!-- Perfil User -->
@@ -144,7 +144,7 @@
                                 </li> -->
                                 {else}
                                 <li class="nav-item">
-                                    <a class="nav-link txt-color-white f-z-14" href="#"  data-placement="bottom" class=" form-login" title="Intranet" data-toggle="modal" data-target="#modal-login"> | <i style="font-size:15px" class="glyphicon glyphicon-log-in"></i> Iniciar Sesión</a>
+                                    <a class="nav-link txt-color-white f-z-14" href="#"  data-placement="bottom" class=" form-login" title="Intranet" data-toggle="modal" data-target="#modal-login"> | <i style="font-size:15px" class="glyphicon glyphicon-log-in"></i> {$lenguaje.text_iniciarsession}</a>
                                 </li>
                                 {/if}
                             </ul>
@@ -160,8 +160,8 @@
                         <img  class="width-250" src="{$_layoutParams.ruta_img}frontend/logo.png" alt="EL PRIC" title="PRIC">
                     </div>
                     <div class="col-xs-8 col-sm-6 col-md-6 col-lg-6 hidden-xs  texto-header  txt-color-grey padding-l-10">
-                        <h2 class="txt-color-black text-justify display-block text-bold">Plataforma Regional de Intercambio de Información y Conocimientos</h2>
-                        <h3 class="sub-title txt-color-black  display-block text-bold pull-right" >Sobre Bósques y Biodiversidad</h3>
+                        <h2 class="txt-color-black text-justify display-block text-bold">{$lenguaje.frontend_head_titulo}</h2>
+                        <h3 class="sub-title txt-color-black  display-block text-bold pull-right" >{$lenguaje.frontend_head_subtitulo}</h3>
                         <div class=" text-center">
                             <img class="max-width-390" src="{$_layoutParams.ruta_img}frontend/img-banderas.png">
                         </div>
@@ -302,13 +302,14 @@
                             <div class="col-md-9">
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <h5 class="text-bold">FINANCIADO POR:</h5>
+                                        <h5 class="text-bold">{$lenguaje.frontend_footer_financiado}
+                                        </h5>
                                         <div class="display-block margin-t-10">
                                             <a href="#" class="display-inline">
                                                 <img class="img-responsive max-height-60" src="{$_layoutParams.ruta_img}frontend/bg_int_itto.png">
                                             </a>
                                         </div>
-                                        <h5 class="text-bold">CON EL APOYO DE:</h5>
+                                        <h5 class="text-bold">{$lenguaje.frontend_footer_apoyode}</h5>
                                         <div class="display-block margin-t-10">
                                             <a href="#" class="display-inline">
                                                 <img class="img-responsive max-height-60" src="{$_layoutParams.ruta_img}frontend/bg_int_gef.png">
@@ -316,7 +317,7 @@
                                         </div>
                                     </div>
                                     <div class="col-md-6 text-align-r">
-                                        <h5 class="text-bold">CONTACTO</h5>
+                                        <h5 class="text-bold">{$lenguaje.frontend_footer_contacto}</h5>
                                         <div class="text-footer">
                                             SHIS - Ql 05. Conjunto 16, casa 21  <br>
                                             Lago Sul - Brasília - DF - Brasil  <br>
@@ -325,7 +326,7 @@
                                             contato@otca.org.br <br>
                                             © Copyright 2018 - OTCA <br>
                                         </div>
-                                        <h5 class="text-bold">SÍGUENOS</h5>
+                                        <h5 class="text-bold">{$lenguaje.frontend_footer_siguenos}</h5>
                                         <div class="text-footer">
                                             <a class="display-block" href="http://www.otca-oficial.info/ " target="_blank">http://www.otca-oficial.info/ </a>
                                             <a class="ic_sociales" href="https://www.facebook.com/otcaoficial" target="_blank"><img class="img-responsive" src="{$_layoutParams.ruta_img}frontend/ic_fb.png"></a>
@@ -336,7 +337,7 @@
                                 </div>
                             </div>
                             <div class="footer-enlaces col-md-3">
-                                <h5 class="text-bold text-color-white">LINKS DE INTERES</h5>
+                                <h5 class="text-bold text-color-white">{$lenguaje.frontend_footer_links}</h5>
                                 <div class="list-group">
                                     {foreach $links_interes as $link}
                                     <a href="{$link->ODli_Url}" class="list-group-item" target="_blank">
@@ -375,10 +376,10 @@
                                     <div class="panel-heading">
                                         <div class="row">
                                             <div class="col-xs-6">
-                                                <a href="#" class="active" id="login-form-link">Iniciar Sesión</a>
+                                                <a href="#" class="active" id="login-form-link">{$lenguaje['text_iniciarsession']}</a>
                                             </div>
                                             <div class="col-xs-6">
-                                                <a href="#" id="register-form-link">Regístrate ahora</a>
+                                                <a href="#" id="register-form-link">{$lenguaje['frontend_modal_registrate']}</a>
                                             </div>
                                         </div>
                                         <hr>
@@ -390,11 +391,11 @@
                                                     <input type="hidden" name="url" id="url" value="{$url}">
                                                     <input type="hidden" name="hd_login_modulo" id="hd_login_modulo" value="">
                                                     <div class="form-group">
-                                                        <label for="disabledTextInput">Usuario</label>
+                                                        <label for="disabledTextInput">{$lenguaje['frontend_modal_usuario']}</label>
                                                         <input type="text" name="usuarioLogin" id="usuarioLogin" tabindex="1" class="form-control" placeholder="Usuario" value="" required="">
                                                     </div>
                                                     <div class="form-group">
-                                                        <label for="disabledTextInput">Contraseña</label>
+                                                        <label for="disabledTextInput">{$lenguaje['frontend_modal_contrasenia']}</label>
                                                         <div class="input-group">
                                                             <input type="password" name="passwordLogin" id="passwordLogin" tabindex="2" class="form-control" placeholder="Contraseña" required="" onkeypress="tecla_enter_login(event)">
                                                             <span  class="input-group-addon btn btn-default btn-xs" id="show-pass"><i class="glyphicon glyphicon-eye-open" id="btn_ver_clave"></i></span>
@@ -407,7 +408,7 @@
                                                     <div class="form-group">
                                                         <div class="row">
                                                             <div class="col-sm-6 col-sm-offset-3">
-                                                                <button type="button" name="logear" id="logear" tabindex="4" class="form-control btn btn-login" >Iniciar Sesión</button>
+                                                                <button type="button" name="logear" id="logear" tabindex="4" class="form-control btn btn-login" >{$lenguaje['text_iniciarsession']}</button>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -424,7 +425,7 @@
                                                         <div class="row">
                                                             <div class="col-lg-12">
                                                                 <div class="text-center">
-                                                                    <a href="#" tabindex="5" class="forgot-password" id="showRecPass">¿Has olvidado tu contraseña?</a>
+                                                                    <a href="#" tabindex="5" class="forgot-password" id="showRecPass">{$lenguaje['frontend_modal_olvidecontrasenia']}</a>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -432,7 +433,7 @@
                                                 </form>
                                                 <div class="form-group hidden" id="divEnvioCorreo">
                                                     <div class="form-group">
-                                                        <label for="disabledTextInput">Ingrese su correo electrónico para recuperar contraseña.</label>
+                                                        <label for="disabledTextInput">{$lenguaje['frontend_modal_correorecuperacion']}</label>
                                                         <div class="input-group">
                                                             <input type="text" name="emailRecPass" id="emailRecPass" tabindex="7" class="form-control" placeholder="Correo Electronico" required="" >
                                                             <span data-toggle="tooltip" data-placement="right" title="Enviar Correo"  class="input-group-addon btn btn-default btn-xs" id="btnRecPass"><i class="glyphicon glyphicon-envelope"></i></span>
@@ -443,33 +444,33 @@
                                                 </div>
                                                 <form id="register-form" action="" style="display: none;">
                                                     <div class="form-group">
-                                                        <label for="">Nombre(s)</label>
-                                                        <input type="text" name="nombreRegistrar" id="nombreRegistrar" pattern="([a-zA-Z][\sa-zA-Z]+)" tabindex="1" class="form-control" placeholder="Nombre(s)" value="">
+                                                        <label for="">{$lenguaje['frontend_form_registronombre']}</label>
+                                                        <input type="text" name="nombreRegistrar" id="nombreRegistrar" pattern="([a-zA-Z][\sa-zA-Z]+)" tabindex="1" class="form-control" placeholder="{$lenguaje['frontend_form_registronombre']}" value="">
                                                     </div>
                                                     <div class="form-group">
-                                                        <label for="">Apellidos</label>
-                                                        <input type="text" name="apellidosRegistrar" id="apellidosRegistrar" pattern="([a-zA-Z][\sa-zA-Z]+)" tabindex="2" class="form-control" placeholder="Apellidos" value="">
+                                                        <label for="">{$lenguaje['frontend_form_registroapellido']}</label>
+                                                        <input type="text" name="apellidosRegistrar" id="apellidosRegistrar" pattern="([a-zA-Z][\sa-zA-Z]+)" tabindex="2" class="form-control" placeholder="{$lenguaje['frontend_form_registroapellido']}" value="">
                                                     </div>
                                                     <div class="form-group">
-                                                        <label for="">Correo electrónico</label>
-                                                        <input type="email" name="emailRegistrar" id="emailRegistrar" tabindex="3" class="form-control" placeholder="Correo electrónico" value="">
+                                                        <label for="">{$lenguaje['frontend_form_registrocorreo']}</label>
+                                                        <input type="email" name="emailRegistrar" id="emailRegistrar" tabindex="3" class="form-control" placeholder="{$lenguaje['frontend_form_registrocorreo']}" value="">
                                                     </div>
                                                     <div class="form-group">
-                                                        <label for="">Usuario</label>
-                                                        <input type="text" name="usuarioRegistrar" id="usuarioRegistrar" pattern="([_A-z0-9])+" tabindex="4" class="form-control" placeholder="Usuario" value="">
+                                                        <label for="">{$lenguaje['frontend_modal_usuario']}</label>
+                                                        <input type="text" name="usuarioRegistrar" id="usuarioRegistrar" pattern="([_A-z0-9])+" tabindex="4" class="form-control" placeholder="{$lenguaje['frontend_modal_usuario']}" value="">
                                                     </div>
                                                     <div class="form-group">
-                                                        <label for="">Contraseña</label>
-                                                        <input type="password" name="passwordRegistrar" id="passwordRegistrar" data-minlength="6" tabindex="5" class="form-control" placeholder="Contraseña">
+                                                        <label for="">{$lenguaje['frontend_modal_contrasenia']}</label>
+                                                        <input type="password" name="passwordRegistrar" id="passwordRegistrar" data-minlength="6" tabindex="5" class="form-control" placeholder="{$lenguaje['frontend_modal_contrasenia']}">
                                                     </div>
                                                     <div class="form-group">
-                                                        <label for="">Confirmar contraseña</label>
-                                                        <input type="password" name="confirm-password" id="confirm-password" data-minlength="7" data-match="#passwordRegistrar" data-match-error="*Contraseña no coinciden" tabindex="6" class="form-control" placeholder="Confirmar contraseña">
+                                                        <label for="">{$lenguaje['frontend_form_registro_confcontrasenia']}</label>
+                                                        <input type="password" name="confirm-password" id="confirm-password" data-minlength="7" data-match="#passwordRegistrar" data-match-error="*Contraseña no coinciden" tabindex="6" class="form-control" placeholder="{$lenguaje['frontend_form_registro_confcontrasenia']}">
                                                     </div>
                                                     <div class="form-group">
                                                         <div class="row">
                                                             <div class="col-sm-6 col-sm-offset-3">
-                                                                <button type="button" name="registrar-login" id="registrar-login" tabindex="8" class="form-control btn btn-register" value="">Crear cuenta</button>
+                                                                <button type="button" name="registrar-login" id="registrar-login" tabindex="8" class="form-control btn btn-register" value="">{$lenguaje['frontend_form_registrocrear']}</button>
                                                             </div>
                                                         </div>
                                                     </div>

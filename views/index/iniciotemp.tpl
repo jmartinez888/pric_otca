@@ -40,17 +40,16 @@
         <div class="col col-md-8 col-sm-12 col-xs-12 ">
             <div class="cont-recursos row">
                 <div class="tit-float-left-top">
-                    Servicios PRIC
-
+                    {$lenguaje.inicio_serviciospric}
                 </div>
 
                 <div class="col-sm-6 col-md-4">
                     <div class="thumbnail">
                         <img  src="{$_layoutParams.ruta_img}m_cursos.png">
                         <div class="caption">
-                        <h3>Cursos</h3>
-                        <p style="text-align: justify;">Actualmente la plataforma PRIC ofrece una gran variedad de cursos en modalidades mooc y e-learning, tanto de larga duración, Másters y Expertos, como de Formación Continua y Especializada ...</p>
-                        <p><a href="{$_layoutParams.root}elearning" class="btn-jsoft btn btn-primary" role="button">ver más</a></p>
+                        <h3>{$lenguaje.inicio_cursos}</h3>
+                        <p style="text-align: justify;">{$lenguaje.inicio_cursos_detalle}</p>
+                        <p><a href="{$_layoutParams.root}elearning" class="btn-jsoft btn btn-primary" role="button">{$lenguaje.inicio_vermas}</a></p>
                         </div>
                     </div>
                 </div>
@@ -58,9 +57,9 @@
                     <div class="thumbnail">
                         <img  src="{$_layoutParams.ruta_img}m_discusiones.png">
                         <div class="caption">
-                        <h3>Discusiones</h3>
-                        <p style="text-align: justify;">Discusión en línea asincrónico donde las personas publican mensajes alrededor de un tema, creando de esta forma un hilo de conversación jerárquico; los foros o discusiones, a su vez, ...</p>
-                        <p><a href="{$_layoutParams.root}foro" class="btn-jsoft btn btn-primary" role="button">ver más</a></p>
+                        <h3>{$lenguaje.inicio_foro}</h3>
+                        <p style="text-align: justify;">{$lenguaje.inicio_foro_detalle}</p>
+                        <p><a href="{$_layoutParams.root}foro" class="btn-jsoft btn btn-primary" role="button">{$lenguaje.inicio_vermas}</a></p>
                         </div>
                     </div>
                 </div>
@@ -68,9 +67,9 @@
                     <div class="thumbnail">
                         <img  src="{$_layoutParams.ruta_img}m_documentos.png">
                         <div class="caption">
-                        <h3>Documentos</h3>
-                        <p style="text-align: justify;">En la actualidad lo habitual es almacenar toda la información de manera digital con el software pertinente y este es necesario que, entre otras cosas, ofrezca personalización e interoperatividad.</p>
-                        <p><a href="{$_layoutParams.root}dublincore/documentos" class="btn-jsoft btn btn-primary" role="button">ver más</a></p>
+                        <h3>{$lenguaje.inicio_documentos}</h3>
+                        <p style="text-align: justify;">{$lenguaje.inicio_documentos_detalle}</p>
+                        <p><a href="{$_layoutParams.root}dublincore/documentos" class="btn-jsoft btn btn-primary" role="button">{$lenguaje.inicio_vermas}</a></p>
                         </div>
                     </div>
                 </div>
@@ -89,7 +88,7 @@
         <div class="col col-md-12 col-sm-12 col-xs-12">
             <div class=" margin-0 " style="background: url({$_layoutParams.ruta_img}frontend/bg-contador.png); heigh:60vh">
                 <div class="tit-float-left-top" style="margin-top: 17px;">
-                Datos y cifras
+                {$lenguaje.inicio_datoscifras}
                 </div>
 
                     <div id="map" style="height: 60vh;width:100%"></div>

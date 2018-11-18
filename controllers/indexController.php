@@ -23,7 +23,7 @@ class indexController extends Controller
     {
         if ($idPagina == 5)
         {
-            // $this->_view->getLenguaje("template_frontend");
+             $this->_view->getLenguaje("index_inicio");
             // Cookie::set('idioma', 1);
             // dd(ODifusion::eventos_interes()->get());
             // $data['interes_evento'] = ODifusion::eventos_interes()->limit(5)->get();
