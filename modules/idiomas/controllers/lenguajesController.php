@@ -232,15 +232,29 @@ class lenguajesController extends idiomasController {
 
 	}
 	public function datatable () {
-		$query = IdiomaFiles::select();
-		$records_total = $query->count();
+		DB::enableQueryLog();
+		$query = IdiomaFiles::select()
+		->join('idiomas_files_vars', 'idiomas_files.Idif_IdIdiomaFile', 'idiomas_files_vars.Idif_IdIdiomaFile')->groupBy('idiomas_files.Idif_IdIdiomaFile');
+		$records_total = $query->get()->count();
 		$records_total_filter = $records_total;
 		if ($this->filledGet('buscar')) {
 			$query->where(function($q) {
-				$q->orWhere('Idif_FileName', 'like', '%'.$this->getTexto('buscar').'%');
+				$buscar = trim($this->getTexto('buscar'));
+				$words = explode(' ', $buscar);
+				$words = array_filter($words, function ($carry) {
+					return $carry;
+				});
+				foreach ($words as $key => $value) {
+					$q->orWhere('Idif_FileName', 'like', '%'.$value.'%');
+					$q->orWhere('Ifv_VarName', 'like', '%'.$value.'%');
+				}
+
+
+
+
 					// ->orWhere('ODif_Descripcion', 'like', '%'.$_GET['buscar'].'%');
 			});
-			$records_total_filter = $query->count();
+			$records_total_filter = $query->get()->count();
 		}
 		if ($this->filledGet('export')) {
 			$this->_export($query, $this->getTexto('export'));
@@ -252,7 +266,8 @@ class lenguajesController extends idiomasController {
 				'draw' => $this->getInt('draw'),
 				'recordsTotal' => $records_total,
         'recordsFiltered' => $records_total_filter,
-        'data' => $rows
+        'data' => $rows,
+        'query' => DB::getQueryLog()
 			];
 			$this->_view->responseJson($data);
 		}
