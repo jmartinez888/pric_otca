@@ -1497,5 +1497,8 @@ class examenController extends elearningController {
        
         $this->_view->renderizar('correccionexamen', 'elearning');
     }
-   
+    // other
+    public function detalle($Nombre){
+        $this->_view->renderizar("detalle");
+    }  
 }

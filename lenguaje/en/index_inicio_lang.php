@@ -1,7 +1,4 @@
 <?php
-include "template_menu_izquierdo_lang.php";
-include "template_backend_lang.php";
-include "template_frontend_lang.php";
 
 $lenguaje["inicio_buscar_titulo"]="SEARCH LISTINGS";
 $lenguaje["inicio_buscar_tabla_titulo"]="Title";

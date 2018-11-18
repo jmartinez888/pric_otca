@@ -246,13 +246,13 @@
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="margin-top: 0px;">&times;</button>
       </div>
       <div class="panel-body">
-        <form id="frm_registro_referencia" method="post" action="gleccion/_registrar_referencia">
-          <div class="col-lg-12 margin-top-10"><strong>Titulo</strong></div>
+        <form class="form-horizontal" id="frm_registro_referencia" method="post" action="gleccion/_registrar_referencia">
+          <div class="col-lg-12 margin-t-10"><strong>Titulo</strong></div>
           <input hidden="hidden" value="{$leccion.Lec_IdLeccion}" name="leccion"/>
           <div class="col-lg-12"><input class="form-control" name="titulo" id="inTituloRef" /></div>
-          <div class="col-lg-12 margin-top-10"><strong>Referencia</strong></div>
+          <div class="col-lg-12 margin-t-10"><strong>Referencia</strong></div>
           <div class="col-lg-12"><input class="form-control" name="descripcionRef" id="inDescripcionRef" /></div>
-          <div class="col-lg-12 margin-top-10"><button class="btn btn-success" id="btn_registrar_referencia">Registrar</button></div>
+          <div class="col-lg-12 margin-t-10"><button class="btn btn-success" id="btn_registrar_referencia">Registrar</button></div>
         <form>
       </div>
     </div>

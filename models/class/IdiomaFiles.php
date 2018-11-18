@@ -40,7 +40,7 @@ class IdiomaFiles extends Eloquent
           $handle = fopen($path.$key.DS.$key_file.'.php', 'w');
           fwrite($handle, '<?php'.PHP_EOL);
           foreach ($value_var as $key_var => $value_body) {
-            $data = '$lenguaje["'.$key_var.'"] = "'.$value_body.'";'.PHP_EOL;
+            $data = '$lenguaje["'.$key_var.'"] = \''.$value_body.'\';'.PHP_EOL;
             fwrite($handle, $data);
           }
           fclose($handle);
@@ -76,7 +76,7 @@ class IdiomaFiles extends Eloquent
           $handle = fopen($path.$key.DS.$key_file.'.php', 'w');
           fwrite($handle, '<?php'.PHP_EOL);
           foreach ($value_var as $key_var => $value_body) {
-            $data = '$lenguaje["'.$key_var.'"] = "'.$value_body.'";'.PHP_EOL;
+            $data = '$lenguaje["'.$key_var.'"] = \''.$value_body.'\';'.PHP_EOL;
             fwrite($handle, $data);
           }
           fclose($handle);

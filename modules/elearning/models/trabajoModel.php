@@ -3,10 +3,10 @@
 class trabajoModel extends Model {
 
 
-	public function insertTrabajo($leccion, $tipo, $titulo, $descripcion, $desde, $hasta){ //'14/02/2017 23:38:12'
+	public function insertTrabajo($leccion, $tipo, $titulo, $descripcion,$desde, $hasta){ //'14/02/2017 23:38:12'
 		$sql = "INSERT INTO trabajo_leccion(Lec_IdLeccion, Tra_Tipo, Tra_Titulo,
-						Tra_Descripcion, Tra_FechaDesde, Tra_FechaHasta, Tra_Estado, Row_Estado)
-		        VALUES({$leccion}, {$tipo}, '{$titulo}', '{$descripcion}',
+						Tra_Descripcion,  Tra_FechaDesde, Tra_FechaHasta, Tra_Estado, Row_Estado)
+		        VALUES({$leccion}, {$tipo}, '{$titulo}', '{$descripcion}',  
 		        	STR_TO_DATE('{$desde}', '%d/%m/%Y %T'), STR_TO_DATE('{$hasta}', '%d/%m/%Y %T'), 1, 1)";
 		$this->execQuery($sql);
 

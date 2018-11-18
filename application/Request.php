@@ -169,9 +169,6 @@ class Request
                 $this->_argumentos = $url;
 
             }
-
-
-
         }
 
         if(!$this->_controlador)
