@@ -383,6 +383,7 @@ class View extends Smarty
             // }
             Session::set("fileLenguaje", $lenguaje);
             $this->assign('lenguaje', $lenguaje);
+            $this->assign('lang', new LenguajeManager($lenguaje));
             if ($res_class) {
                 return new LenguajeManager($lenguaje);
             } else
