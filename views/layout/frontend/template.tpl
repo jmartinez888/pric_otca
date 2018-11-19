@@ -392,12 +392,12 @@
                                                     <input type="hidden" name="hd_login_modulo" id="hd_login_modulo" value="">
                                                     <div class="form-group">
                                                         <label for="disabledTextInput">{$lenguaje['frontend_modal_usuario']}</label>
-                                                        <input type="text" name="usuarioLogin" id="usuarioLogin" tabindex="1" class="form-control" placeholder="Usuario" value="" required="">
+                                                        <input type="text" name="usuarioLogin" id="usuarioLogin" tabindex="1" class="form-control" placeholder="{$lenguaje['frontend_modal_usuario']}" value="" required="">
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="disabledTextInput">{$lenguaje['frontend_modal_contrasenia']}</label>
                                                         <div class="input-group">
-                                                            <input type="password" name="passwordLogin" id="passwordLogin" tabindex="2" class="form-control" placeholder="Contraseña" required="" onkeypress="tecla_enter_login(event)">
+                                                            <input type="password" name="passwordLogin" id="passwordLogin" tabindex="2" class="form-control" placeholder="{$lenguaje['frontend_modal_contrasenia']}" required="" onkeypress="tecla_enter_login(event)">
                                                             <span  class="input-group-addon btn btn-default btn-xs" id="show-pass"><i class="glyphicon glyphicon-eye-open" id="btn_ver_clave"></i></span>
                                                         </div>
                                                     </div>
