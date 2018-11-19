@@ -99,7 +99,6 @@
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="margin-top: 0px;">&times;</button>
       </div>
       <div class="panel-body">
-        <form ></form>
         <form method="POST" action="gleccion/_registrar_contenido" id="frm_registro_contenido">
           <div class="col-lg-12 margin-top-10"><strong>Titulo</strong></div>
           <input hidden="hidden" value="{$leccion.Lec_IdLeccion}" name="leccion"/>
@@ -125,7 +124,6 @@
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="margin-top: 0px;">&times;</button>
       </div>
       <div class="panel-body">
-        <form ></form>
         <form method="POST" action="gleccion/_modificar_contenido" id="frm_modificar_contenido">
           <div class="col-lg-12 margin-top-10"><strong>Titulo</strong></div>
           <input hidden="hidden" name="id" id="inEditId"/>

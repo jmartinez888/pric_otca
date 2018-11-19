@@ -36,7 +36,7 @@
     right: 7px;
   }
 </style>
-<div class="col-lg-12  div_referencias">
+<div class="col-xs-12  div_referencias">
   <div class="panel panel-default " style="border-top: 0; border-top-left-radius: 0; border-top-right-radius: 0;">
     <div class="panel-body">
       {if isset($referencias) && count($referencias) > 0 }
@@ -90,9 +90,6 @@
               </tbody>
         </table>
 
-
-
-
       {else}
         <div>No tienes referencias</div>
       {/if}
@@ -101,7 +98,7 @@
 
   </div>
 </div>
-<div class="col-lg-12  div_materiales">
+<div class="col-xs-12  div_materiales">
   <div class="panel panel-default " style="border-top: 0; border-top-left-radius: 0; border-top-right-radius: 0;">
     <div class="panel-body">
       <div class="table-responsive">
@@ -166,7 +163,7 @@
     </div>
   </div>
 </div>
-<div class="col-lg-12  div_tareas">
+<div class="col-xs-12  div_tareas">
   <div class="panel panel-default " style="border-top: 0; border-top-left-radius: 0; border-top-right-radius: 0;">
     <div class="panel-body">
       <div class="table-responsive">
@@ -253,7 +250,7 @@
           <div class="col-lg-12 margin-t-10"><strong>Referencia</strong></div>
           <div class="col-lg-12"><input class="form-control" name="descripcionRef" id="inDescripcionRef" /></div>
           <div class="col-lg-12 margin-t-10"><button class="btn btn-success" id="btn_registrar_referencia">Registrar</button></div>
-        <form>
+        </form>
       </div>
     </div>
   </div>
@@ -273,12 +270,12 @@
           <div class="col-lg-12"><strong>Link</strong></div>
           <form id="frm_registro_material" method="post" action="gleccion/_registrar_material_link">
           <div class="col-lg-12"><input class="form-control" name="link" id="inMatLink" /></div>
-          <div class="col-lg-12 margin-top-10"><strong>Descripción</strong></div>
+          <div class="col-lg-12 margin-t-10"><strong>Descripción</strong></div>
           <div class="col-lg-12"><textarea class="form-control" name="descripcionMat" id="inMatLinkDescripcion"></textarea></div>
-          <div class="col-lg-12 margin-top-10"><button class="btn btn-success pull-right" id="btn_registrar_material_link"><i class="glyphicon glyphicon-floppy-disk"></i> Guardar</button></div>
-        <form>
-        <div class="col-lg-12 margin-top-10"><input type="radio" value="1" name="opcion"/>Archivo local</div>
-        <div class="col-lg-12 margin-top-10"><button class="btn btn-success" id="btn_registrar_material_file" disabled="disabled"><i class="glyphicon glyphicon-open"></i> Subir archivo</button></div>
+          <div class="col-lg-12 margin-t-10"><button class="btn btn-success pull-right" id="btn_registrar_material_link"><i class="glyphicon glyphicon-floppy-disk"></i> Guardar</button></div>
+        </form>
+        <div class="col-lg-12 margin-t-10"><input type="radio" value="1" name="opcion"/>Archivo local</div>
+        <div class="col-lg-12 margin-t-10"><button class="btn btn-success" id="btn_registrar_material_file" disabled="disabled"><i class="glyphicon glyphicon-open"></i> Subir archivo</button></div>
       </div>
     </div>
   </div>
@@ -295,21 +292,18 @@
       <div class="panel-body">
         <div class="col-lg-12" id="contenido-material-archivo">
         </div>
-        <div class="col-lg-6 margin-top-10">
+        <div class="col-lg-6 margin-t-10">
           <button class="btn btn-success" id="btn_registrar_material_file2">Guardar material</button>
         </div>
-        <div class="col-lg-6 margin-top-10">
+        <div class="col-lg-6 margin-t-10">
           <button class="btn btn-success pull-right" id="btn_cancelar_material_file">Cancelar</button>
         </div>
       </div>
     </div>
   </div>
 </div>
-{include 'res/mod_agregar_trabajo.tpl'}
-{include 'res/mod_editar_trabajo.tpl'}
-
-
-
+{include file = 'modules/elearning/views/templates/res/mod_agregar_trabajo.tpl'}
+{include file = 'modules/elearning/views/templates/res/mod_editar_trabajo.tpl'}
 
 <script type="text/javascript">
   // Para que funcione el tooltip
@@ -487,10 +481,10 @@
             tmp = tmp.split('-');
             tmp = tmp[tmp.length-1];
 
-            var texto =  "<input class='form-control margin-top-10' value='" + tmp + "' disabled='disabled'/>";
+            var texto =  "<input class='form-control margin-t-10' value='" + tmp + "' disabled='disabled'/>";
             contenedor.append(texto);
           });
-          contenedor.append("<label class='margin-top-10'>Descripción</label>");
+          contenedor.append("<label class='margin-t-10'>Descripción</label>");
           contenedor.append("<input class='form-control' id='in_tmp_mat_arch'/>");
 
           setTimeout(function(){ $("#in_tmp_mat_arch").focus(); }, 300);
@@ -581,6 +575,7 @@
       }
       $.fn.Mensaje({ mensaje: "¿Desea registrar la tarea?", tipo: "SiNo", tamano: "sm",
         funcionSi: function(){
+          // alert("ssssssss");
           SubmitForm($("#frm_registro_trabajo"), $(this), function(data, e){
             Mensaje("Se registró la tarea con éxito",
               function(){

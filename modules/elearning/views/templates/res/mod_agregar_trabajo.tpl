@@ -7,7 +7,7 @@
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="margin-top: 0px;">&times;</button>
       </div>
       <div class="panel-body">        
-        <form id="frm_registro_trabajo" method="POST" action="gtrabajo/_registrar_trabajo">
+        <form id="frm_registro_trabajo" method="post" action="gtrabajo/_registrar_trabajo">
           <div class="col-lg-12 margin-t-10"><strong>Titulo</strong></div>
           <input hidden="hidden" value="{$leccion.Lec_IdLeccion}" name="leccion"/>
           <div class="col-lg-12">
@@ -37,7 +37,7 @@
           <div class="col-lg-12 margin-t-10">
             <button class="btn btn-success" id="btn_registrar_trabajo">Registrar</button>
           </div>
-        <form>
+        </form>
       </div>
     </div>
   </div>

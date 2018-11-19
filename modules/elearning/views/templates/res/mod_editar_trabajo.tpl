@@ -7,7 +7,6 @@
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="margin-top: 0px;">&times;</button>
       </div>
       <div class="panel-body">
-        <form></form>
         <form id="frm_actualizar_trabajo" method="POST" action="gtrabajo/_actualizar_trabajo">
           <div class="col-lg-12 margin-top-10"><strong>Titulo</strong></div>
           <input hidden="hidden" id="inUpdIdTrabajo" name="trabajo"/>
@@ -43,7 +42,7 @@
           <div class="col-lg-12 margin-top-10">
             <button class="btn btn-success" id="btn_actualizar_trabajo">Actualizar</button>
           </div>
-        <form>
+        </form>
       </div>
     </div>
   </div>
