@@ -10,6 +10,11 @@ class LenguajeManager {
 			return isset($this->lenguajes[$name]) ? $this->lenguajes[$name] : '['.$name.']';
 		else return '[]';
 	}
+	public function get ($name) {
+		if ($name != '')
+			return isset($this->lenguajes[$name]) ? $this->lenguajes[$name] : '['.$name.']';
+		else return '[]';
+	}
 
 }
 
