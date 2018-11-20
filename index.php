@@ -6,14 +6,14 @@ define('DS', DIRECTORY_SEPARATOR);
 define('LANG_PATH', 'lang');
 define('ROOT', realpath(dirname(__FILE__)) . DS);
 define('APP_PATH', ROOT . 'application' . DS);
-
 try{
+    require_once APP_PATH . 'Exception.php';
     require_once APP_PATH . 'Autoload.php';
     require_once APP_PATH . 'Config.php';
     require_once APP_PATH . 'Vendors.php';
 
     Session::init();
-    //Registry->Se utiliza para guardar instancia de clases que utilizan en toda
+    //Registry->Se utiliza para guardar instancia de clases que utilizan en
     //la aplicacion, utiliza el patron Singleton.
     $registry = Registry::getInstancia();
     $registry->_request = new Request();
@@ -22,10 +22,7 @@ try{
     $registry->_acl = new ACL();
 
     Bootstrap::run($registry->_request);
+} catch(Exception $e){
+    echo $e->getMessage().'asds';
 }
-catch(Exception $e){
-    echo $e->getMessage();
-}
-
-
 ?>

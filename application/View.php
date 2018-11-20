@@ -336,11 +336,12 @@ class View extends Smarty
     {
         if ($lang)
         {
-            $lenguaje = $this->LoadLenguaje("config_names", $lang);
+
+            $lenguaje = $this->LoadLenguaje("config_names", $lang, true);
             return array(
-                'app_name' => $lenguaje["APP_NAME"],
-                'app_slogan' => $lenguaje["APP_SLOGAN"],
-                'app_company' => $lenguaje["APP_COMPANY"]
+                'app_name' => $lenguaje->get("APP_NAME"),
+                'app_slogan' => $lenguaje->get("APP_SLOGAN"),
+                'app_company' => $lenguaje->get("APP_COMPANY")
             );
         }
         else
