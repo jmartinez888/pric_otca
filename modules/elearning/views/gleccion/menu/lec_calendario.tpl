@@ -76,11 +76,13 @@ $(document).ready(function(){
       funcionSi: function(){
         SubmitForm($("#form-fecha"), false, function(data, a){
           Mensaje("Se actualizó la fecha de la lección", function(){
-            CargarPagina("gleccion/_view_leccion", {
-              curso: $("#hidden_curso").val(),
-              modulo : $("#hidden_modulo").val(),
-              leccion : $("#hidden_leccion").val(),
-            }, false, false);
+            location.href = _root_ + _modulo + "/gleccion/_view_leccion/" + $("#hidden_curso").val() + "/" + $("#hidden_modulo").val() + "/" + $("#hidden_leccion").val();
+          
+            // CargarPagina("gleccion/_view_leccion", {
+            //   curso: $("#hidden_curso").val(),
+            //   modulo : $("#hidden_modulo").val(),
+            //   leccion : $("#hidden_leccion").val(),
+            // }, false, false);
           })
         });
       }

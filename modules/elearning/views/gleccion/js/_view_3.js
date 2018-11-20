@@ -1,5 +1,5 @@
-Menu(1);
-RefreshTagUrl();
+// Menu(1);
+// RefreshTagUrl();
 
 $("#btn_actualizar").click(function(e){
   e.preventDefault();

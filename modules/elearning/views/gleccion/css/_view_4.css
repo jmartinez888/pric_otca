@@ -51,3 +51,28 @@
   bottom: 5px;
   right: 5px;
 }
+
+/*Tabs*/
+  .div_titulo{
+    display: block;
+  }
+  .div_contenido{
+    display: none;
+  }
+  .div_referencias{
+    display: none;
+  }
+  .div_materiales{
+    display: none;
+  }
+  .div_tareas{
+    display: none;
+  }
+
+  
+  .nav-tabs > .active{
+    font-weight: bold;
+  }
+  .nav-tabs > li.active > a{
+    color: #009640 !important;
+  }

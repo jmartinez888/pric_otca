@@ -1,14 +1,30 @@
+{extends 'index_elearning.tpl'}
+{block 'css' append}
 <link rel="stylesheet" href="{BASE_URL}modules/elearning/views/gleccion/css/_view_4.css" />
-{include file='modules/elearning/views/gestion/menu/tag_url.tpl'}
-{include file='modules/elearning/views/gleccion/menu/lec_ref_mat.tpl'}
-{include file='modules/elearning/views/gleccion/menu/lec_titulo.tpl'}
+{/block}
 
-<div class="col-lg-9">
-  <div class="panel panel-default margin-top-10">
+{block 'subcontenido'}
+{include file='modules/elearning/views/gestion/menu/tag_url.tpl'}
+<!--  Tabs-->
+<div class="col-lg-12">
+  <ul class="nav nav-tabs">
+    <li role="presentation" class="active" id="item_titulo"><a href="#">TÍTULO</a></li>
+    <li role="presentation" id="item_contenido" ><a href="#">CONTENIDO</a></li>
+    <li role="presentation" id="item_referencias"><a href="#">REFERENCIAS</a></li>
+    <li role="presentation" id="item_materiales" ><a href="#">MATERIAL DIDÁCTICO</a></li>
+    <li role="presentation" id="item_tareas" ><a href="#">TAREAS</a></li>
+  </ul>
+</div>
+
+{include file='modules/elearning/views/gleccion/menu/lec_titulo.tpl'}
+{include file='modules/elearning/views/gleccion/menu/lec_ref_mat.tpl'}
+
+<div class="col-lg-12">
+  <div class="panel panel-default margin-t-10">
     <div class="panel-heading">
       <h3 class="panel-title">
         <i class="glyphicon glyphicon-list-alt"></i>&nbsp;&nbsp;
-        <strong>{$leccion.Lec_Titulo}</strong>
+        <strong>Pizarra Interactiva</strong>
       </h3>
     </div>
     <div class="panel-body" style=" margin: 15px 25px">
@@ -69,6 +85,9 @@
     </div>
   </div>
 </div>
-
+{/block}
+{block 'js' append}
+<script type="text/javascript" src="{$_url}gleccion/js/_view_2.js"></script>
 <script type="text/javascript" src="{$_url}gleccion/js/_view_4.js"></script>
 <script type="text/javascript" src="{$_url}gleccion/js/_view_canvas.js"></script>
+{/block}

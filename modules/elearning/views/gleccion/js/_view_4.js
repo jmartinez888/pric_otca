@@ -1,4 +1,4 @@
-Menu(1);
+// Menu(1);
 RefreshTagUrl();
 
 $("#btn_nueva_pizarra").click(function(){
@@ -46,7 +46,7 @@ function AddImg(a){
   DATA = DATA.split("/");
   DATA = DATA[DATA.length-1];
   $("#tmp_img_url").val(DATA);
-  DATA = $("#hidden_root").val() + "gleccion/_contenido/_pizarra/" + DATA;
+  DATA = _root_ + "/modules/elearning/views/gleccion/_contenido/_pizarra/" + DATA;
 
   var CON = $(".contenido-pizarra");
   $("#tmp_fondo_pizarra").remove();
@@ -55,8 +55,6 @@ function AddImg(a){
   $("#btn-cargar-img-pizarra").hide();
   $("#lb_help").show();
 }
-
-
 
 $("#btn-guardar-pizarra").click(function(){
   var validate = $("#tmp_img_url").val()+$("#tmp_piz_x").val()+$("#tmp_piz_y").val()+
@@ -80,11 +78,13 @@ $("#btn-guardar-pizarra").click(function(){
       AsincTaks("pizarra/_registrar_pizarra", params, function(a){
         $("#panelNuevaPizarra").modal("hide");
         Mensaje("Se registró la pizarra", function(){
-          CargarPagina("gleccion/_view_leccion", {
-            curso: $("#hidden_curso").val(),
-            modulo : $("#hidden_modulo").val(),
-            leccion : $("#hidden_leccion").val(),
-          }, false, false);
+          location.href = _root_ + _modulo + "/gleccion/_view_leccion/" + 
+          $("#hidden_curso").val() + "/" + $("#hidden_modulo").val() + "/" + $("#hidden_leccion").val();
+          // CargarPagina("gleccion/_view_leccion", {
+          //   curso: $("#hidden_curso").val(),
+          //   modulo : $("#hidden_modulo").val(),
+          //   leccion : $("#hidden_leccion").val(),
+          // }, false, false);
         })
         console.log(a);
       }, false, false);
@@ -102,11 +102,14 @@ $(".btn-quitar-pizarra").click(function(){
       var Id = BTN.parent().find(".hidden_IdPizarra").val();
       AsincTaks("pizarra/_eliminar_pizarra", { id: Id }, function(a){
         Mensaje("Se eliminó la pizarra", function(){
-          CargarPagina("gleccion/_view_leccion", {
-            curso: $("#hidden_curso").val(),
-            modulo : $("#hidden_modulo").val(),
-            leccion : $("#hidden_leccion").val(),
-          }, false, false);
+          location.href = _root_ + _modulo + "/gleccion/_view_leccion/" + 
+          $("#hidden_curso").val() + "/" + $("#hidden_modulo").val() + "/" + $("#hidden_leccion").val();
+          
+          // CargarPagina("gleccion/_view_leccion", {
+          //   curso: $("#hidden_curso").val(),
+          //   modulo : $("#hidden_modulo").val(),
+          //   leccion : $("#hidden_leccion").val(),
+          // }, false, false);
         })
       }, false, false);
     }

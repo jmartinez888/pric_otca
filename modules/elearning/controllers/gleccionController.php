@@ -170,7 +170,7 @@ class gleccionController extends elearningController {
             $ExaModel = $this->loadModel("examen");
             // $examen = $ExaModel->getExamenxLeccion($leccion["Lec_IdLeccion"]);
 
-            $this->_view->assign('examens',  $this->examen->getExamensCondicion(0,CANT_REG_PAG, " WHERE e.Lec_IdLeccion = ".$leccion["Lec_IdLeccion"]));
+            $this->_view->assign('examens',  $ExaModel->getExamensCondicion(0,CANT_REG_PAG, " WHERE e.Lec_IdLeccion = ".$leccion["Lec_IdLeccion"]));
 
             // if ($examen && count($examen) > 0) {
             // // print_r($examen);exit;
@@ -182,7 +182,7 @@ class gleccionController extends elearningController {
             
             // $examen = $model->insertExamenLeccion($leccion["Lec_IdLeccion"], "", 0, 0, 0);
             // $preguntas = $model->getPreguntas($examen[0]["Exa_IdExamen"]);
-            $this->_view->assign("examen", $examen);
+            // $this->_view->assign("examen", $examen);
             // $this->_view->assign("preguntas", $preguntas); 
             $view = "ajax/_view_3";
             
