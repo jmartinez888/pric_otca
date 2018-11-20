@@ -46,7 +46,6 @@ class examenController extends elearningController {
         $this->service->Send();        
     }
 
-    // public function examens($idcurso){
     public function examens($idcurso=false){
         // $codigo = $this->getTexto("certificado");
         // $this->_view->setCss(array("verificar"));

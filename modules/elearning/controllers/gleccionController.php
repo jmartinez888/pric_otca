@@ -168,7 +168,9 @@ class gleccionController extends elearningController {
             break;
           case 3:
             $ExaModel = $this->loadModel("examen");
-            $examen = $ExaModel->getExamenxLeccion($leccion["Lec_IdLeccion"]);
+            // $examen = $ExaModel->getExamenxLeccion($leccion["Lec_IdLeccion"]);
+
+            $this->_view->assign('examens',  $this->examen->getExamensCondicion(0,CANT_REG_PAG, " WHERE e.Lec_IdLeccion = ".$leccion["Lec_IdLeccion"]));
 
             // if ($examen && count($examen) > 0) {
             // // print_r($examen);exit;
@@ -228,9 +230,10 @@ class gleccionController extends elearningController {
     public function _actualizar_leccion(){
         $id = $this->getTexto("id_leccion");
         $titulo = $this->getTexto("titulo");
+        $descripcion = $this->getTexto("descripcion");
 
         $model = $this->loadModel("_gestionLeccion");
-        $model->updateLeccion($id, $titulo);
+        $model->updateLeccion($id, $titulo, $descripcion);
 
         $this->service->Success("Se resgistó el contenido con exito");
         $this->service->Send();

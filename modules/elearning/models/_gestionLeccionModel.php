@@ -44,8 +44,8 @@ class _gestionLeccionModel extends Model {
   }
 
 
-  public function updateLeccion($leccion, $titulo){
-    $sql = "UPDATE leccion SET Lec_Titulo = '{$titulo}' WHERE Lec_IdLeccion = {$leccion}";
+  public function updateLeccion($leccion, $titulo, $descripcion){
+    $sql = "UPDATE leccion SET Lec_Titulo = '{$titulo}', Lec_Descripcion = '{$descripcion}'  WHERE Lec_IdLeccion = {$leccion}";
     $this->execQuery($sql);
   }
 

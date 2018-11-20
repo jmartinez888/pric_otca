@@ -5,11 +5,22 @@
     margin-top: 20px !important;
     margin-left: -10px !important;
   }
+  .nav-tabs > .active{
+    font-weight: bold;
+  }
+  .nav-tabs > li.active > a{
+    color: #009640 !important;
+  }
 </style>
 {/block}
 
 {block 'subcontenido'}
 {include file='modules/elearning/views/gestion/menu/tag_url.tpl'}
+<div class="col-lg-12">
+  <ul class="nav nav-tabs">
+    <li role="presentation" class="active" id="item_titulo"><a href="#">TÍTULO</a></li>
+  </ul>
+</div>
 {include file='modules/elearning/views/gleccion/menu/lec_titulo.tpl'}
 <div class="col-xs-12">
   <div class="panel panel-default margin-t-10">
@@ -20,7 +31,6 @@
       </h3>
     </div>
     <div class="panel-body" style=" margin: 15px 25px">
-
       <form id="frm-actualizar-examen" action="gleccion/_actualizar_examen" method="post">
         <input name="id" value="{$examen.Exa_IdExamen}" hidden="hidden"/>
         <div class="col-xs-3">
@@ -52,7 +62,6 @@
           <button class="btn btn-success pull-right" id="btn_actualizar">Actualizar</button>
         </div>
       </form>
-
     </div>
   </div>
 </div>
