@@ -52,7 +52,7 @@ class editarModel extends Model {
 
             return $result->rowCount();
         } catch (PDOException $exception) {
-            v
+            
             $this->registrarBitacora("dublincore(editarModel)", "actualizarArchivoFisico", "Error Model", $exception);
             return $exception->getTraceAsString();
         }
