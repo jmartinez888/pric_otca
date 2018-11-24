@@ -30,6 +30,8 @@ class editarController extends Controller {
         $condicion .= " where dub.Dub_IdDublinCore = $registross ";
 
         $datos = $this->_editar->getDocumento1($condicion);
+        var_dump($datos);
+        exit;
         $paises = $this->_editar->getPaises($this->filtrarInt($registros));
         $valor_paises = "";
         $i = 1;
@@ -69,7 +71,7 @@ class editarController extends Controller {
     private function editarDublin($registros = false, $For_IdForo=false) {
 
         if ($this->_editar->verificarIdiomaDublin($this->getInt('Dub_IdDublinCore'), $this->getSql('idiomaSelect'))) {
-            // echo "hola0000";exit;
+            
 
             $paises = explode(",", $this->getSql('Pai_IdPais'));
             $this->_editar->eliminaDocumentosRelacionados($this->filtrarInt($registros));

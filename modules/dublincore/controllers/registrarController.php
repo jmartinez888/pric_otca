@@ -17,6 +17,7 @@ class registrarController extends Controller {
         }
         
         $this->_view->getLenguaje("bdrecursos_metadata");
+         $this->_view->getLenguaje("bdrecursos_index");
         $this->_view->setJs(array('dublincore'));
         if (empty($this->getSql('Idi_IdIdioma'))) {
             $idioma = Cookie::lenguaje();

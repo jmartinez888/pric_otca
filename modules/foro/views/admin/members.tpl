@@ -130,7 +130,7 @@
                                     </div>
                                     <div class="row">
                                         <hr>
-                                        <div class="col col-md-12 col-xs-12 col-lg-12 col-sm-12">
+                                        <div class="col-md-12 col-xs-12 col-lg-12 col-sm-12">
                                             <div class="form-group">
                                                 <label for="ta_mensaje_usuario">Mensaje</label>
                                                 <textarea  class="form-control"  id="ta_mensaje_usuario" name="ta_mensaje_usuario" ></textarea>

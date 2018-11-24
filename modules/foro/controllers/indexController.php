@@ -223,27 +223,24 @@ class indexController extends foroController {
             [BASE_URL.'public/vendors/jquery/js/jquery.events.input.js'],
             [BASE_URL.'public/vendors/jquery_mentions/js/jquery.mentionsInput.js'],
             "ficha_foro"
-        ]);
+        ]);  
+        $lenguaje = Session::get("fileLenguaje");
 
+         //Obtener Rol de usuario
         $idUsuario = Session::get('id_usuario');
         if(!empty($idUsuario)){
-            $Rol_Ckey = $this->_model->getRolForo(Session::get('id_usuario'), $iFor_IdForo);
+            $Rol_Ckey = $this->_model->getRolForo($idUsuario, $iFor_IdForo);
             if(empty($Rol_Ckey)){
-                $Rol_Ckey = $this->_model->getRol_Ckey(Session::get('id_usuario'));
-                if(empty($Rol_Ckey)){
-                    $Rol_Ckey["Rol_Ckey"] = "sin_rol";
-                }
+                $Rol_Ckey = $this->_model->getRol_Ckey($idUsuario);
             }
-            $valoracion_foro = $this->_model->getValoracion_personal($idUsuario, $iFor_IdForo);
-            $this->_view->assign('valoracion_foro', $valoracion_foro["Nvaloracion_personal"]);
+             $this->_view->assign('Rol_Ckey', $Rol_Ckey["Rol_Ckey"]);
+             $this->_view->assign('id_usuario', $idUsuario);
+                // echo $Rol_Ckey["Rol_Ckey"]; exit;
         }else{
-            $idUsuario = "";
             $Rol_Ckey["Rol_Ckey"]="";
-
-        }
-        
-
-        $lenguaje = Session::get("fileLenguaje");
+            $this->_view->assign('Rol_Ckey', "sin permiso");
+            $this->_view->assign('id_usuario', 0);
+         }
         
         $linea_tematica = $this->_model->getLineaTematica($foro["Lit_IdLineaTematica"]);
         // dd($linea_tematica);
@@ -318,6 +315,9 @@ class indexController extends foroController {
         $Numero_participantes_x_idForo = $this->_model->getNumero_participantes_x_idForo($iFor_IdForo);
         $tiempo = $this->getTiempo($foro["For_FechaCreacion"]);
         $Nvaloraciones_foro = $this->_model->getNvaloraciones($iFor_IdForo);
+
+
+
 
         $this->_view->assign('Nvaloraciones_foro', +$Nvaloraciones_foro["Nvaloraciones"]);
         $this->_view->assign('Numero_participantes_x_idForo', $Numero_participantes_x_idForo["numero_participantes"]);

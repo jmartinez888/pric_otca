@@ -7,6 +7,7 @@ class editarModel extends Model {
     }
 
     public function getDocumento1($condicion = "") {
+        try {
         $post = $this->_db->query(
                 " SELECT dub.*, aut.Aut_IdAutor, aut.Aut_Nombre,arf.Arf_IdArchivoFisico, arf.Arf_PosicionFisica, arf.Arf_FechaCreacion,arf.Arf_URL, taf.*,
              ted.Ted_Descripcion, tid.Tid_Descripcion, tid.Tid_Estado FROM dublincore dub 
@@ -18,12 +19,23 @@ class editarModel extends Model {
             RIGHT JOIN tipo_archivo_fisico taf ON arf.Taf_IdTipoArchivoFisico = taf.Taf_IdTipoArchivoFisico  $condicion"
         );
         return $post->fetch();
+        } catch (PDOException $exception) {
+           
+            $this->registrarBitacora("dublincore(editarModel)", "getDocumento1", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
     }
 
     public function verificarIdiomaDublin($Dub_IdDublinCore, $Idi_IdIdioma) {
+         try {
         $post = $this->_db->query(
                 "SELECT Dub_IdDublinCore, Dub_Titulo FROM dublincore WHERE Dub_IdDublinCore = $Dub_IdDublinCore AND Idi_IdIdioma = '$Idi_IdIdioma' ");
         return $post->fetch();
+        } catch (PDOException $exception) {
+           
+            $this->registrarBitacora("dublincore(editarModel)", "verificarIdiomaDublin", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
     }
 
     public function actualizarArchivoFisico($Arf_IdArchivoFisico, $Arf_Descripcion, $Taf_IdTipoArchivoFisico, $Arf_TypeMime, $Arf_TamanoArchivo, $Arf_PosicionFisica, $Arf_FechaCreacion, $Arf_URL, $Arf_Estado, $Idi_IdIdioma) {
@@ -46,7 +58,7 @@ class editarModel extends Model {
 
             return $result->rowCount();
         } catch (PDOException $exception) {
-            var_dump($exception->getTraceAsString());
+            
             $this->registrarBitacora("dublincore(editarModel)", "actualizarArchivoFisico", "Error Model", $exception);
             return $exception->getTraceAsString();
         }
@@ -68,31 +80,50 @@ class editarModel extends Model {
 
             return $result->rowCount();
         } catch (PDOException $exception) {
-            var_dump($exception->getTraceAsString());
+            
             $this->registrarBitacora("dublincore(editarModel)", "actualizararDublinCore", "Error Model", $exception);
             return $exception->getTraceAsString();
         }
     }
 
     public function actualizarDublinAutor($Dub_IdDublinCore, $Aut_IdAutor) {
+         try {
         $post = $this->_db->query(
                 "UPDATE dublincore_autor SET  Aut_IdAutor = $Aut_IdAutor WHERE Dub_IdDublinCore =  $Dub_IdDublinCore");
+        } catch (PDOException $exception) {
+            
+            $this->registrarBitacora("dublincore(editarModel)", "actualizarDublinAutor", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
     }
 
     public function eliminaDocumentosRelacionados($Dub_IdDublinCore) {
+         try {
         $post = $this->_db->query(
                 "DELETE FROM  documentos_relacionados WHERE Dub_IdDublinCore = $Dub_IdDublinCore");
+        } catch (PDOException $exception) {
+            
+            $this->registrarBitacora("dublincore(editarModel)", "eliminaDocumentosRelacionados", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
     }
 
     public function getPaises($Dub_IdDublinCore = "") {
+        try {
         $post = $this->_db->query(
                 " SELECT pai.Pai_Nombre FROM documentos_relacionados dor
               INNER JOIN pais pai ON dor.Pai_IdPais = pai.Pai_IdPais WHERE dor.Dub_IdDublinCore =  $Dub_IdDublinCore"
         );
         return $post->fetchall();
+         } catch (PDOException $exception) {
+            
+            $this->registrarBitacora("dublincore(editarModel)", "eliminaDocumentosRelacionados", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
     }
 
     public function editarTraduccion($Dub_Titulo, $Dub_Descripcion, $Dub_PalabraClave, $Dub_IdDublinCore, $Idi_IdIdioma) {
+         try {
 
         $ContTradTitulo = $this->buscarCampoTraducido('dublincore', $Dub_IdDublinCore, 'Dub_Titulo', $Idi_IdIdioma);
         $ContTradDescripcion = $this->buscarCampoTraducido('dublincore', $Dub_IdDublinCore, 'Dub_Descripcion', $Idi_IdIdioma);
@@ -149,15 +180,27 @@ class editarModel extends Model {
                         ':Cot_Traduccion' => $Dub_PalabraClave
             ));
         }
+        } catch (PDOException $exception) {
+            
+            $this->registrarBitacora("dublincore(editarModel)", "editarTraduccion", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
     }
 
     public function buscarCampoTraducido($tabla, $Pag_IdPagina, $columna, $Idi_IdIdioma) {
+        try {
         $post = $this->_db->query(
                 "SELECT * FROM contenido_traducido WHERE Cot_Tabla = '$tabla' AND Cot_IdRegistro =  $Pag_IdPagina AND  Cot_Columna = '$columna' AND Idi_IdIdioma= '$Idi_IdIdioma'");
         return $post->fetch();
+        } catch (PDOException $exception) {
+            
+            $this->registrarBitacora("dublincore(editarModel)", "buscarCampoTraducido", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
     }
 
     public function getDublinTraducido($condicion, $Idi_IdIdioma) {
+         try {
         $paginas = $this->_db->query(
                 "SELECT 
                 dub.Dub_IdDublinCore, 
@@ -181,6 +224,11 @@ class editarModel extends Model {
                 RIGHT JOIN tipo_archivo_fisico taf ON arf.Taf_IdTipoArchivoFisico = taf.Taf_IdTipoArchivoFisico  $condicion"
         );
         return $paginas->fetch();
+        } catch (PDOException $exception) {
+            
+            $this->registrarBitacora("dublincore(editarModel)", "getDublinTraducido", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
     }
 
 }
