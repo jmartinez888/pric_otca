@@ -1,6 +1,7 @@
 <?php
-function manejador_excepciones($excepción) {
-  echo "Excepción no capturada: " , $excepción->getMessage(), "\n";
+function manejador_excepciones($exception) {
+    // dd($exception);
+  echo "Excepción no capturada: " , $exception->getMessage(), " en : <b>", $exception->getFile() . "</b>, linea : <b>" . $exception->getLine() . "</b>\n";
 }
 
 set_exception_handler('manejador_excepciones');
