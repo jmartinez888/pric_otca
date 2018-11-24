@@ -18,6 +18,7 @@ class editarController extends Controller {
         }
          $this->_view->getLenguaje("index_inicio");
         $this->_view->getLenguaje("bdrecursos_metadata");
+        $this->_view->getLenguaje("bdrecursos_index");
         $this->_view->setJs(array('dublincore'));
 
         if ($this->botonPress("editarDublin")) 
@@ -30,7 +31,7 @@ class editarController extends Controller {
         $condicion .= " where dub.Dub_IdDublinCore = $registross ";
 
         $datos = $this->_editar->getDocumento1($condicion);
-       
+
         $paises = $this->_editar->getPaises($this->filtrarInt($registros));
         $valor_paises = "";
         $i = 1;
