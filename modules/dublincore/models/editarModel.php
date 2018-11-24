@@ -7,6 +7,7 @@ class editarModel extends Model {
     }
 
     public function getDocumento1($condicion = "") {
+        try {
         $post = $this->_db->query(
                 " SELECT dub.*, aut.Aut_IdAutor, aut.Aut_Nombre,arf.Arf_IdArchivoFisico, arf.Arf_PosicionFisica, arf.Arf_FechaCreacion,arf.Arf_URL, taf.*,
              ted.Ted_Descripcion, tid.Tid_Descripcion, tid.Tid_Estado FROM dublincore dub 
@@ -18,6 +19,11 @@ class editarModel extends Model {
             RIGHT JOIN tipo_archivo_fisico taf ON arf.Taf_IdTipoArchivoFisico = taf.Taf_IdTipoArchivoFisico  $condicion"
         );
         return $post->fetch();
+        } catch (PDOException $exception) {
+           
+            $this->registrarBitacora("dublincore(editarModel)", "getDocumento1", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
     }
 
     public function verificarIdiomaDublin($Dub_IdDublinCore, $Idi_IdIdioma) {
