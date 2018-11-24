@@ -17,9 +17,8 @@
                     <div class="panel-body">
                         <table class="table table-user-information">
                             <tbody>                           
-                                <tr>
-                                    <td>{$lenguaje["label_nombre_bdrecursos"]}:</td>
-                                    <td>{$recurso.Rec_Nombre}</td>
+                                <tr>                                  
+                                    <td colspan="2" >{$recurso.Rec_Nombre}</td>
                                 </tr>
                                 <tr>
                                     <td>{$lenguaje["label_tipo_bdrecursos"]}</td>
