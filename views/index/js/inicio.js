@@ -343,7 +343,6 @@ new Vue({
 		  });
 			var iconBase = _root_ + 'files/difusion/indicador/';
 			axios.get(_root_lang + 'difusion/contenido/datos_cifras').then(res => {
-
 				res.data.forEach(item => {
 					var contentString = `
 						<div id="iw-container">

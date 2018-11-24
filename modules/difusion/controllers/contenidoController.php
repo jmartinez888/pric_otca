@@ -621,13 +621,13 @@ class contenidoController extends difusionController {
     $this->prepareAll('show_all', 0, 0, 0, $id);
 	}
 	public function datos_cifras () {
-		DB::enableQueryLog();
+		// DB::enableQueryLog();
 		$build = ODifusionIndicadores::with(['difusion', 'indicador'])
 			->join('ora_indicadores', 'ora_difusion_indicadores.OInd_IdIndicadores', 'ora_indicadores.OInd_IdIndicadores')
 			->visibles()->activos()->where('ora_indicadores.OInd_Estado', 1)->where('ora_indicadores.Row_Estado', 1);
 
 		$datos = $build->get();
-		$datos[] = DB::getQueryLog();
+		// $datos[] = DB::getQueryLog();
 		$this->_view->responseJson($datos);
 	}
 }
