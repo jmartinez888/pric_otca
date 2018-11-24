@@ -16,7 +16,7 @@ class editarModel extends Model {
             INNER JOIN autor aut ON dua.Aut_IdAutor = aut.Aut_IdAutor  
             LEFT JOIN archivo_fisico arf ON dub.Arf_IdArchivoFisico = arf.Arf_IdArchivoFisico 
             INNER JOIN tipo_dublin tid ON dub.Tid_IdTipoDublin = tid.Tid_IdTipoDublin 
-            RIGHT JOIN tipo_archivo_fisico taf ON arf.Taf_IdTipoArchivoFisico = taf.Taf_IdTipoArchivoFisico  $condicion"
+            LEFT JOIN tipo_archivo_fisico taf ON arf.Taf_IdTipoArchivoFisico = taf.Taf_IdTipoArchivoFisico  $condicion"
         );
         return $post->fetch();
         } catch (PDOException $exception) {
