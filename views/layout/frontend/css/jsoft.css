@@ -692,6 +692,7 @@ p {
 	border-bottom: 1px solid #ddd;
 	display: inline-block;
 	margin: 0 auto;
+	    width: 100%;
 }
 .link-tabs-jsoft:hover{
 	text-decoration: none;
@@ -1154,5 +1155,59 @@ a.mas-jsoft {
 	background: -webkit-linear-gradient(top, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%);
 	background: -moz-linear-gradient(top, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%);
 	background: -ms-linear-gradient(top, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%);
+}
+
+.jsoft_card {
+	    background: #fff;
+	    display: inline-block;
+	    border: 1px solid #ddd;
+	    margin-top: -6px;
+	    padding-left: 5px;
+	    border-left: 0;
+    	border-right: 0;
+    	width: 100%;
+    }
+
+    .jsoft_card .image {
+      float: left;
+      /* background: #000; */
+      width: 25%;
+      padding-top: 15px;
+    }
+    .jsoft_card .fecha_evento h4 {
+         font-size: 15px;
+    margin-top: -5px;
+    text-align: center;
+    }
+
+
+    .jsoft_card .content {
+      float: left;
+      width: 75%;
+      overflow: hidden;
+      padding: 10px 10px 0px 10px;
+      min-height: 40px;
+    }
+.jsoft_card .content p{
+	font-size:12px;
+}
+    .jsoft_card .content h4 {
+      margin: 5px 0;
+    }
+    .jsoft_card .content ul{
+	font-size: 13px;
+	margin-top: 8px;
+	margin-bottom: 2px;
+}
+.fecha_evento h2{
+	font-size:50px;
+	margin-top: -15px;
+	    text-align: center;
+}
+.fecha_evento .badge {
+	font-size: 35px;
+    padding: 3px 13px;
+    border-radius: 10px 10px 0px 0px;
+    background-color: #6c8c6f;
 }
 

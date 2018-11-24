@@ -1,5 +1,5 @@
-<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 p-rt-lt-0" style="background-image: url({BASE_URL}modules/foro/views/index/img/encabezado-foro.jpg); background-repeat: no-repeat;">
-    <div class="col-md-5 col-lg-5" style="color: #333; font-weight: bold; font-size: 18px;">
+<div class="row foro_banner">
+    <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5" style="color: #333; font-weight: bold; font-size: 18px;">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <h1 class="titulo">{$lenguaje.foro_index_label_titulo}</h1>
             <div class="col-lg-12 p-rt-lt-0">
@@ -12,7 +12,7 @@
 <div  class="col-md-12 col-xs-12 col-sm-12 col-lg-12">
     {include file='modules/foro/views/index/menu/lateral.tpl'}
 
-    <div  class="col-md-10 col-xs-12 col-sm-8 col-lg-10" style="margin-top: 10px;">       
+    <div  class="col-md-10 col-xs-12 col-sm-9 col-lg-10" style="margin-top: 10px;">       
         <!-- <h2 class="titulo">{$lenguaje.foro_index_label_titulo}</h2>
         <div class="col-lg-12 p-rt-lt-0">
             <hr class="cursos-hr-title-foro">
@@ -39,23 +39,23 @@
                     <div class="col-md-12">
                         {foreach from=$lista_tematica item=tematica}
                             {if $tematica.Lit_Discussions!="" || $tematica.Lit_Query!=""|| $tematica.Lit_Webinar!=""|| $tematica.Lit_Workshop!=""}
-                        <div class="col-md-6 tematica-foro margin-r-0">
+                        <div class="col-md-6 col-xs-12 col-sm-12 col-lg-6 tematica-foro margin-r-0">
                             <div class="row tem_titulo"><a class="link-foro" href="{$_layoutParams.root}foro/index/searchForo/{trim($tematica.Lit_Nombre)}"><h4><strong>{$tematica.Lit_Nombre}</strong></h4></a></div>
                             <div class="row detalles-tematica">
                                 {if $tematica.Lit_Discussions!=""}
-                                <div class="col-md-6 item-tematica"><a class="simulalink underline" href="{$_layoutParams.root}foro/index/discussions">Discusiones: {$tematica.Lit_Discussions}</a></div>
+                                <div class="col-md-6 col-xs-3 col-sm-3 col-lg-6 item-tematica"><a class="simulalink underline" href="{$_layoutParams.root}foro/index/discussions">Discusiones: {$tematica.Lit_Discussions}</a></div>
                                 {/if}
                                 {if $tematica.Lit_Query!=""}
-                                <div class="col-md-6 item-tematica"><a class="simulalink underline" href="{$_layoutParams.root}foro/index/query">Consultas: {$tematica.Lit_Query}</a></div>  
+                                <div class="col-md-6 col-xs-3 col-sm-3 col-lg-6 item-tematica"><a class="simulalink underline" href="{$_layoutParams.root}foro/index/query">Consultas: {$tematica.Lit_Query}</a></div>  
                                 {/if}
                                 {if $tematica.Lit_Webinar!=""}
-                                <div class="col-md-6 item-tematica"><a class="simulalink underline" href="{$_layoutParams.root}foro/index/webinar">Webinars: {$tematica.Lit_Webinar}</a></div> 
+                                <div class="col-md-6 col-xs-3 col-sm-3 col-lg-6 item-tematica"><a class="simulalink underline" href="{$_layoutParams.root}foro/index/webinar">Webinars: {$tematica.Lit_Webinar}</a></div> 
                                 {/if}
                                 {if $tematica.Lit_Workshop!=""}
-                                <div class="col-md-6 item-tematica"><a class="simulalink underline" href="{$_layoutParams.root}foro/index/workshop">Workshop: {$tematica.Lit_Workshop}</a></div> 
+                                <div class="col-md-6 col-xs-3 col-sm-3 col-lg-6 item-tematica"><a class="simulalink underline" href="{$_layoutParams.root}foro/index/workshop">Workshop: {$tematica.Lit_Workshop}</a></div> 
                                 {/if}
                                 
-                                <div class="row col-md-12 margin-t-5">
+                                <div class="row col-md-12 col-xs-12 col-sm-12 col-lg-12 margin-t-5">
                                 {$tematica.Lit_Members|default:0} Miembro(s) &nbsp;&nbsp;-&nbsp;&nbsp; {$tematica.Lit_Comentarios|default:0} Comentario(s)
                                 </div>
                             </div>
@@ -63,9 +63,9 @@
                          {/if}
                         {/foreach}
                     </div>
-                    <div class="col-lg-12"><br></div>
-
-                    <div class="col-md-12">
+                  
+                    <div class="clearfix"> </div>
+                    <div class="col-md-12 margin-t-10">
                         <h3 class="subtitle-foro">Actividad reciente</h3>
                     </div>
                     <div class="col-lg-12">
@@ -153,42 +153,7 @@
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="row">
-                    <div class="col-md-12">
-                        <h3 class="subtitle-foro">Agenda</h3>
-                    </div>
-                    <div class="col-lg-12">
-                        <hr class="cursos-hr-title-foro">
-                    </div>
-                    <div class="col-md-12">
-                        <div class="tab-pane fade in active show agenda-container">
-                             {foreach from=$lista_agenda item=agenda}
-                            <div class="contenedor-link-agenda">
-                                <a href="#" class="link-tabs-jsoft" style="padding-top: 30px;">
-                                    <div class="row ">
-                                        <div class="col-md-4 fecha-agenda">
-                                            <div class="text-uppercase" style="font-size: 13px;">{($agenda.For_FechaCreacion|date_format:"%A"|utf8_encode)|substr:0:4}</div>    
-                                            <div style="font-size: 21px;"><strong>29</strong></div>
-                                            <div class="text-uppercase" style="font-size: 13px;">{$agenda.For_FechaCreacion|date_format:"%B %Y"}</div>
-                                        </div>
-                                        <div class="col-md-8">
-                                            <div class="card-block px-3">
-                                                <h4 class="card-title" style="font-size: 17px;">{$agenda.For_Titulo|truncate:50:"..."}</h4>
-                                                <p class="card-text" style="font-size: 13px;">
-                                                <i class="glyphicon glyphicon-time"></i>
-                                                {$agenda.For_FechaCreacion|date_format:"%d.%M.%Y %H:%M"}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div> 
-                             {/foreach}
-                            
-                            <a href="#" class="mas-jsoft">VER MÁS</a>         
-
-                        </div>
-                    </div>
-                </div>
+                {include file ='modules/foro/views/index/ajax/tab_top5_agenda.tpl'}
             </div>
 
         </div>

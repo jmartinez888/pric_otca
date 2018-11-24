@@ -4,7 +4,7 @@
         height: 80px;
     }
     .sidebar-left {
-        padding-top: 40px;
+        padding-top: 20px;
         width: 100%;
         padding-right: 0px;
     }
@@ -47,7 +47,7 @@
         padding-left: 0px !important;
     }
 </style>
-<div class="col-md-2 col-xs-12 col-sm-4 col-lg-2" style="padding-left: 0px !important">
+<div class="col-md-2 col-xs-12 col-sm-3 col-lg-2" style="padding-left: 0px !important">
     <div class="sidebar-left">
         <div class="side-menu">
             <ul>
@@ -58,7 +58,7 @@
                 </a>
             </ul>
             <ul>
-                <a href="{BASE_URL}foro/index/discussions" class="nounderline">
+                <a href="{BASE_URL}foro/index/forum" class="nounderline">
                     <div class="side-menu2">
                         <li style="position: relative"><span>Discusiones</span></li>
                     </div>

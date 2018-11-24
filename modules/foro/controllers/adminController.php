@@ -22,8 +22,10 @@ class adminController extends foroController
 
     public function index()
     {
+       
+        $this->_acl->acceso("foro_list_admin");
         $this->_view->setTemplate(LAYOUT_FRONTEND);
-        $this->_acl->autenticado();
+        
         $this->validarUrlIdioma();
         $this->_view->getLenguaje("foro_admin_index");
         $lenguaje = Session::get("fileLenguaje");
@@ -291,22 +293,24 @@ class adminController extends foroController
     public function form($tipo = "", $funcion = "forum", $id_foro = 0)
     {
         $this->validarUrlIdioma();
-        $this->_view->getLenguaje("foro_admin_index");
-        $foro = $this->_model->getForosComplit_x_Id($id_foro);
-        $IdiomaOriginal = $foro['Idi_IdIdioma'];
         $this->_view->setTemplate(LAYOUT_FRONTEND);
-
+        $this->_view->getLenguaje("foro_admin_index");
+        $id_foro=$this->filtrarInt($id_foro);
+       //Verificar errores en el URl
         if ($tipo != "new" && $tipo != "edit") {
-            $this->redireccionar("foro/admin");
+            if($this->_acl->permiso("foro_list_admin"))
+                $this->redireccionar("foro/admin");
+            else
+                $this->redireccionar("foro");
         }
         if ($funcion != "forum" && $funcion != "webinar" && $funcion != "workshop" && $funcion != "query") {
-            $this->redireccionar("foro/admin");
+            if($this->_acl->permiso("foro_list_admin"))
+                $this->redireccionar("foro/admin");
+            else
+                $this->redireccionar("foro");
         }
 
-        if ($funcion == "query") {
-            $this->_view->setTemplate(LAYOUT_FRONTEND);
-        }
-
+        //Cuando preciona el boton guardar
         if ($this->botonPress("bt_guardar")) {
             $datatemp['post'] = $_POST;
             $datatemp['files'] = $_FILES;
@@ -357,13 +361,12 @@ class adminController extends foroController
                 $result_foro = $this->_model->insertarForo($iFor_Titulo, $iFor_Resumen, $iFor_Descripcion, $iFor_Palabras, $iFor_FechaCreacion, $iFor_FechaCierre, $iFor_Funcion, $iFor_Tipo, $iFor_Estado, $iFor_IdPadre, $iLit_IdLineaTematica, $iUsu_IdUsuario, $iEnt_IdEntidad, $id_recurso, $iIdi_IdIdioma);
                 $id_foro     = $result_foro[0];
 
-                $iRol_IdRol  = $this->_acl->getIdRol_x_ckey($Rol_ckey);
-                // dd($iRol_IdRol);
+                $Rol_IdRol  = $this->_acl->getIdRol_x_ckey($Rol_ckey);              
 
                 $model_index    = $this->loadModel('index');
 
-                $result_inscrip = $model_index->inscribir_participante_foro($result_foro[0], $iUsu_IdUsuario, $iRol_IdRol["Rol_IdRol"], 1);
-                // print_r($result_inscrip);
+                $result_inscrip = $model_index->inscribir_participante_foro($result_foro[0], $iUsu_IdUsuario, $Rol_IdRol["Rol_IdRol"], 1);              
+                
 
             } else {
 
@@ -406,18 +409,19 @@ class adminController extends foroController
             }
 
             if ($funcion == "query") {
-                // $this->redireccionar("foro/index/query");
+                 $this->redireccionar("foro/index/query");
             } else {
-                // $this->redireccionar("foro/index/ficha/" . $id_foro);
+                $this->redireccionar("foro/index/ficha/" . $id_foro);
             }
         }
-
-        $this->_view->getLenguaje("foro_admin_index");
-        $lenguaje = Session::get("fileLenguaje");
-
+        
+         //Cuando va editar un foro
         if ($tipo == "edit") {
+            $foro = $this->_model->getForosComplit_x_Id($id_foro);
+            $IdiomaOriginal = $foro['Idi_IdIdioma'];        
+
             // exit;
-            $this->_view->assign('permiso', "editar_foro");
+            
             $this->_view->assign('titulo', "Foro: Editar Foro");
             $this->_view->assign('idForo', $id_foro);
             // echo $foro['Idi_IdIdioma']; exit;
@@ -437,13 +441,16 @@ class adminController extends foroController
                 }
 
             } else {
-                return $this->redireccionar("foro/admin");
+                
+                if($this->_acl->permiso("foro_list_admin"))
+                    $this->redireccionar("foro/admin");
+                else
+                   return $this->redireccionar("foro/index/".$funcion);
+                 
             }
 
         } else {
-            // dd('asd');
-            $this->_view->assign('permiso', "nuevo_foro");
-            $this->_view->assign('titulo', $lenguaje["foro_admin_form_titulo"]);
+            // dd('asd');            
             $this->_view->assign('start_date', date('d-m-Y H:m'));
             $this->_view->assign('end_date', date('d-m-Y H:m', strtotime('+1 day')));
         }
@@ -451,13 +458,36 @@ class adminController extends foroController
         // $linea_tematica = $this->_model->getLineaTematicas();
         // $this->_view->assign('linea_tematica', $linea_tematica);
         $this->_view->assign('linea_tematica', ForoTematica::activos()->visibles()->get());
+        $model_entidad= $this->loadModel('entidad','hidrogeo');
+
+        $this->_view->assign('list_entidad',$model_entidad->getEntidades("where Ent_Estado =1"));
+        $this->_view->assign('tipo', $tipo);
         $this->_view->assign('Form_Funcion', $funcion);
         $this->_view->setJs(array('form', array(BASE_URL . 'public/ckeditor/ckeditor.js'), array(BASE_URL . 'public/ckeditor/adapters/jquery.js'), array(BASE_URL . 'public/js/jquery-ui.min.js'), array(BASE_URL . 'public/js/jquery-ui-timepicker-addon.js')));
         $this->_view->setCss(array('form', array(BASE_URL . "public/css/jquery-ui-timepicker-addon.css"), array(BASE_URL . "public/css/jquery-ui.min.css")));
 
         if ($tipo == "new" && $id_foro != 0) {
+            $model_index= $this->loadModel('index');
+            $foro = $this->_model->getForosComplit_x_Id($id_foro);
+            $Nombre_propietario_foro = $model_index->getPropietario_foro($foro["Usu_IdUsuario"]);
+            $foro["Usu_Usuario"] = $Nombre_propietario_foro["Usu_Nombre"];
+            $foro["tiempo"] = $this->getTiempo($foro["For_FechaCreacion"]);
+            $Nvaloraciones_foro = $model_index->getNvaloraciones($foro["For_IdForo"]);
+            $foro["votos"] = $Nvaloraciones_foro["Nvaloraciones"];
+            $Numero_participantes_subforo = $model_index->getNumero_participantes_x_idForo($foro["For_IdForo"]);
+            $foro["For_TParticipantes"] = $Numero_participantes_subforo["numero_participantes"];
+            $Numero_comentarios_x_idForo = $model_index->getNumero_comentarios_x_idForo($foro["For_IdForo"]);
+            $foro["For_TComentarios"] = $Numero_comentarios_x_idForo["Numero_comentarios"];
+            if (empty($foro)) {
+                if($this->_acl->permiso("foro_list_admin"))
+                    $this->redireccionar("foro/admin");
+                else
+                   return $this->redireccionar("foro/index/".$funcion);
+            }
+            $this->_view->assign('foro_padre', $foro);
             $this->_view->assign('iFor_IdPadre', $id_foro);
         }
+
         $this->_view->assign('idiomas',$this->_model->getIdiomas());
         $Idi_IdIdioma = Cookie::lenguaje();
         $this->_view->assign('idiomaUrl',$Idi_IdIdioma);
@@ -936,7 +966,7 @@ class adminController extends foroController
                 $lenguaje = Session::get("fileLenguaje");
                 $this->_view->assign('titulo', $lenguaje["foro_admin_members_titulo"]);
                 $this->_view->setJs(array('members', array(BASE_URL . 'public/ckeditor/ckeditor.js'), array(BASE_URL . 'public/ckeditor/adapters/jquery.js')));
-
+                $this->_view->setCss(array('form'));
                 $paginador = new Paginador();
 
                 $lista_members  = $this->_model->getMembers_x_Foro($id_foro, "lider_foro");
@@ -952,10 +982,16 @@ class adminController extends foroController
                 $this->_view->assign('text_busqueda_miembro', '');
                 $this->_view->renderizar('members');
             } else {
-                return $this->redireccionar("foro/admin");
+                if($this->_acl->permiso("foro_list_admin"))
+                    $this->redireccionar("foro/admin");
+                else
+                   return $this->redireccionar("foro");
             }
         } else {
-            return $this->redireccionar("foro/admin");
+            if($this->_acl->permiso("foro_list_admin"))
+                    $this->redireccionar("foro/admin");
+                else
+                   return $this->redireccionar("foro");
         }
     }
 

@@ -5,8 +5,8 @@
             <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 
             <!-- ficha-foro-josepacaya -->
-                <div class="col-lg-12 p-rt-lt-0">
-                    <div class="pull-right etiqueta">
+                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 p-rt-lt-0">
+                    <div class="etiqueta">
                         {if $foro.For_Funcion == 'forum'}
                             Discusiones
                         {/if}
@@ -20,12 +20,7 @@
                             Workshop
                         {/if}
                     </div>
-                </div>
-                <div class="col-lg-12 p-rt-lt-0">
-                    <hr class="cursos-hr">
-                </div>
-                <div class="col col-lg-12">
-                    <h3 class="titulo-ficha">{$foro.For_Titulo}</h3>
+
                 </div>
                 {if Session::get('autenticado')}
                     {if $Rol_Ckey == "administrador" || $Rol_Ckey == "lider_foro"}
@@ -38,26 +33,32 @@
                         {/foreach}
                         {if $foro.For_Estado == 2}
                             {if $i==0}
-                                <div class="col col-lg-1 text-center btn_opciones_foro pull-right" style="padding-top: 3%; padding-left: 3%;">
+                                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 text-center btn_opciones_foro pull-right">
                                     <a href="{$_layoutParams.root_clear}dublincore/registrar/index/{$foro.Rec_IdRecurso}/{$foro.For_IdForo}" title="Subir reporte de foro" id="btn-configuracion" class="btn btn-primary btn-circle dropdown-toggle"><i class="glyphicon glyphicon-cloud-upload"></i>
                                     </a>
                                 </div>
                             {else}
-                                <div class="col col-lg-1 text-center btn_opciones_foro pull-right" style="padding-top: 3%; padding-left: 3%;">
+                                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 text-center btn_opciones_foro pull-right">
                                     <a href="{$_layoutParams.root_clear}dublincore/editar/index/{$foro.Rec_IdRecurso}/{$foro.For_IdForo}" title="Editar reporte de foro" id="btn-configuracion" class="btn btn-primary btn-circle dropdown-toggle"><i class="glyphicon glyphicon-pencil"></i>
                                     </a>
                                 </div>
-                                <div class="col col-lg-1 text-center btn_opciones_foro pull-right" style="padding-top: 3%; padding-left: 3%;">
+                                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 text-center btn_opciones_foro pull-right">
                                     <a target="_blank" href="{$_layoutParams.root_archivo_fisico}{$file.Fif_NombreFile}" title="Descargar reporte de foro" id="btn-configuracion" class="btn btn-primary btn-circle dropdown-toggle"><i class="glyphicon glyphicon-cloud-download"></i>
                                     </a>
                                 </div>
                             {/if}
                         {/if}
-                    <div class="col col-lg-1 text-center btn_opciones_foro pull-right" style="padding-left: 3%; padding-top: 3%;">
+                    <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 text-center btn_opciones_foro pull-right">
                         <button  title="Administrar" id="btn-configuracion" class="btn btn-primary btn-circle dropdown-toggle" data-toggle="dropdown" type="button"><i class="glyphicon glyphicon-cog"></i>
                         </button>
                          <ul class="dropdown-menu" style="min-width: 200px;">
                             <li><a href="{$_layoutParams.root}foro/admin/form/edit/{$foro.For_Funcion}/{$foro.For_IdForo}" id_foro="{$foro.For_IdForo}" class="opciones_foro" style="cursor: pointer;">Editar<i class="i_opciones_foro glyphicon glyphicon-pencil pull-right"></i></a></li>
+                            {if !isset($foro.For_IdPadre)}
+                                {if $foro.Row_Estado == 1 && $foro.For_Estado == 1}
+                                 <li><a  href="{$_layoutParams.root}foro/admin/form/new/forum/{$foro.For_IdForo}" class="opciones_foro" style="cursor: pointer;">Crear Sub Discusión<i class="i_opciones_foro glyphicon glyphicon-plus pull-right"></i></a></li>
+                                {/if}
+                            {/if}
+                           
                             <li><a href="{$_layoutParams.root}foro/admin/members/{$foro.For_IdForo}" id_foro="{$foro.For_IdForo}" class="opciones_foro" style="cursor: pointer;">Ver Miembros<i class="i_opciones_foro glyphicon glyphicon-user pull-right"></i></a></li>
                             <li><a href="{$_layoutParams.root}foro/admin/actividad/{$foro.For_IdForo}" id_foro="{$foro.For_IdForo}" class="opciones_foro" style="cursor: pointer;">Ver Actividades<i class="i_opciones_foro glyphicon glyphicon-calendar pull-right"></i></a></li>
                             {if $foro.For_Estado== 2 || $foro.Row_Estado == 0 || $foro.For_Estado== 0}
@@ -80,28 +81,40 @@
                     </div>
                     {/if}
                 {/if}
-                <div class="col-lg-12 p-rt-lt-0" style="font-size: 12px;">
-                    <div class="col-lg-6 p-rt-lt-0">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12  p-rt-lt-0">
+                    <hr class="cursos-hr">
+                </div>
+                <div class="col col-xs-12 col-sm-12 col-md-12 col-lg-12 ">
+                    <h3 class="titulo-ficha margin-t-10">{$foro.For_Titulo}</h3>
+                </div>
+                
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 p-rt-lt-0" style="font-size: 12px;">
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 p-rt-lt-0">
                         <i class="glyphicon glyphicon-user" style="color: #777; text-align: center; vertical-align: middle; margin-bottom: 5px;"></i>
                     Creado hace {$tiempo} por <strong>{$nombre_usuario}</strong>
                     </div>
-                    <div class="col-lg-6 p-rt-lt-0">
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 p-rt-lt-0">
                         <div class="pull-right">
                             <i class="glyphicon glyphicon-comment" style="color: #777; text-align: center; vertical-align: middle; margin-bottom: 3px;"></i>
                             Comentarios: <strong>{$Numero_comentarios_x_idForo}</strong>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-12 p-rt-lt-0">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 p-rt-lt-0">
                     <hr class="cursos-hr">
                 </div>
-                <div class="col-lg-12 contenido">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 contenido">
                     <p>{$foro.For_Descripcion|html_entity_decode}</p>
                 </div>
                 {if $foro.For_Funcion=="forum"}
                     {if count($foro.Sub_Foros)>0}
-                    <div class="col col-lg-11 pull-left">
+                    <div class="col col-xs-12 col-sm-12 col-md-12 col-lg-12 pull-left">
                         <label class="">Sub Discusiones:</label>
+                        {if !isset($foro.For_IdPadre)}
+                            {if $foro.Row_Estado == 1 && $foro.For_Estado == 1}
+                                <a type="button"  href="{$_layoutParams.root}foro/admin/form/new/forum/{$foro.For_IdForo}" class="btn btn-primary btn-sm pull-right" title="Nueva Sub Discusión" style="padding: 2px 10px;"> Crear &nbsp;<i class=" glyphicon glyphicon-plus pull-right"> </i></a>
+                            {/if}
+                        {/if}
                         <hr class="cursos-hr">
                             <ul class="col">
                                 {foreach from=$foro.Sub_Foros  item=sub_foro}
@@ -126,24 +139,9 @@
                                 {/foreach}
                             </ul>
                     </div>
-                    {/if}
-                    {if isset($foro.Sub_Foros.For_IdPadre)}
-                        {if $foro.Row_Estado == 1 && $foro.For_Estado == 1}
-                        <div class="col-lg-2 pull-left" style="margin-bottom: 10px; padding-left: 0px;">
-                            <a type="button"  href="{$_layoutParams.root}foro/admin/form/new/forum/{$foro.For_IdForo}" class="btn btn-primary btn-sm" title="Nuevo Sub Foro">Nuevo</a>
-                        </div>
-                        {/if}
-                    {else}
-                        {if !isset($foro.For_IdPadre)}
-                            {if $foro.Row_Estado == 1 && $foro.For_Estado == 1}
-                            <div class="col-lg-2 pull-left" style="margin-bottom: 10px; padding-left: 0px;">
-                                <a type="button"  href="{$_layoutParams.root}foro/admin/form/new/forum/{$foro.For_IdForo}" class="btn btn-primary btn-sm" title="Nuevo Sub Foro">Nuevo</a>
-                            </div>
-                            {/if}
-                        {/if}
-                    {/if}
+                    {/if}                       
                 {/if}
-                <div class="col-lg-12 p-rt-lt-0" style="font-size: 12px;">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 p-rt-lt-0" style="font-size: 12px;">
                     <div class="col-lg-7 p-rt-lt-0">
                         {if $foro.For_PalabrasClaves != ""}
                         <div class="" style="width: fit-content;line-height: 250%;">
@@ -168,7 +166,7 @@
                     </div>
                 </div>
 
-                <div class="col-lg-12 p-rt-lt-0">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 p-rt-lt-0">
                     <hr class="cursos-hr">
                     <div class="col-lg-12 p-rt-lt-0 id="valoraciones_foro">
                         {if Session::get('autenticado')}
@@ -276,7 +274,7 @@
                         {/if}
                     </div>
                 </div>
-                    <div class="col-md-12 p-rt-lt-0">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 p-rt-lt-0">
                         {if Session::get('autenticado')}
                             {if $comentar_foro || $Rol_Ckey == "administrador_foro" || $Rol_Ckey == "administrador"}
                                 {if $foro.For_Estado == 0 || $foro.For_Estado == 2 || $foro.Row_Estado == 0}
@@ -332,17 +330,17 @@
                                     <br>
                                     {if $Rol_Ckey == "administrador" }
                                         {if $foro.Row_Estado== 1 && $foro.For_Estado == 0}
-                                            <div class="col-lg-12 p-rt-lt-0 alert alert-danger text-center">
+                                            <div class="ccol-xs-12 col-sm-12 col-md-12 col-lg-12 p-rt-lt-0 alert alert-danger text-center">
                                                 <strong class="texto-alert-danger">!Este foro se encuentra DESHABILITADO!. Si desea habilitarlo, ir al boton de configuración <i class="glyphicon glyphicon-cog"></i> y de click en Habilitar.</strong>
                                             </div>
                                         {else}
                                             {if $foro.Row_Estado== 1 && $foro.For_Estado == 2}
-                                                <div class="col-lg-12 p-rt-lt-0 alert alert-danger text-center">
+                                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 p-rt-lt-0 alert alert-danger text-center">
                                                     <strong class="texto-alert-danger">!Este foro se encuentra CERRADO!. Si desea habilitarlo, ir al boton de configuración <i class="glyphicon glyphicon-cog"></i> y de click en Habilitar.</strong>
                                                 </div>
                                             {else}
                                                 {if $foro.Row_Estado== 0}
-                                                <div class="col-lg-12 p-rt-lt-0 alert alert-danger text-center">
+                                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 p-rt-lt-0 alert alert-danger text-center">
                                                     <strong class="texto-alert-danger">!Este foro se encuentra ELIMINADO!. Si desea habilitarlo, ir al boton de configuración <i class="glyphicon glyphicon-cog"></i> y de click en Habilitar.</strong>
                                                 </div>
                                                 {/if}
@@ -350,11 +348,11 @@
                                         {/if}
                                     {else}
                                         {if $foro.For_Estado== 2}
-                                            <div class="col-lg-12 p-rt-lt-0 alert alert-danger text-center">
+                                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 p-rt-lt-0 alert alert-danger text-center">
                                                 <strong class="texto-alert-danger">!Este foro se encuentra cerrado!</strong>
                                             </div>
                                         {else}
-                                        <div class="col-md-12 p-rt-lt-0">
+                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 p-rt-lt-0">
                                              <button class="btn btn-primary btn-md inscribir_foro" id_foro="{$foro.For_IdForo}">Inscríbete para comentar
                                              <i class="glyphicon glyphicon-log-in"></i></button>
                                         </div>
@@ -370,15 +368,15 @@
                             {/if}
                         {else}
                             {if $foro.For_Estado== 2}
-                                <div class="col-lg-12 p-rt-lt-0 alert alert-danger text-center">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 p-rt-lt-0 alert alert-danger text-center">
                                     <strong class="texto-alert-danger">!Este foro se encuentra cerrado!</strong>
                                 </div>
                             {else}
                                 <div class="">
-                                <div class="col-lg-12 anuncio">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 anuncio">
                                   <p>Para colgar su contribución inicie sesión.</p>
                                 </div>
-                                <div class="col-md-12 p-rt-lt-0">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 p-rt-lt-0">
                                     <button data-toggle="modal" data-target="#modal-login" id="login-form-link" class="btn btn-group btn-success ini-sesion">Inicie Sesion <i class="glyphicon glyphicon-log-in"></i></button>
                                 </div>
                             </div>
@@ -386,13 +384,13 @@
                         {/if}
                     </div>
 
-                <div class="col-lg-12 p-rt-lt-0">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 p-rt-lt-0">
                     <h4>
                         <i class="glyphicon glyphicon-comment" style="color: #777; text-align: center; vertical-align: middle; margin-bottom: 3px;"></i>
                         Comentarios:
                     </h4>
                 </div>
-                <div class="col-lg-12 p-rt-lt-0">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 p-rt-lt-0">
                     <hr class="cursos-hr">
                 </div>
                 <input type="hidden" id="ficha_foro" name="ficha_foro" value="ficha_foro">
