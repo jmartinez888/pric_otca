@@ -15,6 +15,7 @@ class gleccionController extends elearningController {
         $this->_view->assign('_url', BASE_URL . "modules/" . $this->_request->getModulo() . "/views/");
         $this->getLibrary("ServiceResult");
         $this->service = new ServiceResult();
+        $this->examen = $this->loadModel("examen");  
     }
 
     public function _view_lecciones_modulo($id_curso = 0, $id_modulo = 0){
@@ -167,18 +168,26 @@ class gleccionController extends elearningController {
             $view = "ajax/_view_2";
             break;
           case 3:
-            $ExaModel = $this->loadModel("examen");
+            // $ExaModel = $this->loadModel("examen");
             // $examen = $ExaModel->getExamenxLeccion($leccion["Lec_IdLeccion"]);
             $condicion = " WHERE e.Lec_IdLeccion = ".$leccion["Lec_IdLeccion"]." ";
-            $this->_view->assign('examens',  $ExaModel->getExamensCondicion(0,CANT_REG_PAG, $condicion));
+            $this->_view->assign('examens',  $this->examen->getExamensCondicion(0,CANT_REG_PAG, $condicion));
             $paginador = new Paginador();
-            $arrayRowCount = $ExaModel->getExamenesRowCount($condicion);
+            $arrayRowCount = $this->examen->getExamenesRowCount($condicion);
             $totalRegistros = $arrayRowCount['CantidadRegistros'];
             $paginador->paginar($totalRegistros,"listarexamens", "", 0, CANT_REG_PAG, true);
             $this->_view->assign('numeropagina', $paginador->getNumeroPagina());
             $this->_view->assign('idcurso', $curso);
-            $this->_view->assign('porcentaje', $ExaModel->getExamensCondicion(0,CANT_REG_PAG, " WHERE e.Lec_IdLeccion = ".$leccion["Lec_IdLeccion"]." AND e.Exa_Estado = 1 AND e.Row_Estado = 1"));
-
+            $porcentaje = $this->examen->getExamensCondicion(0,CANT_REG_PAG, " WHERE e.Lec_IdLeccion = ".$leccion["Lec_IdLeccion"]." AND e.Exa_Estado = 1 AND e.Row_Estado = 1");
+            // print_r($porcentaje);
+            if (count($porcentaje)>0) {
+               
+            $this->_view->assign('porcentaje', $porcentaje['Porcentaje'] );
+            } else {
+                
+            $this->_view->assign('porcentaje', "");
+            }
+            
             // if ($examen && count($examen) > 0) {
             // // print_r($examen);exit;
             //     $this->redireccionar("elearning/examen/editarexamen/".$examen["Cur_IdCurso"]."/".$examen["Exa_IdExamen"]);
@@ -204,7 +213,7 @@ class gleccionController extends elearningController {
         $this->_view->render($view);
     }
 
-    public function _cambiarEstadoExamen(){
+    public function _cambiarEstadoExamenPO(){
         $this->_acl->acceso('agregar_rol');
         //Para Mensajes
         $resultado = array();
@@ -288,6 +297,139 @@ class gleccionController extends elearningController {
         $this->_view->assign('idcurso', $idcurso);
         $this->_view->assign('porcentaje', $ExaModel->getExamensCondicion(0,CANT_REG_PAG, " WHERE e.Lec_IdLeccion = ".$leccion["Lec_IdLeccion"]." AND e.Exa_Estado = 1 AND e.Row_Estado = 1"));
 
+        $this->_view->renderizar('ajax/listarexamens', false, true);
+    }
+
+    public function _cambiarEstadoExamen(){
+        $this->_acl->acceso('agregar_rol');
+        //Para Mensajes
+        $resultado = array();
+        $mensaje = "error";
+        $contenido = "";
+        //Para Mensajes
+
+        $txtBuscar = $this->getSql('palabra');
+        $pagina = $this->getInt('pagina');
+        $filas=$this->getInt('filas');
+        $Exa_Idpregunta = $this->getInt('_Exa_IdExamen');
+        $Exa_Estado = $this->getInt('_Exa_Estado');
+        $Lec_IdLeccion = $this->getInt('_Lec_IdLeccion');
+        // $idExamen=$this->getInt('idexamen');
+        $idcurso = $this->getInt('idcurso');
+        // echo $Per_Estado."//".$Per_Idpregunta; exit;
+        if(!$Exa_Idpregunta){
+            $contenido = 'Error parametro ID...!!';
+            $mensaje = "error";
+            array_push($resultado, array(0 => $mensaje, 1 => $contenido));
+        } else {
+            $rowCountEstado = $this->examen->cambiarEstadoExamen($Exa_Idpregunta, $Exa_Estado);
+            if ($rowCountEstado > 0) {
+                if ($Exa_Estado == 1) {
+                    $contenido = ' Se cambio de estado correctamente a <b>Deshabilitado</b> <i data-toggle="tooltip" data-placement="bottom" class="glyphicon glyphicon-remove-sign" title="Deshabilitado" style="background: #FFF; color: #DD4B39; padding: 2px;"/> ...!! ';              
+                }
+                if ($Exa_Estado == 0) {
+                     $contenido = ' Se cambio de estado correctamente a <b>Habilitado</b> <i data-toggle="tooltip" data-placement="bottom" class="glyphicon glyphicon-ok-sign" title="Habilitado" style=" background: #FFF;  color: #088A08; padding: 2px;"/> ...!! ';
+                }     
+                $mensaje = "ok";
+                array_push($resultado, array(0 => $mensaje, 1 => $contenido));       
+            } else {
+                $contenido = 'Error de variable(s) en consulta..!!'; 
+                $mensaje = "error";
+                array_push($resultado, array(0 => $mensaje, 1 => $contenido));
+            }        
+        }
+        $mensaje_json = json_encode($resultado);
+        // echo($mensaje_json); exit();
+        $this->_view->assign('_mensaje_json', $mensaje_json);
+        $this->_buscarexamens();
+    }
+
+    public function _buscarexamens(){
+        $txtBuscar = $this->getSql('palabra');
+        $pagina = $this->getInt('pagina');
+        $idcurso=$this->getInt('idcurso');
+
+        // $Exa_Idpregunta = $this->getInt('_Exa_IdExamen');
+        // $Exa_Estado = $this->getInt('_Exa_Estado');
+        $Lec_IdLeccion = $this->getInt('_Lec_IdLeccion');
+
+        $condicion = " ";
+        $soloActivos = 0;
+        if ($txtBuscar) 
+        {
+            $condicion = "  WHERE Lec_IdLeccion = $Lec_IdLeccion  AND Exa_Titulo liKe '%$txtBuscar%' ";
+            //Filtro por Activos/Eliminados
+            if (!$this->_acl->permiso('ver_eliminados')) {
+                $soloActivos = 1;
+                $condicion .= " AND e.Row_Estado = $soloActivos ";
+            } else {
+                $condicion .= " ORDER BY e.Row_Estado DESC  ";
+            }
+        } else {
+            //Filtro por Activos/Eliminados     
+            $condicion = "  WHERE e.Lec_IdLeccion = $Lec_IdLeccion ORDER BY e.Row_Estado DESC ";   
+            if (!$this->_acl->permiso('ver_eliminados')) {
+                $soloActivos = 1;
+                $condicion = "  WHERE e.Lec_IdLeccion = $Lec_IdLeccion AND e.Row_Estado = $soloActivos ";
+            }
+        }         
+
+        $paginador = new Paginador();
+
+        $arrayRowCount = $this->examen->getExamensRowCount($condicion);
+        $totalRegistros = $arrayRowCount['CantidadRegistros'];
+        // echo($totalRegistros);
+        // print_r($arrayRowCount); echo($condicion);exit;
+        $porcentaje = $this->examen->getExamensPorcentaje($idcurso);
+        $this->_view->assign('examens', $this->examen->getExamensCondicion($pagina,CANT_REG_PAG, $condicion));
+        $this->_view->assign('porcentaje', $porcentaje['Porcentaje'] );
+
+        $paginador->paginar( $totalRegistros ,"listarexamens", "$txtBuscar", $pagina, CANT_REG_PAG, true);
+
+        $this->_view->assign('numeropagina', $paginador->getNumeroPagina());
+        $this->_view->assign('paginacionexamens', $paginador->getView('paginacion_ajax_s_filas'));
+        $this->_view->renderizar('ajax/listarexamens', false, true);
+    }
+
+    public function _paginacion_listarexamens($txtBuscar = false){
+        //$this->validarUrlIdioma();
+        $pagina = $this->getInt('pagina');
+        $filas=$this->getInt('filas');
+        $idcurso=$this->getInt('idcurso');
+        $totalRegistros = $this->getInt('total_registros');
+
+        $condicion = " ";
+        $soloActivos = 0;
+        // $nombre = $this->getSql('palabra');
+        if ($txtBuscar) 
+        {
+            $condicion = " WHERE Cur_IdCurso=$idcurso AND Exa_Titulo liKe '%$txtBuscar%' ";
+            //Filtro por Activos/Eliminados
+            if (!$this->_acl->permiso('ver_eliminados')) {
+                $soloActivos = 1;
+                $condicion .= " AND e.Row_Estado = $soloActivos ";
+            } else {
+                $condicion .= " ORDER BY e.Row_Estado DESC  ";
+            }
+        } else {
+            //Filtro por Activos/Eliminados     
+            $condicion = "  WHERE Cur_IdCurso=$idcurso ORDER BY e.Row_Estado DESC ";   
+            if (!$this->_acl->permiso('ver_eliminados')) {
+                $soloActivos = 1;
+                $condicion = "  WHERE Cur_IdCurso=$idcurso AND e.Row_Estado = $soloActivos ";
+            }
+        }         
+
+        $paginador = new Paginador();
+        // $arrayRowCount = $this->_aclm->getpreguntasRowCount$arrayRowCount = 0,($condicion);
+        $porcentaje = $this->examen->getExamensPorcentaje($idcurso);
+        $paginador->paginar( $totalRegistros,"listarexamens", "$txtBuscar", $pagina, $filas, true);
+        // print_r($porcentaje['Porcentaje']);
+        $this->_view->assign('examens', $this->examen->getExamensCondicion($pagina,$filas, $condicion));
+        $this->_view->assign('numeropagina', $paginador->getNumeroPagina());
+        $this->_view->assign('porcentaje', $porcentaje['Porcentaje'] );
+        //$this->_view->assign('cantidadporpagina',$registros);
+        $this->_view->assign('paginacionexamens', $paginador->getView('paginacion_ajax_s_filas'));
         $this->_view->renderizar('ajax/listarexamens', false, true);
     }
 
