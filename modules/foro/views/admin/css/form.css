@@ -119,7 +119,7 @@ and open the template in the editor.
     float: left;
     list-style: none outside none;
     margin: 0;
-    padding: 0 0 0 15px;
+    padding: 0 0 0 0px;
     width: auto;
 }
 .status-upload ul > li {
@@ -209,5 +209,10 @@ and open the template in the editor.
     margin-right: 9px;
     margin-top: 9px;
     padding: 6px 15px;
+}
+.foro-hr-title-form {
+    margin-top: 0px;
+    padding: 0.2px;
+    border-top: 1px solid #3c763d;
 }
 

@@ -44,6 +44,7 @@ class indexController extends foroController {
         }
         $lista_tematica = $this->_model->getResumenLineTematica();
         $lista_agenda = $this->_model->getAgendaIndex();
+     
         $this->_view->assign('lista_foros', $lista_foros);
         $this->_view->assign('Rol_Ckey', $Rol_Ckey["Rol_Ckey"]);
         $this->_view->assign('lista_tematica', $lista_tematica);
@@ -73,7 +74,7 @@ class indexController extends foroController {
         $this->_view->renderizar('searchForo');
     }
 
-    public function discussions() {
+    public function forum() {
         $this->_view->setTemplate(LAYOUT_FRONTEND);
         $this->_view->assign('titulo', "Discusiones");
         $this->_view->setCss(array("jp-index"));
@@ -196,8 +197,33 @@ class indexController extends foroController {
         $this->_view->renderizar('statistics');
     }
 
-    public function ficha($iFor_IdForo) {
+    public function ficha($iFor_IdForo=0) {
+
+        //Verifica parametro 
+        $iFor_IdForo=$this->filtrarInt($iFor_IdForo);
+
+        if ($iFor_IdForo==0) {
+            $this->redireccionar("foro");
+        }
+        $foro = $this->_model->getForo_x_idforo($iFor_IdForo);
+        if (empty($foro)) {
+            $this->redireccionar("foro");
+        }
         $this->validarUrlIdioma();
+        $this->_view->setTemplate(LAYOUT_FRONTEND);
+        $this->_view->getLenguaje("foro_index_ficha");
+        $this->_view->setCss([
+            [BASE_URL.'public/vendors/jquery_mentions/css/jquery.mentionsInput.css'],
+            "ficha_foro", "jp-ficha_foro"
+        ]);
+        $this->_view->setJs([
+            [BASE_URL.'public/vendors/underscore/underscore-min.js'],
+            [BASE_URL.'public/vendors/autosize/autosize.min.js'],
+            [BASE_URL.'public/vendors/jquery/js/jquery.elastic.js'],
+            [BASE_URL.'public/vendors/jquery/js/jquery.events.input.js'],
+            [BASE_URL.'public/vendors/jquery_mentions/js/jquery.mentionsInput.js'],
+            "ficha_foro"
+        ]);
 
         $idUsuario = Session::get('id_usuario');
         if(!empty($idUsuario)){
@@ -215,23 +241,10 @@ class indexController extends foroController {
             $Rol_Ckey["Rol_Ckey"]="";
 
         }
-        $this->_view->setTemplate(LAYOUT_FRONTEND);
-        $this->_view->getLenguaje("foro_index_ficha");
-        $this->_view->setCss([
-            [BASE_URL.'public/vendors/jquery_mentions/css/jquery.mentionsInput.css'],
-            "ficha_foro", "jp-ficha_foro"
-        ]);
-        $this->_view->setJs([
-            [BASE_URL.'public/vendors/underscore/underscore-min.js'],
-            [BASE_URL.'public/vendors/autosize/autosize.min.js'],
-            [BASE_URL.'public/vendors/jquery/js/jquery.elastic.js'],
-            [BASE_URL.'public/vendors/jquery/js/jquery.events.input.js'],
-            [BASE_URL.'public/vendors/jquery_mentions/js/jquery.mentionsInput.js'],
-            "ficha_foro"
-        ]);
+        
 
         $lenguaje = Session::get("fileLenguaje");
-        $foro = $this->_model->getForo_x_idforo($iFor_IdForo);
+        
         $linea_tematica = $this->_model->getLineaTematica($foro["Lit_IdLineaTematica"]);
         // dd($linea_tematica);
         // echo $linea_tematica["Lit_Nombre"];exit;
@@ -471,59 +484,7 @@ class indexController extends foroController {
 
     }
 
-    public function getTiempo($fecha_inicial)
-    {
-        $tiempo ="";
-        $hora_servidor = $this->_model->getHora_Servidor();
-        $fechainicial = new DateTime($fecha_inicial);
-        $fechafinal = new DateTime($hora_servidor["hora_servidor"]);
-        $diferencia = $fechainicial->diff($fechafinal);
-        $meses = ( $diferencia->y * 12 ) + $diferencia->m;
-        if($diferencia->y < 1){
-            if ($meses<1) {
-                if ($diferencia->d < 1) {
-                    if ($diferencia->h < 1) {
-                        if($diferencia->i < 1){
-                            $tiempo = " un momento ";
-                        }else{
-                            if($diferencia->i == 1){
-                                $tiempo = $diferencia->i . " minuto ";
-                            }else{
-                                $tiempo = $diferencia->i . " minutos ";
-                            }
-
-                        }
-                    }else{
-                        if($diferencia->h == 1){
-                            $tiempo = $diferencia->h . " hora ";
-                        }else{
-                            $tiempo = $diferencia->h . " horas ";
-                        }
-                    }
-                }else{
-                    if($diferencia->d == 1){
-                        $tiempo = $diferencia->d . " día ";
-                    }else{
-                        $tiempo = $diferencia->d . " días ";
-                    }
-                }
-            }else{
-                if($diferencia->m == 1){
-                    $tiempo = $diferencia->m . " mes ";
-                }else{
-                    $tiempo = $diferencia->m . " meses ";
-                }
-            }
-        }else{
-            if($diferencia->y == 1){
-                    $tiempo = $diferencia->y . " año ";
-            }else{
-                $tiempo = $diferencia->y . " años ";
-            }
-        }
-        return $tiempo;
-    }
-
+    
     public function ficha_comentario_completo($iFor_IdForo, $iCom_IdComentario) {
         $this->validarUrlIdioma();
 

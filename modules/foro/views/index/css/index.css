@@ -1,3 +1,6 @@
+/* Dispositivos muy pequeños (teléfonos de hasta 768px de anchura) */
+/* No se define ninguna media query porque este es el estilo por
+   defecto utilizado por Bootstrap 3 */
 .foro-item{
     height: auto;
     background-color: #f2f2f2;
@@ -43,3 +46,32 @@
     text-decoration:underline;
     cursor: pointer;
 }
+
+.foro_banner{
+   background-color: #50c555;
+}
+
+ 
+/* Dispositivos pequeños (tablets, anchura mayor o igual a 768px) */
+@media (min-width: 768px) { 
+    .foro_banner{
+        background-color: #50c555;
+    }
+}
+ 
+/* Dispositivos medianos (ordenadores, anchura mayor o igual a 992px) */
+@media (min-width: 992px) { 
+    .foro_banner{
+    background-image: url(/modules/foro/views/index/img/encabezado-foro.jpg); background-repeat: no-repeat;background-size: 100%;
+
+}
+}
+ 
+/* Dispositivos grandes (ordenadores, anchura mayor o igual a 1200px) */
+@media (min-width: 1200px) { 
+    .foro_banner{
+    background-image: url(/modules/foro/views/index/img/encabezado-foro.jpg); background-repeat: no-repeat;background-size: 100%;
+}
+
+}
+

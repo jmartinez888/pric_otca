@@ -107,3 +107,18 @@
 	text-decoration: underline;
 	color: #000;
 }
+.btn-configuracion {
+    width: 35px;
+    height: 35px;
+    padding: 6px 4px;
+    border-radius: 35px;
+    font-size: 15px;
+    line-height: 1.33;
+    border-color: #fff !important;
+}
+.opciones_foro {
+    cursor: pointer;
+    color: black;
+    padding-right: 0;
+    padding: 4px 14px !important;
+}

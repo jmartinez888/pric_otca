@@ -349,17 +349,15 @@ class ACL
     public function getIdRol_x_ckey($iRol_Ckey)
     {       
         try{
-                $sql = "call s_s_obtener_id_rol_x_ckey(?)";
-                $_id_rol = $this->_db->prepare($sql);
-                $_id_rol->bindParam(1, $iRol_Ckey, PDO::PARAM_INT);
-                $_id_rol->execute();
-                $_id_rol = $_id_rol->fetch(PDO::FETCH_ASSOC);
+                $rol = $this->_db->query(
+                        "SELECT Rol_IdRol,Rol_Nombre FROM rol WHERE Rol_Ckey = '$iRol_Ckey'");
+                return $rol->fetch();
             } catch (PDOException $exception) {
-                // $this->registrarBitacora("acl(indexModel)", "getIdRol_x_ckey", "Error Model", $exception);
-                $exception->getTraceAsString();
+                $this->registrarBitacora("acl(indexModel)", "getIdRol_x_ckey", "Error Model", $exception);
+                return $exception->getTraceAsString();
             }
 
-        return $_id_rol;
+        
     }
     
 
@@ -431,10 +429,10 @@ class ACL
 //        }
         if(Session::get('autenticado'))
         {
-           header("location:" . BASE_URL . "error/access/5050/$url");
+           header("location:" . BASE_URL .Cookie::lenguaje()."/error/access/5050/$url");
             return;
         }else{
-            header("location:" . BASE_URL . "usuarios/login/index/$url");
+            header("location:" . BASE_URL . Cookie::lenguaje(). "/usuarios/login/index/$url");
         }
         exit;
     }
