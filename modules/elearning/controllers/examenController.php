@@ -74,6 +74,7 @@ class examenController extends elearningController {
         $titulo = $this->examen->getTituloCurso($idcurso);
         $this->_view->assign('numeropagina', $paginador->getNumeroPagina());
         $this->_view->assign('paginacionexamens', $paginador->getView('paginacion_ajax_s_filas'));
+        // print_r($porcentaje);
         $this->_view->assign('porcentaje', $porcentaje['Porcentaje'] );
         // $this->_view->assign('titulo', 'Administracion de preguntas');
         $this->_view->assign('idcurso', $idcurso);
@@ -82,47 +83,48 @@ class examenController extends elearningController {
         $this->_view->renderizar('examens');
     }
 
+    public function _cambiarEstadoExamen(){
+        $this->_acl->acceso('agregar_rol');
+        //Para Mensajes
+        $resultado = array();
+        $mensaje = "error";
+        $contenido = "";
+        //Para mensajes
 
-    public function _paginacion_listarexamens($txtBuscar = false){
-        //$this->validarUrlIdioma();
+        $txtBuscar = $this->getSql('palabra');
         $pagina = $this->getInt('pagina');
         $filas=$this->getInt('filas');
-        $idcurso=$this->getInt('idcurso');
-        $totalRegistros = $this->getInt('total_registros');
-
-        $condicion = " ";
-        $soloActivos = 0;
-        // $nombre = $this->getSql('palabra');
-        if ($txtBuscar) 
-        {
-            $condicion = " WHERE Cur_IdCurso=$idcurso AND Exa_Titulo liKe '%$txtBuscar%' ";
-            //Filtro por Activos/Eliminados
-            if (!$this->_acl->permiso('ver_eliminados')) {
-                $soloActivos = 1;
-                $condicion .= " AND e.Row_Estado = $soloActivos ";
-            } else {
-                $condicion .= " ORDER BY e.Row_Estado DESC  ";
-            }
+        $Exa_Idpregunta = $this->getInt('_Exa_IdExamen');
+        $Exa_Estado = $this->getInt('_Exa_Estado');
+        $Lec_IdLeccion = $this->getInt('_Lec_IdLeccion');
+        // $idExamen=$this->getInt('idexamen');
+        // $idcurso=$this->getInt('idcurso');
+        // echo $Per_Estado."//".$Per_Idpregunta; exit;
+        if(!$Exa_Idpregunta){
+            $contenido = 'Error parametro ID...!!';
+            $mensaje = "error";
+            array_push($resultado, array(0 => $mensaje, 1 => $contenido));
         } else {
-            //Filtro por Activos/Eliminados     
-            $condicion = "  WHERE Cur_IdCurso=$idcurso ORDER BY e.Row_Estado DESC ";   
-            if (!$this->_acl->permiso('ver_eliminados')) {
-                $soloActivos = 1;
-                $condicion = "  WHERE Cur_IdCurso=$idcurso AND e.Row_Estado = $soloActivos ";
-            }
-        }         
-
-
-        $paginador = new Paginador();
-        // $arrayRowCount = $this->_aclm->getpreguntasRowCount$arrayRowCount = 0,($condicion);
-
-        $paginador->paginar( $totalRegistros,"listarexamens", "$txtBuscar", $pagina, $filas, true);
-
-        $this->_view->assign('examens', $this->examen->getExamensCondicion($pagina,$filas, $condicion));
-        $this->_view->assign('numeropagina', $paginador->getNumeroPagina());
-        //$this->_view->assign('cantidadporpagina',$registros);
-        $this->_view->assign('paginacionexamens', $paginador->getView('paginacion_ajax_s_filas'));
-        $this->_view->renderizar('ajax/listarexamens', false, true);
+            $rowCountEstado = $this->examen->cambiarEstadoExamen($Exa_Idpregunta, $Exa_Estado);
+            if ($rowCountEstado > 0) {
+                if ($Exa_Estado == 1) {
+                    $contenido = ' Se cambio de estado correctamente a <b>Deshabilitado</b> <i data-toggle="tooltip" data-placement="bottom" class="glyphicon glyphicon-remove-sign" title="Deshabilitado" style="background: #FFF; color: #DD4B39; padding: 2px;"/> ...!! ';              
+                }
+                if ($Exa_Estado == 0) {
+                     $contenido = ' Se cambio de estado correctamente a <b>Habilitado</b> <i data-toggle="tooltip" data-placement="bottom" class="glyphicon glyphicon-ok-sign" title="Habilitado" style=" background: #FFF;  color: #088A08; padding: 2px;"/> ...!! ';
+                }     
+                $mensaje = "ok";
+                array_push($resultado, array(0 => $mensaje, 1 => $contenido));       
+            } else {
+                $contenido = 'Error de variable(s) en consulta..!!'; 
+                $mensaje = "error";
+                array_push($resultado, array(0 => $mensaje, 1 => $contenido));
+            }        
+        }
+        $mensaje_json = json_encode($resultado);
+        // echo($mensaje_json); exit();
+        $this->_view->assign('_mensaje_json', $mensaje_json);
+        $this->_buscarexamens();
     }
 
     public function _buscarexamens(){
@@ -157,11 +159,56 @@ class examenController extends elearningController {
         $totalRegistros = $arrayRowCount['CantidadRegistros'];
         // echo($totalRegistros);
         // print_r($arrayRowCount); echo($condicion);exit;
+        $porcentaje = $this->examen->getExamensPorcentaje($idcurso);
         $this->_view->assign('examens', $this->examen->getExamensCondicion($pagina,CANT_REG_PAG, $condicion));
+        $this->_view->assign('porcentaje', $porcentaje['Porcentaje'] );
 
         $paginador->paginar( $totalRegistros ,"listarexamens", "$txtBuscar", $pagina, CANT_REG_PAG, true);
 
         $this->_view->assign('numeropagina', $paginador->getNumeroPagina());
+        $this->_view->assign('paginacionexamens', $paginador->getView('paginacion_ajax_s_filas'));
+        $this->_view->renderizar('ajax/listarexamens', false, true);
+    }
+
+    public function _paginacion_listarexamens($txtBuscar = false){
+        //$this->validarUrlIdioma();
+        $pagina = $this->getInt('pagina');
+        $filas=$this->getInt('filas');
+        $idcurso=$this->getInt('idcurso');
+        $totalRegistros = $this->getInt('total_registros');
+
+        $condicion = " ";
+        $soloActivos = 0;
+        // $nombre = $this->getSql('palabra');
+        if ($txtBuscar) 
+        {
+            $condicion = " WHERE Cur_IdCurso=$idcurso AND Exa_Titulo liKe '%$txtBuscar%' ";
+            //Filtro por Activos/Eliminados
+            if (!$this->_acl->permiso('ver_eliminados')) {
+                $soloActivos = 1;
+                $condicion .= " AND e.Row_Estado = $soloActivos ";
+            } else {
+                $condicion .= " ORDER BY e.Row_Estado DESC  ";
+            }
+        } else {
+            //Filtro por Activos/Eliminados     
+            $condicion = "  WHERE Cur_IdCurso=$idcurso ORDER BY e.Row_Estado DESC ";   
+            if (!$this->_acl->permiso('ver_eliminados')) {
+                $soloActivos = 1;
+                $condicion = "  WHERE Cur_IdCurso=$idcurso AND e.Row_Estado = $soloActivos ";
+            }
+        }         
+
+
+        $paginador = new Paginador();
+        // $arrayRowCount = $this->_aclm->getpreguntasRowCount$arrayRowCount = 0,($condicion);
+        $porcentaje = $this->examen->getExamensPorcentaje($idcurso);
+        $paginador->paginar( $totalRegistros,"listarexamens", "$txtBuscar", $pagina, $filas, true);
+
+        $this->_view->assign('examens', $this->examen->getExamensCondicion($pagina,$filas, $condicion));
+        $this->_view->assign('numeropagina', $paginador->getNumeroPagina());
+        $this->_view->assign('porcentaje', $porcentaje['Porcentaje'] );
+        //$this->_view->assign('cantidadporpagina',$registros);
         $this->_view->assign('paginacionexamens', $paginador->getView('paginacion_ajax_s_filas'));
         $this->_view->renderizar('ajax/listarexamens', false, true);
     }
