@@ -13,7 +13,7 @@ abstract class Controller
     protected $_url;
 
 
-    public function __construct($lang,$url)
+    public function __construct($lang, $url = '')
     {
         $this->_registry = Registry::getInstancia();
         $this->_acl = $this->_registry->_acl;
@@ -22,8 +22,10 @@ abstract class Controller
         $this->_lenguaje = $lang;
         $this->_url = $url;
         Session::set("fileLenguaje",array());
-        if(isset($this->_url))
+        if(isset($this->_url) && trim($this->_url) != '')
             $this->_view->assign('url', $this->_url);
+        else $this->_view->assign('url', '');
+
 
         $this->init();
     }

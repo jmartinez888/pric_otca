@@ -22,7 +22,7 @@ try{
     $registry->_acl = new ACL();
 
     Bootstrap::run($registry->_request);
-} catch(Exception $e){
-    echo $e->getMessage().'asds';
+} catch(Exception $exception){
+    echo "Excepción no capturada: " , $exception->getMessage(), " en : <b>", $exception->getFile() . "</b>, linea : <b>" . $exception->getLine() . "</b>\n";
 }
 ?>

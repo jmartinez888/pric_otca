@@ -94,11 +94,13 @@ $("#btn_nuevo_contenido").click(function(e){
 
         var parmas = { id: Id, link: Link, descripcion: Descripcion};
         AsincTaks("gleccion/_actualizar_video", parmas, function(a){
-          CargarPagina("gleccion/_view_leccion", {
-            curso: $("#hidden_curso").val(),
-            modulo : $("#hidden_modulo").val(),
-            leccion : $("#hidden_leccion").val(),
-          }, false, false);
+          location.href = _root_ + _modulo + "/gleccion/_view_leccion/" + $("#hidden_curso").val() + "/" + $("#hidden_modulo").val() + "/" + $("#hidden_leccion").val();
+          
+          // CargarPagina("gleccion/_view_leccion", {
+          //   curso: $("#hidden_curso").val(),
+          //   modulo : $("#hidden_modulo").val(),
+          //   leccion : $("#hidden_leccion").val(),
+          // }, false, false);
         }, false, false);
       }
     });
