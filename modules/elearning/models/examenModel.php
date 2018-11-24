@@ -113,7 +113,7 @@ class examenModel extends Model {
     public function getUltimoExamen($id, $idusuario)
     {
         try{
-            $sql = " SELECT * FROM examen_alumno WHERE Exa_IdExamen=$id AND Usu_IdUsuario=$idusuario ORDER BY Exl_IdExamenAlumno DESC LIMIT 1 ";
+            $sql = " SELECT * FROM examen_alumno WHERE Exa_IdExamen = $id AND Usu_IdUsuario = $idusuario ORDER BY Exl_IdExamenAlumno DESC LIMIT 1 ";
             $result = $this->_db->prepare($sql);
             $result->execute();
             return $result->fetch(PDO::FETCH_ASSOC);
@@ -139,7 +139,7 @@ class examenModel extends Model {
     public function getExamensPorcentaje($id)
     {
         try{
-            $sql = " SELECT SUM(e.Exa_Porcentaje) as Porcentaje FROM examen e WHERE Moc_IdModulo=$id AND e.Exa_Estado=1 AND e.Row_Estado=1 ";
+            $sql = " SELECT SUM(e.Exa_Porcentaje) as Porcentaje FROM examen e WHERE e.Cur_IdCurso = $id AND e.Exa_Estado = 1 AND e.Row_Estado= 1 ";
             $result = $this->_db->prepare($sql);
             $result->execute();
             return $result->fetch(PDO::FETCH_ASSOC);
@@ -358,6 +358,18 @@ class examenModel extends Model {
         }
     }
 
+    public function getExamenesRowCount($condicion = "")
+    {
+        try{
+            $sql = " SELECT COUNT(e.Exa_IdExamen) AS CantidadRegistros FROM examen e $condicion ";
+            $result = $this->_db->prepare($sql);
+            $result->execute();
+            return $result->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("elearning(examenModel)", "getExamenesRowCount", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
 
     public function getPreguntasCondicion($pagina,$registrosXPagina,$condicion = "")
     {
@@ -425,23 +437,23 @@ class examenModel extends Model {
     //   return $resultado;
     // }
 
-    public function cambiarEstadopreguntas($Rol_IdRol, $Rol_Estado)
+    public function cambiarEstadopreguntas($Pre_IdPregunta, $Pre_Estado)
     {
         try{
-            if($Rol_Estado==0)
+            if($Pre_Estado==0)
             {
                 $sql = "call s_u_cambiar_estado_pregunta(?,1)";
                 $result = $this->_db->prepare($sql);
-                $result->bindParam(1, $Rol_IdRol, PDO::PARAM_INT);
+                $result->bindParam(1, $Pre_IdPregunta, PDO::PARAM_INT);
                 $result->execute();
 
                 return $result->rowCount(PDO::FETCH_ASSOC);                
             }
-            if($Rol_Estado==1)
+            if($Pre_Estado==1)
             {
                 $sql = "call s_u_cambiar_estado_pregunta(?,0)";
                 $result = $this->_db->prepare($sql);
-                $result->bindParam(1, $Rol_IdRol, PDO::PARAM_INT);
+                $result->bindParam(1, $Pre_IdPregunta, PDO::PARAM_INT);
                 $result->execute();
 
                 return $result->rowCount(PDO::FETCH_ASSOC);
@@ -452,6 +464,32 @@ class examenModel extends Model {
         }
     }
 
+    public function cambiarEstadoExamen($Exa_IdExamen, $Exa_Estado)
+    {
+        try{
+            if($Exa_Estado == 0)
+            {
+                $sql = "call s_u_cambiar_estado_examen(?,1)";
+                $result = $this->_db->prepare($sql);
+                $result->bindParam(1, $Exa_IdExamen, PDO::PARAM_INT);
+                $result->execute();
+
+                return $result->rowCount(PDO::FETCH_ASSOC);                
+            }
+            if($Exa_Estado == 1)
+            {
+                $sql = "call s_u_cambiar_estado_examen(?,0)";
+                $result = $this->_db->prepare($sql);
+                $result->bindParam(1, $Exa_IdExamen, PDO::PARAM_INT);
+                $result->execute();
+
+                return $result->rowCount(PDO::FETCH_ASSOC);
+            }
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("elearning(examenModel)", "cambiarEstadoExamen", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
 
     public function eliminarHabilitarpregunta($iMod_Idpregunta = 0, $iRow_Estado = 0)
     {
