@@ -81,7 +81,7 @@
                         {if ($_acl->permiso("deshabilitar_foro") || $id_usuario == $foro.Usu_IdUsuario) && $foro.Row_Estado == 1 && ($foro.For_Estado== 0 || $foro.For_Estado== 1 || $foro.For_Estado== 2)}
                         <li><a id_foro="{$foro.For_IdForo}" class="opciones_foro eliminar_foro" Row_Estado="{$foro.Row_Estado}" style="cursor: pointer;">Eliminar<i class="i_opciones_foro glyphicon glyphicon-trash pull-right"></i></a></li>
                         {/if}
-                        {if $Rol_Ckey == "administrador" || $Rol_Ckey == "administrador_foro"}
+                        {if $Rol_Ckey == "administrador" || $Rol_Ckey == "administrador_foro    "}
                         <li><a href="{$_layoutParams.root}foro/admin/" id_foro="{$foro.For_IdForo}" class="opciones_foro" style="cursor: pointer;">Ver todos los foros<i class="i_opciones_foro glyphicon glyphicon-list pull-right"></i></a></li>
                         {/if}
                     </ul>
