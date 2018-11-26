@@ -1,9 +1,16 @@
 <?php
 
+
 class cursoModel extends Model {
+    protected $table = 'curso';
+    protected $primaryKey = 'Cur_IdCurso';
+    public $timestamps = false;
 
-    public function __construct() { parent::__construct(); }
 
+    public function __construct() {
+      parent::__construct();
+
+    }
     // public function getCurso(){
     //     $cursos = $this->getArray("SELECT C.*, CC.Con_Descripcion as Modalidad FROM curso C
     //         INNER JOIN constante CC ON CC.Con_Valor = C.Moa_IdModalidad AND CC.Con_Codigo = 1000
@@ -18,6 +25,14 @@ class cursoModel extends Model {
     //     return $resultado;
     // }
 
+    //SOLO CON LA INSTANCIA DEL CURSO, DEBEN EXISTIR LAS VARIABLES
+    public function formularios () {
+      return $this->hasMany('App\Formulario', 'Cur_IdCurso');
+    }
+    public function getFormularioActivo () {
+      return $this->formularios()->activos()->first();
+    }
+    //END
     public function getCursoID($id){
         $cursos = $this->getArray("SELECT * FROM curso WHERE Cur_IdCurso = {$id} AND Cur_Estado = 1 AND Row_Estado = 1");
         $resultado = array();
@@ -299,14 +314,14 @@ class cursoModel extends Model {
     }
     // Jhon Martinez
     public function getCursos($Usu_IdUsuario = false, $Texto = false){
-        
+
         if ($Usu_IdUsuario) {
             $andUsuario = " AND mat.Usu_IdUsuario = " . $Usu_IdUsuario;
         } else {
             $andUsuario = " AND mat.Usu_IdUsuario = 0 ";
         }
         try{
-            $sql = " SELECT   cr.Cur_IdCurso, cr.Cur_UrlBanner, cr.Cur_Titulo, cr.Cur_Descripcion, cr.Usu_IdUsuario, cr.Cur_Vacantes, cr.Cur_FechaDesde, cr.Moa_IdModalidad, CONCAT(u.Usu_Nombre,' ',u.Usu_Apellidos) AS Docente, cc.Con_Descripcion AS Modalidad, COUNT(mt.Mat_IdMatricula) AS Matriculados, (CASE WHEN AVG(vc.Val_Valor) > 0 THEN AVG(vc.Val_Valor) ELSE 0 END) AS Valoracion, (CASE WHEN cu_m.Matriculado = 1 THEN 1 ELSE 0 END) AS Inscrito FROM 
+            $sql = " SELECT   cr.Cur_IdCurso, cr.Cur_UrlBanner, cr.Cur_Titulo, cr.Cur_Descripcion, cr.Usu_IdUsuario, cr.Cur_Vacantes, cr.Cur_FechaDesde, cr.Moa_IdModalidad, CONCAT(u.Usu_Nombre,' ',u.Usu_Apellidos) AS Docente, cc.Con_Descripcion AS Modalidad, COUNT(mt.Mat_IdMatricula) AS Matriculados, (CASE WHEN AVG(vc.Val_Valor) > 0 THEN AVG(vc.Val_Valor) ELSE 0 END) AS Valoracion, (CASE WHEN cu_m.Matriculado = 1 THEN 1 ELSE 0 END) AS Inscrito FROM
                   (SELECT cur.Cur_IdCurso, 1 AS Matriculado FROM curso cur
                   INNER JOIN matricula_curso mat ON cur.Cur_IdCurso = mat.Cur_IdCurso
                   WHERE cur.Cur_Estado = 1 AND cur.Row_Estado = 1 AND mat.Mat_Valor = 1 ". $andUsuario . " ) cu_m
@@ -314,7 +329,7 @@ class cursoModel extends Model {
               INNER JOIN matricula_curso mt ON cr.Cur_IdCurso = mt.Cur_IdCurso
               INNER JOIN constante cc ON cr.Moa_IdModalidad = cc.Con_Valor AND cc.Con_Codigo = 1000
               INNER JOIN usuario u ON cr.Usu_IdUsuario = u.Usu_IdUsuario
-              LEFT JOIN valoracion_curso vc ON cr.Cur_IdCurso = vc.Cur_IdCurso 
+              LEFT JOIN valoracion_curso vc ON cr.Cur_IdCurso = vc.Cur_IdCurso
               WHERE cr.Cur_Estado = 1 AND cr.Row_Estado = 1 AND mt.Mat_Valor = 1 " . $Texto . "
               GROUP BY cr.Cur_IdCurso ";
             $result = $this->_db->prepare($sql);
@@ -330,7 +345,7 @@ class cursoModel extends Model {
 
         $registroInicio = 0;
         if ($pagina > 0) {
-            $registroInicio = ($pagina - 1) * $registrosXPagina;               
+            $registroInicio = ($pagina - 1) * $registrosXPagina;
         }
 
         if ($Usu_IdUsuario) {
@@ -340,18 +355,18 @@ class cursoModel extends Model {
         }
 
         try{
-            $sql = " SELECT cur_so.*, COUNT(vc.Usu_IdUsuario) AS Valoraciones, 
-                    CAST((CASE WHEN AVG(vc.Val_Valor) > 0 THEN AVG(vc.Val_Valor) ELSE 0 END) AS DECIMAL(2,1)) AS Valor FROM 
-                    (   SELECT cr.Cur_IdCurso, cr.Cur_UrlBanner, cr.Cur_Titulo, cr.Cur_Descripcion, cr.Usu_IdUsuario, cr.Cur_Vacantes, cr.Cur_FechaDesde, cr.Moa_IdModalidad, CONCAT(u.Usu_Nombre,' ',u.Usu_Apellidos) AS Docente, cc.Con_Descripcion AS Modalidad, SUM(CASE WHEN mt.Mat_Valor = 1 THEN 1 ELSE 0 END) AS Matriculados, (CASE WHEN cu_m.Matriculado = 1 THEN 1 ELSE 0 END) AS Inscrito FROM 
+            $sql = " SELECT cur_so.*, COUNT(vc.Usu_IdUsuario) AS Valoraciones,
+                    CAST((CASE WHEN AVG(vc.Val_Valor) > 0 THEN AVG(vc.Val_Valor) ELSE 0 END) AS DECIMAL(2,1)) AS Valor FROM
+                    (   SELECT cr.Cur_IdCurso, cr.Cur_UrlBanner, cr.Cur_Titulo, cr.Cur_Descripcion, cr.Usu_IdUsuario, cr.Cur_Vacantes, cr.Cur_FechaDesde, cr.Moa_IdModalidad, CONCAT(u.Usu_Nombre,' ',u.Usu_Apellidos) AS Docente, cc.Con_Descripcion AS Modalidad, SUM(CASE WHEN mt.Mat_Valor = 1 THEN 1 ELSE 0 END) AS Matriculados, (CASE WHEN cu_m.Matriculado = 1 THEN 1 ELSE 0 END) AS Inscrito FROM
                             ( SELECT cur.Cur_IdCurso, 1 AS Matriculado FROM curso cur
                               INNER JOIN matricula_curso mat ON cur.Cur_IdCurso = mat.Cur_IdCurso
-                              WHERE cur.Cur_Estado = 1 AND cur.Row_Estado = 1 AND mat.Mat_Valor = 1 $andUsuario ) cu_m 
+                              WHERE cur.Cur_Estado = 1 AND cur.Row_Estado = 1 AND mat.Mat_Valor = 1 $andUsuario ) cu_m
                         RIGHT JOIN curso cr ON cu_m.Cur_IdCurso = cr.Cur_IdCurso
                         LEFT JOIN matricula_curso mt ON cr.Cur_IdCurso = mt.Cur_IdCurso
                         INNER JOIN constante cc ON cr.Moa_IdModalidad = cc.Con_Valor AND cc.Con_Codigo = 1000
-                        INNER JOIN usuario u ON cr.Usu_IdUsuario = u.Usu_IdUsuario $condicionActivos ) cur_so 
-                    LEFT JOIN valoracion_curso vc ON cur_so.Cur_IdCurso = vc.Cur_IdCurso 
-                    GROUP BY cur_so.Cur_IdCurso 
+                        INNER JOIN usuario u ON cr.Usu_IdUsuario = u.Usu_IdUsuario $condicionActivos ) cur_so
+                    LEFT JOIN valoracion_curso vc ON cur_so.Cur_IdCurso = vc.Cur_IdCurso
+                    GROUP BY cur_so.Cur_IdCurso
                     LIMIT $registroInicio, $registrosXPagina " ;
 
             $result = $this->_db->prepare($sql);

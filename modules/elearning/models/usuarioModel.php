@@ -1,6 +1,9 @@
 <?php
 
 class usuarioModel extends Model {
+    protected $table = 'usuario';
+    protected $primaryKey = 'Usu_IdUsuario';
+    public $timestamps = false;
 
     public function __construct() { parent::__construct(); }
 

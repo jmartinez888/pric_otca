@@ -88,19 +88,12 @@
                 </div>
     </div>
 </div>
-
 {/block}
 {block 'template'}
 <template id="botones_opcion">
-    <button  data-toggle="tooltip" data-placement="bottom" class="btn btn-default  btn-sm glyphicon glyphicon-list-alt" title="" href="{$_layoutParams.root}idiomas/lenguajes/{literal}{{id}}{/literal}" data-original-title="{$lenguaje['str_ver_elemento']}"></button>
+    <a  data-toggle="tooltip" data-placement="bottom" class="btn btn-default  btn-sm glyphicon glyphicon-list-alt" title="" href="{$_layoutParams.root}idiomas/lenguajes/{literal}{{id}}{/literal}" data-original-title="{$lenguaje['str_ver_elemento']}"></a>
     {* <button data-toggle="tooltip" data-placement="bottom" data-accion="estado" class="btn btn-default btn-sm glyphicon glyphicon-refresh btn-acciones"  data-estado="{literal}{{estado}}{/literal}" data-id="{literal}{{id}}{/literal}"  data-nombre="{literal}{{nombre}}{/literal}"  title="{$lenguaje['str_cambiar_estado']}"> </button> *}
-    <form enctype="multipart/form-data" id="frm_json{literal}{{id}}{/literal}" style="display:inline-block;">
-        <input name="file" class="hidden files_json" id="file_{literal}{{id}}{/literal}" type="file" accept="application/json" data-id="{literal}{{id}}{/literal}" />
-        <label data-toggle="tooltip" data-placement="bottom" for="file_{literal}{{id}}{/literal}" data-id="{literal}{{id}}{/literal}" data-accion="exportar" class="btn btn-default  btn-sm btn-acciones glyphicon glyphicon-import" title="Importar SQL">
-        </label>
-    </form>
-
-    <a  href="{$_layoutParams.root}idiomas/lenguajes/{literal}{{id}}{/literal}?export=json_export" data-toggle="tooltip" data-placement="bottom" data-id="{literal}{{id}}{/literal}" data-accion="exportar" class="btn btn-default  btn-sm btn-acciones glyphicon glyphicon-export" title="Exportar SQL"></a>
+    <a target="_blank" href="{$_layoutParams.root}idiomas/lenguaje/{literal}{{id}}{/literal}?import=sql" data-toggle="tooltip" data-placement="bottom" data-id="{literal}{{id}}{/literal}" data-accion="exportar" class="btn btn-default  btn-sm btn-acciones glyphicon glyphicon-import" title="Importar SQL"></a><a  href="{$_layoutParams.root}idiomas/lenguajes/{literal}{{id}}{/literal}?export=json_export" data-toggle="tooltip" data-placement="bottom" data-id="{literal}{{id}}{/literal}" data-accion="exportar" class="btn btn-default  btn-sm btn-acciones glyphicon glyphicon-export" title="Exportar SQL"></a>
     <button data-toggle="tooltip" data-placement="bottom" data-id="{literal}{{id}}{/literal}" data-accion="editar" class="btn btn-default  btn-sm btn-acciones glyphicon glyphicon-edit" title="{$lenguaje['str_editar']}"></button>
     <button data-toggle="tooltip" data-id="{literal}{{id}}{/literal}"  data-accion="eliminar" class="btn btn-default btn-sm  glyphicon glyphicon-trash confirmar-eliminar-rol btn-acciones" data-nombre="{literal}{{nombre}}{/literal}" title="{$lenguaje['str_eliminar']}" data-placement="bottom"> </button>
 </template>

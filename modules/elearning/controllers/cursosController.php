@@ -1,5 +1,6 @@
 <?php
 
+use App\Formulario;
 use Dompdf\Adapter\CPDF;
 use Dompdf\Dompdf;
 use Dompdf\Exception;
@@ -158,6 +159,7 @@ class cursosController extends elearningController {
         $this->_view->assign("progreso", $progreso);
       }
       $modulo = $mModulo->getModulosCurso($id, Session::get("id_usuario"));
+      // dd($modulo);
       $duracion = $model->getDuracionCurso($id);
       $certificado = $mCert->getCertificadoUsuarioCurso(Session::get("id_usuario"), $id);
 
@@ -166,12 +168,22 @@ class cursosController extends elearningController {
       if($plantilla){
         $this->_view->assign("plantilla", $plantilla);
       }
+      $respuesta_completada = false;
+      $frm = Formulario::getActivoByCursoId($curso['Cur_IdCurso']);
+      if ($frm) {
+        //verificar si llenó formulario
+        $respuesta = $frm->getRespuestaByUsuario(Session::get('id_usuario'));
+        if ($respuesta) {
+          $respuesta_completada = $respuesta->Fur_Completado == 1;
+        }
 
+      }
       $this->_view->setTemplate(LAYOUT_FRONTEND);
       $this->_view->setCss(array("index", "curso", "jp-curso"));
       // $this->_view->setCss(array("modulo", "index", "jp-index", "jp-detalle-lateral"));
       $this->_view->setJs(array(array(BASE_URL . 'modules/elearning/views/gestion/js/core/util.js'), "curso"));
       $this->_view->assign("inscritos", $inscritos);
+      $this->_view->assign("respuesta_completada", $respuesta_completada);
       $this->_view->assign("curso", $curso);
       $this->_view->assign("objetivos", $mObj->getObjs($id));
       $this->_view->assign("modulo", $modulo);
@@ -367,14 +379,19 @@ class cursosController extends elearningController {
   }
 
   public function _inscripcion($mod = "", $curso = ""){
-      if ($mod=="" || $curso=="" || !is_numeric($mod) || !is_numeric($mod)){ $this->redireccionar("elearning/"); }
+      if ($mod=="" || $curso=="" || !is_numeric($mod) || !is_numeric($mod)){
+        $this->redireccionar("elearning/");
+      }
       if (!Session::get("autenticado")){ $this->redireccionar("elearning/"); }
 
       $model = $this->loadModel("inscripcion");
       if($mod==1){
         $model->insertarInscripcion(Session::get("id_usuario"), $curso, 1);
       }else{
-        $model->insertarInscripcion(Session::get("id_usuario"), $curso, 2);
+        if ($mod == 3)
+          $model->insertarInscripcion(Session::get("id_usuario"), $curso, 1);
+        else
+          $model->insertarInscripcion(Session::get("id_usuario"), $curso, 2);
       }
 
       $Cmodel = $this->loadModel("_gestionCurso");
@@ -383,7 +400,11 @@ class cursosController extends elearningController {
       foreach ($anuncios as $a) {
         $Cmodel->registrarAnuncioUsuario($a['Anc_IdAnuncioCurso'], Session::get("id_usuario"));
       }
-      $this->redireccionar("elearning/cursos/curso/" . $curso);
+      if ($mod == 1)
+        $this->redireccionar("elearning/cursos/curso/" . $curso);
+      else {
+        $this->redireccionar("elearning/formulario/responder/" . $curso);
+      }
   }
 
   public function _previous_leccion(){

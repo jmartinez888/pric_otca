@@ -60,7 +60,7 @@
     <div class="panel-body form-horizontal"  id="panelImg">
 
       <div class="form-group">
-          <label class="col-md-3 control-label"> Imagen Icono : </label>
+          <label class="col-md-3 control-label"> {$lang->get('elearning_gcurso_imagen_icono')} : </label>
           <div class="col-md-6">
               {if strlen($curso.Cur_UrlBanner)>0 && $curso.Cur_UrlBanner != "default.jpg"}
                   <img class="img-banner" id="img_banner_new" src="{BASE_URL}modules/elearning/views/cursos/img/portada/{$curso.Cur_UrlBanner}" />
@@ -82,7 +82,7 @@
           </div>
       </div> -->
       <div class="form-group">
-          <label class="col-md-3 control-label"> Video Presentación : </label>
+          <label class="col-md-3 control-label"> {$lang->get('elearning_gcurso_video_presenta')} : </label>
           <div class="col-md-6">
             {if strlen($curso.Cur_UrlVideoPresentacion)>0}
               <input name="Cur_UrlVideoPresentacion" id="Cur_UrlVideoPresentacion" class="form-control" value="https://www.youtube.com/watch?v={$curso.Cur_UrlVideoPresentacion}" />

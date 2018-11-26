@@ -2,7 +2,6 @@
 
 {block 'contenido'}
 {if $elemento != null}
-
 		<div id="container_vue" class="hidden">
 			<div class="row" style="padding-left: 1.3em; padding-bottom: 20px;">
         <h4 class="titulo-view">{$elemento->Idif_FileName}</h4>
@@ -20,7 +19,7 @@
 	                        <div class="form-group">
 	                            <label class="col-lg-2 control-label" for="nombre">{$lenguaje['str_nombre']} : </label>
 	                            <div class="col-lg-10">
-	                                <input type="text" name="" id="nombre" class="form-control" value="" required="required" v-model="nombre">
+	                                <input type="text" name="" id="nombre" class="form-control" value="" required="required" v-model="nombre" placeholder="modulo_controlador, modulo_controlador_metodo, controlador_metodo">
 	                            </div>
 	                        </div>
 	                        {foreach $idiomas as $idioma}

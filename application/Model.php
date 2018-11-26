@@ -1,7 +1,7 @@
 
 <?php
-
-class Model {
+use Illuminate\Database\Eloquent\Model as Eloquent;
+class Model extends Eloquent{
 
     private $_registry;
     protected $_db;
@@ -60,13 +60,13 @@ class Model {
 
         }
     }
-    //Registro de Errores 
+    //Registro de Errores
      public function registrarBitacora($bit_NombrePagina, $bit_NombreMetodo,$eve_tipo, Exception $ex){
         $bit_Descripcion="";
         $eve_descripcion="";
         $bit_Descripcion= "Code :". $ex ->getCode();
-        $bit_Descripcion .= " ;Message : ".$ex->getMessage();  
-        $bit_Descripcion .= " ;TraceAsString : ".$ex->getTraceAsString();            
+        $bit_Descripcion .= " ;Message : ".$ex->getMessage();
+        $bit_Descripcion .= " ;TraceAsString : ".$ex->getTraceAsString();
         $eve_descripcion .= $ex->getMessage();
         $this->insertarBitacora(
                                $eve_descripcion,$eve_tipo,
@@ -75,7 +75,7 @@ class Model {
         return true;
       }
 
-    
+
     public function insertarVisita($iVis_Explorador,$iVis_PaginaVisita,$iVis_PaginaAnterior,$iVis_SistemaOperativo,$iVis_Idioma,$iVis_Ip/*,$iVis_Pais,$iVis_Fuente*/){
         $sql = "call s_i_estadistica_visita(?,?,?,?,?,?)";
             $result = $this->_db->prepare($sql);
