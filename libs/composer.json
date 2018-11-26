@@ -13,6 +13,7 @@
 				"../models/class/",
 				"../modules/foro/class/",
 				"../modules/usuarios/class/",
+				"../modules/elearning/class/",
 				"../modules/difusion/class/"
 			]
     },

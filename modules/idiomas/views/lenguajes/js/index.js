@@ -131,11 +131,27 @@ new Vue({
       });
     this.dt_tbl_datatable.on('draw', () => {
       // $('#tbl_datatable .btn-acciones').tooltip();
+
     })
     this.tbl_datatable.on('click', '.btn-acciones', this.onClick_btnAccion);
     this.tbl_datatable.tooltip({
       selector: '[data-toggle="tooltip"]'
     });
     $('#container_vue').removeClass('hidden')
+
+    this.tbl_datatable.on('change', '.files_json', (e) => {
+	    	console.log(e.currentTarget)
+	    	let id = e.currentTarget.dataset.id
+	    	let frm = e.currentTarget.parentElement
+	    	console.log(frm)
+	    	axios.post(_root_lang + 'idiomas/lenguajes/upload_import/' +  id, new FormData(frm)).then(res => {
+	    		console.log(res)
+	    	}).catch(err => {
+	    		console.log(err)
+	    	})
+	    	console.log('change')
+
+	   })
+
 	}
 })
