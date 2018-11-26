@@ -46,7 +46,7 @@ class examenController extends elearningController {
         $this->service->Send();        
     }
 
-    public function examens($idcurso=false){
+    public function examens($idcurso=false, $idLeccion = false){
         // $codigo = $this->getTexto("certificado");
         // $this->_view->setCss(array("verificar"));
         $this->_view->setTemplate(LAYOUT_FRONTEND);
@@ -56,11 +56,17 @@ class examenController extends elearningController {
         $pagina = $this->getInt('pagina');
 
         //Filtro por Activos/Eliminados
-        $condicion = "  WHERE e.Cur_IdCurso=$idcurso ORDER BY e.Row_Estado DESC ";
+        if ($idLeccion) {
+            $filtro = " WHERE e.Lec_IdLeccion = $idLeccion ";
+        } else {            
+            $filtro = " WHERE e.Cur_IdCurso = $idcurso ";
+        }
+        
+        $condicion = " $filtro  ORDER BY e.Row_Estado DESC ";
         $soloActivos = 0;
         if (!$this->_acl->permiso('ver_eliminados')) {
             $soloActivos = 1;
-            $condicion = "  WHERE e.Cur_IdCurso=$idcurso and e.Row_Estado = $soloActivos ";
+            // $condicion = "  $filtro and e.Row_Estado = $soloActivos ";
         }
 
         $paginador = new Paginador();
