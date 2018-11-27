@@ -26,6 +26,11 @@ class gcursoController extends elearningController {
     $curso = $this->curso->getCursoXId($curso_id);
     $formulario = Formulario::getByCurso($curso['Cur_IdCurso']);
     $formulario = $formulario->count() > 0 ? $formulario[0] : null;
+    $data['respuestas'] = [];
+    if ($formulario) {
+      $data['respuestas'] = $formulario->respuestas;
+
+    }
     // dd($formulario);
     // $data_vue = [
     //   'formulario_id' => $formulario != null ? $formulario : null

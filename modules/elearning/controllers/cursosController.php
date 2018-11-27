@@ -400,11 +400,11 @@ class cursosController extends elearningController {
       foreach ($anuncios as $a) {
         $Cmodel->registrarAnuncioUsuario($a['Anc_IdAnuncioCurso'], Session::get("id_usuario"));
       }
-      if ($mod == 1)
+      if ($mod == 1 || $mod = 2)
         $this->redireccionar("elearning/cursos/curso/" . $curso);
-      else {
+      if ($mod == 3)
         $this->redireccionar("elearning/formulario/responder/" . $curso);
-      }
+
   }
 
   public function _previous_leccion(){

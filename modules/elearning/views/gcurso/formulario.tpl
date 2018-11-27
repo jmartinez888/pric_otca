@@ -106,7 +106,40 @@
       </div>
     </div>
     <div class="panel-body form-horizontal tab-pane" role="tabpanel"  id="formulario_respuestas">
-      <h1>DOS</h1>
+      <div class="panel panel-default">
+      <div class="panel-heading cabecera-titulo">
+        <h3 class="panel-title">
+          <i class="glyphicon glyphicon-list-alt"></i>&nbsp;&nbsp;
+          <strong>ALUMNOS INSCRITOS</strong>
+        </h3>
+      </div>
+      <div class="panel-body" style=" margin: 15px 25px">
+        <div class="col-lg-12">
+          <div class="table-responsive" style="width: 100%">
+            <table class="table" id="tblMisCursos">
+              <thead>
+                <tr>
+                  <th>Id</th>
+                  <th>Alumnos</th>
+                  <th>Usuario</th>
+                  <th>Fecha</th>
+                </tr>
+              </thead>
+              <tbody>
+                {foreach $respuestas as $res}
+                  <tr>
+                    <td>{$res->usuario->Usu_IdUsuario}</td>
+                    <td>{$res->usuario->Usu_Nombre} {$res->usuario->Usu_Apellidos}</td>
+                    <td>{$res->usuario->Usu_Usuario}</td>
+                    <td>{$res->Fur_CreatedAt}</td>
+                  </tr>
+                {/foreach}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
     </div>
   </div>
 </div>

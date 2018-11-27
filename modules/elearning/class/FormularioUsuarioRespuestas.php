@@ -10,6 +10,10 @@ class FormularioUsuarioRespuestas extends Eloquent
   protected $primaryKey = 'Fur_IdFrmUsuRes';
   const CREATED_AT = 'Fur_CreatedAt';
   const UPDATED_AT = 'Fur_UpdatedAt';
+
+  public function usuario () {
+  	return $this->belongsTo('App\Usuario', 'Usu_IdUsuario');
+  }
 }
 
 ?>

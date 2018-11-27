@@ -24,6 +24,9 @@ class Formulario extends Eloquent
   public function respuesta () {
     return $this->hasOne('App\FormularioUsuarioRespuestas', 'Frm_IdFormulario');
   }
+  public function respuestas () {
+    return $this->hasMany('App\FormularioUsuarioRespuestas', 'Frm_IdFormulario');
+  }
   public function getRespuestaByUsuario ($usuario_id) {
     return $this->respuesta()->where('Usu_IdUsuario', $usuario_id)->first();
   }

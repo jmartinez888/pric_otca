@@ -97,9 +97,10 @@ class formularioController extends elearningController {
 			$mod_curso = $this->loadModel('curso');
 
 			$curso = $mod_curso::find($curso_id);
+			// dd($curso);
 			// $data['obj_curso'] = $curso;
 			$this->_view->setTemplate(LAYOUT_FRONTEND);
-			if ($curso) {
+			if ($curso ) {
 				$frm = $curso->getFormularioActivo();
 				$data['obj_curso'] = $curso;
 				if ($frm) {

@@ -1,5 +1,7 @@
 <?php
 
+namespace App;
+
 class usuarioModel extends Model {
     protected $table = 'usuario';
     protected $primaryKey = 'Usu_IdUsuario';
