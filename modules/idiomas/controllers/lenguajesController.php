@@ -6,6 +6,73 @@ use App\IdiomaFilesVars;
 use App\IdiomaFilesVarsBody;
 use Illuminate\Database\Capsule\Manager as DB;
 class lenguajesController extends idiomasController {
+	protected $path_temp_import = ROOT.'tmp'.DS.'import_files'.DS;
+	public function upload_import ($id) {
+		$res = ['success' => false];
+		if (!file_exists($this->path_temp_import))
+			mkdir($this->path_temp_import);
+		$row = IdiomaFiles::find($id);
+		if ($row) {
+			if (isset($_FILES['file']) && $_FILES['file']['type'] == 'application/json') {
+				$file = $_FILES['file'];
+				$name = pathinfo($file['name'], PATHINFO_FILENAME);
+				if ($name == $row->Idif_FileName) {
+					if(move_uploaded_file($file['tmp_name'], $this->path_temp_import.$file['name'])) {
+						$res['success'] = true;
+					}
+				}
+			}
+		}
+		// dd($_FILES);
+		$this->_view->responseJson($res);
+
+	}
+	public function import($id) {
+
+		$this->_view->getLenguaje('idiomas_lenguajes');
+		$row = IdiomaFiles::find($id);
+		$comparador = [];
+		if ($row) {
+			$json = '';
+			$file = $this->path_temp_import.$row->Idif_FileName.'.json';
+			if (is_readable($file) && basename($file) == $row->Idif_FileName.'.json') {
+				$json = file_get_contents($file);
+				$json = json_decode($json, true);
+				if ($json['file']['name'] == $row->Idif_FileName) {
+					foreach ($json['file']['vars'] as $key => $value) {
+						$var = IdiomaFilesVars::get_var_by_name($value['name']);
+						if ($var == null) {
+							$comparador[] = ['name' => $value['name'], 'import' =>  $value, 'base' => []];
+						} else{
+							$var->body;
+							$pre_var = ['name' => $var->Ifv_VarName, 'body' => []];
+							foreach ($var->body as $key_body => $value_body) {
+								$pre_var['body'][] = ['idioma' => $value_body->Idi_IdIdioma, 'value' => $value_body->Ifvb_Body];
+							}
+							$comparador[] = ['name' => $value['name'], 'import' => $value, 'base' => $pre_var];
+						}
+					}
+				}
+			}
+
+		}
+		dd($comparador);
+		// exit;
+		$vars_idioma = [];
+		// $idiomas->map(function($item) use(&$vars_idioma) {
+		// 	$vars_idioma['idioma_'.$item->Idi_IdIdioma] = '';
+		// });
+		// $data_vue = [
+		// 	'idiomas' => $vars_idioma,
+		// 	'file_id' => $row->Idif_IdIdiomaFile
+		// ];
+		$data['elemento'] = $row;
+		$data['comparador'] = $comparador;
+		$data['idiomas'] = $idiomas;
+		$data['data_vue'] = $data_vue;
+		$this->_view->assign($data);
+		$this->_view->render('import');
+	}
 	public function migrate_files ($id) {
 			if ($id == 999888) {
 				$files = scandir(ROOT . 'lenguaje');
@@ -57,6 +124,7 @@ class lenguajesController extends idiomasController {
 						}
 					}
 				}
+
 				DB::transaction(function () use($files_value) {
 					foreach ($files_value as $file_name => $variables) {
 						//crear ficheros
@@ -233,8 +301,15 @@ class lenguajesController extends idiomasController {
 	}
 	public function datatable () {
 		DB::enableQueryLog();
-		$query = IdiomaFiles::select()
-		->join('idiomas_files_vars', 'idiomas_files.Idif_IdIdiomaFile', 'idiomas_files_vars.Idif_IdIdiomaFile')->groupBy('idiomas_files.Idif_IdIdiomaFile');
+		$query = IdiomaFiles::select([
+			'idiomas_files.Idif_IdIdiomaFile',
+			'idiomas_files.Idif_FileName',
+			'idiomas_files.Idif_Descripcion',
+			'idiomas_files.Row_estado',
+			'idiomas_files_vars.Ifv_IdFileVar',
+			'idiomas_files_vars.Ifv_VarName'
+		])
+		->leftJoin('idiomas_files_vars', 'idiomas_files.Idif_IdIdiomaFile', 'idiomas_files_vars.Idif_IdIdiomaFile')->groupBy('idiomas_files.Idif_IdIdiomaFile');
 		$records_total = $query->get()->count();
 		$records_total_filter = $records_total;
 		if ($this->filledGet('buscar')) {
@@ -304,6 +379,7 @@ class lenguajesController extends idiomasController {
 	}
 
 	public function show ($id) {
+		$this->_view->getLenguaje('idiomas_lenguajes');
 		$row = IdiomaFiles::find($id);
 		if ($this->isAcceptJson()) {
 			$res = ['success' => $row != null, 'data' => null];
@@ -311,19 +387,46 @@ class lenguajesController extends idiomasController {
 			$this->_view->responseJson($res);
 		} else {
 			$idiomas = Idioma::activos();
-			$vars_idioma = [];
-			$idiomas->map(function($item) use(&$vars_idioma) {
-				$vars_idioma['idioma_'.$item->Idi_IdIdioma] = '';
-			});
-			$data_vue = [
-				'idiomas' => $vars_idioma,
-				'file_id' => $row->Idif_IdIdiomaFile
-			];
-			$data['elemento'] = $row;
-			$data['idiomas'] = $idiomas;
-			$data['data_vue'] = $data_vue;
-			$this->_view->assign($data);
-			$this->_view->render('detalles');
+			if ($this->has('export')) {
+				$res = [];
+				if ($this->getTexto('export') == 'json_export') {
+					// $row
+					$res = ['file' => [
+						'name' => $row->Idif_FileName,
+						'vars' => []
+					]];
+					$row->vars->map(function($item) use(&$res, $row){
+						// $item->body;
+						$vars = ['name' => $item->Ifv_VarName, 'body' => []];
+						foreach ($item->body as $key => $value) {
+							$vars['body'][] = ['idioma' => $value->Idi_IdIdioma, 'value' => $value->Ifvb_Body];
+							// $res['file']['vars'][][$value->Idi_IdIdioma] = $value->Ifvb_Body;
+
+
+						}
+						$res['file']['vars'][] = $vars;
+					});
+					// dd($res);
+					header("Content-disposition: attachment; filename=".$row->Idif_FileName.'.json');
+					header("Content-type: application/json");
+					$this->_view->responseJson($res);
+					// readfile("nombre_del_archivo.extension");
+				}
+			} else {
+				$vars_idioma = [];
+				$idiomas->map(function($item) use(&$vars_idioma) {
+					$vars_idioma['idioma_'.$item->Idi_IdIdioma] = '';
+				});
+				$data_vue = [
+					'idiomas' => $vars_idioma,
+					'file_id' => $row->Idif_IdIdiomaFile
+				];
+				$data['elemento'] = $row;
+				$data['idiomas'] = $idiomas;
+				$data['data_vue'] = $data_vue;
+				$this->_view->assign($data);
+				$this->_view->render('detalles');
+			}
 		}
 	}
 	public function index ($id = 'index') {

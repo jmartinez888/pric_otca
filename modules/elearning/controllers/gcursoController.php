@@ -1,5 +1,7 @@
 <?php
 
+use App\Formulario;
+
 /**
  * Description of loginController
  * @author ROLORO
@@ -18,7 +20,28 @@ class gcursoController extends elearningController {
     $this->getLibrary("ServiceResult");
     $this->service = new ServiceResult();
   }
+  public function formulario ($curso_id) {
+    $this->_view->getLenguaje('elearning_gcurso');
+    $this->_view->setTemplate(LAYOUT_FRONTEND);
+    $curso = $this->curso->getCursoXId($curso_id);
+    $formulario = Formulario::getByCurso($curso['Cur_IdCurso']);
+    $formulario = $formulario->count() > 0 ? $formulario[0] : null;
+    $data['respuestas'] = [];
+    if ($formulario) {
+      $data['respuestas'] = $formulario->respuestas;
 
+    }
+    // dd($formulario);
+    // $data_vue = [
+    //   'formulario_id' => $formulario != null ? $formulario : null
+    // ];
+    $data['menu'] = 'curso';
+    $data['curso'] = $curso;
+    $data['formulario'] = $formulario;
+    // $data['data_frm'] = $data_vue;
+    $this->_view->assign($data);
+    $this->_view->render('formulario');
+  }
   public function index(){ }
 
   public function _view_mis_cursos()
@@ -52,7 +75,7 @@ class gcursoController extends elearningController {
     // $id = $this->getTexto("id");
     // $idcurso = 1;
     $this->_view->setTemplate(LAYOUT_FRONTEND);
-
+    $this->_view->getLenguaje('elearning_gcurso');
     if(!is_numeric($idcurso) && strlen($idcurso)==0){ $idcurso = Session::get("learn_param_curso"); }
     if(strlen($idcurso)==0){ exit; }
     $datos = $this->curso->getCursoXId($idcurso);
@@ -176,7 +199,7 @@ class gcursoController extends elearningController {
 
   public function _partial_objetivos_especificos(){
     $id = $this->getTexto("id");
-    // echo $id; 
+    // echo $id;
     $objetivos = $this->curso->getObjetivosXCurso($id, 0);
 
     $this->_view->assign('objetivos', $objetivos);
@@ -209,11 +232,11 @@ class gcursoController extends elearningController {
     $curso = $this->getTexto("curso");
     $video = $this->getTexto("video");
 
-    // $codigo = $_POST['texto']; // aqui pones el codigo en un campo de texto 
-    $cadena='watch?v=';  
-    $pos=strpos($video,$cadena);  
-    $pos= $pos + strlen($cadena);  
-    $video=substr($video,$pos,100);  
+    // $codigo = $_POST['texto']; // aqui pones el codigo en un campo de texto
+    $cadena='watch?v=';
+    $pos=strpos($video,$cadena);
+    $pos= $pos + strlen($cadena);
+    $video=substr($video,$pos,100);
     // $_POST['video'] = $cadena;
 
 

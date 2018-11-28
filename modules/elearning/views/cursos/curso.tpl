@@ -22,9 +22,7 @@
             <div class="col-lg-6">
             <br>
             <br>
-            <h3 style="text-align: center; font-size: 35px;">
-              <strong>{$curso.Cur_Titulo}</strong>
-            </h3>
+            <h3 style="text-align: center; font-size: 35px;"><strong>{$curso.Cur_Titulo}</strong></h3>
             <br>
             </div>
             <div class="col-lg-3 row ic-sociales">
@@ -35,7 +33,7 @@
                 <a class="btn fa fa-google-plus im_sociales" id="im_sociales" style="background: #C03A2A" href="#"></a>
             </div>
 
-            
+
 
           </div>
 
@@ -68,7 +66,7 @@
                 {if $inscritos >= 2 }
                 <strong style="color: #393939; font-size: 16px">Alumnos</strong>
                 {else}
-                <strong style="color: #393939; font-size: 16px">Alumno</strong>                
+                <strong style="color: #393939; font-size: 16px">Alumno</strong>
                 {/if}
                 <br><br>
               </div>
@@ -83,13 +81,13 @@
                 {if $inscritos >= 2 }
                 <strong style="color: #393939; font-size: 16px">Alumnos</strong>
                 {else}
-                <strong style="color: #393939; font-size: 16px">Alumno</strong>                
+                <strong style="color: #393939; font-size: 16px">Alumno</strong>
                 {/if}
                 <br><br>
               </div>
               {/if}
-              
-              
+
+
               <div class="col-lg-12">
                 <br>
                 <i class="glyphicon glyphicon-star" style="color: #E9BA46; font-size: 25px"></i>
@@ -103,9 +101,9 @@
           </div>
 
           <div class="col-lg-12 text-curso">
-            <div>{$curso.Cur_Descripcion}</div> <br/>   
+            <div>{$curso.Cur_Descripcion}</div> <br/>
           </div>
-          
+
           {if isset($objetivos) && count($objetivos)>0}
           <div class="col-lg-12 text-curso">
             <div><strong><i class="glyphicon glyphicon-record"></i>
@@ -145,9 +143,10 @@
                 </button-->
               </a>
             </div> <br/>
-          </div>          
-          
+          </div>
+
           <div class="col-lg-12">
+
             {if $session==1}
               {if isset($inscripcion) && count($inscripcion)>0}
                 {if $inscripcion[0].Mat_Valor==2 }
@@ -173,14 +172,27 @@
                         {$inscripcion[0].Mat_FechaReg}</span>
                       </center>
                   {else}
-                      <div class="col-lg-12 anuncio"> 
-                      <strong><i class="glyphicon glyphicon-warning-sign" style="font-size: 20px;"> </i>&nbsp; ¡Atención!</strong>
-                      Para inscribirte en el curso presencial debe llenar el formulario de inscripción.</div>
+                    {if $respuesta_completada}
+                      <center class="tag-inscrito">
+                        <span><strong>Inscrito:</strong>
+                        {$inscripcion[0].Mat_FechaReg}</span>
+                      </center>
+                    {else}
+
+                      <div class="col-lg-12 anuncio">
+                        <strong>
+                          <i class="glyphicon glyphicon-warning-sign" style="font-size: 20px;"> </i>&nbsp; ¡Atención!
+                        </strong>
+                        {* Para inscribirte en el curso presencial debe llenar el formulario de inscripción. *}
+                        LLenar formulario de inscripción.
+                      </div>
                       <div class="col-lg-12">
-                        <a href="https://docs.google.com/forms/d/e/1FAIpQLSfnDPVqGFC2J6rMkuqAPi18G0w0KkSqueGtbgZXEEuDk7dg7w/viewform"  target="_blank" >
-                          <button class="btn btn-group btn-inscribir">Inscribirme</button>
+                        <a href="{$_layoutParams.root}elearning/formulario/responder/{$curso['Cur_IdCurso']}"  target="" >
+                          {* <button class="btn btn-group btn-inscribir">Inscribirme</button> *}
+                          <button class="btn btn-group btn-inscribir">Ir a formulario</button>
                         </a>
                       </div>
+                    {/if}
                   {/if}
 
                   {if Session::get('id_usuario') && $curso.Moa_IdModalidad != 3}
@@ -209,7 +221,7 @@
               {/if}
             {else}
               {if $curso.Moa_IdModalidad != 3}
-                <div class="col-lg-12 anuncio"> 
+                <div class="col-lg-12 anuncio">
                 <strong><i class="glyphicon glyphicon-warning-sign" style="font-size: 20px;"> </i>&nbsp; ¡Atención!</strong>
                 Para inscribirte en el curso necesitas una cuenta.</div>
                 <div class="col-lg-12">
@@ -219,7 +231,7 @@
                 </button>
                 </div>
               {else}
-                <div class="col-lg-12 anuncio"> 
+                <div class="col-lg-12 anuncio">
                 <strong><i class="glyphicon glyphicon-warning-sign" style="font-size: 20px;"> </i>&nbsp; ¡Atención!</strong>
                 Para inscribirte en el curso presencial debe llenar el formulario de inscripción.</div>
                 <div class="col-lg-12">
@@ -231,7 +243,7 @@
             {/if}
           </div>
 
-          
+
 
 
           {if $session==1 && count($modulo)>0 && $curso.Moa_IdModalidad != 3 }
@@ -240,7 +252,7 @@
               <hr class="cursos-hr">
             </div>
             <div class="col-lg-12" style="padding-left: 0px; padding-right: 0px;">
-              {$index = 1} 
+              {$index = 1}
               {foreach from=$modulo item=o}
               <div class="col-lg-12">
                 <div class="ficha-mod col-lg-12">
@@ -270,7 +282,7 @@
                 </div>
 
               </div>
-              {$index = $index + 1} 
+              {$index = $index + 1}
               {/foreach}
             </div>
           {/if}
@@ -291,17 +303,17 @@
               <span class="glyphicon glyphicon-star item-calificar" tag="3"></span>
               <span class="glyphicon glyphicon-star item-calificar" tag="4"></span>
               <span class="glyphicon glyphicon-star item-calificar" tag="5"></span>
-            </div>            
+            </div>
           </div>
           <div class="col-lg-4">
             <button class="btn btn-default pull-right btn-calificar" id="btnCalificar">
               <strong><span class="glyphicon glyphicon-star"></span>&nbsp; Calificar</strong>
             </button>
-          </div> 
+          </div>
           {/if}
           <div class="col-lg-12" style="margin-top: 10px; font-size:16px">
             <label>Valoraciones del curso: </label>
-          </div> 
+          </div>
           <div class="col-lg-12">
             <hr class="cursos-hr">
           </div>

@@ -19,11 +19,12 @@
 <div class="col-lg-12">
   <ul class="nav nav-tabs">
     <li role="presentation" class="active" id="item_titulo"><a href="#">TÍTULO</a></li>
+    <li role="presentation" class="" id="item_examen"><a href="#">EXÁMEN</a></li>
   </ul>
 </div>
 {include file='modules/elearning/views/gleccion/menu/lec_titulo.tpl'}
 
-<div class="col-xs-12">
+<!-- <div class="col-xs-12">
   <div class="panel panel-default margin-t-10">
     <div class="panel-heading">
       <h3 class="panel-title">
@@ -33,7 +34,7 @@
     </div>
 
     <!-- EXAMEN JM -->
-    <div class="panel-body">  
+    <!-- <div class="panel-body">   -->
 
         <!-- <div class="row" style="text-align:right">
             <div style="display:inline-block;padding-right:2em">
@@ -42,9 +43,9 @@
                 <input class="form-control" placeholder="Buscar examen" style="width: 300px; float: left; margin: 0px 10px;" name="palabraexamen" id="palabraexamen">
                 <button class="btn btn-success" style=" float: left" type="button" id="buscarexamen"  ><i class="glyphicon glyphicon-search"></i></button>
             </div>
-        </div> -->
+        </div> --
 
-       <!--  <div id="listarexamens">
+        <div id="listarexamens">
             <div class="col-xs-12">
                 {if isset($porcentaje) && count($porcentaje)  < 1}
                 <input type="hidden" name="habilitados" id="habilitados" value="0">
@@ -111,8 +112,9 @@
                     No hay registros
                 {/if}                
             </div>
-        </div> -->
-        <div id="listarexamens">
+        </div>
+        <!-- ultimo -->
+        <!-- <div id="listarexamens">
             <div class="col-xs-12">
               <input type="hidden" name="porcentaje" id="porcentaje" value="{$porcentaje}">
               {if $porcentaje < 100}
@@ -177,10 +179,11 @@
                   No hay registros
               {/if}                
             </div>
-        </div>
+        </div> --
+
     </div>
   </div>
-</div>
+</div> -->
 
 <!-- <div class="col-xs-12">
   <div class="panel panel-default">
