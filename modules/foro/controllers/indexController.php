@@ -44,7 +44,7 @@ class indexController extends foroController {
 
             $lista_foros[$i]["votos"]= $votos["Nvaloraciones"];
         }
-         exit;
+         
         $lista_tematica = $this->_model->getResumenLineTematica();
         $lista_agenda = $this->_model->getAgendaIndex();
      
@@ -53,7 +53,7 @@ class indexController extends foroController {
         $this->_view->assign('lista_tematica', $lista_tematica);
         $this->_view->assign('lista_agenda', $lista_agenda);
 
-
+        exit;
         $this->_view->renderizar('index');
     }
     public function searchForo($filtro = "") {
