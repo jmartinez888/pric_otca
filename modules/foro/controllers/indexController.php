@@ -80,7 +80,10 @@ class indexController extends foroController {
         $this->_view->setJs(array('buscar_foro'));
         $lista_foros = $this->_model->getForos("forum");
         for ($i=0; $i < count($lista_foros); $i++) {
+            $Nvaloraciones_foro = $this->_model->getNvaloraciones($lista_foros[$i]["For_IdForo"],'forum');
+            $lista_foros[$i]["Nvaloraciones_foro"]=$Nvaloraciones_foro["Nvaloraciones"];
             $lista_foros[$i]["tiempo"]= $lista_foros[$i]["For_FechaCreacion"];
+
         }
         $this->_view->assign('lista_foros', $lista_foros);
         $this->_view->renderizar('discussions');
@@ -93,6 +96,8 @@ class indexController extends foroController {
         $this->_view->setJs(array('buscar_foro'));
         $lista_foros = $this->_model->getForos("query");
         for ($i=0; $i < count($lista_foros); $i++) {
+            $Nvaloraciones_foro = $this->_model->getNvaloraciones($lista_foros[$i]["For_IdForo"],'forum');
+            $lista_foros[$i]["Nvaloraciones_foro"]=$Nvaloraciones_foro["Nvaloraciones"];
             $lista_foros[$i]["tiempo"]= $lista_foros[$i]["For_FechaCreacion"];
         }
         $this->_view->assign('lista_foros', $lista_foros);
@@ -105,6 +110,8 @@ class indexController extends foroController {
         $this->_view->setJs(array('buscar_foro'));
         $lista_foros = $this->_model->getForos("webinar");
         for ($i=0; $i < count($lista_foros); $i++) {
+            $Nvaloraciones_foro = $this->_model->getNvaloraciones($lista_foros[$i]["For_IdForo"],'forum');
+            $lista_foros[$i]["Nvaloraciones_foro"]=$Nvaloraciones_foro["Nvaloraciones"];
             $lista_foros[$i]["tiempo"]= $lista_foros[$i]["For_FechaCreacion"];
         }
         $this->_view->assign('lista_foros', $lista_foros);
@@ -118,6 +125,8 @@ class indexController extends foroController {
         $this->_view->setJs(array('buscar_foro'));
         $lista_foros = $this->_model->getForos("workshop");
         for ($i=0; $i < count($lista_foros); $i++) {
+            $Nvaloraciones_foro = $this->_model->getNvaloraciones($lista_foros[$i]["For_IdForo"],'forum');
+            $lista_foros[$i]["Nvaloraciones_foro"]=$Nvaloraciones_foro["Nvaloraciones"];
             $lista_foros[$i]["tiempo"]= $lista_foros[$i]["For_FechaCreacion"];
         }
         $this->_view->assign('lista_foros', $lista_foros);
@@ -136,6 +145,8 @@ class indexController extends foroController {
 
         $lista_foros = $this->_model->getForosPaginado($text_busqueda, $for_funcion);
         for ($i=0; $i < count($lista_foros); $i++) {
+            $Nvaloraciones_foro = $this->_model->getNvaloraciones($lista_foros[$i]["For_IdForo"],'forum');
+            $lista_foros[$i]["Nvaloraciones_foro"]=$Nvaloraciones_foro["Nvaloraciones"];
             $lista_foros[$i]["tiempo"]= $lista_foros[$i]["For_FechaCreacion"];
         }
         // $totalRegistros = $this->_model->getRowForos($filtro);

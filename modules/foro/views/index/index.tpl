@@ -40,7 +40,7 @@
                         {foreach from=$lista_tematica item=tematica}
                             {if $tematica.Lit_Discussions!="" || $tematica.Lit_Query!=""|| $tematica.Lit_Webinar!=""|| $tematica.Lit_Workshop!=""}
                         <div class="col-md-6 col-xs-12 col-sm-12 col-lg-6 tematica-foro margin-r-0">
-                            <div class="row tem_titulo"><a class="link-foro" href="{$_layoutParams.root}foro/index/searchForo/{trim($tematica.Lit_Nombre)}"><h4><strong>{$tematica.Lit_Nombre}</strong></h4></a></div>
+                            <div class="row tem_titulo"><a class="link-foro" href="{$_layoutParams.root}foro/tematica/detalles/{$tematica.Lit_IdLineaTematica}"><h4><strong>{$tematica.Lit_Nombre}</strong></h4></a></div>
                             <div class="row detalles-tematica">
                                 {if $tematica.Lit_Discussions!=""}
                                 <div class="col-md-6 col-xs-3 col-sm-3 col-lg-6 item-tematica"><a class="simulalink underline" href="{$_layoutParams.root}foro/index/discussions">Discusiones: {$tematica.Lit_Discussions}</a></div>

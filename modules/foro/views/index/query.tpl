@@ -31,37 +31,14 @@
             </div>
             
             <div id="lista_buscar_query" class="row">
-                <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12" style="margin-bottom: 30px; margin-top: 15px;">
-                    
+                <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 p-rt-lt-0" style="margin-bottom: 30px;">
                     {if count($lista_foros)>0}
                     {foreach from=$lista_foros item=foro}
-                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                        <div class="">
-                            <div class="cabecera-discusion">
-                                <a class="link-foro" href="{$_layoutParams.root}foro/index/ficha/{$foro.For_IdForo}">
-                                    <h4 style="text-align: justify;"><strong>{$foro.For_Titulo}</strong></h4>
-                                </a>
-                            </div>
-                            <div class="detalles-act-reciente">{$foro.Usu_Usuario} &nbsp;&nbsp;-&nbsp;&nbsp; hace {timediff date=$foro.tiempo  lang=Cookie::lenguaje()} &nbsp;&nbsp;-&nbsp;&nbsp; 3 votos &nbsp;&nbsp;-&nbsp;&nbsp; {$foro.For_TComentarios|default:0} comentario(s)</div>
-                            <!-- <div class="body-item">
-                                <p>{$foro.For_Resumen|truncate:120:"..."}</p>
-                            </div> -->
-                            <!-- <div class="footer-item row">
-                                <div class="col-md-6">
-                                    {$end_date=($foro.For_FechaCierre|date_format:"%d-%m-%Y")}
-                                    <span class="date">{$foro.For_FechaCreacion|date_format:"%d-%m-%Y"} {if ($foro.For_FechaCierre|date_format:"%d-%m-%Y")!=""} / {($foro.For_FechaCierre|date_format:"%d-%m-%Y")}{/if}</span>
-                                </div>
-                                <div class="col-md-6 text-right">
-                                    Colaboraciones <span class="badge">{$foro.For_TComentarios}</span>
-                                </div>
-                            </div> -->
-                        </div>
-                    </div>
+                    {include file='modules/foro/views/index/ajax/include_item_list_forum.tpl'}
                     {/foreach}
                     {else}
                     <h4>No se encontraron Resultados</h4>
                     {/if}
-                    
                 </div>
             </div>
         </div>
