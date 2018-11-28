@@ -42,7 +42,7 @@
                             <div style="padding-bottom: 10px;">                          
                                 <p style="text-align: justify;">{$foro.For_Resumen|truncate:120:"..."}</p>
                             </div>
-                            <div class="detalles-act-reciente">{$foro.Usu_Usuario} &nbsp;&nbsp;-&nbsp;&nbsp; hace {$foro.tiempo} &nbsp;&nbsp;-&nbsp;&nbsp; 3 votos &nbsp;&nbsp;-&nbsp;&nbsp; {$foro.For_TComentarios|default:0} comentario(s)</div>     
+                            <div class="detalles-act-reciente">{$foro.Usu_Usuario} &nbsp;&nbsp;-&nbsp;&nbsp; hace {timediff date=$foro.tiempo  lang=Cookie::lenguaje()} &nbsp;&nbsp;-&nbsp;&nbsp; 3 votos &nbsp;&nbsp;-&nbsp;&nbsp; {$foro.For_TComentarios|default:0} comentario(s)</div>     
                             <!-- <div class="footer-item row">
                                 <div class="col-md-6">
                                     {$end_date=($foro.For_FechaCierre|date_format:"%d-%m-%Y")}

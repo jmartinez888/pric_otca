@@ -42,7 +42,7 @@
                                     <h4 style="text-align: justify;"><strong>{$foro.For_Titulo}</strong></h4>
                                 </a>
                             </div>
-                            <div class="detalles-act-reciente">{$foro.Usu_Usuario} &nbsp;&nbsp;-&nbsp;&nbsp; hace {$foro.tiempo} &nbsp;&nbsp;-&nbsp;&nbsp; 3 votos &nbsp;&nbsp;-&nbsp;&nbsp; {$foro.For_TComentarios|default:0} comentario(s)</div>
+                            <div class="detalles-act-reciente">{$foro.Usu_Usuario} &nbsp;&nbsp;-&nbsp;&nbsp; hace {timediff date=$foro.tiempo  lang=Cookie::lenguaje()} &nbsp;&nbsp;-&nbsp;&nbsp; 3 votos &nbsp;&nbsp;-&nbsp;&nbsp; {$foro.For_TComentarios|default:0} comentario(s)</div>
                             <!-- <div class="body-item">
                                 <p>{$foro.For_Resumen|truncate:120:"..."}</p>
                             </div> -->

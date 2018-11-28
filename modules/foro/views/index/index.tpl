@@ -84,7 +84,7 @@
                                          <p style="text-align: justify;">{$foro.For_Resumen|truncate:120:"..."}</p>
                                     </div>
                                     {/if}
-                                    <div class="detalles-act-reciente">{$foro.Usu_Usuario} &nbsp;&nbsp;-&nbsp;&nbsp; hace {$foro.tiempo} &nbsp;&nbsp;-&nbsp;&nbsp; {$foro.votos} voto(s) &nbsp;&nbsp;-&nbsp;&nbsp; {$foro.For_TParticipantes|default:0} miembro(s) &nbsp;&nbsp;-&nbsp;&nbsp;{$foro.For_TComentarios|default:0} comentario(s)</div>
+                                    <div class="detalles-act-reciente">{$foro.Usu_Usuario} &nbsp;&nbsp;-&nbsp;&nbsp; hace {timediff date=$foro.tiempo  lang=Cookie::lenguaje()}&nbsp;&nbsp;-&nbsp;&nbsp; {$foro.votos} voto(s) &nbsp;&nbsp;-&nbsp;&nbsp; {$foro.For_TParticipantes|default:0} miembro(s) &nbsp;&nbsp;-&nbsp;&nbsp;{$foro.For_TComentarios|default:0} comentario(s)</div>
                                 {else}
                                     {if $foro.Row_Estado == 1}
                                         {if $Rol_Ckey == "lider_foro" || $Rol_Ckey == "moderador_foro" || $Rol_Ckey == "facilitador_foro" || $Rol_Ckey == "administrador_foro" || $Rol_Ckey == "administrador"}
@@ -95,7 +95,7 @@
                                              <p style="text-align: justify;">{$foro.For_Resumen|truncate:120:"..."}</p>
                                         </div>
                                         {/if}
-                                        <div class="detalles-act-reciente">{$foro.Usu_Usuario} &nbsp;&nbsp;-&nbsp;&nbsp; hace {$foro.tiempo} &nbsp;&nbsp;-&nbsp;&nbsp; {$foro.votos} voto(s) &nbsp;&nbsp;-&nbsp;&nbsp; {$foro.For_TParticipantes|default:0} miembro(s) &nbsp;&nbsp;-&nbsp;&nbsp;{$foro.For_TComentarios|default:0} comentario(s)</div>
+                                        <div class="detalles-act-reciente">{$foro.Usu_Usuario} &nbsp;&nbsp;-&nbsp;&nbsp; hace {timediff date=$foro.tiempo  lang=Cookie::lenguaje()} &nbsp;&nbsp;-&nbsp;&nbsp; {$foro.votos} voto(s) &nbsp;&nbsp;-&nbsp;&nbsp; {$foro.For_TParticipantes|default:0} miembro(s) &nbsp;&nbsp;-&nbsp;&nbsp;{$foro.For_TComentarios|default:0} comentario(s)</div>
                                         {/if}
                                     {else}
                                         {if $Rol_Ckey == "administrador_foro" || $Rol_Ckey == "administrador"}
@@ -106,7 +106,7 @@
                                              <p style="text-align: justify;">{$foro.For_Resumen|truncate:120:"..."}</p>
                                         </div>
                                         {/if}
-                                        <div class="detalles-act-reciente">{$foro.Usu_Usuario} &nbsp;&nbsp;-&nbsp;&nbsp; hace {$foro.tiempo} &nbsp;&nbsp;-&nbsp;&nbsp; {$foro.votos} voto(s) &nbsp;&nbsp;-&nbsp;&nbsp; {$foro.For_TParticipantes|default:0} miembro(s) &nbsp;&nbsp;-&nbsp;&nbsp;{$foro.For_TComentarios|default:0} comentario(s)</div>
+                                        <div class="detalles-act-reciente">{$foro.Usu_Usuario} &nbsp;&nbsp;-&nbsp;&nbsp; hace {timediff date=$foro.tiempo  lang=Cookie::lenguaje()} &nbsp;&nbsp;-&nbsp;&nbsp; {$foro.votos} voto(s) &nbsp;&nbsp;-&nbsp;&nbsp; {$foro.For_TParticipantes|default:0} miembro(s) &nbsp;&nbsp;-&nbsp;&nbsp;{$foro.For_TComentarios|default:0} comentario(s)</div>
                                         {/if}  
                                     {/if}
                                 {/if}                                  
@@ -119,7 +119,7 @@
                                          <p style="text-align: justify;">{$foro.For_Resumen|truncate:120:"..."}</p>
                                     </div>
                                     {/if}
-                                    <div class="detalles-act-reciente">{$foro.Usu_Usuario} &nbsp;&nbsp;-&nbsp;&nbsp; hace {$foro.tiempo} &nbsp;&nbsp;-&nbsp;&nbsp; {$foro.votos} voto(s) &nbsp;&nbsp;-&nbsp;&nbsp; {$foro.For_TParticipantes|default:0} miembro(s) &nbsp;&nbsp;-&nbsp;&nbsp;{$foro.For_TComentarios|default:0} comentario(s)</div>
+                                    <div class="detalles-act-reciente">{$foro.Usu_Usuario} &nbsp;&nbsp;-&nbsp;&nbsp; hace {timediff date=$foro.tiempo  lang=Cookie::lenguaje()} &nbsp;&nbsp;-&nbsp;&nbsp; {$foro.votos} voto(s) &nbsp;&nbsp;-&nbsp;&nbsp; {$foro.For_TParticipantes|default:0} miembro(s) &nbsp;&nbsp;-&nbsp;&nbsp;{$foro.For_TComentarios|default:0} comentario(s)</div>
                                 {else}
                                     {if $foro.Row_Estado == 1}
                                         {if $Rol_Ckey == "lider_foro" || $Rol_Ckey == "moderador_foro" || $Rol_Ckey == "facilitador_foro" || $Rol_Ckey == "administrador_foro" || $Rol_Ckey == "administrador"}
@@ -130,7 +130,7 @@
                                              <p style="text-align: justify;">{$foro.For_Resumen|truncate:120:"..."}</p>
                                         </div>
                                         {/if}
-                                        <div class="detalles-act-reciente">{$foro.Usu_Usuario} &nbsp;&nbsp;-&nbsp;&nbsp; hace {$foro.tiempo} &nbsp;&nbsp;-&nbsp;&nbsp; {$foro.votos} voto(s) &nbsp;&nbsp;-&nbsp;&nbsp; {$foro.For_TParticipantes|default:0} miembro(s) &nbsp;&nbsp;-&nbsp;&nbsp;{$foro.For_TComentarios|default:0} comentario(s)</div>
+                                        <div class="detalles-act-reciente">{$foro.Usu_Usuario} &nbsp;&nbsp;-&nbsp;&nbsp; hace {timediff date=$foro.tiempo  lang=Cookie::lenguaje()} &nbsp;&nbsp;-&nbsp;&nbsp; {$foro.votos} voto(s) &nbsp;&nbsp;-&nbsp;&nbsp; {$foro.For_TParticipantes|default:0} miembro(s) &nbsp;&nbsp;-&nbsp;&nbsp;{$foro.For_TComentarios|default:0} comentario(s)</div>
                                         {/if}
                                     {else}
                                         {if $Rol_Ckey == "administrador_foro" || $Rol_Ckey == "administrador"}
@@ -141,7 +141,7 @@
                                              <p style="text-align: justify;">{$foro.For_Resumen|truncate:120:"..."}</p>
                                         </div>
                                         {/if}
-                                        <div class="detalles-act-reciente">{$foro.Usu_Usuario} &nbsp;&nbsp;-&nbsp;&nbsp; hace {$foro.tiempo} &nbsp;&nbsp;-&nbsp;&nbsp; {$foro.votos} voto(s) &nbsp;&nbsp;-&nbsp;&nbsp; {$foro.For_TParticipantes|default:0} miembro(s) &nbsp;&nbsp;-&nbsp;&nbsp;{$foro.For_TComentarios|default:0} comentario(s)</div>
+                                        <div class="detalles-act-reciente">{$foro.Usu_Usuario} &nbsp;&nbsp;-&nbsp;&nbsp; hace {timediff date=$foro.tiempo  lang=Cookie::lenguaje()} &nbsp;&nbsp;-&nbsp;&nbsp; {$foro.votos} voto(s) &nbsp;&nbsp;-&nbsp;&nbsp; {$foro.For_TParticipantes|default:0} miembro(s) &nbsp;&nbsp;-&nbsp;&nbsp;{$foro.For_TComentarios|default:0} comentario(s)</div>
                                         {/if}  
                                     {/if}
                                 {/if}  

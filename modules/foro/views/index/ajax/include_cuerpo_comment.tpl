@@ -10,7 +10,7 @@
                 <h4 class="user">
                 {$commen_body.Usu_Nombre} {$commen_body.Usu_Apellidos} <br>
                 </h4>
-                <span class="date">{timediff date=$commen_body.Com_Fecha lang=Cookie::lenguaje()} {$commen_body.Com_Fecha}</span>
+                <span class="date">{timediff date=$commen_body.Com_Fecha lang=Cookie::lenguaje()}</span>
             </div>
             <div class="col col-xs-4 col-sm-4 col-md-4 col-lg-4 text-right">
                 <span title="Opciones"  class="dropdown-toggle opciones_comentario_{$hijo_comentarios.Com_IdComentario}" style="cursor: pointer;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >

@@ -41,8 +41,6 @@ class indexController extends foroController {
             $lista_foros[$i]["tiempo"]= $lista_foros[$i]["For_FechaCreacion"];
             $votos = $this->_model->getNvaloraciones($lista_foros[$i]["For_IdForo"],'forum');
             $lista_foros[$i]["votos"]= $votos["Nvaloraciones"];
-            var_dump($votos);
-            
         }
 
         $lista_tematica = $this->_model->getResumenLineTematica();
