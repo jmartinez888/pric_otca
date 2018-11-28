@@ -75,7 +75,7 @@ max-height: none !important;
         {if (isset($menuRaiz) && !empty($menuRaiz[0][0]))}
         <ul clas="col-xs-3 col-sm-3 col-md-2 col-lg-2">
           <li>
-            <a href="{$_layoutParams.root}">{$lenguaje["label_inicio"]} </a>
+            <a href="{$_layoutParams.root}">{$lenguaje["frontend_label_inicio"]} </a>
           </li>
           {foreach from=$menuRaiz item=mr}
           {$mr[0]}
@@ -84,7 +84,7 @@ max-height: none !important;
         {else}
         <ul clas="col-xs-3 col-sm-3 col-md-2 col-lg-2">
           <li>
-            <a href="{$_layoutParams.root}">{$lenguaje["label_inicio"]} </a>
+            <a href="{$_layoutParams.root}">{$lenguaje["frontend_label_inicio"]} </a>
           </li>
         </ul>
         {/if}
