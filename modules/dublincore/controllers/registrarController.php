@@ -109,13 +109,11 @@ class registrarController extends Controller {
                 $dublin = $this->_dublincore->registrarDublinCore(
                         $this->getSql('Dub_Titulo'), $this->getSql('Dub_Descripcion'), $this->getSql('Dub_Editor'), $this->getSql('Dub_Colabrorador'), $this->getSql('Dub_FechaDocumento'), $this->getSql('Dub_Formato'), $this->getSql('Dub_Identificador'), $this->getSql('Dub_Fuente'), $this->getSql('Dub_Idioma'), $this->getSql('Dub_Relacion'), $this->getSql('Dub_Cobertura'), $this->getSql('Dub_Derechos'), $this->getSql('Dub_PalabraClave'), $tipo_dublin[0], $archivo_fisico, $this->getSql('Idi_IdIdioma'), $tema_dublin[0], $this->filtrarInt($recurso));
 
+                //Registro en foro
                 if ($For_IdForo) {
-                    $result_e = $this->_dublincore->insertarFileForo($nombre_archivo, "", "", $For_IdForo, $recurso, "REPORTE-FORO-". $For_IdForo);
-                    $this->_view->assign('For_IdForo', $For_IdForo);
+                    $result_e = $this->_dublincore->insertarFileForo($nombre_archivo, $_FILES['Arf_IdArchivoFisico']['type'], $_FILES['Arf_IdArchivoFisico']['size'], $For_IdForo, $recurso,$dublin[0],$this->getSql('Dub_Titulo'),1);                   
                 }
-
-                // echo($dublin); 
-                // print_r($dublin);
+                $this->_view->assign('For_IdForo', $For_IdForo);
 
                 if ($dublin) {
                     $dublin_autor = $this->_dublincore->getDublinAutor($dublin[0], $autor[0]);

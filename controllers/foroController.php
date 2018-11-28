@@ -29,61 +29,7 @@ class foroController extends Controller
             }
         }
         return false;
-    }
-
-    protected function getTiempo($fecha_inicial)
-    {
-        $tiempo ="";     
-        $hora_servidor=getdate();
-        $fechainicial = new DateTime($fecha_inicial);
-        $fechafinal = new DateTime();
-        $diferencia = $fechainicial->diff($fechafinal);
-        $meses = ( $diferencia->y * 12 ) + $diferencia->m;
-        if($diferencia->y < 1){
-            if ($meses<1) {
-                if ($diferencia->d < 1) {
-                    if ($diferencia->h < 1) {
-                        if($diferencia->i < 1){
-                            $tiempo = " un momento ";
-                        }else{
-                            if($diferencia->i == 1){
-                                $tiempo = $diferencia->i . " minuto ";
-                            }else{
-                                $tiempo = $diferencia->i . " minutos ";
-                            }
-
-                        }
-                    }else{
-                        if($diferencia->h == 1){
-                            $tiempo = $diferencia->h . " hora ";
-                        }else{
-                            $tiempo = $diferencia->h . " horas ";
-                        }
-                    }
-                }else{
-                    if($diferencia->d == 1){
-                        $tiempo = $diferencia->d . " día ";
-                    }else{
-                        $tiempo = $diferencia->d . " días ";
-                    }
-                }
-            }else{
-                if($diferencia->m == 1){
-                    $tiempo = $diferencia->m . " mes ";
-                }else{
-                    $tiempo = $diferencia->m . " meses ";
-                }
-            }
-        }else{
-            if($diferencia->y == 1){
-                    $tiempo = $diferencia->y . " año ";
-            }else{
-                $tiempo = $diferencia->y . " años ";
-            }
-        }
-        return $tiempo;
-    }
-    
+    }   
 
 }
 

@@ -402,7 +402,7 @@ class adminController extends foroController
             if (count($aFile_foro)) {
                 foreach ($aFile_foro as $key => $value) {
                     if (trim($value["name"]) != "") {
-                        $result_e = $this->_model->insertarFileForo($value["name"], $value["type"], $value["size"], $id_foro, $id_recurso);
+                        $result_e = $this->_model->insertarFileForo($value["name"], $value["type"], $value["size"], $id_foro, $id_recurso,$iDub_IdDublinCore=0,$iFif_Titulo="",$iFif_EsOutForo=0);
                     }
 
                 }
@@ -999,11 +999,17 @@ class adminController extends foroController
     {
         $this->_view->setTemplate(LAYOUT_FRONTEND);
         if ($id_foro == 0) {
-            $this->redireccionar("foro/admin");
+            if($this->_acl->permiso("foro_list_admin"))
+                    $this->redireccionar("foro/admin");
+            else
+                   return $this->redireccionar("foro");
         }
         $foro = $this->_model->getForos_x_Id($id_foro);
         if (empty($foro)) {
-            $this->redireccionar("foro/admin");
+            if($this->_acl->permiso("foro_list_admin"))
+                $this->redireccionar("foro/admin");
+            else
+                return $this->redireccionar("foro");
         }
 
         if ($this->botonPress("bt_guardar")) {

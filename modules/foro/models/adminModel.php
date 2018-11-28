@@ -583,17 +583,20 @@ class adminModel extends Model
         }
     }
 
-    public function insertarFileForo($iFif_NombreFile, $iFif_TipoFile, $iFif_SizeFile, $iFor_IdForo, $iRec_IdComentario)
+    public function insertarFileForo($iFif_NombreFile, $iFif_TipoFile, $iFif_SizeFile, $iFor_IdForo, $iRec_IdRecurso,$iDub_IdDublinCore, $iFif_Titulo,$iFif_EsOutForo)
     {
         try {
 
-            $sql    = "call s_i_insertar_file_foro(?,?,?,?,?)";
+            $sql    = "call s_i_insertar_file_foro(?,?,?,?,?,?,?,?)";
             $result = $this->_db->prepare($sql);
             $result->bindParam(1, $iFif_NombreFile, PDO::PARAM_STR);
             $result->bindParam(2, $iFif_TipoFile, PDO::PARAM_STR);
             $result->bindParam(3, $iFif_SizeFile, PDO::PARAM_INT);
             $result->bindParam(4, $iFor_IdForo, PDO::PARAM_INT);
-            $result->bindParam(5, $iRec_IdComentario, PDO::PARAM_INT);
+            $result->bindParam(5, $iRec_IdRecurso, PDO::PARAM_INT);
+            $result->bindParam(6, $iDub_IdDublinCore, PDO::PARAM_INT);
+            $result->bindParam(7, $iFif_Titulo, PDO::PARAM_STR);
+            $result->bindParam(8, $iFif_EsOutForo, PDO::PARAM_INT);
 
             $result->execute();
             return $result->fetch();

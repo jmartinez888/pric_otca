@@ -16,14 +16,14 @@ class editarController extends Controller {
         if ($For_IdForo) {
             $this->_view->setTemplate(LAYOUT_FRONTEND);
         }
-         $this->_view->getLenguaje("index_inicio");
+        $this->_view->getLenguaje("index_inicio");
         $this->_view->getLenguaje("bdrecursos_metadata");
         $this->_view->getLenguaje("bdrecursos_index");
         $this->_view->setJs(array('dublincore'));
 
         if ($this->botonPress("editarDublin")) 
         {
-            $this->editarDublin($this->filtrarInt($registros));
+            $this->editarDublin($this->filtrarInt($registros),$For_IdForo);
         }
 
         $condicion = "";
@@ -138,10 +138,10 @@ class editarController extends Controller {
                         $this->getSql('Dub_Titulo'), $this->getSql('Dub_Descripcion'), $this->getSql('Dub_Editor'), $this->getSql('Dub_Colabrorador'), $this->getSql('Dub_FechaDocumento'), $formato[1], $this->getSql('Dub_Identificador'), $this->getSql('Dub_Fuente'), $this->getSql('Dub_Idioma'), $this->getSql('Dub_Relacion'), $this->getSql('Dub_Cobertura'), $this->getSql('Dub_Derechos'), $this->getSql('Dub_PalabraClave'), $tipo_dublin[0], $this->getInt('Arf_IdArchivoFisico'), $tema_dublin[0], $this->filtrarInt($registros)
                 );
 
-                if ($For_IdForo) {
-                    $result_e = $this->_dublincore->updateFileForo($For_IdForo, $nombre_archivo, "", "");
-                    $this->_view->assign('For_IdForo', $For_IdForo);
+                if ($For_IdForo) {                 
+                    $result_e = $this->_registrar->updateFileForo($For_IdForo, $archivo_fisico['Arf_PosicionFisica'], $archivo_fisico['Arf_TypeMime'], $archivo_fisico['Arf_TamanoArchivo'],$this->getSql('Dub_Titulo'));
                 }
+                $this->_view->assign('For_IdForo', $For_IdForo);
 
 
                 $dublin_autor = $this->_registrar->getDublinAutor($this->filtrarInt($registros), $autor[0]);

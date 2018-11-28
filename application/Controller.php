@@ -68,6 +68,35 @@ abstract class Controller
         }
     }
 
+    protected function loadController($controller, $modulo = false)
+    {
+        $controller = $controller . 'Controller';
+        $rutaController = ROOT . 'controllers' . DS . $controller . '.php';
+
+        if(!$modulo)
+        {
+            $modulo = $this->_request->getModulo();
+        }
+
+        if($modulo)
+        {
+           if($modulo != 'default')
+           {
+               $rutaController = ROOT . 'modules' . DS . $modulo . DS . 'controllers' . DS . $controller . '.php';
+           }
+        }
+
+        if(is_readable($rutaController))
+        {
+            require_once $rutaController;
+            $controller = new $controller;
+            return $controller;
+        } else {
+            throw new Exception('Error de controller - ' . $rutaController);
+            return false;
+        }
+    }
+
     protected function botonPress($clave)
     {
         if(isset($_REQUEST[$clave]))

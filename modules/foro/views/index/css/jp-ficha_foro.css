@@ -49,16 +49,14 @@
 	color: #777;
 	border-color: #777;
 }
-.btn-like{
-	background-color: #4C9942;
-	color: white;
-	border-color: #4C9942;
-	margin-bottom: 5px;
+.likes{
+	margin-top: 10px;
+	font-size: 18px;
+	margin-bottom: 10px;
 }
-.btn-like:hover{
-	background-color: #fff !important;
-	color: #4C9942;
-	border-color: #4C9942;
+.btn-like {
+    cursor: pointer;
+    color: #8bc34a;
 }
 .participantes{
 
@@ -115,12 +113,12 @@
 	text-decoration: underline;
 }
 .media-heading-jp{
-	background-color: #ceffc8 !important;
+	background-color: #f2f2f2 !important;
 	border: none !important;
 	border-radius: 5px 5px 0px 0px !important;
 }
 .media-heading-jp:before{
-	background-color: #ceffc8 !important;
+	background-color: #f2f2f2 !important;
 	border: none !important;
 	-webkit-transform: rotate(-35deg) !important;
 	transform: rotate(-35deg) !important;

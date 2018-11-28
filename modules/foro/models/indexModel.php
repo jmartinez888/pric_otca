@@ -111,7 +111,7 @@ class indexModel extends Model {
     public function getPropietario_foro($Usu_IdUsuario) {
         try {
             $post = $this->_db->query(
-                    "SELECT Usu_Nombre FROM usuario
+                    "SELECT Usu_Usuario,Usu_Nombre FROM usuario
                     WHERE Usu_IdUsuario = {$Usu_IdUsuario}");
             return $post->fetch();
         } catch (PDOException $exception) {
@@ -189,10 +189,11 @@ class indexModel extends Model {
         }
     }
 
+
     public function getComentario_x_idforo($iFor_IdForo, $iCom_IdComentario) {
         try {
             $post = $this->_db->query(
-                    "SELECT c.Com_IdComentario,c.Com_Descripcion,c.Com_Fecha,c.Com_Estado,c.For_IdForo,c.Idi_IdIdioma,c.Row_Estado,u.Usu_Nombre,u.Usu_Apellidos, u.Usu_IdUsuario FROM comentarios c INNER JOIN usuario u ON u.Usu_IdUsuario=c.Usu_IdUsuario WHERE c.For_IdForo={$iFor_IdForo} AND c.Row_Estado = 1 AND c.Com_IdComentario = {$iCom_IdComentario}");
+                    "SELECT c.Com_IdComentario,c.Com_IdPadre,c.Com_Descripcion,c.Com_Fecha,c.Com_Estado,c.For_IdForo,c.Idi_IdIdioma,c.Row_Estado,u.Usu_Nombre,u.Usu_Apellidos, u.Usu_IdUsuario FROM comentarios c INNER JOIN usuario u ON u.Usu_IdUsuario=c.Usu_IdUsuario WHERE c.For_IdForo={$iFor_IdForo} AND c.Row_Estado = 1 AND c.Com_IdComentario = {$iCom_IdComentario}");
             return $post->fetch();
         } catch (PDOException $exception) {
             $this->registrarBitacora("foro(indexModel)", "getComentario_x_idforo", "Error Model", $exception);
@@ -311,17 +312,17 @@ class indexModel extends Model {
         }
     }
 
-    // public function getValoraciones_x_IdForo($iFor_IdForo) {
-    //     try {
-    //         $post = $this->_db->query(
-    //                 "SELECT COUNT(For_Valorar) AS Nvaloraciones_foro FROM usuario_foro
-    //                     WHERE For_IdForo = {$iFor_IdForo} AND For_Valorar = 1");
-    //         return $post->fetch();
-    //     } catch (PDOException $exception) {
-    //         $this->registrarBitacora("foro(indexModel)", "getValoraciones_x_For_IdForo", "Error Model", $exception);
-    //         return $exception->getTraceAsString();
-    //     }
-    // }
+    public function getValoraciones_x_IdForo($iFor_IdForo) {
+         try {
+             $post = $this->_db->query(
+                     "SELECT COUNT(For_Valorar) AS Nvaloraciones_foro FROM usuario_foro
+                         WHERE For_IdForo = {$iFor_IdForo} AND For_Valorar = 1");
+             return $post->fetch();
+         } catch (PDOException $exception) {
+             $this->registrarBitacora("foro(indexModel)", "getValoraciones_x_For_IdForo", "Error Model", $exception);
+             return $exception->getTraceAsString();
+         }
+     }
 
     // public function Valorar_Foro($iFor_IdForo, $iUsu_IdUsuario, $For_Valorar)
     // {
@@ -344,12 +345,12 @@ class indexModel extends Model {
     //     }
     // }
 
-    public function getValoracion_personal($iUsu_IdUsuario, $iID) {
+    public function getValoracion_personal($iUsu_IdUsuario, $iID,$objeto) {
         try {
             $post = $this->_db->query(
                     "SELECT COUNT(*) AS Nvaloracion_personal
                         FROM like_foro_comentario
-                        WHERE Usu_IdUsuario = '$iUsu_IdUsuario' AND ID = {$iID}");
+                        WHERE Usu_IdUsuario = '$iUsu_IdUsuario' AND Lfc_IdObjeto = {$iID} and Lfc_Objeto='$objeto'");          
             return $post->fetch();
         } catch (PDOException $exception) {
             $this->registrarBitacora("foro(indexModel)", "getValoracion_personal", "Error Model", $exception);
@@ -357,12 +358,12 @@ class indexModel extends Model {
         }
     }
 
-    public function getNvaloraciones($iID) {
+    public function getNvaloraciones($iID,$objeto) {
         try {
             $post = $this->_db->query(
                     "SELECT COUNT(*) AS Nvaloraciones
                         FROM like_foro_comentario
-                        WHERE ID = '$iID'");
+                        WHERE Lfc_IdObjeto = $iID and Lfc_Objeto ='$objeto'");
             return $post->fetch();
         } catch (PDOException $exception) {
             $this->registrarBitacora("foro(indexModel)", "getNvaloraciones", "Error Model", $exception);
@@ -370,24 +371,25 @@ class indexModel extends Model {
         }
     }
 
-    public function registrarValoracion_Comentario_Foro($iUsu_IdUsuario, $iID, $Valor) {
+    public function registrarValoracion_Comentario_Foro($iUsu_IdUsuario, $iLfc_IdObjeto,$iLfc_Objeto, $Valor) {
         try {
-            if ($Valor == 0) {
-                $sql = "call s_i_like_comentario_foro(?,?)";
+            $result = $this->_db->query(
+                        "DELETE FROM like_foro_comentario WHERE Usu_IdUsuario = $iUsu_IdUsuario AND Lfc_IdObjeto = $iLfc_IdObjeto  and Lfc_Objeto ='$iLfc_Objeto'");
+             $rest= $result->rowCount();
+          
+            if ($Valor == 0) {                
+
+                $sql = "call s_i_like_comentario_foro(?,?,?)";
+
                 $result = $this->_db->prepare($sql);
                 $result->bindParam(1, $iUsu_IdUsuario, PDO::PARAM_INT);
-                $result->bindParam(2, $iID, PDO::PARAM_INT);
+                $result->bindParam(2, $iLfc_IdObjeto, PDO::PARAM_INT);
+                $result->bindParam(3, $iLfc_Objeto, PDO::PARAM_STR);
 
                 $result->execute();
                 return $result->fetch();
-            }else{
-                if ($Valor == 1) {
-                    $result = $this->_db->query(
-                        "DELETE FROM like_foro_comentario WHERE Usu_IdUsuario = {$iUsu_IdUsuario}  AND ID = {$iID}"
-                    );
-                    return $result->rowCount(PDO::FETCH_ASSOC);
-                }
             }
+            return $rest;
         } catch (PDOException $exception) {
 
             $this->registrarBitacora("foro(indexModel)", "registrarValoracion_Comentario_Foro", "Error Model", $exception);
@@ -490,7 +492,7 @@ class indexModel extends Model {
 
     public function getFacilitadores($iFor_IdForo) {
         try {
-            $sql = "select u.Usu_Nombre,u.Usu_Apellidos,u.Usu_InstitucionLaboral,r.Rol_IdRol,r.Rol_Nombre from usuario_foro uf
+            $sql = "select u.Usu_IdUsuario,u.Usu_Nombre,u.Usu_Apellidos,u.Usu_URLImage,u.Usu_InstitucionLaboral,r.Rol_IdRol,r.Rol_Nombre from usuario_foro uf
                     inner join usuario u on u.Usu_IdUsuario=uf.Usu_IdUsuario
                     inner join rol r on r.Rol_IdRol=uf.Rol_IdRol
                     where uf.For_IdForo= $iFor_IdForo and (r.Rol_Ckey = 'lider_foro' or r.Rol_Ckey = 'moderador_foro' or r.Rol_Ckey = 'facilitador_foro') AND uf.Row_Estado = 1 order by r.Rol_Nombre desc";

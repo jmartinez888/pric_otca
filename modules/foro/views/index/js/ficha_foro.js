@@ -200,12 +200,12 @@ $(document).on('ready', function () {
 
     //para el like del foro
     $('body').on('click', '#ValorarForo', function () {
-        valorar_foro($(this).attr("id_usuario"), $(this).attr("id_foro"), $(this).attr("valor"), $(this).attr("ajaxtpl"));
+        valorar_foro($(this).attr("id_usuario"), $(this).attr("id_foro"),$(this).attr("objeto"), $(this).attr("valor"), $(this).attr("ajaxtpl"));
     });
 
     //para el like del comentario del foro
     $('body').on('click', '.valorar_comentario', function () {
-        valorar_comentario_foro($(this).attr("id_usuario"),$(this).attr("id_comentario"), $(this).attr("valor"), $(this).attr("ajaxtpl"));
+        valorar_comentario_foro($(this).attr("id_usuario"),$(this).attr("id_comentario"),$(this).attr("objeto"),$(this).attr("valor"), $(this).attr("ajaxtpl"));
     });
 
     $('body').on('click', '.cerrar_foro', function () {
@@ -271,11 +271,12 @@ function cerrarForo(id_foro, estado_foro) {
     });
 }
 
-function valorar_comentario_foro(id_usuario, ID, valor, ajaxtpl) {
+function valorar_comentario_foro(id_usuario, ID,objeto, valor, ajaxtpl) {
     $.post(_root_ + 'foro/index/registrarValoracion_Comentario_Foro',
         {
             id_usuario: id_usuario,
             ID: ID,
+            objeto:objeto,
             valor: valor,
             ajaxtpl: ajaxtpl
         }, function (data) {
@@ -284,11 +285,12 @@ function valorar_comentario_foro(id_usuario, ID, valor, ajaxtpl) {
     });
 }
 
-function valorar_foro(id_usuario, ID, valor, ajaxtpl) {
-    $.post(_root_ + 'foro/index/registrarValoracion_Comentario_Foro',
+function valorar_foro(id_usuario, ID, objeto,valor, ajaxtpl) {
+    $.post(_root_ + 'foro/index/ValorarForo',
         {
             id_usuario: id_usuario,
-            ID: ID,
+            id_foro: ID,
+            objeto:objeto,
             valor: valor,
             ajaxtpl: ajaxtpl
         }, function (data) {

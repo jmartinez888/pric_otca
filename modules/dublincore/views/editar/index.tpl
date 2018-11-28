@@ -14,9 +14,8 @@
                     <div class="panel-body">
                         <table class="table table-user-information">
                             <tbody>                           
-                                <tr>
-                                    <td>{$lenguaje["label_nombre_bdrecursos"]}:</td>
-                                    <td>{$recurso.Rec_Nombre}</td>
+                                <tr>                                   
+                                    <td colspan="2">{$recurso.Rec_Nombre}</td>
                                 </tr>
                                 <tr>
                                     <td>{$lenguaje["label_tipo_bdrecursos"]}</td>
@@ -283,7 +282,11 @@
                 <p><center>{$mensaje}</center></p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                {if !empty($For_IdForo)}                         
+                    <a href="{$_layoutParams.root_clear}foro/index/ficha/{$For_IdForo}" class="btn btn-default">Cerrar</a> 
+                    {else} 
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>     
+                    {/if}
             </div>
         </div>
 

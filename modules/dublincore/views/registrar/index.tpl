@@ -281,7 +281,7 @@
                     <p><center>{$mensaje}</center></p>
                 </div>
                 <div class="modal-footer">
-                    {if $For_IdForo != ""}                        
+                    {if !empty($For_IdForo)}                         
                     <a href="{$_layoutParams.root_clear}foro/index/ficha/{$For_IdForo}" class="btn btn-default">Cerrar</a> 
                     {else} 
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>     
