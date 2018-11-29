@@ -1,10 +1,21 @@
+<style type="text/css">
+    .tag-url{
+        color: #75ACE5;
+        display: inline-block;
+        cursor: pointer;
+    }
+</style>
 {include file='modules/elearning/views/gestion/menu/menu.tpl'}
 <div class="col-xs-10">
     <div class="col-xs-12">
         <div class="col-xs-12">
             <div class=" " style="margin-bottom: 0px !important">
                 <div class="text-center text-bold" style="margin-top: 20px; margin-bottom: 20px; color: #267161;">
-                  <h3 style="text-transform: uppercase; margin: 0; font-weight: bold;">{$titulo}</h3>
+                {if isset($idLeccion) && $idLeccion > 0}
+                    {include file='modules/elearning/views/gestion/menu/tag_url.tpl'}
+                {else}
+                    {$titulo}
+                {/if}
                 </div>
             </div>
         </div>
@@ -15,6 +26,11 @@
         <div class="panel-body">           
             <div class="row" style="text-align:right">
                 <div style="display:inline-block;padding-right:2em">
+                    {if isset($idLeccion) && $idLeccion > 0}
+                        <input type="hidden" class="estado" id="hidden_modulo" value="{$modulo.Moc_IdModuloCurso}" />
+                        <input type="hidden" class="estado" id="hidden_leccion" value="{$idLeccion}" />
+                        
+                    {/if}
                     <input type="hidden" name="idcurso" id="idcurso" value="{$idcurso}">
                     <input type="hidden" name="hidden_curso" id="hidden_curso" value="{$idcurso}">
                     <input class="form-control" placeholder="Buscar examen" style="width: 300px; float: left; margin: 0px 10px;" name="palabraexamen" id="palabraexamen">
@@ -23,16 +39,24 @@
             </div>
             <div id="listarexamens">
                 <div class="col-xs-12">
-                    <input type="hidden" name="porcentaje" id="porcentaje" value="{$porcentaje}">
-                    {if $porcentaje < 100}
-                     <a href="{$_layoutParams.root}elearning/examen/nuevoexamen/{$idcurso}" class="btn btn-primary margin-top-10 glyphicon glyphicon-plus" id="btn_nuevo" > Nuevo</a>
+                    <input type="hidden" name="porcentaje" id="porcentaje" value="{$porcentaje|default:'0'}">
+                    {if $porcentaje <= 100}
+                        {if isset($idLeccion) && $idLeccion > 0}
+                            <input type="hidden" class="estado" id="hidden_habilitado" value="{$Exa_Habilitado|default:'0'}" />
+                                                        
+                            <a href="{$_layoutParams.root}elearning/gleccion/_view_leccion/{$idcurso}/{$modulo.Moc_IdModuloCurso}/{$idLeccion}" class="btn btn-danger margin-t-10 " id="btn_nuevo" ><i class="glyphicon glyphicon-triangle-left"></i> Regresar</a>
+                            
+                            <a href="{$_layoutParams.root}elearning/examen/nuevoexamen/{$idcurso}/{$idLeccion}" class="btn btn-primary margin-t-10 " id="btn_nuevo" > <i class="glyphicon glyphicon-plus"></i> Nuevo</a>
+                        {else}
+                         <a href="{$_layoutParams.root}elearning/examen/nuevoexamen/{$idcurso}" class="btn btn-primary margin-t-10 glyphicon glyphicon-plus" id="btn_nuevo" > Nuevo</a>
+                        {/if}
                     {else}
-                     <a data-toggle="modal"  data-target="#msj-invalido" class="btn btn-danger margin-top-10 glyphicon glyphicon-plus" data-placement="bottom" > Nuevo</a>
+                     <a data-toggle="modal"  data-target="#msj-invalido" class="btn btn-danger margin-t-10 glyphicon glyphicon-plus" data-placement="bottom" > Nuevo</a>
                     {/if}            
                     {if isset($examens) && count($examens)}
                         <div class="table-responsive">
                             <table class="table" style="  margin: 20px auto">
-                                <tr>
+                                <tr >
                                     <th style=" text-align: center">Nº</th>
                                     <th style=" text-align: center">Título</th>
                                     <th style=" text-align: center">Intentos</th>
@@ -41,7 +65,13 @@
                                     <th style=" text-align: center">Opciones</th>
                                 </tr>
                                 {foreach item=rl from=$examens}
-                                    <tr>
+                                    <tr {if $rl.Row_Estado==0}
+                    {if $_acl->permiso("ver_eliminados")}
+                        class="btn-danger"
+                    {else}
+                        hidden {$numeropagina = $numeropagina-1}
+                    {/if}
+                {/if}>
                                         <td style=" text-align: center">{$numeropagina++}</td>
                                         <td style=" text-align: center">{$rl.Exa_Titulo}</td>
                                         <td style=" text-align: center">{$rl.Exa_Intentos}</td>
@@ -56,7 +86,7 @@
                                         </td>
                                         {if $_acl->permiso("editar_rol")}
                                         <td style=" text-align: center">
-                                            {if  $rl.Emitido==0}
+                                            {if  $rl.Emitido>=0}
                                             <a data-toggle="tooltip" data-placement="bottom" class="btn btn-default btn-sm glyphicon glyphicon-refresh estado-examen" title="{$lenguaje.tabla_opcion_cambiar_est}" Exa_Porcentaje = "{$rl.Exa_Porcentaje}" 
                                             id_examen="{$rl.Exa_IdExamen}" estado="{$rl.Exa_Estado}"> </a>
                                             {/if}
@@ -64,7 +94,7 @@
 
                                              <a data-toggle="tooltip" data-placement="bottom" class="btn btn-default btn-sm glyphicon glyphicon-question-sign btn-preguntas" title="Preguntas" href="{$_layoutParams.root}elearning/examen/preguntas/{$idcurso}/{$rl.Exa_IdExamen}"></a>
 
-                                            {if  $rl.Emitido==0}
+                                            {if  $rl.Emitido>=0}
                                             <a   
                                             {if $rl.Row_Estado==0}
                                                 data-toggle="tooltip" 

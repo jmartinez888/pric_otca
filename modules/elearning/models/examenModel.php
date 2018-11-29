@@ -149,6 +149,19 @@ class examenModel extends Model {
         }
     }
 
+    // jm
+    public function getLeccionXId($Lec_IdLeccion){
+        try{
+            $sql = " SELECT * FROM leccion WHERE Lec_IdLeccion = $Lec_IdLeccion AND Row_Estado = 1 AND Lec_Tipo = 3 ORDER BY Lec_IdLeccion ASC ";
+            $result = $this->_db->prepare($sql);
+            $result->execute();
+            return $result->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("elearning(examenModel)", "getLeccionXId", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
+
     public function getLecciones($id){
         try{
             $sql = " SELECT * FROM leccion WHERE Moc_IdModuloCurso = $id AND Row_Estado = 1 AND Lec_Tipo=3 ORDER BY Lec_IdLeccion ASC ";
@@ -241,6 +254,7 @@ class examenModel extends Model {
             }
             $sql = " SELECT e.*,(SELECT COUNT(ea.Exa_IdExamen) FROM examen_alumno ea WHERE ea.Exa_IdExamen=e.Exa_IdExamen LIMIT 1) AS Emitido FROM examen e $condicion 
                 LIMIT $registroInicio, $registrosXPagina ";
+                
             $result = $this->_db->query($sql);
             return $result->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $exception) {
@@ -487,6 +501,23 @@ class examenModel extends Model {
             }
         } catch (PDOException $exception) {
             $this->registrarBitacora("elearning(examenModel)", "cambiarEstadoExamen", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
+    public function eliminarHabilitarexamen($iMod_Idpregunta = 0, $iRow_Estado = 0)
+    {
+        // echo $iMod_Idpregunta."fdffff".$iRow_Estado;
+        try{
+            $sql = "call s_u_habilitar_deshabilitar_examen(?,?)";
+            $result = $this->_db->prepare($sql);
+            $result->bindParam(1, $iMod_Idpregunta, PDO::PARAM_INT);
+            $result->bindParam(2, $iRow_Estado, PDO::PARAM_INT);
+            $result->execute();
+            
+            return $result->rowCount(PDO::FETCH_ASSOC); 
+
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("elearning(examenModel)", "eliminarHabilitarexamen", "Error Model", $exception);
             return $exception->getTraceAsString();
         }
     }

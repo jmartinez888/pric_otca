@@ -17,7 +17,11 @@ $(document).on('ready', function () {
 
     //     }
     // });
-// RefreshTagUrl();
+    try {
+        RefreshTagUrl();
+    } catch(e) {
+       
+    }
     
     $("#hidden_curso").val($("#idcurso").val());
 
@@ -54,17 +58,25 @@ $(document).on('ready', function () {
     var paginacion = function (pagina, nombrelista, datos,total_registros) {
 
         var pagina;
+
+        if (parseInt($("#hidden_leccion").val()) > 0) {
+           var hidden_leccion = $("#hidden_leccion").val();
+        } else {
+           var hidden_leccion = "";
+        } 
+
         if($("#idexamen").length > 0)
-        pagina = {'pagina':pagina,'filas':$("#s_filas_"+nombrelista).val(),'total_registros':total_registros,'idexamen':$("#idexamen").val() };
-        
+            pagina = {'pagina':pagina,'filas':$("#s_filas_"+nombrelista).val(),'total_registros':total_registros,'idexamen':$("#idexamen").val() };
         else
-        pagina = {'pagina':pagina,'filas':$("#s_filas_"+nombrelista).val(),'total_registros':total_registros,'idcurso':$("#idcurso").val() };
+            pagina = {'pagina':pagina,'filas':$("#s_filas_"+nombrelista).val(),'total_registros':total_registros,'idcurso':$("#idcurso").val(), 'idleccion':hidden_leccion };
         
         $.post(_root_ + 'elearning/examen/_paginacion_' + nombrelista + '/' + datos, pagina, function (data) {
             $("#" + nombrelista).html('');
             $("#cargando").hide();
             $("#" + nombrelista).html(data);
         });
+
+
     }
 
     $('#img').change(function(e) {
@@ -206,46 +218,50 @@ $(document).on('ready', function () {
     }); 
 
     $("body").on('click', "#buscarexamen", function () { 
-        $("#cargando").show();       
-        buscarexamen($("#palabraexamen").val(), $("#idcurso").val());
+        $("#cargando").show();     
+        if (parseInt($("#hidden_leccion").val()) > 0) {
+            buscarexamen($("#palabraexamen").val(), $("#idcurso").val(), $("#hidden_leccion").val());                      
+        } else {
+            buscarexamen($("#palabraexamen").val(), $("#idcurso").val()), 0;
+        }  
     }); 
 
-    $("body").on('click', '.estado-examen', function() {
-        $("#cargando").show();
-        if (_post && _post.readyState != 4) {
-            _post.abort();
-        }
+    // $("body").on('click', '.estado-examen', function() {
+    //     $("#cargando").show();
+    //     if (_post && _post.readyState != 4) {
+    //         _post.abort();
+    //     }
 
-        _id_examen = $(this).attr("id_examen");
-        if (_id_examen === undefined) {
-            _id_examen = 0;
-        }
-        _estado = $(this).attr("estado");
-        if (_estado === undefined) {
-            _estado = 0;
-        }
-        if (!_estado) {
-            _estado = 0;
-        }
+    //     _id_examen = $(this).attr("id_examen");
+    //     if (_id_examen === undefined) {
+    //         _id_examen = 0;
+    //     }
+    //     _estado = $(this).attr("estado");
+    //     if (_estado === undefined) {
+    //         _estado = 0;
+    //     }
+    //     if (!_estado) {
+    //         _estado = 0;
+    //     }
 
-        _post = $.post(_root_ + 'elearning/examen/_cambiarEstadoExamens',
-            {                    
-                _Mod_Idexamen: _id_examen,
-                _Mod_Estado: _estado,
-                pagina: $(".pagination .active span").html(),
-                palabra: $("#palabraexamen").val(),
-                filas:$("#s_filas_"+'listarexamens').val(),
-                // idexamen:$("#idexamen").val()
+    //     _post = $.post(_root_ + 'elearning/examen/_cambiarEstadoExamens',
+    //         {                    
+    //             _Mod_Idexamen: _id_examen,
+    //             _Mod_Estado: _estado,
+    //             pagina: $(".pagination .active span").html(),
+    //             palabra: $("#palabraexamen").val(),
+    //             filas:$("#s_filas_"+'listarexamens').val(),
+    //             // idexamen:$("#idexamen").val()
                 
-            },
-        function(data) {
-            $("#listarexamens").html('');
-            $("#cargando").hide();
-            $("#listarexamens").html(data);
-            $('[data-toggle="tooltip"]').tooltip(); 
-            // mensaje(JSON.parse(data));
-        });
-    });
+    //         },
+    //     function(data) {
+    //         $("#listarexamens").html('');
+    //         $("#cargando").hide();
+    //         $("#listarexamens").html(data);
+    //         $('[data-toggle="tooltip"]').tooltip(); 
+    //         // mensaje(JSON.parse(data));
+    //     });
+    // });
 
     $("body").on('click', '.estado-examen', function() {
       _estado = $(this).attr("estado");
@@ -255,9 +271,19 @@ $(document).on('ready', function () {
       if (!_estado) {
           _estado = 0;
       }
-
+      // _hidden_leccion = 0;
       if (_estado == 0) {
-        if ($("#porcentaje").val() < 100 && $(this).attr("Exa_Porcentaje") > 0) {
+        if (parseInt($("#hidden_leccion").val()) > 0) {
+            if (parseInt($("#hidden_habilitado").val()) > 0) {
+                _hidden_leccion = 1;
+            } else {
+                _hidden_leccion = 0;
+            }            
+        } else {
+            _hidden_leccion = 0;
+        }
+
+        if (parseInt($("#porcentaje").val()) <= 100 && _hidden_leccion == 0 && parseInt($("#porcentaje").val())+parseInt($(this).attr("Exa_Porcentaje")) <= 100 ) {
           $("#cargando").show();
           if (_post && _post.readyState != 4) {
               _post.abort();
@@ -287,7 +313,16 @@ $(document).on('ready', function () {
               $('[data-toggle="tooltip"]').tooltip(); 
           });
         } else {
-          mensaje([["error"," Solo se puede habilitar un examen por lección...!! "]]);
+            if (parseInt($("#porcentaje").val())+parseInt($(this).attr("Exa_Porcentaje")) > 100 ) {
+                mensaje([["error"," No se puede habilitar examen porque supera el porcentaje máximo de 100%...!! "]]);
+            }
+            if (_hidden_leccion == 1) {
+                mensaje([["error"," Solo se puede habilitar un examen por lección...!! "]]);
+            }
+            if (parseInt($("#porcentaje").val()) > 100 ) {
+                mensaje([["error"," El porcentaje se superó...!! "]]);
+            }
+            
         }
       } else {
           $("#cargando").show();
@@ -321,6 +356,76 @@ $(document).on('ready', function () {
         }
     });
 
+    $("body").on('click', '.confirmar-eliminar-examen', function() {
+        
+        if (_post && _post.readyState != 4) {
+            _post.abort();
+        }
+
+        _id_examen = $(this).attr("id_examen");
+        if (_id_examen === undefined) {
+            _id_examen = 0;
+        }
+
+        _Mod_Idexamen_ = _id_examen;
+        _Row_Estado_ = 0;
+    });
+    $("body").on('click', '.confirmar-habilitar-examen', function() {
+        $("#cargando").show();
+        if (_post && _post.readyState != 4) {
+            _post.abort();
+        }
+
+        _id_examen = $(this).attr("id_examen");
+        if (_id_examen === undefined) {
+            _id_examen = 0;
+        }
+
+        _Mod_Idexamen_ = _id_examen;
+        _Row_Estado_ = 1;
+        
+        _post = $.post(_root_ + 'elearning/examen/_eliminar_examen',
+                {                    
+                    _Exa_IdExamen: _Mod_Idexamen_,
+                    _Row_Estado: _Row_Estado_,
+                    pagina: $(".pagination .active span").html(),
+                    palabra: $("#palabraexamen").val(),
+                    filas:$("#s_filas_"+'listarexamens').val(),
+                    idcurso: $("#hidden_curso").val(),
+                    _Lec_IdLeccion: $("#hidden_leccion").val()
+                    
+                },
+        function(data) {
+            $("#listarexamens").html('');
+            $("#cargando").hide();
+            $("#listarexamens").html(data);
+            // Select all elements with data-toggle="tooltips" in the document
+            $('[data-toggle="tooltip"]').tooltip(); 
+        });
+    });
+    $("body").on('click', '.eliminar_examen', function() {
+        $("#cargando").show();
+        // _Per_IdPermiso = _eliminar;
+        _post = $.post(_root_ + 'elearning/examen/_eliminar_examen',
+                {                    
+                    _Exa_IdExamen: _Mod_Idexamen_,
+                    _Row_Estado: _Row_Estado_,
+                    pagina: $(".pagination .active span").html(),
+                    palabra: $("#palabraexamen").val(),
+                    filas:$("#s_filas_"+'listarexamens').val(),
+                    idcurso: $("#hidden_curso").val(),
+                    _Lec_IdLeccion: $("#hidden_leccion").val()
+                    
+                },
+        function(data) {
+            $("#listarexamens").html('');
+            $("#cargando").hide();
+            $("#listarexamens").html(data);
+            // Select all elements with data-toggle="tooltips" in the document
+            $('[data-toggle="tooltip"]').tooltip(); 
+        });
+    });
+
     $("body").on('click', '.estado-pregunta', function() {
         _estado = $(this).attr("estado");
         if (_estado === undefined) {
@@ -329,7 +434,9 @@ $(document).on('ready', function () {
         if (!_estado) {
             _estado = 0;
         }
-        if (($("#puntos").val() > 0 && $(this).attr("Pre_Puntos") <= $("#puntos").val()) || _estado == 1) {
+        // alert($("#puntos").val());
+        // alert($(this).attr("Pre_Puntos"));
+        if ((parseInt($("#puntos").val()) > 0 && parseInt($(this).attr("Pre_Puntos")) <= parseInt($("#puntos").val())) || _estado == 1) {
             $("#cargando").show();
             if (_post && _post.readyState != 4) {
                 _post.abort();
@@ -359,10 +466,10 @@ $(document).on('ready', function () {
                 $('[data-toggle="tooltip"]').tooltip(); 
             });
         } else {
-            if ($("#puntos").val() == 0) { 
+            if (parseInt($("#puntos").val()) == 0) { 
                 mensaje([["error"," Ya se ha alcanzado todos los puntos del peso del examen con las preguntas registradas...!! "]]);
             } else {
-                if ($(this).attr("Pre_Puntos") > $("#puntos").val()) { 
+                if (parseInt($(this).attr("Pre_Puntos")) > parseInt($("#puntos").val())) { 
                     mensaje([["error"," El puntaje de la pregunta que quiere habilitar supera los puntos del peso del examen...!! "]]);
                 }                
             }
@@ -453,12 +560,13 @@ function buscarpregunta(criterio, idexamen) {
     });
 }
 
-function buscarexamen(criterio, idcurso) {
+function buscarexamen(criterio, idcurso, idleccion=0) {
     $("#cargando").show();
     $.post(_root_ + 'elearning/examen/_buscarexamens',
     {
         palabra:criterio,
-        idcurso:idcurso
+        idcurso:idcurso,
+        _Lec_IdLeccion:idleccion
         
     }, function (data) {
         $("#listarexamens").html('');

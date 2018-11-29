@@ -20,32 +20,92 @@
         <input type="hidden" name="hidden_curso" id="hidden_curso" value="{$idcurso}">
        
         <div class="form-group">
-                
             <label class="col-lg-3 control-label">Título: </label>
             <div class="col-lg-9">
                 <p><input class="form-control" id ="titulo" type="text" name="titulo" value="{$datos.nombre|default:""}" placeholder="Título"/></p>
             </div>
         </div>
-
-        <div class="form-group">
-            <label class="col-lg-3 control-label" >Módulo: </label>
-            <div class="col-lg-9">
-                <p>
-                  <select class="form-control" id="selectmodulo" name="selectmodulo">
-                    {if isset($modulos) && count($modulos)}
-                    <option value="0">Seleccione módulo</option>
-                    {foreach item=ll from=$modulos}
-                        <option value="{$ll.Moc_IdModuloCurso}">{$ll.Moc_Titulo}</option>
-                    {/foreach}
-                    {/if}
-                  </select>
-                </p>
+        
+        {if isset($idLeccion) && $idLeccion > 0}
+            <div class="form-group">
+                <label class="col-lg-3 control-label" >Módulo: </label>
+                <div class="col-lg-9">
+                    <p>
+                      <select class="form-control" id="selectmodulo" name="selectmodulo" >
+                        {if isset($modulos) && count($modulos)}
+                        <option value="0">Seleccione módulo</option>
+                        {foreach item=ll from=$modulos}
+                            <option {if $leccion.Moc_IdModuloCurso == $ll.Moc_IdModuloCurso} selected="selected" {/if} value="{$ll.Moc_IdModuloCurso}">{$ll.Moc_Titulo}</option>
+                        {/foreach}
+                        {/if}
+                      </select>
+                    </p>
+                </div>
             </div>
-        </div>
+            <div id="completar">
+            {if isset($lecciones) && count($lecciones)}
+                <div class="form-group">
+                    <label class="col-xs-3 control-label" >Lección: </label>
+                    <div class="col-xs-9">
+                        <select class="form-control" id="selectleccion" name="selectleccion" >
+                            {foreach item=ll from=$lecciones}
+                                <option value="{$ll.Lec_IdLeccion}" {if $leccion.Lec_IdLeccion == $ll.Lec_IdLeccion} selected="selected" {/if}>{$ll.Lec_Titulo}</option>
+                            {/foreach}
+                        </select>
+                    </div>
+                </div>  
+                <div class="form-group">
+                    <label class="col-xs-3 control-label" >Porcentaje Global: </label>
+                    <div class="col-xs-9">
+                        <input data-toggle="tooltip" data-placement="bottom" title="El valor debe ser inferior o igual a {$porcentaje}" class="form-control" id ="porcentaje" type="number" name="porcentaje" value="{$examen.Exa_Porcentaje|default:'0'}" placeholder="Porcentaje" max="{$porcentaje}" min="0" value="0"/>
+                    </div>
+                </div>   
+                <div class="form-group">
+                    <label class="col-xs-3 control-label" >Puntaje Máximo: </label>
+                    <div class="col-xs-9">
+                        <p class="  margin-t-10"> <input type="radio" value="20" class="radioalt " name="puntaje" checked="checked" />  20</p>
+                        <p class=" margin-t-10"> <input type="radio" value="100" class="radioalt " name="puntaje"/>
+                         100</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-3 control-label" >Número Máximo de Intentos: </label>
+                    <div class="col-xs-9">
+                        <select class="form-control" id="intentos" name="intentos">          
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="5">5</option>
+                            <option value="10">10</option>
+                            <option value="0">Ilimitado</option>
+                        </select>
+                    </div>
+                </div>
+            {else}
+                <center>No hay lecciones disponibles<center>
+            {/if}
+            </div>
+        {else}
+            <div class="form-group">
+                <label class="col-lg-3 control-label" >Módulo: </label>
+                <div class="col-lg-9">
+                    <p>
+                      <select class="form-control" id="selectmodulo" name="selectmodulo">
+                        {if isset($modulos) && count($modulos)}
+                        <option value="0">Seleccione módulo</option>
+                        {foreach item=ll from=$modulos}
+                            <option value="{$ll.Moc_IdModuloCurso}">{$ll.Moc_Titulo}</option>
+                        {/foreach}
+                        {/if}
+                      </select>
+                    </p>
+                </div>
+            </div>
+            <div id="completar">
 
-        <div id="completar">
+            </div>
+        {/if}
 
-        </div>
         <div class="form-group">
             <div class="col-lg-offset-2 col-lg-10">
              <button class="btn btn-success pull-right margin-top-10" id="guardar" name="guardar">Preparar preguntas</button>
