@@ -157,58 +157,68 @@ class gleccionController extends elearningController {
         $this->_view->assign("trabajo", $trabajo); //RODRIGO 20180605
         $this->_view->assign("tipo_trabajo", $tipo_trabajo); //RODRIGO 20180605
         switch ($leccion["Lec_Tipo"]) {
-          case 1:
-            $contenido = $model->getContenidoLeccion($leccion["Lec_IdLeccion"]);
-            $this->_view->assign("contenido", $contenido);
-            $view = "ajax/_view_1";
-            break;
-          case 2:
-            $contenido = $model->getDetalleLeccion2($leccion["Lec_IdLeccion"]);
-            $this->_view->assign("contenido", $contenido);
-            $view = "ajax/_view_2";
-            break;
-          case 3:
-            // $ExaModel = $this->loadModel("examen");
-            // $examen = $ExaModel->getExamenxLeccion($leccion["Lec_IdLeccion"]);
-            $condicion = " WHERE e.Lec_IdLeccion = ".$leccion["Lec_IdLeccion"]." ";
-            $this->_view->assign('examens',  $this->examen->getExamensCondicion(0,CANT_REG_PAG, $condicion));
-            $paginador = new Paginador();
-            $arrayRowCount = $this->examen->getExamenesRowCount($condicion);
-            $totalRegistros = $arrayRowCount['CantidadRegistros'];
-            $paginador->paginar($totalRegistros,"listarexamens", "", 0, CANT_REG_PAG, true);
-            $this->_view->assign('numeropagina', $paginador->getNumeroPagina());
-            $this->_view->assign('idcurso', $curso);
-            $porcentaje = $this->examen->getExamensCondicion(0,CANT_REG_PAG, " WHERE e.Lec_IdLeccion = ".$leccion["Lec_IdLeccion"]." AND e.Exa_Estado = 1 AND e.Row_Estado = 1");
-            // print_r($porcentaje);
-            if (count($porcentaje)>0) {
-               
-            $this->_view->assign('porcentaje', $porcentaje['Porcentaje'] );
-            } else {
-                
-            $this->_view->assign('porcentaje', "");
-            }
-            
-            // if ($examen && count($examen) > 0) {
-            // // print_r($examen);exit;
-            //     $this->redireccionar("elearning/examen/editarexamen/".$examen["Cur_IdCurso"]."/".$examen["Exa_IdExamen"]);
-            // } else {
-            //     $this->redireccionar("/elearning/examen/nuevoexamen/".$curso["Cur_IdCurso"]);
-            // }
+            case 1:
+                $contenido = $model->getContenidoLeccion($leccion["Lec_IdLeccion"]);
+                $this->_view->assign("contenido", $contenido);
+                $this->_view->assign("Lec_Tipo",$leccion["Lec_Tipo"]);
+                $view = "ajax/_view_1";
+                break;
+            case 2:
+                $contenido = $model->getDetalleLeccion2($leccion["Lec_IdLeccion"]);
+                $this->_view->assign("contenido", $contenido);
+                $view = "ajax/_view_2";
+                break;
+            case 3:
+                // $ExaModel = $this->loadModel("examen");
+                // $examen = $ExaModel->getExamenxLeccion($leccion["Lec_IdLeccion"]);
+                $condicion = " WHERE e.Lec_IdLeccion = ".$leccion["Lec_IdLeccion"]." ";
+                $this->_view->assign('examens',  $this->examen->getExamensCondicion(0,CANT_REG_PAG, $condicion));
+                $paginador = new Paginador();
+                $arrayRowCount = $this->examen->getExamenesRowCount($condicion);
+                $totalRegistros = $arrayRowCount['CantidadRegistros'];
+                $paginador->paginar($totalRegistros,"listarexamens", "", 0, CANT_REG_PAG, true);
+                $this->_view->assign('numeropagina', $paginador->getNumeroPagina());
+                $this->_view->assign('idcurso', $curso);
 
-            
-            // $examen = $model->insertExamenLeccion($leccion["Lec_IdLeccion"], "", 0, 0, 0);
-            // $preguntas = $model->getPreguntas($examen[0]["Exa_IdExamen"]);
-            // $this->_view->assign("examen", $examen);
-            // $this->_view->assign("preguntas", $preguntas); 
-            $view = "ajax/_view_3";
-            
-            break;
-          case 4:
-            $piz = $this->loadModel("pizarra");
-            $pizarras = $piz->getPizarrasLeccion($leccion["Lec_IdLeccion"]);
-            $this->_view->assign("pizarras", $pizarras);
-            $view = "ajax/_view_4";
-            break;
+
+                // $porcentaje = $this->examen->getExamensCondicion(0,CANT_REG_PAG, " WHERE e.Lec_IdLeccion = ".$leccion["Lec_IdLeccion"]." AND e.Exa_Estado = 1 AND e.Row_Estado = 1");
+                // // print_r($porcentaje);
+                // if (count($porcentaje)>0) {
+                   
+                // $this->_view->assign('porcentaje', $porcentaje['Porcentaje'] );
+                // } else {
+                    
+                // $this->_view->assign('porcentaje', "");
+                // }
+
+                
+                // if ($examen && count($examen) > 0) {
+                // // print_r($examen);exit;
+                //     $this->redireccionar("elearning/examen/editarexamen/".$examen["Cur_IdCurso"]."/".$examen["Exa_IdExamen"]);
+                // } else {
+                //     $this->redireccionar("/elearning/examen/nuevoexamen/".$curso["Cur_IdCurso"]);
+                // }
+
+                
+                // $examen = $model->insertExamenLeccion($leccion["Lec_IdLeccion"], "", 0, 0, 0);
+                // $preguntas = $model->getPreguntas($examen[0]["Exa_IdExamen"]);
+                // $this->_view->assign("examen", $examen);
+                // $this->_view->assign("preguntas", $preguntas); 
+                $view = "ajax/_view_3";
+                
+                break;
+            case 4:
+                $piz = $this->loadModel("pizarra");
+                $pizarras = $piz->getPizarrasLeccion($leccion["Lec_IdLeccion"]);
+                $this->_view->assign("pizarras", $pizarras);
+                $view = "ajax/_view_4";
+                break;
+            case 6:
+                $contenido = $model->getContenidoLeccion($leccion["Lec_IdLeccion"]);
+                $this->_view->assign("contenido", $contenido);
+                $this->_view->assign("Lec_Tipo",$leccion["Lec_Tipo"]);
+                $view = "ajax/_view_1";
+                break;
         }
         $this->_view->render($view);
     }

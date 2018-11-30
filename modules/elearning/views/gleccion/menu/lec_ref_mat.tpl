@@ -302,8 +302,12 @@
     </div>
   </div>
 </div>
+{if isset($Lec_Tipo) && $Lec_Tipo == 6}
+
 {include file = 'modules/elearning/views/templates/res/mod_agregar_trabajo.tpl'}
 {include file = 'modules/elearning/views/templates/res/mod_editar_trabajo.tpl'}
+
+{/if}
 
 <script type="text/javascript">
   // Para que funcione el tooltip

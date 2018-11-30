@@ -523,16 +523,18 @@ class examenController extends elearningController {
     public function preguntas($id,$idExamen){
         // $id = $this->getTexto("id");
         // $idLeccion = $this->getTexto("idleccion");
-        if(strlen($id)==0){ $id = Session::get("learn_param_curso"); }
-        if(strlen($id)==0){ exit; }
-        Session::set("learn_url_tmp", "examen/preguntas");
-        Session::set("learn_param_curso", $id);
+        
+        // if(strlen($id)==0){ $id = Session::get("learn_param_curso"); }
+        // if(strlen($id)==0){ exit; }
+        // Session::set("learn_url_tmp", "examen/preguntas");
+
+        // Session::set("learn_param_curso", $id);
         // $codigo = $this->getTexto("certificado");
         // $this->_view->setCss(array("verificar"));
 
         // $idExamen = $this->getTexto("id");
         $this->_view->setTemplate(LAYOUT_FRONTEND);
-        $this->_view->setJs(array(array(BASE_URL . 'modules/elearning/views/gestion/js/core/util.js'), array(BASE_URL . 'modules/elearning/views/gestion/js/core/controller.js'), array(BASE_URL . 'modules/elearning/views/gestion/js/core/view.js'), "index"));
+        $this->_view->setJs(array(array(BASE_URL . 'modules/elearning/views/gestion/js/core/util.js'), array(BASE_URL . 'modules/elearning/views/gestion/js/core/controller.js'),  "index"));
 
         // url
         $Examen = $this->examen->getExamenID($idExamen);
@@ -540,6 +542,7 @@ class examenController extends elearningController {
         $model = $this->loadModel("_gestionLeccion");
         $leccion = $model->getLeccionId($Examen["Lec_IdLeccion"]);
         $modulo = $Mmodel->getModuloId($Examen["Moc_IdModulo"]);
+        $this->_view->assign("curso", $Mmodel->getCursoId($id));
         $this->_view->assign("modulo", $modulo);
         $this->_view->assign("leccion", $leccion);
         $this->_view->assign('idLeccion', $Examen["Lec_IdLeccion"]);
