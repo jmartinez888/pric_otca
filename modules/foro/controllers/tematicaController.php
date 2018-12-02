@@ -38,6 +38,10 @@ class tematicaController extends foroController {
 							$item->ref_url = BASE_URL.Cookie::lenguaje().'/foro/index/ficha/'.$item->For_IdForo;
 							$item->total_comentarios = $item->comentarios()->count();
 							$item->total_miembros = $item->miembros()->count();
+							$item->For_FechaCreacion =$this->timediff($item->For_FechaCreacion,Cookie::lenguaje());
+							$this->_model = $this->loadModel('index');
+							$Nvaloraciones_comentario = $this->_model->getNvaloraciones($item->For_IdForo,'forum');							
+							$item->total_likes=$this->shortnumber($Nvaloraciones_comentario["Nvaloraciones"]);
 							$item->autor;
 							return $item;
 						});
@@ -66,11 +70,12 @@ class tematicaController extends foroController {
 				]);
 				$data['tematica'] = $tematica;
 				$data['funciones'] = Foro::funciones();
+				$this->_view->assign('titulo', $tematica['Lit_Nombre']);
 				$this->_view->assign($data);
 				$this->_view->render('detalles');
 			}
 		} else {
-			echo 'asd';
+			echo 'No found!..';
 			//contenido no encontrado
 		}
 

@@ -9,15 +9,17 @@ class editarModel extends Model {
     public function getDocumento1($condicion = "") {
         try {
         $post = $this->_db->query(
-                " SELECT dub.*, aut.Aut_IdAutor, aut.Aut_Nombre,arf.Arf_IdArchivoFisico, arf.Arf_PosicionFisica, arf.Arf_FechaCreacion,arf.Arf_URL, taf.*,
+                "SELECT dub.*, aut.Aut_IdAutor, aut.Aut_Nombre,arf.Arf_IdArchivoFisico, arf.Arf_PosicionFisica, arf.Arf_FechaCreacion,arf.Arf_URL, taf.*,
              ted.Ted_Descripcion, tid.Tid_Descripcion, tid.Tid_Estado FROM dublincore dub 
             INNER JOIN tema_dublin ted ON dub.Ted_IdTemaDublin = ted.Ted_IdTemaDublin 
             INNER JOIN dublincore_autor dua ON dub.Dub_IdDublinCore = dua.Dub_IdDublinCore 
             INNER JOIN autor aut ON dua.Aut_IdAutor = aut.Aut_IdAutor  
             LEFT JOIN archivo_fisico arf ON dub.Arf_IdArchivoFisico = arf.Arf_IdArchivoFisico 
             INNER JOIN tipo_dublin tid ON dub.Tid_IdTipoDublin = tid.Tid_IdTipoDublin 
-            LEFT JOIN tipo_archivo_fisico taf ON arf.Taf_IdTipoArchivoFisico = taf.Taf_IdTipoArchivoFisico  $condicion"
+            LEFT JOIN tipo_archivo_fisico taf ON arf.Taf_IdTipoArchivoFisico = taf.Taf_IdTipoArchivoFisico  $condicion" 
         );
+
+       
         return $post->fetch();
         } catch (PDOException $exception) {
            

@@ -66,7 +66,7 @@ and open the template in the editor.
     text-overflow: ellipsis;
     vertical-align: bottom;
     white-space: nowrap;
-    max-width: 218px;
+    max-width: 215px;
 }
 .status-upload .files .file_size
 {

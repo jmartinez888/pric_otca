@@ -2,7 +2,7 @@ var _post = null;
 var _Per_IdPermiso_ = 0;
 $(document).on('ready', function () {   
 
-    $('body').on('click', '.pagina', function () {
+   $('body').on('click', '.pagina', function () {
         $("#cargando").show();
         paginacion($(this).attr("pagina"), $(this).attr("nombre"), $(this).attr("parametros"),$(this).attr("total_registros"));
     });
@@ -11,9 +11,9 @@ $(document).on('ready', function () {
         paginacion($(this).attr("pagina"), $(this).attr("nombre"), $(this).attr("parametros"),$(this).attr("total_registros"));
     });
     var paginacion = function (pagina, nombrelista, datos,total_registros) {
-        var pagina = {'pagina':pagina,'filas':$("#s_filas_"+nombrelista).val(),'total_registros':total_registros,'filtro':datos};
+        var pagina = {'pagina':pagina,'filas':$("#s_filas_"+nombrelista).val(),'ajax':nombrelista,'total_registros':total_registros,'filtro':datos,'tipo':$("#hdd_tipo").val()};
         
-        $.post(_root_ + 'foro/index/_paginacion_' + nombrelista + '/' + datos, pagina, function (data) {
+        $.post(_root_ + 'foro/index/_paginacion_ListaForo/' + datos, pagina, function (data) {
             $("#" + nombrelista).html('');
             $("#cargando").hide();
             $("#" + nombrelista).html(data);

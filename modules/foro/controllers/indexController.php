@@ -55,21 +55,15 @@ class indexController extends foroController {
     public function searchForo($filtro = "") {
         $this->_view->setTemplate(LAYOUT_FRONTEND);
         $filtro = $this->filtrarTexto($filtro);
+         $this->_view->assign('titulo', "Búsqueda en Foros");
         $this->_view->setJs(array('index'));
         $this->_view->setCss(array("index", "jp-index"));
-        $paginador = new Paginador();
+        
 
-        $lista_foros = $this->_model->getForosPaginado($filtro);
-        $totalRegistros = $this->_model->getRowForos($filtro);
+        $totalRegistros = $this->_model->getRowForos($filtro,"");
+        $this->getForos($for_funcion='',$filtro,$totalRegistros["For_NRow"],"lista_search",$pagina = 1, CANT_REG_PAG);
 
-        $paginador->paginar($totalRegistros["For_NRow"], "listarForo", $filtro, $pagina = 0, CANT_REG_PAG, true);
-
-        $this->_view->assign('lista_foros', $lista_foros);
-
-        $this->_view->assign('palabrabuscada', $filtro);
-        $this->_view->assign('numeropagina', $paginador->getNumeroPagina());
-        //$this->_view->assign('cantidadporpagina',$registros);
-        $this->_view->assign('paginacion', $paginador->getView('paginacion_ajax_s_filas'));
+        $this->_view->assign('search', $filtro);
         $this->_view->renderizar('searchForo');
     }
 
@@ -78,14 +72,12 @@ class indexController extends foroController {
         $this->_view->assign('titulo', "Discusiones");
         $this->_view->setCss(array("jp-index"));
         $this->_view->setJs(array('buscar_foro'));
-        $lista_foros = $this->_model->getForos("forum");
-        for ($i=0; $i < count($lista_foros); $i++) {
-            $Nvaloraciones_foro = $this->_model->getNvaloraciones($lista_foros[$i]["For_IdForo"],'forum');
-            $lista_foros[$i]["Nvaloraciones_foro"]=$Nvaloraciones_foro["Nvaloraciones"];
-            $lista_foros[$i]["tiempo"]= $lista_foros[$i]["For_FechaCreacion"];
+       
+        $totalRegistros = $this->_model->getRowForos("",$tipo="forum");
 
-        }
-        $this->_view->assign('lista_foros', $lista_foros);
+        $this->getForos($tipo="forum",$filtro="",$totalRegistros["For_NRow"],$ajax="lista_buscar_forum",$pagin=0,$filas=CANT_REG_PAG);
+
+
         $this->_view->renderizar('discussions');
     }
 
@@ -94,13 +86,12 @@ class indexController extends foroController {
         $this->_view->assign('titulo', "Consultas");
         $this->_view->setCss(array("jp-index"));
         $this->_view->setJs(array('buscar_foro'));
-        $lista_foros = $this->_model->getForos("query");
-        for ($i=0; $i < count($lista_foros); $i++) {
-            $Nvaloraciones_foro = $this->_model->getNvaloraciones($lista_foros[$i]["For_IdForo"],'forum');
-            $lista_foros[$i]["Nvaloraciones_foro"]=$Nvaloraciones_foro["Nvaloraciones"];
-            $lista_foros[$i]["tiempo"]= $lista_foros[$i]["For_FechaCreacion"];
-        }
-        $this->_view->assign('lista_foros', $lista_foros);
+
+        $totalRegistros = $this->_model->getRowForos("",$tipo="query");
+
+        $this->getForos($tipo="query",$filtro="",$totalRegistros["For_NRow"],$ajax="lista_buscar_query",$pagin=0,$filas=CANT_REG_PAG);
+
+
         $this->_view->renderizar('query');
     }
 
@@ -108,13 +99,11 @@ class indexController extends foroController {
         $this->_view->setTemplate(LAYOUT_FRONTEND);
         $this->_view->setCss(array("jp-index"));
         $this->_view->setJs(array('buscar_foro'));
-        $lista_foros = $this->_model->getForos("webinar");
-        for ($i=0; $i < count($lista_foros); $i++) {
-            $Nvaloraciones_foro = $this->_model->getNvaloraciones($lista_foros[$i]["For_IdForo"],'forum');
-            $lista_foros[$i]["Nvaloraciones_foro"]=$Nvaloraciones_foro["Nvaloraciones"];
-            $lista_foros[$i]["tiempo"]= $lista_foros[$i]["For_FechaCreacion"];
-        }
-        $this->_view->assign('lista_foros', $lista_foros);
+
+        $totalRegistros = $this->_model->getRowForos("",$tipo="webinar");
+
+        $this->getForos($tipo="webinar",$filtro="",$totalRegistros["For_NRow"],$ajax="lista_buscar_webinar",$pagin=0,$filas=CANT_REG_PAG);
+
         $this->_view->renderizar('webinar');
     }
 
@@ -123,13 +112,11 @@ class indexController extends foroController {
         $this->_view->assign('titulo', "Workshop");
         $this->_view->setCss(array("jp-index"));
         $this->_view->setJs(array('buscar_foro'));
-        $lista_foros = $this->_model->getForos("workshop");
-        for ($i=0; $i < count($lista_foros); $i++) {
-            $Nvaloraciones_foro = $this->_model->getNvaloraciones($lista_foros[$i]["For_IdForo"],'forum');
-            $lista_foros[$i]["Nvaloraciones_foro"]=$Nvaloraciones_foro["Nvaloraciones"];
-            $lista_foros[$i]["tiempo"]= $lista_foros[$i]["For_FechaCreacion"];
-        }
-        $this->_view->assign('lista_foros', $lista_foros);
+
+        $totalRegistros = $this->_model->getRowForos("",$tipo="workshop");
+
+        $this->getForos($tipo="workshop",$filtro="",$totalRegistros["For_NRow"],$ajax="lista_buscar_workshop",$pagin=0,$filas=CANT_REG_PAG);
+
         $this->_view->renderizar('workshop');
     }
 
@@ -141,25 +128,68 @@ class indexController extends foroController {
 
         $this->_view->setJs(array('buscar_foro'));
         // $this->_view->setCss(array("index"));
-        // $paginador = new Paginador();
+       
+        if($ajax=="lista_historico"){
+            
+            $totalRegistros = $this->_model->getRowForoHistorico($text_busqueda);   
+            $lista_foros = $this->_model->getHistorico($text_busqueda);
+             $this->getForos($for_funcion,$text_busqueda,$totalRegistros["For_NRow"],$ajax,$pagina = 1, CANT_REG_PAG,$lista_foros);
+        
+        }else {
+            $totalRegistros = $this->_model->getRowForos($text_busqueda,$for_funcion);
+            $this->getForos($for_funcion,$text_busqueda,$totalRegistros["For_NRow"],$ajax,$pagina = 1, CANT_REG_PAG);
+        }
 
-        $lista_foros = $this->_model->getForosPaginado($text_busqueda, $for_funcion);
+        
+        $this->_view->renderizar('ajax/'.$ajax, false, true);
+    }
+
+    public function _paginacion_ListaForo($filtro="")
+    {
+        //Variables de Ajax_JavaScript
+        $pagina         = $this->getInt('pagina');
+        $filas          = $this->getInt('filas');
+        $totalRegistros = $this->getInt('total_registros');     
+        $ajax = $this->getTexto('ajax');
+        $tipo=$this->getTexto('tipo');
+
+        if($ajax=="lista_historico"){
+            $lista_foros = $this->_model->getHistorico($filtro,$pagina,$filas);
+            $this->getForos($tipo,$filtro,$totalRegistros,$ajax,$pagina,$filas,$lista_foros);
+        }else {
+            $this->getForos($tipo,$filtro,$totalRegistros,$ajax,$pagina,$filas);
+        }
+
+        
+        
+        $this->_view->renderizar('ajax/'.$ajax, false, true);
+    }
+
+    private function getForos($tipo,$filtro,$totalRegistros,$ajax,$pagina,$filas,$list=false){
+
+        $paginador = new Paginador();
+        $paginador->paginar($totalRegistros, $ajax, $filtro, $pagina, $filas, true);
+        if(!$list){
+        $lista_foros    = $this->_model->getForosPaginado($filtro,$tipo, $pagina, $filas);
+        }else{
+            $lista_foros=$list;
+        }
+        
         for ($i=0; $i < count($lista_foros); $i++) {
             $Nvaloraciones_foro = $this->_model->getNvaloraciones($lista_foros[$i]["For_IdForo"],'forum');
             $lista_foros[$i]["Nvaloraciones_foro"]=$Nvaloraciones_foro["Nvaloraciones"];
             $lista_foros[$i]["tiempo"]= $lista_foros[$i]["For_FechaCreacion"];
-        }
-        // $totalRegistros = $this->_model->getRowForos($filtro);
+          
+            if(is_array($list)){
+                $lista_foros[$i]["Archivos"] = $this->_model->getArchivos_x_idforo($lista_foros[$i]["For_IdForo"]);               
+            }            
 
-        //$paginador->paginar($totalRegistros["For_NRow"], "listarForo", $filtro, $pagina = 0, CANT_REG_PAG, true);
+        }
 
         $this->_view->assign('lista_foros', $lista_foros);
+        $this->_view->assign('numeropagina', $paginador->getNumeroPagina());
+        $this->_view->assign('paginacion', $paginador->getView('paginacion_ajax_s_filas'));
 
-        //$this->_view->assign('palabrabuscada', $text_busqueda);
-        //$this->_view->assign('numeropagina', $paginador->getNumeroPagina());
-        //$this->_view->assign('cantidadporpagina',$registros);
-        //$this->_view->assign('paginacion', $paginador->getView('paginacion_ajax_s_filas'));
-        $this->_view->renderizar('ajax/'.$ajax, false, true);
     }
 
     public function agenda() {
@@ -172,15 +202,26 @@ class indexController extends foroController {
     }
     public function historico() {
         $this->_view->setTemplate(LAYOUT_FRONTEND);
-        $this->_view->assign('titulo', "Historico");
-        $this->_view->setCss(array("historico", "jp-historico"));
+        $this->_view->assign('titulo', "Histórico");
+        $this->_view->setCss(array("historico", "jp-historico","jp-index"));
+        $this->_view->setJs(array('buscar_foro'));
+
+        $totalRegistros = $this->_model->getRowForoHistorico();   
+
         $foro = $this->_model->getHistorico();
+        $this->getForos($tipo="",$filtro="",$totalRegistros["For_NRow"],$ajax="lista_historico",$pagin=0,$filas=CANT_REG_PAG, $foro);
+
+        /*
         for ($index = 0; $index < count($foro); $index++) {
+            $Nvaloraciones_foro = $this->_model->getNvaloraciones($foro[$index]["For_IdForo"],'forum');
+            $foro[$index]["Nvaloraciones_foro"]=$Nvaloraciones_foro["Nvaloraciones"];
                 $foro[$index]["Archivos"] = $this->_model->getArchivos_x_idforo($foro[$index]["For_IdForo"]);
         }
         $this->_view->assign('lista_foros', $foro);
+        */
         $this->_view->renderizar('historico');
     }
+
     public function statistics() {
         $this->_view->setTemplate(LAYOUT_FRONTEND);
         $this->_view->setCss(array(
@@ -963,7 +1004,7 @@ class indexController extends foroController {
         $result = array();
         foreach ($file as $key => $value) {
             if ($file && move_uploaded_file($value['tmp_name'], $src . $value["name"])) {
-                $result[$key] = ["id" => $key, "name" => $value["name"], "type" => $value["type"], "size" => $value["size"], "url" => $src . $value["name"]];
+                $result[$key] = ["id" => $key, "name" => $value["name"], "type" => $value["type"], "size" => $value["size"], "url" => $src . $value["name"], "out" =>0];
             } else {
                 $result[$key] = false;
             }

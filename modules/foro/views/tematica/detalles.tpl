@@ -32,7 +32,7 @@
 						{/foreach}
 					</select>
 				</div>
-				<button class="btn  btn-success btn-buscador" type="submit" id="btn_buscar_foro"><i class="glyphicon glyphicon-search"></i> Buscar</button>
+				<button class="btn  btn-success btn-buscador" type="submit" id="btn_buscar_foro"><i class="glyphicon glyphicon-search"></i>Buscar</button>
 			</form>
 		</div>
 		<div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 p-rt-lt-0">
@@ -40,13 +40,17 @@
 				<div class="col-md-12 col-xs-12 col-sm-12 col-lg-12">
 					<recientes
 					v-for="items in list_recientes"
-					v-bind:foro="items"
-					></recientes>
+					v-bind:foro="items">
+						Cargando Datos!...
+					</recientes>
 				</div>
-				<div class="col-lg-12" v-if="existeData">
+				<div id="ver_mas"  class="col-md-12 col-xs-12 col-sm-12 col-lg-12 margin-t-10 hidden" v-if="existeData">
 					<a class="" href="#" role="button" @click.prevent="onClick_loadRecientes">Ver más...</a>
 					<br>
 				</div>
+				<div id="ver_mas"  class="col-md-12 col-xs-12 col-sm-12 col-lg-12 margin-t-10 hidden" v-if="pagination.active==false">
+					No se encontraron resultados!...
+				</div>		
 			</div>
 		</div>
 	</div>
@@ -54,7 +58,7 @@
 {/block}
 {block 'template'}
 <template id="recientes">
-<div class="row col-lg-12 tematica-foro">
+<div class="row col-md-12 col-xs-12 col-sm-12 col-lg-12 tematica-foro">
 	<div>
 		<a :href="foro.ref_url" class="link-foro"><h4 style="text-align: justify;"><strong>{literal} {{foro.For_Titulo}} {/literal}</strong></h4></a>
 	</div>
@@ -62,7 +66,10 @@
 		<p style="text-align: justify;" v-html="foro.For_Resumen"></p>
 	</div>
 	<div class="detalles-act-reciente" style="padding-top: 6px; border-bottom: 1px solid rgb(221, 221, 221); padding-bottom: 6px;">
-		<span class="badge" style="border-radius: 4px;">{literal} {{foro.For_Funcion}} {/literal}</span>  {literal} {{foro.autor ? foro.autor.Usu_Nombre + ' ' + foro.autor.Usu_Apellidos  : 'no_definido'}} {/literal} &nbsp;&nbsp;-&nbsp;&nbsp; {literal} {{foro.format_creacion}} {/literal}  &nbsp;&nbsp;-&nbsp;&nbsp; 0 voto(s) &nbsp;&nbsp;-&nbsp;&nbsp; {literal} {{foro.total_miembros}} {/literal} miembro(s) &nbsp;&nbsp;-&nbsp;&nbsp;{literal}{{foro.total_comentarios}}{/literal} comentario(s)
+		<span class="badge" style="border-radius: 4px;">
+		{literal}
+		{{foro.For_Funcion}}
+		{/literal}</span>  {literal} {{foro.autor ? foro.autor.Usu_Usuario : 'no_definido'}} {/literal} &nbsp;&nbsp;-&nbsp;&nbsp; {literal} {{foro.format_creacion}} {/literal}  &nbsp;&nbsp;-&nbsp;&nbsp; {literal} {{foro.total_likes}} voto(s) {/literal}&nbsp;&nbsp;-&nbsp;&nbsp; {literal} {{foro.total_miembros}} {/literal} participante(s) &nbsp;&nbsp;-&nbsp;&nbsp;{literal}{{foro.total_comentarios}}{/literal} comentario(s)
 	</div>
 </div>
 </template>

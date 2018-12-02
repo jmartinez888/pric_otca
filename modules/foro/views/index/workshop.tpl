@@ -27,6 +27,7 @@
                     </span>
                 </div><!-- /input-group -->
         </div>
+        <input type="hidden" name="hdd_tipo" id="hdd_tipo" value="workshop">
         <div id="lista_buscar_workshop" class="row">
             <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 p-rt-lt-0" style="margin-bottom: 30px;">
                     {if count($lista_foros)>0}
@@ -37,6 +38,7 @@
                     <h4>No se encontraron Resultados</h4>
                     {/if}
             </div>
+            {$paginacion|default:""}
         </div>
 
     </div>

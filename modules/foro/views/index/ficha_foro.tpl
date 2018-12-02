@@ -56,7 +56,7 @@
                         {if $_acl->permiso("editar_foro") || $id_usuario == $foro.Usu_IdUsuario}
                         <li><a href="{$_layoutParams.root}foro/admin/form/edit/{$foro.For_Funcion}/{$foro.For_IdForo}" id_foro="{$foro.For_IdForo}" class="opciones_foro" style="cursor: pointer;">Editar<i class="i_opciones_foro glyphicon glyphicon-pencil pull-right"></i></a></li>
                         {/if}
-                        {if $_acl->permiso("agregar_sub_discusion") && !isset($foro.For_IdPadre) && $foro.For_Funcion == 'forum' && $foro.Row_Estado == 1 && $foro.For_Estado == 1 && $}
+                        {if $_acl->permiso("agregar_sub_discusion") && !isset($foro.For_IdPadre) && $foro.For_Funcion == 'forum' && $foro.Row_Estado == 1 && $foro.For_Estado == 1}
                         <li><a  href="{$_layoutParams.root}foro/admin/form/new/forum/{$foro.For_IdForo}" class="opciones_foro" style="cursor: pointer;">Crear Sub Discusión<i class="i_opciones_foro glyphicon glyphicon-plus pull-right"></i></a></li>
                         {/if}
                         {if $foro.For_Funcion != 'query'}
@@ -92,7 +92,7 @@
                     <hr class="cursos-hr">
                 </div>
                 <div class="col col-xs-12 col-sm-12 col-md-12 col-lg-12 ">
-                    <h3 class="titulo-ficha margin-t-10">{$foro.For_Titulo}</h3>
+                    <h3 class="margin-t-10">{$foro.For_Titulo}</h3>
                 </div>
                 
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 p-rt-lt-0" style="font-size: 12px;">
@@ -289,22 +289,22 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-md-12 col-xs-12 col-lg-12 col-sm-12">
-                        <h2 class="col-xs-8">Reporta un Comentario</h2>
+                        <h2 class="col-md-8 col-xs-8 col-lg-8 col-sm-8">Reporta un Comentario</h2>
                         <input type="hidden" id="idcomentario" name="idcomentario">
                         <button title="cerrar" type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                         </button>
                         <div class="panel-group">
                             <div class="panel panel-default">
-                                <div class="col-xs-12 panel-heading" style="color: #333; background-color: #F5F5AE; border-color: #ddd;">
-                                    <div class="col col-xs-1"><img src="{$_layoutParams.root_clear}public/img/advertencia.png">
+                                <div class="col-md-12 col-xs-12 col-lg-12 col-sm-12 panel-heading" style="color: #333; background-color: #F5F5AE; border-color: #ddd;">
+                                    <div class="col col-col-md-1 col-xs-1 col-lg-1 col-sm-1 "><img class="img-responsive" src="{$_layoutParams.root_clear}public/img/advertencia.png">
                                     </div>
-                                    <div class="col-xs-11">
+                                    <div class="col-md-11 col-xs-11 col-lg-11 col-sm-11">
                                     Tus comentarios nos ayudan a determinar cuándo algo no es apropiado. A continuación indicanos cúal es tu motivo para reportar este comentario.</div>
                                 </div>
                                 <div class="panel-body">
                                     <div class="row">
-                                        <div class="col-md-12">
+                                        <div class="col-md-12 col-xs-12 col-lg-12 col-sm-12">
                                             <div class="form-group">
                                                 <label>Mensaje</label>
                                                 <textarea class="form-control" id="ta_mensaje_reportar" name="ta_mensaje_reportar"></textarea>

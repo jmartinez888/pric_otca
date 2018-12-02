@@ -2,72 +2,20 @@
     {include file='modules/foro/views/index/menu/lateral.tpl'}
     <div  class="col-md-10 col-xs-12 col-sm-8 col-lg-10" style="margin-top: 10px; margin-bottom: 30px;">
         <h2 class="titulo">Histórico</h2>
-        <div class="col-lg-12 p-rt-lt-0">
+        <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 p-rt-lt-0">
             <hr class="cursos-hr-title-foro">
         </div> 
-        <div class="row">
-            <div class="col-md-12">
-                
-                {if count($lista_foros)>0}
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>Detalles de histórico de Foro</th>
-                                <th>Foro Fechas</th>
-                            </tr>
-                        </thead>  
-                        <tbody>
-                            {foreach from=$lista_foros item=foro}
-                                <tr>
-                                    <td>
-                                        <a class="link-foro" href="{$_layoutParams.root_clear}foro/index/ficha/{$foro.For_IdForo}" target="_blank"><h4 style="text-align: justify;">{$foro.For_Titulo}</h4></a>
-
-                                        <div style="padding-bottom: 10px;">{if $foro.For_Funcion=="forum"}
-                                            Discusión
-                                        {else if  $foro.For_Funcion=="webinar"}
-                                            Webinar
-                                        {else if  $foro.For_Funcion=="worshop"}
-                                            Workshop
-                                        {else if  $foro.For_Funcion=="query"}
-                                            Consulta                                                        
-                                        {/if}</div>
-
-                                        <small>
-                                            <strong>Iniciado por:</strong> {$foro.Usu_Nombre} {$foro.Usu_Apellidos}
-                                        </small>
-                                        <br>
-                                        <small class="pull-left">
-                                            <strong>Participantes:</strong> {$foro.For_TParticipantes} 
-                                        </small>
-                                        <small class="pull-right" style="margin-right: 5px">
-                                            <strong>Comentarios:</strong> {$foro.For_TComentarios}
-                                        </small>
-                                    </td>
-                                    <td>
-                                        <small>
-                                            <strong>Finalizado:</strong>
-                                        </small>
-                                        {$foro.For_FechaCierre}
-                                        <br>
-                                        {foreach from=$foro.Archivos item=file}
-                                            {if $file.Fif_Titulo =="REPORTE-FORO-{$foro.For_IdForo}"}
-                                            <a class="reporte" target="_blank" href="{$_layoutParams.root_archivo_fisico}{$file.Fif_NombreFile}">Descargar Reporte</a>
-                                            {break}
-                                            {/if}
-                                        {/foreach}                                        
-                                    </td>
-                                </tr>
-                                <!--washington-->
-                            {/foreach}
-                        </tbody>
-                    </table>
-                {else}
-                    <h4>No se encontraron Resultados</h4>
-                {/if}
-
-            </div>
-
-
+        <div class="col col-md-offset-6 col-lg-offset-6 col-md-6 col-xs-12 col-sm-12 col-lg-6">
+            <div class="input-group">
+                <input type ="text" class="form-control"  data-toggle="tooltip" data-original-title="Buscar" placeholder="Buscar" name="text_busqueda" id="text_busqueda" onkeypress="tecla_enter_foro(event)" value="{$palabrabuscada|default:''}">
+                <span class="input-group-btn">
+                    <button class="btn  btn-success btn-buscador" for_funcion ="forum" ajax="lista_historico" type="button" id="buscar_foro"><i class="glyphicon glyphicon-search"></i></button>
+                </span>
+                </div><!-- /input-group -->
+        </div>
+        <input type="hidden" name="hdd_tipo" id="hdd_tipo" value="">
+        <div  id="lista_historico" class="row">
+             {include file='modules/foro/views/index/ajax/lista_historico.tpl'}
         </div>
 
     </div>

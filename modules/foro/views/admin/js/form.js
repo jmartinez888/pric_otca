@@ -15,9 +15,9 @@ $(document).on('ready', function () {
         $($(this).parent()).remove();
         if ($("#" + id_padre).html().trim() == "") {
             $("#" + id_padre).removeClass("d-block")
-            $("#" + id_padre).addClass("d-none")
-            set_input_hdd_files_form();
+            $("#" + id_padre).addClass("d-none")           
         }
+         set_input_hdd_files_form();
     });
     $('body').on('click', '.bt_start_time', function () {
         $("#start_time").datetimepicker("show");
@@ -74,6 +74,26 @@ $(document).on('ready', function () {
         gestionIdiomas($("#idPadreIdiomas").val(), idIdioma);
         // buscar($("#palabra").val(), $("#buscarTipo").val(), $("#idPadreIdiomas").val(),idIdioma);        
     }); 
+
+    $( "#s_lista_entidad" ).change(function() {
+        if($(this).val()=="-1"){
+             $('#modal-nueva-entidad').modal('show');
+        }
+    });
+
+    $('body').on('click', '#bt_guardar_entidad', function () {
+        get_select_option_entidad($("#text_nombre_entidad").val(),$("#text_siglas_entidad").val())
+    });
+
+    $('#modal-nueva-entidad').on('hide.bs.modal', function () { 
+        if($('#s_lista_entidad').val()=='-1'){
+            $("#s_lista_entidad").val("");
+            
+        }
+        $('.selectpicker').selectpicker('refresh');
+        $("#text_nombre_entidad").val("");
+        $("#text_siglas_entidad").val("");
+    });
 });
 
 function gestionIdiomas(padre, idIdioma) {
@@ -133,6 +153,7 @@ function load_files_form(file, div_conte) {
                 $("#" + id_file).val(file["name"]);
                 $("#" + id_file).attr("f-size", file["size"]);
                 $("#" + id_file).attr("f-type", file["type"]);
+                $("#" + id_file).attr("f-fout", file["out"]);
             });
             set_input_hdd_files_form();
         }
@@ -153,7 +174,7 @@ function div_file(titulo, peso, id) {
 function set_input_hdd_files_form() {
     var files = {};
     jQuery.each($("[name=attach_form]"), function (i, file) {
-        files[$(file).attr("id")] = {"name": $(file).val(), "size": $(file).attr("f-size"), "type": $(file).attr("f-type")};
+        files[$(file).attr("id")] = {"name": $(file).val(), "size": $(file).attr("f-size"), "type": $(file).attr("f-type"), "out": $(file).attr("f-fout")};
     })
     att_files = JSON.stringify(files);
     $("#hd_file_form").val(att_files);
@@ -161,6 +182,23 @@ function set_input_hdd_files_form() {
 
 function get_count_file() {
     return  $("[name=attach_form]").length;
+}
+
+function get_select_option_entidad(nombre,siglas){
+     $("#cargando").show();
+    $.post(_root_ + 'foro/admin/_registrar_entidad',
+            {
+                nombre: nombre,
+                siglas: siglas
+               
+            }, function (data) {
+
+        $("#select_entidad").html(data);  
+           
+        $("#cargando").hide();
+        $('#modal-nueva-entidad').modal('hide');
+       
+    });
 }
 
 

@@ -27,6 +27,7 @@
                     </span>
                 </div><!-- /input-group -->
         </div>
+        <input type="hidden" name="hdd_tipo" id="hdd_tipo" value="webinar">
         <div id="lista_buscar_webinar" class="row">
             <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 p-rt-lt-0" style="margin-bottom: 30px;">
                     {if count($lista_foros)>0}
@@ -36,7 +37,8 @@
                     {else}
                     <h4>No se encontraron Resultados</h4>
                     {/if}
-            </div>   
+            </div> 
+            {$paginacion|default:""} 
         </div>
     </div>
 </div>

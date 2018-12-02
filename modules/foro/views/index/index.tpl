@@ -74,7 +74,6 @@
                     <div class="col-lg-12">
                         {foreach from=$lista_foros item=foro}
                         <div class="row col-lg-12 tematica-foro">
-
                             {if $foro.For_Tipo == 1}
                                 {if $foro.For_Estado != 0 && $foro.Row_Estado == 1} 
                             <div><a class="link-foro"  href="{$_layoutParams.root}foro/index/ficha/{$foro.For_IdForo}">
