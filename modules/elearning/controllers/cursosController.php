@@ -238,11 +238,24 @@ class cursosController extends elearningController {
       $Emodel = $this->loadModel("examen");
        Session::set("intento", 0);
 
-      if(strlen($curso)==0 || strlen($modulo)==0){ $this->redireccionar("elearning/"); }
-      if(!Session::get("autenticado")){ $this->redireccionar("elearning/"); }
-      if(!is_numeric($curso) || !is_numeric($modulo)){ $this->redireccionar("elearning/"); }
-      if(!$Mmodel->validarCursoModulo($curso, $modulo)){ $this->redireccionar("elearning/cursos"); }
-      if(!$Mmodel->validarModuloUsuario($modulo, Session::get("id_usuario"))){ $this->redireccionar("elearning/cursos"); }
+      if(strlen($curso)==0 || strlen($modulo)==0){
+
+        $this->redireccionar("elearning/"); 
+      }
+      if(!Session::get("autenticado")){ 
+        echo "string";exit;
+        $this->redireccionar("elearning/"); 
+      }
+      if(!is_numeric($curso) || !is_numeric($modulo)){
+        $this->redireccionar("elearning/"); 
+      }
+
+      if(!$Mmodel->validarCursoModulo($curso, $modulo)){ 
+        $this->redireccionar("elearning/cursos"); 
+      }
+      if(!$Mmodel->validarModuloUsuario($modulo, Session::get("id_usuario"))){ 
+        $this->redireccionar("elearning/cursos"); 
+      }
       //if(!$Lmodel->validarLeccion($leccion, $modulo, Session::get("id_usuario"))){ $this->redireccionar("elearning/cursos"); }
 
       $OLeccion = $Lmodel->getLeccion($leccion, $modulo, Session::get("id_usuario"));
@@ -260,7 +273,9 @@ class cursosController extends elearningController {
       $indice_leccion = $clave + 1;
       $final = count($lecciones) == $indice_leccion ? true : false;
 
-      if($OLeccion==null){ $this->redireccionar("elearning/cursos"); }
+      if($OLeccion==null){ 
+        $this->redireccionar("elearning/cursos");
+      }
 
        $Tmodel = $this->loadModel("trabajo");
       $TTmodel = $this->loadModel("tarea");
@@ -308,7 +323,10 @@ class cursosController extends elearningController {
           }
           $OLeccion["Progreso"]=$tmp["Progreso"];
 
-          if($examen==null){ $this->redireccionar("elearning/"); }
+          if($examen==null){ 
+            // echo "stringssss";exit;
+            $this->redireccionar("elearning/"); 
+          }
 
           if ($this->botonPress("comenzar")) {
 
@@ -450,17 +468,16 @@ class cursosController extends elearningController {
 
       $clave = array_search($objeto["Lec_IdLeccion"], array_column($lecciones, "Lec_IdLeccion"));
       $nextLeccion = $lecciones[$clave+1];
-      // echo $clave; print_r($nextLeccion);print_r($lecciones); exit;
-      if($nextLeccion["Progreso"]==1 && $nextLeccion["Lec_Tipo"]==3){
-
-        if(count($lecciones) > $clave+2){
-          $posibleSiguiente = $lecciones[$clave+2];
+      // echo $clave; print_r($objeto);print_r($nextLeccion);print_r($lecciones); exit;
+      if(($nextLeccion["Progreso"] == 0 && $nextLeccion["Lec_Tipo"] == 3)|| $nextLeccion["Lec_Tipo"] != 3){
+        // echo $clave;exit;
+        if(count($lecciones) > $clave+1){
+          $posibleSiguiente = $lecciones[$clave+1];
           $this->redireccionar("elearning/cursos/modulo/" . $curso . "/" . $objeto["Moc_IdModuloCurso"] . "/" . $posibleSiguiente["Lec_IdLeccion"]);
         }else{
+          // echo "holaaaaaaa"; exit;
           $this->redireccionar("elearning/cursos/curso/" . $curso);
         }
-      }else{
-        $this->redireccionar("elearning/cursos/modulo/" . $curso . "/" . $objeto["Moc_IdModuloCurso"] . "/" . $nextLeccion["Lec_IdLeccion"]);
       }
   }
 

@@ -20,6 +20,11 @@ class _gestionModuloModel extends Model {
     return $this->getArray($sql)[0];
   }
 
+  public function getCursoId($curso){
+    $sql = "SELECT * FROM curso WHERE Cur_IdCurso = {$curso} AND Row_Estado = 1 AND Cur_Estado = 1";
+    return $this->getArray($sql)[0];
+  }
+
   public function updateEstadoModulo($mod, $estado){
     $this->execQuery("UPDATE modulo_curso SET Moc_Estado = '$estado' WHERE Moc_IdModuloCurso = $mod");
   }

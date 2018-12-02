@@ -5,7 +5,8 @@
           <div class=" " style="margin-bottom: 0px !important">
             <div class="text-center text-bold" style="margin-top: 20px; margin-bottom: 20px; color: #267161;">
                 <h3 style="text-transform: uppercase; margin: 0; font-weight: bold;">
-                {$titulo}
+                <!-- {$titulo} -->
+                 {include file='modules/elearning/views/examen/ajax/tag_url.tpl'}
                 </h3>
             </div>
           </div>

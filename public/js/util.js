@@ -57,7 +57,7 @@ function mensaje(resultado) {
             setTimeout(() => {
                 div.remove()
                 console.log(value)
-                if (value[3] != ''){
+                if (x !== "undefined" && value[3] != ''){
                     console.log('vere')
                     window.location.href = value[3]
                 }
