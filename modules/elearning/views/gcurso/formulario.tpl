@@ -82,8 +82,8 @@
 {else}
 <div class="col-lg-12">
   <ul class="nav nav-tabs" role="tablist">
-    <li role="formulario" class="active" id="item_editar"><a href="#formulario_editar" aria-controls="formulario_editar" role="tab" data-toggle="tab">PREGUNTAS</a></li>
-    <li role="formulario" id="item_respuestas" ><a href="#formulario_respuestas" aria-controls="formulario_respuestas" role="tab" data-toggle="tab">RESPUESTAS</a></li>
+    <li role="formulario" class="active" id="item_editar"><a href="#formulario_editar" aria-controls="formulario_editar" role="tab" data-toggle="tab">{$lang->get('elearning_gcurso_preguntas')}</a></li>
+    <li role="formulario" id="item_respuestas" ><a href="#formulario_respuestas" aria-controls="formulario_respuestas" role="tab" data-toggle="tab">{$lang->get('elearning_gcurso_respuestas')}</a></li>
   </ul>
 </div>
 <div class="col-lg-12 ">
@@ -92,7 +92,8 @@
 
       <div id="formulario_editar_vue">
 
-        <button type="" @click.prevent="onClick_agregarTag" id="btn_agregar">AGREGAR TAG</button>
+        <button class="btn btn-success" type="" @click.prevent="onClick_agregarTag" id="btn_agregar">{$lang->get('elearning_formulario_responder_add_pregunta')}</button>
+        <button class="btn btn-success" type="" @click.prevent="onClick_agregarTitulo" id="btn_agregar">{$lang->get('elearning_formulario_responder_add_titulo')}</button>
         <hr>
         <div class="" id="container_tags">
           <div class="tags_input_edit col-sm-12 hh" @click="onClick_editar(event, 'titulo_frm')">
@@ -110,19 +111,20 @@
       <div class="panel-heading cabecera-titulo">
         <h3 class="panel-title">
           <i class="glyphicon glyphicon-list-alt"></i>&nbsp;&nbsp;
-          <strong>ALUMNOS INSCRITOS</strong>
+          <strong>{$lang->get('elearning_formulario_responder_alumnos_inscritos')}</strong>
         </h3>
       </div>
       <div class="panel-body" style=" margin: 15px 25px">
-        <div class="col-lg-12">
+        <div class="col-lg-12" id="formulario_respuestas_vue">
           <div class="table-responsive" style="width: 100%">
             <table class="table" id="tblMisCursos">
               <thead>
                 <tr>
                   <th>Id</th>
-                  <th>Alumnos</th>
-                  <th>Usuario</th>
-                  <th>Fecha</th>
+                  <th>{$lang->get('str_alumnos')}</th>
+                  <th>{$lang->get('str_usuarios')}</th>
+                  <th>{$lang->get('str_fecha')}</th>
+                  <th>{$lang->get('str_operacion')}</th>
                 </tr>
               </thead>
               <tbody>
@@ -132,6 +134,10 @@
                     <td>{$res->usuario->Usu_Nombre} {$res->usuario->Usu_Apellidos}</td>
                     <td>{$res->usuario->Usu_Usuario}</td>
                     <td>{$res->Fur_CreatedAt}</td>
+                    <td>
+                      <a href="{$_layoutParams.root}elearning/formulario/respuesta/{$res->Fur_IdFrmUsuRes}" class="btn btn-default  btn-sm" data-toggle="tooltip" data-placement="bottom" title="{$lang->get('str_ver_respuestas')}"><i class="glyphicon glyphicon-file"></i></a>
+                      <button data-id="{$res->Fur_IdFrmUsuRes}" @click="onClick_deleteRespuesta({$res->Fur_IdFrmUsuRes})" class="btn btn-default  btn-sm" data-toggle="tooltip" data-placement="bottom" title="{$lang->get('str_ver_respuestas')}"><i class="glyphicon glyphicon-trash"></i></button>
+                    </td>
                   </tr>
                 {/foreach}
               </tbody>
@@ -154,8 +160,12 @@
 
         <div class="form-group">
 
-          <select name="" id="tipo" class="form-control" required="required" v-model="tipo">
-            <option value="titulo">TITU</option>
+          <select v-if="element.tipo == 'titulo_a' || element.tipo == 'titulo_b'" name="" id="tipo" class="form-control" required="required" v-model="tipo">
+            {* <option value="titulo">TITU</option> *}
+            <option value="titulo_a">TITULO</option>
+            <option value="titulo_b">SUB-TITULO</option>
+          </select>
+          <select v-else name="" id="tipo" class="form-control" required="required" v-model="tipo">
             <option value="texto">TEXTO</option>
             <option value="parrafo">PARRAFO</option>
             <option value="select">SELECT</option>
@@ -164,17 +174,19 @@
             <option value="upload">UPLOAD</option>
             <option value="fecha">FECHA</option>
             <option value="hora">HORA</option>
+            <option value="cuadricula">CUADRICULA</option>
+            <option value="casilla">CASILLAS</option>
           </select>
         </div>
       </div>
     </div>
     {* <button type="button" @click.prevent="show_me">show me</button> *}
 
-      <div class="col-sm-12 uu" v-if="tipo == 'titulo'">
+      <div class="col-sm-12 uu" v-if="tipo == 'titulo_a'">
         <div class="col-sm-12" v-if="!element.edit">
           <form role="form">
             <div class="form-group">
-              <h1>{literal}{{values.pregunta == '' ? 'Formulario sin título' : values.pregunta}}{/literal}</h1>
+              <h2>{literal}{{values.pregunta == '' ? 'Título' : values.pregunta}}{/literal}</h2>
               <p>{literal}{{ values.descripcion }}{/literal}</p>
             </div>
           </form>
@@ -182,10 +194,58 @@
         <div class="col-sm-12" v-else>
           <form role="form">
             <div class="form-group">
-              <input type="text" name=""  class="form-control" value="" required="required" pattern="" title="" placeholder="Formulario sin título" v-model="values.pregunta">
+              <input type="text" name=""  class="form-control" value="" required="required" pattern="" title="" placeholder="Título" v-model="values.pregunta">
             </div>
             <div class="form-group">
-              <input type="text" name=""  class="form-control"   placeholder="Descripción" v-model="values.descripcion">
+              <input type="text" name=""  class="form-control"   placeholder="{$lang->get('str_descripcion')}" v-model="values.descripcion">
+            </div>
+          </form>
+        </div>
+        <hr>
+        <div v-if="element.edit" class="pull-right">
+          {include 'botones_acciones_tags.tpl'}
+        </div>
+      </div>
+      <div class="col-sm-12 uu" v-if="tipo == 'titulo_b'">
+        <div class="col-sm-12" v-if="!element.edit">
+          <form role="form">
+            <div class="form-group">
+              <h3>{literal}{{values.pregunta == '' ? '{/literal}{$lang->get('str_sub_titulo')}{literal}' : values.pregunta}}{/literal}</h3>
+              <p>{literal}{{ values.descripcion }}{/literal}</p>
+            </div>
+          </form>
+        </div>
+        <div class="col-sm-12" v-else>
+          <form role="form">
+            <div class="form-group">
+              <input type="text" name=""  class="form-control" value="" required="required" pattern="" title="" placeholder="{$lang->get('str_sub_titulo')}" v-model="values.pregunta">
+            </div>
+            <div class="form-group">
+              <input type="text" name=""  class="form-control"   placeholder="{$lang->get('str_descripcion')}" v-model="values.descripcion">
+            </div>
+          </form>
+        </div>
+        <hr>
+        <div v-if="element.edit" class="pull-right">
+          {include 'botones_acciones_tags.tpl'}
+        </div>
+      </div>
+      <div class="col-sm-12 uu" v-if="tipo == 'titulo'">
+        <div class="col-sm-12" v-if="!element.edit">
+          <form role="form">
+            <div class="form-group">
+              <h1>{literal}{{values.pregunta == '' ? '{/literal}{$lang->get('elearning_formulario_responder_formulario_sin_titulo')}{literal}' : values.pregunta}}{/literal}</h1>
+              <p>{literal}{{ values.descripcion }}{/literal}</p>
+            </div>
+          </form>
+        </div>
+        <div class="col-sm-12" v-else>
+          <form role="form">
+            <div class="form-group">
+              <input type="text" name=""  class="form-control" value="" required="required" pattern="" title="" placeholder="{$lang->get('elearning_formulario_responder_formulario_sin_titulo')}" v-model="values.pregunta">
+            </div>
+            <div class="form-group">
+              <input type="text" name=""  class="form-control"   placeholder="{$lang->get('str_descripcion')}" v-model="values.descripcion">
             </div>
           </form>
         </div>
@@ -194,57 +254,205 @@
         <div class="col-sm-12" v-if="!element.edit">
           <form role="form">
             <div class="form-group">
-              <label class="control-label">{literal}{{values.pregunta == '' ? 'Pregunta' : values.pregunta}}{/literal}</label>
-              <input type="text" name=""  class="form-control"   placeholder="Texto de respuesta corta">
+              <label class="control-label">{literal}{{values.pregunta == '' ? '{/literal}{$lang->get('str_pregunta')}{literal}' : values.pregunta}}{/literal}</label>
+              <input type="text" name=""  class="form-control"   placeholder="{$lang->get('elearning_formulario_responder_texto_res_corta')}">
             </div>
           </form>
         </div>
         <div class="col-sm-12" v-else>
           <form role="form">
             <div class="form-group">
-              <input type="text" name=""  class="form-control" value="" required="required" pattern="" title="" placeholder="Pregunta" v-model="values.pregunta">
+              <input type="text" name=""  class="form-control" value="" required="required" pattern="" title="" placeholder="{$lang->get('str_pregunta')}" v-model="values.pregunta">
             </div>
             <div class="form-group">
-              <input type="text" name=""  class="form-control"   placeholder="Texto de respuesta corta">
+              <input type="text" name=""  class="form-control"   placeholder="{$lang->get('elearning_formulario_responder_texto_res_corta')}">
             </div>
           </form>
         </div>
         <hr>
         <div v-if="element.edit" class="pull-right">
-          <button type="button" @click.prevent="onClick_delete">D</button>
-          <button type="button" @click.prevent="onClick_delete">O</button>
+          {include 'botones_acciones_tags.tpl'}
         </div>
       </div>
       <div class="col-sm-12 uu" v-if="tipo == 'parrafo'">
         <div class="col-sm-12" v-if="!element.edit">
           <form role="form">
             <div class="form-group">
-              <label class="control-label">{literal}{{values.pregunta == '' ? 'Pregunta' : values.pregunta}}{/literal}</label>
-              <textarea class="form-control" rows="3" required="required" placeholder="">Texto de respuesta larga</textarea>
+              <label class="control-label">{literal}{{values.pregunta == '' ? '{/literal}{$lang->get('str_pregunta')}{literal}' : values.pregunta}}{/literal}</label>
+              <textarea class="form-control" rows="3" required="required" placeholder="">{$lang->get('elearning_formulario_responder_texto_res_larga')}</textarea>
             </div>
           </form>
         </div>
         <div class="col-sm-12" v-else>
           <form role="form">
             <div class="form-group">
-              <input type="text" name=""  class="form-control" value="" required="required" pattern="" title="" placeholder="Pregunta" v-model="values.pregunta">
+              <input type="text" name=""  class="form-control" value="" required="required" pattern="" title="" placeholder="{$lang->get('str_pregunta')}" v-model="values.pregunta">
             </div>
             <div class="form-group">
-              <textarea class="form-control" rows="3" required="required" placeholder="">Texto de respuesta larga</textarea>
+              <textarea class="form-control" rows="3" required="required" placeholder="">{$lang->get('elearning_formulario_responder_texto_res_larga')}</textarea>
             </div>
           </form>
         </div>
         <hr>
         <div v-if="element.edit" class="pull-right">
-          <button type="button" @click.prevent="onClick_delete">D</button>
-          <button type="button" @click.prevent="onClick_delete">O</button>
+          {include 'botones_acciones_tags.tpl'}
+        </div>
+      </div>
+      <div class="col-sm-12 uu" v-if="tipo == 'cuadricula'">
+        <div class="col-sm-12" v-if="!element.edit">
+          <form role="form">
+            <div class="form-group">
+              <label class="control-label">{literal}{{values.pregunta == '' ? '{/literal}{$lang->get('str_pregunta')}{literal}' : values.pregunta}}{/literal}</label>
+              <table class="table table-bordered table-hover">
+                <thead>
+                  <tr>
+                    <th>&nbsp;</th>
+                    <th v-for="columnas in values.preguntas">{literal}{{ columnas.pregunta }}{/literal}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="filas in values.options" v-if="filas.tipo == 'fil'">
+                    <td>{literal}{{ filas.opcion }}{/literal}</td>
+                    <td v-for="columnas in values.preguntas"><div class="radio">
+                      <label>
+                        <input type="radio" value="">
+                      </label>
+                    </div></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </form>
+        </div>
+        <div class="col-sm-12" v-else>
+          <form role="form">
+            <div class="form-group">
+              <input type="text" name=""  class="form-control" value="" required="required" pattern="" title="" placeholder="{$lang->get('str_pregunta')}" v-model="values.pregunta">
+            </div>
+            <div class="form-group">
+              <div class="col-sm-6">
+                <ol class="container_select">
+                  <li v-for="(opc, index) in values.options" v-if="opc.tipo == 'fil'">
+                    <div class="input-group">
+                      <input type="text"  class="form-control"  v-model="values.options[index].opcion" placeholder="Opción">
+                      <div class="input-group-addon">
+                        <button type="button" @click="onClick_removeOption(index, opc.id, 'fil')">X</button>
+                      </div>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="input-group" style="padding: 10px 5px">
+                      <span style="" @click="onClick_agregarOptionColFil('fil')">{$lang->get('elearning_formulario_responder_add_fil')}</span>
+                    </div>
+                  </li>
+                </ol>
+              </div>
+              <div class="col-sm-6">
+                <ol class="container_select">
+                  <li v-for="(opc, index) in values.preguntas">
+                    <div class="input-group">
+                      <input type="text"  class="form-control"  v-model="values.preguntas[index].pregunta" placeholder="Opción">
+                      <div class="input-group-addon">
+                        <button type="button" @click="onClick_removeOption(index, opc.id, 'col')">X</button>
+                      </div>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="input-group" style="padding: 10px 5px">
+                      {* <input type="text"  class="form-control" placeholder="{$lang->get('elearning_formulario_responder_add_opc')}" @click="onClick_agregarOptionSelect"> *}
+                      <span style="" @click="onClick_agregarOptionColFil('col')">{$lang->get('elearning_formulario_responder_add_col')}</span>
+                    </div>
+                  </li>
+                </ol>
+              </div>
+            </div>
+          </form>
+        </div>
+        <hr>
+        <div v-if="element.edit" class="pull-right">
+          {include 'botones_acciones_tags.tpl'}
+        </div>
+      </div>
+      <div class="col-sm-12 uu" v-if="tipo == 'casilla'">
+        <div class="col-sm-12" v-if="!element.edit">
+          <form role="form">
+            <div class="form-group">
+              <label class="control-label">{literal}{{values.pregunta == '' ? '{/literal}{$lang->get('str_pregunta')}{literal}' : values.pregunta}}{/literal}</label>
+              <table class="table table-bordered table-hover">
+                <thead>
+                  <tr>
+                    <th>&nbsp;</th>
+                    <th v-for="columnas in values.preguntas">{literal}{{ columnas.pregunta }}{/literal}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="filas in values.options" v-if="filas.tipo == 'fil'">
+                    <td>{literal}{{ filas.opcion }}{/literal}</td>
+                    <td v-for="columnas in values.preguntas"><div class="checkbox">
+                      <label>
+                        <input type="checkbox" value="">
+                      </label>
+                    </div></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </form>
+        </div>
+        <div class="col-sm-12" v-else>
+          <form role="form">
+            <div class="form-group">
+              <input type="text" name=""  class="form-control" value="" required="required" pattern="" title="" placeholder="{$lang->get('str_pregunta')}" v-model="values.pregunta">
+            </div>
+            <div class="form-group">
+              <div class="col-sm-6">
+                <ol class="container_select">
+                  <li v-for="(opc, index) in values.options" v-if="opc.tipo == 'fil'">
+                    <div class="input-group">
+                      <input type="text"  class="form-control"  v-model="values.options[index].opcion" placeholder="Opción">
+                      <div class="input-group-addon">
+                        <button type="button" @click="onClick_removeOption(index, opc.id, 'fil')">X</button>
+                      </div>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="input-group" style="padding: 10px 5px">
+                      <span style="" @click="onClick_agregarOptionColFil('fil')">{$lang->get('elearning_formulario_responder_add_fil')}</span>
+                    </div>
+                  </li>
+                </ol>
+              </div>
+              <div class="col-sm-6">
+                <ol class="container_select">
+                  <li v-for="(opc, index) in values.preguntas">
+                    <div class="input-group">
+                      <input type="text"  class="form-control"  v-model="values.preguntas[index].pregunta" placeholder="Opción">
+                      <div class="input-group-addon">
+                        <button type="button" @click="onClick_removeOption(index, opc.id, 'col')">X</button>
+                      </div>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="input-group" style="padding: 10px 5px">
+                      {* <input type="text"  class="form-control" placeholder="{$lang->get('elearning_formulario_responder_add_opc')}" @click="onClick_agregarOptionSelect"> *}
+                      <span style="" @click="onClick_agregarOptionColFil('col')">{$lang->get('elearning_formulario_responder_add_col')}</span>
+                    </div>
+                  </li>
+                </ol>
+              </div>
+            </div>
+          </form>
+        </div>
+        <hr>
+        <div v-if="element.edit" class="pull-right">
+          {include 'botones_acciones_tags.tpl'}
         </div>
       </div>
       <div class="col-sm-12 uu" v-if="tipo == 'select'">
         <div class="col-sm-12" v-if="!element.edit">
           <form role="form">
             <div class="form-group">
-              <label class="control-label">{literal}{{values.pregunta == '' ? 'Pregunta' : values.pregunta}}{/literal}</label>
+              <label class="control-label">{literal}{{values.pregunta == '' ? '{/literal}{$lang->get('str_pregunta')}{literal}' : values.pregunta}}{/literal}</label>
               {* <select class="form-control" required="required">
                 <option value="" v-for="opc in values.options">{literal}{{opc}}{/literal}</option>
               </select> *}
@@ -257,7 +465,7 @@
         <div class="col-sm-12" v-else>
           <form role="form">
             <div class="form-group">
-              <input type="text" name=""  class="form-control" value="" required="required" pattern="" title="" placeholder="Pregunta" v-model="values.pregunta">
+              <input type="text" name=""  class="form-control" value="" required="required" pattern="" title="" placeholder="{$lang->get('str_pregunta')}" v-model="values.pregunta">
             </div>
             <div class="form-group">
               <ol class="container_select">
@@ -271,8 +479,8 @@
                 </li>
                 <li>
                   <div class="input-group" style="padding: 10px 5px">
-                    {* <input type="text"  class="form-control" placeholder="Añadir opción" @click="onClick_agregarOptionSelect"> *}
-                    <span style="" @click="onClick_agregarOptionSelect">Añadir opción</span>
+                    {* <input type="text"  class="form-control" placeholder="{$lang->get('elearning_formulario_responder_add_opc')}" @click="onClick_agregarOptionSelect"> *}
+                    <span style="" @click="onClick_agregarOptionSelect">{$lang->get('elearning_formulario_responder_add_opc')}</span>
                   </div>
                 </li>
               </ol>
@@ -281,15 +489,14 @@
         </div>
         <hr>
         <div v-if="element.edit" class="pull-right">
-          <button type="button" @click.prevent="onClick_delete">D</button>
-          <button type="button" @click.prevent="onClick_delete">O</button>
+          {include 'botones_acciones_tags.tpl'}
         </div>
       </div>
       <div class="col-sm-12 uu" v-if="tipo == 'radio'">
         <div class="col-sm-12" v-if="!element.edit">
           <form role="form">
             <div class="form-group">
-              <label class="control-label">{literal}{{values.pregunta == '' ? 'Pregunta' : values.pregunta}}{/literal}</label>
+              <label class="control-label">{literal}{{values.pregunta == '' ? '{/literal}{$lang->get('str_pregunta')}{literal}' : values.pregunta}}{/literal}</label>
               {* <select class="form-control" required="required">
                 <option value="" v-for="opc in values.options">{literal}{{opc}}{/literal}</option>
               </select> *}
@@ -307,7 +514,7 @@
         <div class="col-sm-12" v-else>
           <form role="form">
             <div class="form-group">
-              <input type="text" name=""  class="form-control" value="" required="required" pattern="" title="" placeholder="Pregunta" v-model="values.pregunta">
+              <input type="text" name=""  class="form-control" value="" required="required" pattern="" title="" placeholder="{$lang->get('str_pregunta')}" v-model="values.pregunta">
             </div>
             <div class="form-group">
               <ol class="container_select">
@@ -321,8 +528,8 @@
                 </li>
                 <li>
                   <div class="input-group" style="padding: 10px 5px">
-                    {* <input type="text"  class="form-control" placeholder="Añadir opción" @click="onClick_agregarOptionSelect"> *}
-                    <span style="" @click="onClick_agregarOptionSelect">Añadir opción</span>
+                    {* <input type="text"  class="form-control" placeholder="{$lang->get('elearning_formulario_responder_add_opc')}" @click="onClick_agregarOptionSelect"> *}
+                    <span style="" @click="onClick_agregarOptionSelect">{$lang->get('elearning_formulario_responder_add_opc')}</span>
                   </div>
                 </li>
               </ol>
@@ -331,20 +538,17 @@
         </div>
         <hr>
         <div v-if="element.edit" class="pull-right">
-          <button type="button" @click.prevent="onClick_delete">D</button>
-          <button type="button" @click.prevent="onClick_delete">O</button>
+          {include 'botones_acciones_tags.tpl'}
         </div>
       </div>
       <div class="col-sm-12 uu" v-if="tipo == 'box'">
         <div class="col-sm-12" v-if="!element.edit">
           <form role="form">
             <div class="form-group">
-              <label class="control-label">{literal}{{values.pregunta == '' ? 'Pregunta' : values.pregunta}}{/literal}</label>
+              <label class="control-label">{literal}{{values.pregunta == '' ? '{/literal}{$lang->get('str_pregunta')}{literal}' : values.pregunta}}{/literal}</label>
               {* <select class="form-control" required="required">
                 <option value="" v-for="opc in values.options">{literal}{{opc}}{/literal}</option>
               </select> *}
-
-
                   <div class="radio" v-for="opc in values.options">
                     <label>
                       <input type="checkbox" name=""  value="" >
@@ -357,7 +561,7 @@
         <div class="col-sm-12" v-else>
           <form role="form">
             <div class="form-group">
-              <input type="text" name=""  class="form-control" value="" required="required" pattern="" title="" placeholder="Pregunta" v-model="values.pregunta">
+              <input type="text" name=""  class="form-control" value="" required="required" pattern="" title="" placeholder="{$lang->get('str_pregunta')}" v-model="values.pregunta">
             </div>
             <div class="form-group">
               <ol class="container_select">
@@ -371,8 +575,8 @@
                 </li>
                 <li>
                   <div class="input-group" style="padding: 10px 5px">
-                    {* <input type="text"  class="form-control" placeholder="Añadir opción" @click="onClick_agregarOptionSelect"> *}
-                    <span style="" @click="onClick_agregarOptionSelect">Añadir opción</span>
+                    {* <input type="text"  class="form-control" placeholder="{$lang->get('elearning_formulario_responder_add_opc')}" @click="onClick_agregarOptionSelect"> *}
+                    <span style="" @click="onClick_agregarOptionSelect">{$lang->get('elearning_formulario_responder_add_opc')}</span>
                   </div>
                 </li>
               </ol>
@@ -381,84 +585,79 @@
         </div>
         <hr>
         <div v-if="element.edit" class="pull-right">
-          <button type="button" @click.prevent="onClick_delete">D</button>
-          <button type="button" @click.prevent="onClick_delete">O</button>
+          {include 'botones_acciones_tags.tpl'}
         </div>
       </div>
       <div class="col-sm-12 uu" v-if="tipo == 'upload'">
         <div class="col-sm-12" v-if="!element.edit">
           <form role="form">
             <div class="form-group">
-              <label class="control-label">{literal}{{values.pregunta == '' ? 'Pregunta' : values.pregunta}}{/literal}</label>
-              <input type="file" name=""  class="form-control"   placeholder="Texto de respuesta corta">
+              <label class="control-label">{literal}{{values.pregunta == '' ? '{/literal}{$lang->get('str_pregunta')}{literal}' : values.pregunta}}{/literal}</label>
+              <input type="file" name=""  class="form-control"   placeholder="{$lang->get('elearning_formulario_responder_texto_res_corta')}">
             </div>
           </form>
         </div>
         <div class="col-sm-12" v-else>
           <form role="form">
             <div class="form-group">
-              <input type="text" name=""  class="form-control" value="" required="required" pattern="" title="" placeholder="Pregunta" v-model="values.pregunta">
+              <input type="text" name=""  class="form-control" value="" required="required" pattern="" title="" placeholder="{$lang->get('str_pregunta')}" v-model="values.pregunta">
             </div>
             <div class="form-group">
-              <input type="text" name=""  class="form-control"   placeholder="Texto de respuesta corta">
+              <input type="text" name=""  class="form-control"   placeholder="{$lang->get('elearning_formulario_responder_texto_res_corta')}">
             </div>
           </form>
         </div>
         <hr>
         <div v-if="element.edit" class="pull-right">
-          <button type="button" @click.prevent="onClick_delete">D</button>
-          <button type="button" @click.prevent="onClick_delete">O</button>
+          {include 'botones_acciones_tags.tpl'}
         </div>
       </div>
-
       <div class="col-sm-12 uu" v-if="tipo == 'fecha'">
         <div class="col-sm-12" v-if="!element.edit">
           <form role="form">
             <div class="form-group">
-              <label class="control-label">{literal}{{values.pregunta == '' ? 'Pregunta' : values.pregunta}}{/literal}</label>
-              <input type="date" name=""  class="form-control"   placeholder="Texto de respuesta corta">
+              <label class="control-label">{literal}{{values.pregunta == '' ? '{/literal}{$lang->get('str_pregunta')}{literal}' : values.pregunta}}{/literal}</label>
+              <input type="date" name=""  class="form-control"   placeholder="{$lang->get('elearning_formulario_responder_texto_res_corta')}">
             </div>
           </form>
         </div>
         <div class="col-sm-12" v-else>
           <form role="form">
             <div class="form-group">
-              <input type="text" name=""  class="form-control" value="" required="required" pattern="" title="" placeholder="Pregunta" v-model="values.pregunta">
+              <input type="text" name=""  class="form-control" value="" required="required" pattern="" title="" placeholder="{$lang->get('str_pregunta')}" v-model="values.pregunta">
             </div>
             <div class="form-group">
-              <input type="date" name=""  class="form-control"   placeholder="Texto de respuesta corta">
+              <input type="date" name=""  class="form-control"   placeholder="{$lang->get('elearning_formulario_responder_texto_res_corta')}">
             </div>
           </form>
         </div>
         <hr>
         <div v-if="element.edit" class="pull-right">
-          <button type="button" @click.prevent="onClick_delete">D</button>
-          <button type="button" @click.prevent="onClick_delete">O</button>
+          {include 'botones_acciones_tags.tpl'}
         </div>
       </div>
       <div class="col-sm-12 uu" v-if="tipo == 'hora'">
         <div class="col-sm-12" v-if="!element.edit">
           <form role="form">
             <div class="form-group">
-              <label class="control-label">{literal}{{values.pregunta == '' ? 'Pregunta' : values.pregunta}}{/literal}</label>
-              <input type="time" name=""  class="form-control"   placeholder="Texto de respuesta corta">
+              <label class="control-label">{literal}{{values.pregunta == '' ? '{/literal}{$lang->get('str_pregunta')}{literal}' : values.pregunta}}{/literal}</label>
+              <input type="time" name=""  class="form-control"   placeholder="{$lang->get('elearning_formulario_responder_texto_res_corta')}">
             </div>
           </form>
         </div>
         <div class="col-sm-12" v-else>
           <form role="form">
             <div class="form-group">
-              <input type="text" name=""  class="form-control" value="" required="required" pattern="" title="" placeholder="Pregunta" v-model="values.pregunta">
+              <input type="text" name=""  class="form-control" value="" required="required" pattern="" title="" placeholder="{$lang->get('str_pregunta')}" v-model="values.pregunta">
             </div>
             <div class="form-group">
-              <input type="time" name=""  class="form-control"   placeholder="Texto de respuesta corta">
+              <input type="time" name=""  class="form-control"   placeholder="{$lang->get('elearning_formulario_responder_texto_res_corta')}">
             </div>
           </form>
         </div>
         <hr>
         <div v-if="element.edit" class="pull-right">
-          <button type="button" @click.prevent="onClick_delete">D</button>
-          <button type="button" @click.prevent="onClick_delete">O</button>
+          {include 'botones_acciones_tags.tpl'}
         </div>
       </div>
 

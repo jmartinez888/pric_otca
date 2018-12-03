@@ -92,7 +92,7 @@
 {/block}
 {block 'template'}
 <template id="botones_opcion">
-    <button  data-toggle="tooltip" data-placement="bottom" class="btn btn-default  btn-sm glyphicon glyphicon-list-alt" title="" href="{$_layoutParams.root}idiomas/lenguajes/{literal}{{id}}{/literal}" data-original-title="{$lenguaje['str_ver_elemento']}"></button>
+    <a  data-toggle="tooltip" data-placement="bottom" class="btn btn-default  btn-sm glyphicon glyphicon-list-alt" title="" href="{$_layoutParams.root}idiomas/lenguajes/{literal}{{id}}{/literal}" data-original-title="{$lenguaje['str_ver_elemento']}"></a>
     {* <button data-toggle="tooltip" data-placement="bottom" data-accion="estado" class="btn btn-default btn-sm glyphicon glyphicon-refresh btn-acciones"  data-estado="{literal}{{estado}}{/literal}" data-id="{literal}{{id}}{/literal}"  data-nombre="{literal}{{nombre}}{/literal}"  title="{$lenguaje['str_cambiar_estado']}"> </button> *}
     <form enctype="multipart/form-data" id="frm_json{literal}{{id}}{/literal}" style="display:inline-block;">
         <input name="file" class="hidden files_json" id="file_{literal}{{id}}{/literal}" type="file" accept="application/json" data-id="{literal}{{id}}{/literal}" />

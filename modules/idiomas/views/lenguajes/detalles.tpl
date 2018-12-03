@@ -44,7 +44,7 @@
 	    <div class="panel panel-default">
 
 	                <div class="panel-heading">
-	                    <h3 class="panel-title"><i class="glyphicon glyphicon-list-alt"></i>&nbsp;&nbsp;<strong>{$elemento->Idif_FileName}</strong>
+	                    <h3 class="panel-title"><i class="glyphicon glyphicon-list-alt"></i>&nbsp;&nbsp;<strong>{$lang->get('str_variables')} : {$elemento->Idif_FileName}</strong>
 	                    </h3>
 	                </div>
 	                <div class="panel-body" style=" margin: 15px">

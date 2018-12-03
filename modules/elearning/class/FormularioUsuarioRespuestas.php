@@ -14,6 +14,16 @@ class FormularioUsuarioRespuestas extends Eloquent
   public function usuario () {
   	return $this->belongsTo('App\Usuario', 'Usu_IdUsuario');
   }
+
+  public function detalles () {
+  	return $this->hasMany('App\FormularioUsuarioRespuestasDetalles', 'Fur_IdFrmUsuRes');
+  }
+
+  public function formulario () {
+  	return $this->belongsTo('App\Formulario', 'Frm_IdFormulario');
+  }
+
+
 }
 
 ?>

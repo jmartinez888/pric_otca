@@ -21,26 +21,32 @@ class gcursoController extends elearningController {
     $this->service = new ServiceResult();
   }
   public function formulario ($curso_id) {
-    $this->_view->getLenguaje('elearning_gcurso');
+    $lang = $this->_view->getLenguaje('elearning_gcurso', false, true);
+    $data['titulo'] = $lang->get('elearning_gcurso_gestion_formulario');
     $this->_view->setTemplate(LAYOUT_FRONTEND);
     $curso = $this->curso->getCursoXId($curso_id);
-    $formulario = Formulario::getByCurso($curso['Cur_IdCurso']);
-    $formulario = $formulario->count() > 0 ? $formulario[0] : null;
-    $data['respuestas'] = [];
-    if ($formulario) {
-      $data['respuestas'] = $formulario->respuestas;
+    if ($curso['Moa_IdModalidad'] == 3) {
+      $formulario = Formulario::getByCurso($curso['Cur_IdCurso']);
+      $formulario = $formulario->count() > 0 ? $formulario[0] : null;
+      $data['respuestas'] = [];
+      if ($formulario) {
+        $data['respuestas'] = $formulario->respuestas;
 
+      }
+      // dd($formulario);
+      // $data_vue = [
+      //   'formulario_id' => $formulario != null ? $formulario : null
+      // ];
+      $data['menu'] = 'curso';
+      $data['curso'] = $curso;
+      $data['titulo'] = $curso['Cur_Titulo'].' - '.$data['titulo'];
+      $data['formulario'] = $formulario;
+      // $data['data_frm'] = $data_vue;
+      $this->_view->assign($data);
+      $this->_view->render('formulario');
+    } else {
+      $this->redireccionar('elearning/gestion');
     }
-    // dd($formulario);
-    // $data_vue = [
-    //   'formulario_id' => $formulario != null ? $formulario : null
-    // ];
-    $data['menu'] = 'curso';
-    $data['curso'] = $curso;
-    $data['formulario'] = $formulario;
-    // $data['data_frm'] = $data_vue;
-    $this->_view->assign($data);
-    $this->_view->render('formulario');
   }
   public function index(){ }
 
