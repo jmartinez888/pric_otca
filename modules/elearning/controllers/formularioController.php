@@ -332,7 +332,9 @@ class formularioController extends elearningController {
 	public function update_pregunta ($id, $opc = 'default') {
 
 		$res = ['success' => false];
-		if ($this->has(['tipo', 'formulario_id', 'obligatorio'])) {
+
+		if ($this->has(['tipo', 'formulario_id'])) {
+
 			$pre_id = $this->getInt('pregunta_id');
 			if (is_numeric($id) && $id != 0 && $pre_id == $id) {
 
@@ -341,7 +343,9 @@ class formularioController extends elearningController {
 				if ($pre) {
 					$tipo = $this->getTexto('tipo');
 							DB::transaction(function () use ($pre, &$res, $tipo, $opc) {
+
 								if ($opc == 'default') {
+
 									$pre->Fpr_Pregunta = $_POST['values']['pregunta'];
 									$pre->Fpr_Descripcion = $_POST['values']['descripcion'];
 									$pre->Fpr_Tipo = strtolower($tipo);
@@ -376,10 +380,12 @@ class formularioController extends elearningController {
 									}
 								}
 								if ($opc == 'obligatorio') {
+									if (isset($_POST['obligatorio'])) {
 
-									$val = $_POST['obligatorio'];
-									if (is_numeric($val) && ($val == 1 || $val == 0))
-										$pre->Fpr_Obligatorio = $val;
+										$val = $_POST['obligatorio'];
+										if (is_numeric($val) && ($val == 1 || $val == 0))
+											$pre->Fpr_Obligatorio = $val;
+									}
 								}
 								if ($pre->save())
 										$res['success'] = true;
