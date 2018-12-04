@@ -21,6 +21,8 @@ class gcursoController extends elearningController {
     $this->service = new ServiceResult();
   }
   public function formulario ($curso_id) {
+    $this->_acl->autenticado();
+    //verificar que el rol sea de docente o permiso de editar formulario
     $lang = $this->_view->getLenguaje(['elearning_gcurso', 'elearning_formulario_responder'], false, true);
 
     $data['titulo'] = $lang->get('elearning_gcurso_gestion_formulario');
