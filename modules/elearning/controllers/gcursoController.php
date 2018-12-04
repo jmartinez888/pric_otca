@@ -21,7 +21,8 @@ class gcursoController extends elearningController {
     $this->service = new ServiceResult();
   }
   public function formulario ($curso_id) {
-    $lang = $this->_view->getLenguaje('elearning_gcurso', false, true);
+    $lang = $this->_view->getLenguaje(['elearning_gcurso', 'elearning_formulario_responder'], false, true);
+
     $data['titulo'] = $lang->get('elearning_gcurso_gestion_formulario');
     $this->_view->setTemplate(LAYOUT_FRONTEND);
     $curso = $this->curso->getCursoXId($curso_id);
