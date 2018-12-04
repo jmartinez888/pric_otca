@@ -6,10 +6,12 @@ class Model extends Eloquent{
     private $_registry;
     protected $_db;
     protected $_request;
+    protected $_acl;
 
     public function __construct() {
         $this->_registry = Registry::getInstancia();
         $this->_request = $this->_registry->_request;
+        $this->_acl = $this->_registry->_acl;
         $this->_db = $this->_registry->_db;
         $this->_db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }

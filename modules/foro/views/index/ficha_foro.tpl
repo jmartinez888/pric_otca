@@ -67,17 +67,17 @@
                         <li><a href="{$_layoutParams.root}foro/admin/actividad/{$foro.For_IdForo}" id_foro="{$foro.For_IdForo}" class="opciones_foro" style="cursor: pointer;">Ver Actividades<i class="i_opciones_foro glyphicon glyphicon-calendar pull-right"></i></a></li>
                         {/if}
                         {/if}
-                        {if ($_acl->permiso("habilitar_foro") || $id_usuario == $foro.Usu_IdUsuario) && ($foro.For_Estado== 2 || $foro.Row_Estado == 0 || $foro.For_Estado== 0)}
+                        {if ($_acl->permiso("habilitar_foro") || $id_usuario == $foro.Usu_IdUsuario) &&  $foro.For_Estado== 0}
                         <li><a id_foro="{$foro.For_IdForo}" class="opciones_foro hablitarForo" style="cursor: pointer;">Habilitar<i class="i_opciones_foro glyphicon glyphicon-ok pull-right"></i></a></li>
                         {else}
-                        {if ($_acl->permiso("cerrar_foro") || $id_usuario == $foro.Usu_IdUsuario) && ($foro.For_Estado== 0 || $foro.Row_Estado == 1 || $foro.For_Estado== 1)}
+                        {if ($_acl->permiso("cerrar_foro") || $id_usuario == $foro.Usu_IdUsuario) && $foro.For_Estado== 0}
                         <li><a id_foro="{$foro.For_IdForo}" class="opciones_foro cerrar_foro" estado="{$foro.For_Estado}" style="cursor: pointer;">Cerrar Foro<i class="i_opciones_foro glyphicon glyphicon-off pull-right"></i></a></li>
                         {/if}
                         {if ($_acl->permiso("deshabilitar_foro") || $id_usuario == $foro.Usu_IdUsuario) && ($foro.For_Estado== 1 || $foro.For_Estado == 2)}
                         <li><a id_foro="{$foro.For_IdForo}" for_estado="{$foro.For_Estado}" class="opciones_foro deshablitarForo" style="cursor: pointer;">Deshabilitar<i class="i_opciones_foro glyphicon glyphicon-eye-close pull-right"></i></a></li>
                         {/if}
                         {/if}
-                        {if ($_acl->permiso("deshabilitar_foro") || $id_usuario == $foro.Usu_IdUsuario) && $foro.Row_Estado == 1 && ($foro.For_Estado== 0 || $foro.For_Estado== 1 || $foro.For_Estado== 2)}
+                        {if ($_acl->permiso("deshabilitar_foro") || $id_usuario == $foro.Usu_IdUsuario)}
                         <li><a id_foro="{$foro.For_IdForo}" class="opciones_foro eliminar_foro" Row_Estado="{$foro.Row_Estado}" style="cursor: pointer;">Eliminar<i class="i_opciones_foro glyphicon glyphicon-trash pull-right"></i></a></li>
                         {/if}
                         {if $Rol_Ckey == "administrador" || $Rol_Ckey == "administrador_foro    "}

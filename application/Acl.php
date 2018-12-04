@@ -376,6 +376,11 @@ class ACL
        }
     }
 
+    public function rolckey($iRol_Ckey){
+        $rol=$this->getIdRol_x_ckey($iRol_Ckey);
+        return $this->rol($rol['Rol_IdRol']);
+    }
+    //Fin nUevo
 
     public function getPermisos()
     {
