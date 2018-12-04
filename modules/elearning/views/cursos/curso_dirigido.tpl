@@ -10,7 +10,7 @@
         <div class="panel-body">
           <div class="col-lg-12" style="padding-left: 0px; padding-right: 0px;">
             <div class="col-lg-3 img-curso">
-              <img src="{BASE_URL}modules/elearning/views/cursos/img/portada/{$curso.Cur_UrlBanner}" />
+              <img class="w-100" src="{BASE_URL}modules/elearning/views/cursos/img/portada/{$curso.Cur_UrlBanner}" />
               {if $curso.Moa_IdModalidad == 2}
               <div class="col-xs-12 text-center " style="background: #2196F3; color: white; font-weight: bold; font-size: 18px;">LMS</div>
               {/if}
@@ -30,7 +30,7 @@
                 <a class="btn fa fa-twitter im_sociales" id="im_sociales" style="background: #55ACEE" href="#"></a>
                 <a class="btn fa fa-google-plus im_sociales" id="im_sociales" style="background: #C03A2A" href="#"></a>
             </div>
-            
+
           </div>
 
           <div class="col-lg-12">
@@ -144,13 +144,10 @@
             {/if}
           {/if}
         {else}
-        <div class="col-lg-12 anuncio">
+          <div class="col-lg-12 anuncio">
               <strong><i class="glyphicon glyphicon-warning-sign" style="font-size: 20px;"> </i>&nbsp; ¡Atención!</strong>
               Para inscribirte en el curso necesitas una cuenta.</div>
-        <!-- <a href="{BASE_URL}login/login/elearning!cursos!curso_dirigido!{$curso.Cur_IdCurso}">
-          <button class="btn btn-success btn-ficha">Loguearme</button>
-        </a> -->
-        <div class="col-lg-12">
+          <div class="col-lg-12">
                 <button data-toggle="modal" data-target="#modal-login" class="btn btn-group btn-success ini-sesion">
                 <strong>Iniciar Sesión</strong>
                 <i class="glyphicon glyphicon-log-in"></i>
@@ -168,7 +165,7 @@
         {foreach from=$modulo item=o}
         <div class="col-lg-12">
           <div class="ficha-mod col-lg-12">
-            <div class="col-lg-2"><img class="img-modulo" src="{BASE_URL}modules/elearning/views/cursos/img/contador-modulo-lms.png"/></div>
+            <div class="col-lg-2"><img class="w-100" class="img-modulo" src="{BASE_URL}modules/elearning/views/cursos/img/contador-modulo-lms.png"/></div>
             <div class="col-lg-10 ficha-mod-title"><strong>{$o.Moc_Titulo}</strong></div>
             <div class="col-lg-10 ficha-mod-desc">{$o.Moc_Descripcion}</div>
         </div>

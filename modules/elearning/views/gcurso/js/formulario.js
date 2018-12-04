@@ -197,7 +197,7 @@ new Vue({
 	methods: {
 		onClick_deleteRespuesta: function (respuesta_id) {
 			console.log(event)
-			let target = event.target.parent.parent
+			let target = event.target.parentNode.parentNode.parentNode
 			axios.post(_root_lang + 'elearning/formulario/delete_respuesta/' + respuesta_id).then(res => {
 				if (res.data.success) {
 					target.remove()

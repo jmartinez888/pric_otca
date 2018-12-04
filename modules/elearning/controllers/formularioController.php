@@ -8,7 +8,21 @@ use App\Usuario;
 use Illuminate\Database\Capsule\Manager as DB;
 class formularioController extends elearningController {
 	public function delete_respuesta ($respuesta_id) {
-		// dd($_POST);
+		$res = ['success' => false];
+		if (is_numeric($respuesta_id) && $respuesta_id != 0) {
+			$respuesta = FormularioUsuarioRespuestas::find($respuesta_id);
+			if ($respuesta) {
+				DB::transaction(function () use ($respuesta, &$res) {
+					foreach($respuesta->detalles as $det) {
+						$det->delete();
+					}
+					if ($respuesta->delete())
+						$res['success'] = true;
+				});
+			}
+
+		}
+		$this->_view->responseJson($res);
 	}
 	public function respuesta ($respuesta_id) {
 		if ($this->_acl->tienePermisos('ver_respuestas_formulario_alumnos')) {
@@ -197,7 +211,7 @@ class formularioController extends elearningController {
 		if ($success_pass) {
 			//load formulario
 
-			$data['menu'] = 'curso';
+			$data['menu'] = 'docente';
 
 		}
 		if (is_numeric($curso_id) && $curso_id != 0) {

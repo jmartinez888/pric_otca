@@ -211,7 +211,7 @@
       background-color: rgba(0,0,0, .1);
 
   }
-  ul{
+  .sidebar-left ul{
     padding-left: 0px !important;
   }
 

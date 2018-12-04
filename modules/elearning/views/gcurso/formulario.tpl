@@ -108,44 +108,44 @@
     </div>
     <div class="panel-body form-horizontal tab-pane" role="tabpanel"  id="formulario_respuestas">
       <div class="panel panel-default">
-      <div class="panel-heading cabecera-titulo">
-        <h3 class="panel-title">
-          <i class="glyphicon glyphicon-list-alt"></i>&nbsp;&nbsp;
-          <strong>{$lang->get('elearning_formulario_responder_alumnos_inscritos')}</strong>
-        </h3>
-      </div>
-      <div class="panel-body" style=" margin: 15px 25px">
-        <div class="col-lg-12" id="formulario_respuestas_vue">
-          <div class="table-responsive" style="width: 100%">
-            <table class="table" id="tblMisCursos">
-              <thead>
-                <tr>
-                  <th>Id</th>
-                  <th>{$lang->get('str_alumnos')}</th>
-                  <th>{$lang->get('str_usuarios')}</th>
-                  <th>{$lang->get('str_fecha')}</th>
-                  <th>{$lang->get('str_operacion')}</th>
-                </tr>
-              </thead>
-              <tbody>
-                {foreach $respuestas as $res}
+        <div class="panel-heading cabecera-titulo">
+          <h3 class="panel-title">
+            <i class="glyphicon glyphicon-list-alt"></i>&nbsp;&nbsp;
+            <strong>{$lang->get('elearning_formulario_responder_alumnos_inscritos')}</strong>
+          </h3>
+        </div>
+        <div class="panel-body" style=" margin: 15px 25px">
+          <div class="col-lg-12" id="formulario_respuestas_vue">
+            <div class="table-responsive" style="width: 100%">
+              <table class="table" id="tblMisCursos">
+                <thead>
                   <tr>
-                    <td>{$res->usuario->Usu_IdUsuario}</td>
-                    <td>{$res->usuario->Usu_Nombre} {$res->usuario->Usu_Apellidos}</td>
-                    <td>{$res->usuario->Usu_Usuario}</td>
-                    <td>{$res->Fur_CreatedAt}</td>
-                    <td>
-                      <a href="{$_layoutParams.root}elearning/formulario/respuesta/{$res->Fur_IdFrmUsuRes}" class="btn btn-default  btn-sm" data-toggle="tooltip" data-placement="bottom" title="{$lang->get('str_ver_respuestas')}"><i class="glyphicon glyphicon-file"></i></a>
-                      <button data-id="{$res->Fur_IdFrmUsuRes}" @click="onClick_deleteRespuesta({$res->Fur_IdFrmUsuRes})" class="btn btn-default  btn-sm" data-toggle="tooltip" data-placement="bottom" title="{$lang->get('str_ver_respuestas')}"><i class="glyphicon glyphicon-trash"></i></button>
-                    </td>
+                    <th>Id</th>
+                    <th>{$lang->get('str_alumnos')}</th>
+                    <th>{$lang->get('str_usuarios')}</th>
+                    <th>{$lang->get('str_fecha')}</th>
+                    <th>{$lang->get('str_operacion')}</th>
                   </tr>
-                {/foreach}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {foreach $respuestas as $res}
+                    <tr>
+                      <td>{$res->usuario->Usu_IdUsuario}</td>
+                      <td>{$res->usuario->Usu_Nombre} {$res->usuario->Usu_Apellidos}</td>
+                      <td>{$res->usuario->Usu_Usuario}</td>
+                      <td>{$res->Fur_CreatedAt}</td>
+                      <td>
+                        <a href="{$_layoutParams.root}elearning/formulario/respuesta/{$res->Fur_IdFrmUsuRes}" class="btn btn-default  btn-sm" data-toggle="tooltip" data-placement="bottom" title="{$lang->get('str_ver_respuestas')}"><i class="glyphicon glyphicon-file"></i></a>
+                        <button data-id="{$res->Fur_IdFrmUsuRes}" @click="onClick_deleteRespuesta({$res->Fur_IdFrmUsuRes})" class="btn btn-default  btn-sm" data-toggle="tooltip" data-placement="bottom" title="{$lang->get('str_ver_respuestas')}"><i class="glyphicon glyphicon-trash"></i></button>
+                      </td>
+                    </tr>
+                  {/foreach}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
-    </div>
     </div>
   </div>
 </div>

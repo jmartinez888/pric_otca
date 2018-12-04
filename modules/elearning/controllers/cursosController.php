@@ -1,6 +1,7 @@
 <?php
 
 use App\Formulario;
+use App\FormularioUsuarioRespuestas;
 use Dompdf\Adapter\CPDF;
 use Dompdf\Dompdf;
 use Dompdf\Exception;
@@ -14,6 +15,37 @@ class cursosController extends elearningController {
   public function __construct($lang,$url)
   {
       parent::__construct($lang,$url);
+  }
+
+  public function respuestas_formulario ($curso_id, $respuesta_id = 0) {
+    $lang = $this->_view->getLenguaje('elearning_cursos', false, true);
+    $mod_curso = $this->loadModel("curso");
+    $curso = $mod_curso::find($curso_id);
+    $frm = $curso->getFormularioActivo();
+
+    $data['curso'] = $curso;
+    $this->_view->setTemplate(LAYOUT_FRONTEND);
+    if (is_numeric($respuesta_id) && $respuesta_id != 0) {
+      $respuesta = FormularioUsuarioRespuestas::find($respuesta_id);
+      if ($respuesta) {
+
+        $this->_view->addViews('modules'.DS.'elearning'.DS.'views'.DS.'formulario');
+        $data['alumno'] = $respuesta->usuario;
+        $data['respuesta'] = $respuesta;
+        $data['titulo'] = $curso['Cur_Titulo'].' - '.$lang->get('elearning_cursos_ver_formulario');
+        $data['formulario'] = $frm;
+        $tpl = 'ver_respuestas';
+      } else {
+        $this->redireccionar('elearning/cursos/curso/'.$curso['Cur_IdCurso']);
+      }
+    } else {
+      $data['respuestas'] = $frm->respuestas;
+      $data['titulo'] = $curso['Cur_Titulo'].' - '.$lang->get('str_respuestas');
+      $tpl = 'respuestas';
+    }
+    $this->_view->assign($data);
+    $this->_view->render($tpl);
+
   }
 
   public function index(){
@@ -240,21 +272,21 @@ class cursosController extends elearningController {
 
       if(strlen($curso)==0 || strlen($modulo)==0){
 
-        $this->redireccionar("elearning/"); 
+        $this->redireccionar("elearning/");
       }
-      if(!Session::get("autenticado")){ 
+      if(!Session::get("autenticado")){
         echo "string";exit;
-        $this->redireccionar("elearning/"); 
+        $this->redireccionar("elearning/");
       }
       if(!is_numeric($curso) || !is_numeric($modulo)){
-        $this->redireccionar("elearning/"); 
+        $this->redireccionar("elearning/");
       }
 
-      if(!$Mmodel->validarCursoModulo($curso, $modulo)){ 
-        $this->redireccionar("elearning/cursos"); 
+      if(!$Mmodel->validarCursoModulo($curso, $modulo)){
+        $this->redireccionar("elearning/cursos");
       }
-      if(!$Mmodel->validarModuloUsuario($modulo, Session::get("id_usuario"))){ 
-        $this->redireccionar("elearning/cursos"); 
+      if(!$Mmodel->validarModuloUsuario($modulo, Session::get("id_usuario"))){
+        $this->redireccionar("elearning/cursos");
       }
       //if(!$Lmodel->validarLeccion($leccion, $modulo, Session::get("id_usuario"))){ $this->redireccionar("elearning/cursos"); }
 
@@ -273,7 +305,7 @@ class cursosController extends elearningController {
       $indice_leccion = $clave + 1;
       $final = count($lecciones) == $indice_leccion ? true : false;
 
-      if($OLeccion==null){ 
+      if($OLeccion==null){
         $this->redireccionar("elearning/cursos");
       }
 
@@ -323,9 +355,9 @@ class cursosController extends elearningController {
           }
           $OLeccion["Progreso"]=$tmp["Progreso"];
 
-          if($examen==null){ 
+          if($examen==null){
             // echo "stringssss";exit;
-            $this->redireccionar("elearning/"); 
+            $this->redireccionar("elearning/");
           }
 
           if ($this->botonPress("comenzar")) {

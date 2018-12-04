@@ -158,7 +158,6 @@
                                         <div class="radio">
                                           <label>
                                             <input type="radio" name="frm_pre_{$col->Fpr_IdForPreguntas}" id="input" value="{$fil->Fpo_IdForPrOpc}" required="">
-                                            {$fil->Fpo_IdForPrOpc}_{$col->Fpr_IdForPreguntas}
                                           </label>
                                         </div>
                                       </td>
@@ -190,7 +189,6 @@
                                         <div class="checkbox">
                                           <label>
                                             <input type="checkbox" name="frm_pre_{$col->Fpr_IdForPreguntas}[]" id="input" value="{$fil->Fpo_IdForPrOpc}" >
-                                            {$fil->Fpo_IdForPrOpc}_{$col->Fpr_IdForPreguntas}
                                           </label>
                                         </div>
                                       </td>

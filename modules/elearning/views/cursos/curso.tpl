@@ -12,7 +12,7 @@
         <div class="panel-body">
           <div class="col-lg-12" style="padding-left: 0px; padding-right: 0px;">
             <div class="col-lg-3 img-curso">
-              <img src="{BASE_URL}modules/elearning/views/cursos/img/portada/{$curso.Cur_UrlBanner}" />
+              <img class="w-100" src="{BASE_URL}modules/elearning/views/cursos/img/portada/{$curso.Cur_UrlBanner}" />
               {if $curso.Moa_IdModalidad == 1}
               <div class="col-xs-12 text-center mooc" style="color: white; font-weight: bold; font-size: 18px;">MOOC</div>
               {else}
@@ -64,14 +64,15 @@
                 <strong style="color: #393939; font-size: 16px">{$inscritos}</strong>
                 <br>
                 {if $inscritos >= 2 }
-                <strong style="color: #393939; font-size: 16px">Alumnos</strong>
+                <strong style="color: #393939; font-size: 16px">{$lang->get('str_alumnos')}</strong>
                 {else}
-                <strong style="color: #393939; font-size: 16px">Alumno</strong>
+                <strong style="color: #393939; font-size: 16px">{$lang->get('str_alumno')}</strong>
                 {/if}
                 <br><br>
               </div>
               {/if}
               {if $curso.Moa_IdModalidad == 3}
+              <a href="{$_layoutParams.root}elearning/cursos/respuestas_formulario/{$curso['Cur_IdCurso']}" title="">
               <div class="col-lg-12" style=" border-bottom: #ddd solid 0.2px;">
                 <br>
                 <i class="glyphicon glyphicon-user" style="color: #31A3BB; font-size: 25px"></i>
@@ -79,12 +80,13 @@
                 <strong style="color: #393939; font-size: 16px">{$inscritos}</strong>
                 <br>
                 {if $inscritos >= 2 }
-                <strong style="color: #393939; font-size: 16px">Alumnos</strong>
+                <strong style="color: #393939; font-size: 16px">{$lang->get('str_alumnos')}</strong>
                 {else}
-                <strong style="color: #393939; font-size: 16px">Alumno</strong>
+                <strong style="color: #393939; font-size: 16px">{$lang->get('str_alumno')}</strong>
                 {/if}
                 <br><br>
               </div>
+              </a>
               {/if}
 
 
@@ -226,18 +228,28 @@
                 Para inscribirte en el curso necesitas una cuenta.</div>
                 <div class="col-lg-12">
                   <button data-toggle="modal" data-target="#modal-login" class="btn btn-group btn-success ini-sesion">
-                  <strong>Iniciar Sesión</strong>
-                  <i class="glyphicon glyphicon-log-in"></i>
-                </button>
+                    <strong>Iniciar Sesión</strong>
+                    <i class="glyphicon glyphicon-log-in"></i>
+                  </button>
                 </div>
               {else}
-                <div class="col-lg-12 anuncio">
+                {* <div class="col-lg-12 anuncio">
                 <strong><i class="glyphicon glyphicon-warning-sign" style="font-size: 20px;"> </i>&nbsp; ¡Atención!</strong>
                 Para inscribirte en el curso presencial debe llenar el formulario de inscripción.</div>
                 <div class="col-lg-12">
-                  <a href="https://docs.google.com/forms/d/e/1FAIpQLSfnDPVqGFC2J6rMkuqAPi18G0w0KkSqueGtbgZXEEuDk7dg7w/viewform" target="_blank">
+                  <a href="{$_layoutParams.root}elearning/formulario/responder" target="_blank">
                     <button class="btn btn-group btn-inscribir">Inscribirme</button>
                   </a>
+                </div> *}
+
+                <div class="col-lg-12 anuncio">
+                <strong><i class="glyphicon glyphicon-warning-sign" style="font-size: 20px;"> </i>&nbsp; ¡Atención!</strong>
+                Para inscribirte en el curso necesitas una cuenta.</div>
+                <div class="col-lg-12">
+                  <button data-toggle="modal" data-target="#modal-login" class="btn btn-group btn-success ini-sesion">
+                    <strong>Iniciar Sesión</strong>
+                    <i class="glyphicon glyphicon-log-in"></i>
+                  </button>
                 </div>
               {/if}
             {/if}
@@ -257,7 +269,7 @@
               <div class="col-lg-12">
                 <div class="ficha-mod col-lg-12">
                   <div class="col-lg-2">
-                    <img class="img-modulo" src="{BASE_URL}modules/elearning/views/cursos/img/contador-modulo-{$index}.png"/>
+                    <img  class="img-modulo w-100" src="{BASE_URL}modules/elearning/views/cursos/img/contador-modulo-{$index}.png"/>
                     <strong class="ficha-mod-icon"></strong>
                   </div>
                   <div class="col-lg-10 ficha-mod-title"> <strong>{$o.Moc_Titulo}</strong> </div>
