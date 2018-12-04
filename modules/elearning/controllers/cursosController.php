@@ -18,7 +18,7 @@ class cursosController extends elearningController {
   }
 
   public function respuestas_formulario ($curso_id, $respuesta_id = 0) {
-    $lang = $this->_view->getLenguaje('elearning_cursos', false, true);
+    $lang = $this->_view->getLenguaje(['elearning_cursos', 'elearning_formulario_responder'], false, true);
     $mod_curso = $this->loadModel("curso");
     $curso = $mod_curso::find($curso_id);
     $frm = $curso->getFormularioActivo();
