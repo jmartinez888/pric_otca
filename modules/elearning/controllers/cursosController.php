@@ -178,6 +178,7 @@ class cursosController extends elearningController {
   }
 
   public function curso($id=""){
+      $lang = $this->_view->getLenguaje('elearning_cursos', false, true);
       if($id == "" || !is_numeric($id) ){ $this->redireccionar("elearning/"); }
       $model = $this->loadModel("curso");
       $mObj = $this->loadModel("objetivos");
@@ -221,6 +222,7 @@ class cursosController extends elearningController {
       $this->_view->assign("curso", $curso);
       $this->_view->assign("objetivos", $mObj->getObjs($id));
       $this->_view->assign("modulo", $modulo);
+      $this->_view->assign("titulo", $curso['Cur_Titulo']);
       $this->_view->assign("certificado", $certificado);
       $this->_view->assign("duracion", $duracion["Total"] . " Lecciones");
       $this->_view->assign("detalle", $model->getDetalleCurso($curso["Cur_IdCurso"]));
