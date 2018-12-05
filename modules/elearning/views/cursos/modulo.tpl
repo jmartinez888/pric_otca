@@ -7,7 +7,7 @@
       <div class="col-lg-5 titulo-modulo">
          <h4><strong> Módulo {$mod_datos.INDEX}: {$modulo["Moc_Titulo"]}</strong></h4>
       </div>
-      <div class="col-lg-5 derecha" style="margin-top: 5px !important">
+      <div class="col-sm-6 col-lg-5 derecha" style="margin-top: 5px !important">
           <span>Lección {$leccion["Index"]} de {count($lecciones)}</span>
           {if $leccion["Index"] > 1 }
           <form method="post" action="{BASE_URL}elearning/cursos/_previous_leccion/" style="display: inline-block">
@@ -61,8 +61,8 @@
             {/if}
           {/if}
       </div>
-      <div class="col-lg-2" style="margin-top: 5px !important">
-        <a href="{BASE_URL}elearning/cursos/curso/{$curso}">
+      <div class="col-sm-6 col-lg-2" style="margin-top: 5px !important">
+        <a class="pull-right" href="{BASE_URL}elearning/cursos/curso/{$curso}">
         <button class="course-students-amount btn-regresar btn btn-group">
           <span class="glyphicon glyphicon-hand-left" aria-hidden="true"></span>
           Volver al curso

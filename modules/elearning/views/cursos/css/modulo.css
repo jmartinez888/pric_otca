@@ -294,10 +294,10 @@ ul{
     top: 7px;
     right: 7px;
 }
-@media (min-width: 768px) {
+@media (max-width: 768px) {
     .sidebar {
-        height: 330px !important;
-        max-height: 330px !important;
+        height: inherit !important;
+        max-height: inherit !important;
     }
 }
 /*@media (max-width: 767px) {
