@@ -479,17 +479,21 @@ class examenController extends elearningController {
         Session::set("learn_param_curso", $id);
         // $lecciones=$this->examen->getLecciones($id);
 
-        $modulos=$this->examen->getModulos($id);
+        $modulos = $this->examen->getModulos($id);
 
-        if ($this->botonPress("guardarEdit")) {
-            $examen = $this->examen->editExamen($id,$this->getSql("selectmodulo"), $this->getSql("titulo"), $this->getSql("porcentaje"), $this->getSql("puntaje"),  $this->getSql("intentos"), $this->getInt("selectleccion"), $idExamen);
+        if ($this->botonPress("prepararPregunta")) {
+            $this->redireccionar('elearning/examen/preguntas/'.$id.'/'.$idExamen);
+        }
+        if ($this->botonPress("guardarEditar")) {
+            $examen = $this->examen->editExamen($id,$this->getSql("selectmodulo"), $this->getSql("titulo"), $this->getSql("porcentaje"), $this->getInt("puntaje"),  $this->getSql("intentos"), $this->getInt("selectleccion"), $idExamen);
             if($examen){
-                $this->redireccionar('elearning/examen/preguntas/'.$id.'/'.$idExamen);
+                $this->_view->assign('_mensaje', 'Se guardo correctamente los cambios..!!');
             }
         }
 
         $titulo = $this->examen->getTituloCurso($id);
         $examen = $this->examen->getExamen($idExamen);
+        $examenAlumno = $this->examen->getExamenAlumnos($idExamen);
         $Exa_Porcentaje = $this->examen->getExamenesPorcentaje($id);
         $Tra_Porcentaje = $this->examen->getTrabajosPorcentaje($id);
         $Porcentaje = 100 - $Exa_Porcentaje['Exa_PorcentajeTotal'] - $Tra_Porcentaje['Tra_PorcentajeTotal'] + $examen['Exa_Porcentaje'];
@@ -499,6 +503,7 @@ class examenController extends elearningController {
         $this->_view->assign('titulo', $titulo["Cur_Titulo"]);
         $this->_view->assign('modulos', $modulos);
         $this->_view->assign('examen', $examen);
+        $this->_view->assign('examenAlumno', $examenAlumno);
         $this->_view->assign('porcentaje', $Porcentaje);
         $this->_view->assign('lecciones', $this->examen->getLecciones($examen['Moc_IdModulo']));
         $this->_view->assign('idcurso', $id);
@@ -579,12 +584,14 @@ class examenController extends elearningController {
         // echo $puntos_pregunta['puntos_pregunta']; exit;
         if ($peso['Exa_Estado'] == 0 && $puntos_maximo == 0) {
             $habilitaExamen = $this->examen->updateExamen($idExamen);
-        }         
+        }  
 
         $titulo =  $this->examen->getTituloCurso($id);
         $this->_view->assign('numeropagina', $paginador->getNumeroPagina());
         $this->_view->assign('paginacionpreguntas', $paginador->getView('paginacion_ajax_s_filas'));
         $this->_view->assign('puntos_maximo', $puntos_maximo);
+        $this->_view->assign('puntos_total', $puntos_pregunta['puntos_pregunta']);
+
         // $this->_view->assign('titulo', 'Administracion de preguntas');
         $this->_view->assign('titulo', $titulo["Cur_Titulo"]);
         $this->_view->assign('examen', $idExamen);
@@ -631,6 +638,7 @@ class examenController extends elearningController {
         $puntos_pregunta= $this->examen->getPuntosPregunta($idExamen);
         $puntos_maximo=$peso['Exa_Peso']-$puntos_pregunta['puntos_pregunta'];
         $this->_view->assign('puntos_maximo', $puntos_maximo);
+        $this->_view->assign('puntos_total', $puntos_pregunta['puntos_pregunta']);
 
         $this->_view->assign('preguntas', $this->examen->getPreguntasCondicion($pagina,$filas, $condicion));
         $this->_view->assign('numeropagina', $paginador->getNumeroPagina());
@@ -718,6 +726,7 @@ class examenController extends elearningController {
         $this->_view->assign('puntos_maximo', $puntos_maximo);
         $this->_view->assign('idcurso', $idcurso);
         $this->_view->assign('examen',$idExamen);
+        $this->_view->assign('puntos_total', $puntos_pregunta['puntos_pregunta']);
         $this->_view->assign('numeropagina', $paginador->getNumeroPagina());
         $this->_view->assign('paginacionpreguntas', $paginador->getView('paginacion_ajax_s_filas'));
         $this->_view->renderizar('ajax/listarpreguntas', false, true);
@@ -763,6 +772,7 @@ class examenController extends elearningController {
         $puntos_pregunta= $this->examen->getPuntosPregunta($idExamen);
         $puntos_maximo=$peso['Exa_Peso']-$puntos_pregunta['puntos_pregunta'];
         $this->_view->assign('puntos_maximo', $puntos_maximo);
+        $this->_view->assign('puntos_total', $puntos_pregunta['puntos_pregunta']);
 
         $this->_view->assign('examen',$idExamen);
         $this->_view->assign('numeropagina', $paginador->getNumeroPagina());
@@ -1009,27 +1019,23 @@ class examenController extends elearningController {
             $pregunta =$this->examen->insertPregunta($idExamen, $pregunta, 0, 2, null, $this->getInt("puntos"));
 
             if($pregunta){
+                $alternativa = 0;
+                $j = 1;
+                $total = 0;
+                // for($i=1;$i<=$contador;$i++){
+                //     if($this->getSql("ckb".$i)!=null)
+                //         $total++;
+                // }
 
-                $alternativa=0;
-                $j=1;
-                $total=0;
+                for($i = 1; $i <= $contador; $i++)
 
-                for($i=1;$i<=$contador;$i++){
-                    if($this->getSql("ckb".$i)!=null)
-                        $total++;
-                }
-
-                for($i=1;$i<=$contador;$i++)
-
-                if($this->getSql("alt".$i)!=null){
-
-                    if($this->getSql("ckb".$i)!=null)
-                    $alternativa =$this->examen->insertAlternativa($pregunta[0], $j, $this->getSql("alt".$i),0,1,$this->getInt("puntos")/$total);
-
-                else
-                    $alternativa =$this->examen->insertAlternativa($pregunta[0], $j, $this->getSql("alt".$i),0,0,0);
-                    $j++;
-                }
+                    if($this->getSql("alt".$i) != null){
+                        if($this->getSql("ckb".$i) != null)
+                            $alternativa = $this->examen->insertAlternativa($pregunta[0], $j, $this->getSql("alt".$i),0,1,$this->getInt("puntos")/$contador);
+                        else
+                            $alternativa = $this->examen->insertAlternativa($pregunta[0], $j, $this->getSql("alt".$i),0,0,$this->getInt("puntos")/$contador);
+                            $j++;
+                    }
                 
                 if($alternativa)
                     $this->redireccionar("elearning/examen/preguntas/$id/$idExamen");
@@ -1044,48 +1050,50 @@ class examenController extends elearningController {
         $this->_view->renderizar('respuestamultiple', 'elearning');
     }
 
-    public function editarRespuestaMultiple($id, $idcurso){
+    public function editarRespuestaMultiple($idPregunta, $idcurso){
         // $this->_view->setCss(array("verificar"));
         $this->_view->setTemplate(LAYOUT_FRONTEND);
         $this->_view->setJs(array(array(BASE_URL . 'modules/elearning/views/gestion/js/core/util.js'), "index"));
 
-        $alternativas =$this->examen->getAlternativas($id);
+        $alternativas =$this->examen->getAlternativas($idPregunta);
 
-        $preguntaedit =$this->examen->getValorPregunta($id);
+        $preguntaedit =$this->examen->getValorPregunta($idPregunta);
 
 
         if ($this->botonPress("btn_registrar_pregunta")) {
 
-            $countrpta=$this->examen->deleteAlternativa($id);
+            $countrpta = $this->examen->deleteAlternativa($idPregunta);
             $pregunta = $this->getSql("in_pregunta");
-            $contador = $this->getTexto("contador");
+            $contador = $this->getInt("contador");
+            // echo $contador;
+            $pregunta = $this->examen->updatePregunta($idPregunta, $pregunta, 0,$this->getInt("puntos"));
+            // print_r($pregunta);
 
-            $pregunta =$this->examen->updatePregunta($id, $pregunta, 0,$this->getInt("puntos"));
+            if($pregunta){
 
-             if($pregunta){
+                $alternativa = 0;
+                $j = 1;
 
-                $alternativa=0;
-                $j=1;
+                // $total=0;
 
-                $total=0;
+                // for($i=1;$i<=$contador;$i++){
+                //     if($this->getSql("ckb".$i)!=null)
+                //         $total++;
+                // }
 
-                for($i=1;$i<=$contador;$i++){
-                    if($this->getSql("ckb".$i)!=null)
-                        $total++;
+                for($i = 1; $i <= $contador; $i++) {
+                    if($this->getSql("alt".$i) != null){
+                        if($this->getSql("ckb".$i) != null){
+                            $alternativa = $this->examen->insertAlternativa($idPregunta, $j, $this->getSql("alt".$i),0,1,$this->getInt("puntos")/$contador);
+                            // echo "check";
+                            // print_r($alternativa);
+                        } else {
+                            $alternativa = $this->examen->insertAlternativa($idPregunta, $j, $this->getSql("alt".$i),0,0,$this->getInt("puntos")/$contador);
+                        }     
+                        $j++;                        
+                    }
                 }
 
-                for($i=1;$i<=$contador;$i++)
-
-                if($this->getSql("alt".$i)!=null){
-
-                    if($this->getSql("ckb".$i)!=null)
-                    $alternativa =$this->examen->insertAlternativa($id, $j, $this->getSql("alt".$i),0,1,$this->getInt("puntos")/$total);
-
-                else
-                    $alternativa =$this->examen->insertAlternativa($id, $j, $this->getSql("alt".$i),0,0,0);
-                    $j++;
-                }
-                
                 if($alternativa)
                      $this->redireccionar("elearning/examen/preguntas/$idcurso/".$preguntaedit['Exa_IdExamen']);
             }
@@ -1096,13 +1104,13 @@ class examenController extends elearningController {
         $puntos_pregunta= $this->examen->getPuntosPregunta($preguntaedit['Exa_IdExamen']);
         $puntos_maximo=$peso['Exa_Peso']-$puntos_pregunta['puntos_pregunta'];
 
-        $titulo =  $this->examen->getTituloCurso($id);
+        $titulo =  $this->examen->getTituloCurso($idPregunta);
         $this->_view->assign('titulo', $titulo["Cur_Titulo"]);
         $this->_view->assign('puntos_maximo', $puntos_maximo );
         $this->_view->assign('examen', $preguntaedit['Exa_IdExamen'] );
         $this->_view->assign('idcurso', $idcurso);
         $this->_view->assign('alternativas', $alternativas);
-        $this->_view->assign('nextinput', count($alternativas)+1);
+        $this->_view->assign('nextinput', count($alternativas) + 1);
         $this->_view->assign('preguntaedit', $preguntaedit);
         $this->_view->renderizar('editarrespuestamultiple');
     }
@@ -1262,7 +1270,7 @@ class examenController extends elearningController {
         if ($this->botonPress("btn_registrar_pregunta")) {
             $countrpta=$this->examen->deleteAlternativa($id);
             $pregunta = $this->getSql("in_pregunta");
-            $contador = $this->getTexto("contador");
+            $contador = $this->getInt("contador");
 
             $pregunta =$this->examen->updatePregunta($id, $pregunta, 0,  $this->getInt("puntos"));
 
@@ -1272,12 +1280,14 @@ class examenController extends elearningController {
                 for($i=1;$i<=$contador;$i++)
                 if($this->getSql("enu".$i)!=null){
                     $alternativa =$this->examen->insertAlternativa($id, $j, $this->getSql("enu".$i),0,1,$this->getInt("puntos")/$contador);
+                    // print_r($alternativa);
                     $alternativa2 =$this->examen->insertAlternativa($id, $j, $this->getSql("rpta".$i),$alternativa[0],1);
-
+                    // echo "////";
+                    print_r($alternativa2);
                     $this->examen->updateRelacionAlternativa($alternativa[0], $alternativa2[0]);
                     $j++;
                 }
-                
+                // exit;
                 if($alternativa)
                      $this->redireccionar("elearning/examen/preguntas/$idcurso/".$preguntaedit['Exa_IdExamen']);
             }
@@ -1517,126 +1527,120 @@ class examenController extends elearningController {
         $this->_view->setTemplate(LAYOUT_FRONTEND);
         $this->_view->setJs(array(array(BASE_URL . 'modules/elearning/views/gestion/js/core/util.js'), "index"));
 
-        if (Session::get("intento")<1){
-        $intento=$this->examen->insertExamenAlumno($idexamen,Session::get("id_usuario"));
-        Session::set("intento", 1);
-        Session::set("idintento", $intento[0]);
-        $preguntas= $this->examen->getPreguntas($idexamen);
-        $peso= $this->examen->getExamenPeso($idexamen);
-        Session::set("preguntas", $preguntas);
-        }
         // echo $intento[0]; exit;
-       
+
+        if (Session::get("intento") < 1){
+            $preguntas = $this->examen->getPreguntas($idexamen);
+            $peso = $this->examen->getExamenPeso($idexamen);
+            Session::set("preguntas", $preguntas);
+            Session::set("intento", 1);
+        }
+        // print_r($preguntas);
         if ($this->botonPress("terminar")) {
 
-            $puntos=0;
+            $intento = $this->examen->insertExamenAlumno($idexamen,Session::get("id_usuario"));
+            Session::set("idintento", $intento[0]);
 
-            $preguntas=Session::get("preguntas");
-
-            for ($i=0; $i < count($preguntas); $i++) { 
-
-                $tipo=$this->getSql('tipo_preg'.$i);
-
-                if($tipo==1){
-
-                    $alt=$preguntas[$i]['Alt'];
-                    $puntosrpta=0;
-
+            $puntos = 0;
+            $preguntas = Session::get("preguntas");
+            // print_r($preguntas);
+            for ($i = 0; $i < count($preguntas); $i++) { 
+                $tipo = $this->getSql('tipo_preg'.$i);
+                // echo $i.":::tipo:::". $tipo . "\n";
+                // JM --> Listo (Pregunta tipo respuesta Unica)
+                if($tipo == 1){
+                    $alt = $preguntas[$i]['Alt'];
+                    // echo "Unico::::"; print_r($alt); echo "///. \n";
+                    $puntosrpta = 0;
                     foreach ($alt as $k) {
-                       if($k['Alt_Valor']==$preguntas[$i]['Pre_Valor'])
-                            if($this->getInt('rpta_alt'.$i)==$k['Alt_IdAlternativa']){
-                                $puntosrpta=$preguntas[$i]['Pre_Puntos'];
-                                $puntos=$puntos+$puntosrpta;
+                        if($k['Alt_Valor'] == $preguntas[$i]['Pre_Valor'])
+                            if($this->getInt('rpta_alt'.$i) == $k['Alt_IdAlternativa']){
+                                // echo "P1_Rapt-alt:".$this->getInt('rpta_alt'.$i);
+                                $puntosrpta = $preguntas[$i]['Pre_Puntos'];
+                                $puntos = $puntos + $puntosrpta;
+                                // echo "P1:".$puntosrpta;
                             }
                     }
+                    $this->examen->insertRespuesta($this->getInt('id_preg'.$i), Session::get("idintento"), $this->getInt('rpta_alt'.$i),null,null,$puntosrpta); 
 
-                     $this->examen->insertRespuesta($this->getInt('id_preg'.$i), Session::get("idintento"), $this->getInt('rpta_alt'.$i),null,null,$puntosrpta);                    
-                }
-
-                else if($tipo==2){
-
-                    for($j=0; $j < count($preguntas[$i]['Alt']); $j++){
+                } else if($tipo == 2){
+                // JM --> Listo (Pregunta con respuesta Multiple)
+                    $alt = $preguntas[$i]['Alt'];
+                    // echo "Multiple::::"; print_r($alt);
+                    for($j = 0; $j < count($alt); $j++){
                         if($this->getSql('rpta2_alt'.$i.'_index'.$j)){
-                            
-                            $alt=$preguntas[$i]['Alt'];
-                            $puntosrpta=0;
-
+                            $puntosrpta = 0;
                             foreach ($alt as $k) {
-                                if($k['Alt_Check'])
-                                if($this->getInt('rpta2_alt'.$i.'_index'.$j)==$k['Alt_IdAlternativa']){
-                                    $puntosrpta=$k['Alt_Puntos'];
-                                    $puntos=$puntos+$puntosrpta;
-                                }
+                                // if($k['Alt_Check'])
+                                    if($this->getInt('rpta2_alt'.$i.'_index'.$j) == $k['Alt_IdAlternativa']){
+                                        $puntosrpta = $k['Alt_Puntos'];
+                                        $puntos = $puntos + $puntosrpta;
+                                    }
                             }   
-
-                             $this->examen->insertRespuesta($this->getInt('id_preg'.$i), Session::get("idintento"), $this->getInt('rpta2_alt'.$i.'_index'.$j),null,null,$puntosrpta);                 
-
+                            // echo "P2:".$puntosrpta; 
+                            $this->examen->insertRespuesta($this->getInt('id_preg'.$i), Session::get("idintento"), $this->getInt('rpta2_alt'.$i.'_index'.$j),null,null,$puntosrpta);
                         }
                     }
-                }
-
-                else if($tipo==3){
-
-                    $alt=$preguntas[$i]['Alt'];
-
-                    for($j=0; $j < count($alt); $j++){
-
-                    $puntosrpta=0;
-
-                    if($this->getSql('rpta3_'.$i.'_index_'.$j)==$alt[$j]['Alt_Etiqueta']){
-                        $puntosrpta=$alt[$j]['Alt_Puntos'];
-                        $puntos=$puntos+$puntosrpta; 
+                } else if($tipo == 3){
+                    // JM --> Listo (Pregunta con respuesta en Blanco)
+                    $alt = $preguntas[$i]['Alt'];
+                    // echo "EnBLanco::::"; print_r($alt);
+                    for($j = 0; $j < count($alt); $j++){
+                    $puntosrpta = 0;
+                    if($this->getSql('rpta3_'.$i.'_index_'.$j) == $alt[$j]['Alt_Etiqueta']){
+                        $puntosrpta = $alt[$j]['Alt_Puntos'];
+                        $puntos = $puntos + $puntosrpta; 
                     }
-
+                    // echo "P3:".$puntosrpta; 
                     $this->examen->insertRespuesta($this->getInt('id_preg'.$i), Session::get("idintento"),null,null, $this->getSql('rpta3_'.$i.'_index_'.$j),$puntosrpta);
                     }
                 }
 
                 else if($tipo==4){
-
-                    $alt=$preguntas[$i]['Alt'];
-
+                    // JM --> Listo (Pregunta con respuesta relacionar)
+                    $alt = $preguntas[$i]['Alt'];
                     for($j=0; $j < count($alt); $j=$j+2){
-
-                        $puntosrpta=0;
-
-                        if($this->getInt('rpta4_'.$i.'_index_'.$j)==$alt[$j]['Alt_IdAlternativa'])
-                            if($this->getInt('rpta4_alt'.$i.'_index_'.$j)==$alt[$j]['Alt_Relacion']){
-                                $puntosrpta=$alt[$j]['Alt_Puntos'];
-                                $puntos=$puntos+$puntosrpta;
-                            }
-
-                     $this->examen->insertRespuesta($this->getInt('id_preg'.$i), Session::get("idintento"), $this->getInt('rpta4_'.$i.'_index_'.$j),$this->getInt('rpta4_alt'.$i.'_index_'.$j),null,$puntosrpta);
+                        $puntosrpta = 0;
+                        if($this->getInt('rpta4_'.$i.'_index_'.$j)==$alt[$j]['Alt_IdAlternativa'] && $this->getInt('rpta4_alt'.$i.'_index_'.$j)==$alt[$j]['Alt_Relacion']){
+                            $puntosrpta = $alt[$j]['Alt_Puntos'];
+                            $puntos = $puntos + $puntosrpta;
+                        }   
+                        // echo "P4:".$puntosrpta; 
+                        $this->examen->insertRespuesta($this->getInt('id_preg'.$i), Session::get("idintento"), $this->getInt('rpta4_'.$i.'_index_'.$j),$this->getInt('rpta4_alt'.$i.'_index_'.$j),NULL,$puntosrpta);
                     }
                 }
 
-                else if($tipo==5){
-                    $this->examen->insertRespuesta($this->getInt('id_preg'.$i), Session::get("idintento"), null, null, $this->getSql('rpta_alt'.$i),null);
-                }
-
-                else{
+                else if($tipo == 5){
+                    // echo "string";
+                    // print_r($preguntas[$i]["Pre_Puntos"]);
+                    $puntos = $puntos + $preguntas[$i]["Pre_Puntos"];
+                    $this->examen->insertRespuesta($this->getInt('id_preg'.$i), Session::get("idintento"), NULL, NULL, $this->getSql('rpta_alt'.$i),$preguntas[$i]["Pre_Puntos"]);
+                } else{
                     $cont2=0;
-                    for($j=0; $j < count($preguntas[$i]['Alt']); $j++)
-                    if($this->getSql('rpta7_alt'.$i.'_index'.$j)){
+                    // print_r($preguntas[$i]['Alt']);
+                    for($j=0; $j < count($preguntas[$i]['Alt']); $j++){
 
-                     $alt=$preguntas[$i]['Alt'];
-                    $cont=0;
-                    $puntosrpta=0;
-                    
+                        if($this->getSql('rpta7_alt'.$i.'_index'.$j)){
+
+                        $alt=$preguntas[$i]['Alt'];
+                        $cont=0;
+                        $puntosrpta=0;
+                        
                             foreach ($alt as $k) {
-                                if($k['Alt_Check']){
+                                // if($k['Alt_Check']){
                                     if($this->getInt('rpta7_alt'.$i.'_index'.$j)==$k['Alt_IdAlternativa'])
                                         $cont2++;
 
                                     $cont++;
-                                }
+                                // }
                             } 
-                        if($cont==$cont2){
+                            if($cont==$cont2){
                                 $puntosrpta=$preguntas[$i]['Pre_Puntos'];
                                 $puntos=$puntos+$puntosrpta;
                             }
-
-                        $this->examen->insertRespuesta($this->getInt('id_preg'.$i), Session::get("idintento"), $this->getInt('rpta7_alt'.$i.'_index'.$j),null,null,$puntosrpta);
+                                   // echo "P7:".$puntosrpta; 
+                            $this->examen->insertRespuesta($this->getInt('id_preg'.$i), Session::get("idintento"), $this->getInt('rpta7_alt'.$i.'_index'.$j),null,null,$puntosrpta);
+                        }
                     }
                 }
             }
@@ -1648,11 +1652,11 @@ class examenController extends elearningController {
             // if($puntos*100/$peso[0]>50){
             //     $this->examen->insertProgreso(Session::get("id_usuario"), $examen['Lec_IdLeccion']);
             // }
-
+            exit;
              $this->redireccionar("elearning/cursos/modulo/".$examen['Cur_IdCurso'].'/'.$examen['Moc_IdModulo'].'/'.$examen['Lec_IdLeccion']);
         }
 
-        $this->_view->assign('preguntas', $preguntas);       
+        $this->_view->assign('preguntas', Session::get("preguntas"));       
         $this->_view->renderizar('examen');
     }
 

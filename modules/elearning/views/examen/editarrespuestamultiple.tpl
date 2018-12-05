@@ -41,7 +41,7 @@
               {$i=1}
               {foreach item=rl from=$alternativas}
                 <div class="col col-xs-12">
-                <div class="col-xs-10"><input placeholder="Alternativa" class="form-control " name="alt{$i}" id="inPreg{$i}" style="margin-top:10px;" value="{$rl.Alt_Etiqueta}" type="text"/></div>
+                <div class="col-xs-10"><input placeholder="Alternativa" class="form-control " name="alt{$i}" id="alt{$i}" style="margin-top:10px;" value="{$rl.Alt_Etiqueta}" type="text"/></div>
                 <div class="col-xs-1"><input type="checkbox" value="{$i}" class="radioalt " name="ckb{$i}" id='ckb{$i}'  {if $rl.Alt_Check==1} checked {/if} style="margin-top:10px;"/></div>
                   {if $i>2}
                     <div class='col-xs-1'>

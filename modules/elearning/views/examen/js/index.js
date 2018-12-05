@@ -118,7 +118,7 @@ $(document).on('ready', function () {
         var textoseparado = texto.split("|");
         $("#alt").html("");
         var j=1;
-        var cabecera = "<div class='table-responsive'><table id='tabla' class='table' style='margin: 20px auto'><tr><th style='text-align: center'>Nº</th><th style='text-align: center'>Respuesta</th><th class='col-lg-3' style='text-align: center'>Puntos</th></tr></table></div>";
+        var cabecera = "<div class='table-responsive'><table id='tabla' class='table' style='margin: 20px auto'><tr><th style='text-align: center'>Nº</th><th style='text-align: center'>Respuesta</th><th class='col-lg-3' style='text-align: center'>Puntos <button type='button' data-toggle='tooltip' data-placement='bottom' title='Asignar puntos automaticamente' class='btn btn-xs btn-warning margin-top-10' name='btn_asignar_puntos' id='btn_asignar_puntos'>Asignar</button> </th></tr></table></div>";
         $("#alt").append(cabecera);
         contblanco=1;
         for(var i=0; i< textoseparado.length; i++){
@@ -134,6 +134,7 @@ $(document).on('ready', function () {
         }
         // var cierre ="</table></div>"
         // $("#alt").append(cierre);
+        document.getElementById("btn_registrar_pregunta").disabled = false;
         if(j==1)
             $("#alt").html("Por favor defina un espacio en blanco con estos separadores <b>|...|</b>");
     });
@@ -167,7 +168,8 @@ $(document).on('ready', function () {
                 $("#puntos"+i).attr('max', parseInt(_max));
                 $("#puntos"+i).attr('data-original-title', "El valor debe ser inferior o igual a " + _max);
             }
-        }        
+        }  
+        document.getElementById("btn_registrar_pregunta").disabled = false;      
     });
     $("body").on('click', "#btn_asignar_puntos", function (e) {
         e.preventDefault();
@@ -194,6 +196,7 @@ $(document).on('ready', function () {
         }
         $("#puntos").val(maximo);
         $("#puntoslabel").text("Puntos: "+ maximo);
+        document.getElementById("btn_registrar_pregunta").disabled = false;
     });
 
     $('#confirm-delete').on('show.bs.modal', function(e) { 
@@ -592,13 +595,14 @@ function gestionIdiomas(idrol, idIdiomaOriginal, idIdioma) {
 
 $("#btn_añadir1").click(function(){
     if(contadorinputs<6){
-        // var campo = "<div><div class='col-lg-10'><input placeholder='Alternativa' class='form-control margin-top-10' name='alt"+nextinput+"' id='inPreg"+nextinput+"'/></div><div class='col-lg-1'><input type='radio' value='"+nextinput+"' class='radioalt margin-top-10' name='valor_preg'/></div><div class='col-lg-1'><button class='btn btn-danger glyphicon pull-right margin-top-10 glyphicon-minus' class='btn_quitar' id='btn_quitar"+nextinput+"'></button></div></div>";
-        var campo = "<div class='col col-sm-12'><div class='col-sm-10'><input style='margin-top:10px;' placeholder='Alternativa' class='form-control margin-top-10' name='alt"+nextinput+"' id='inPreg"+nextinput+"'/></div><div class='col-sm-1'><input style='margin-top:10px;' type='radio' value='"+nextinput+"' class='radioalt margin-top-10' name='valor_preg'/></div><div class='col-sm-1'> <a style='margin-top:10px;' href='javascript:void(0);' class='remove_button btn btn-danger pull-right margin-top-10 ' data-toggle='tooltip' data-placement='right'  title='Eliminar Alternativa'><i class='glyphicon glyphicon-minus'></i></a></div></div>";
-        // var campo = "<div class='col-lg-11'><input placeholder='Alternativa "+nextinput+"' class='form-control margin-top-10' name='alt"+nextinput+"' id='inPreg"+nextinput+"'/></div><div class='col-lg-1'><input type='radio' value='"+nextinput+"' class='radioalt margin-top-10' name='valor_preg'/></div>";
+        // var campo = "<div><div class='col-lg-10'><input placeholder='Alternativa' class='form-control margin-t-10' name='alt"+nextinput+"' id='alt"+nextinput+"'/></div><div class='col-lg-1'><input type='radio' value='"+nextinput+"' class='radioalt margin-t-10' name='valor_preg'/></div><div class='col-lg-1'><button class='btn btn-danger glyphicon pull-right margin-t-10 glyphicon-minus' class='btn_quitar' id='btn_quitar"+nextinput+"'></button></div></div>";
+        var campo = "<div class='col col-sm-12'><div class='col-sm-10'><input style='margin-top:10px;' placeholder='Alternativa' class='form-control margin-t-10' name='alt"+nextinput+"' id='alt"+nextinput+"'/></div><div class='col-sm-1'><input style='margin-top:10px;' type='radio' value='"+nextinput+"' class='radioalt margin-t-10' name='valor_preg'/></div><div class='col-sm-1'> <a style='margin-top:10px;' href='javascript:void(0);' class='remove_button btn btn-danger pull-right margin-t-10 ' data-toggle='tooltip' data-placement='right'  title='Eliminar Alternativa'><i class='glyphicon glyphicon-minus'></i></a></div></div>";
+        // var campo = "<div class='col-lg-11'><input placeholder='Alternativa "+nextinput+"' class='form-control margin-t-10' name='alt"+nextinput+"' id='alt"+nextinput+"'/></div><div class='col-lg-1'><input type='radio' value='"+nextinput+"' class='radioalt margin-t-10' name='valor_preg'/></div>";
         $("#alt").append(campo);
-        $("#contador").val(nextinput);
         nextinput++;
         contadorinputs++;
+        $("#contador").val(contadorinputs);
+        $("#nextinput").val(nextinput);
         // Select all elements with data-toggle="tooltips" in the document
         $('[data-toggle="tooltip"]').tooltip(); 
     }
@@ -606,27 +610,29 @@ $("#btn_añadir1").click(function(){
 
 $("#btn_añadir2").click(function(){
     if(contadorinputs<6){
-        // var campo = "<div><div class='col-lg-10'><input placeholder='Alternativa' class='form-control margin-top-10' name='alt"+nextinput+"' id='inPreg"+nextinput+"'/></div><div class='col-lg-1'><input type='radio' value='"+nextinput+"' class='radioalt margin-top-10' name='valor_preg'/></div><div class='col-lg-1'><button class='btn btn-danger glyphicon pull-right margin-top-10 glyphicon-minus' class='btn_quitar' id='btn_quitar"+nextinput+"'></button></div></div>";
-        var campo = "<div class='col col-sm-12'> <div class='col-sm-10'><input style='margin-top:10px;' placeholder='Alternativa' class='form-control margin-top-10' name='alt"+nextinput+"' id='inPreg"+nextinput+"'/></div><div class='col-sm-1'><input style='margin-top:10px;' type='checkbox' value='"+nextinput+"' class='radioalt margin-top-10' name='ckb"+nextinput+"' id='ckb"+nextinput+"' /></div><div class='col-sm-1'><a style='margin-top:10px;' href='javascript:void(0);' class='remove_button btn btn-danger pull-right margin-top-10 ' data-toggle='tooltip' data-placement='right'  title='Eliminar Alternativa'><i class='glyphicon glyphicon-minus'></i></a></div> </div>";
-        // var campo = "<div class='col-lg-11'><input placeholder='Alternativa "+nextinput+"' class='form-control margin-top-10' name='alt"+nextinput+"' id='inPreg"+nextinput+"'/></div><div class='col-lg-1'><input type='radio' value='"+nextinput+"' class='radioalt margin-top-10' name='valor_preg'/></div>";
+        // var campo = "<div><div class='col-lg-10'><input placeholder='Alternativa' class='form-control margin-t-10' name='alt"+nextinput+"' id='alt"+nextinput+"'/></div><div class='col-lg-1'><input type='radio' value='"+nextinput+"' class='radioalt margin-t-10' name='valor_preg'/></div><div class='col-lg-1'><button class='btn btn-danger glyphicon pull-right margin-t-10 glyphicon-minus' class='btn_quitar' id='btn_quitar"+nextinput+"'></button></div></div>";
+        var campo = "<div class='col col-sm-12'> <div class='col-sm-10'><input style='margin-top:10px;' placeholder='Alternativa' class='form-control margin-t-10' name='alt"+nextinput+"' id='alt"+nextinput+"'/></div><div class='col-sm-1'><input style='margin-top:10px;' type='checkbox' value='"+nextinput+"' class='radioalt margin-t-10' name='ckb"+nextinput+"' id='ckb"+nextinput+"' /></div><div class='col-sm-1'><a style='margin-top:10px;' href='javascript:void(0);' class='remove_button btn btn-danger pull-right margin-t-10 ' data-toggle='tooltip' data-placement='right'  title='Eliminar Alternativa'><i class='glyphicon glyphicon-minus'></i></a></div> </div>";
+        // var campo = "<div class='col-lg-11'><input placeholder='Alternativa "+nextinput+"' class='form-control margin-t-10' name='alt"+nextinput+"' id='alt"+nextinput+"'/></div><div class='col-lg-1'><input type='radio' value='"+nextinput+"' class='radioalt margin-t-10' name='valor_preg'/></div>";
         $("#alt").append(campo);
-        $("#contador").val(nextinput);
         nextinput++;
         contadorinputs++;
+        $("#contador").val(contadorinputs);
+        $("#nextinput").val(nextinput);
         // Select all elements with data-toggle="tooltips" in the document
         $('[data-toggle="tooltip"]').tooltip(); 
     }
 });
 
 $("#btn_añadir4").click(function(){
-    // var campo = "<div><div class='col-lg-10'><input placeholder='Alternativa' class='form-control margin-top-10' name='alt"+nextinput+"' id='inPreg"+nextinput+"'/></div><div class='col-lg-1'><input type='radio' value='"+nextinput+"' class='radioalt margin-top-10' name='valor_preg'/></div><div class='col-lg-1'><button class='btn btn-danger glyphicon pull-right margin-top-10 glyphicon-minus' class='btn_quitar' id='btn_quitar"+nextinput+"'></button></div></div>";
+    // var campo = "<div><div class='col-lg-10'><input placeholder='Alternativa' class='form-control margin-t-10' name='alt"+nextinput+"' id='alt"+nextinput+"'/></div><div class='col-lg-1'><input type='radio' value='"+nextinput+"' class='radioalt margin-t-10' name='valor_preg'/></div><div class='col-lg-1'><button class='btn btn-danger glyphicon pull-right margin-t-10 glyphicon-minus' class='btn_quitar' id='btn_quitar"+nextinput+"'></button></div></div>";
     if(contadorinputs<6){
         var campo = "<div class='col col-sm-12'> <div class='col col-sm-11 margin-t-10'><label class=''>Enunciado "+nextinput+":</label><input placeholder='Enunciado "+nextinput+"' class='form-control' name='enu"+nextinput+"' id='enu"+nextinput+"'/><label class=''>Corresponde a:</label><input placeholder='Respuesta relacionada' class='form-control' name='rpta"+nextinput+"' id='rpta"+nextinput+"'/></div><div class='col col-sm-1' ><a href='javascript:void(0);' class='remove_button btn btn-danger pull-right' style='margin-top:100%;' data-toggle='tooltip' data-placement='right'  title='Eliminar Alternativa'><i class='glyphicon glyphicon-minus'></i></a></div></div>";
-    // var campo = "<div class='col-lg-11'><input placeholder='Alternativa "+nextinput+"' class='form-control margin-top-10' name='alt"+nextinput+"' id='inPreg"+nextinput+"'/></div><div class='col-lg-1'><input type='radio' value='"+nextinput+"' class='radioalt margin-top-10' name='valor_preg'/></div>";
+    // var campo = "<div class='col-lg-11'><input placeholder='Alternativa "+nextinput+"' class='form-control margin-t-10' name='alt"+nextinput+"' id='alt"+nextinput+"'/></div><div class='col-lg-1'><input type='radio' value='"+nextinput+"' class='radioalt margin-t-10' name='valor_preg'/></div>";
         $("#alt").append(campo);
-        $("#contador").val(nextinput);
         nextinput++;
         contadorinputs++;
+        $("#contador").val(contadorinputs);
+        $("#nextinput").val(nextinput);
     // Select all elements with data-toggle="tooltips" in the document
         $('[data-toggle="tooltip"]').tooltip(); 
     }
@@ -634,6 +640,11 @@ $("#btn_añadir4").click(function(){
 
 $("#alt").on('click', '.remove_button', function(e){ //Once remove button is clicked
     e.preventDefault();
-    $(this).parent('div').parent('div').remove(); //Remove field html //Decrement field counter
+    nextinput--;
     contadorinputs--;
+    $("#contador").val(contadorinputs);
+    $("#nextinput").val(nextinput);
+    $(this).parent('div').parent('div').remove(); //Remove field html //Decrement field counter
+    
+    $('[data-toggle="tooltip"]').tooltip(); 
 });

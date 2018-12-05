@@ -50,6 +50,11 @@
                     {/if}
                 </tr>
             {/foreach}
+            <tr>
+                <th style=" text-align: center" colspan="3"></th>
+                <th style=" text-align: center">Total {$puntos_total}</th>
+                <th style=" text-align: center" colspan="2" ></th>
+            </tr>
         </table>
     </div>
     {$paginacionpreguntas|default:""}

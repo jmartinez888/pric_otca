@@ -1,3 +1,4 @@
+
 {include file='modules/elearning/views/gestion/menu/menu.tpl'}
 <div class="col-sm-10" style="padding-bottom: 40px;">
     <div class="col-lg-12">

@@ -92,23 +92,31 @@ class _gestionCursoModel extends Model {
   }
 
   // Jhon Martinez
-  public function getMisCursos($Usu_IdUsuario = 0, $Busqueda = "")
+  public function getMisCursos($Usu_IdUsuario = 0, $Busqueda = "", $soloActivos = 0)
   {
     try{
-        $sql = "  SELECT cursi.*,COUNT(vc.Usu_IdUsuario) AS Valoraciones, CAST((CASE WHEN AVG(vc.Val_Valor) > 0 THEN AVG(vc.Val_Valor) ELSE    0 END) AS DECIMAL(2,1)) AS Valor FROM (
-              SELECT cr.Cur_IdCurso, cr.Cur_Estado, cr.Cur_UrlBanner, cr.Cur_Titulo, cr.Cur_Descripcion, cr.Usu_IdUsuario, cr.Cur_Vacantes, cr.Cur_FechaDesde, cr.Moa_IdModalidad, CONCAT(u.Usu_Nombre,' ',u.Usu_Apellidos) AS Docente, cc.Con_Descripcion AS Modalidad,
-                SUM(CASE WHEN mt.Mat_Valor = 1 THEN 1 ELSE 0 END) AS Matriculados, (CASE WHEN cu_m.Matriculado = 1 THEN 1 ELSE 0 END) AS Inscrito FROM 
-                              (SELECT cur.Cur_IdCurso, 1 AS Matriculado FROM curso cur
-                              INNER JOIN matricula_curso mat ON cur.Cur_IdCurso = mat.Cur_IdCurso
-                              WHERE cur.Cur_Estado = 1 AND cur.Row_Estado = 1 AND mat.Mat_Valor = 1 AND mat.Usu_IdUsuario = $Usu_IdUsuario ) cu_m
-                          RIGHT JOIN curso cr ON cu_m.Cur_IdCurso = cr.Cur_IdCurso
-                          INNER JOIN constante cc ON cr.Moa_IdModalidad = cc.Con_Valor AND cc.Con_Codigo = 1000
-                          INNER JOIN usuario u ON cr.Usu_IdUsuario = u.Usu_IdUsuario 
-                          LEFT JOIN matricula_curso mt ON cr.Cur_IdCurso = mt.Cur_IdCurso
-                          WHERE cr.Row_Estado = 1 
-                          GROUP BY cr.Cur_IdCurso )cursi
-              LEFT JOIN valoracion_curso vc ON cursi.Cur_IdCurso = vc.Cur_IdCurso 
-              WHERE (cursi.Inscrito = 1 OR cursi.Usu_IdUsuario = $Usu_IdUsuario) ";
+        $sql = "  SELECT cursi.*,COUNT(vc.Usu_IdUsuario) AS Valoraciones, CAST((CASE WHEN AVG(vc.Val_Valor) > 0 THEN AVG(vc.Val_Valor) ELSE 0 END) AS DECIMAL(2,1)) AS Valor FROM (
+            SELECT cr.Cur_IdCurso, cr.Cur_Estado, cr.Cur_UrlBanner, cr.Cur_Titulo, cr.Cur_Descripcion, cr.Usu_IdUsuario, cr.Cur_Vacantes, cr.Cur_FechaDesde, cr.Moa_IdModalidad, CONCAT(u.Usu_Nombre,' ',u.Usu_Apellidos) AS Docente, cc.Con_Descripcion AS Modalidad,
+              SUM(CASE WHEN mt.Mat_Valor = 1 THEN 1 ELSE 0 END) AS Matriculados, (CASE WHEN cu_m.Matriculado = 1 THEN 1 ELSE 0 END) AS Inscrito FROM (
+              SELECT cur.Cur_IdCurso, 1 AS Matriculado FROM curso cur
+                INNER JOIN matricula_curso mat ON cur.Cur_IdCurso = mat.Cur_IdCurso
+                WHERE cur.Cur_Estado = 1 ";
+                
+        if ($soloActivos == 1) {
+            $sql .= " AND cur.Row_Estado = $soloActivos ";
+        }
+        $sql .= " AND mat.Mat_Valor = 1 AND mat.Usu_IdUsuario = $Usu_IdUsuario ) cu_m
+                  RIGHT JOIN curso cr ON cu_m.Cur_IdCurso = cr.Cur_IdCurso
+                  INNER JOIN constante cc ON cr.Moa_IdModalidad = cc.Con_Valor AND cc.Con_Codigo = 1000
+                  INNER JOIN usuario u ON cr.Usu_IdUsuario = u.Usu_IdUsuario 
+                  LEFT JOIN matricula_curso mt ON cr.Cur_IdCurso = mt.Cur_IdCurso ";
+
+        if ($soloActivos == 1) {
+            $sql .= " AND cr.Row_Estado = $soloActivos ";
+        }
+        $sql .= " GROUP BY cr.Cur_IdCurso )cursi
+            LEFT JOIN valoracion_curso vc ON cursi.Cur_IdCurso = vc.Cur_IdCurso 
+            WHERE (cursi.Inscrito = 1 OR cursi.Usu_IdUsuario = $Usu_IdUsuario) ";
         if( strlen($Busqueda) ){
           $sql .=" AND cursi.Cur_Titulo like '%" . $Busqueda . "%' OR cursi.Cur_Descripcion like '%{$Busqueda}%' ";
         }

@@ -60,23 +60,39 @@
                 </div>   
                 <div class="form-group">
                     <label class="col-xs-3 control-label" >Puntaje Máximo: </label>
-                    <div class="col-xs-9">
-                        <p class="  margin-t-10"> <input type="radio" value="20" class="radioalt " name="puntaje" checked="checked" />  20</p>
-                        <p class=" margin-t-10"> <input type="radio" value="100" class="radioalt " name="puntaje"/>
-                         100</p>
+                    <div class="col-xs-2 col-lg-1 ">
+                        <p class="  margin-t-10" > 
+                            <input type="radio" value="20" class="radioalt " name="puntaje" {if $examen.Exa_Peso == 20 } checked="checked" {/if} {if isset($examenAlumno) && $examenAlumno.Exa_IdExamen > 0 } disabled="" {/if}  /> 20</p>
+                        <p class=" margin-t-10"> 
+                            <input type="radio" value="100" class="radioalt " name="puntaje" {if $examen.Exa_Peso == 100 } checked="checked" {/if} {if isset($examenAlumno) && $examenAlumno.Exa_IdExamen > 0 } disabled="" {/if} /> 100</p>
+                    </div>
+                    <div class=" col-xs-7 margin-t-10 " > 
+                        <blockquote style="margin: 0;">
+                            <b style="font-size: 14px">NOTA: </b>
+                            <em> 
+                                {if isset($examenAlumno) && $examenAlumno.Exa_IdExamen > 0 } 
+                                    <h5>
+                                        No se puede modificar el peso del examen porque existen exaamenes resueltos por alumnos. 
+                                    </h5>  
+                                {else}
+                                    <h5>
+                                        Si modifica el puntaje máximo afectara los puntos en cada pregunta del examen. 
+                                    </h5> 
+                                {/if}  
+                            </em>
+                        </blockquote> 
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-xs-3 control-label" >Número Máximo de Intentos: </label>
                     <div class="col-xs-9">
-                        <select class="form-control" id="intentos" name="intentos">
-                            {if $examen.Lec_IdLeccion == $ll.Lec_IdLeccion} selected="selected" {/if}>{$ll.Lec_Titulo}
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="5">5</option>
-                            <option value="10">10</option>
-                            <option value="0">Ilimitado</option>
+                        <select class="form-control" id="intentos" name="intentos">                            
+                            <option {if $examen.Exa_Intentos == 1} selected="selected" {/if} value="1">1</option>
+                            <option {if $examen.Exa_Intentos == 2} selected="selected" {/if} value="2">2</option>
+                            <option {if $examen.Exa_Intentos == 3} selected="selected" {/if} value="3">3</option>
+                            <option {if $examen.Exa_Intentos == 5} selected="selected" {/if} value="5">5</option>
+                            <option {if $examen.Exa_Intentos == 10} selected="selected" {/if} value="10">10</option>
+                            <option {if $examen.Exa_Intentos == 0} selected="selected" {/if} value="0">Ilimitado</option>
                         </select>
                     </div>
                 </div>
@@ -85,8 +101,11 @@
                 {/if}
             </div>
             <div class="form-group">
-                <div class="col-xs-offset-2 col-xs-9">
-                    <button class="btn btn-success pull-right " id="guardarEdit" name="guardarEdit">Preparar preguntas</button>
+                <div class="col-xs-3 col-md-2 pull-right">
+                    <button class="btn btn-info pull-right " id="prepararPregunta" name="prepararPregunta"> Preparar preguntas </button>
+                </div>
+                <div class="col-xs-3 pull-right">
+                    <button class="btn btn-success pull-right " id="guardarEditar" name="guardarEditar"> Guardar </button>
                 </div>
             </div>
         </form>

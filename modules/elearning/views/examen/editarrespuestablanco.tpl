@@ -37,7 +37,7 @@
             </div>
 
             <div class="col-xs-12" style="margin-top: 15px">
-            <b>Respuestas en blanco: </b>
+            <b>Respuestas en blanco: </b> ¡El puntaje máximo disponible es {$puntos_maximo}!.
 
               <div class="col col-xs-12" style="margin-top: 15px" id="alt">
                 <div class='table-responsive'>
@@ -52,7 +52,7 @@
                     <tr style='text-align: center'>
                       <td >{$i}</td>
                       <td>{$ra.Alt_Etiqueta}</td>
-                      <td><input data-toggle="tooltip" data-placement="bottom" title="El valor debe ser inferior o igual a {$puntos_maximo-$preguntaedit.Pre_Puntos+$ra.Alt_Puntos}" placeholder="Puntos" class="form-control puntos_blanco" name="puntos{$i}" id="puntos{$i}" type='number' min='0' max="{$puntos_maximo-$preguntaedit.Pre_Puntos+$ra.Alt_Puntos}" value="{$ra.Alt_Puntos}"/></td>
+                      <td><input data-toggle="tooltip" data-placement="bottom" title="El valor debe ser inferior o igual a {if $preguntaedit.Pre_Estado == 0}{$puntos_maximo-$preguntaedit.Pre_Puntos+$ra.Alt_Puntos}{else}{$puntos_maximo+$ra.Alt_Puntos}{/if}" placeholder="Puntos" class="form-control puntos_blanco" name="puntos{$i}" id="puntos{$i}" type='number' min='0' max="{if $preguntaedit.Pre_Estado == 0}{$puntos_maximo}{else}{$puntos_maximo+$ra.Alt_Puntos}{/if}" value="{$ra.Alt_Puntos}"/></td>
                     </tr>
                     {$i=$i+1}
                     {/foreach}
@@ -63,14 +63,14 @@
             </div>            
             <div class="col-sm-10">
               <a data-toggle="tooltip" data-placement="bottom" title="Cancelar registro" href="{$_layoutParams.root}elearning/examen/preguntas/{$idcurso}/{$examen}" class="btn btn-danger">Cancelar</a>
-               <button data-toggle="tooltip" data-placement="bottom" title="Guardar cambios" class="btn btn-success " name="btn_registrar_pregunta" id="btn_registrar_pregunta">Guardar</button>
+               <button data-toggle="tooltip" data-placement="bottom" title="Guardar cambios" class="btn btn-success " disabled="true" name="btn_registrar_pregunta" id="btn_registrar_pregunta">Guardar</button>
             </div>
         </form>
         </div>
     </div>
 </div>
 
-<script type="text/javascript">
+<!-- <script type="text/javascript">
   $(document).on('ready', function () { 
     var maximo = $("#maximo").val();
     // if (maximo < $("#puntos").val()) {}
@@ -98,4 +98,4 @@
     // $("#puntoslabel").text("Puntos: "+ maximo);
 
   });
-</script>
+</script> -->

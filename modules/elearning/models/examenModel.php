@@ -31,7 +31,7 @@ class examenModel extends Model {
     public function getExamenxLeccion($Lec_IdLeccion)
     {
         try{
-            $sql = " SELECT * FROM examen WHERE Lec_IdLeccion = $Lec_IdLeccion ";
+            $sql = " SELECT * FROM examen WHERE Lec_IdLeccion = $Lec_IdLeccion AND Exa_Estado = 1 AND Row_Estado = 1 ";
             $result = $this->_db->prepare($sql);
             $result->execute();
             return $result->fetch(PDO::FETCH_ASSOC);
@@ -50,6 +50,18 @@ class examenModel extends Model {
             return $result->fetch(PDO::FETCH_ASSOC);
         } catch (PDOException $exception) {
             $this->registrarBitacora("elearning(examenModel)", "getExamen", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
+    public function getExamenAlumnos($Exa_IdExamen = 0)
+    {
+        try{
+            $sql = " SELECT * FROM examen_alumno WHERE Exa_IdExamen = $Exa_IdExamen ";
+            $result = $this->_db->prepare($sql);
+            $result->execute();
+            return $result->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("elearning(examenModel)", "getExamenAlumnos", "Error Model", $exception);
             return $exception->getTraceAsString();
         }
     }
@@ -205,7 +217,7 @@ class examenModel extends Model {
     public function getExamenPeso($id)
     {
         try{
-            $sql = " SELECT Exa_Peso, Exa_Estado FROM examen WHERE Exa_IdExamen=$id ";
+            $sql = " SELECT Exa_Peso, Exa_Estado FROM examen WHERE Exa_IdExamen = $id ";
             $result = $this->_db->prepare($sql);
             $result->execute();
             return $result->fetch(PDO::FETCH_ASSOC);
@@ -559,7 +571,7 @@ class examenModel extends Model {
 
     public function updatePregunta($pregunta, $descripcion, $valor, $puntos){
         try {             
-            $sql = "UPDATE pregunta SET
+            $sql = " UPDATE pregunta  SET
               Pre_Descripcion = '$descripcion',
               Pre_Valor = '$valor',
               Pre_Puntos = $puntos,
@@ -600,7 +612,7 @@ class examenModel extends Model {
             $result->bindParam(3, $descripcion, PDO::PARAM_STR); 
             $result->bindParam(4, $relacion, PDO::PARAM_INT); 
             $result->bindParam(5, $check, PDO::PARAM_INT);   
-            $result->bindParam(6, $puntos, PDO::PARAM_INT);                  
+            $result->bindParam(6, $puntos, PDO::PARAM_STR);                 
             $result->execute();
             return $result->fetch();
         } catch (PDOException $exception) {
@@ -721,8 +733,9 @@ class examenModel extends Model {
     //     }
     // }
 
-    public function insertRespuesta($Pre_IdPregunta, $Exl_IdExamenAlumno, $Alt_IdAlternativa,$iAlt_IdAlternativa_Relacion, $Res_Respuesta, $puntos){
+    public function insertRespuesta($Pre_IdPregunta=0, $Exl_IdExamenAlumno=0, $Alt_IdAlternativa=0,$iAlt_IdAlternativa_Relacion=0, $Res_Respuesta="", $puntos=0){
         try {             
+            echo "call s_i_respuesta($Pre_IdPregunta, $Exl_IdExamenAlumno, $Alt_IdAlternativa,$iAlt_IdAlternativa_Relacion, $Res_Respuesta, $puntos)";
             $sql = "call s_i_respuesta(?,?,?,?,?,?)";
             $result = $this->_db->prepare($sql);
             $result->bindParam(1, $Pre_IdPregunta, PDO::PARAM_INT);
@@ -730,7 +743,7 @@ class examenModel extends Model {
             $result->bindParam(3, $Alt_IdAlternativa, PDO::PARAM_INT); 
             $result->bindParam(4, $iAlt_IdAlternativa_Relacion, PDO::PARAM_INT); 
             $result->bindParam(5, $Res_Respuesta, PDO::PARAM_STR);
-            $result->bindParam(6, $puntos, PDO::PARAM_INT);                   
+            $result->bindParam(6, $puntos, PDO::PARAM_STR);                   
             $result->execute();
             return $result->fetch();
         } catch (PDOException $exception) {
@@ -846,7 +859,7 @@ WHERE Exl_IdExamenAlumno=$idexamen AND r.Pre_IdPregunta= $idpregunta";
 
     public function updateNotaExamen($pregunta, $descripcion){
         try {             
-            $sql = "UPDATE examen_alumno SET
+            $sql = " UPDATE examen_alumno SET
               Exl_Nota = $descripcion
             WHERE Exl_IdExamenAlumno = $pregunta";
             $result = $this->_db->prepare($sql);                

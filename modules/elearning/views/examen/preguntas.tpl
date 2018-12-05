@@ -50,11 +50,12 @@
         <div class="panel-body">
             <div class="row" style="text-align:right">
                 <div style="display:inline-block;padding-right:2em">
-                     <input type="hidden" name="idexamen" id="idexamen" value="{$examen}">
-                    <input type="hidden" name="idcurso" id="idcurso" value="{$idcurso}">              
+                    <input type="hidden" name="idexamen" id="idexamen" value="{$examen}">
+                    <input type="hidden" name="idcurso" id="idcurso" value="{$idcurso}">          
                     <input class="form-control" placeholder="Buscar Pregunta" style="width: 300px; float: left; margin: 0px 10px;" name="palabrapregunta" id="palabrapregunta">
                     <button class="btn btn-success" style=" float: left" type="button" id="buscarpregunta"  ><i class="glyphicon glyphicon-search"></i></button>
                 </div>
+                <a href="{$_layoutParams.root}elearning/examen/editarexamen/{$idcurso}/{$examen}" class="btn btn-danger margin-t-10 col-xs-2" id="btn_nuevo" ><i class="glyphicon glyphicon-triangle-left"></i> Regresar</a>    
             </div>
             <div id="listarpreguntas">
                 <input type="hidden" name="puntos" id="puntos" value="{$puntos_maximo}">
@@ -65,7 +66,7 @@
                                 <th style=" text-align: center">Nº</th>
                                 <th style=" text-align: center">Preguntas</th>
                                 <th style=" text-align: center">Tipo</th>
-                                <th style=" text-align: center">Puntos Totales</th>
+                                <th style=" text-align: center">Puntos </th>
                                 <th style=" text-align: center">Estado</th>
                                 <th style=" text-align: center">Opciones</th>
                             </tr>
@@ -111,6 +112,11 @@
                                     {/if}
                                 </tr>
                             {/foreach}
+                            <tr>
+                                <th style=" text-align: center" colspan="3"></th>
+                                <th style=" text-align: center">Total {$puntos_total}</th>
+                                <th style=" text-align: center" colspan="2" ></th>
+                            </tr>
                         </table>
                     </div>
                     {$paginacionpreguntas|default:""}

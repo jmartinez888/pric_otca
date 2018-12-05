@@ -23,12 +23,35 @@ class inscripcionModel extends Model {
       }
     }
 
-    public function insertarInscripcion($usuario, $curso, $estado){
-      $pre = $this->getInscripcion($usuario, $curso);
+    // public function insertarInscripcion($usuario, $curso, $estado){
+    //   $pre = $this->getInscripcion($usuario, $curso);
 
-      if($pre==null || count($pre)==0){
-        $this->execQuery(" INSERT INTO matricula_curso(Usu_IdUsuario, Cur_IdCurso, Mat_Valor)
-                          VALUES({$usuario}, {$curso}, {$estado}) ");
-      }
+    //   if($pre == null || count($pre) == 0){
+    //     $this->execQuery(" INSERT INTO matricula_curso(Usu_IdUsuario, Cur_IdCurso, Mat_Valor)
+    //                       VALUES({$usuario}, {$curso}, {$estado}) ");
+    //   }
+    // }
+    public function insertarInscripcion($usuario, $curso, $estado){
+        $pre = $this->getInscripcion($usuario, $curso);
+        if($pre == null || count($pre) == 0){
+          try{
+              $sql = " INSERT INTO matricula_curso (Usu_IdUsuario, Cur_IdCurso, Mat_Valor) VALUES({$usuario}, {$curso}, {$estado}) ";
+              $result = $this->_db->query($sql);
+              return $result->rowCount(PDO::FETCH_ASSOC);
+          } catch (PDOException $exception) {
+              $this->registrarBitacora("elearning(examenModel)", "insertarInscripcion", "Error Model", $exception);
+              return $exception->getTraceAsString();
+          }
+        }
+    }
+    public function asignarRolAlumno($usuario, $rol){
+        try{
+            $sql = " INSERT INTO usuario_rol (Usu_IdUsuario, Rol_IdRol, Usr_Valor) VALUES({$usuario}, {$rol}, 1) ";
+            $result = $this->_db->query($sql);
+            return $result->rowCount(PDO::FETCH_ASSOC);
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("elearning(examenModel)", "asignarRolAlumno", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
     }
 }
