@@ -79,10 +79,10 @@
                                     <a class="nav-link txt-color-white f-z-14" href="{$_layoutParams.root_clear}index/_loadLang/en"> | English</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link txt-color-white f-z-14" href="{$_layoutParams.root_clear}acercade/contacto"> | Contácto</a>
+                                    <a class="nav-link txt-color-white f-z-14" href="{$_layoutParams.root}acercade/contacto"> | Contácto</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link txt-color-white f-z-14" href="{$_layoutParams.root_clear}acercade"> | {$lenguaje.frontend_text_acercade}</a>
+                                    <a class="nav-link txt-color-white f-z-14" href="{$_layoutParams.root}page/item/10"> | {$lenguaje.frontend_text_acercade}</a>
                                 </li>
                                 {if Session::get('autenticado')}
                                 <!-- Perfil User -->
@@ -110,6 +110,7 @@
                                             </a>
                                         </li>
                                         <!-- Menu Body -->
+                                        <!-- 
                                         <li class="user-body">
                                             <div class="row">
                                                 <div class="col-xs-4 text-center">
@@ -121,14 +122,16 @@
                                                 <div class="col-xs-4 text-center">
                                                     <a href="#">Friends</a>
                                                 </div>
-                                            </div>
-                                            <!-- /.row -->
+                                            </div>                                           
                                         </li>
+                                        -->
                                         <!-- Menu Footer-->
                                         <li class="user-footer">
+                                            {if $_acl->rolckey('administrador') || $_acl->rolckey('administrador_foro') || $_acl->rolckey('administrador_elearning') || $_acl->rolckey('administrador_usuarios') || $_acl->rolckey('administrador_documentos')}
                                             <div class="pull-left">
                                                 <a class="btn btn-default btn-flat" href="{$_layoutParams.root}acl"  data-toggle="tooltip" data-placement="bottom" title="Intranet"><i style="font-size:15px" class="glyphicon glyphicon-cog"></i> {$lenguaje.text_intranet}</a>
                                             </div>
+                                            {/if}
                                             <div class="pull-right">
                                                 <a class="btn btn-default btn-flat" href="{$_layoutParams.root}usuarios/login/cerrar"  data-toggle="tooltip" data-placement="bottom" title="Cerrar Sesi&oacute;n"><i style="font-size:15px" class="glyphicon glyphicon-log-out"></i> {$lenguaje.frontend_text_cerrarsession}</a>
                                             </div>
