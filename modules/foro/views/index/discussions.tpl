@@ -23,11 +23,12 @@
             <div class="input-group">
                 <input type ="text" class="form-control"  data-toggle="tooltip" data-original-title="Buscar" placeholder="Buscar" name="text_busqueda" id="text_busqueda" onkeypress="tecla_enter_foro(event)" value="{$palabrabuscada|default:''}">
                 <span class="input-group-btn">
-                    <button class="btn  btn-success btn-buscador" for_funcion ="forum" ajax="lista_buscar_discusiones" type="button" id="buscar_foro"><i class="glyphicon glyphicon-search"></i></button>
+                    <button class="btn  btn-success btn-buscador" for_funcion ="forum" ajax="lista_buscar_forum" type="button" id="buscar_foro"><i class="glyphicon glyphicon-search"></i></button>
                 </span>
                 </div><!-- /input-group -->
             </div>
-            <div id="lista_buscar_discusiones" class="row">
+            <input type="hidden" name="hdd_tipo" id="hdd_tipo" value="forum">
+            <div id="lista_buscar_forum" class="row">                
                 <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 p-rt-lt-0" style="margin-bottom: 30px;">
                     {if count($lista_foros)>0}
                     {foreach from=$lista_foros item=foro}
@@ -37,6 +38,7 @@
                     <h4>No se encontraron Resultados</h4>
                     {/if}
                 </div>
+                {$paginacion|default:""}
             </div>
         </div>
     </div>

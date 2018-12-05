@@ -25,20 +25,30 @@
                     <ul id="div_show_{$foro.For_IdForo}">
                                             {foreach from=$foro.Archivos  item=file}
                                             <li tabindex="-1" id="">
+                                                <div class="col col-xs-1 col-sm-1 col-md-1 col-lg-1">
                                                 {if $file.Fif_TipoFile|strstr:"video"}
-                                                <i class="fa fa-video-camera"></i>
-                                                {/if}
-                                                {if $file.Fif_TipoFile|strstr:"image"}
+                                                <i class="fa fa-video-camera"></i>        
+                                                {elseif $file.Fif_TipoFile|strstr:"image"}
                                                 <i class="fa fa-picture-o"></i>
-                                                {/if}
-                                                {if $file.Fif_TipoFile|strstr:"application"}
+                                                {elseif $file.Fif_TipoFile|strstr:"application"}
+                                                <i class="fa fa-file-o"></i>
+                                                {else}
                                                 <i class="fa fa-file-o"></i>
                                                 {/if}
-                                                <div class="">
-                                                    <a class="file_titulo2 underline" href="{$_layoutParams.root_archivo_fisico}{$file.Fif_NombreFile}"  title="Descargar" target="_blank">{substr($file.Fif_NombreFile, 0, 33)}...</a>
                                                 </div>
+                                                {if $file.Fif_EsOutForo==1}
+                                                <div class="col col-xs-11 col-sm-11 col-md-11 col-lg-11">
+                                                    <a class="file_titulo2 underline" href="{$_layoutParams.root_archivo_fisico}{$file.Fif_NombreFile}"  title="Descargar {$file.Fif_Titulo}" target="_blank">
+                                                        <strong>{substr($file.Fif_Titulo, 0, 27)}... </strong></a>
+                                                </div>
+                                                {else}
+                                                <div class="col col-xs-11 col-sm-11 col-md-11 col-lg-11">
+                                                    <a class="file_titulo2 underline" href="{$_layoutParams.root_archivo_fisico}{$file.Fif_NombreFile}"  title="Descargar {$file.Fif_NombreFile}" target="_blank">{substr($file.Fif_NombreFile, 0, 27)}...</a>
+                                                </div>
+                                                {/if}
+                                                
                                                 {$file.Fif_SizeFile=$file.Fif_SizeFile/1024}
-                                                <div class="file_size">({if $file.Fif_SizeFile<1024}{$file.Fif_SizeFile|string_format:"%.1f"} KB {else} {$file.Fif_SizeFile=$file.Fif_SizeFile/1024} {$file.Fif_SizeFile|string_format:"%.1f"} MB{/if})</div>
+                                                <div class="pull-right file_size">({if $file.Fif_SizeFile<1024}{$file.Fif_SizeFile|string_format:"%.1f"} KB {else} {$file.Fif_SizeFile=$file.Fif_SizeFile/1024} {$file.Fif_SizeFile|string_format:"%.1f"} MB{/if})</div>
                                             </li>
                                             {/foreach}
                     </ul>

@@ -102,6 +102,7 @@ class indexbdModel extends Model
     //-----------------------------------------------ACAAAAAAA-------------------
     public function getRecursoCompletoXid($idrecurso) 
     {
+       
         $listarecurso = $this->getRecursoMetadata($idrecurso);
         // print_r($listarecurso);
         if (!empty($listarecurso['Rec_IdRecurso'])) 

@@ -27,13 +27,13 @@
       box-shadow: 0 0 15px 1px #9e9e9e;
 
   }
-
+/*
   li {
       display: list-item;
       text-align: -webkit-match-parent;
       cursor: pointer;
       color: #3CACDF;
-  }
+  }*/
 
   a.nounderline: link { text-decoration: none; }
 
@@ -192,7 +192,7 @@
       background-color: rgba(0,0,0, .1);
 
   }
-  ul{
+  .sidebar-left ul{
     padding-left: 0px !important;
   }
   .header {
@@ -400,7 +400,7 @@
       background-color: rgba(0,0,0, .1);
 
   }
-  ul{
+  .sidebar-left ul{
     padding-left: 0px !important;
   }
 
@@ -438,6 +438,8 @@
           </li>
         </div>
     </ul>
+
+    {if (isset($curso)) && $curso['Moa_IdModalidad'] == 3}
     <ul id="item-formularios">
         <div class="side-menu2">
           <li class="side-menu" style="position: relative">
@@ -446,6 +448,7 @@
           </li>
         </div>
     </ul>
+    {/if}
     <ul id="item-modulos-curso">
         <div class="side-menu2">
           <li class="side-menu" style="position: relative">

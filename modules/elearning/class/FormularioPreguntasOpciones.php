@@ -11,6 +11,11 @@ class FormularioPreguntasOpciones extends Eloquent
   const CREATED_AT = 'Fpo_CreatedAt';
   const UPDATED_AT = 'Fpo_UpdatedAt';
 
+
+  public static function getByPregunta ($pregunta_id) {
+    return self::where('Fpr_IdForPreguntas', $pregunta_id)->get();
+  }
+
   public function formatToArray ($exclude = []) {
     return [
       'id' => $this->Fpo_IdForPrOpc,
@@ -18,7 +23,9 @@ class FormularioPreguntasOpciones extends Eloquent
       'orden' => $this->Fpo_Orden,
       'pregunta_id' => $this->Fpr_IdForPreguntas,
       'create' => $this->Fpo_CreatedAt,
-      'update' => $this->Fpo_UpdatedAt
+      'update' => $this->Fpo_UpdatedAt,
+      'orden' => $this->Fpo_Orden,
+      'tipo' => $this->Fpo_Tipo
     ];
   }
 }

@@ -107,7 +107,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <nav class="navbar navbar-static-top" role="navigation">
                     <!-- Sidebar toggle button-->
                     <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
-                        <span class="sr-only">Toggle navigation</span>
+                        <span class="sr-only"></span>
                     </a>
                     <!-- Navbar Right Menu -->
                     <div class="title-sii pull-left " >
@@ -154,7 +154,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             <li ><a href="{$_layoutParams.root}arquitectura"><i class='fa fa-gears'></i> <span>{$lenguaje.menu_izquierdo_1_1}</span></a></li>
                             {/if}
                             {if $_acl->permiso("listar_idiomas")}
-                            <li><a href="{$_layoutParams.root}idiomas"><i class='glyphicon glyphicon-comment'></i> <span>{$lenguaje.menu_izquierdo_1_2}</span></a></li>
+                            <li><a href="{$_layoutParams.root}idiomas/lenguajes"><i class='glyphicon glyphicon-comment'></i> <span>{$lenguaje.menu_izquierdo_1_2}</span></a></li>
                             {/if}
                             {if $_acl->permiso("listar_usuarios")}
                             <li class="treeview">

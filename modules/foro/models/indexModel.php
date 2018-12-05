@@ -12,7 +12,7 @@ class indexModel extends Model {
             //         "SELECT f.*,(SELECT COUNT(Com_IdComentario) FROM comentarios c WHERE c.For_IdForo=f.For_IdForo) as For_TComentarios  FROM foro f WHERE f.For_Funcion LIKE '%$iFor_Funcion%' AND Row_Estado=1 ORDER BY f.For_FechaCreacion DESC");
             $post = $this->_db->query(
                     "SELECT f.*,(SELECT COUNT(Com_IdComentario) FROM comentarios c
-                                WHERE c.For_IdForo=f.For_IdForo) AS For_TComentarios, u.Usu_Usuario
+                                WHERE c.For_IdForo=f.For_IdForo) AS For_NComentarios, u.Usu_Usuario
                     FROM foro f INNER JOIN usuario u ON u.Usu_IdUsuario=f.Usu_IdUsuario
                     WHERE f.For_Funcion LIKE '%$iFor_Funcion%' ORDER BY f.For_FechaCreacion DESC");
             return $post->fetchAll();
@@ -25,7 +25,7 @@ class indexModel extends Model {
     public function getForosSearch($Condicion = "") {
         try {
             $post = $this->_db->query(
-                    "SELECT f.For_IdForo,f.For_Titulo,f.For_Resumen,f.For_Funcion,f.For_FechaCreacion,f.For_FechaCierre,f.For_Update,(SELECT COUNT(*) FROM comentarios c WHERE c.For_IdForo =f.For_IdForo) AS For_NComentarios,
+                    "SELECT f.For_IdForo,f.For_Titulo,f.For_Resumen,f.For_Funcion,f.For_FechaCreacion,f.For_FechaCierre,f.For_Update,(SELECT COUNT(*) FROM comentarios c WHERE c.For_IdForo =f.For_IdForo and c.Com_Estado=1 and c.Row_Estado=1) AS For_NComentarios,
                         (SELECT COUNT(uf.Usu_IdUsuario) FROM usuario_foro uf WHERE uf.For_IdForo = f.For_IdForo AND Usf_Estado=1 AND Row_Estado=1) AS For_NParticipantes, u.Usu_Usuario, u.Usu_Nombre, u.Usu_Apellidos, f.Idi_IdIdioma, f.For_Estado
                     FROM foro f
                     INNER JOIN usuario u ON u.Usu_IdUsuario = f.Usu_IdUsuario $Condicion ");
@@ -39,12 +39,50 @@ class indexModel extends Model {
     public function getForosPaginado($iFor_Filtros = "", $iFor_Filtros2 = "", $iPagina = 1, $iRegistrosXPagina = CANT_REG_PAG)
     {
         try {
-            $sql = " call s_s_foro_admin(?,?,?,?)";
+
+            $Inicio =($iPagina - 1) * $iRegistrosXPagina;
+            if($Inicio<1)
+                $Inicio=0;
+
+            //$sql = "call s_s_foro_admin(?,?,?,?)";
+            $sql="SELECT f.For_IdForo,f.For_Titulo,f.For_Resumen,f.For_Funcion,f.For_FechaCreacion,f.For_FechaCierre, f.For_Estado,f.For_Update,(SELECT COUNT(*) FROM comentarios c WHERE c.For_IdForo =f.For_IdForo AND c.Com_Estado=1 AND c.Row_Estado=1) AS For_NComentarios ,
+                (SELECT COUNT(uf.Usu_IdUsuario) FROM usuario_foro uf WHERE uf.For_IdForo = f.For_IdForo AND Usf_Estado=1 AND Row_Estado=1) AS For_NParticipantes,
+                u.Usu_Usuario, f.Row_Estado, lit.Lit_Nombre, f.For_Tipo, f.Rec_IdRecurso 
+                FROM foro f 
+                INNER JOIN usuario u ON u.Usu_IdUsuario = f.Usu_IdUsuario
+                INNER JOIN linea_tematica lit ON f.Lit_IdLineaTematica = lit.Lit_IdLineaTematica
+                WHERE ";
+
+            $where=" (f.For_Titulo LIKE CONCAT('%',:iFor_Filtros,'%') 
+                    OR f.For_Resumen LIKE CONCAT('%',:iFor_Filtros,'%') 
+                    OR f.For_Descripcion LIKE CONCAT('%',:iFor_Filtros,'%') 
+                    OR f.For_PalabrasClaves LIKE CONCAT('%',:iFor_Filtros,'%')
+                    OR lit.Lit_Nombre LIKE CONCAT('%',:iFor_Filtros,'%'))
+                    AND f.For_Funcion LIKE CONCAT('%',:iFor_Filtros2,'%')
+                    ORDER BY f.Row_Estado DESC, f.For_FechaCreacion DESC 
+                    LIMIT :Inicio,:iRegistrosXPagina";
+
+             if ($this->_acl->rolckey("administrador")  ||  $this->_acl->rolckey("administrador_foro"))
+             {
+                
+                $sql=$sql.$where;
+
+             }else if($this->_acl->rolckey("lider_foro")  ||  $this->_acl->rolckey("moderador_foro")){
+               
+                 
+                 $sql=$sql." f.Row_Estado=1 and ". $where;                
+
+             }else{
+
+                
+                 $sql=$sql." f.For_Estado!=0 and f.Row_Estado=1 and ". $where;
+             }
+
             $result = $this->_db->prepare($sql);
-             $result->bindParam(1, $iFor_Filtros, PDO::PARAM_STR);
-            $result->bindParam(2, $iFor_Filtros2, PDO::PARAM_STR);
-            $result->bindParam(3, $iPagina, PDO::PARAM_INT);
-            $result->bindParam(4, $iRegistrosXPagina, PDO::PARAM_INT);
+            $result->bindParam(':iFor_Filtros', $iFor_Filtros, PDO::PARAM_STR);
+            $result->bindParam(':iFor_Filtros2', $iFor_Filtros2, PDO::PARAM_STR);
+            $result->bindParam(':Inicio', $Inicio, PDO::PARAM_INT);
+            $result->bindParam(':iRegistrosXPagina', $iRegistrosXPagina, PDO::PARAM_INT);
 
             $result->execute();
             return $result->fetchAll();
@@ -55,13 +93,50 @@ class indexModel extends Model {
     }
     public function getRowForos($iFor_Filtros = "", $iFor_Filtros2 = "") {
         try {
-            $post = $this->_db->query(
-                    "SELECT COUNT(*) as For_NRow from foro f
-                    WHERE (f.For_Titulo LIKE CONCAT('%','$iFor_Filtros','%')
-                    OR f.For_Resumen LIKE CONCAT('%','$iFor_Filtros','%')
+
+            $sql="SELECT COUNT(*) as For_NRow from foro f WHERE ";
+
+            $where=" (f.For_Titulo LIKE CONCAT('%','$iFor_Filtros','%') OR f.For_Resumen LIKE CONCAT('%','$iFor_Filtros','%')
                     OR f.For_Descripcion LIKE CONCAT('%','$iFor_Filtros','%')
                     OR f.For_PalabrasClaves LIKE CONCAT('%','$iFor_Filtros','%'))
-                    AND f.For_Funcion LIKE CONCAT('%','$iFor_Filtros2','%') ORDER BY f.For_FechaCreacion DESC");
+                    AND f.For_Funcion LIKE CONCAT('%','$iFor_Filtros2','%') ORDER BY f.For_FechaCreacion DESC";
+
+             if ($this->_acl->rolckey("administrador")  ||  $this->_acl->rolckey("administrador_foro"))
+             {
+                
+                $sql=$sql.$where;
+
+             }else if($this->_acl->rolckey("lider_foro")  ||  $this->_acl->rolckey("moderador_foro")){
+               
+                 
+                 $sql=$sql." f.Row_Estado=1 and ". $where;                
+
+             }else{
+
+                
+                 $sql=$sql." f.For_Estado!=0 and f.Row_Estado=1 and ". $where;
+             }          
+
+            $post = $this->_db->query($sql);
+
+            return $post->fetch();
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("foro(adminModel)", "getRowForos", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
+    public function getRowForoHistorico($iFor_Filtro = "") {
+        try {
+            $sql="SELECT COUNT(*) as For_NRow from foro f
+                    INNER JOIN usuario u ON u.Usu_IdUsuario = f.Usu_IdUsuario
+                    WHERE f.For_FechaCierre < TIMESTAMP(NOW()) AND f.For_Estado=2 AND f.Row_Estado=1 AND (f.For_Titulo LIKE CONCAT('%','$iFor_Filtro','%')
+                     OR f.For_Resumen LIKE CONCAT('%','$iFor_Filtro','%') 
+                     OR f.For_Descripcion LIKE CONCAT('%','$iFor_Filtro','%') 
+                     OR f.For_PalabrasClaves LIKE CONCAT('%','$iFor_Filtro','%')
+                     OR u.Usu_Usuario LIKE CONCAT('%','$iFor_Filtro','%')
+                     OR f.For_Funcion LIKE CONCAT('%','$iFor_Filtro','%'))";   
+                             
+            $post = $this->_db->query($sql);
 
             return $post->fetch();
         } catch (PDOException $exception) {
@@ -76,7 +151,7 @@ class indexModel extends Model {
                     "SELECT f.*,u.Usu_Usuario,(SELECT COUNT(Com_IdComentario) FROM comentarios c WHERE c.For_IdForo=f.For_IdForo) AS For_TComentarios,(SELECT COUNT(*) FROM usuario_foro uf WHERE uf.For_IdForo=f.For_IdForo AND uf.Row_Estado=1) AS For_TParticipantes
                     FROM foro f
                     INNER JOIN usuario u ON u.Usu_IdUsuario=f.Usu_IdUsuario
-                    WHERE f.For_Funcion LIKE '%$iFor_Funcion%' AND f.Row_Estado=1
+                    WHERE f.For_Funcion LIKE '%$iFor_Funcion%' and f.For_Estado=1 AND f.Row_Estado=1 
                     ORDER BY f.For_FechaCreacion DESC
                     LIMIT 5");
             return $post->fetchAll();
@@ -88,8 +163,27 @@ class indexModel extends Model {
 
     public function getForo_x_idforo($iFor_IdForo) {
         try {
-            $post = $this->_db->query(
-                    "SELECT f.*,(SELECT COUNT(Com_IdComentario) FROM comentarios c WHERE c.For_IdForo=f.For_IdForo) as For_TComentarios, (SELECT COUNT(*) FROM usuario_foro uf WHERE uf.For_IdForo=f.For_IdForo AND uf.Row_Estado=1) as For_TParticipantes FROM foro f where f.For_IdForo={$iFor_IdForo}");
+            $sql= "SELECT f.*,(SELECT COUNT(Com_IdComentario) FROM comentarios c WHERE c.For_IdForo=f.For_IdForo) as For_TComentarios, (SELECT COUNT(*) FROM usuario_foro uf WHERE uf.For_IdForo=f.For_IdForo AND uf.Row_Estado=1) as For_TParticipantes FROM foro f where f.For_IdForo={$iFor_IdForo}";
+
+          
+
+            if ($this->_acl->rolckey("administrador")  ||  $this->_acl->rolckey("administrador_foro"))
+             {
+                
+                $sql=$sql;
+
+             }else if($this->_acl->rolckey("lider_foro")  ||  $this->_acl->rolckey("moderador_foro")){
+               
+                 
+                 $sql=$sql." and f.Row_Estado=1  ";                
+
+             }else{
+
+                
+                 $sql=$sql." and f.For_Estado!=0 and f.Row_Estado=1 ";
+             }       
+
+            $post = $this->_db->query($sql);
             return $post->fetch();
         } catch (PDOException $exception) {
             $this->registrarBitacora("foro(indexModel)", "getForos", "Error Model", $exception);
@@ -401,7 +495,7 @@ class indexModel extends Model {
         try {
             $post = $this->_db->query(
                     "SELECT r.Rol_Ckey FROM usuario_rol usr INNER JOIN usuario usu ON usr.Usu_IdUsuario = usu.Usu_IdUsuario
-                        INNER JOIN rol r ON r.Rol_IdRol = usr.Rol_IdRol WHERE usu.Usu_IdUsuario = $iUsu_IdUsuario AND (r.Rol_Ckey = 'administrador_foro' OR r.Rol_Ckey = 'administrador') AND r.Row_Estado = 1");
+                     INNER JOIN rol r ON r.Rol_IdRol = usr.Rol_IdRol WHERE usu.Usu_IdUsuario = $iUsu_IdUsuario AND (r.Rol_Ckey = 'administrador_foro' OR r.Rol_Ckey = 'administrador') AND r.Row_Estado = 1");
             return $post->fetch();
         } catch (PDOException $exception) {
             $this->registrarBitacora("foro(indexModel)", "getRol_Ckey", "Error Model", $exception);
@@ -519,10 +613,10 @@ class indexModel extends Model {
         try {
             $post = $this->_db->query(
                     "SELECT * FROM (
-                    (SELECT f.For_IdForo,f.For_Titulo,f.For_FechaCreacion,f.For_Funcion,f.For_Estado FROM foro f
+                    (SELECT f.For_IdForo,0,f.For_Titulo,f.For_FechaCreacion,f.For_Funcion,f.For_Estado FROM foro f
                     WHERE f.For_Estado=1 AND f.Row_Estado=1 ORDER BY f.For_FechaCreacion DESC LIMIT 5)
                     UNION ALL
-                    (SELECT af.Acf_IdActividadForo,af.Acf_Titulo,Act_FechaInicio,'activity',af.Act_Estado FROM actividad_foro af
+                    (SELECT af.For_IdForo,af.Acf_IdActividadForo,af.Acf_Titulo,Act_FechaInicio,'activity',af.Act_Estado FROM actividad_foro af
                     WHERE af.Act_Estado AND af.Row_Estado=1 ORDER BY Act_FechaInicio DESC LIMIT 5)) AS Agenda
                     ORDER BY For_FechaCreacion DESC LIMIT 5");
             return $post->fetchAll();
@@ -549,16 +643,30 @@ class indexModel extends Model {
         }
     }
 
-    public function getHistorico() {
+    public function getHistorico($iFor_Filtro = "", $iPagina = 1, $iRegistrosXPagina = CANT_REG_PAG) {
         try {
-            $post = $this->_db->query(
-                    "SELECT f.For_IdForo,f.For_Titulo, f.For_FechaCreacion, f.For_FechaCierre, f.For_Funcion, u.Usu_Nombre, u.Usu_Apellidos,
-                    (SELECT COUNT(Com_IdComentario) FROM comentarios c WHERE c.For_IdForo=f.For_IdForo) AS For_TComentarios,
-                    (SELECT COUNT(*) FROM usuario_foro uf WHERE uf.For_IdForo=f.For_IdForo) AS For_TParticipantes
+            $Inicio =($iPagina - 1) * $iRegistrosXPagina;
+            if($Inicio<1)
+                $Inicio=0;
+
+            $sql="SELECT f.For_IdForo,f.For_Titulo, f.For_FechaCreacion,f.For_FechaCreacion, f.For_FechaCierre, f.For_Funcion,u.Usu_Usuario, u.Usu_Nombre, u.Usu_Apellidos,
+                    (SELECT COUNT(Com_IdComentario) FROM comentarios c WHERE c.For_IdForo=f.For_IdForo and c.Com_Estado=1 and c.Row_Estado=1) AS For_NComentarios,
+                    (SELECT COUNT(*) FROM usuario_foro uf WHERE uf.For_IdForo=f.For_IdForo AND uf.Usf_Estado=1 AND uf.Row_Estado=1) AS For_NParticipantes
                     FROM foro f
                     INNER JOIN usuario u ON u.Usu_IdUsuario = f.Usu_IdUsuario
-                    WHERE f.For_FechaCierre < TIMESTAMP(NOW()) AND f.For_Estado=2 AND f.Row_Estado=1
-                    ORDER BY f.For_FechaCierre DESC ");
+                    WHERE f.For_FechaCierre < TIMESTAMP(NOW()) AND f.For_Estado=2 AND f.Row_Estado=1 AND 
+                    (f.For_Titulo LIKE CONCAT('%','$iFor_Filtro','%')
+                     OR f.For_Resumen LIKE CONCAT('%','$iFor_Filtro','%') 
+                     OR f.For_Descripcion LIKE CONCAT('%','$iFor_Filtro','%') 
+                     OR f.For_PalabrasClaves LIKE CONCAT('%','$iFor_Filtro','%')
+                     OR u.Usu_Usuario LIKE CONCAT('%','$iFor_Filtro','%')
+                     OR f.For_Funcion LIKE CONCAT('%','$iFor_Filtro','%')
+                    )                    
+                    ORDER BY f.For_FechaCierre DESC 
+                    LIMIT $Inicio,$iRegistrosXPagina";
+                    
+            $post = $this->_db->query($sql);
+
             return $post->fetchAll();
         } catch (PDOException $exception) {
             $this->registrarBitacora("foro(indexModel)", "getHistorico", "Error Model", $exception);

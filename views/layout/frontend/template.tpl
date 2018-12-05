@@ -63,7 +63,7 @@
                     <nav class="navbar navbar-light padding-0 margin-0 display-inline back-color-black z-i-10" style="min-height: 20px">
                         <div class="navbar-header">
                             <button class="navbar-toggle collapsed" style="color:#fff; box-shadow: 0 0 11px #f5f4f4; padding: 2px 10px 0px; top: 3px; border: 1px solid black; margin: 3px;" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                            <span class="sr-only">Toggle navigation</span>
+                            <span class="sr-only"></span>
                             <span class="fa fa-bars" style="font-size: 19px;"></span>
                             </button>
                         </div>
@@ -79,10 +79,10 @@
                                     <a class="nav-link txt-color-white f-z-14" href="{$_layoutParams.root_clear}index/_loadLang/en"> | English</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link txt-color-white f-z-14" href="{$_layoutParams.root_clear}acercade/contacto"> | Contácto</a>
+                                    <a class="nav-link txt-color-white f-z-14" href="{$_layoutParams.root}acercade/contacto"> | Contácto</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link txt-color-white f-z-14" href="{$_layoutParams.root_clear}acercade"> | {$lenguaje.frontend_text_acercade}</a>
+                                    <a class="nav-link txt-color-white f-z-14" href="{$_layoutParams.root}page/item/10"> | {$lenguaje.frontend_text_acercade}</a>
                                 </li>
                                 {if Session::get('autenticado')}
                                 <!-- Perfil User -->
@@ -110,6 +110,7 @@
                                             </a>
                                         </li>
                                         <!-- Menu Body -->
+                                        <!-- 
                                         <li class="user-body">
                                             <div class="row">
                                                 <div class="col-xs-4 text-center">
@@ -121,14 +122,16 @@
                                                 <div class="col-xs-4 text-center">
                                                     <a href="#">Friends</a>
                                                 </div>
-                                            </div>
-                                            <!-- /.row -->
+                                            </div>                                           
                                         </li>
+                                        -->
                                         <!-- Menu Footer-->
                                         <li class="user-footer">
+                                            {if $_acl->rolckey('administrador') || $_acl->rolckey('administrador_foro') || $_acl->rolckey('administrador_elearning') || $_acl->rolckey('administrador_usuarios') || $_acl->rolckey('administrador_documentos')}
                                             <div class="pull-left">
                                                 <a class="btn btn-default btn-flat" href="{$_layoutParams.root}acl"  data-toggle="tooltip" data-placement="bottom" title="Intranet"><i style="font-size:15px" class="glyphicon glyphicon-cog"></i> {$lenguaje.text_intranet}</a>
                                             </div>
+                                            {/if}
                                             <div class="pull-right">
                                                 <a class="btn btn-default btn-flat" href="{$_layoutParams.root}usuarios/login/cerrar"  data-toggle="tooltip" data-placement="bottom" title="Cerrar Sesi&oacute;n"><i style="font-size:15px" class="glyphicon glyphicon-log-out"></i> {$lenguaje.frontend_text_cerrarsession}</a>
                                             </div>
@@ -165,7 +168,7 @@
                         <div class=" text-center">
                             <img class="max-width-390" src="{$_layoutParams.ruta_img}frontend/img-banderas.png">
                         </div>
-                        
+
                     </div>
                     <div class="col-xs-6 col-sm-3 col-md-3 col-lg-3 padding-10 text-align-right">
                         <img class="width-250"  src="{$_layoutParams.ruta_img}frontend/logo_otca.png">
@@ -184,22 +187,30 @@
                             <!-- Brand and toggle get grouped for better mobile display -->
                             <div class="navbar-header  display-inline  pull-left margin-t-10">
                                 <button type="button" style="float: left;color: black;padding: 5px 10px;box-shadow: 0 0 11px black; border: 1px solid;  margin: 5px; margin-left: 29px;" class="navbar-toggle collapsed"  data-toggle="collapse" data-target="#navbarSupportedContentUp" aria-controls="navbarSupportedContentUp" aria-expanded="false" aria-label="Toggle navigation">
-                                <span class="sr-only">Toggle navigation</span>
+                                <span class="sr-only"></span>
                                 <span class="fa fa-bars" style="font-size: 20px;"></span>
                                 </button>
                             </div>
                             <div class="col-xs-10 col-sm-12 col-md-2 col-lg-3 buscador margin-t-10 pull-right buscador" >
                                 <form style="background: #fff;border: 2px solid #336b78;float: none !important;" class=" navbar-right form-horizontal " data-toggle="validator" id="form1" role="form" method="post" autocomplete="on">
-                                     <div class="row col-xs-11 col-sm-11 col-md-11 col-lg-11">
+                                    <div class="col-sm-12 col-md-12 col-xs-12" style="padding: 0px;">
+                                        <div class="input-group" style="">
+                                          <input type="text" class="" data-placement="bottom"  id="textBuscar" name="textBuscar" placeholder="{$lenguaje.text_buscador|default}" value="{$palabra|default:''}" required="required" onkeypress="tecla_enter(event)" style="width: 100%;border: 0px;padding: 2px 8px;outline: none;">
+                                          <span class="input-group-btn">
+                                            <button class="btn-default" id="btnBuscar" name="btnBuscar" onclick="buscarPalabra('textBuscar')" type="button" style="font-size: 15px;border: 0px;background: transparent;"><i class="glyphicon glyphicon-search"></i></button>
+                                          </span>
+                                        </div>
+                                    </div>
+                                     {* <div class="row col-xs-11 col-sm-11 col-md-11 col-lg-11">
                                          <input style="border: 0;    width: 100%;"  data-placement="bottom"  type="search" id="textBuscar" name="textBuscar" placeholder="{$lenguaje.text_buscador|default}" value="{$palabra|default:''}" required="required" onkeypress="tecla_enter(event)" >
                                      </div>
                                      <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 pull-right" style="padding-right: 0px;">
                                          <button style="background: transparent;border: 0;color: #22454e;margin-left: -14px;" type="button" id="btnBuscar" name="btnBuscar" onclick="buscarPalabra('textBuscar')" value="" > <i class="glyphicon glyphicon-search"></i></button>
-                                    </div>
+                                    </div> *}
                                      <div class="clearfix"></div>
                                 </form>
                             </div>
-                            
+
                             {if isset($widgets.top)}
                             <div class="col col-xs-12 col-sm-12 col-md-10 col-lg-9">
                                 {foreach from=$widgets.top item=wd}
@@ -211,9 +222,9 @@
                                 {/foreach}
                             </div>
                             {/if}
-                            
+
                         </div>
-                        
+
                     </div>
                 </nav>
             </div>

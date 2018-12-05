@@ -37,34 +37,16 @@
   }
 </style>
 <style type="text/css" media="screen">
-  .tags_input_edit:hover {
-    /*border: 2px solid black;*/
-  }
-  .tags_input_edit {
-    border-left: 2px solid white;
-    padding: 10px 5px;
-  }
-  .tag_input_edit_select {
-    border-left: 2px solid black;
-    padding: 10px 5px;
-    box-shadow: 2px 0px 1px 1px rgba(100, 100, 100, 0.7);
-  }
-  .container_select {
+  h2.tag-custom {
+    margin-top: 8px;
+    margin-bottom: 4px;
 
   }
+  h3.tag-custom {
+    margin-top: 4px;
+    margin-bottom: 2px;
 
-.container_select input.form-control{
-    border: 0px;
-    border-bottom: 1px solid black;
-}
-
-.container_select .input-group-addon{
-    border: 0px;
-
-}
-#btn_agregar {
-
-}
+  }
 </style>
 <!-- <link href="{$_url}gcurso/css/_view_finalizar_registro.css" rel="stylesheet" type="text/css"/> -->
 {/block}
@@ -93,7 +75,7 @@
 
             <div id="formulario_editar_vue">
               <div class="col-sm-12">
-                <form role="form" action="{$_layoutParams.root}elearning/formulario/store_respuesta/{$obj_curso['Cur_IdCurso']}" method="post">
+                <form role="form" action="{$_layoutParams.root}elearning/formulario/store_respuesta/{$obj_curso['Cur_IdCurso']}" method="post" enctype="multipart/form-data">
                   <div class="form-group">
                     <h1>{$formulario->Frm_Titulo}</h1>
                     <p>{$formulario->Frm_Descripcion}</p>
@@ -101,48 +83,123 @@
                   <hr>
                   {foreach $formulario->preguntas as $pre}
                     <div class="form-group">
-                      <label class="control-label">{$pre->Fpr_Pregunta}</label>
-                      {if ($pre->Fpr_Tipo == 'texto')}
-                        <input type="text" name="frm_pre_{$pre->Fpr_IdForPreguntas}"  class="form-control" {if ($pre->Fpr_Obligatorio == 1)}required="required"{/if}>
-                      {/if}
-                      {if ($pre->Fpr_Tipo == 'parrafo')}
-                        <textarea name="frm_pre_{$pre->Fpr_IdForPreguntas}" class="form-control" rows="3"></textarea>
-                      {/if}
-                      {if ($pre->Fpr_Tipo == 'select')}
-                        <select name="frm_pre_{$pre->Fpr_IdForPreguntas}"  class="form-control" >
+                      {if ($pre->Fpr_Tipo == 'titulo_a' || $pre->Fpr_Tipo == 'titulo_b')}
+                        {if ($pre->Fpr_Tipo == 'titulo_a')}
+                          <h2 class="tag-custom">{$pre->Fpr_Pregunta}</h2>
+                        {/if}
+                        {if ($pre->Fpr_Tipo == 'titulo_b')}
+                          <h3 class="tag-custom">{$pre->Fpr_Pregunta}</h3>
+                        {/if}
+                        {if (trim($pre->Fpr_Descripcion) != '')}
+                          <p>{$pre->Fpr_Descripcion}</p>
+                        {/if}
+                      {else}
+
+                        <label class="control-label">{$pre->Fpr_Pregunta}</label>
+                        {if ($pre->Fpr_Tipo == 'texto')}
+                          <input type="text" name="frm_pre_{$pre->Fpr_IdForPreguntas}"  class="form-control" {if ($pre->Fpr_Obligatorio == 1)}required="required"{/if}>
+                        {/if}
+                        {if ($pre->Fpr_Tipo == 'parrafo')}
+                          <textarea name="frm_pre_{$pre->Fpr_IdForPreguntas}" class="form-control" rows="3"></textarea>
+                        {/if}
+                        {if ($pre->Fpr_Tipo == 'select')}
+                          <select name="frm_pre_{$pre->Fpr_IdForPreguntas}"  class="form-control" >
+                            {foreach $pre->opciones as $opc}
+                              <option value="{$opc->Fpo_IdForPrOpc}">{$opc->Fpo_Opcion}</option>
+                            {/foreach}
+                          </select>
+                        {/if}
+                        {if ($pre->Fpr_Tipo == 'radio')}
                           {foreach $pre->opciones as $opc}
-                            <option value="{$opc->Fpo_IdForPrOpc}">{$opc->Fpo_Opcion}</option>
+                            <div class="radio">
+                              <label>
+                                <input type="radio" name="frm_pre_{$pre->Fpr_IdForPreguntas}"  value="{$opc->Fpo_IdForPrOpc}" >
+                                {$opc->Fpo_Opcion}
+                              </label>
+                            </div>
                           {/foreach}
-                        </select>
-                      {/if}
-                      {if ($pre->Fpr_Tipo == 'radio')}
-                        {foreach $pre->opciones as $opc}
-                          <div class="radio">
-                            <label>
-                              <input type="radio" name="frm_pre_{$pre->Fpr_IdForPreguntas}"  value="{$opc->Fpo_IdForPrOpc}" >
-                              {$opc->Fpo_Opcion}
-                            </label>
-                          </div>
-                        {/foreach}
-                      {/if}
-                      {if ($pre->Fpr_Tipo == 'box')}
-                        {foreach $pre->opciones as $opc}
-                          <div class="checkbox">
-                            <label>
-                              <input type="checkbox" name="frm_pre_{$pre->Fpr_IdForPreguntas}[]" value="{$opc->Fpo_IdForPrOpc}">
-                              {$opc->Fpo_Opcion}
-                            </label>
-                          </div>
-                        {/foreach}
-                      {/if}
-                      {if ($pre->Fpr_Tipo == 'upload')}
-                        <input type="file" name="frm_pre_{$pre->Fpr_IdForPreguntas}"  class="form-control" >
-                      {/if}
-                      {if ($pre->Fpr_Tipo == 'fecha')}
-                        <input type="date" name="frm_pre_{$pre->Fpr_IdForPreguntas}"  class="form-control"   >
-                      {/if}
-                      {if ($pre->Fpr_Tipo == 'hora')}
-                        <input type="time" name="frm_pre_{$pre->Fpr_IdForPreguntas}"  class="form-control"   >
+                        {/if}
+                        {if ($pre->Fpr_Tipo == 'box')}
+                          {foreach $pre->opciones as $opc}
+                            <div class="checkbox">
+                              <label>
+                                <input type="checkbox" name="frm_pre_{$pre->Fpr_IdForPreguntas}[]" value="{$opc->Fpo_IdForPrOpc}">
+                                {$opc->Fpo_Opcion}
+                              </label>
+                            </div>
+                          {/foreach}
+                        {/if}
+                        {if ($pre->Fpr_Tipo == 'upload')}
+                          <input type="file" name="file_pre_{$pre->Fpr_IdForPreguntas}"  class="form-control" >
+                        {/if}
+                        {if ($pre->Fpr_Tipo == 'fecha')}
+                          <input type="date" name="frm_pre_{$pre->Fpr_IdForPreguntas}"  class="form-control"   >
+                        {/if}
+                        {if ($pre->Fpr_Tipo == 'hora')}
+                          <input type="time" name="frm_pre_{$pre->Fpr_IdForPreguntas}"  class="form-control"   >
+                        {/if}
+                        {if ($pre->Fpr_Tipo == 'cuadricula')}
+                          <table class="table table-bordered table-hover">
+                            <thead>
+                              <tr>
+                                <th>&nbsp;</th>
+                                {foreach $pre->hijos as $col}
+                                  <th>{$col->Fpr_Pregunta}</th>
+                                {/foreach}
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {foreach $pre->opciones as $fil}
+                                {if $fil->Fpo_Tipo == 'fil'}
+                                  <tr>
+                                    <td>{$fil->Fpo_Opcion}</td>
+                                    {foreach $pre->hijos as $col}
+                                      <td>
+                                        <div class="radio">
+                                          <label>
+                                            <input type="radio" name="frm_pre_{$col->Fpr_IdForPreguntas}" id="input" value="{$fil->Fpo_IdForPrOpc}" required="">
+                                          </label>
+                                        </div>
+                                      </td>
+
+                                    {/foreach}
+                                  </tr>
+                                {/if}
+                              {/foreach}
+                            </tbody>
+                          </table>
+                        {/if}
+                        {if ($pre->Fpr_Tipo == 'casilla')}
+                          <table class="table table-bordered table-hover">
+                            <thead>
+                              <tr>
+                                <th>&nbsp;</th>
+                                {foreach $pre->hijos as $col}
+                                  <th>{$col->Fpr_Pregunta}</th>
+                                {/foreach}
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {foreach $pre->opciones as $fil}
+                                {if $fil->Fpo_Tipo == 'fil'}
+                                  <tr>
+                                    <td>{$fil->Fpo_Opcion}</td>
+                                    {foreach $pre->hijos as $col}
+                                      <td>
+                                        <div class="checkbox">
+                                          <label>
+                                            <input type="checkbox" name="frm_pre_{$col->Fpr_IdForPreguntas}[]" id="input" value="{$fil->Fpo_IdForPrOpc}" >
+                                          </label>
+                                        </div>
+                                      </td>
+
+                                    {/foreach}
+                                  </tr>
+                                {/if}
+                              {/foreach}
+                            </tbody>
+                          </table>
+                        {/if}
                       {/if}
                     </div>
                   {/foreach}

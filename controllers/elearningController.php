@@ -12,7 +12,7 @@
  * @author ROLORO
  */
 class elearningController extends Controller {
-
+	protected $ruta_formularios = ROOT.'files'.DS.'elearning'.DS.'formularios'.DS;
   public function __construct($lang,$url)
   {
     parent::__construct($lang,$url);

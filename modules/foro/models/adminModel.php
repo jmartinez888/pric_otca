@@ -110,23 +110,17 @@ class adminModel extends Model
         }
     }
 
-    public function verificarNombreForo($For_IdForo, $For_Titulo, $For_Resumen, $For_Descripcion, $For_PalabrasClaves) {
+    public function verificarNombreForo($For_IdForo, $For_Titulo,$Idi_IdIdiomaselect) {
         try{  
             if(empty($For_Titulo)){
                 $For_Titulo = "sin contenido";
             }
-            if(empty($For_Resumen)){
-                $For_Resumen = "sin contenido";
-            }
-            if(empty($For_Descripcion)){
-                $For_Descripcion = "sin contenido";
-            }
-            if(empty($For_PalabrasClaves)){
-                $For_PalabrasClaves = "sin contenido";
-            }
+            
 
             $post = $this->_db->query(
-                        "SELECT For_IdForo, For_Titulo FROM foro WHERE For_IdForo = $For_IdForo AND For_Titulo = '$For_Titulo' AND For_Resumen = '$For_Resumen' AND For_Descripcion = '$For_Descripcion' AND For_PalabrasClaves = '$For_PalabrasClaves' ");
+                        "SELECT For_IdForo, For_Titulo FROM foro WHERE For_IdForo != $For_IdForo AND For_Titulo = '$For_Titulo' AND Idi_IdIdioma='$Idi_IdIdiomaselect'");
+
+            
         return $post->fetch();
         } catch (PDOException $exception) {
             $this->registrarBitacora("foro(adminModel)", "verificarNombreForo", "Error Model", $exception);

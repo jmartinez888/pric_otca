@@ -111,9 +111,12 @@ FROM tema_dublin ");
 
     public function getAutor($Aut_Nombre) {
         try {
-        $post = $this->_db->query(
-                "SELECT	aut.Aut_IdAutor FROM autor aut WHERE aut.Aut_Nombre = '$Aut_Nombre'");
-        return $post->fetch();
+        $sql = "SELECT	aut.Aut_IdAutor FROM autor aut WHERE aut.Aut_Nombre = '?'";
+        $result = $this->_db->prepare($sql);
+        $result->bindParam(1, $Aut_Nombre, PDO::PARAM_STR);
+        $result->execute();
+
+        return $result->fetch();      
          } catch (PDOException $exception) {
             
             $this->registrarBitacora("dublincore(registrarModel)", "getAutor", "Error Model", $exception);

@@ -26,6 +26,7 @@ new Vue({
   		pagination: {
   			start: 0,
   			length: 5,
+        active:true
   		},
   		pagination_agenda: {
   			start: 0,
@@ -57,12 +58,20 @@ new Vue({
 	  	}}).then(res => {
 	  		console.log(res.data)
 	  		let temp = res.data.data.map(v => {
-  				v.format_creacion = moment(v.For_FechaCreacion).fromNow()
+  				//v.format_creacion = moment(v.For_FechaCreacion).fromNow()
+          v.format_creacion = v.For_FechaCreacion;
   				return v
   			});
-	  		if (res.data.data.length >= this.pagination.length)
-	  				this.existeData = true
-	  			else this.existeData = false
+	  		if (res.data.data.length >= this.pagination.length){
+	  				this.existeData = true            
+	  			}else {
+            this.existeData = false
+            
+          }
+
+        if (res.data.data.length==0){
+             this.pagination.active=false
+        }
 
 	  		if (this.buscando) {
 	  			this.list_recientes = temp
@@ -84,8 +93,9 @@ new Vue({
 	  	}}).then(res => {
 	  		console.log(res.data)
 	  		let temp = res.data.data.map(v => {
-  				v.format_creacion = moment(v.For_FechaCreacion).fromNow()
-  				return v
+  				//v.format_creacion = moment(v.For_FechaCreacion).fromNow()
+          v.format_creacion = v.For_FechaCreacion
+          return v
   			});
 	  		if (res.data.data.length >= this.pagination.length)
 	  				this.existeDataAgenda = true
@@ -100,7 +110,7 @@ new Vue({
   },
   components: {
   	recientes
-  },
+  }, 
   created: function () {
   	this.loadRecientes()
   },
@@ -108,5 +118,9 @@ new Vue({
   	// this.list_recientes.push({id: 'asd'})
   	// this.list_recientes.push({id: 'asds'})
   	// this.list_recientes.push({id: 'asddd'})
+    $("#ver_mas").removeClass("hidden");
+  },
+  updated: function () {
+    $("#ver_mas").removeClass("hidden");
   }
 });

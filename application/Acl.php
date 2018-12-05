@@ -1,5 +1,6 @@
 <?php
 /*Modificado por Jhon Martinez*/
+use Illuminate\Database\Capsule\Manager as DB;
 class ACL
 {
     private $_registry;
@@ -7,7 +8,7 @@ class ACL
     private $_Usu_IdUsuario;
     private $_roles;
     private $_permisos;
-    
+
     public function __construct($idUsuario = false)
     {
         if($idUsuario)
@@ -25,22 +26,22 @@ class ACL
                 $this->_Usu_IdUsuario = 0;
             }
         }
-                
+
         $this->_registry = Registry::getInstancia();
         $this->_db = $this->_registry->_db;
         $this->_roles = $this->getRolesUsuario();
         $this->_permisos = $this->getPermisosRoles();
         $this->compilarAcl();
     }
-    
+
     public function compilarAcl()
     {
         $this->_permisos = array_merge($this->_permisos, $this->getPermisosUsuario());
         // print_r($this->_permisos);exit;
     }
-    
+
     public function getRolesUsuario()
-    { 
+    {
         try{
             $sql = "call s_s_listar_roles_x_id_usuario(?)";
             $result = $this->_db->prepare($sql);
@@ -54,16 +55,16 @@ class ACL
 
 
         if(count($roles) > 0)
-        {          
+        {
             // print_r($roles);
             return $roles;
         }
-        else 
-            return 0;                
+        else
+            return 0;
     }
-    
+
     public function getPermisosRoles()
-    {    
+    {
         $data = array();
         $RolesArray = $this->_roles;
         // $pdo = $this->_db;
@@ -74,7 +75,7 @@ class ACL
                 try{
 
                     // $permisosArray = $this->_db->query("select * from permisos_rol where Rol_IdRol = {$RolesArray[$i]['Rol_IdRol']}"
-                    //         );   
+                    //         );
                     // $permisosArray = $permisosArray->fetchAll(PDO::FETCH_ASSOC);
 
                     $sql = "call s_s_listar_permisos_rol_x_id_rol(?)";
@@ -86,22 +87,22 @@ class ACL
                 } catch (PDOException $exception) {
                     // $this->registrarBitacora("acl(indexModel)", "getPermisos", "Error Model", $exception);
                     $exception->getTraceAsString();
-                }                
+                }
                 // print_r($this->getPermisoKey($permisosArray[0]['Per_IdPermiso']));
                 for($j = 0; $j < count($permisosArray); $j++)
                 {
                     $key = $this->getPermisoKey($permisosArray[$j]['Per_IdPermiso']);
                     if($key == ''){continue;}
-                    
+
                     if($permisosArray[$j]['Per_Valor'] == 1)
                     {
                         $v = true;
                     }
                     else
                     {
-                        $v = false; 
+                        $v = false;
                     }
-                    
+
                     $data[$key] = array(
                         'key' => $key,
                         'permiso' => $this->getPermisoNombre($permisosArray[$j]['Per_IdPermiso']),
@@ -110,7 +111,7 @@ class ACL
                         'heredado' => true,
                         'id' => $permisosArray[$j]['Per_IdPermiso']
                     );
-                } 
+                }
             }
         }
 
@@ -139,14 +140,14 @@ class ACL
             {
                 continue;
             }
-            
+
             if($permisosUsuarios[$i]['Peu_Valor'] == 1)
             {
                 $v = true;
             } else {
                 $v = false;
             }
-            
+
             $data[$key] = array(
                 'key' => $key,
                 'permiso' => $this->getPermisoNombre($permisosUsuarios[$i]['Per_IdPermiso']),
@@ -165,7 +166,7 @@ class ACL
 
                     $permisos = $this->_db->query(
                     " SELECT peu.*, r.Rol_Nombre FROM permisos_usuario peu " .
-                    " INNER JOIN permisos_rol per ON peu.Per_IdPermiso = per.Per_IdPermiso " . 
+                    " INNER JOIN permisos_rol per ON peu.Per_IdPermiso = per.Per_IdPermiso " .
                     " INNER JOIN rol r ON per.Rol_IdRol = r.Rol_IdRol " .
                     " WHERE peu.Usu_IdUsuario = {$this->_Usu_IdUsuario} " .
                     " AND peu.Per_IdPermiso IN (" . implode(",", $idPermisos) . ")"
@@ -192,7 +193,7 @@ class ACL
             $permisos = array();
         }
 
-        
+
         // print_r($permisos);exit;
         for($i = 0; $i < count($permisos); $i++)
         {
@@ -201,7 +202,7 @@ class ACL
             {
                 continue;
             }
-            
+
             if($permisos[$i]['Peu_Valor'] == 1)
             {
                 $v = true;
@@ -210,7 +211,7 @@ class ACL
             {
                 $v = false;
             }
-            
+
             $data[$key] = array(
                 'key' => $key,
                 'permiso' => $this->getPermisoNombre($permisos[$i]['Per_IdPermiso']),
@@ -231,7 +232,7 @@ class ACL
 
         if($RolesArray && count($RolesArray) > 0){
             for($i = 0; $i < count($RolesArray); $i++)
-            {                
+            {
                 try{
                     $sql = "call s_s_listar_ids_permisos_x_id_rol(?)";
                     $idPermisos = $this->_db->prepare($sql);
@@ -242,18 +243,18 @@ class ACL
                     // $this->registrarBitacora("acl(indexModel)", "getPermisos", "Error Model", $exception);
                     $exception->getTraceAsString();
                 }
-                
+
                 for($j = 0; $j < count($idPermisos); $j++){
                     $idPermisosArray[] = $idPermisos[$j]['Per_IdPermiso'];
 
-                    
+
                 }
             }
         }
         return $idPermisosArray;
-    }   
-    
-    
+    }
+
+
     public function getPermisoKey($permisoID)
     {
         $permisoID = (int) $permisoID;
@@ -266,15 +267,15 @@ class ACL
 
         // $pdo = new PDO('mysql:host=' . DB_HOST .
         //         ';dbname=' . DB_NAME,
-        //         DB_USER, 
+        //         DB_USER,
         //         DB_PASS);
         // $pdo = $this->_db;
-        try{                
+        try{
                 // $key = $this->_db->query(
                 //         "select Per_Ckey as `key` from permisos " .
                 //         "where Per_IdPermiso = {$permisoID}"
                 //         );
-                        
+
                 // $key = $key->fetch();
 
                 $sql = " call s_s_obtener_ckey_permiso_x_id(?) ";
@@ -291,26 +292,26 @@ class ACL
             $exception->getTraceAsString();
         }
             // print_r($key);
-        
+
         // var_dump($key);
             // echo $key['key'];
         return $key['key'];
     }
-    
+
     public function getPermisoNombre($permisoID)
     {
         $permisoID = (int) $permisoID;
         // $pdo = new PDO('mysql:host=' . DB_HOST .
         //         ';dbname=' . DB_NAME,
-        //         DB_USER, 
+        //         DB_USER,
         //         DB_PASS);
         try{
-        
+
                 // $key = $this->_db->query(
                 //         "select Per_Nombre from permisos " .
                 //         "where Per_IdPermiso = {$permisoID}"
                 //         );
-                        
+
                 // $key = $key->fetch();
 
                 $sql = "call s_s_obtener_nombre_permiso_x_id(?)";
@@ -344,10 +345,10 @@ class ACL
 
         return $_Rol_Nombre['Rol_Nombre'];
     }
-    
+
     #creador por rcardenas
     public function getIdRol_x_ckey($iRol_Ckey)
-    {       
+    {
         try{
                 $rol = $this->_db->query(
                         "SELECT Rol_IdRol,Rol_Nombre FROM rol WHERE Rol_Ckey = '$iRol_Ckey'");
@@ -357,12 +358,12 @@ class ACL
                 return $exception->getTraceAsString();
             }
 
-        
+
     }
-    
 
 
-    //NUevo creado por Vigo 
+
+    //NUevo creado por Vigo
     public function rol($iRol_IdRol) {
        if (is_array($this->_roles) || is_object($this->_roles)) {
            foreach ($this->_roles as $item_rol) {
@@ -374,17 +375,22 @@ class ACL
            return false;
        }
     }
-    
-        
+
+    public function rolckey($iRol_Ckey){
+        $rol=$this->getIdRol_x_ckey($iRol_Ckey);
+        return $this->rol($rol['Rol_IdRol']);
+    }
+    //Fin nUevo
+
     public function getPermisos()
     {
         if(isset($this->_permisos) && count($this->_permisos))
             // print_r($this->_permisos);exit;
             return $this->_permisos;
     }
-    
+
     public function Usu_IdUsuario()
-    {        
+    {
         return $this->_Usu_IdUsuario;
     }
     public function getAutenticado()
@@ -396,36 +402,52 @@ class ACL
             return false;
         }
     }
+    /**
+     * [tienePermisos valida más de un permiso de usuario]
+     * @param  [string || array(strings)] $keys [permiso o grupo de permisos]
+     * @return [boolean]                   []
+     */
+    public function tienePermisos ($keys) {
+
+        $build =  DB::table('usuario_rol')->select(DB::raw('COUNT(*) as permisos') )
+            ->where('Usu_IdUsuario', $this->_Usu_IdUsuario)
+            ->join('rol', 'usuario_rol.Rol_IdRol', 'rol.Rol_IdRol')
+            ->join('permisos_rol', 'rol.Rol_IdRol', 'permisos_rol.Rol_IdRol')
+            ->join('permisos', 'permisos_rol.Per_IdPermiso', 'permisos.Per_IdPermiso');
+        if (is_array($keys)) {
+            return $build->whereIn('permisos.Per_CKey', $keys)->first()->permisos == count($keys) ? true : false;
+        } else {
+            return  $build->where('permisos.Per_CKey', $keys)->first()->permisos > 0 ? true : false;
+        }
+    }
 
     public function permiso($key)
     {
         if(array_key_exists($key, $this->_permisos)){
-
             if($this->_permisos[$key]['valor'] == true || $this->_permisos[$key]['valor'] == 1)
             {
                 return true;
             }
         }
-        
         return false;
     }
-    
+
     public function acceso($key)
-    {   
+    {
         if($this->permiso($key))
         {
             Session::tiempo();
             return;
         }
         $url = str_replace("/","*",$this->_registry->_request->getUrl());
-        //$url=$_SERVER['HTTP_REFERER'];    
+        //$url=$_SERVER['HTTP_REFERER'];
 //        if(isset($url)&&!empty($url))
 //        {
 //           $url="/"+$url;
 //        }
 //        else
 //        {
-//          $url="";  
+//          $url="";
 //        }
         if(Session::get('autenticado'))
         {
@@ -451,9 +473,9 @@ class ACL
         //}
         //else
         //{
-         // $url="";  
+         // $url="";
         //}
-        
+
         header("location:" . BASE_URL . "usuarios/login/index/$url");
         exit;
     }

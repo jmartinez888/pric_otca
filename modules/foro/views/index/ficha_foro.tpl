@@ -22,7 +22,7 @@
                 </div>
                 
                 <!--¨Para subir reporte de Discusion-->
-                {if Session::get('autenticado') && ($Rol_Ckey == "administrador" || $Rol_Ckey=="administrador_foro" || $Rol_Ckey == "lider_foro" || $id_usuario == $foro.Usu_IdUsuario)}
+                {if Session::get('autenticado') && ( $Rol_Ckey == "administrador" || $Rol_Ckey=="administrador_foro" || $Rol_Ckey == "lider_foro" || $Rol_Ckey == "moderador_foro" || $id_usuario == $foro.Usu_IdUsuario)}
 
                     {$Fif_EsOutForo=0}
                     {foreach from=$foro.Archivos item=file}
@@ -38,7 +38,7 @@
                                 <a href="{$_layoutParams.root_clear}dublincore/registrar/index/{$foro.Rec_IdRecurso}/{$foro.For_IdForo}" title="Subir reporte de la Discusión" id="btn-configuracion" class="btn btn-primary btn-circle dropdown-toggle"><i class="glyphicon glyphicon-cloud-upload"></i>
                                 </a>
                             </div>
-                    {else}
+                        {else}
                         <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 text-center btn_opciones_foro pull-right">
                             <a href="{$_layoutParams.root_clear}dublincore/editar/index/{$Dub_IdDublinCore}/{$foro.For_IdForo}" title="Editar reporte de foro" id="btn-configuracion" class="btn btn-primary btn-circle dropdown-toggle"><i class="glyphicon glyphicon-pencil"></i>
                             </a>
@@ -47,8 +47,8 @@
                             <a target="_blank" href="{$_layoutParams.root_archivo_fisico}{$file.Fif_NombreFile}" title="Descargar reporte de discusión" id="btn-configuracion" class="btn btn-primary btn-circle dropdown-toggle"><i class="glyphicon glyphicon-cloud-download"></i>
                             </a>
                         </div>
+                        {/if}
                     {/if}
-                {/if}
                 <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 text-center btn_opciones_foro pull-right">
                     <button  title="Administrar" id="btn-configuracion" class="btn btn-primary btn-circle dropdown-toggle" data-toggle="dropdown" type="button"><i class="glyphicon glyphicon-cog"></i>
                     </button>
@@ -56,7 +56,7 @@
                         {if $_acl->permiso("editar_foro") || $id_usuario == $foro.Usu_IdUsuario}
                         <li><a href="{$_layoutParams.root}foro/admin/form/edit/{$foro.For_Funcion}/{$foro.For_IdForo}" id_foro="{$foro.For_IdForo}" class="opciones_foro" style="cursor: pointer;">Editar<i class="i_opciones_foro glyphicon glyphicon-pencil pull-right"></i></a></li>
                         {/if}
-                        {if $_acl->permiso("agregar_sub_discusion") && !isset($foro.For_IdPadre) && $foro.For_Funcion == 'forum' && $foro.Row_Estado == 1 && $foro.For_Estado == 1 && $}
+                        {if $_acl->permiso("agregar_sub_discusion") && !isset($foro.For_IdPadre) && $foro.For_Funcion == 'forum' && $foro.Row_Estado == 1 && $foro.For_Estado == 1}
                         <li><a  href="{$_layoutParams.root}foro/admin/form/new/forum/{$foro.For_IdForo}" class="opciones_foro" style="cursor: pointer;">Crear Sub Discusión<i class="i_opciones_foro glyphicon glyphicon-plus pull-right"></i></a></li>
                         {/if}
                         {if $foro.For_Funcion != 'query'}
@@ -67,32 +67,35 @@
                         <li><a href="{$_layoutParams.root}foro/admin/actividad/{$foro.For_IdForo}" id_foro="{$foro.For_IdForo}" class="opciones_foro" style="cursor: pointer;">Ver Actividades<i class="i_opciones_foro glyphicon glyphicon-calendar pull-right"></i></a></li>
                         {/if}
                         {/if}
-                        {if ($_acl->permiso("habilitar_foro") || $id_usuario == $foro.Usu_IdUsuario) && ($foro.For_Estado== 2 || $foro.Row_Estado == 0 || $foro.For_Estado== 0)}
+                        {if ($_acl->permiso("habilitar_foro") || $id_usuario == $foro.Usu_IdUsuario) &&  $foro.For_Estado== 0}
                         <li><a id_foro="{$foro.For_IdForo}" class="opciones_foro hablitarForo" style="cursor: pointer;">Habilitar<i class="i_opciones_foro glyphicon glyphicon-ok pull-right"></i></a></li>
                         {else}
-                        {if ($_acl->permiso("cerrar_foro") || $id_usuario == $foro.Usu_IdUsuario) && ($foro.For_Estado== 0 || $foro.Row_Estado == 1 || $foro.For_Estado== 1)}
+                        {if ($_acl->permiso("cerrar_foro") || $id_usuario == $foro.Usu_IdUsuario) && $foro.For_Estado== 0}
                         <li><a id_foro="{$foro.For_IdForo}" class="opciones_foro cerrar_foro" estado="{$foro.For_Estado}" style="cursor: pointer;">Cerrar Foro<i class="i_opciones_foro glyphicon glyphicon-off pull-right"></i></a></li>
                         {/if}
                         {if ($_acl->permiso("deshabilitar_foro") || $id_usuario == $foro.Usu_IdUsuario) && ($foro.For_Estado== 1 || $foro.For_Estado == 2)}
                         <li><a id_foro="{$foro.For_IdForo}" for_estado="{$foro.For_Estado}" class="opciones_foro deshablitarForo" style="cursor: pointer;">Deshabilitar<i class="i_opciones_foro glyphicon glyphicon-eye-close pull-right"></i></a></li>
                         {/if}
                         {/if}
-                        {if ($_acl->permiso("deshabilitar_foro") || $id_usuario == $foro.Usu_IdUsuario) && $foro.Row_Estado == 1 && ($foro.For_Estado== 0 || $foro.For_Estado== 1 || $foro.For_Estado== 2)}
+                        {if (($_acl->permiso("eliminar_foro") || $id_usuario == $foro.Usu_IdUsuario)) && $foro.Row_Estado==1}
                         <li><a id_foro="{$foro.For_IdForo}" class="opciones_foro eliminar_foro" Row_Estado="{$foro.Row_Estado}" style="cursor: pointer;">Eliminar<i class="i_opciones_foro glyphicon glyphicon-trash pull-right"></i></a></li>
                         {/if}
-                        {if $Rol_Ckey == "administrador" || $Rol_Ckey == "administrador_foro    "}
+                        {if (($_acl->permiso("restaurar_foro") || $id_usuario == $foro.Usu_IdUsuario)) && $foro.Row_Estado==0}
+                        <li><a id_foro="{$foro.For_IdForo}" class="opciones_foro eliminar_foro" Row_Estado="{$foro.Row_Estado}" style="cursor: pointer;">Restaurar<i class="i_opciones_foro glyphicon glyphicon-refresh pull-right"></i></a></li>
+                        {/if}
+                        {if $Rol_Ckey == "administrador" || $Rol_Ckey == "administrador_foro"}
                         <li><a href="{$_layoutParams.root}foro/admin/" id_foro="{$foro.For_IdForo}" class="opciones_foro" style="cursor: pointer;">Ver todos los foros<i class="i_opciones_foro glyphicon glyphicon-list pull-right"></i></a></li>
                         {/if}
                     </ul>
                 </div>
-                {/if}
+                {/if}                
                 <!--¨Fin Para subir reporte de Discusion-->
                 
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12  p-rt-lt-0">
                     <hr class="cursos-hr">
                 </div>
                 <div class="col col-xs-12 col-sm-12 col-md-12 col-lg-12 ">
-                    <h3 class="titulo-ficha margin-t-10">{$foro.For_Titulo}</h3>
+                    <h3 class="margin-t-10">{$foro.For_Titulo}</h3>
                 </div>
                 
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 p-rt-lt-0" style="font-size: 12px;">
@@ -178,9 +181,9 @@
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 p-rt-lt-0">
                     {if Session::get('autenticado')}
-                        {if $comentar_foro ||$Rol_Ckey == "administrador" ||  $Rol_Ckey == "administrador_foro" || $Rol_Ckey == "lider_foro" || $Rol_Ckey == "moderador_foro"}
+                        {if $comentar_foro || $_acl->rolckey("administrador") || $_acl->rolckey("administrador_foro") || $_acl->rolckey("lider_foro") || $_acl->rolckey("moderador_foro")}
                             {if $foro.For_Estado == 0 || $foro.For_Estado == 2 || $foro.Row_Estado == 0}
-                                {if $Rol_Ckey == "administrador" ||  $Rol_Ckey == "administrador_foro" || $Rol_Ckey == "lider_foro" || $Rol_Ckey == "moderador_foro" }
+                                {if $_acl->rolckey("administrador")  || $_acl->rolckey("administrador_foro") || $_acl->rolckey("lider_foro") || $_acl->rolckey("moderador_foro") }
                                     {if $foro.Row_Estado== 1}
                                         {if $foro.For_Estado == 0}
                                             <div class="col-lg-12 p-rt-lt-0 alert alert-danger text-center">
@@ -191,9 +194,9 @@
                                                 <strong class="texto-alert-danger">!Este foro se encuentra CERRADO!. Si desea habilitarlo, ir al boton de configuración <i class="glyphicon glyphicon-cog"></i> y de click en Habilitar.</strong>
                                             </div>
                                         {/if}
-                                    {elseif $Rol_Ckey == "administrador" ||  $Rol_Ckey == "administrador_foro"}
+                                    {elseif $_acl->rolckey("administrador") || $_acl->rolckey("administrador_foro")}
                                         <div class="col-lg-12 p-rt-lt-0 alert alert-danger text-center">
-                                            <strong class="texto-alert-danger">!Este foro se encuentra ELIMINADO!. Si desea habilitarlo, ir al boton de configuración <i class="glyphicon glyphicon-cog"></i> y de click en Habilitar.</strong>
+                                            <strong class="texto-alert-danger">!Este foro se encuentra ELIMINADO!. Si desea habilitarlo, ir al boton de configuración <i class="glyphicon glyphicon-cog"></i> y de click en Restaurar.</strong>
                                         </div> 
                                     {/if}
                                 {else}
@@ -289,22 +292,22 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-md-12 col-xs-12 col-lg-12 col-sm-12">
-                        <h2 class="col-xs-8">Reporta un Comentario</h2>
+                        <h2 class="col-md-8 col-xs-8 col-lg-8 col-sm-8">Reporta un Comentario</h2>
                         <input type="hidden" id="idcomentario" name="idcomentario">
                         <button title="cerrar" type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                         </button>
                         <div class="panel-group">
                             <div class="panel panel-default">
-                                <div class="col-xs-12 panel-heading" style="color: #333; background-color: #F5F5AE; border-color: #ddd;">
-                                    <div class="col col-xs-1"><img src="{$_layoutParams.root_clear}public/img/advertencia.png">
+                                <div class="col-md-12 col-xs-12 col-lg-12 col-sm-12 panel-heading" style="color: #333; background-color: #F5F5AE; border-color: #ddd;">
+                                    <div class="col col-col-md-1 col-xs-1 col-lg-1 col-sm-1 "><img class="img-responsive" src="{$_layoutParams.root_clear}public/img/advertencia.png">
                                     </div>
-                                    <div class="col-xs-11">
+                                    <div class="col-md-11 col-xs-11 col-lg-11 col-sm-11">
                                     Tus comentarios nos ayudan a determinar cuándo algo no es apropiado. A continuación indicanos cúal es tu motivo para reportar este comentario.</div>
                                 </div>
                                 <div class="panel-body">
                                     <div class="row">
-                                        <div class="col-md-12">
+                                        <div class="col-md-12 col-xs-12 col-lg-12 col-sm-12">
                                             <div class="form-group">
                                                 <label>Mensaje</label>
                                                 <textarea class="form-control" id="ta_mensaje_reportar" name="ta_mensaje_reportar"></textarea>

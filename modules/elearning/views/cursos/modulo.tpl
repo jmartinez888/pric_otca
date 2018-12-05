@@ -7,7 +7,7 @@
       <div class="col-lg-5 titulo-modulo">
          <h4><strong> Módulo {$mod_datos.INDEX}: {$modulo["Moc_Titulo"]}</strong></h4>
       </div>
-      <div class="col-lg-5 derecha" style="margin-top: 5px !important">
+      <div class="col-sm-6 col-lg-5 derecha" style="margin-top: 5px !important">
           <span>Lección {$leccion["Index"]} de {count($lecciones)}</span>
           {if $leccion["Index"] > 1 }
           <form method="post" action="{BASE_URL}elearning/cursos/_previous_leccion/" style="display: inline-block">
@@ -61,8 +61,8 @@
             {/if}
           {/if}
       </div>
-      <div class="col-lg-2" style="margin-top: 5px !important">
-        <a href="{BASE_URL}elearning/cursos/curso/{$curso}">
+      <div class="col-sm-6 col-lg-2" style="margin-top: 5px !important">
+        <a class="pull-right" href="{BASE_URL}elearning/cursos/curso/{$curso}">
         <button class="course-students-amount btn-regresar btn btn-group">
           <span class="glyphicon glyphicon-hand-left" aria-hidden="true"></span>
           Volver al curso
@@ -72,12 +72,12 @@
   </div>
 
 <div class="row">
-  <div class="col-lg-12 leccion-container">
-  <div class="col-lg-3" style="padding-left:0px; padding-right: 0px;">
+  <div class="col-lg-12 ">
+  <div class="col-sm-12 col-md-3 col-lg-3" style="padding-left:0px; padding-right: 0px;">
 
     {include file='modules/elearning/views/cursos/menu/lecciones.tpl'}
   </div>
-  <div class="col-lg-9" style="padding-left:0px; padding-right: 0px;">
+  <div class="col-sm-12 col-md-9 col-lg-9" style="padding-left:0px; padding-right: 0px;">
 
 
     {if $leccion["Lec_Tipo"]==1}
@@ -141,7 +141,7 @@
                   </small>
                   <h3></h3>
               </div>
-            </div> 
+            </div>
             <div class="col-lg-12 circulo">
               <div class="progress" data-toggle="tooltip" data-placement="top" title="" data-original-title="Your progress">
                 <div class="clip-1">
@@ -162,16 +162,16 @@
             <div style="width: 100%; margin: 0px auto; text-align:center;">
             <form class="" role="form" method="post" action="" autocomplete="on">
                 <input type="hidden" value="1" name="enviar" />
-               
+
                 <div class="form-group">
-                        
+
                     <label class="col-lg-12 control-label">Número de intentos: {$intentos.intentos} de {$examen.Exa_Intentos}</label>
                     <div class="col-lg-12">
                     <p></p>
                         <p>Al presionar el botón de Comenzar Prueba se contabilizará un intento.</p>
                     </div>
                 </div>
-                
+
                 <div class="form-group">
                     <div class="col-lg-12">
                      <button class="btn btn-success margin-top-10" name="comenzar" id="comenzar">Comenzar Prueba</button>
@@ -182,7 +182,7 @@
             {else}
             <div style="width: 100%; margin: 0px auto; text-align:center;">
                 <div class="form-group">
-                        
+
                     <label class="col-lg-12 control-label">Número de intentos: {$intentos.intentos} de {$examen.Exa_Intentos}</label>
                     <div class="col-lg-12">
                     <p></p>
@@ -199,7 +199,7 @@
                   <small>Obtuviste {$ultimoexamen.Exl_Nota} puntos de {$examen.Exa_Peso}</small>
                   <h3></h3>
               </div>
-            </div> 
+            </div>
             <div class="col-lg-12 circulo">
               <div class="progress" data-toggle="tooltip" data-placement="top" title="" data-original-title="Your progress">
                 <div class="clip-1">
@@ -219,16 +219,16 @@
             <div style="width: 100%; margin: 0px auto; text-align:center;">
             <form class="" role="form" method="post" action="" autocomplete="on">
                 <input type="hidden" value="1" name="enviar" />
-               
+
                 <div class="form-group">
-                        
+
                     <label class="col-lg-12 control-label">Número de intentos: {$intentos.intentos} de {$examen.Exa_Intentos}</label>
                     <div class="col-lg-12">
                     <p></p>
                         <p>Al presionar el botón de Comenzar Prueba se contabilizará un intento.</p>
                     </div>
                 </div>
-                
+
                 <div class="form-group">
                     <div class="col-lg-12">
                      <button class="btn btn-success margin-top-10" name="comenzar" id="comenzar">Comenzar Prueba</button>
@@ -239,7 +239,7 @@
             {else}
             <div style="width: 100%; margin: 0px auto; text-align:center;">
                 <div class="form-group">
-                        
+
                     <label class="col-lg-12 control-label">Número de intentos: {$intentos.intentos} de {$examen.Exa_Intentos}</label>
                     <div class="col-lg-12">
                     <p></p>
@@ -253,7 +253,7 @@
               <div style="width: 100%; margin: 0px auto; text-align:center;">
                <form class="" role="form" method="post" action="" autocomplete="on">
                 <input type="hidden" value="1" name="enviar" />
-               
+
                 <div class="form-group">
                     <h3>Usted no ha realizado ningún intento hasta el momento</h3>
                     <label class="col-lg-12 control-label">Número de intentos disponibles: {$examen.Exa_Intentos}</label>
@@ -262,7 +262,7 @@
                         <p>Al presionar el botón de Comenzar Prueba se contabilizará un intento.</p>
                     </div>
                 </div>
-                
+
                 <div class="form-group">
                     <div class="col-lg-12">
                      <button class="btn btn-success margin-top-10" name="comenzar" id="comenzar">Comenzar Prueba</button>

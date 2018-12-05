@@ -10,7 +10,8 @@ Vue.component('input-tags', {
 				tipo: 'texto',
 				pregunta: '',
 				descripcion: '',
-				options: []
+				options: [],
+				preguntas: []
 
 			}
 		}
@@ -35,7 +36,7 @@ Vue.component('input-tags', {
 					frm.append('pregunta_id', this.element.id)
 				}
 				frm.append('values[tipo]', this.values.tipo)
-				frm.append('values[obligatorio]', 1)
+				// frm.append('values[obligatorio]', 1)
 				frm.append('values[pregunta]', this.values.pregunta)
 				frm.append('values[descripcion]', this.values.descripcion)
 				let i = 0
@@ -43,6 +44,13 @@ Vue.component('input-tags', {
 					frm.append('values[options][' + i + '][id]', o.id)
 					frm.append('values[options][' + i + '][opcion]', o.opcion)
 					frm.append('values[options][' + i + '][orden]', o.orden)
+					i++
+				}
+				i = 0
+				for (var o of this.values.preguntas) {
+					frm.append('values[preguntas][' + i + '][id]', o.id)
+					frm.append('values[preguntas][' + i + '][pregunta]', o.pregunta)
+					frm.append('values[preguntas][' + i + '][orden]', o.orden)
 					i++
 				}
 				if (this.tipo == 'titulo') {
@@ -66,14 +74,25 @@ Vue.component('input-tags', {
 
 	},
 	methods: {
-		onClick_removeOption(i, opcion_id) {
+		onClick_removeOption(i, opcion_id, tipo = 'none') {
 			let data = new FormData();
-			data.append('opcion_id', opcion_id)
-			axios.post(_root_lang + 'elearning/formulario/delete_opcion/' + opcion_id, data).then(res => {
-				if (res.data.success) {
-					this.values.options.splice(i, 1);
-				}
-			})
+			if (tipo == 'none' || tipo == 'fil') {
+				data.append('opcion_id', opcion_id)
+				axios.post(_root_lang + 'elearning/formulario/delete_opcion/' + opcion_id, data).then(res => {
+					if (res.data.success) {
+						this.values.options.splice(i, 1);
+					}
+				})
+			}
+			if (tipo == 'col') {
+				data.append('pregunta_id', opcion_id)
+				axios.post(_root_lang + 'elearning/formulario/delete_pregunta/' + opcion_id, data).then(res => {
+					if (res.data.success) {
+						// this.values.options.splice(i, 1);
+						this.$el.parentElement.remove()
+					}
+				})
+			}
 
 		},
 		setStyle: function (value) {
@@ -83,8 +102,29 @@ Vue.component('input-tags', {
 			else
 				target.classList.remove('tag_input_edit_select')
 		},
+		onClick_Obligatorio: function () {
+			let frm = new FormData();
+			let obl = this.element.obligatorio == 1 ? 0 : 1
+			frm.append('obligatorio', obl);
+			frm.append('pregunta_id', this.element.id);
+			frm.append('tipo', '');
+			frm.append('formulario_id', '');
+			axios.post(_root_lang + 'elearning/formulario/update_pregunta/' + this.element.id + '/obligatorio', frm).then(res => {
+				if (res.data.success)
+					this.element.obligatorio = obl
+			});
+		},
 		onClick_delete: function () {
-			this.$el.parentElement.remove()
+			console.log(this.element)
+			let data = new FormData();
+			data.append('pregunta_id', this.element.id)
+			axios.post(_root_lang + 'elearning/formulario/delete_pregunta/' + this.element.id, data).then(res => {
+				if (res.data.success) {
+					// this.values.options.splice(i, 1);
+					this.$el.parentElement.remove()
+				}
+			})
+
 			// this.$emit('delete_tag', this.element.id);
 
 		},
@@ -98,6 +138,29 @@ Vue.component('input-tags', {
 				if (res.data.success)
 					this.values.options.push(res.data.data)
 			})
+		},
+		onClick_agregarOptionColFil: function (opc = 'none') {
+			let data = new FormData();
+			data.append('pregunta_id', this.element.id)
+
+			switch (opc) {
+				case 'fil':
+					data.append('tipo_opc', opc)
+					axios.post(_root_lang + 'elearning/formulario/store_opcion/' + this.element.id, data).then(res => {
+						if (res.data.success)
+							this.values.options.push(res.data.data)
+					})
+					break;
+				case 'col':
+					data.append('pregunta_padre', this.element.id)
+					axios.post(_root_lang + 'elearning/formulario/store_pregunta/' + this.element.formulario_id + (this.element.tipo == 'cuadricula' ? '/radio' : '/box'), data).then(res => {
+						if (res.data.success) {
+							this.values.preguntas.push(res.data.data)
+							// this.tags.push({name: 'b', id: res.data.data.id, edit: false, tag_name: 'texto', })
+						}
+					})
+					break;
+			}
 		}
 	},
 	mounted: function () {
@@ -116,9 +179,31 @@ Vue.component('input-tags', {
 			this.values.pregunta = this.element.pregunta
 			this.values.descripcion = this.element.descripcion
 			this.values.options = this.element.opciones
+			if (this.element.tipo == 'cuadricula' || this.element.tipo == 'casilla') {
+				this.values.preguntas = this.element.hijos
+			}
 		}
 
 
+	}
+})
+new Vue({
+	el: '#formulario_respuestas_vue',
+	data: function () {
+		return {
+
+		}
+	},
+	methods: {
+		onClick_deleteRespuesta: function (respuesta_id) {
+			console.log(event)
+			let target = event.target.parentNode.parentNode.parentNode
+			axios.post(_root_lang + 'elearning/formulario/delete_respuesta/' + respuesta_id).then(res => {
+				if (res.data.success) {
+					target.remove()
+				}
+			})
+		}
 	}
 })
 
@@ -175,6 +260,22 @@ new Vue({
 					this.tags.splice(i, 1)
 				}
 
+			})
+
+		},
+		onClick_agregarTitulo: function () {
+			this.tags.forEach(v => {
+				// if (v.id != id)
+					v.edit = false
+
+			})
+			this.element_titulo.edit = false
+			axios.post(_root_lang + 'elearning/formulario/store_pregunta/' + this.data.id + '/titulo_a').then(res => {
+				if (res.data.success) {
+					res.data.data.edit = true
+					this.tags.push(res.data.data)
+					// this.tags.push({name: 'b', id: res.data.data.id, edit: false, tag_name: 'texto', })
+				}
 			})
 
 		},
