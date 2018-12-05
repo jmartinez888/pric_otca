@@ -14,33 +14,14 @@ class acercadeController extends Controller{
         $this->_view->getLenguaje("index_inicio");      
         $this->_view->renderizar('index');
     }
-    public function otca()
-    {
-    	
-        $this->validarUrlIdioma();
-        $this->_view->setTemplate(LAYOUT_FRONTEND); 
-        $this->_view->getLenguaje("index_inicio");      
-        $this->_view->renderizar('otca');
-    }
-    public function ora()
-    {    	
-        $this->validarUrlIdioma();
-        $this->_view->setTemplate(LAYOUT_FRONTEND); 
-        $this->_view->getLenguaje("index_inicio");      
-        $this->_view->renderizar('ora');
-    }
-    public function elProyecto()
-    {       
-        $this->validarUrlIdioma();
-        $this->_view->setTemplate(LAYOUT_FRONTEND); 
-        $this->_view->getLenguaje("index_inicio");      
-        $this->_view->renderizar('elProyecto');
-    }
+   
     public function contacto()
     {       
         $this->validarUrlIdioma();
         $this->_view->setTemplate(LAYOUT_FRONTEND); 
-        $this->_view->getLenguaje("index_inicio");      
+        $this->_view->assign('titulo', 'Contactar');
+        $this->_view->getLenguaje("index_inicio");    
+        $this->_view->getLenguaje("template_backend_lang");    
         $this->_view->renderizar('contacto');
     }
 }
