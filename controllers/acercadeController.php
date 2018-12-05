@@ -21,7 +21,7 @@ class acercadeController extends Controller{
         $this->_view->setTemplate(LAYOUT_FRONTEND); 
         $this->_view->assign('titulo', 'Contactar');
         $this->_view->getLenguaje("index_inicio");    
-        $this->_view->getLenguaje("template_backend_lang");    
+        $this->_view->getLenguaje("template_backend");    
         $this->_view->renderizar('contacto');
     }
 }
