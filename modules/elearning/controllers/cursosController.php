@@ -74,6 +74,7 @@ class cursosController extends elearningController {
   //Jhon Martinez
   public function cursos(){
       $model = $this->loadModel("curso");
+      $lang = $this->_view->getLenguaje('elearning_cursos', false, true);
       // $mConstante = $this->loadModel("constante");
       $_tipo_curso = $this->getInt('_tipo_curso');
       $_mis_cursos = $this->getInt('_mis_cursos');
@@ -138,6 +139,7 @@ class cursosController extends elearningController {
       $this->_view->setJs(array("inicio"));
       $this->_view->setCss(array("modulo", "index", "jp-index", "jp-detalle-lateral"));
       $this->_view->assign("busqueda", $busqueda);
+      $this->_view->assign("titulo", $lang->get('str_cursos'));
       $this->_view->assign("cursos", $cursos);
       $this->_view->assign("_mis_cursos",$_mis_cursos);
       $this->_view->assign("_tipo_curso",$_tipo_curso);

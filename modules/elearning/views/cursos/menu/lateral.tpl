@@ -8,6 +8,7 @@
       width: 100%;
       padding-right: 0px;
   }
+
   .side-menu {
       list-style: none;
       color: #222;
@@ -221,22 +222,24 @@
     -webkit-box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.6);
     box-shadow: 3px 3px 10px rgba(100, 100, 100, 0.6);
   }
+
+  .side-menu-center-mid {
+    display: flex;
+    align-items: center;
+  }
 </style>
 
 
 
-  <div class="col col-md-2 col-lg-2">
-    <div class="col-md-12 menu-cursos" style="padding-top: 40px;">
+  <div class="col-xs-12 col-sm-12 col-md-3 col-lg-2">
+    <div class="col-sm-12 col-md-12 menu-cursos" style="padding-top: 40px;">
         <ul class="col-md-12 p-rt-lt-0">
           <a href="{BASE_URL}elearning/cursos/" class="nounderline">
           <div class="side-menu2 col-md-12 p-rt-lt-0">
-            <li class="side-menu col-md-12" style="position: relative">
-            <div class="col-md-2 p-rt-lt-0">
+            <li class="side-menu side-menu-center-mid col-md-12" style="position: relative">
               <i class="glyphicon glyphicon-blackboard"></i>
-            </div>
-            <div class="col-md-10 p-rt-lt-0">
-              <span> Cursos</span>
-            </div>
+              &nbsp;
+              <span> {$lang->get('str_cursos')}</span>
           </li>
         </div>
           </a>
@@ -246,19 +249,16 @@
           <a href="{BASE_URL}elearning/cursos/miscursos" class="nounderline">
             <div class="side-menu2"><li class="side-menu" style="position: relative">
             <i class="glyphicon glyphicon-book"></i>
-            <span> Mis Cursos</span></li></div>
+            <span> {$lang->get('str_mis_cursos')}</span></li></div>
           </a>
         </ul> -->
         <ul class="col-md-12 p-rt-lt-0">
           <a href="{BASE_URL}elearning/gestion/_inicio" class="nounderline">
             <div {if isset($active) && $active == 'mis_cursos'} class="side-menu2 active col-md-12 p-rt-lt-0" {else} class="side-menu2 col-md-12 p-rt-lt-0" {/if}>
-              <li class="side-menu col-md-12" style="position: relative">
-              <div class="col-md-2 p-rt-lt-0">
+              <li class="side-menu side-menu-center-mid col-md-12" style="position: relative">
                 <i class="glyphicon glyphicon-book"></i>
-              </div>
-              <div class="col-md-10 p-rt-lt-0">
-                <span> Mis Cursos </span>
-              </div>
+                &nbsp;
+                <span> {$lang->get('elearning_cursos_mis_cursos')} </span>
             </li>
           </div>
           </a>
@@ -273,13 +273,11 @@
         <ul class="col-md-12 p-rt-lt-0">
             <a href="{BASE_URL}elearning/certificado/miscertificados" class="nounderline">
                 <div class="side-menu2 col-md-12 p-rt-lt-0">
-                  <li class="side-menu col-md-12" style="position: relative">
-                    <div class="col-md-2 p-rt-lt-0" style="margin: 10px auto;">
+                  <li class="side-menu side-menu-center-mid col-md-12" style="position: relative">
                       <i class="glyphicon glyphicon-education"></i>
-                    </div>
-                    <div class="col-md-10 p-rt-lt-0">
-                      <span>Mis Certificados</span>
-                    </div>
+                      &nbsp;
+                      <span>{$lang->get('elearning_cursos_mis_certificados')}</span>
+
                   </li>
                 </div>
             </a>
@@ -296,13 +294,11 @@
         <ul class="col-md-12 p-rt-lt-0">
           <a href="{BASE_URL}elearning/certificado/verificar" class="nounderline">
             <div class="side-menu2 col-md-12 p-rt-lt-0">
-              <li class="side-menu col-md-12" style="position: relative">
-                <div class="col-md-2 p-rt-lt-0" style="margin: 10px auto;">
+              <li class="side-menu side-menu-center-mid col-md-12" style="position: relative">
                   <i class="glyphicon glyphicon-education"></i>
-                </div>
-                <div class="col-md-10 p-rt-lt-0">
-                  <span>Verificar Certificados</span>
-                </div>
+                  &nbsp;
+                  <span>{$lang->get('elearning_cursos_verificar_certificados')}</span>
+
               </li>
             </div>
           </a>

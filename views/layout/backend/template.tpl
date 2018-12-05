@@ -107,7 +107,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <nav class="navbar navbar-static-top" role="navigation">
                     <!-- Sidebar toggle button-->
                     <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
-                        <span class="sr-only">Toggle navigation</span>
+                        <span class="sr-only"></span>
                     </a>
                     <!-- Navbar Right Menu -->
                     <div class="title-sii pull-left " >
