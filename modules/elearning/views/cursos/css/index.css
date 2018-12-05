@@ -1,5 +1,5 @@
 .curso-item{
-  height: 500px;
+  height: 585px;
   background-color: #f7f7f9;
   border: 1px solid #e1e1e8;
   border-radius: 4px;
@@ -56,11 +56,11 @@
 
 .curso-item-mod{
   position: absolute;
-  top: 0px;
+  bottom: 0px;
   right: 0px;
   padding: 10px;
   color: white;
-  border-radius: 0px 0px 0px 20px;
+  border-radius: 20px 0px 0px 0px;
 }
 
 .mooc{
@@ -87,4 +87,8 @@
     #div-margin-t-10{
         margin-top: 10px
     }
+}
+
+.container-item-image {
+  position: relative;
 }
