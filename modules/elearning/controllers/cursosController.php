@@ -259,6 +259,7 @@ class cursosController extends elearningController {
       $this->_view->setJs(array(array(BASE_URL . 'modules/elearning/views/gestion/js/core/util.js'), "curso"));
       $this->_view->assign("curso", $curso);
       $this->_view->assign("inscritos", $inscritos);
+      $this->_view->assign("titulo", $curso['Cur_Titulo']);
       $this->_view->assign("certificado", $certificado);
       $this->_view->assign("duracion", $duracion["Total"] . " Lecciones");
       $this->_view->assign("modulo", $mModulo->getModulosCursoLMS($id, Session::get("id_usuario")));
