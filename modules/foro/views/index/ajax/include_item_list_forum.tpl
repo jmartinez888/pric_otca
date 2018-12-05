@@ -1,4 +1,11 @@
-<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 
+{if $foro.For_Estado==0 && $foro.Row_Estado==1}
+ disable_foro
+{elseif  $foro.Row_Estado==0}
+ delete_foro
+{/if}
+
+">
 	<div class="discusion">
 		<div class="cabecera-discusion">
 			<a class="link-foro" href="{$_layoutParams.root}foro/index/ficha/{$foro.For_IdForo}">

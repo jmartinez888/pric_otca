@@ -89,7 +89,6 @@ class indexController extends foroController {
 
         $totalRegistros = $this->_model->getRowForos("",$tipo="query");
 
-
         $this->getForos($tipo="query",$filtro="",$totalRegistros["For_NRow"],$ajax="lista_buscar_query",$pagin=0,$filas=CANT_REG_PAG);
 
 

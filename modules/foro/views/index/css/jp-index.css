@@ -122,3 +122,11 @@
     padding-right: 0;
     padding: 4px 14px !important;
 }
+
+.disable_foro{
+	background-color: #fbe4c9 !important;
+}
+
+.delete_foro{
+	background-color: #fbc9c9 !important;
+}

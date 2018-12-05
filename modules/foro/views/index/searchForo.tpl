@@ -18,7 +18,7 @@
                     <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12">
                          <input type="hidden" name="hdd_tipo" id="hdd_tipo" value="">
                          <div  id="lista_search" class="row">
-                           {include file='modules/foro/views/index/ajax/lista_searchForo.tpl'}
+                           {include file='modules/foro/views/index/ajax/lista_search.tpl'}
                         </div>
                     </div>
                 </div>
