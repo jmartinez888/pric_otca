@@ -5,6 +5,7 @@
   padding: 15px;
   color: #393939;
   position: relative;
+  padding-bottom: 15px;
 
 }
 
@@ -51,4 +52,17 @@
 
 .pendiente{
   background: gray !important;
+}
+
+@media (max-width: 767px) {
+
+  .ficha-leccion{
+    background-color: #aac0ff;
+    margin-top: 5px;
+    border-radius: 5px;
+    padding: 15px;
+    color: #393939;
+    position: relative;
+    padding-bottom: 60px;
+  }
 }
