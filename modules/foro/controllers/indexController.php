@@ -13,19 +13,9 @@ class indexController extends foroController {
         $this->_model = $this->loadModel('index');
     }
 
-    public function index() {
-        $idUsuario = Session::get('id_usuario');
+    public function index() {    
 
-        if(!empty($idUsuario)){
-            $Rol_Ckey = $this->_model->getRol_Ckey(Session::get('id_usuario'));
-            if(empty($Rol_Ckey)){
-                $Rol_Ckey["Rol_Ckey"] = "sin_rol";
-            }
-        }else{
-            $idUsuario = "";
-            $Rol_Ckey["Rol_Ckey"]="";
-        }
-
+       
         $this->validarUrlIdioma();
         $this->_view->setTemplate(LAYOUT_FRONTEND);
 
@@ -46,8 +36,7 @@ class indexController extends foroController {
         $lista_tematica = $this->_model->getResumenLineTematica();
         $lista_agenda = $this->_model->getAgendaIndex();
      
-        $this->_view->assign('lista_foros', $lista_foros);
-        $this->_view->assign('Rol_Ckey', $Rol_Ckey["Rol_Ckey"]);
+        $this->_view->assign('lista_foros', $lista_foros);       
         $this->_view->assign('lista_tematica', $lista_tematica);
         $this->_view->assign('lista_agenda', $lista_agenda);
         $this->_view->renderizar('index');
@@ -406,7 +395,7 @@ class indexController extends foroController {
         if(!empty($idUsuario)){
             $Rol_Ckey = $this->_model->getRolForo(Session::get('id_usuario'), $iFor_IdForo);
             if(empty($Rol_Ckey)){
-                $Rol_Ckey = $this->_model->getRol_Ckey(Session::get('id_usuario'));
+                $Rol_Ckey = $this->_model->getRol_Ckey($idUsuario);
                 if(empty($Rol_Ckey)){
                     $Rol_Ckey["Rol_Ckey"] = "sin_rol";
                 }

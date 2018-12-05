@@ -22,7 +22,7 @@
                 </div>
                 
                 <!--¨Para subir reporte de Discusion-->
-                {if Session::get('autenticado') && ($Rol_Ckey == "administrador" || $Rol_Ckey=="administrador_foro" || $Rol_Ckey == "lider_foro" || $id_usuario == $foro.Usu_IdUsuario)}
+                {if Session::get('autenticado') && ( $Rol_Ckey == "administrador" || $Rol_Ckey=="administrador_foro" || $Rol_Ckey == "lider_foro" || $id_usuario == $foro.Usu_IdUsuario)}
 
                     {$Fif_EsOutForo=0}
                     {foreach from=$foro.Archivos item=file}
@@ -77,10 +77,13 @@
                         <li><a id_foro="{$foro.For_IdForo}" for_estado="{$foro.For_Estado}" class="opciones_foro deshablitarForo" style="cursor: pointer;">Deshabilitar<i class="i_opciones_foro glyphicon glyphicon-eye-close pull-right"></i></a></li>
                         {/if}
                         {/if}
-                        {if ($_acl->permiso("deshabilitar_foro") || $id_usuario == $foro.Usu_IdUsuario)}
+                        {if (($_acl->permiso("eliminar_foro") || $id_usuario == $foro.Usu_IdUsuario)) && $foro.Row_Estado==1}
                         <li><a id_foro="{$foro.For_IdForo}" class="opciones_foro eliminar_foro" Row_Estado="{$foro.Row_Estado}" style="cursor: pointer;">Eliminar<i class="i_opciones_foro glyphicon glyphicon-trash pull-right"></i></a></li>
                         {/if}
-                        {if $Rol_Ckey == "administrador" || $Rol_Ckey == "administrador_foro    "}
+                        {if (($_acl->permiso("restaurar_foro") || $id_usuario == $foro.Usu_IdUsuario)) && $foro.Row_Estado==0}
+                        <li><a id_foro="{$foro.For_IdForo}" class="opciones_foro eliminar_foro" Row_Estado="{$foro.Row_Estado}" style="cursor: pointer;">Restaurar<i class="i_opciones_foro glyphicon glyphicon-refresh pull-right"></i></a></li>
+                        {/if}
+                        {if $Rol_Ckey == "administrador" || $Rol_Ckey == "administrador_foro"}
                         <li><a href="{$_layoutParams.root}foro/admin/" id_foro="{$foro.For_IdForo}" class="opciones_foro" style="cursor: pointer;">Ver todos los foros<i class="i_opciones_foro glyphicon glyphicon-list pull-right"></i></a></li>
                         {/if}
                     </ul>
@@ -178,9 +181,9 @@
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 p-rt-lt-0">
                     {if Session::get('autenticado')}
-                        {if $comentar_foro ||$Rol_Ckey == "administrador" ||  $Rol_Ckey == "administrador_foro" || $Rol_Ckey == "lider_foro" || $Rol_Ckey == "moderador_foro"}
+                        {if $comentar_foro || $_acl->rolckey("administrador") || $_acl->rolckey("administrador_foro") || $_acl->rolckey("lider_foro") || $_acl->rolckey("moderador_foro")}
                             {if $foro.For_Estado == 0 || $foro.For_Estado == 2 || $foro.Row_Estado == 0}
-                                {if $Rol_Ckey == "administrador" ||  $Rol_Ckey == "administrador_foro" || $Rol_Ckey == "lider_foro" || $Rol_Ckey == "moderador_foro" }
+                                {if $_acl->rolckey("administrador")  || $_acl->rolckey("administrador_foro") || $_acl->rolckey("lider_foro") || $_acl->rolckey("moderador_foro") }
                                     {if $foro.Row_Estado== 1}
                                         {if $foro.For_Estado == 0}
                                             <div class="col-lg-12 p-rt-lt-0 alert alert-danger text-center">
@@ -191,9 +194,9 @@
                                                 <strong class="texto-alert-danger">!Este foro se encuentra CERRADO!. Si desea habilitarlo, ir al boton de configuración <i class="glyphicon glyphicon-cog"></i> y de click en Habilitar.</strong>
                                             </div>
                                         {/if}
-                                    {elseif $Rol_Ckey == "administrador" ||  $Rol_Ckey == "administrador_foro"}
+                                    {elseif $_acl->rolckey("administrador") || $_acl->rolckey("administrador_foro")}
                                         <div class="col-lg-12 p-rt-lt-0 alert alert-danger text-center">
-                                            <strong class="texto-alert-danger">!Este foro se encuentra ELIMINADO!. Si desea habilitarlo, ir al boton de configuración <i class="glyphicon glyphicon-cog"></i> y de click en Habilitar.</strong>
+                                            <strong class="texto-alert-danger">!Este foro se encuentra ELIMINADO!. Si desea habilitarlo, ir al boton de configuración <i class="glyphicon glyphicon-cog"></i> y de click en Restaurar.</strong>
                                         </div> 
                                     {/if}
                                 {else}

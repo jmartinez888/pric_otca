@@ -163,8 +163,27 @@ class indexModel extends Model {
 
     public function getForo_x_idforo($iFor_IdForo) {
         try {
-            $post = $this->_db->query(
-                    "SELECT f.*,(SELECT COUNT(Com_IdComentario) FROM comentarios c WHERE c.For_IdForo=f.For_IdForo) as For_TComentarios, (SELECT COUNT(*) FROM usuario_foro uf WHERE uf.For_IdForo=f.For_IdForo AND uf.Row_Estado=1) as For_TParticipantes FROM foro f where f.For_IdForo={$iFor_IdForo}");
+            $sql= "SELECT f.*,(SELECT COUNT(Com_IdComentario) FROM comentarios c WHERE c.For_IdForo=f.For_IdForo) as For_TComentarios, (SELECT COUNT(*) FROM usuario_foro uf WHERE uf.For_IdForo=f.For_IdForo AND uf.Row_Estado=1) as For_TParticipantes FROM foro f where f.For_IdForo={$iFor_IdForo}";
+
+          
+
+            if ($this->_acl->rolckey("administrador")  ||  $this->_acl->rolckey("administrador_foro"))
+             {
+                
+                $sql=$sql;
+
+             }else if($this->_acl->rolckey("lider_foro")  ||  $this->_acl->rolckey("moderador_foro")){
+               
+                 
+                 $sql=$sql." and f.Row_Estado=1  ";                
+
+             }else{
+
+                
+                 $sql=$sql." and f.For_Estado!=0 and f.Row_Estado=1 ";
+             }       
+
+            $post = $this->_db->query($sql);
             return $post->fetch();
         } catch (PDOException $exception) {
             $this->registrarBitacora("foro(indexModel)", "getForos", "Error Model", $exception);
