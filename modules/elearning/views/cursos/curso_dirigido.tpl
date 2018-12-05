@@ -4,7 +4,7 @@
     <a class="referencia-curso" href="{BASE_URL}elearning/cursos/">Cursos</a>  /  {$curso.Cur_Titulo}
   </div>
   {include file='modules/elearning/views/cursos/menu/lateral.tpl'}
-  <div class="col-lg-10" style="margin-top: 20px; padding-left: 0px; padding-right: 0px;">
+  <div class="col-xs-12 col-sm-12 col-md-9 col-lg-10" style="margin-top: 20px; ">
     <div class="col-lg-12" style="padding-right: 0px;">
       <div class="panel panel-default">
         <div class="panel-body">
@@ -163,14 +163,19 @@
       </div>
       <div class="col-lg-12" style="padding-left: 0px; padding-right: 0px;">
         {foreach from=$modulo item=o}
-        <div class="col-lg-12">
-          <div class="ficha-mod col-lg-12">
-            <div class="col-lg-2"><img class="w-100" class="img-modulo" src="{BASE_URL}modules/elearning/views/cursos/img/contador-modulo-lms.png"/></div>
-            <div class="col-lg-10 ficha-mod-title"><strong>{$o.Moc_Titulo}</strong></div>
-            <div class="col-lg-10 ficha-mod-desc">{$o.Moc_Descripcion}</div>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <div class="ficha-mod col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding-bottom: 15px">
+            <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2" style="padding: 0px; text-align: center;">
+              <img class="w-100 img-modulo pr-5 pl-5" class="img-modulo" src="{BASE_URL}modules/elearning/views/cursos/img/contador-modulo-lms.png"/>
+            </div>
+            <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10 ficha-mod-title">
+              <strong>{$o.Moc_Titulo}</strong>
+              {$o.Moc_Descripcion}
+            </div>
+
         </div>
           {foreach from=$o.LECCIONES item=l}
-            <div class="col-lg-12" style="padding-left: 0px; padding-right: 0px;">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding-left: 0px; padding-right: 0px;">
               <div class="ficha-leccion {if $l.Activo==1}lec-lms-activo{/if}">
                 <h4><strong>{$l.Lec_Titulo}</strong></h4>
                 <span class="glyphicon glyphicon-calendar"></span>
