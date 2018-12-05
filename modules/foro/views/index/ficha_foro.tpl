@@ -22,7 +22,7 @@
                 </div>
                 
                 <!--¨Para subir reporte de Discusion-->
-                {if Session::get('autenticado') && ( $Rol_Ckey == "administrador" || $Rol_Ckey=="administrador_foro" || $Rol_Ckey == "lider_foro" || $id_usuario == $foro.Usu_IdUsuario)}
+                {if Session::get('autenticado') && ( $Rol_Ckey == "administrador" || $Rol_Ckey=="administrador_foro" || $Rol_Ckey == "lider_foro" || $Rol_Ckey == "moderador_foro" || $id_usuario == $foro.Usu_IdUsuario)}
 
                     {$Fif_EsOutForo=0}
                     {foreach from=$foro.Archivos item=file}
@@ -38,7 +38,7 @@
                                 <a href="{$_layoutParams.root_clear}dublincore/registrar/index/{$foro.Rec_IdRecurso}/{$foro.For_IdForo}" title="Subir reporte de la Discusión" id="btn-configuracion" class="btn btn-primary btn-circle dropdown-toggle"><i class="glyphicon glyphicon-cloud-upload"></i>
                                 </a>
                             </div>
-                    {else}
+                        {else}
                         <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 text-center btn_opciones_foro pull-right">
                             <a href="{$_layoutParams.root_clear}dublincore/editar/index/{$Dub_IdDublinCore}/{$foro.For_IdForo}" title="Editar reporte de foro" id="btn-configuracion" class="btn btn-primary btn-circle dropdown-toggle"><i class="glyphicon glyphicon-pencil"></i>
                             </a>
@@ -47,8 +47,8 @@
                             <a target="_blank" href="{$_layoutParams.root_archivo_fisico}{$file.Fif_NombreFile}" title="Descargar reporte de discusión" id="btn-configuracion" class="btn btn-primary btn-circle dropdown-toggle"><i class="glyphicon glyphicon-cloud-download"></i>
                             </a>
                         </div>
+                        {/if}
                     {/if}
-                {/if}
                 <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 text-center btn_opciones_foro pull-right">
                     <button  title="Administrar" id="btn-configuracion" class="btn btn-primary btn-circle dropdown-toggle" data-toggle="dropdown" type="button"><i class="glyphicon glyphicon-cog"></i>
                     </button>
@@ -88,7 +88,7 @@
                         {/if}
                     </ul>
                 </div>
-                {/if}
+                {/if}                
                 <!--¨Fin Para subir reporte de Discusion-->
                 
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12  p-rt-lt-0">

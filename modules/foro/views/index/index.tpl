@@ -92,7 +92,7 @@
                     <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12"><br></div>
                 </div>
             </div>
-            <div class="col-md-4 col-xs-12 col-sm-4 col-lg-4">
+            <div class="col-md-4 col-xs-12 col-sm-12 col-lg-4">
                 {include file ='modules/foro/views/index/ajax/tab_top5_agenda.tpl'}
             </div>
 

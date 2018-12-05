@@ -965,6 +965,7 @@ class adminController extends foroController
 
     public function members($id_foro = 0)
     {
+        $this->_acl->acceso("listar_miembros");
         $this->_view->setTemplate(LAYOUT_FRONTEND);
         $model_index = $this->loadModel('index');
         if ($id_foro != 0) {
@@ -991,8 +992,16 @@ class adminController extends foroController
                 $this->_view->setCss(array('form'));
                 $paginador = new Paginador();
 
-                $lista_members  = $this->_model->getMembers_x_Foro($id_foro, "lider_foro");
-                $totalRegistros = $this->_model->getRowMembers_x_Foro($id_foro, "lider_foro");
+                if($Rol_Ckey["Rol_Ckey"]=="lider_foro" || $Rol_Ckey["Rol_Ckey"] =="administrador" || $Rol_Ckey["Rol_Ckey"] =="administrador_foro"){
+                    $filtro_rol="lider_foro";
+                }else if($Rol_Ckey["Rol_Ckey"]=="moderador_foro") {
+                    $filtro_rol="facilitador_foro";
+                }else {
+                    $filtro_rol="participante_foro";
+                }
+
+                $lista_members  = $this->_model->getMembers_x_Foro($id_foro,$filtro_rol);
+                $totalRegistros = $this->_model->getRowMembers_x_Foro($id_foro,$filtro_rol);
 
                 $paginador->paginar($totalRegistros["Usf_RowMembers"], "listaMembers", "", $pagina = 1, CANT_REG_PAG, true);
 
@@ -1218,7 +1227,7 @@ class adminController extends foroController
         if(count($result_inscrip)>0){
             // dd($result_inscrip);
             $result = $model_index->getEmail_Usuario($id_usuario);
-            $this->sendEmail($result, $mensaje);
+            $this->sendEmail($result, $mensaje,$id_foro);
         }
         $pagina    = 1;
         $paginador = new Paginador();
@@ -1237,19 +1246,24 @@ class adminController extends foroController
         $this->_view->renderizar('ajax/listaMembers', false, true);
     }
 
-     public function sendEmail($Email, $mensaje)
+     public function sendEmail($Email, $mensaje,$idforo)
     {
+        $model_user     = $this->loadModel('usuario', 'usuarios');
+        $idUsuario = Session::get('id_usuario');
+        $user = $model_user->getUsuario($idUsuario);
+
         $obj = new Request();
         // echo $obj->getModulo();exit;
 
         $url = BASE_URL.$obj->getModulo();
-        $email = $Email[0];
-        $mail = "Prueba de mensaje";
-        $Subject = 'INVITACION';
-        $contenido = $mensaje . ' ' . "<a href=" . $url .">" .$url. "</a>";
-        $fromName = '¡PRIC - BIENVENIDO NUEVO MIEMBRO!';
+        $email = $Email[0];       
+        $Subject = 'PRIC - OTCA | Invitacion a participar en el foro';
+        $contenido = "<h2 style='display: block;margin: 0;padding: 0;color: #202020;font-family: Helvetica;font-size: 18px;font-style: normal;font-weight: bold;line-height: 125%;letter-spacing: normal;text-align: left;'>INVITACION.</h2>";
+        $contenido = $contenido .$mensaje . '<br>' . "<a href= '" . $url ."/index/ficha/".$idforo."'>Acceder</a>";
+        $contenido =$contenido. "<br><br>"."Copie el siguiente link: "."<a href= '" . $url ."/index/ficha/".$idforo."'>".$url ."/index/ficha/".$idforo."</a>";
+        $fromName = $user["Usu_Nombre"]." ".$user["Usu_Apellidos"]." | FORO - PRIC" ;
         $Correo = new Correo();
-        $SendCorreo = $Correo->enviar($email, "NAME", $Subject, $contenido, $fromName);
+        $SendCorreo = $Correo->enviar($email, "NAME", $Subject, $contenido, $fromName,$user["Usu_Email"]);
         $this->_view->assign('url', $url);
     }
 

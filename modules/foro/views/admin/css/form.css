@@ -216,3 +216,6 @@ and open the template in the editor.
     border-top: 1px solid #3c763d;
 }
 
+.nav>li>a:focus, .nav>li>a:hover {
+    color:  #3c8dbc;
+}
