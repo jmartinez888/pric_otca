@@ -356,7 +356,7 @@ class cursosController extends elearningController {
                   $puntos = 0;
                   $preguntas = Session::get("preguntas");
                   // print_r($preguntas);
-                  for ($i = 0; $i < count($preguntas); $i++) { 
+                  for ($i = 0; $i < count($preguntas); $i++) {
                       $tipo = $this->getSql('tipo_preg'.$i);
                       // echo $i.":::tipo:::". $tipo . "\n";
                       // JM --> Listo (Pregunta tipo respuesta Unica)
@@ -373,7 +373,7 @@ class cursosController extends elearningController {
                                       // echo "P1:".$puntosrpta;
                                   }
                           }
-                          $Emodel->insertRespuesta($this->getInt('id_preg'.$i), Session::get("idintento"), $this->getInt('rpta_alt'.$i),null,null,$puntosrpta); 
+                          $Emodel->insertRespuesta($this->getInt('id_preg'.$i), Session::get("idintento"), $this->getInt('rpta_alt'.$i),null,null,$puntosrpta);
 
                       } else if($tipo == 2){
                       // JM --> Listo (Pregunta con respuesta Multiple)
@@ -388,8 +388,8 @@ class cursosController extends elearningController {
                                           $puntosrpta = $k['Alt_Puntos'];
                                           $puntos = $puntos + $puntosrpta;
                                       }
-                                  }   
-                                  // echo "P2:".$puntosrpta; 
+                                  }
+                                  // echo "P2:".$puntosrpta;
                                   $Emodel->insertRespuesta($this->getInt('id_preg'.$i), Session::get("idintento"), $this->getInt('rpta2_alt'.$i.'_index'.$j),null,null,$puntosrpta);
                               } else {
 
@@ -403,9 +403,9 @@ class cursosController extends elearningController {
                           $puntosrpta = 0;
                           if($this->getSql('rpta3_'.$i.'_index_'.$j) == $alt[$j]['Alt_Etiqueta']){
                               $puntosrpta = $alt[$j]['Alt_Puntos'];
-                              $puntos = $puntos + $puntosrpta; 
+                              $puntos = $puntos + $puntosrpta;
                           }
-                          // echo "P3:".$puntosrpta; 
+                          // echo "P3:".$puntosrpta;
                           $Emodel->insertRespuesta($this->getInt('id_preg'.$i), Session::get("idintento"),null,null, $this->getSql('rpta3_'.$i.'_index_'.$j),$puntosrpta);
                           }
                       }
@@ -418,8 +418,8 @@ class cursosController extends elearningController {
                               if($this->getInt('rpta4_'.$i.'_index_'.$j)==$alt[$j]['Alt_IdAlternativa'] && $this->getInt('rpta4_alt'.$i.'_index_'.$j)==$alt[$j]['Alt_Relacion']){
                                   $puntosrpta = $alt[$j]['Alt_Puntos'];
                                   $puntos = $puntos + $puntosrpta;
-                              }   
-                              // echo "P4:".$puntosrpta; 
+                              }
+                              // echo "P4:".$puntosrpta;
                               $Emodel->insertRespuesta($this->getInt('id_preg'.$i), Session::get("idintento"), $this->getInt('rpta4_'.$i.'_index_'.$j),$this->getInt('rpta4_alt'.$i.'_index_'.$j),NULL,$puntosrpta);
                           }
                       }
@@ -439,7 +439,7 @@ class cursosController extends elearningController {
                                   $alt=$preguntas[$i]['Alt'];
                                   $cont=0;
                                   $puntosrpta=0;
-                              
+
                                   foreach ($alt as $k) {
                                       if($k['Alt_Check']){
                                           if($this->getInt('rpta7_alt'.$i.'_index'.$j)==$k['Alt_IdAlternativa'])
@@ -447,12 +447,12 @@ class cursosController extends elearningController {
 
                                           $cont++;
                                       }
-                                  } 
+                                  }
                                   if($cont==$cont2){
                                       $puntosrpta=$preguntas[$i]['Pre_Puntos'];
                                       $puntos=$puntos+$puntosrpta;
                                   }
-                                         // echo "P7:".$puntosrpta; 
+                                         // echo "P7:".$puntosrpta;
                                   $Emodel->insertRespuesta($this->getInt('id_preg'.$i), Session::get("idintento"), $this->getInt('rpta7_alt'.$i.'_index'.$j),null,null,$puntosrpta);
                               }
                           }
@@ -471,9 +471,9 @@ class cursosController extends elearningController {
                   $this->redireccionar("elearning/cursos/modulo/".$examen['Cur_IdCurso'].'/'.$examen['Moc_IdModulo'].'/'.$examen['Lec_IdLeccion']);
               }
 
-              $this->_view->assign('preguntas', Session::get("preguntas"));  
-          } else {                  
-              
+              $this->_view->assign('preguntas', Session::get("preguntas"));
+          } else {
+
               // echo $examen["Exa_IdExamen"]. Session::get("id_usuario"); exit;
               $ultimoexamen = $Emodel->getUltimoExamen($examen["Exa_IdExamen"], Session::get("id_usuario"));
 
@@ -674,7 +674,7 @@ class cursosController extends elearningController {
             $modulos_ = $model->getModulosClave($curso, Session::get("id_usuario"));
             $claveModulos = array_search($objeto["Moc_IdModuloCurso"], array_column($modulos_, "Moc_IdModuloCurso"));
             $nextModulo = $modulos_[$claveModulos+1];
-            
+
             if(count($modulos_) > $claveModulos+1){
                 $posibleSiguienteMod = $modulos_[$claveModulos+1];
 

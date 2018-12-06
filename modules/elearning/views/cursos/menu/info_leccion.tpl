@@ -2,13 +2,13 @@
       <div class="">
         <ul class="nav nav-tabs">
             {if strlen($leccion["Lec_Descripcion"]) > 0 }
-              <li class="active"><a class="active-tab" data-toggle="tab" href="#inf_curso">{$lang->get('elearning_cursos_informacion_leccion')}</a></li>
+               <li class="active"><a class="active-tab" data-toggle="tab" href="#inf_curso">{$lang->get('elearning_cursos_informacion_leccion')}</a></li>
             {/if}
             {if isset($materiales) && count($materiales) > 0 }
               <li><a class="active-tab" data-toggle="tab" href="#mat_ditac">{$lang->get('elearning_cursos_material_didactico')}</a></li>
             {/if}
             {if isset($referencias) && count($referencias) > 0 }
-              <li><a class="active-tab" data-toggle="tab" href="#ref_mat">{$lang->get('str_referencias')}</a></li>
+               <li><a class="active-tab" data-toggle="tab" href="#ref_mat">{$lang->get('str_referencias')}</a></li>
             {/if}
             {if isset($tareas) && count($tareas) > 0 }
               <li><a class="active-tab" data-toggle="tab" href="#tar_mat">{$lang->get('elearning_cursos_tareas_pendientes')}</a></li>
@@ -78,7 +78,7 @@
                           {if $r.Condicion == 0}
                             <div>{strtoupper($lang->get('str_activo'))}</div>
                           {elseif $r.Condicion == 1}
-                            <div>{strtoupper($lang->get('elearning_cursos_proximo_a_activarse'))}</div>
+                             <div>{strtoupper($lang->get('elearning_cursos_proximo_a_activarse'))}</div>
                           {elseif $r.Condicion == 2}
                             <div>{strtoupper($lang->get('elearning_cursos_periodo_concluido'))}</div>
                           {/if}
@@ -91,7 +91,7 @@
                               <i class="glyphicon glyphicon-file"></i> {$lang->get('str_resolver')}
                             </button>
                           {else}
-                            <div>{strtoupper($lang->get('str_ninguno'))}</div>
+                             <div>{strtoupper($lang->get('str_ninguno'))}</div>
                           {/if}
                           </center>
                         </td>
@@ -128,7 +128,7 @@
                         <div id="divArcAdjTarea"></div>
                         <button class="btn btn-default" id="btnAgregarArchivoTarea">
                           <i class="glyphicon glyphicon-file"></i>
-                          {$lang->get('str_adjuntar_archivo')}
+                           {$lang->get('str_adjuntar_archivo')}
                         </button>
                       </div>
                       <div class="col-lg-12 margin-top-10" style="padding-top: 10px">
