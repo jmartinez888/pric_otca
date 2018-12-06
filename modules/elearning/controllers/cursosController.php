@@ -275,7 +275,7 @@ class cursosController extends elearningController {
       $Cmodel = $this->loadModel("curso");
       $Emodel = $this->loadModel("examen");
        Session::set("intento", 0);
-
+       $obj_curso = null;
       if(strlen($curso)==0 || strlen($modulo)==0){
 
         $this->redireccionar("elearning/");
@@ -295,7 +295,7 @@ class cursosController extends elearningController {
         $this->redireccionar("elearning/cursos");
       }
       //if(!$Lmodel->validarLeccion($leccion, $modulo, Session::get("id_usuario"))){ $this->redireccionar("elearning/cursos"); }
-
+      $obj_curso = $Cmodel::find($curso);
       $OLeccion = $Lmodel->getLeccion($leccion, $modulo, Session::get("id_usuario"));
 
       $lecciones = $Lmodel->getLecciones($modulo, Session::get("id_usuario"));
@@ -393,8 +393,9 @@ class cursosController extends elearningController {
       // $this->_view->assign("examenes", $examenes);
 
       $this->_view->assign("leccion", $OLeccion);
-      if ($curso) {
-        $this->_view->assign("titulo",$lang->get('str_modulo').' - '.$curso['Cur_Titulo']);
+      if ($curso != 0) {
+
+        $this->_view->assign("titulo",$lang->get('str_modulo').' - '.$obj_curso->Cur_Titulo]);
       }
       $this->_view->assign("referencias", $Lmodel->getReferencias($OLeccion["Lec_IdLeccion"]));
       $this->_view->assign("materiales", $Lmodel->getMateriales($OLeccion["Lec_IdLeccion"]));
