@@ -233,6 +233,7 @@ class cursosController extends elearningController {
 
   public function curso_dirigido($id = ""){
       if($id == "" || !is_numeric($id) ){ $this->redireccionar("elearning/"); }
+      $this->_view->getLenguaje(['elearning_cursos']);
       $model = $this->loadModel("curso");
       $mObj = $this->loadModel("objetivos");
       $mModulo = $this->loadModel("modulo");
