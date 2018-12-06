@@ -256,7 +256,7 @@
 
                 <div class="form-group">
                     <h3>{$lang->get('elearning_cursos_usted_no_realizo_intento')}</h3>
-                    <label class="col-lg-12 control-label">{$lang->get('elearning_cursos_numero_intentos')} {strtolow($lang->get('str_disponibles'))}: {$examen.Exa_Intentos}</label>
+                    <label class="col-lg-12 control-label">{$lang->get('elearning_cursos_numero_intentos')} {strtolower($lang->get('str_disponibles'))}: {$examen.Exa_Intentos}</label>
                     <div class="col-lg-12">
                     <p></p>
                         <p>{$lang->get('elearning_cursos_presionar_comenzar_cuenta_intento')}.</p>
