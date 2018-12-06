@@ -24,7 +24,7 @@ function AddSocketInstance(ope){
 	});
 }
 function InitSocket(objeto){
-  socket = io(_root_+'api/nodejs0/', { query: "id=" + objeto.id + "&curso=" + objeto.curso + "&tipo=2" });
+  socket = io(_root_+'api/nodejs/', { query: "id=" + objeto.id + "&curso=" + objeto.curso + "&tipo=2" });
 
   // socket = io('http://local.github:3000/', { query: "id=" + objeto.id + "&curso=" + objeto.curso + "&tipo=2" });
 
