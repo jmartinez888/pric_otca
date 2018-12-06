@@ -111,10 +111,18 @@
         </div>
         <div class="panel-body contenedor-clase">
           {if isset($html) && count($html) > 0 }
-            <div class="video" id="video" >
+           <!--  <div class="video" id="video" >
               <iframe width="100%" src="{$html.CL_Descripcion}" frameborder="0"
               allow="autoplay; encrypted-media" id="frame-video" allowfullscreen> </iframe>
-            </div>
+            </div> -->
+            <div class="col-md-offset-1 col-md-10 " id="div_video" style="padding: 5px; border: 2px solid #00a65a;">
+                  <object width="100%" height="344">
+                    <param name="movie" id="video_curso_param"  value="http://www.youtube.com/v/{$html.CL_Descripcion}"></param>
+                    <param name="allowFullScreen" value="true"></param>
+                    <param name="allowscriptaccess" value="always"></param>
+                    <embed id="video_curso_embed" src="http://www.youtube.com/v/{$html.CL_Descripcion}" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="100%" height="344"></embed>
+                  </object>
+              </div>
           {/if}
         </div>
       </div>

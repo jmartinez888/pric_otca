@@ -9,7 +9,7 @@ $("#btn-cargar-img-pizarra").click(function(){
   $("#panelNuevaPizarra").modal("hide");
   setTimeout(function(){
     var params = {
-      route: "modules/elearning/views/gleccion/_contenido/_pizarra",
+      route: "files/elearning/_pizarra",
       pre: $("#hidden_leccion").val()
     };
     InitUploader(function(a){
@@ -46,7 +46,7 @@ function AddImg(a){
   DATA = DATA.split("/");
   DATA = DATA[DATA.length-1];
   $("#tmp_img_url").val(DATA);
-  DATA = _root_ + "/modules/elearning/views/gleccion/_contenido/_pizarra/" + DATA;
+  DATA = _root_ + "/files/elearning/_pizarra/" + DATA;
 
   var CON = $(".contenido-pizarra");
   $("#tmp_fondo_pizarra").remove();

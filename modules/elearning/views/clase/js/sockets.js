@@ -142,7 +142,7 @@ function AddPizarra(Pizarra){
   texto = "<div class='pizarra-mini'>"
             + "<input value='1' class='hidden_IdPizarra' hidden='hidden' />"
             +   "<img class='img-pizarra-mini' "
-            +     " src='" + $("#hiddenURL").val() + "modules/elearning/views/gleccion/_contenido/_pizarra/" + Pizarra + "' />"
+            +     " src='" + $("#hiddenURL").val() + "files/elearning/_pizarra/" + Pizarra + "' />"
             + "</div>";
   console.log(texto);
   $("#tmp_mini_pizarras").append(texto);
