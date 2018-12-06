@@ -164,7 +164,7 @@
       <div class="col-lg-12" style="padding-left: 0px; padding-right: 0px;">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 xxxxxxxxxxxx">
         {foreach from=array_merge($modulo, $modulo) item=o}
-          <div class="ficha-mod col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding-bottom: 15px;margin-top: 15px">
+          <div class="ficha-mod col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding-bottom: 15px; margin-top: 15px">
             <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2" style="padding: 0px; text-align: center;">
               <img class="w-100 img-modulo pr-5 pl-5" class="img-modulo" src="{BASE_URL}modules/elearning/views/cursos/img/contador-modulo-lms.png"/>
             </div>
