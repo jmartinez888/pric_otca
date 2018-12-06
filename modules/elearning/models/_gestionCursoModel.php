@@ -74,6 +74,12 @@ class _gestionCursoModel extends Model {
       return $this->getArray("SELECT * FROM curso WHERE Cur_Estado = 1 AND Row_Estado = 1");
   }
 
+
+  public function getCursoById($id) {
+      $res = $this->getArray("SELECT * FROM curso WHERE Cur_IdCurso = $id");
+      return count($res) > 0 ? $res[0] : null;
+  }
+
   public function getCursoXId($id) {
       $res = $this->getArray("SELECT * FROM curso WHERE Cur_IdCurso = $id AND Row_Estado = 1");
       return count($res) > 0 ? $res[0] : null;

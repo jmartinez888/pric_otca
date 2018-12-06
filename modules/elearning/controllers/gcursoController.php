@@ -58,7 +58,7 @@ class gcursoController extends elearningController {
     $id = Session::get("id_usuario");
     $busqueda = $this->getTexto('busqueda');
     // $cursos = $this->curso->getCursoXDocente($id, $busqueda);
-    
+
     $soloActivos = 0;
     if (!$this->_acl->permiso('ver_eliminados')) {
       $soloActivos = 1;
@@ -93,7 +93,7 @@ class gcursoController extends elearningController {
     $this->_view->getLenguaje('elearning_gcurso');
     if(!is_numeric($idcurso) && strlen($idcurso)==0){ $idcurso = Session::get("learn_param_curso"); }
     if(strlen($idcurso)==0){ exit; }
-    $datos = $this->curso->getCursoXId($idcurso);
+    $datos = $this->curso->getCursoById($idcurso);
     $parametros = $this->curso->getParametros($idcurso);
 
     Session::set("learn_param_curso", $idcurso);
