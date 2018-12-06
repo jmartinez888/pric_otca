@@ -193,7 +193,7 @@ class formularioController extends elearningController {
 
 		$mod_usuario = $this->loadModel('usuario', 'usuarios');
 		$usuario = $mod_usuario::find(Session::get('id_usuario'));
-		$lang = $this->_view->getLenguaje('elearning_formulario_responder', false, true);
+		$lang = $this->_view->getLenguaje(['elearning_formulario_responder','elearning_cursos'], false, true);
 		$roles = $usuario->getUsuariosRoles();
 		$success_pass = false;
 		$data['menu'] = '';
