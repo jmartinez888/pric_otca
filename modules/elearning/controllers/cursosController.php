@@ -314,7 +314,8 @@ class cursosController extends elearningController {
       if($OLeccion==null){
         $this->redireccionar("elearning/cursos");
       }
-      $this->_view->getLenguaje(['elearning_cursos']);
+      $lang = $this->_view->getLenguaje(['elearning_cursos'], false, true);
+
        $Tmodel = $this->loadModel("trabajo");
       $TTmodel = $this->loadModel("tarea");
       $tareas = $Tmodel->getTrabajoXLeccion($OLeccion["Lec_IdLeccion"]);
@@ -392,6 +393,9 @@ class cursosController extends elearningController {
       // $this->_view->assign("examenes", $examenes);
 
       $this->_view->assign("leccion", $OLeccion);
+      if ($curso) {
+        $this->_view->assign("titulo",$lang->get('str_modulo').' - '.$curso['Cur_Titulo']);
+      }
       $this->_view->assign("referencias", $Lmodel->getReferencias($OLeccion["Lec_IdLeccion"]));
       $this->_view->assign("materiales", $Lmodel->getMateriales($OLeccion["Lec_IdLeccion"]));
       $this->_view->assign("tareas", $tareas);
