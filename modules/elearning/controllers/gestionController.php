@@ -33,7 +33,7 @@ class gestionController extends elearningController {
       }
 
       $this->_view->setTemplate(LAYOUT_FRONTEND);
-      $this->_view->getLenguaje("index_inicio");
+      $this->_view->getLenguaje(["index_inicio", 'elearning_cursos']);
 
       $this->_view->setJs(//array(//array(BASE_URL . 'public/ckeditor/ckeditor.js'),
         array(BASE_URL . 'public/ckeditor/adapters/jquery.js'));
