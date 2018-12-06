@@ -62,7 +62,7 @@ class gcursoController extends elearningController {
     $soloActivos = 0;
     if (!$this->_acl->permiso('ver_eliminados')) {
       $soloActivos = 1;
-      $sql .= " AND cur.Row_Estado = $soloActivos ";
+      // $sql .= " AND cur.Row_Estado = $soloActivos ";
     }
     $cursos = $this->curso->getMisCursos($id, $busqueda, $soloActivos);
 

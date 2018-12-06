@@ -734,8 +734,7 @@ class examenModel extends Model {
     // }
 
     public function insertRespuesta($Pre_IdPregunta=0, $Exl_IdExamenAlumno=0, $Alt_IdAlternativa=0,$iAlt_IdAlternativa_Relacion=0, $Res_Respuesta="", $puntos=0){
-        try {             
-            echo "call s_i_respuesta($Pre_IdPregunta, $Exl_IdExamenAlumno, $Alt_IdAlternativa,$iAlt_IdAlternativa_Relacion, $Res_Respuesta, $puntos)";
+        try {
             $sql = "call s_i_respuesta(?,?,?,?,?,?)";
             $result = $this->_db->prepare($sql);
             $result->bindParam(1, $Pre_IdPregunta, PDO::PARAM_INT);
