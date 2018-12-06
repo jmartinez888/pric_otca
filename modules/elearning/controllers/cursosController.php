@@ -395,7 +395,7 @@ class cursosController extends elearningController {
       $this->_view->assign("leccion", $OLeccion);
       if ($curso != 0) {
 
-        $this->_view->assign("titulo",$lang->get('str_modulo').' - '.$obj_curso->Cur_Titulo]);
+        $this->_view->assign("titulo",$lang->get('str_modulo').' - '.$obj_curso->Cur_Titulo);
       }
       $this->_view->assign("referencias", $Lmodel->getReferencias($OLeccion["Lec_IdLeccion"]));
       $this->_view->assign("materiales", $Lmodel->getMateriales($OLeccion["Lec_IdLeccion"]));
