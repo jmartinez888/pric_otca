@@ -33,7 +33,7 @@
 
     </ul>
     <p style="text-align: right;">
-        <a href="http://35.198.18.102/ora" target="_blank">Más Informacion</a>
+        <a href="#" target="_blank">Más Informacion</a>
     </p>
 </div>
 
