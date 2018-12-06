@@ -2,16 +2,16 @@
       <div class="">
         <ul class="nav nav-tabs">
             {if strlen($leccion["Lec_Descripcion"]) > 0 }
-              <li class="active"><a class="active-tab" data-toggle="tab" href="#inf_curso">Información de la Lección</a></li>
+               <li class="active"><a class="active-tab" data-toggle="tab" href="#inf_curso">{$lang->get('elearning_cursos_informacion_leccion')}</a></li>
             {/if}
             {if isset($materiales) && count($materiales) > 0 }
-              <li><a class="active-tab" data-toggle="tab" href="#mat_ditac">Material didáctico</a></li>
+              <li><a class="active-tab" data-toggle="tab" href="#mat_ditac">{$lang->get('elearning_cursos_material_didactico')}</a></li>
             {/if}
             {if isset($referencias) && count($referencias) > 0 }
-              <li><a class="active-tab" data-toggle="tab" href="#ref_mat">Referencias</a></li>
+               <li><a class="active-tab" data-toggle="tab" href="#ref_mat">{$lang->get('str_referencias')}</a></li>
             {/if}
             {if isset($tareas) && count($tareas) > 0 }
-              <li><a class="active-tab" data-toggle="tab" href="#tar_mat">Tareas Pendientes</a></li>
+              <li><a class="active-tab" data-toggle="tab" href="#tar_mat">{$lang->get('elearning_cursos_tareas_pendientes')}</a></li>
             {/if}
         </ul>
         {if strlen($leccion["Lec_Descripcion"]) > 0 }
@@ -50,17 +50,17 @@
                   <table class="table table-striped" id="tblMisCursos">
                     <tbody>
                       <tr>
-                        <th width="20%"><center>Trabajo</center></th>
-                        <th width="20%"><center>Fechas</center></th>
-                        <th width="30%"><center>Detalle</center></th>
-                        <th width="10%"><center>Adjuntos</center></th>
-                        <th width="10%"><center>Estado</center></th>
-                        <th width="10%"><center>Acciones</center></th>
+                        <th width="20%"><center>{$lang->get('str_trabajo')}</center></th>
+                        <th width="20%"><center>{$lang->get('str_fechas')}</center></th>
+                        <th width="30%"><center>{$lang->get('str_detalle')}</center></th>
+                        <th width="10%"><center>{$lang->get('str_adjuntos')}</center></th>
+                        <th width="10%"><center>{$lang->get('str_estado')}</center></th>
+                        <th width="10%"><center>{$lang->get('str_acciones')}</center></th>
                       </tr>
                       {foreach from=$tareas item=r}
                       <tr>
                         <td>{$r.Tra_Titulo}</td>
-                        <td>Desde: {$r.Tra_FechaDesde}<br/>Hasta: {$r.Tra_FechaHasta}</td>
+                        <td>{$lang->get('str_desde')}: {$r.Tra_FechaDesde}<br/>{$lang->get('str_hasta')}: {$r.Tra_FechaHasta}</td>
                         <td>{$r.Tra_Descripcion}</td>
                         <td>
                           {if isset($r.Archivos) && count($r.Archivos)> 0}
@@ -76,11 +76,11 @@
                         <td>
                           <center>
                           {if $r.Condicion == 0}
-                            <div>ACTIVO</div>
+                            <div>{strtoupper($lang->get('str_activo'))}</div>
                           {elseif $r.Condicion == 1}
-                            <div>PROXIMO A ACTIVARSE</div>
+                             <div>{strtoupper($lang->get('elearning_cursos_proximo_a_activarse'))}</div>
                           {elseif $r.Condicion == 2}
-                            <div>PERIODO CONCLUIDO</div>
+                            <div>{strtoupper($lang->get('elearning_cursos_periodo_concluido'))}</div>
                           {/if}
                           </center>
                         </td>
@@ -88,10 +88,10 @@
                           <center>
                           {if $r.Condicion == 0}
                             <button class="btn btn-success btnResolverTarea" tag="{$r.Tra_IdTrabajo}" tipo="{$r.Tra_Tipo}">
-                              <i class="glyphicon glyphicon-file"></i> Resolver
+                              <i class="glyphicon glyphicon-file"></i> {$lang->get('str_resolver')}
                             </button>
                           {else}
-                            <div>NINGUNO</div>
+                             <div>{strtoupper($lang->get('str_ninguno'))}</div>
                           {/if}
                           </center>
                         </td>
@@ -107,32 +107,32 @@
                   <div class="panel panel-cmacm">
                     <div class="panel-heading" style="background-color: #f5f5f5; color: #333">
                       <span style="height: 20px; width: 20px; margin-right: 5px;" class="glyphicon glyphicon-list-alt"></span>
-                      <strong>Resolver Tarea</strong>
+                      <strong>{$lang->get('elearning_cursos_resolver_tarea')}</strong>
                       <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="margin-top: 0px;">&times;</button>
                     </div>
                     <div class="panel-body">
-                      <div class="col-lg-12 margin-top-10"><strong>Titulo</strong></div>
+                      <div class="col-lg-12 margin-top-10"><strong>{$lang->get('str_titulo')}</strong></div>
                       <input id="inIdTarea" hidden="hidden"/>
                       <input id="inTipoTarea" hidden="hidden"/>
                       <input hidden="hidden" id="inIdTrabajo" name="trabajo"/>
                       <div class="col-lg-12">
                         <input class="form-control" name="titulo" id="inResTarTit" autocomplete="off"/>
                       </div>
-                      <div class="col-lg-12 margin-top-10"><strong>Descripción</strong></div>
+                      <div class="col-lg-12 margin-top-10"><strong>{$lang->get('str_descripcion')}</strong></div>
                       <div class="col-lg-12">
                         <textarea class="form-control" name="descripcion" id="inResTarDesc" rows="4"
                         maxlength="300"  autocomplete="off"></textarea>
                       </div>
                       <div class="col-lg-12" style="margin-top: 10px;" id="zonaFilesAdjuntos">
-                        <label>Archivos adjuntos: </label>
+                        <label>{$lang->get('str_archivos_adjuntos')}: </label>
                         <div id="divArcAdjTarea"></div>
                         <button class="btn btn-default" id="btnAgregarArchivoTarea">
                           <i class="glyphicon glyphicon-file"></i>
-                          Adjuntar archivo
+                           {$lang->get('str_adjuntar_archivo')}
                         </button>
                       </div>
                       <div class="col-lg-12 margin-top-10" style="padding-top: 10px">
-                        <button class="btn btn-success" id="btn_resolver_tarea"> Guardar</button>
+                        <button class="btn btn-success" id="btn_resolver_tarea"> {$lang->get('str_guardar')}</button>
                       </div>
                     </div>
                   </div>
