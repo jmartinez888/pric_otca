@@ -274,6 +274,12 @@ class cursosController extends elearningController {
       $Cmodel = $this->loadModel("curso");
       $Emodel = $this->loadModel("examen");
 
+
+
+
+
+
+
       if(strlen($curso)==0 || strlen($modulo)==0){
 
         $this->redireccionar("elearning/");
