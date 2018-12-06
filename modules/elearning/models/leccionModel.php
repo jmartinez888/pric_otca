@@ -138,8 +138,8 @@ class leccionModel extends Model {
       $progreso = $this->getProgresoLeccion($leccion, $usuario);
 
       if($progreso["Completo"] == 0){
-        $sql = "INSERT INTO progreso_curso(Lec_IdLeccion, Usu_IdUsuario, Pro_Valor)
-                VALUES({$leccion}, {$usuario}, 1)";
+        $sql = " INSERT INTO progreso_curso(Lec_IdLeccion, Usu_IdUsuario, Pro_Valor)
+                VALUES({$leccion}, {$usuario}, 1) ";
         $this->execQuery($sql);
       }
     }

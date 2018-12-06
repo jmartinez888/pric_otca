@@ -122,6 +122,19 @@ class examenModel extends Model {
         }
     }
 
+    public function updateProgreso($idusu, $idleccion)
+    {
+        try{
+            $sql = " UPDATE progreso_curso SET Pro_Valor = 0 WHERE Usu_IdUsuario = $idusu AND Lec_IdLeccion = $idleccion ";
+            $result = $this->_db->prepare($sql);
+            $result->execute();
+            return $result->rowCount(PDO::FETCH_ASSOC);
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("elearning(examenModel)", "updateProgreso", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
+
     public function getUltimoExamen($id, $idusuario)
     {
         try{
