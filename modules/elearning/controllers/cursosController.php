@@ -269,19 +269,20 @@ class cursosController extends elearningController {
       $this->_view->renderizar('curso_dirigido');
   }
 
-  public function modulo($curso= "", $modulo = "", $leccion = ""){
+  public function modulo($curso= "", $modulo = "", $leccion = "", $idexamen = false){
       $Mmodel = $this->loadModel("modulo");
       $Lmodel = $this->loadModel("leccion");
       $Cmodel = $this->loadModel("curso");
       $Emodel = $this->loadModel("examen");
        Session::set("intento", 0);
        $obj_curso = null;
+
       if(strlen($curso)==0 || strlen($modulo)==0){
 
         $this->redireccionar("elearning/");
       }
       if(!Session::get("autenticado")){
-        echo "string";exit;
+        // echo "string";exit;
         $this->redireccionar("elearning/");
       }
       if(!is_numeric($curso) || !is_numeric($modulo)){
@@ -325,56 +326,197 @@ class cursosController extends elearningController {
       //     $tareas[$i]["Archivos"] = $Tmodel->getArchivos($tareas[$i]["Tra_IdTrabajo"]);
       //   }
       // }
-      if($OLeccion["Lec_Tipo"] == 1){
+      if($OLeccion["Lec_Tipo"] == 1 || $OLeccion["Lec_Tipo"] == 6){
           //$Lmodel->RegistrarProgreso($OLeccion["Lec_IdLeccion"], Session::get("id_usuario"));
           $html = $Lmodel->getContenido($OLeccion["Lec_IdLeccion"]);
           $this->_view->assign("cont_html", $html);
-
       }else if($OLeccion["Lec_Tipo"] == 2){
           //$Lmodel->RegistrarProgreso($OLeccion["Lec_IdLeccion"], Session::get("id_usuario"));
           $html = $Lmodel->getContenido($OLeccion["Lec_IdLeccion"]);
           $this->_view->assign("html", $html[0]);
       }
-
       else if($OLeccion["Lec_Tipo"] == 3){
           $examen = $Emodel->getExamenxLeccion($OLeccion["Lec_IdLeccion"]);
+          if ($idexamen && $idexamen = $examen["Exa_IdExamen"]) {
+              // $this->_view->setTemplate(LAYOUT_FRONTEND);
+              // $this->_view->setJs(array(array(BASE_URL . 'modules/elearning/views/gestion/js/core/util.js'), "index"));
 
-          // echo $examen["Exa_IdExamen"]. Session::get("id_usuario"); exit;
-          $ultimoexamen = $Emodel->getUltimoExamen($examen["Exa_IdExamen"], Session::get("id_usuario"));
+              // echo $intento[0]; exit;
 
-          // echo $ultimoexamen[0]; exit;
-          $intentos = $Emodel->getIntentos($examen["Exa_IdExamen"], Session::get("id_usuario"));
+              if (Session::get("intento") < 1){
+                  $preguntas = $Emodel->getPreguntas($idexamen);
+                  $peso = $Emodel->getExamenPeso($idexamen);
+                  Session::set("preguntas", $preguntas);
+                  Session::set("intento", 1);
+              }
+              if ($this->botonPress("terminar")) {
 
-          if($tmp["Progreso"]==1 || $intentos > 0){
-            // $resultados = $Cmodel->getResultadoExamen($examen["Exa_IdExamen"], Session::get("id_usuario"));
-            if($ultimoexamen){
-              $angulo_ok = $ultimoexamen['Exl_Nota'] * 360 / $examen['Exa_Peso'];
-              $ang_1 = $angulo_ok > 180 ? 180 : $angulo_ok;
-              $ang_2 = $angulo_ok > 180 ? $angulo_ok - $ang_1 : 0;
-              $this->_view->assign("ang_1", $ang_1);
-              $this->_view->assign("ang_2", $ang_2);
-              // $this->_view->assign("next_mod", $Mmodel->getNextModulo($modulo));
-              $this->_view->assign("ultimoexamen", $ultimoexamen);
-            }
-            // $this->_view->assign("resultados", $resultados);
-            //$this->redireccionar("elearning/cursos/modulo/" . $curso. "/" . $tmp["Moc_IdModuloCurso"] . "/" .
-              //$lecciones[0]["Lec_IdLeccion"]);
+                  $intento = $Emodel->insertExamenAlumno($idexamen,Session::get("id_usuario"));
+                  Session::set("idintento", $intento[0]);
+
+                  $puntos = 0;
+                  $preguntas = Session::get("preguntas");
+                  // print_r($preguntas);
+                  for ($i = 0; $i < count($preguntas); $i++) {
+                      $tipo = $this->getSql('tipo_preg'.$i);
+                      // echo $i.":::tipo:::". $tipo . "\n";
+                      // JM --> Listo (Pregunta tipo respuesta Unica)
+                      if($tipo == 1){
+                          $alt = $preguntas[$i]['Alt'];
+                          // echo "Unico::::"; print_r($alt); echo "///. \n";
+                          $puntosrpta = 0;
+                          foreach ($alt as $k) {
+                              if($k['Alt_Valor'] == $preguntas[$i]['Pre_Valor'])
+                                  if($this->getInt('rpta_alt'.$i) == $k['Alt_IdAlternativa']){
+                                      // echo "P1_Rapt-alt:".$this->getInt('rpta_alt'.$i);
+                                      $puntosrpta = $preguntas[$i]['Pre_Puntos'];
+                                      $puntos = $puntos + $puntosrpta;
+                                      // echo "P1:".$puntosrpta;
+                                  }
+                          }
+                          $Emodel->insertRespuesta($this->getInt('id_preg'.$i), Session::get("idintento"), $this->getInt('rpta_alt'.$i),null,null,$puntosrpta);
+
+                      } else if($tipo == 2){
+                      // JM --> Listo (Pregunta con respuesta Multiple)
+                          $alt = $preguntas[$i]['Alt'];
+                          // echo "Multiple::::"; print_r($alt);
+                          for($j = 0; $j < count($alt); $j++){
+                              if($this->getSql('rpta2_alt'.$i.'_index'.$j)){
+                                  $puntosrpta = 0;
+                                  foreach ($alt as $k) {
+                                      // if($k['Alt_Check'])
+                                      if($this->getInt('rpta2_alt'.$i.'_index'.$j) == $k['Alt_IdAlternativa']){
+                                          $puntosrpta = $k['Alt_Puntos'];
+                                          $puntos = $puntos + $puntosrpta;
+                                      }
+                                  }
+                                  // echo "P2:".$puntosrpta;
+                                  $Emodel->insertRespuesta($this->getInt('id_preg'.$i), Session::get("idintento"), $this->getInt('rpta2_alt'.$i.'_index'.$j),null,null,$puntosrpta);
+                              } else {
+
+                              }
+                          }
+                      } else if($tipo == 3){
+                          // JM --> Listo (Pregunta con respuesta en Blanco)
+                          $alt = $preguntas[$i]['Alt'];
+                          // echo "EnBLanco::::"; print_r($alt);
+                          for($j = 0; $j < count($alt); $j++){
+                          $puntosrpta = 0;
+                          if($this->getSql('rpta3_'.$i.'_index_'.$j) == $alt[$j]['Alt_Etiqueta']){
+                              $puntosrpta = $alt[$j]['Alt_Puntos'];
+                              $puntos = $puntos + $puntosrpta;
+                          }
+                          // echo "P3:".$puntosrpta;
+                          $Emodel->insertRespuesta($this->getInt('id_preg'.$i), Session::get("idintento"),null,null, $this->getSql('rpta3_'.$i.'_index_'.$j),$puntosrpta);
+                          }
+                      }
+
+                      else if($tipo==4){
+                          // JM --> Listo (Pregunta con respuesta relacionar)
+                          $alt = $preguntas[$i]['Alt'];
+                          for($j=0; $j < count($alt); $j=$j+2){
+                              $puntosrpta = 0;
+                              if($this->getInt('rpta4_'.$i.'_index_'.$j)==$alt[$j]['Alt_IdAlternativa'] && $this->getInt('rpta4_alt'.$i.'_index_'.$j)==$alt[$j]['Alt_Relacion']){
+                                  $puntosrpta = $alt[$j]['Alt_Puntos'];
+                                  $puntos = $puntos + $puntosrpta;
+                              }
+                              // echo "P4:".$puntosrpta;
+                              $Emodel->insertRespuesta($this->getInt('id_preg'.$i), Session::get("idintento"), $this->getInt('rpta4_'.$i.'_index_'.$j),$this->getInt('rpta4_alt'.$i.'_index_'.$j),NULL,$puntosrpta);
+                          }
+                      }
+
+                      else if($tipo == 5){
+                          // echo "string";
+                          // print_r($preguntas[$i]["Pre_Puntos"]);
+                          $puntos = $puntos + $preguntas[$i]["Pre_Puntos"];
+                          $Emodel->insertRespuesta($this->getInt('id_preg'.$i), Session::get("idintento"), NULL, NULL, $this->getSql('rpta_alt'.$i),$preguntas[$i]["Pre_Puntos"]);
+                      } else{
+                          $cont2=0;
+                          // print_r($preguntas[$i]['Alt']);
+                          for($j=0; $j < count($preguntas[$i]['Alt']); $j++){
+
+                              if($this->getSql('rpta7_alt'.$i.'_index'.$j)){
+
+                                  $alt=$preguntas[$i]['Alt'];
+                                  $cont=0;
+                                  $puntosrpta=0;
+
+                                  foreach ($alt as $k) {
+                                      if($k['Alt_Check']){
+                                          if($this->getInt('rpta7_alt'.$i.'_index'.$j)==$k['Alt_IdAlternativa'])
+                                              $cont2++;
+
+                                          $cont++;
+                                      }
+                                  }
+                                  if($cont==$cont2){
+                                      $puntosrpta=$preguntas[$i]['Pre_Puntos'];
+                                      $puntos=$puntos+$puntosrpta;
+                                  }
+                                         // echo "P7:".$puntosrpta;
+                                  $Emodel->insertRespuesta($this->getInt('id_preg'.$i), Session::get("idintento"), $this->getInt('rpta7_alt'.$i.'_index'.$j),null,null,$puntosrpta);
+                              }
+                          }
+                      }
+                  }
+
+                  $Emodel->updateNotaExamen(Session::get("idintento"), $puntos);
+
+                  $examen=$Emodel->getExamen($idexamen);
+
+                  // if($puntos*100/$peso[0]>50){
+                  //     $this->examen->insertProgreso(Session::get("id_usuario"), $examen['Lec_IdLeccion']);
+                  // }
+                  // exit;
+                  Session::set("intento", 0);
+                  $this->redireccionar("elearning/cursos/modulo/".$examen['Cur_IdCurso'].'/'.$examen['Moc_IdModulo'].'/'.$examen['Lec_IdLeccion']);
+              }
+
+              $this->_view->assign('preguntas', Session::get("preguntas"));
+          } else {
+
+              // echo $examen["Exa_IdExamen"]. Session::get("id_usuario"); exit;
+              $ultimoexamen = $Emodel->getUltimoExamen($examen["Exa_IdExamen"], Session::get("id_usuario"));
+
+              // echo $ultimoexamen[0]; exit;
+              $intentos = $Emodel->getIntentos($examen["Exa_IdExamen"], Session::get("id_usuario"));
+
+              if($tmp["Progreso"]==1 || $intentos > 0){
+                // $resultados = $Cmodel->getResultadoExamen($examen["Exa_IdExamen"], Session::get("id_usuario"));
+                if($ultimoexamen){
+
+                  $parametrosCurso = $Cmodel->getParametroCurso($curso);
+
+                  $angulo_ok = $ultimoexamen['Exl_Nota'] * 360 / $examen['Exa_Peso'];
+                  $ang_1 = $angulo_ok > 180 ? 180 : $angulo_ok;
+                  $ang_2 = $angulo_ok > 180 ? $angulo_ok - $ang_1 : 0;
+                  $this->_view->assign("ang_1", $ang_1);
+                  $this->_view->assign("ang_2", $ang_2);
+                  // $this->_view->assign("next_mod", $Mmodel->getNextModulo($modulo));
+                  $this->_view->assign("ultimoexamen", $ultimoexamen);
+                  $this->_view->assign("parametrosCurso", $parametrosCurso[0]);
+
+                }
+                // $this->_view->assign("resultados", $resultados);
+                //$this->redireccionar("elearning/cursos/modulo/" . $curso. "/" . $tmp["Moc_IdModuloCurso"] . "/" .
+                  //$lecciones[0]["Lec_IdLeccion"]);
+              }
+              $OLeccion["Progreso"]=$tmp["Progreso"];
+
+              if($examen==null){
+                // echo "stringssss";exit;
+                $this->redireccionar("elearning/");
+              }
+
+              if ($this->botonPress("comenzar")) {
+
+                  $this->redireccionar('elearning/cursos/modulo/'.$curso."/".$modulo."/".$leccion."/".$examen['Exa_IdExamen']);
+              }
+
+              $this->_view->assign("intentos", $intentos);
+              $this->_view->assign("restantes",$examen['Exa_Intentos']-$intentos['intentos']);
+              $this->_view->assign("examen", $examen);
           }
-          $OLeccion["Progreso"]=$tmp["Progreso"];
-
-          if($examen==null){
-            // echo "stringssss";exit;
-            $this->redireccionar("elearning/");
-          }
-
-          if ($this->botonPress("comenzar")) {
-
-            $this->redireccionar('elearning/examen/examen/'.$examen['Exa_IdExamen']);
-        }
-          $this->_view->assign("intentos", $intentos);
-
-          $this->_view->assign("restantes",$examen['Exa_Intentos']-$intentos['intentos']);
-          $this->_view->assign("examen", $examen);
       }
 
       else if ($OLeccion["Lec_Tipo"] == 4){
@@ -509,25 +651,47 @@ class cursosController extends elearningController {
       $model = $this->loadModel("leccion");
       $objeto = $model->getLeccion($leccion);
 
-      if($objeto["Lec_Tipo"] == 1 || $objeto["Lec_Tipo"] == 2){
+      if($objeto["Lec_Tipo"] == 1 || $objeto["Lec_Tipo"] == 2 || $objeto["Lec_Tipo"] == 3 || $objeto["Lec_Tipo"] == 6 ){
         $model->RegistrarProgreso($leccion, Session::get("id_usuario"));
       }
-
+      // lecciones
       $lecciones = $model->getLecciones($objeto["Moc_IdModuloCurso"], Session::get("id_usuario"));
 
       $clave = array_search($objeto["Lec_IdLeccion"], array_column($lecciones, "Lec_IdLeccion"));
-      $nextLeccion = $lecciones[$clave+1];
+
       // echo $clave; print_r($objeto);print_r($nextLeccion);print_r($lecciones); exit;
-      if(($nextLeccion["Progreso"] == 0 && $nextLeccion["Lec_Tipo"] == 3)|| $nextLeccion["Lec_Tipo"] != 3){
+
+      // if(($nextLeccion["Progreso"] == 0 && $nextLeccion["Lec_Tipo"] == 3)|| $nextLeccion["Lec_Tipo"] != 3){
+
         // echo $clave;exit;
         if(count($lecciones) > $clave+1){
+          // $nextLeccion = $lecciones[$clave+1];
+
           $posibleSiguiente = $lecciones[$clave+1];
+          // echo  "elearning/cursos/modulo/" . $curso . "/" . $objeto["Moc_IdModuloCurso"] . "/" . $posibleSiguiente["Lec_IdLeccion"]."////////////////".$curso.$posibleSiguiente["Lec_IdLeccion"].$objeto["Moc_IdModuloCurso"] .$clave.count($lecciones);exit;
           $this->redireccionar("elearning/cursos/modulo/" . $curso . "/" . $objeto["Moc_IdModuloCurso"] . "/" . $posibleSiguiente["Lec_IdLeccion"]);
         }else{
-          // echo "holaaaaaaa"; exit;
-          $this->redireccionar("elearning/cursos/curso/" . $curso);
+            // modulos
+            $modulos_ = $model->getModulosClave($curso, Session::get("id_usuario"));
+            $claveModulos = array_search($objeto["Moc_IdModuloCurso"], array_column($modulos_, "Moc_IdModuloCurso"));
+            $nextModulo = $modulos_[$claveModulos+1];
+
+            if(count($modulos_) > $claveModulos+1){
+                $posibleSiguienteMod = $modulos_[$claveModulos+1];
+
+
+                // lecciones me quede aqui
+                $primeraLeccion = $model->getLeccionUno($objeto["Moc_IdModuloCurso"]);
+
+
+                $this->redireccionar("elearning/cursos/modulo/" . $curso . "/" . $posibleSiguienteMod["Moc_IdModuloCurso"] . "/" . $primeraLeccion[0]["Lec_IdLeccion"]);
+            } else{
+
+              // echo "holaaaaaaa"; exit;
+              $this->redireccionar("elearning/cursos/curso/" . $curso);
+            }
         }
-      }
+      // }
   }
 
   public function _send_examen(){

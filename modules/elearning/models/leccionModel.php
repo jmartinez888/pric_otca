@@ -109,6 +109,29 @@ class leccionModel extends Model {
       }
       return $resultado;
     }
+    // JM
+    public function getModulosClave($curso, $usuario = ""){
+      $sql = "SELECT * FROM modulo_curso WHERE Cur_IdCurso = {$curso}
+              AND Moc_Estado = 1 AND Row_Estado = 1
+              ORDER BY Moc_IdModuloCurso ASC";
+      $modulos = $this->getArray($sql);
+      $resultado = array();
+      foreach ($modulos as $i) {
+        $clave = array_search($i["Moc_IdModuloCurso"], array_column($modulos, "Moc_IdModuloCurso"));
+        $i["Index"] = $clave + 1;
+        array_push($resultado, $i);
+      }
+      return $resultado;
+    }
+    // JM
+    public function getLeccionUno($Moc_IdModuloCurso){
+      $sql = " SELECT MIN(Lec_IdLeccion) as PrimerLeccion FROM leccion L
+              WHERE L.Moc_IdModuloCurso = $Moc_IdModuloCurso
+                AND L.Lec_Estado = 1 AND L.Row_Estado = 1 ";
+            
+      $resultado = $this->getArray($sql);
+      return $resultado;
+    }
 
     public function RegistrarProgreso($leccion, $usuario){ 
     
