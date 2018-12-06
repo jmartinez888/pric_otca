@@ -43,6 +43,16 @@
         <!-- <link rel="icon" href="{$_layoutParams.ruta_img}frontend/lr.png" type="image/x-icon"> -->
         <!-- <link rel="stylesheet" href="css/font-awesome/css/font-awesome.css"> -->
         <!-- <link rel="stylesheet" href="css/jsoft.css"> -->
+        <script type="text/javascript">
+            var _root_ = '{$_layoutParams.root_clear}';
+            var _root_lang = '{$_layoutParams.root}';
+            var _root_archivo_fisico = '{$_layoutParams.root_archivo_fisico}';
+            var _modulo = '{$_layoutParams.modulo}';
+            var _controlador = '{$_layoutParams.controlador}';
+            var _metodo = '{$_layoutParams.metodo}';
+            var locale_set = '{Cookie::lenguaje()}';
+            // $('.mitooltip').tooltip();
+        </script>
         <!--RODRIGO-->
         <script type="text/javascript" src="{$_layoutParams.root_clear}public/js/jquery-1.11.2.min.js"></script>
         <!-- <script type="text/javascript">
@@ -519,16 +529,7 @@
             });
             });
             </script>
-            <script type="text/javascript">
-            var _root_ = '{$_layoutParams.root_clear}';
-            var _root_lang = '{$_layoutParams.root}';
-            var _root_archivo_fisico = '{$_layoutParams.root_archivo_fisico}';
-            var _modulo = '{$_layoutParams.modulo}';
-            var _controlador = '{$_layoutParams.controlador}';
-            var _metodo = '{$_layoutParams.metodo}';
-            var locale_set = '{Cookie::lenguaje()}';
-            // $('.mitooltip').tooltip();
-            </script>
+            
             <!-- <script src="//code.jquery.com/jquery-1.11.2.min.js"></script> -->
             <!-- <script src="{$_layoutParams.ruta_js}jquery-3.2.1.slim.min.js" type="text/javascript"></script> -->
             <!-- <script src="{$_layoutParams.ruta_js}bootstrap.min.js" type="text/javascript"></script> -->
