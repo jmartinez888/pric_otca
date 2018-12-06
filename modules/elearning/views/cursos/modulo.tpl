@@ -5,23 +5,23 @@
   <div class="row gradiente">
       <br>
       <div class="col-lg-5 titulo-modulo">
-         <h4><strong> Módulo {$mod_datos.INDEX}: {$modulo["Moc_Titulo"]}</strong></h4>
+         <h4><strong> {$lang->get('str_modulo')} {$mod_datos.INDEX}: {$modulo["Moc_Titulo"]}</strong></h4>
       </div>
       <div class="col-sm-6 col-lg-5 derecha" style="margin-top: 5px !important">
-          <span>Lección {$leccion["Index"]} de {count($lecciones)}</span>
+          <span>{$lang->get('str_leccion')} {$leccion["Index"]} {$lang->get('str_de')} {count($lecciones)}</span>
           {if $leccion["Index"] > 1 }
           <form method="post" action="{BASE_URL}elearning/cursos/_previous_leccion/" style="display: inline-block">
             <input value="{$curso}" name="curso" hidden="hidden"/>
             <input value="{$leccion.Lec_IdLeccion}" name="leccion" hidden="hidden"/>
             <button class="course-students-amount btn btn-next-previous">
               <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-              Anterior
+              {$lang->get('str_anterior')}
             </button>
           </form>
           {else}
           <button class="course-students-amount btn btn-default" disabled="disabled">
               <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-              Anterior
+              {$lang->get('str_anterior')}
           </button>
           {/if}
           {if $leccion["Index"] < {count($lecciones)} }
@@ -30,7 +30,7 @@
             <input value="{$leccion.Lec_IdLeccion}" name="leccion" hidden="hidden"/>
             <button class="course-students-amount btn btn-next-previous">
               <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-              Siguiente
+              {$lang->get('str_siguiente')}
             </button>
           </form>
           {else}
@@ -43,7 +43,7 @@
                   <input value="{$leccion.Lec_IdLeccion}" name="leccion" hidden="hidden"/>
                   <button class="course-students-amount btn btn-next-previous">
                     <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-                    Siguiente
+                    {$lang->get('str_siguiente')}
                   </button>
                 </form>
                 {/if}
@@ -55,7 +55,7 @@
                 <input value="{$leccion.Lec_IdLeccion}" name="leccion" hidden="hidden"/>
                 <button class="course-students-amount btn btn-next-previous">
                   <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-                  Siguiente
+                  {$lang->get('str_siguiente')}
                 </button>
               </form>
             {/if}
@@ -65,7 +65,7 @@
         <a class="pull-right" href="{BASE_URL}elearning/cursos/curso/{$curso}">
         <button class="course-students-amount btn-regresar btn btn-group">
           <span class="glyphicon glyphicon-hand-left" aria-hidden="true"></span>
-          Volver al curso
+          {$lang->get('elearning_cursos_volver_curso')}
         </button>
       </a>
       </div>
@@ -136,14 +136,14 @@
           <div class="row">
             <div class="col-lg-12">
               <div class="alert alert-success" role="alert">
-                  <h3>¡Enhorabuena! ¡Usted ya aprobó su exámen!</h3>
-                  <small>Obtuviste {$ultimoexamen.Exl_Nota} puntos de {$examen.Exa_Peso}
+                  <h3>¡{$lang->get('str_enhorabuen')}! ¡{$lang->get('elearning_cursos_usted_aprobo_examen')}!</h3>
+                  <small>{$lang->get('str_obtuviste')} {$ultimoexamen.Exl_Nota} {$lang->get('elearning_cursos_puntos_de')} {$examen.Exa_Peso}
                   </small>
                   <h3></h3>
               </div>
             </div>
             <div class="col-lg-12 circulo">
-              <div class="progress" data-toggle="tooltip" data-placement="top" title="" data-original-title="Your progress">
+              <div class="progress" data-toggle="tooltip" data-placement="top" title="{$lang->get('elearning_cursos_tu_progeso')}" data-original-title="{$lang->get('elearning_cursos_tu_progeso')}">
                 <div class="clip-1">
                   <div class="slice-1" style="-webkit-transform:rotate({$ang_1}deg);-moz-transform:rotate({$ang_1}deg);-o-transform:rotate({$ang_1}deg);transform:rotate({$ang_1}deg);">
                   </div>
@@ -165,16 +165,16 @@
 
                 <div class="form-group">
 
-                    <label class="col-lg-12 control-label">Número de intentos: {$intentos.intentos} de {$examen.Exa_Intentos}</label>
+                    <label class="col-lg-12 control-label">{$lang->get('elearning_cursos_numero_intentos')}: {$intentos.intentos} {$lang->get('str_de')} {$examen.Exa_Intentos}</label>
                     <div class="col-lg-12">
                     <p></p>
-                        <p>Al presionar el botón de Comenzar Prueba se contabilizará un intento.</p>
+                        <p>{$lang->get('elearning_cursos_presionar_comenzar_cuenta_intento')}.</p>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <div class="col-lg-12">
-                     <button class="btn btn-success margin-top-10" name="comenzar" id="comenzar">Comenzar Prueba</button>
+                     <button class="btn btn-success margin-top-10" name="comenzar" id="comenzar">{$lang->get('elearning_cursos_comenzar_prueba')}</button>
                     </div>
                 </div>
             </form>
@@ -183,10 +183,10 @@
             <div style="width: 100%; margin: 0px auto; text-align:center;">
                 <div class="form-group">
 
-                    <label class="col-lg-12 control-label">Número de intentos: {$intentos.intentos} de {$examen.Exa_Intentos}</label>
+                    <label class="col-lg-12 control-label">{$lang->get('elearning_cursos_numero_intentos')}: {$intentos.intentos} {$lang->get('str_de')} {$examen.Exa_Intentos}</label>
                     <div class="col-lg-12">
                     <p></p>
-                        <p>Usted ya no cuenta con más intentos</p>
+                        <p>{$lang->get('elearning_cursos_usted_no_mas_intento')}</p>
                     </div>
                 </div>
               </div>
@@ -195,13 +195,13 @@
           {else}
             <div class="col-lg-12">
               <div class="alert alert-danger" role="alert">
-                  <h3>Lo sentimos, no has superado el exámen.</h3>
-                  <small>Obtuviste {$ultimoexamen.Exl_Nota} puntos de {$examen.Exa_Peso}</small>
+                  <h3>{$lang->get('elearning_cursos_losiento_no_supera_examen')}.</h3>
+                  <small>{$lang->get('str_obtuviste')} {$ultimoexamen.Exl_Nota} {$lang->get('elearning_cursos_puntos_de')} {$examen.Exa_Peso}</small>
                   <h3></h3>
               </div>
             </div>
             <div class="col-lg-12 circulo">
-              <div class="progress" data-toggle="tooltip" data-placement="top" title="" data-original-title="Your progress">
+              <div class="progress" data-toggle="tooltip" data-placement="top" title="{$lang->get('elearning_cursos_tu_progeso')}" data-original-title="{$lang->get('elearning_cursos_tu_progeso')}">
                 <div class="clip-1">
                   <div class="slice-1" style="-webkit-transform:rotate({$ang_1}deg);-moz-transform:rotate({$ang_1}deg);-o-transform:rotate({$ang_1}deg);transform:rotate({$ang_1}deg);">
                   </div>
@@ -222,16 +222,16 @@
 
                 <div class="form-group">
 
-                    <label class="col-lg-12 control-label">Número de intentos: {$intentos.intentos} de {$examen.Exa_Intentos}</label>
+                    <label class="col-lg-12 control-label">{$lang->get('elearning_cursos_numero_intentos')}: {$intentos.intentos} {$lang->get('str_de')} {$examen.Exa_Intentos}</label>
                     <div class="col-lg-12">
                     <p></p>
-                        <p>Al presionar el botón de Comenzar Prueba se contabilizará un intento.</p>
+                        <p>{$lang->get('elearning_cursos_presionar_comenzar_cuenta_intento')}.</p>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <div class="col-lg-12">
-                     <button class="btn btn-success margin-top-10" name="comenzar" id="comenzar">Comenzar Prueba</button>
+                     <button class="btn btn-success margin-top-10" name="comenzar" id="comenzar">{$lang->get('elearning_cursos_comenzar_prueba')}</button>
                     </div>
                 </div>
             </form>
@@ -240,10 +240,10 @@
             <div style="width: 100%; margin: 0px auto; text-align:center;">
                 <div class="form-group">
 
-                    <label class="col-lg-12 control-label">Número de intentos: {$intentos.intentos} de {$examen.Exa_Intentos}</label>
+                    <label class="col-lg-12 control-label">{$lang->get('elearning_cursos_numero_intentos')}: {$intentos.intentos} {$lang->get('str_de')} {$examen.Exa_Intentos}</label>
                     <div class="col-lg-12">
                     <p></p>
-                        <p>Usted ya no cuenta con más intentos</p>
+                        <p>{$lang->get('elearning_cursos_usted_no_mas_intento')}</p>
                     </div>
                 </div>
               </div>
@@ -255,17 +255,17 @@
                 <input type="hidden" value="1" name="enviar" />
 
                 <div class="form-group">
-                    <h3>Usted no ha realizado ningún intento hasta el momento</h3>
-                    <label class="col-lg-12 control-label">Número de intentos disponibles: {$examen.Exa_Intentos}</label>
+                    <h3>{$lang->get('elearning_cursos_usted_no_realizo_intento')}</h3>
+                    <label class="col-lg-12 control-label">{$lang->get('elearning_cursos_numero_intentos')} {strtolow($lang->get('str_disponibles'))}: {$examen.Exa_Intentos}</label>
                     <div class="col-lg-12">
                     <p></p>
-                        <p>Al presionar el botón de Comenzar Prueba se contabilizará un intento.</p>
+                        <p>{$lang->get('elearning_cursos_presionar_comenzar_cuenta_intento')}.</p>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <div class="col-lg-12">
-                     <button class="btn btn-success margin-top-10" name="comenzar" id="comenzar">Comenzar Prueba</button>
+                     <button class="btn btn-success margin-top-10" name="comenzar" id="comenzar">{$lang->get('elearning_cursos_comenzar_prueba')}</button>
                     </div>
                 </div>
             </form>
