@@ -283,7 +283,7 @@
     setTimeout(function(){
 
       var params = {
-        route: "modules/elearning/views/gleccion/_contenido/_material",
+        route: "files/elearning/_material",
         pre: $("hidden_leccion").val()
       };
       InitUploader(function(a){

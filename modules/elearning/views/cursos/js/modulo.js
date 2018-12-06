@@ -189,7 +189,7 @@ $(document).ready(function(){
     content.html("");
     files.forEach(function(row){
         var texto = "<div class='col-lg-12 item-arch-adj'>";
-        texto += "<a href='" + _root_ + "modules/elearning/views/gleccion/_contenido/_tareas/" + row.Arc_Ruta +"' target='_blank'>";
+        texto += "<a href='" + _root_ + "files/elearning/_tareas/" + row.Arc_Ruta +"' target='_blank'>";
         texto += row.Arc_Ruta +"</a>";
         texto += "<button class='btnElimArcAdj' tag='" + row.Arc_IdArchivo + "'><i class='glyphicon glyphicon-trash'>";
         texto += "</i></button></div>";
@@ -219,7 +219,7 @@ $(document).ready(function(){
 
     setTimeout(function(){
       var params = {
-        route: "modules/elearning/views/gleccion/_contenido/_tareas",
+        route: "files/elearning/_tareas",
         pre: $("#inIdTarea").val(),
         validator: {
           files: cantidad,
