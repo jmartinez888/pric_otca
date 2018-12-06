@@ -314,7 +314,7 @@ class cursosController extends elearningController {
       if($OLeccion==null){
         $this->redireccionar("elearning/cursos");
       }
-
+      $this->_view->getLenguaje(['elearning_cursos']);
        $Tmodel = $this->loadModel("trabajo");
       $TTmodel = $this->loadModel("tarea");
       $tareas = $Tmodel->getTrabajoXLeccion($OLeccion["Lec_IdLeccion"]);
