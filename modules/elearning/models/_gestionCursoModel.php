@@ -75,12 +75,13 @@ class _gestionCursoModel extends Model {
   }
 
   public function getCursoXId($id) {
-      return $this->getArray("SELECT * FROM curso WHERE Cur_IdCurso = $id AND Row_Estado = 1")[0];
+      $res = $this->getArray("SELECT * FROM curso WHERE Cur_IdCurso = $id AND Row_Estado = 1");
+      return count($res) > 0 ? $res[0] : null;
   }
   // JMart
   public function getCursoXDocente($id, $busqueda = "") {
       $sql = "SELECT * FROM curso c
-              INNER JOIN usuario u ON c.Usu_IdUsuario = u.Usu_IdUsuario   
+              INNER JOIN usuario u ON c.Usu_IdUsuario = u.Usu_IdUsuario
               WHERE c.Usu_IdUsuario = {$id} AND c.Row_Estado = 1 ";
       if( strlen($busqueda) ){
         $sql .=" AND Cur_Titulo like '%{$busqueda}%' AND Cur_Descripcion like '%{$busqueda}%'";
@@ -101,21 +102,21 @@ class _gestionCursoModel extends Model {
               SELECT cur.Cur_IdCurso, 1 AS Matriculado FROM curso cur
                 INNER JOIN matricula_curso mat ON cur.Cur_IdCurso = mat.Cur_IdCurso
                 WHERE cur.Cur_Estado = 1 ";
-                
+
         if ($soloActivos == 1) {
             $sql .= " AND cur.Row_Estado = $soloActivos ";
         }
         $sql .= " AND mat.Mat_Valor = 1 AND mat.Usu_IdUsuario = $Usu_IdUsuario ) cu_m
                   RIGHT JOIN curso cr ON cu_m.Cur_IdCurso = cr.Cur_IdCurso
                   INNER JOIN constante cc ON cr.Moa_IdModalidad = cc.Con_Valor AND cc.Con_Codigo = 1000
-                  INNER JOIN usuario u ON cr.Usu_IdUsuario = u.Usu_IdUsuario 
+                  INNER JOIN usuario u ON cr.Usu_IdUsuario = u.Usu_IdUsuario
                   LEFT JOIN matricula_curso mt ON cr.Cur_IdCurso = mt.Cur_IdCurso ";
 
         if ($soloActivos == 1) {
             $sql .= " AND cr.Row_Estado = $soloActivos ";
         }
         $sql .= " GROUP BY cr.Cur_IdCurso )cursi
-            LEFT JOIN valoracion_curso vc ON cursi.Cur_IdCurso = vc.Cur_IdCurso 
+            LEFT JOIN valoracion_curso vc ON cursi.Cur_IdCurso = vc.Cur_IdCurso
             WHERE (cursi.Inscrito = 1 OR cursi.Usu_IdUsuario = $Usu_IdUsuario) ";
         if( strlen($Busqueda) ){
           $sql .=" AND cursi.Cur_Titulo like '%" . $Busqueda . "%' OR cursi.Cur_Descripcion like '%{$Busqueda}%' ";
@@ -214,14 +215,14 @@ class _gestionCursoModel extends Model {
     try {
         $sql = " UPDATE curso SET Cur_UrlVideoPresentacion = '{$video}' WHERE Cur_IdCurso = '{$curso}' ";
          // $this->execQuery($sql);
-         $result = $this->_db->prepare($sql);                                                   
+         $result = $this->_db->prepare($sql);
           $result->execute();
           return $result->rowCount(PDO::FETCH_ASSOC);
     } catch (PDOException $exception) {
         $this->registrarBitacora("elearning(_gestionCursoModel)", "updateVideoCurso", "Error Model", $exception);
         return $exception->getTraceAsString();
-    } 
-    
+    }
+
   }
 
 
@@ -237,12 +238,12 @@ class _gestionCursoModel extends Model {
         try{
             $anuncios = $this->_db->query(
                 " SELECT COUNT(anc.Anc_IdAnuncioCurso) AS CantidadRegistros from anuncio_curso anc $condicion "
-            );           
-            return $anuncios->fetch(PDO::FETCH_ASSOC);            
+            );
+            return $anuncios->fetch(PDO::FETCH_ASSOC);
         } catch (PDOException $exception) {
             $this->registrarBitacora("gestion(indexModel)", "getAnunciosRowCount", "Error Model", $exception);
             return $exception->getTraceAsString();
-        }        
+        }
     }
 
   public function getAnunciosCondicion($pagina,$registrosXPagina,$condicion = "")
@@ -250,10 +251,10 @@ class _gestionCursoModel extends Model {
         try{
             $registroInicio = 0;
             if ($pagina > 0) {
-                $registroInicio = ($pagina - 1) * $registrosXPagina;                
+                $registroInicio = ($pagina - 1) * $registrosXPagina;
             }
 
-            $sql = " SELECT *, SUBSTRING(Anc_Descripcion, 1, 30) AS Anc_DescripcionRec FROM anuncio_curso anc $condicion 
+            $sql = " SELECT *, SUBSTRING(Anc_Descripcion, 1, 30) AS Anc_DescripcionRec FROM anuncio_curso anc $condicion
                 LIMIT $registroInicio, $registrosXPagina ";
             $result = $this->_db->query($sql);
             return $result->fetchAll(PDO::FETCH_ASSOC);
@@ -285,12 +286,12 @@ class _gestionCursoModel extends Model {
   // }
 
   public function registrarAnuncio($titulo, $descripcion, $idCurso){
-        try {             
+        try {
             $sql = "call s_i_anuncios(?,?,?)";
             $result = $this->_db->prepare($sql);
             $result->bindParam(1, $titulo, PDO::PARAM_STR);
             $result->bindParam(2, $descripcion, PDO::PARAM_STR);
-            $result->bindParam(3, $idCurso,  PDO::PARAM_INT);                       
+            $result->bindParam(3, $idCurso,  PDO::PARAM_INT);
             $result->execute();
             return $result->fetch();
         } catch (PDOException $exception) {
@@ -300,11 +301,11 @@ class _gestionCursoModel extends Model {
     }
 
     public function registrarAnuncioUsuario($anuncio, $usuario){
-        try {             
+        try {
             $sql = "call s_i_anuncios_usuarios(?,?)";
             $result = $this->_db->prepare($sql);
             $result->bindParam(1, $anuncio, PDO::PARAM_INT);
-            $result->bindParam(2, $usuario, PDO::PARAM_INT);                       
+            $result->bindParam(2, $usuario, PDO::PARAM_INT);
             $result->execute();
             return $result->fetch();
         } catch (PDOException $exception) {
@@ -347,12 +348,12 @@ class _gestionCursoModel extends Model {
                 " SELECT U.Usu_IdUsuario IdUsu FROM usuario U
             INNER JOIN matricula_curso MC ON U.Usu_IdUsuario = MC.Usu_IdUsuario
             WHERE MC.Cur_IdCurso = $curso "
-            );           
-            return $alumnos->fetchAll(PDO::FETCH_ASSOC);            
+            );
+            return $alumnos->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $exception) {
             $this->registrarBitacora("elearning(_gestionCursoModel)", "getMatriculadosCurso", "Error Model", $exception);
             return $exception->getTraceAsString();
-        }        
+        }
     }
 
 
@@ -363,12 +364,12 @@ class _gestionCursoModel extends Model {
                 " SELECT U.Usu_Nombre,U.Usu_Apellidos,U.Usu_DocumentoIdentidad,U.Usu_Email FROM usuario U
             INNER JOIN matricula_curso MC ON U.Usu_IdUsuario = MC.Usu_IdUsuario
             WHERE Cur_IdCurso = $curso "
-            );           
-            return $alumnos->fetchAll(PDO::FETCH_ASSOC);            
+            );
+            return $alumnos->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $exception) {
             $this->registrarBitacora("elearning(_gestionCursoModel)", "getMatriculadosCurso", "Error Model", $exception);
             return $exception->getTraceAsString();
-        }        
+        }
     }
 
 
@@ -396,7 +397,7 @@ class _gestionCursoModel extends Model {
                 $result->bindParam(1, $Per_IdPermiso, PDO::PARAM_INT);
                 $result->execute();
 
-                return $result->rowCount(PDO::FETCH_ASSOC);                
+                return $result->rowCount(PDO::FETCH_ASSOC);
             }
             if($Per_Estado==1)
             {
@@ -420,7 +421,7 @@ class _gestionCursoModel extends Model {
         try{
 
             $permiso = $this->_db->query(
-                " UPDATE anuncio_curso SET Row_Estado = $Row_Estado WHERE Anc_IdAnuncioCurso = $Per_IdPermiso "               
+                " UPDATE anuncio_curso SET Row_Estado = $Row_Estado WHERE Anc_IdAnuncioCurso = $Per_IdPermiso "
                 );
             return $permiso->rowCount(PDO::FETCH_ASSOC);
         } catch (PDOException $exception) {
