@@ -1,8 +1,8 @@
 <div class="col-lg-12">
-        <h3>Examen</h3>
-        <hr class="cursos-hr">
-    </div>
-   <div  class="col-lg-12">
+    <h3>Examen</h3>
+    <hr class="cursos-hr">
+</div>
+<div  class="col-lg-12">
     <form class="" role="form" method="post" action="" autocomplete="on">
         <input type="hidden" value="1" name="enviar" />
         {if isset($preguntas) && count($preguntas)}
