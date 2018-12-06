@@ -184,7 +184,7 @@ class certificadoController extends elearningController {
     public function verificar($codigo = false) {
 
         $this->_view->setTemplate(LAYOUT_FRONTEND);
-
+        $this->_view->getLenguaje(['elearning_cursos']);
         $this->_view->setJs(array("verificar"));
         $this->_view->setCss(array("verificar"));
 
