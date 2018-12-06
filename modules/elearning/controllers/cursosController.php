@@ -440,13 +440,19 @@ class cursosController extends elearningController {
       if (!Session::get("autenticado")){ $this->redireccionar("elearning/"); }
 
       $model = $this->loadModel("inscripcion");
+      $inscrito = false;
       if($mod==1){
-        $model->insertarInscripcion(Session::get("id_usuario"), $curso, 1);
+        $inscrito = $model->insertarInscripcion(Session::get("id_usuario"), $curso, 1);
       }else{
         if ($mod == 3)
-          $model->insertarInscripcion(Session::get("id_usuario"), $curso, 1);
+        $inscrito = $model->insertarInscripcion(Session::get("id_usuario"), $curso, 1);
         else
-          $model->insertarInscripcion(Session::get("id_usuario"), $curso, 2);
+        $inscrito = $model->insertarInscripcion(Session::get("id_usuario"), $curso, 2);
+      }
+
+      if ($inscrito && $inscrito > 0) {
+        $modelUsuario = $this->loadModel("usuario","usuarios");
+        $rolAlumno = $modelUsuario->replaceRolUsuario(Session::get("id_usuario"), 6);
       }
 
       $Cmodel = $this->loadModel("_gestionCurso");

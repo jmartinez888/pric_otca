@@ -58,7 +58,13 @@ class gcursoController extends elearningController {
     $id = Session::get("id_usuario");
     $busqueda = $this->getTexto('busqueda');
     // $cursos = $this->curso->getCursoXDocente($id, $busqueda);
-    $cursos = $this->curso->getMisCursos($id, $busqueda);
+    
+    $soloActivos = 0;
+    if (!$this->_acl->permiso('ver_eliminados')) {
+      $soloActivos = 1;
+      $sql .= " AND cur.Row_Estado = $soloActivos ";
+    }
+    $cursos = $this->curso->getMisCursos($id, $busqueda, $soloActivos);
 
     //print_r($cursos); exit;
     // $this->_view->setCss(array("jm-mis-cursos"));
