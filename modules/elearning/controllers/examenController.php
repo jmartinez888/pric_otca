@@ -1522,19 +1522,20 @@ class examenController extends elearningController {
         $this->_view->renderizar('comenzarexamen', 'elearning');
     }
 
-    public function examen($idexamen){
+    public function examen($idexamen=false){
         // $this->_view->setCss(array("miscertificados"));
-        $this->_view->setTemplate(LAYOUT_FRONTEND);
-        $this->_view->setJs(array(array(BASE_URL . 'modules/elearning/views/gestion/js/core/util.js'), "index"));
 
-        // echo $intento[0]; exit;
+                    // $this->_view->setTemplate(LAYOUT_FRONTEND);
+                    // $this->_view->setJs(array(array(BASE_URL . 'modules/elearning/views/gestion/js/core/util.js'), "index"));
 
-        if (Session::get("intento") < 1){
-            $preguntas = $this->examen->getPreguntas($idexamen);
-            $peso = $this->examen->getExamenPeso($idexamen);
-            Session::set("preguntas", $preguntas);
-            Session::set("intento", 1);
-        }
+                    // if (Session::get("intento") < 1){
+                    //     $preguntas = $this->examen->getPreguntas($idexamen);
+                    //     $peso = $this->examen->getExamenPeso($idexamen);
+                    //     Session::set("preguntas", $preguntas);
+                    //     Session::set("intento", 1);
+                    // }
+
+
         // print_r($preguntas);
         if ($this->botonPress("terminar")) {
 
@@ -1572,13 +1573,15 @@ class examenController extends elearningController {
                             $puntosrpta = 0;
                             foreach ($alt as $k) {
                                 // if($k['Alt_Check'])
-                                    if($this->getInt('rpta2_alt'.$i.'_index'.$j) == $k['Alt_IdAlternativa']){
-                                        $puntosrpta = $k['Alt_Puntos'];
-                                        $puntos = $puntos + $puntosrpta;
-                                    }
+                                if($this->getInt('rpta2_alt'.$i.'_index'.$j) == $k['Alt_IdAlternativa']){
+                                    $puntosrpta = $k['Alt_Puntos'];
+                                    $puntos = $puntos + $puntosrpta;
+                                }
                             }   
                             // echo "P2:".$puntosrpta; 
                             $this->examen->insertRespuesta($this->getInt('id_preg'.$i), Session::get("idintento"), $this->getInt('rpta2_alt'.$i.'_index'.$j),null,null,$puntosrpta);
+                        } else {
+
                         }
                     }
                 } else if($tipo == 3){
@@ -1622,17 +1625,17 @@ class examenController extends elearningController {
 
                         if($this->getSql('rpta7_alt'.$i.'_index'.$j)){
 
-                        $alt=$preguntas[$i]['Alt'];
-                        $cont=0;
-                        $puntosrpta=0;
+                            $alt=$preguntas[$i]['Alt'];
+                            $cont=0;
+                            $puntosrpta=0;
                         
                             foreach ($alt as $k) {
-                                // if($k['Alt_Check']){
+                                if($k['Alt_Check']){
                                     if($this->getInt('rpta7_alt'.$i.'_index'.$j)==$k['Alt_IdAlternativa'])
                                         $cont2++;
 
                                     $cont++;
-                                // }
+                                }
                             } 
                             if($cont==$cont2){
                                 $puntosrpta=$preguntas[$i]['Pre_Puntos'];
@@ -1652,12 +1655,12 @@ class examenController extends elearningController {
             // if($puntos*100/$peso[0]>50){
             //     $this->examen->insertProgreso(Session::get("id_usuario"), $examen['Lec_IdLeccion']);
             // }
-            exit;
+            // exit;
              $this->redireccionar("elearning/cursos/modulo/".$examen['Cur_IdCurso'].'/'.$examen['Moc_IdModulo'].'/'.$examen['Lec_IdLeccion']);
         }
 
-        $this->_view->assign('preguntas', Session::get("preguntas"));       
-        $this->_view->renderizar('examen');
+                    // $this->_view->assign('preguntas', Session::get("preguntas"));       
+                    // $this->_view->renderizar('examen');
     }
 
     public function resultado($puntos=0, $peso=0){

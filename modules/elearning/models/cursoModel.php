@@ -390,4 +390,15 @@ class cursoModel extends Model {
             return $exception->getTraceAsString();
         }
     }
+    // Jhon Martinez
+    public function getParametroCurso($curso){
+        try{
+            $sql = " SELECT * FROM parametro_curso WHERE Cur_IdCurso = {$curso} ";
+            return $this->getArray($sql);
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("elearning(cursoModel)", "getParametroCurso", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
+
 }
