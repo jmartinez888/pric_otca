@@ -33,7 +33,7 @@
             <div class="col-lg-6">
               <div class="panel item-pizarra">
                 <input class="hidden_IdPizarra" value="{$p.Piz_IdPizarra}" hidden="hidden"/>
-                <img src="{BASE_URL}modules/elearning/views/gleccion/_contenido/_pizarra/{$p.Piz_ImgFondo}" />
+                <img src="{BASE_URL}files/elearning/_pizarra/{$p.Piz_ImgFondo}" />
                 <button class="btn btn-default btn-quitar-pizarra"><span class="glyphicon glyphicon-trash"></span></button>
               </div>
             </div>

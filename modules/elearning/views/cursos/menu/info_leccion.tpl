@@ -66,7 +66,7 @@
                           {if isset($r.Archivos) && count($r.Archivos)> 0}
                             <center>
                             {foreach from=$r.Archivos item=file}
-                              <a href="{BASE_URL}modules/elearning/views/gleccion/_contenido/_trabajos/{$file.Arc_Ruta}" target="_blank">
+                              <a href="{BASE_URL}files/elearning/_trabajos/{$file.Arc_Ruta}" target="_blank">
                                 <i class="glyphicon glyphicon-file"></i>
                               </a>
                             {/foreach}

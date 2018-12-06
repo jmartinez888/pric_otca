@@ -106,7 +106,7 @@
                 <div class="pizarra-mini">
                   <input value="{$p.Piz_IdPizarra}" class="hidden_IdPizarra" hidden="hidden" />
                   <img class="img-pizarra-mini" 
-                  src="{BASE_URL}modules/elearning/views/gleccion/_contenido/_pizarra/{$p.Piz_ImgFondo}" />
+                  src="{BASE_URL}files/elearning/_pizarra/{$p.Piz_ImgFondo}" />
                 </div>
               {/foreach}
                 </div>
@@ -160,7 +160,7 @@
                       <img class="pizarra-fondo-item" style="width: {$p.Piz_ImgWidth}px; height: {$p.Piz_ImgHeight}px; 
                         top: {$p.Piz_ImgY}px; left: {$p.Piz_ImgX}px;
                         {if $leccion.Lec_LMSPizarra != $p.Piz_IdPizarra}display:none{/if}" id="pizarra-fondo-{$p.Piz_IdPizarra}" 
-                        src="{BASE_URL}modules/elearning/views/gleccion/_contenido/_pizarra/{$p.Piz_ImgFondo}" />
+                        src="{BASE_URL}files/elearning/_pizarra/{$p.Piz_ImgFondo}" />
                       
                     {/foreach}
                   {/if}

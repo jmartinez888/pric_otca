@@ -72,7 +72,7 @@
 $(document).ready(function(){
 	$("#btn-agregar-pizarra").click(function(){
 		var params = {
-			route: "modules/elearning/views/gleccion/_contenido/_pizarra",
+			route: "files/elearning/_pizarra",
 			pre: $("hiddenLeccion").val()
 		};
 		InitUploader(function(a){
@@ -139,7 +139,7 @@ $(document).ready(function(){
 		DATA = DATA[DATA.length-1];
 
 		$("#tmp_img_url").val(DATA);
-		DATA = $("#hiddenURL").val() + "modules/elearning/views/gleccion/_contenido/_pizarra/" + DATA;
+		DATA = $("#hiddenURL").val() + "files/elearning/_pizarra/" + DATA;
 
 		var CON = $(".contenido-pizarra_nuevo");
 		$("#tmp_fondo_pizarra").remove();
