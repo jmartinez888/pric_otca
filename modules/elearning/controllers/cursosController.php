@@ -385,17 +385,17 @@ class cursosController extends elearningController {
         $this->redireccionar("elearning/clase/examen/" . $curso . "/" .$modulo  . "/" . $OLeccion["Lec_IdLeccion"]);
         exit;
       }
-
+      $obj_modulo = $Mmodel->getModulo($modulo);
       $this->_view->setTemplate(LAYOUT_FRONTEND);
       $this->_view->assign("mod_datos", $datos_modulo);
-      $this->_view->assign("modulo", $Mmodel->getModulo($modulo));
+      $this->_view->assign("modulo", $obj_modulo);
       $this->_view->assign("lecciones", $lecciones);
       // $this->_view->assign("examenes", $examenes);
 
       $this->_view->assign("leccion", $OLeccion);
       if ($curso != 0) {
 
-        $this->_view->assign("titulo",$lang->get('str_modulo').' - '.$obj_curso->Cur_Titulo);
+        $this->_view->assign("titulo",$lang->get('str_modulo').': '.$obj_modulo['Moc_Titulo']);
       }
       $this->_view->assign("referencias", $Lmodel->getReferencias($OLeccion["Lec_IdLeccion"]));
       $this->_view->assign("materiales", $Lmodel->getMateriales($OLeccion["Lec_IdLeccion"]));
