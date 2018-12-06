@@ -275,16 +275,13 @@ class cursosController extends elearningController {
       $Cmodel = $this->loadModel("curso");
       $Emodel = $this->loadModel("examen");
 
-
-
-      Session::set("intento", 0);
-      $obj_curso = null;
+       Session::set("intento", 0);
+       $obj_curso = null;
 
       if(strlen($curso)==0 || strlen($modulo)==0){
 
         $this->redireccionar("elearning/");
       }
-
       if(!Session::get("autenticado")){
         // echo "string";exit;
         $this->redireccionar("elearning/");

@@ -23,7 +23,7 @@ class certificadoController extends elearningController {
 
         $usuario = Session::get("id_usuario");
         $curso = $this->getTexto("curso");
-        
+
         $tmpUser = "0000" . $usuario;
         $tmpCurso = "0000" . $curso;
 
@@ -43,13 +43,14 @@ class certificadoController extends elearningController {
 
         $this->service->Populate($calif);
         $this->service->Success("Se registró la calificación");
-        $this->service->Send();        
+        $this->service->Send();
     }
 
     public function miscertificados(){
         // $codigo = $this->getTexto("certificado");
         $this->_view->setCss(array("verificar"));
         $this->_view->setTemplate(LAYOUT_FRONTEND);
+        $this->_view->getLenguaje(['elearning_cursos']);
         // $this->_view->assign("certificado", $codigo);
         // $this->_view->assign("resultados", $this->certificado->getCertificado($codigo));
         // $this->_view->renderizar("menu");
@@ -72,7 +73,7 @@ class certificadoController extends elearningController {
 
         $paginador = new Paginador();
 
-        
+
         $arrayRowCount = $this->certificado->getCertificadoRowCount("WHERE v.Usu_IdUsuario = $usuario");
 
         $this->_view->assign('certificados', $this->certificado->getCertificadosCondicion($pagina,CANT_REG_PAG,"WHERE v.Usu_IdUsuario = $usuario"));
@@ -83,13 +84,13 @@ class certificadoController extends elearningController {
 
         $this->_view->assign('numeropagina', $paginador->getNumeroPagina());
         $this->_view->assign('paginacioncertificados', $paginador->getView('paginacion_ajax_s_filas'));
-        
+
         $this->_view->assign('titulo', 'Mis Certficados');
         $this->_view->renderizar('miscertificados');
     }
 
 
-     public function _paginacion_listarcertificados($txtBuscar = false) 
+     public function _paginacion_listarcertificados($txtBuscar = false)
     {
         //$this->validarUrlIdioma();
         $pagina = $this->getInt('pagina');
@@ -100,7 +101,7 @@ class certificadoController extends elearningController {
         $condicion = " ";
         $soloActivos = 1;
         // $nombre = $this->getSql('palabra');
-        if ($txtBuscar) 
+        if ($txtBuscar)
         {
             $condicion = " WHERE c.Cur_Titulo liKe '%$txtBuscar%' and v.Usu_IdUsuario = $usuario ";
             //Filtro por Activos/Eliminados
@@ -111,13 +112,13 @@ class certificadoController extends elearningController {
             //     $condicion .= " ORDER BY Row_Estado DESC  ";
             // }
         } else {
-            //Filtro por Activos/Eliminados     
-            // $condicion = " ORDER BY Row_Estado DESC ";   
+            //Filtro por Activos/Eliminados
+            // $condicion = " ORDER BY Row_Estado DESC ";
             // if (!$this->_acl->permiso('ver_eliminados')) {
             //     $soloActivos = 1;
                  $condicion = " WHERE v.Usu_IdUsuario = $usuario  ";
             // }
-        }         
+        }
 
 
         $paginador = new Paginador();
@@ -132,7 +133,7 @@ class certificadoController extends elearningController {
         $this->_view->renderizar('ajax/listarcertificados', false, true);
     }
     //Modificado por Jhon Martinez
-    public function _buscarcertificado() 
+    public function _buscarcertificado()
     {
         $txtBuscar = $this->getSql('palabra');
         $pagina = $this->getInt('pagina');
@@ -141,7 +142,7 @@ class certificadoController extends elearningController {
 
         $soloActivos = 1;
         // $nombre = $this->getSql('palabra');
-        if ($txtBuscar) 
+        if ($txtBuscar)
         {
             $condicion = " WHERE c.Cur_Titulo liKe '%$txtBuscar%' and v.Usu_IdUsuario = $usuario ";
             // if (!$this->_acl->permiso('ver_eliminados')) {
@@ -150,15 +151,15 @@ class certificadoController extends elearningController {
             // }
             // $condicion .= " ORDER BY Row_Estado DESC  ";
         } else {
-            //Filtro por Activos/Eliminados     
-            // $condicion = " ORDER BY Row_Estado DESC ";   
+            //Filtro por Activos/Eliminados
+            // $condicion = " ORDER BY Row_Estado DESC ";
             // if (!$this->_acl->permiso('ver_eliminados')) {
             //     $soloActivos = 1;
                 $condicion = "  WHERE v.Usu_IdUsuario = $usuario  ";
             // }
 
             //Filtro por Activos/Eliminados
-        }        
+        }
 
 
         $paginador = new Paginador();
@@ -183,7 +184,7 @@ class certificadoController extends elearningController {
     public function verificar($codigo = false) {
 
         $this->_view->setTemplate(LAYOUT_FRONTEND);
-        
+        $this->_view->getLenguaje(['elearning_cursos']);
         $this->_view->setJs(array("verificar"));
         $this->_view->setCss(array("verificar"));
 
@@ -197,7 +198,7 @@ class certificadoController extends elearningController {
         $this->_view->renderizar('verificar');
     }
 
-    public function _paginacion_listarcertificadosotros($txtBuscar = false) 
+    public function _paginacion_listarcertificadosotros($txtBuscar = false)
     {
         //$this->validarUrlIdioma();
         $pagina = $this->getInt('pagina');
@@ -208,7 +209,7 @@ class certificadoController extends elearningController {
         $condicion = " ";
         $soloActivos = 1;
         // $nombre = $this->getSql('palabra');
-        if ($txtBuscar) 
+        if ($txtBuscar)
         {
             $condicion = " WHERE v.Cer_Codigo liKe '%$txtBuscar%' ";
             //Filtro por Activos/Eliminados
@@ -219,13 +220,13 @@ class certificadoController extends elearningController {
             //     $condicion .= " ORDER BY Row_Estado DESC  ";
             // }
         } else {
-            //Filtro por Activos/Eliminados     
-            // $condicion = " ORDER BY Row_Estado DESC ";   
+            //Filtro por Activos/Eliminados
+            // $condicion = " ORDER BY Row_Estado DESC ";
             // if (!$this->_acl->permiso('ver_eliminados')) {
             //     $soloActivos = 1;
                  $condicion = " ";
             // }
-        }         
+        }
 
 
         $paginador = new Paginador();
@@ -250,7 +251,7 @@ class certificadoController extends elearningController {
         $model = $this->loadModel("curso");
         $curso = $model->getCursoID($idCurso);
         $this->_view->assign("curso", $curso[0]);
-        
+
         $plantillas=$this->certificado->getAllPlantillaCertificado($idCurso);
         $this->_view->assign('plantillas', $plantillas);
         $this->_view->assign('idCurso', $idCurso);
@@ -261,9 +262,9 @@ class certificadoController extends elearningController {
 
     public function plantilla_certificado($idCurso){
         // $codigo = $this->getTexto("certificado");
-        
+
         $this->_view->setTemplate(LAYOUT_FRONTEND);
-       
+
         $this->_view->getLenguaje("index_inicio");
         // $plantillas=$this->certificado->getAllPlantillaCertificado($idCurso);
 
@@ -271,7 +272,7 @@ class certificadoController extends elearningController {
         $this->_view->setCss(array("plantilla"));
 
          if ($this->botonPress("bt_editarPlantilla")) {
-            
+
             $tipo_doc=$_FILES['img']['type'];
             if($tipo_doc!=="image/jpg" && $tipo_doc!=="image/jpeg" && $tipo_doc!=="image/png"){
                 echo ("<script type='text/javascript'>");
@@ -315,7 +316,7 @@ class certificadoController extends elearningController {
             }
         }
 
-        if ($this->botonPress("bt_cancelareditarPlantilla")) {   
+        if ($this->botonPress("bt_cancelareditarPlantilla")) {
             $this->redireccionar("elearning/certificado/plantilla_opcion/".$idCurso);
         }
 
@@ -326,7 +327,7 @@ class certificadoController extends elearningController {
 
     public function plantilla_certificado_editar($id){
         // $codigo = $this->getTexto("certificado");
-        
+
         $this->_view->setTemplate(LAYOUT_FRONTEND);
         $this->_view->setJs(array("index"));
         $this->_view->setCss(array("plantilla"));
@@ -352,7 +353,7 @@ class certificadoController extends elearningController {
 
                 if(null !==$this->getSql('ckbFecha'))
                     $estiloFecha=$this->getSql('estiloFecha');
-            
+
             $tipo_doc=$_FILES['img']['type'];
             if($tipo_doc!=="image/jpg" && $tipo_doc!=="image/jpeg" && $tipo_doc!=="image/png"){
                 $this->certificado->editarPlantilla($plantilla['Plc_UrlImg'],$estiloAlumno, $estiloCurso,$estiloHoras,$estiloFecha,$id);
@@ -371,31 +372,31 @@ class certificadoController extends elearningController {
             }
         }
 
-         if ($this->botonPress("bt_SeleccionarPlantilla")) {   
+         if ($this->botonPress("bt_SeleccionarPlantilla")) {
 
             $plantillas=$this->certificado->getAllPlantillaCertificado($plantilla['Cur_IdCurso']);
 
             foreach ($plantillas as $k) {
                 $this->certificado->cambiarSelectedPlantilla($k['Plc_IdPlantillaCertificado'],1);
             }
-             
+
             $this->certificado->cambiarSelectedPlantilla($id,0);
 
         }
 
 
-        if ($this->botonPress("bt_EliminarPlantilla")) {   
-             
+        if ($this->botonPress("bt_EliminarPlantilla")) {
+
             $this->certificado->eliminarPlantilla($id);
             $this->redireccionar("elearning/certificado/plantilla_opcion/".$plantilla['Cur_IdCurso']);
         }
 
-        if ($this->botonPress("bt_cancelareditarPlantilla")) {   
+        if ($this->botonPress("bt_cancelareditarPlantilla")) {
             $this->redireccionar("elearning/certificado/plantilla_opcion/".$plantilla['Cur_IdCurso']);
         }
 
         $this->_view->assign('plantilla', $plantilla);
         $this->_view->renderizar('plantilla_certificado_editar');
     }
-   
+
 }

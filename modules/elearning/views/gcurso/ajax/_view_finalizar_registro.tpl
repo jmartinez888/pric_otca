@@ -63,10 +63,10 @@
           <label class="col-md-3 control-label"> {$lang->get('elearning_gcurso_imagen_icono')} : </label>
           <div class="col-md-6">
               {if strlen($curso.Cur_UrlBanner)>0 && $curso.Cur_UrlBanner != "default.jpg"}
-                  <img class="img-banner" id="img_banner_new" src="{BASE_URL}modules/elearning/views/cursos/img/portada/{$curso.Cur_UrlBanner}" />
+                  <img class="img-banner w-100" id="img_banner_new" src="{BASE_URL}modules/elearning/views/cursos/img/portada/{$curso.Cur_UrlBanner}" />
               {else}
                 <b class="col-xs-12 text-center">Imagen Default</b>
-                  <img class="img-banner" style="opacity: 0.6" src="{BASE_URL}modules/elearning/views/cursos/img/portada/default.jpg" />
+                  <img class="img-banner w-100" style="opacity: 0.6" src="{BASE_URL}modules/elearning/views/cursos/img/portada/default.jpg" />
               {/if}
           </div>
           <div class=" col-md-2">
