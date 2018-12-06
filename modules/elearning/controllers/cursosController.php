@@ -274,8 +274,8 @@ class cursosController extends elearningController {
       $Lmodel = $this->loadModel("leccion");
       $Cmodel = $this->loadModel("curso");
       $Emodel = $this->loadModel("examen");
-       Session::set("intento", 0);
-       $obj_curso = null;
+      Session::set("intento", 0);
+      $obj_curso = null;
 
       if(strlen($curso)==0 || strlen($modulo)==0){
 
