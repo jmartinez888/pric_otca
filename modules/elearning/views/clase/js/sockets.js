@@ -44,14 +44,23 @@ var SOCKET_CLASE = SocketInstance("INICIO_CLASE", function(){
   }
 }, function(){});
 
-var SOCKET_MENSAJE = SocketInstance("CHAT", function(){
-}, function(){
-}, function(msg){
+var SOCKET_MENSAJE = SocketInstance("CHAT", function(){}, function(){}, function(msg){
   if(USUARIO.id == msg.usuario){
     AddMensaje(1, msg.id, "", msg.msg);
   }else{
     AddMensaje(2, msg.id, "", msg.msg);
   }
+}, function(){});
+
+var TOTALES_LECCION = SocketInstance("TOTALES_LECCION", function(){}, function(){}, function(msg){
+  console.log(msg);
+  if (msg != null)
+    $('#totales_conectados').text(msg.count);
+  // if(USUARIO.id == msg.usuario){
+  //   AddMensaje(1, msg.id, "", msg.msg);
+  // }else{
+  //   AddMensaje(2, msg.id, "", msg.msg);
+  // }
 }, function(){});
 
 

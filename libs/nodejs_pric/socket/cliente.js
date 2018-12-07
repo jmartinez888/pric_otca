@@ -1,5 +1,5 @@
 module.exports = function(io, socket, cliente){
-  var _ = require('lodash');	
+  var _ = require('lodash');
 
   socket.on('PIZARRA', function(msg){
     var result = JSON.parse(JSON.stringify(msg));
@@ -18,6 +18,7 @@ module.exports = function(io, socket, cliente){
   });
 
   socket.on('CHAT', function(msg){
+    console.log(msg);
   	var result = { id: get(socket).id, msg: msg.mensaje, usuario: msg.usuario/*, fecha: msg.fecha*/ }
     io.emit('CHAT', result);
   });

@@ -4,22 +4,41 @@ module.exports = function(app, test){
   var CLIENTES = [];
   var ADMIN = [];
   var TEST = test;
-
+  var CONECTADOS = [];
+  function buscar_leccion (leccion_id) {
+    console.log(CONECTADOS)
+    return CONECTADOS.find(function(v) {
+      console.log(leccion_id);
+      return v.leccion == leccion_id;
+    })
+  }
   io.sockets.on('connection', function (socket) {
     addSocket(socket);
-    console.log("Usuario conectado ID: " + get(socket).tipo);
+    console.log("Usuario conectado ID: " + get(socket).id + ' TIPO : ' + get(socket).tipo + "[LECCION : " + get(socket).leccion + "]");
+    let leccion_id = get(socket).leccion;
+    var leccion = buscar_leccion(leccion_id);
+      if (leccion == undefined)
+        CONECTADOS.push({leccion: get(socket).leccion, count: 1});
+      else {
+        leccion.count = leccion.count + 1;
+      }
+      console.log(CONECTADOS)
+      send('TOTALES_LECCION', leccion);
 
     if(get(socket).tipo==1){
       require('./admin')(io, socket, ADMIN);
       var resultado = { conectados : ADMIN.length }
     }else{
       require('./cliente')(io, socket, CLIENTES);
-      
       var resultado = { conectados : CLIENTES.length }
     }
-    
+
     send('CONN', resultado);
     socket.on('disconnect', function(){
+      console.log('id pra remove : ' + leccion_id)
+      let leccionremove = buscar_leccion(leccion_id);
+      leccionremove.count = leccionremove.count - 1;
+      send('TOTALES_LECCION', leccionremove);
       removeSocket(socket, CLIENTES, ADMIN);
       send('CONN', resultado);
     });
@@ -41,7 +60,7 @@ module.exports = function(app, test){
       });
     }
   }
-  
+
   function removeSocket(socket, cli, adm){
     if(socket.id!=null){
       if(get(socket).tipo == 1){

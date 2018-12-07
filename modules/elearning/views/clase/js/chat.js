@@ -42,6 +42,7 @@ $("#chat-text-send").click(function(){
     success: function(a){
       var DATA = JSON.parse(a);
       if(DATA.estado==1){
+        console.log(data);
         SOCKET_MENSAJE.send(data);
       }else{
         console.log("No se pudo guardar el mensaje");
@@ -73,21 +74,19 @@ function AddMensaje(autor, id, fecha, mensaje){
     control = '<div class="content-msn">' +
                 '<div class="mensaje-me">' +
                   '<div class="mensaje-chat-text">' +
-                      '<p><strong>'+ usuario +'</strong></p>' +
-                      '<p>'+ mensaje +'</p>' +
-                      '<p><small>'+ fecha+'</small></p>' +
+                      '<div class="sujeto-link"><div class="avatar"><img class="img-circle-msn" /></div><strong>'+ usuario +'</strong></div>' +
+                      '<p class="p-mensaje">'+ mensaje +'</p>' +
+                      '<p class="p-time"><small>'+ fecha +'</small></p>' +
                   '</div>' +
-                  '<div class="avatar"><img class="img-circle-msn" /></div>' +
                 '</div>' +
               '</div>';
   }else{
     control = '<div class="content-msn">' +
                 '<div class="mensaje-other">' +
-                '<div class="avatar"><img class="img-circle-msn"/></div>' +
                 '<div class="mensaje-chat-text">' +
-                    '<p><strong>'+ usuario +'</strong></p>' +
-                    '<p>'+ mensaje +'</p>' +
-                    '<p><small>'+ fecha+'</small></p>' +
+                    '<div class="sujeto-link"><div class="avatar"><img class="img-circle-msn"/></div><strong>'+ usuario +'</strong></div>' +
+                    '<p clas="p-mensaje">'+ mensaje +'</p>' +
+                    '<p clas="p-time"><small>'+ fecha+'</small></p>' +
                 '</div>' +
                 '</div>' +
               '</div>';
