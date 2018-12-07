@@ -21,7 +21,7 @@ class _gestionModuloModel extends Model {
   }
 
   public function getCursoId($curso){
-    $sql = "SELECT * FROM curso WHERE Cur_IdCurso = {$curso} AND Row_Estado = 1 AND Cur_Estado = 1";
+    $sql = "SELECT * FROM curso WHERE Cur_IdCurso = {$curso} AND Row_Estado = 1 ";
     return $this->getArray($sql)[0];
   }
 
