@@ -165,9 +165,9 @@ $("#btn_registrar").click(function(e){
   e.preventDefault();
   SubmitForm($("#frm_registro"), $(this), function(data, e){
     var DATA = JSON.parse(data);
-    alert("acacaca");
+    // alert("acacaca");
     Mensaje(DATA.mensaje, function(){
-      alert("ooooooooo");
+      // alert("ooooooooo");
       location.href = _root_ + _modulo + "/gcurso/_view_finalizar_registro/" + $("#hidden_curso").val();
       // CargarPagina("gcurso/_view_finalizar_registro/", { id: $("#hidden_curso").val() }, false, false);
     });

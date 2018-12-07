@@ -56,6 +56,8 @@ class cursosController extends elearningController {
       if( strlen($id) == "" || !is_numeric($id) ){ $this->redireccionar("elearning/"); }
       $model = $this->loadModel("curso");
 
+      $this->_view->getLenguaje(['elearning_cursos']);
+
       $curso = $model->getCursoID($id);
       if( !isset($curso) || count($curso) == 0 || $curso == null ){ $this->redireccionar("elearning/"); }
       $usuario = $model->getUsuarioCurso($id);
@@ -361,7 +363,7 @@ class cursosController extends elearningController {
                       $tipo = $this->getSql('tipo_preg'.$i);
                       // echo $i.":::tipo:::". $tipo . "\n";
                       // JM --> Listo (Pregunta tipo respuesta Unica)
-                      echo $puntos."::::".$i."\n";
+                      // echo $puntos."::::".$i."\n";
                       if($tipo == 1){
                           $alt = $preguntas[$i]['Alt'];
                           // echo "Unico::::"; print_r($alt); echo "///. \n";
@@ -429,8 +431,13 @@ class cursosController extends elearningController {
                       else if($tipo == 5){
                           // echo "string";
                           // print_r($preguntas[$i]["Pre_Puntos"]);
-                          $puntos = $puntos + $preguntas[$i]["Pre_Puntos"];
-                          $Emodel->insertRespuesta($this->getInt('id_preg'.$i), Session::get("idintento"), NULL, NULL, $this->getSql('rpta_alt'.$i),$preguntas[$i]["Pre_Puntos"]);
+                          $puntosrpta = 0;
+                          if ($this->getSql('rpta_alt'.$i) && strlen(trim($this->getSql('rpta_alt'.$i)," ")) > 0) {
+                            $puntosrpta = $preguntas[$i]["Pre_Puntos"];
+                            $puntos = $puntos + $puntosrpta;
+                          } 
+                          
+                          $Emodel->insertRespuesta($this->getInt('id_preg'.$i), Session::get("idintento"), NULL, NULL, $this->getSql('rpta_alt'.$i),$puntosrpta);
                       } else{
                           $cont2=0;
                           // print_r($preguntas[$i]['Alt']);
@@ -466,10 +473,9 @@ class cursosController extends elearningController {
                   $examen = $Emodel->getExamen($idexamen);
                   $parametrosCurso = $Cmodel->getParametroCurso($curso);
 
+                  $Emodel->updateProgreso(Session::get("id_usuario"), $examen['Lec_IdLeccion']);
                   if($puntos/$peso[0] > $parametrosCurso["Par_NotaMinima"]/$parametrosCurso["Par_NotaMaxima"]){
                       $Emodel->insertProgreso(Session::get("id_usuario"), $examen['Lec_IdLeccion']);
-                  } else {
-                      $Emodel->updateProgreso(Session::get("id_usuario"), $examen['Lec_IdLeccion']);
                   }
 
                   // exit;
@@ -655,9 +661,11 @@ class cursosController extends elearningController {
       $curso = $this->getTexto("curso");
 
       $model = $this->loadModel("leccion");
+      $Emodel = $this->loadModel("examen");
       $objeto = $model->getLeccion($leccion);
 
       if($objeto["Lec_Tipo"] == 1 || $objeto["Lec_Tipo"] == 2 || $objeto["Lec_Tipo"] == 3 || $objeto["Lec_Tipo"] == 6 ){
+        $Emodel->updateProgreso(Session::get("id_usuario"), $examen['Lec_IdLeccion']);
         $model->RegistrarProgreso($leccion, Session::get("id_usuario"));
       }
       // lecciones
