@@ -22,17 +22,19 @@ class gmoduloController extends elearningController {
     if(strlen($idcurso)==0){ exit; }
     $Cmodel = $this->loadModel("_gestionCurso");
     $Mmodel = $this->loadModel("_gestionModulo");
-
-    $curso = $Cmodel->getCursoXId($idcurso);
+    $lang = $this->_view->getLenguaje('elearning_gcurso', false, true);
+    $curso = $Cmodel->getCursoById($idcurso);
     $modulos = $Mmodel->getModulos($idcurso);
 
     Session::set("learn_param_curso", $idcurso);
     Session::set("learn_url_tmp", "gmodulo/_view_modulos_curso");
-
+    $data['titulo'] = $lang->get('str_modulos').' - '.str_limit($curso['Cur_Titulo'], 20);
+    $data['active'] = 'modulos';
     $this->_view->assign('menu', 'curso');
     $this->_view->assign("curso", $curso);
     // $this->_view->assign('idcurso', $idcurso);
     $this->_view->assign("modulos", $modulos);
+    $this->_view->assign($data);
     $this->_view->render('ajax/_view_modulos_curso');
   }
 
@@ -44,13 +46,17 @@ class gmoduloController extends elearningController {
     $Cmodel = $this->loadModel("_gestionCurso");
     $Mmodel = $this->loadModel("_gestionModulo");
     $Tmodel = $this->loadModel("trabajo");
-
-    $curso = $Cmodel->getCursoXId($id);
+    $lang = $this->_view->getLenguaje('elearning_cursos', false, true);
+    $curso = $Cmodel->getCursoById($id);
     $modulos = $Mmodel->getModulos($id);
 
     for ($i = 0; $i < count($modulos); $i++) {
       $modulos[$i]["TAREAS"] = $Tmodel->getTrabajoXModulo($modulos[$i]["Moc_IdModuloCurso"]);
     }
+
+    $data['titulo'] = $lang->get('str_tareas').' - '.str_limit($curso['Cur_Titulo'], 20);
+    $data['active'] = 'tareas';
+    $this->_view->assign($data);
 
     Session::set("learn_url_tmp", "gmodulo/_view_tareas_curso");
     Session::set("learn_param_curso", $id);

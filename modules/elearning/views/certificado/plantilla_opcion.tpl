@@ -1,12 +1,12 @@
 {include file='modules/elearning/views/gestion/menu/menu.tpl'}
-<div class="col-lg-10" style="margin-top: 20px">
+<div class="col-xs-12 col-sm-12 col-md-9 col-lg-10" style="margin-top: 20px">
 {include file='modules/elearning/views/gestion/menu/tag_url.tpl'}
     <div class="col-lg-12" >
         <div class="panel panel-default">
             <div class="panel-heading ">
                 <h3 class="panel-title "><i style="float:right" class=" glyphicon glyphicon-option-vertical"></i><i class="glyphicon glyphicon-picture"></i>&nbsp;&nbsp;<strong>Plantilla Certificado</strong></h3>
             </div>
-            <div id="nuevo_anuncio" class="panel-body" style="width: 90%; margin: 0px auto"> 
+            <div id="nuevo_anuncio" class="panel-body" style="width: 90%; margin: 0px auto">
                 <div class="form-group">
                     <a target="_blank" class="btn btn-success btn-certificado" style="margin-bottom: 10px" href="{BASE_URL}elearning/certificado/plantilla_certificado/{$idCurso}">
                     <strong><span class="glyphicon glyphicon-plus"></span>&nbsp; Crear Nueva Plantilla</strong>
@@ -33,7 +33,7 @@
                     </div>
                 </div>
                 {/if}
-            </div>   
+            </div>
         </div>
-    </div>                              
+    </div>
 </div>

@@ -245,9 +245,13 @@ class certificadoController extends elearningController {
         // $codigo = $this->getTexto("certificado");
         $this->_view->setTemplate(LAYOUT_FRONTEND);
         $this->_view->setJs(array(array(BASE_URL . 'modules/elearning/views/gestion/js/core/util.js'), "index"));
+        $mod_curso = $this->loadModel('curso');
+        $curso = $mod_curso::find($idCurso);
         $this->_view->setCss(array("plantilla"));
-        $this->_view->getLenguaje("index_inicio");
-
+        $lang = $this->_view->getLenguaje(["index_inicio", 'elearning_cursos'], false, true);
+        $data['titulo'] = $lang->get('str_certificado').' - '.str_limit($curso['Cur_Titulo'], 20);
+        $data['active'] = 'certificado';
+        $this->_view->assign($data);
         $model = $this->loadModel("curso");
         $curso = $model->getCursoID($idCurso);
         $this->_view->assign("curso", $curso[0]);

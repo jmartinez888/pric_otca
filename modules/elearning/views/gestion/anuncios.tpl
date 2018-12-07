@@ -1,5 +1,5 @@
 {include file='modules/elearning/views/gestion/menu/menu.tpl'}
-<div class="col-lg-10" style="margin-top: 20px">
+<div class="col-xs-12 col-sm-12 col-md-9 col-lg-10" style="margin-top: 20px">
 {include file='modules/elearning/views/gestion/menu/tag_url.tpl'}
 <div class="col-lg-12" >
     {if  $tipo==0}
@@ -10,7 +10,7 @@
         <div style="height: 0px;" aria-expanded="false" id="collapse3" class="panel-collapse collapse">
             <div class="panel-body">
                 <div id="nuevoRegistro">
-                    <div style="width: 90%; margin: 0px auto">    
+                    <div style="width: 90%; margin: 0px auto">
                         <form class="form-horizontal" id="form1" role="form" data-toggle="validator" method="post" action="" autocomplete="on">
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">Titulo : </label>
@@ -30,7 +30,7 @@
                                 </div>
                             </div>
                         </form>
-                    </div>        
+                    </div>
                 </div>
             </div>
         </div>
@@ -77,7 +77,7 @@
                                      <td style=" text-align: center">
                                         {if $rl.Anc_Estado==0}
                                             <p data-toggle="tooltip" data-placement="bottom" class="glyphicon glyphicon-remove-sign " title="{$lenguaje.label_denegado}" style="color: #DD4B39;"></p>
-                                        {/if}                            
+                                        {/if}
                                         {if $rl.Anc_Estado==1}
                                             <p data-toggle="tooltip" data-placement="bottom" class="glyphicon glyphicon-ok-sign " title="{$lenguaje.label_habilitado}" style="color: #088A08;"></p>
                                         {/if}
@@ -85,20 +85,20 @@
                                     {if $_acl->permiso("editar_rol")}
                                         <td style=" text-align: center">
                                             <a data-toggle="tooltip" data-placement="bottom" class="btn btn-default btn-sm glyphicon glyphicon-refresh estado-anuncio" title="{$lenguaje.tabla_opcion_cambiar_est}" id_anuncio="{$rl.Anc_IdAnuncioCurso}" estado="{$rl.Anc_Estado}"> </a>
-                                            
+
                                             <a data-toggle="tooltip" data-placement="bottom" class="btn btn-default btn-sm glyphicon glyphicon-edit" title="Editar" href="{$_layoutParams.root}elearning/gestion/editarAnuncios/{$rl.Anc_IdAnuncioCurso}"></a>
 
                                             <a data-toggle="tooltip" data-placement="bottom" class="btn btn-default btn-sm glyphicon glyphicon-envelope" title="Enviar email" href="{$_layoutParams.root}anuncios/gestion/enviarEmailAnuncios/{$rl.Anc_IdAnuncioCurso}/elearning"></a>
 
-                                            <a   
+                                            <a
                                             {if $rl.Row_Estado==0}
-                                                data-toggle="tooltip" 
-                                                class="btn btn-default btn-sm  glyphicon glyphicon-ok confirmar-habilitar-anuncio" title="{$lenguaje.label_habilitar}" 
+                                                data-toggle="tooltip"
+                                                class="btn btn-default btn-sm  glyphicon glyphicon-ok confirmar-habilitar-anuncio" title="{$lenguaje.label_habilitar}"
                                             {else}
                                                 data-book-id="{$rl.Anc_Titulo}"
                                                 data-toggle="modal"  data-target="#confirm-delete"
                                                 class="btn btn-default btn-sm  glyphicon glyphicon-trash confirmar-eliminar-anuncio" title="{$lenguaje.label_eliminar}"
-                                            {/if} 
+                                            {/if}
                                             id_anuncio="{$rl.Anc_IdAnuncioCurso}" data-placement="bottom" > </a>
                                         </td>
                                     {/if}
@@ -117,7 +117,7 @@
                     {$paginacionanuncios|default:""}
                 {else}
                     No exite registros
-                {/if}                
+                {/if}
             </div>
         </div>
   </div>
@@ -135,7 +135,7 @@
                 <p>¿Deseas Continuar?</p>
                 <p>Eliminar: <strong  class="nombre-es">Anuncio</strong></p>
                 <label id="texto_" name='texto_'></label>
-                <!-- <input type='text' class='form-control' name='codigo' id='validate-number' placeholder='Codigo' required> --> 
+                <!-- <input type='text' class='form-control' name='codigo' id='validate-number' placeholder='Codigo' required> -->
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
@@ -155,7 +155,7 @@
             <div class="modal-body">
                 <!-- <p> <strong  class="nombre-es"><label id="titulo_" name='titulo_'></label></strong></p> -->
                 <label id="texto_" name='texto_'></label>
-                <!-- <input type='text' class='form-control' name='codigo' id='validate-number' placeholder='Codigo' required> --> 
+                <!-- <input type='text' class='form-control' name='codigo' id='validate-number' placeholder='Codigo' required> -->
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Volver</button>

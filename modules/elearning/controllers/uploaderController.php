@@ -18,6 +18,7 @@ class uploaderController extends elearningController {
   }
 
   public function post(){
+
     // echo "string".$this->getTexto("route").$this->getTexto("pre");exit;
     $this->getLibrary("ServiceResult");
     $service = new ServiceResult();
@@ -28,16 +29,19 @@ class uploaderController extends elearningController {
     $resultados = array();
 
     for ($i = 0; $i < count($_FILES["files"]["name"]); $i++) {
-      $name = str_replace(" ", "", $_FILES["files"]["name"][$i]);
+      $name = str_replace(" ", "", trim($_FILES["files"]["name"][$i]));
       $type = $_FILES["files"]["type"][$i];
       $tmp_name = $_FILES["files"]["tmp_name"][$i];
-      $tmp_ruta_archivo = $ruta . $this->Prefijo() . "-" . $pre . "-" . utf8_decode($name);
-      $tmp_name_archivo = $this->Prefijo() . "-" . $pre . "-" . $name;
+      $ext = pathinfo($name, PATHINFO_EXTENSION);
+      $pre_name = $this->Prefijo() . "-" . $pre . "-" . md5($name).'.'.$ext;
+      $tmp_ruta_archivo = $ruta . $pre_name;
+      // $tmp_name_archivo = $this->Prefijo() . "-" . $pre . "-" . $name;
+
 
       if(move_uploaded_file($tmp_name, $tmp_ruta_archivo)) {
-        array_push($resultados, array( "estado" => 1, "url" => $tmp_name_archivo ));
+        array_push($resultados, array( "estado" => 1, "url" => $pre_name, "name_file" => $name  ));
 			} else {
-        array_push($resultados, array( "estado" => 0, "url" => $tmp_name_archivo ));
+        array_push($resultados, array( "estado" => 0, "url" => $pre_name, "name_file" => $name  ));
 			}
     }
 
