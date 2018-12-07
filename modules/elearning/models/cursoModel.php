@@ -34,7 +34,7 @@ class cursoModel extends Model {
     }
     //END
     public function getCursoID($id){
-        $cursos = $this->getArray("SELECT * FROM curso WHERE Cur_IdCurso = {$id} AND Cur_Estado = 1 AND Row_Estado = 1");
+        $cursos = $this->getArray("SELECT * FROM curso WHERE Cur_IdCurso = {$id} AND Row_Estado = 1");
         $resultado = array();
         foreach ($cursos as $c) {
           if($c["Moa_IdModalidad"]==2){
