@@ -56,6 +56,8 @@ class cursosController extends elearningController {
       if( strlen($id) == "" || !is_numeric($id) ){ $this->redireccionar("elearning/"); }
       $model = $this->loadModel("curso");
 
+      $this->_view->getLenguaje(['elearning_cursos']);
+
       $curso = $model->getCursoID($id);
       if( !isset($curso) || count($curso) == 0 || $curso == null ){ $this->redireccionar("elearning/"); }
       $usuario = $model->getUsuarioCurso($id);

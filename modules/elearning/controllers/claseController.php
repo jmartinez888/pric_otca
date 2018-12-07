@@ -129,7 +129,7 @@ class claseController extends elearningController {
   }
 
   public function download($file){
-    $ruta = ROOT . "modules".DS."elearning".DS."views".DS."gleccion".DS."_contenido".DS."_material".DS . $file;
+    $ruta = ROOT . "files".DS."elearning".DS."_material".DS . $file;
 
     if (is_readable($ruta)){
       header("Content-disposition: attachment; filename=" . $file);
