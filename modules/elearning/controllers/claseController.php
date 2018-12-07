@@ -73,7 +73,7 @@ class claseController extends elearningController {
     }
     $pizarras = $Pmodel->getPizarras($OLeccion["Lec_IdLeccion"]);
     $mensajes = $chmodel->ListarChat($ocurso["Cur_IdCurso"], $OLeccion["Lec_IdLeccion"]);
-
+    $this->_view->getLenguaje("elearning_cursos");
     $this->_view->assign("chat", $mensajes);
     $this->_view->assign("pizarra", $pizarras);
     $this->_view->assign("alumnos", $alumnos);
