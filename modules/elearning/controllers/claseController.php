@@ -112,6 +112,12 @@ class claseController extends elearningController {
 
     $model = $this->loadModel("chat");
     $model->RegistrarMensaje($usuario, $curso, $leccion, $mensaje);
+    $json->Populate([
+      'usuario' => $usuario,
+      'curso' => $curso,
+      'leccion' => $leccion,
+      'mensaje' => $mensaje
+    ]);
     $json->Success("Exito");
     $json->Send();
   }

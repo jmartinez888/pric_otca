@@ -82,3 +82,10 @@
     padding-right: 0px;
     padding-left: 0px;
 }
+
+@media (max-width: 768px) {
+    .sidebar {
+        height: inherit !important;
+        max-height: inherit !important;
+    }
+}

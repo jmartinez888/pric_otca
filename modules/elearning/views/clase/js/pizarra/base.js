@@ -148,4 +148,5 @@ function EnviarAccion(accion, x1, y1, x2, y2, add){
 AddSocketInstance(SOCKET_PIZARRA);
 AddSocketInstance(SOCKET_CLASE);
 AddSocketInstance(SOCKET_MENSAJE);
+AddSocketInstance(TOTALES_LECCION);
 StartServer();

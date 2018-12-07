@@ -294,12 +294,7 @@ ul{
     top: 7px;
     right: 7px;
 }
-@media (max-width: 768px) {
-    .sidebar {
-        height: inherit !important;
-        max-height: inherit !important;
-    }
-}
+
 /*@media (max-width: 767px) {
 .sidebar {
     padding-top: 0px;

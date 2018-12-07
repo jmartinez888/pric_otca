@@ -2,6 +2,7 @@ var socket;
 var OPES_SOCKET = [];
 
 function SocketInstance(id){
+  console.log('socket instance a')
 	var ope = { ID: id, connect: null, disconnect: null
 		, send: function(msg){ socket.emit(id, msg); },
 		receive: null, reconnect: null
@@ -9,6 +10,7 @@ function SocketInstance(id){
 	return ope;
 }
 function SocketInstance(id, _connect, _disconnect, _receive, _reconnect){
+  console.log('socket instance b')
 	var ope = { ID: id, connect: _connect, disconnect: _disconnect
 		, send: function(msg){ socket.emit(id, msg); },
 		receive: _receive, reconnect: _reconnect
@@ -24,7 +26,7 @@ function AddSocketInstance(ope){
 	});
 }
 function InitSocket(objeto){
-  socket = io(_root_, { query: "id=" + objeto.id + "&curso=" + objeto.curso + "&tipo=2" });
+  socket = io(_root_, { query: "id=" + objeto.id + "&curso=" + objeto.curso + "&tipo=2&leccion=" + LMS_LECCION });
 
   // socket = io('http://local.github:3000/', { query: "id=" + objeto.id + "&curso=" + objeto.curso + "&tipo=2" });
 

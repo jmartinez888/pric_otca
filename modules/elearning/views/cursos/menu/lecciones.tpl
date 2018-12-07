@@ -1,8 +1,8 @@
-<div class="sidebar">
+<div class="sidebar sidebar-reduce">
   <div class="side-menu">
     <ul>
       {foreach from=$lecciones key=i item=o}
-        
+
         {if $o["Progreso"] == 1 || ($i>0 && $lecciones[$i-1]["Progreso"] == 1)}
         <a href="{BASE_URL}elearning/cursos/modulo/{$curso}/{$modulo.Moc_IdModuloCurso}/{$o.Lec_IdLeccion}" class="nounderline">
         {/if}
@@ -19,7 +19,7 @@
         {if $o["Progreso"] == 1 || ($i>0 && $lecciones[$i-1]["Progreso"] == 1)}
         </a>
         {/if}
-<!-- 
+<!--
         {foreach from=$examenes item=e}
           {if $o.Lec_IdLeccion == $e.Lec_IdLeccion}
           <a href="{BASE_URL}elearning/cursos/modulo/{$curso}/{$modulo.Moc_IdModuloCurso}/{$e.Exa_IdExamen}/2" class="nounderline">
@@ -37,7 +37,7 @@
           </a>
         {/if}
         {/if}
-        {/foreach} --> 
+        {/foreach} -->
       {/foreach}
     </ul>
   </div>
