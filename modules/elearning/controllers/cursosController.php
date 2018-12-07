@@ -431,8 +431,13 @@ class cursosController extends elearningController {
                       else if($tipo == 5){
                           // echo "string";
                           // print_r($preguntas[$i]["Pre_Puntos"]);
-                          $puntos = $puntos + $preguntas[$i]["Pre_Puntos"];
-                          $Emodel->insertRespuesta($this->getInt('id_preg'.$i), Session::get("idintento"), NULL, NULL, $this->getSql('rpta_alt'.$i),$preguntas[$i]["Pre_Puntos"]);
+                          $puntosrpta = 0;
+                          if ($this->getSql('rpta_alt'.$i) && strlen(trim($this->getSql('rpta_alt'.$i)," ")) > 0) {
+                            $puntosrpta = $preguntas[$i]["Pre_Puntos"];
+                            $puntos = $puntos + $puntosrpta;
+                          } 
+                          
+                          $Emodel->insertRespuesta($this->getInt('id_preg'.$i), Session::get("idintento"), NULL, NULL, $this->getSql('rpta_alt'.$i),$puntosrpta);
                       } else{
                           $cont2=0;
                           // print_r($preguntas[$i]['Alt']);
