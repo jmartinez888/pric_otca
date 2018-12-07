@@ -345,9 +345,9 @@ class cursosController extends elearningController {
 
               // echo $intento[0]; exit;
               // print_r($examen);
+              $peso = $Emodel->getExamenPeso($idexamen);
               if (Session::get("intento") < 1){
                   $preguntas = $Emodel->getPreguntas($idexamen);
-                  $peso = $Emodel->getExamenPeso($idexamen);
                   Session::set("preguntas", $preguntas);
                   Session::set("intento", 1);
               }
@@ -436,7 +436,7 @@ class cursosController extends elearningController {
                             $puntosrpta = $preguntas[$i]["Pre_Puntos"];
                             $puntos = $puntos + $puntosrpta;
                           } 
-                          
+
                           $Emodel->insertRespuesta($this->getInt('id_preg'.$i), Session::get("idintento"), NULL, NULL, $this->getSql('rpta_alt'.$i),$puntosrpta);
                       } else{
                           $cont2=0;
@@ -472,9 +472,11 @@ class cursosController extends elearningController {
 
                   $examen = $Emodel->getExamen($idexamen);
                   $parametrosCurso = $Cmodel->getParametroCurso($curso);
+                    // echo "string"; print_r($parametrosCurso);
 
                   $Emodel->updateProgreso(Session::get("id_usuario"), $examen['Lec_IdLeccion']);
-                  if($puntos/$peso[0] > $parametrosCurso["Par_NotaMinima"]/$parametrosCurso["Par_NotaMaxima"]){
+                  if($puntos/$peso["Exa_Peso"] > $parametrosCurso[0]["Par_NotaMinima"]/$parametrosCurso[0]["Par_NotaMaxima"]){
+                    // echo "string"; print_r($parametrosCurso);
                       $Emodel->insertProgreso(Session::get("id_usuario"), $examen['Lec_IdLeccion']);
                   }
 
