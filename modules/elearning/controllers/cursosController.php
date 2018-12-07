@@ -363,7 +363,7 @@ class cursosController extends elearningController {
                       $tipo = $this->getSql('tipo_preg'.$i);
                       // echo $i.":::tipo:::". $tipo . "\n";
                       // JM --> Listo (Pregunta tipo respuesta Unica)
-                      echo $puntos."::::".$i."\n";
+                      // echo $puntos."::::".$i."\n";
                       if($tipo == 1){
                           $alt = $preguntas[$i]['Alt'];
                           // echo "Unico::::"; print_r($alt); echo "///. \n";
@@ -468,10 +468,9 @@ class cursosController extends elearningController {
                   $examen = $Emodel->getExamen($idexamen);
                   $parametrosCurso = $Cmodel->getParametroCurso($curso);
 
+                  $Emodel->updateProgreso(Session::get("id_usuario"), $examen['Lec_IdLeccion']);
                   if($puntos/$peso[0] > $parametrosCurso["Par_NotaMinima"]/$parametrosCurso["Par_NotaMaxima"]){
                       $Emodel->insertProgreso(Session::get("id_usuario"), $examen['Lec_IdLeccion']);
-                  } else {
-                      $Emodel->updateProgreso(Session::get("id_usuario"), $examen['Lec_IdLeccion']);
                   }
 
                   // exit;

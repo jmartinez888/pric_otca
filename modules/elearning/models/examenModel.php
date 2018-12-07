@@ -125,7 +125,7 @@ class examenModel extends Model {
     public function updateProgreso($idusu, $idleccion)
     {
         try{
-            $sql = " UPDATE progreso_curso SET Pro_Valor = 0 WHERE Usu_IdUsuario = $idusu AND Lec_IdLeccion = $idleccion ";
+            $sql = " DELETE FROM progreso_curso WHERE Usu_IdUsuario = $idusu AND Lec_IdLeccion = $idleccion ";
             $result = $this->_db->prepare($sql);
             $result->execute();
             return $result->rowCount(PDO::FETCH_ASSOC);
