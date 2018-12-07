@@ -156,10 +156,7 @@
                                         <div class="col-lg-4">
                                         <select name="rpta4_alt{$i-1}_index_{$j}" class="form-control">
                                           <option value="" > Select </option>
-                                        {for $k=1; $k<count($rl.Alt);$k=$k+2}
-                                        <option value="{$rl.Alt[$k]['Alt_IdAlternativa']}" >{$rl.Alt[$k]['Alt_Etiqueta']}</option>
-                                        {$l=$l+1}
-                                        {/for}
+                                        
                                         </select>
                                         </div>
                                         </div>
