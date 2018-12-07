@@ -57,8 +57,12 @@ class gestionController extends elearningController {
     if(!$_model->validarDocenteCurso($id, Session::get("id_usuario"))){ $this->redireccionar("elearning/"); }
 
     $curso = $model->getCursoID($id);
-    $matriculados = $_model->getMatriculados($id);
 
+    $matriculados = $_model->getMatriculados($id);
+    $lang = $this->_view->getLenguaje('elearning_cursos', false, true);
+    $data['titulo'] = $lang->get('str_alumnos').' - '.str_limit($curso[0]['Cur_Titulo'], 20);
+    $data['active'] = 'alumnos';
+    $this->_view->assign($data);
     $this->_view->setTemplate(LAYOUT_FRONTEND);
     $this->_view->setCss(array('jp-matricula'));
     $this->_view->assign("curso", $curso[0]);
@@ -98,7 +102,11 @@ class gestionController extends elearningController {
     // $this->_view->assign('usuarios', $this->_usuarios->getUsuariosPaginado($condicion));
     $paginador->paginar( $totalRegistros,"listaranuncios", "", $pagina, CANT_REG_PAG, true);
 
-    $curso = $model->getCursoID($id);
+    $curso = $model::find($id);
+    $lang = $this->_view->getLenguaje('elearning_cursos', false, true);
+    $data['titulo'] = $lang->get('str_examen').' - '.str_limit($curso['Cur_Titulo'], 20);
+    $data['active'] = 'anuncios';
+    $this->_view->assign($data);
     $anuncios = $_model->getAnunciosCondicion(1,CANT_REG_PAG,$condicion);
 
     if ($this->botonPress("bt_guardar")) {

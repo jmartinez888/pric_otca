@@ -90,7 +90,7 @@ class gcursoController extends elearningController {
     // $id = $this->getTexto("id");
     // $idcurso = 1;
     $this->_view->setTemplate(LAYOUT_FRONTEND);
-    $this->_view->getLenguaje('elearning_gcurso');
+    $lang = $this->_view->getLenguaje(['elearning_gcurso', 'elearning_cursos'], false, true);
     if(!is_numeric($idcurso) && strlen($idcurso)==0){ $idcurso = Session::get("learn_param_curso"); }
     if(strlen($idcurso)==0){ exit; }
     $datos = $this->curso->getCursoById($idcurso);
@@ -102,6 +102,8 @@ class gcursoController extends elearningController {
     $this->_view->assign('modalidad', $datos["Moa_IdModalidad"]);
     $this->_view->assign('curso', $datos);
     $this->_view->assign('menu', 'curso');
+    $this->_view->assign('titulo', $lang->get('elearning_gcurso_ficha_curso').' - '.str_limit($datos['Cur_Titulo'], 20));
+    $this->_view->assign('active', 'ficha_curso');
     $this->_view->assign('idcurso', $idcurso);
     $this->_view->assign('parametros', $parametros);
     $this->_view->render('ajax/_view_finalizar_registro');

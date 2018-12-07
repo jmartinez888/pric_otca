@@ -274,7 +274,7 @@
           <div class="col-lg-12"><textarea class="form-control" name="descripcionMat" id="inMatLinkDescripcion"></textarea></div>
           <div class="col-lg-12 margin-t-10"><button class="btn btn-success pull-right" id="btn_registrar_material_link"><i class="glyphicon glyphicon-floppy-disk"></i> Guardar</button></div>
         </form>
-        <div class="col-lg-12 margin-t-10"><input type="radio" value="1" name="opcion"/>Archivo local</div>
+        <div class="col-lg-12 margin-t-10"><input type="radio" value="1" name="opcion" id="opc_archivo_local"/><label for="opc_archivo_local" style="font-weight: 400">Archivo local</label></div>
         <div class="col-lg-12 margin-t-10"><button class="btn btn-success" id="btn_registrar_material_file" disabled="disabled"><i class="glyphicon glyphicon-open"></i> Subir archivo</button></div>
       </div>
     </div>
@@ -339,7 +339,6 @@
         tipo: "SiNo",
         funcionSi: function(){
           var params = { tipo: 1, url: Link, leccion: Leccion, descripcion: Descripcion };
-
           AsincTaks("gleccion/_registrar_material", params, function(a){
             $("#panelNuevoMaterialArchivo").modal("hide");
             setTimeout(function(){
@@ -390,7 +389,7 @@
       if ($(this).parent().find(".Hidden_TipoMaterial").val() == 1) {
         var Link = $(this).parent().find(".Hidden_IdEnlace").val();
       } else {
-        var Link = _root_ + "modules/" + _modulo + "/views/gleccion/_contenido/_material/";
+        var Link = _root_ + "files/elearning/_material/";
         Link += $(this).parent().find(".Hidden_IdEnlace").val();
       }
 
@@ -465,28 +464,39 @@
           var contenedor = $("#contenido-material-archivo");
           contenedor.html("");
           contenedor.append("<label>Archivos</label>");
+          let urls = []
+          DATA.data.forEach(v => {
+            urls.push({
+              url: v.url
+            })
+          })
+          // var datos = '[';
+          // DATA.data.forEach(function(row){
+          //   var tmp = row.url.split('\\');
+          //   tmp = tmp[tmp.length-1];
+          //   tmp = row.url.split('/');
+          //   tmp = tmp[tmp.length-1];
 
-          var datos = '[';
+          //   datos += '{ "url":"' + tmp + '"},';
+          // });
+          // datos = datos.substring(0, datos.length-1);
+          // datos += "]";
+
+
+          contenedor.append("<input value='" + JSON.stringify(urls) + "' id='tmp-archivo-local-url' hidden='hidden'/>");
           DATA.data.forEach(function(row){
-            var tmp = row.url.split('\\');
-            tmp = tmp[tmp.length-1];
-            tmp = row.url.split('/');
-            tmp = tmp[tmp.length-1];
+            // var tmp = row.url.split('\\');
+            // tmp = tmp[tmp.length-1];
+            // tmp = tmp.split('-');
+            // tmp = tmp[tmp.length-1];
 
-            datos += '{ "url":"' + tmp + '"},';
-          });
-          datos = datos.substring(0, datos.length-1);
-          datos += "]";
-
-          contenedor.append("<input value='" + datos + "' id='tmp-archivo-local-url' hidden='hidden'/>");
-          DATA.data.forEach(function(row){
-            var tmp = row.url.split('\\');
-            tmp = tmp[tmp.length-1];
-            tmp = tmp.split('-');
-            tmp = tmp[tmp.length-1];
-
-            var texto =  "<input class='form-control margin-t-10' value='" + tmp + "' disabled='disabled'/>";
-            contenedor.append(texto);
+            var texto =  "<input class='form-control margin-t-10' value='" + JSON.stringify(row.name_file) + "' disabled='disabled'/>";
+            var obj_texto = document.createElement('input')
+            obj_texto.value = row.name_file
+            obj_texto.type = "text"
+            obj_texto.disabled = true
+            obj_texto.className = "form-control margin-t-10"
+            contenedor.append(obj_texto);
           });
           contenedor.append("<label class='margin-t-10'>Descripción</label>");
           contenedor.append("<input class='form-control' id='in_tmp_mat_arch'/>");
@@ -796,7 +806,7 @@
   function AddFileAdjunto(item){
     console.log(item);
     var cadena = "<div class='col-lg-12 item-arch-adj'>";
-    cadena += "<a href='" + $("#hidden_root").val() + "gleccion/_contenido/_trabajos/" + item.Arc_Ruta;
+    cadena += "<a href='" + _root_ + "files/elearning/_trabajos/" + item.Arc_Ruta;
     cadena +=  "' target='_blank'>" + item.Arc_Ruta.substring(item.Arc_Ruta.length-20, item.Arc_Ruta.length) + "</a>";
     cadena +=  "<input class='inIdArcAdj estado' value='" + item.Arc_IdArchivo + "' />";
     cadena +=  "<button class='btnElimArcAdj'><i class='glyphicon glyphicon-trash'></i></button>";

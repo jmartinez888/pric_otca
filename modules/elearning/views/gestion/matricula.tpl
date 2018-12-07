@@ -1,5 +1,5 @@
 {include file='modules/elearning/views/gestion/menu/menu.tpl'}
-<div class="col-lg-10" style="margin-top: 20px;">  
+<div class="col-xs-12 col-sm-12 col-md-9 col-lg-10" style="margin-top: 20px;">
 {include file='modules/elearning/views/gestion/menu/tag_url.tpl'}
   <div class=" col-lg-12" >
     {if $curso.Moa_IdModalidad == 2}
@@ -59,7 +59,7 @@
         </h3>
       </div>
       <div class="panel-body" style=" margin: 15px 25px">
-        <div class="col-lg-12"> 
+        <div class="col-lg-12">
           Este es un curso MOOC, no requiere de validación de inscripción
         </div>
       </div>

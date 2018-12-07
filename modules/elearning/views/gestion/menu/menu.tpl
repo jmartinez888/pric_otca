@@ -226,7 +226,7 @@
     border-left: 5px solid #00979c;
   }
 
-  .side-menu2:hover{
+  .side-menu2:hover, .side-menu2.active {
     border-left: 5px solid #355D3A;
     -moz-box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.6);
     -webkit-box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.6);
@@ -410,6 +410,11 @@
     -webkit-box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.6);
     box-shadow: 3px 3px 10px rgba(100, 100, 100, 0.6);
   }
+
+  .side-menu-center-mid {
+    display: flex;
+    align-items: center;
+  }
 </style>
 
 <!-- {include file='modules/elearning/views/cursos/menu/descripcion.tpl'} -->
@@ -420,20 +425,22 @@
     <input hidden="hidden" id="hidden_curso" name="hidden_curso" value="{$idcurso}"/>
   {/if}
 {/if}
-<div class="col-xs-12 col-sm-3 col-md-2" >
+<div class="col-xs-12 col-sm-12 col-md-3 col-lg-2" >
   <div class="sidebar-left">
     <ul id="item-lista-curso">
-        <div {if $active = 'mis_cursos'} class="side-menu2 active" {else} class="side-menu2 " {/if} >
-          <li class="side-menu" style="position: relative">
+        <div {if $active == 'mis_cursos'} class="side-menu2 active" {else} class="side-menu2 " {/if} >
+          <li class="side-menu side-menu-center-mid" style="position: relative">
             <i class="glyphicon glyphicon-book"></i>
+            &nbsp;
             <span> Mis Cursos </span>
           </li>
         </div>
     </ul>
     <ul id="item-ficha-curso">
-        <div class="side-menu2">
-          <li class="side-menu" style="position: relative">
+        <div class="side-menu2 {if $active == 'ficha_curso'}active{/if}">
+          <li class="side-menu side-menu-center-mid" style="position: relative">
             <i class="fa fa-file-text-o"></i>
+            &nbsp;
             <span> Ficha Curso </span>
           </li>
         </div>
@@ -441,26 +448,29 @@
 
     {if (isset($curso)) && $curso['Moa_IdModalidad'] == 3}
     <ul id="item-formularios">
-        <div class="side-menu2">
-          <li class="side-menu" style="position: relative">
+        <div class="side-menu2 {if $active == 'formulario'}active{/if}">
+          <li class="side-menu side-menu-center-mid" style="position: relative">
             <i class="fa fa-file-text-o"></i>
+            &nbsp;
             <span> Formulario </span>
           </li>
         </div>
     </ul>
     {/if}
     <ul id="item-modulos-curso">
-        <div class="side-menu2">
-          <li class="side-menu" style="position: relative">
+        <div class="side-menu2 {if $active == 'modulos'}active{/if}">
+          <li class="side-menu side-menu-center-mid" style="position: relative">
             <i class="fa fa-book"></i>
+            &nbsp;
             <span> Modulos </span>
           </li>
         </div>
     </ul>
     <ul id="item-tareas-curso">
-        <div class="side-menu2">
-          <li class="side-menu" style="position: relative">
+        <div class="side-menu2 {if $active == 'tareas'}active{/if}">
+          <li class="side-menu side-menu-center-mid" style="position: relative">
             <i class="fa fa-pencil-square"></i>
+            &nbsp;
             <span> Tareas Asignadas </span>
           </li>
         </div>
@@ -468,43 +478,48 @@
 
     <!-- Jhon Martinez -->
     <ul id="item-examen-curso">
-      <div class="side-menu2">
-        <li class="side-menu" style="position: relative">
+      <div class="side-menu2 {if $active == 'examen'}active{/if}">
+        <li class="side-menu side-menu-center-mid" style="position: relative">
           <i class="fa fa-edit"></i>
+          &nbsp;
           <span> Examen </span>
         </li>
       </div>
     </ul>
     <ul id="item-anuncios-curso">
-      <div class="side-menu2">
-        <li class="side-menu" style="position: relative">
+      <div class="side-menu2 {if $active == 'anuncios'}active{/if}">
+        <li class="side-menu side-menu-center-mid" style="position: relative">
           <i class="fa fa-send-o"></i>
+          &nbsp;
           <span> Anuncios </span>
         </li>
       </div>
     </ul>
     <ul id="item-certificado-curso">
-      <div class="side-menu2">
-        <li class="side-menu" style="position: relative">
+      <div class="side-menu2 {if $active == 'certificado'}active{/if}">
+        <li class="side-menu side-menu-center-mid" style="position: relative">
           <i class="glyphicon glyphicon-education"></i>
+          &nbsp;
           <span> Certificado </span>
         </li>
       </div>
     </ul>
 
     <ul id="item-alumnos-curso">
-      <div class="side-menu2">
-        <li class="side-menu" style="position: relative">
+      <div class="side-menu2 {if $active == 'alumnos'}active{/if}">
+        <li class="side-menu side-menu-center-mid" style="position: relative">
           <i class="fa fa-users"></i>
+          &nbsp;
           <span> Alumnos </span>
         </li>
       </div>
     </ul>
 
     <!-- <ul id="item-calendario-curso">
-      <div class="side-menu2">
-        <li class="side-menu" style="position: relative">
+      <div class="side-menu2 {if $active == 'ficha_curso'}active{/if}">
+        <li class="side-menu side-menu-center-mid" style="position: relative">
           <i class="fa fa-calendar"></i>
+          &nbsp;
           <span> Calendario </span>
         </li>
       </div>

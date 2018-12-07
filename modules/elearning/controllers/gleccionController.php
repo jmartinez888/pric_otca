@@ -15,7 +15,7 @@ class gleccionController extends elearningController {
         $this->_view->assign('_url', BASE_URL . "modules/" . $this->_request->getModulo() . "/views/");
         $this->getLibrary("ServiceResult");
         $this->service = new ServiceResult();
-        $this->examen = $this->loadModel("examen");  
+        $this->examen = $this->loadModel("examen");
     }
 
     public function _view_lecciones_modulo($id_curso = 0, $id_modulo = 0){
@@ -136,6 +136,7 @@ class gleccionController extends elearningController {
 
         $Exa_Porcentaje = $examen->getExamenesPorcentaje($curso);
         $Tra_Porcentaje = $examen->getTrabajosPorcentaje($curso);
+
         $Porcentaje = 100 - $Exa_Porcentaje['Exa_PorcentajeTotal'] - $Tra_Porcentaje['Tra_PorcentajeTotal'];
 
         $cursoDatos = $Cmodel->getCursoXId($curso);
@@ -146,6 +147,8 @@ class gleccionController extends elearningController {
         $trabajo = $Tmodel->getTrabajoUsuario($leccion["Lec_IdLeccion"]); //RODRIGO 20180605
         $tipo_trabajo = $Tmodel->getConstanteTrabajo(); //RODRIGO 20180605
 
+        $data['titulo'] = $leccion['Tipo'].' - '.$leccion['Lec_Titulo'];
+        $this->_view->assign($data);
         $view = "";
         $this->_view->assign('porcentaje', $Porcentaje);
         $this->_view->assign('menu', 'curso');
@@ -184,14 +187,14 @@ class gleccionController extends elearningController {
                 // $porcentaje = $this->examen->getExamensCondicion(0,CANT_REG_PAG, " WHERE e.Lec_IdLeccion = ".$leccion["Lec_IdLeccion"]." AND e.Exa_Estado = 1 AND e.Row_Estado = 1");
                 // // print_r($porcentaje);
                 // if (count($porcentaje)>0) {
-                   
+
                 // $this->_view->assign('porcentaje', $porcentaje['Porcentaje'] );
                 // } else {
-                    
+
                 // $this->_view->assign('porcentaje', "");
                 // }
 
-                
+
                 // if ($examen && count($examen) > 0) {
                 // // print_r($examen);exit;
                 //     $this->redireccionar("elearning/examen/editarexamen/".$examen["Cur_IdCurso"]."/".$examen["Exa_IdExamen"]);
@@ -199,13 +202,13 @@ class gleccionController extends elearningController {
                 //     $this->redireccionar("/elearning/examen/nuevoexamen/".$curso["Cur_IdCurso"]);
                 // }
 
-                
+
                 // $examen = $model->insertExamenLeccion($leccion["Lec_IdLeccion"], "", 0, 0, 0);
                 // $preguntas = $model->getPreguntas($examen[0]["Exa_IdExamen"]);
                 // $this->_view->assign("examen", $examen);
-                // $this->_view->assign("preguntas", $preguntas); 
+                // $this->_view->assign("preguntas", $preguntas);
                 $view = "ajax/_view_3";
-                
+
                 break;
             case 4:
                 $piz = $this->loadModel("pizarra");
@@ -241,26 +244,26 @@ class gleccionController extends elearningController {
         $idcurso = $this->getInt('_idcurso');
         // echo $Per_Estado."//".$Per_Idpregunta; exit;
 
-        if(!$Exa_Idpregunta){            
-            $contenido = 'Error parametro ID...!!'; 
+        if(!$Exa_Idpregunta){
+            $contenido = 'Error parametro ID...!!';
             $mensaje = "error";
-            array_push($resultado, array(0 => $mensaje, 1 => $contenido));            
+            array_push($resultado, array(0 => $mensaje, 1 => $contenido));
         } else {
             $rowCountEstado = $this->examen->cambiarEstadoExamen($Exa_Idpregunta, $Exa_Estado);
             if ($rowCountEstado > 0) {
                 if ($Exa_Estado == 1) {
-                    $contenido = ' Se cambio de estado correctamente a <b>Deshabilitado</b> <i data-toggle="tooltip" data-placement="bottom" class="glyphicon glyphicon-remove-sign" title="Deshabilitado" style="background: #FFF; color: #DD4B39; padding: 2px;"/> ...!! ';              
+                    $contenido = ' Se cambio de estado correctamente a <b>Deshabilitado</b> <i data-toggle="tooltip" data-placement="bottom" class="glyphicon glyphicon-remove-sign" title="Deshabilitado" style="background: #FFF; color: #DD4B39; padding: 2px;"/> ...!! ';
                 }
                 if ($Exa_Estado == 0) {
                      $contenido = ' Se cambio de estado correctamente a <b>Habilitado</b> <i data-toggle="tooltip" data-placement="bottom" class="glyphicon glyphicon-ok-sign" title="Habilitado" style=" background: #FFF;  color: #088A08; padding: 2px;"/> ...!! ';
-                }     
+                }
                 $mensaje = "ok";
-                array_push($resultado, array(0 => $mensaje, 1 => $contenido));       
+                array_push($resultado, array(0 => $mensaje, 1 => $contenido));
             } else {
-                $contenido = 'Error de variable(s) en consulta..!!'; 
+                $contenido = 'Error de variable(s) en consulta..!!';
                 $mensaje = "error";
                 array_push($resultado, array(0 => $mensaje, 1 => $contenido));
-            }        
+            }
         }
         $mensaje_json = json_encode($resultado);
         // echo($mensaje_json); exit();
@@ -268,9 +271,9 @@ class gleccionController extends elearningController {
 
         $condicion = " ";
         $soloActivos = 0;
-        
-        //Filtro por Activos/Eliminados     
-        $condicion = " WHERE e.Lec_IdLeccion = $Lec_IdLeccion ORDER BY e.Row_Estado DESC ";   
+
+        //Filtro por Activos/Eliminados
+        $condicion = " WHERE e.Lec_IdLeccion = $Lec_IdLeccion ORDER BY e.Row_Estado DESC ";
         if (!$this->_acl->permiso('ver_eliminados')) {
             $soloActivos = 1;
             $condicion = " WHERE e.Lec_IdLeccion = $Lec_IdLeccion AND e.Row_Estado = $soloActivos ";
@@ -335,18 +338,18 @@ class gleccionController extends elearningController {
             $rowCountEstado = $this->examen->cambiarEstadoExamen($Exa_Idpregunta, $Exa_Estado);
             if ($rowCountEstado > 0) {
                 if ($Exa_Estado == 1) {
-                    $contenido = ' Se cambio de estado correctamente a <b>Deshabilitado</b> <i data-toggle="tooltip" data-placement="bottom" class="glyphicon glyphicon-remove-sign" title="Deshabilitado" style="background: #FFF; color: #DD4B39; padding: 2px;"/> ...!! ';              
+                    $contenido = ' Se cambio de estado correctamente a <b>Deshabilitado</b> <i data-toggle="tooltip" data-placement="bottom" class="glyphicon glyphicon-remove-sign" title="Deshabilitado" style="background: #FFF; color: #DD4B39; padding: 2px;"/> ...!! ';
                 }
                 if ($Exa_Estado == 0) {
                      $contenido = ' Se cambio de estado correctamente a <b>Habilitado</b> <i data-toggle="tooltip" data-placement="bottom" class="glyphicon glyphicon-ok-sign" title="Habilitado" style=" background: #FFF;  color: #088A08; padding: 2px;"/> ...!! ';
-                }     
+                }
                 $mensaje = "ok";
-                array_push($resultado, array(0 => $mensaje, 1 => $contenido));       
+                array_push($resultado, array(0 => $mensaje, 1 => $contenido));
             } else {
-                $contenido = 'Error de variable(s) en consulta..!!'; 
+                $contenido = 'Error de variable(s) en consulta..!!';
                 $mensaje = "error";
                 array_push($resultado, array(0 => $mensaje, 1 => $contenido));
-            }        
+            }
         }
         $mensaje_json = json_encode($resultado);
         // echo($mensaje_json); exit();
@@ -365,7 +368,7 @@ class gleccionController extends elearningController {
 
         $condicion = " ";
         $soloActivos = 0;
-        if ($txtBuscar) 
+        if ($txtBuscar)
         {
             $condicion = "  WHERE Lec_IdLeccion = $Lec_IdLeccion  AND Exa_Titulo liKe '%$txtBuscar%' ";
             //Filtro por Activos/Eliminados
@@ -376,13 +379,13 @@ class gleccionController extends elearningController {
                 $condicion .= " ORDER BY e.Row_Estado DESC  ";
             }
         } else {
-            //Filtro por Activos/Eliminados     
-            $condicion = "  WHERE e.Lec_IdLeccion = $Lec_IdLeccion ORDER BY e.Row_Estado DESC ";   
+            //Filtro por Activos/Eliminados
+            $condicion = "  WHERE e.Lec_IdLeccion = $Lec_IdLeccion ORDER BY e.Row_Estado DESC ";
             if (!$this->_acl->permiso('ver_eliminados')) {
                 $soloActivos = 1;
                 $condicion = "  WHERE e.Lec_IdLeccion = $Lec_IdLeccion AND e.Row_Estado = $soloActivos ";
             }
-        }         
+        }
 
         $paginador = new Paginador();
 
@@ -411,7 +414,7 @@ class gleccionController extends elearningController {
         $condicion = " ";
         $soloActivos = 0;
         // $nombre = $this->getSql('palabra');
-        if ($txtBuscar) 
+        if ($txtBuscar)
         {
             $condicion = " WHERE Cur_IdCurso=$idcurso AND Exa_Titulo liKe '%$txtBuscar%' ";
             //Filtro por Activos/Eliminados
@@ -422,13 +425,13 @@ class gleccionController extends elearningController {
                 $condicion .= " ORDER BY e.Row_Estado DESC  ";
             }
         } else {
-            //Filtro por Activos/Eliminados     
-            $condicion = "  WHERE Cur_IdCurso=$idcurso ORDER BY e.Row_Estado DESC ";   
+            //Filtro por Activos/Eliminados
+            $condicion = "  WHERE Cur_IdCurso=$idcurso ORDER BY e.Row_Estado DESC ";
             if (!$this->_acl->permiso('ver_eliminados')) {
                 $soloActivos = 1;
                 $condicion = "  WHERE Cur_IdCurso=$idcurso AND e.Row_Estado = $soloActivos ";
             }
-        }         
+        }
 
         $paginador = new Paginador();
         // $arrayRowCount = $this->_aclm->getpreguntasRowCount$arrayRowCount = 0,($condicion);
@@ -541,21 +544,25 @@ class gleccionController extends elearningController {
   }
 
     public function _registrar_material(){
+
         $tipo = $this->getTexto("tipo");
         $leccion = $this->getTexto("leccion");
+        $urls = json_decode($_POST['url']);
         $url = $this->getTexto("url");
         $descripcion = $this->getTexto("descripcion");
-
         $model = $this->loadModel("_gestionLeccion");
 
         if($tipo==2){
-          $url = html_entity_decode($url);
-          $url = json_decode($url, true);
 
-          foreach ($url as $i) {
-            $model->insertMaterial($leccion, $i["url"], 2, $descripcion);
-          }
+          // $url = html_entity_decode($url);
+          // $url = json_decode($url, true);
+            if (is_array($urls)) {
+              foreach ($urls as $i) {
+                $model->insertMaterial($leccion, $i->url, 2, $descripcion);
+              }
+            }
         }else{
+
           $model->insertMaterial($leccion, $url, 1, $descripcion);
         }
         $this->service->Success("Se insertó los materiales");

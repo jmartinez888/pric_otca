@@ -283,7 +283,7 @@ class _gestionLeccionModel extends Model {
         $mensaje = "Deebe configurar el número de preguntas para el examen";
         return $mensaje;
       }
-      $sql = "SELECT * FROM pregunta WHERE Exa_IdExamen = {$examen[0]['Exa_IdExamen']} 
+      $sql = "SELECT * FROM pregunta WHERE Exa_IdExamen = {$examen[0]['Exa_IdExamen']}
               AND Pre_Estado = 1 AND Row_Estado = 1";
       $preguntas = $this->getArray($sql);
 
@@ -293,7 +293,7 @@ class _gestionLeccionModel extends Model {
       }else{
         if (count($preguntas) >= $examen[0]["Exa_NroPreguntas"]){
           return "";
-        }else{ 
+        }else{
           $mensaje = "Debe registrar mas preguntas en el examen o modificar el número de preguntas";
           return $mensaje;
         }

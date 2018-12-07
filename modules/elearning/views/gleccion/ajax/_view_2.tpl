@@ -27,7 +27,7 @@
     display: none;
   }
 
-  
+
   .nav-tabs > .active{
     font-weight: bold;
   }
