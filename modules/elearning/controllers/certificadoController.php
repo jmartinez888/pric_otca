@@ -270,7 +270,6 @@ class certificadoController extends elearningController {
         $this->_view->setTemplate(LAYOUT_FRONTEND);
 
         $this->_view->getLenguaje("index_inicio");
-        $this->_view->getLenguaje("elearning_certificado_plantilla");
         // $plantillas=$this->certificado->getAllPlantillaCertificado($idCurso);
 
         $this->_view->setJs(array(array(BASE_URL . 'modules/elearning/views/gestion/js/core/util.js'), "index"));
@@ -337,7 +336,6 @@ class certificadoController extends elearningController {
         $this->_view->setJs(array("index"));
         $this->_view->setCss(array("plantilla"));
         $this->_view->getLenguaje("index_inicio");
-        $this->_view->getLenguaje("elearning_certificado_plantilla");
         $plantilla=$this->certificado->getPlantillaCertificadoxId($id);
 
          if ($this->botonPress("bt_editarPlantilla")) {

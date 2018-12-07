@@ -51,7 +51,7 @@
           <div id="f" class="panel-body" style="width: 100%;">                    
                              <div class="form-group">
                                 <div class="col-xs-6 col-sm-2 col-lg-3">
-                                    <button class="btn btn-success" type="submit" id="bt_editarPlantilla" name="bt_editarPlantilla" ><i class="glyphicon glyphicon-floppy-disk"> </i>&nbsp; {$lenguaje.el_ce_pl_button_ok}</button>
+                                    <button class="btn btn-success" type="submit" id="bt_editarPlantilla" name="bt_editarPlantilla" ><i class="glyphicon glyphicon-floppy-disk"> </i>&nbsp; {$lenguaje.button_ok}</button>
                                 </div>
                                 <div class="col-xs-6 col-sm-2 col-lg-3">
                                     <button class="btn btn-success" type="submit" id="bt_SeleccionarPlantilla" name="bt_SeleccionarPlantilla" ><i class="glyphicon glyphicon-check"> </i>&nbsp; Establecer como Plantilla</button>
@@ -60,7 +60,7 @@
                                     <button class="btn btn-success" type="submit" id="bt_EliminarPlantilla" name="bt_EliminarPlantilla" ><i class="glyphicon glyphicon-trash"> </i>&nbsp; Eliminar</button>
                                 </div>
                             <div class="col-xs-6 col-sm-2 col-lg-3">
-                                <button class="btn btn-danger" type="submit" id="bt_cancelareditarPlantilla" name="bt_cancelareditarPlantilla" ><i class="glyphicon glyphicon-remove"> </i>&nbsp; {$lenguaje.el_ce_pl_button_cancel}</button>
+                                <button class="btn btn-danger" type="submit" id="bt_cancelareditarPlantilla" name="bt_cancelareditarPlantilla" ><i class="glyphicon glyphicon-remove"> </i>&nbsp; {$lenguaje.button_cancel}</button>
                             </div>
                         
                     </div>        
