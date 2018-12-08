@@ -40,7 +40,7 @@
           <div id="ref_mat" class="tab-pane fade">
              {foreach from=$referencias item=r}
               <div><strong>{$r.Ref_Titulo}</strong></div>
-              <div><a href="{$r.Ref_Descripcion}"></a>{$r.Ref_Descripcion}</div>
+              <div><a href="{$r.Ref_Descripcion}" target="_blank">{$r.Ref_Descripcion}</a></div>
             {/foreach}
           </div>
         {/if}
