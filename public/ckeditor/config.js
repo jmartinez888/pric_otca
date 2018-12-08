@@ -13,6 +13,11 @@ CKEDITOR.editorConfig = function( config ) {
     config.filebrowserUploadUrl = _root_+'public/ckeditor/kcfinder/upload.php?type=files';
     config.filebrowserImageUploadUrl = _root_+'public/ckeditor/kcfinder/upload.php?type=images';
     config.filebrowserFlashUploadUrl = _root_+'public/ckeditor/kcfinder/upload.php?type=flash';
+
+    config.toolbar_Basic =
+        [
+            ['Format','Styles','Font','FontSize','-','Bold', 'Italic','Underline','StrikeThrough','-', 'NumberedList', 'BulletedList', '-', 'Link', 'Unlink','-','JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock','.','About']
+        ];
 };
 /*
 CKEDITOR.editorConfig = function(config) {

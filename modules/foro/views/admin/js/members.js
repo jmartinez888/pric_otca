@@ -100,6 +100,7 @@ $(document).on('ready', function () {
      creator: 'inline'
      } );
      */
+$('#ta_mensaje_usuario').ckeditor(function() { /* callback code */ }, { toolbar : 'Basic' });
 
 
 
