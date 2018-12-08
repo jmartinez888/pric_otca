@@ -174,6 +174,8 @@ $("#btn_registrar").click(function(e){
   });
 });
 
+
+// Agregar Informacion
 $("#btnNuevoDetalle").click(function(e){
   e.preventDefault();
   var toggle = $("#toggle_NuevoDetalle").val();
@@ -197,6 +199,9 @@ $("#btnNuevoDetalle").click(function(e){
     $("#divDetallesCursos").append(html);
 
     InputValidate("#tmpNvInfoTitulo", 300);
+    $('#tmpNvInfoDetalle').ckeditor(function() { /* callback code */ 
+    }, { toolbar : 'Basic' });
+    
     $("#tmpNvInfoTitulo").unbind("keypress").keypress(function(e){
       if (e.keyCode == 13){
         e.preventDefault();
