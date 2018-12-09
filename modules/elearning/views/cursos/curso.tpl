@@ -149,6 +149,20 @@
             </div> <br/>
           </div>
 
+          {if isset($detalle) && count($detalle)>0}
+          <div class="col-xs-12 text-curso">
+            <div><strong><i class="glyphicon glyphicon-record"></i>
+            &nbsp;Información Adicional</strong></div>
+            {foreach from=$detalle item=d}
+              <ul>
+                <li class="list-objetivos">
+                <b>{$d.DC_Titulo} :</b></li>
+                {$d.DC_Descripcion}
+              </ul>
+            {/foreach}
+          </div>
+          {/if}
+
           <div class="col-xs-12">
 
             {if $session==1}
@@ -275,8 +289,14 @@
               <div class="col-xs-12 col-sm-12 col-md-12 col-xs-12 ">
                 <div class="ficha-mod col-xs-12 col-sm-12 col-md-12 col-xs-12">
                   <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2" style="padding: 0px; text-align: center;">
-                    <img  class="img-modulo w-100 pr-5 pl-5" src="{BASE_URL}modules/elearning/views/cursos/img/contador-modulo-{$index}.png"/>
-                    <strong class="ficha-mod-icon"></strong>
+                    <div class="col col-xs-12">
+                        <img  class="img-modulo w-100 pr-5 pl-5" src="{BASE_URL}modules/elearning/views/cursos/img/contador-modulo-{$index}.png"/>
+                        <strong class="ficha-mod-icon"></strong>                      
+                    </div>
+                    
+                    <div class="col col-xs-12">
+                        <strong>Duración: {$o.Moc_TiempoDedicacion}</strong>  
+                    </div>                    
                   </div>
                   <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10 ficha-mod-title">
                     <strong>{$o.Moc_Titulo}</strong>

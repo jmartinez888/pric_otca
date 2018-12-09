@@ -53,9 +53,10 @@ class gleccionController extends elearningController {
         $tipo = $this->getTexto("tipo");
         $titulo = $this->getTexto("titulo");
         $descripcion = $this->getTexto("descripcion");
+        $dedicacion = $this->getTexto("dedicacion");
 
         $Mmodel = $this->loadModel("_gestionLeccion");
-        $Mmodel->insertLeccion($id, $tipo, $titulo, $descripcion);
+        $Mmodel->insertLeccion($id, $tipo, $titulo, $descripcion, $dedicacion);
 
         $this->service->Success("Se resgistó el módulo con exito");
         $this->service->Send();
@@ -480,9 +481,10 @@ class gleccionController extends elearningController {
         $id = $this->getTexto("id_leccion");
         $titulo = $this->getTexto("titulo");
         $descripcion = $this->getTexto("descripcion");
+        $dedicacion = $this->getTexto("dedicacion");
 
         $model = $this->loadModel("_gestionLeccion");
-        $model->updateLeccion($id, $titulo, $descripcion);
+        $model->updateLeccion($id, $titulo, $descripcion, $dedicacion);
 
         $this->service->Success("Se resgistó el contenido con exito");
         $this->service->Send();

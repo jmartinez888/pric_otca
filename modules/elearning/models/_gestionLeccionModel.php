@@ -4,9 +4,9 @@ class _gestionLeccionModel extends Model {
 
   public function __construct() { parent::__construct(); }
 
-  public function insertLeccion($modulo, $tipo, $titulo, $descripcion){
-    $sql = "INSERT INTO leccion(Moc_IdModuloCurso, Lec_Tipo, Lec_Titulo, Lec_Descripcion, Lec_LMSEstado, Lec_Estado)
-            VALUES({$modulo}, {$tipo}, '{$titulo}', '{$descripcion}', 0, 1)";
+  public function insertLeccion($modulo, $tipo, $titulo, $descripcion, $dedicacion){
+    $sql = "INSERT INTO leccion(Moc_IdModuloCurso, Lec_Tipo, Lec_Titulo, Lec_Descripcion, Lec_TiempoDedicacion, Lec_LMSEstado, Lec_Estado)
+            VALUES({$modulo}, {$tipo}, '{$titulo}', '{$descripcion}', '{$dedicacion}', 0, 1)";
     $this->execQuery($sql);
   }
 
@@ -44,8 +44,8 @@ class _gestionLeccionModel extends Model {
   }
 
 
-  public function updateLeccion($leccion, $titulo, $descripcion){
-    $sql = "UPDATE leccion SET Lec_Titulo = '{$titulo}', Lec_Descripcion = '{$descripcion}'  WHERE Lec_IdLeccion = {$leccion}";
+  public function updateLeccion($leccion, $titulo, $descripcion, $dedicacion){
+    $sql = "UPDATE leccion SET Lec_Titulo = '{$titulo}', Lec_Descripcion = '{$descripcion}', Lec_TiempoDedicacion = '{$dedicacion}'  WHERE Lec_IdLeccion = {$leccion}";
     $this->execQuery($sql);
   }
 

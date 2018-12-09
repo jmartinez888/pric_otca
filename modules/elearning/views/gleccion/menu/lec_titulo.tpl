@@ -8,15 +8,19 @@
     </div> -->
     <div class="panel-body" >
       <form id="form-datos-leccion" action="gleccion/_actualizar_leccion" method="post">
-      <label>Titulo</label>
-      <input name="titulo" class="form-control" value="{$leccion.Lec_Titulo}" />
-      <div class="col col-xs-12 margin-top-10">
-          <label class="">Descripción</label>
-          <textarea name="descripcion" class="form-control" rows="5">{$leccion.Lec_Descripcion}</textarea>
-        </div>
-      <input hidden="hidden" id="hidden_curso" name="id_curso" value="{$curso.Cur_IdCurso}" />
-      <input name="id_modulo" id="hidden_modulo" hidden="hidden" value="{$modulo.Moc_IdModuloCurso}" />
-      <input name="id_leccion" id="hidden_leccion" hidden="hidden" value="{$leccion.Lec_IdLeccion}" />
+          <label>Titulo</label>
+          <input name="titulo" class="form-control" value="{$leccion.Lec_Titulo}" />
+          <div class="col col-xs-12 margin-top-10">
+            <label class="">Descripción</label>
+            <textarea name="descripcion" class="form-control" rows="5">{$leccion.Lec_Descripcion}</textarea>
+          </div>
+          <div class="col col-xs-12 margin-t-10">
+            <label>Tiempo de Dedicación</label>
+            <input class="form-control" name="dedicacion" value="{$leccion.Lec_TiempoDedicacion}" />
+          </div>
+          <input hidden="hidden" id="hidden_curso" name="id_curso" value="{$curso.Cur_IdCurso}" />
+          <input name="id_modulo" id="hidden_modulo" hidden="hidden" value="{$modulo.Moc_IdModuloCurso}" />
+          <input name="id_leccion" id="hidden_leccion" hidden="hidden" value="{$leccion.Lec_IdLeccion}" />
       </form>
       <button class="btn btn-success pull-right margin-t-10" id="btn-actualizar-leccion">Actualizar</button>
     </div>

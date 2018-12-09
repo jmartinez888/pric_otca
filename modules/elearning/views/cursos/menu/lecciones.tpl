@@ -8,13 +8,16 @@
         {/if}
           <li style="position: relative; color: #fff" {if $o["Lec_IdLeccion"] == $leccion["Lec_IdLeccion"]}class="item-active"{/if}>
             {if $o["Progreso"] == 1 && $o["Lec_Tipo"] == 3 }
-            <div style="color: #d5ff67">Lección {$o.Index}: <div>
-            <span style="color: #d5ff67"> {$o.Lec_Titulo} <strong>(Aprobado)</strong></span>
+                <div style="color: #d5ff67">Lección {$o.Index}: <div>
+                <span style="color: #d5ff67"> {$o.Lec_Titulo} <strong>(Aprobado)</strong></span>
             {else}
-            Lección {$o.Index}: <br>
-            <span> {$o.Lec_Titulo}</span>
+                Lección {$o.Index}: <br>
+                <span> {$o.Lec_Titulo}</span>
             {/if}
-            {if $o["Progreso"] == 1}<span class="glyphicon glyphicon-star item-leccion-concluida"></span>{/if}
+            {if $o["Progreso"] == 1}
+                <span class="glyphicon glyphicon-star item-leccion-concluida"></span>
+            {/if}
+            <br> <span style="font-weight: normal; font-size: 12px">Duración: {$o.Lec_TiempoDedicacion}</span>
           </li>
         {if $o["Progreso"] == 1 || ($i>0 && $lecciones[$i-1]["Progreso"] == 1)}
         </a>
