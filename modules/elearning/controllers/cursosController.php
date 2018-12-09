@@ -189,6 +189,7 @@ class cursosController extends elearningController {
       $mCert = $this->loadModel("certificado");
 
       $curso = $model->getCursoID($id)[0];
+      // print_r($curso);exit;
       if($curso["Moa_IdModalidad"]==2){ $this->redireccionar("elearning/cursos/curso_dirigido/" . $curso["Cur_IdCurso"]); }
       $inscritos = $mInsc->getInscritos($id);
       if(Session::get("autenticado")){
@@ -227,7 +228,7 @@ class cursosController extends elearningController {
       $this->_view->assign("titulo", $curso['Cur_Titulo']);
       $this->_view->assign("certificado", $certificado);
       $this->_view->assign("duracion", $duracion["Total"] . " Lecciones");
-      $this->_view->assign("detalle", $model->getDetalleCurso($curso["Cur_IdCurso"]));
+      $this->_view->assign("detalle", $model->getDetalleCurso($curso["Cur_IdCurso"])); print_r($model->getDetalleCurso($curso["Cur_IdCurso"]));exit;
       $this->_view->assign("inscripcion",$mInsc->getInscripcion(Session::get("id_usuario"), $id));
       $this->_view->assign("session",Session::get("autenticado"));
       $this->_view->renderizar('curso');

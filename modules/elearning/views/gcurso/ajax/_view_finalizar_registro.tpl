@@ -162,7 +162,7 @@
         <div class="col-lg-12 margin-top-10"><h5><strong>N° Vacantes</strong></h5></div>
         <div class="col-lg-12"><input type="number" class="form-control" id="inVacantes" name="vacantes" value="{$curso.Cur_Vacantes}"/></div>
         <div class="col-lg-12 margin-top-10"><h5><strong>Contacto</strong></h5></div>
-        <div class="col-lg-12"><input class="form-control" id="inContacto" name="contacto" value="{$curso.Cur_Contacto}"/></div>
+        <div class="col-lg-12"><textarea class="form-control" id="inContacto" name="contacto" > {$curso.Cur_Contacto} </textarea> </div>
         <div class="col-lg-12"><h5><strong>Requisitos Sotftware</strong></h5></div>
         <div class="col-lg-12"><input class="form-control" id="inSoftware" name="software" value="{$curso.Cur_ReqSoftware}"/></div>
         <div class="col-lg-12"><h5><strong>Requisitos Hardware</strong></h5></div>

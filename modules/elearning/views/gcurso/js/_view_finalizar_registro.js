@@ -1,5 +1,10 @@
 ﻿// Menu(1);
 
+$(document).on('ready', function () { 
+  $('#inContacto').ckeditor(function() { }, { toolbar : 'Basic' });
+});
+
+
 // Jhon Martinez
 $("#item_presentacion").click(function() {
   $(this).removeClass("active");
@@ -201,7 +206,7 @@ $("#btnNuevoDetalle").click(function(e){
     InputValidate("#tmpNvInfoTitulo", 300);
     $('#tmpNvInfoDetalle').ckeditor(function() { /* callback code */ 
     }, { toolbar : 'Basic' });
-    
+
     $("#tmpNvInfoTitulo").unbind("keypress").keypress(function(e){
       if (e.keyCode == 13){
         e.preventDefault();
