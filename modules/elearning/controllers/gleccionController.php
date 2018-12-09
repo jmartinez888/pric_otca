@@ -450,7 +450,7 @@ class gleccionController extends elearningController {
   public function _modificar_contenido(){
     $id = $this->getTexto("id");
     $titulo = $this->getTexto("titulo");
-    $contenido = $this->getTexto("contenido");
+    $contenido = $this->getPostParam("contenido");
 
     $model = $this->loadModel("_gestionLeccion");
     $model->updateContenido($id, $titulo, $contenido);
@@ -462,7 +462,7 @@ class gleccionController extends elearningController {
   public function _registrar_contenido(){
     $leccion = $this->getTexto("leccion");
     $titulo = $this->getTexto("titulo");
-    $contenido = $this->getTexto("contenido");
+    $contenido = $this->getPostParam("contenido");
 
     $contenido = str_replace("<script>", "", $contenido);
     $contenido = str_replace("</script>", "", $contenido);

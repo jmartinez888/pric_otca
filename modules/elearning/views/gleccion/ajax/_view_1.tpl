@@ -72,7 +72,7 @@
           {foreach from=$contenido item=c}
             <div class="margin-top-10 item-contenido">
               <strong>{$c.CL_Titulo}</strong>
-              <div>{substr($c.CL_Descripcion, 0, 100)}...</div>
+              <div>{$c.CL_Descripcion}</div>
               <input class="hidden_IdContenido estado" value="{$c.CL_IdContenido}"/>
               <input class="hidden_TituloContenido estado" value="{$c.CL_Titulo}"/>
               <input class="hidden_Contenido estado" value="{$c.CL_Descripcion}"/>
@@ -83,11 +83,14 @@
           <div>Esta lección esta vacía</div>
         {/if}
       </div>
+      {if isset($contenido) && count($contenido) < 1 }
       <div class="col-lg-12">
         <button class="btn btn-success margin-top-10 pull-right" type="button" id="btn_nuevo_contenido">
           <i class="glyphicon glyphicon-book"></i> Agregar Contenido
         </button>
       </div>
+      {/if}
+
     </div>
   </div>
 </div>

@@ -1,9 +1,11 @@
 ﻿// Menu(1);
 
 $(document).on('ready', function () { 
+  $('#inDescripcion').ckeditor(function() { }, { toolbar : 'Basic' });
   $('#inContacto').ckeditor(function() { }, { toolbar : 'Basic' });
   $('#inSoftware').ckeditor(function() { }, { toolbar : 'Basic' });
   $('#inHardware').ckeditor(function() { }, { toolbar : 'Basic' });
+  $('#inMetodologia').ckeditor(function() { }, { toolbar : 'Basic' });
 });
 
 

@@ -150,7 +150,7 @@
           <strong></strong>
         </div>
         <div class="col-lg-12"><h5><strong>Objetivo General del Curso</strong></h5></div>
-        <div class="col-lg-12"><input class="form-control" id="inObjetivo" name="objgeneral" value="{$curso.Cur_ObjetivoGeneral}"/></div>
+        <div class="col-lg-12"><textarea class="form-control" id="inObjetivo" name="objgeneral" >{$curso.Cur_ObjetivoGeneral}</textarea></div>
         <div class="col-lg-12 margin-top-10"><h5><strong>Objetivos Específicos</strong></h5></div>
         <div id="divObjetivosEspecificos"></div>
         <div class="col-xs-3">
@@ -158,7 +158,7 @@
           <button id="btnNuevoObjetivo" class="col-xs-12 btn btn-sm btn-warning" >Agregar objetivo</button>
         </div>
         <div class="col-lg-12 margin-top-10"><h5><strong>Público Objetivo</strong></h5></div>
-        <div class="col-lg-12"><input class="form-control" id="inPublico" name="publico" value="{$curso.Cur_PublicoObjetivo}"/></div>
+        <div class="col-lg-12"><textarea class="form-control" id="inPublico" name="publico" >{$curso.Cur_PublicoObjetivo}</textarea></div>
         <div class="col-lg-12 margin-top-10"><h5><strong>N° Vacantes</strong></h5></div>
         <div class="col-lg-12"><input type="number" class="form-control" id="inVacantes" name="vacantes" value="{$curso.Cur_Vacantes}"/></div>
         <div class="col-lg-12 margin-top-10"><h5><strong>Contacto</strong></h5></div>
@@ -168,7 +168,7 @@
         <div class="col-lg-12"><h5><strong>Requisitos Hardware</strong></h5></div>
         <div class="col-lg-12"><textarea class="form-control" id="inHardware" name="hardware" >{$curso.Cur_ReqHardware}</textarea></div>
         <div class="col-lg-12"><h5><strong>Metodología</strong></h5></div>
-        <div class="col-lg-12"><input class="form-control" id="inMetodologia" name="metodologia" value="{$curso.Cur_Metodologia}"/></div>
+        <div class="col-lg-12"><textarea class="form-control" id="inMetodologia" name="metodologia" >{$curso.Cur_Metodologia}</textarea></div>
         <div id="divDetallesCursos"></div>
         <div class="col-xs-3">
           <input class="estado" id="toggle_NuevoDetalle" value="0" />

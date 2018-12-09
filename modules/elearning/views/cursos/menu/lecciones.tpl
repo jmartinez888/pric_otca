@@ -2,7 +2,6 @@
   <div class="side-menu">
     <ul>
       {foreach from=$lecciones key=i item=o}
-
         {if $o["Progreso"] == 1 || ($i>0 && $lecciones[$i-1]["Progreso"] == 1)}
         <a href="{BASE_URL}elearning/cursos/modulo/{$curso}/{$modulo.Moc_IdModuloCurso}/{$o.Lec_IdLeccion}" class="nounderline">
         {/if}
