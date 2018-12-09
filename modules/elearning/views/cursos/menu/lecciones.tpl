@@ -17,7 +17,7 @@
             {if $o["Progreso"] == 1}
                 <span class="glyphicon glyphicon-star item-leccion-concluida"></span>
             {/if}
-            <br> <span style="font-weight: normal; font-size: 12px">Duración: {$o.Lec_TiempoDedicacion}</span>
+            <br> <span style="font-weight: normal; font-size: 12px">Dedicación: {$o.Lec_TiempoDedicacion}</span>
           </li>
         {if $o["Progreso"] == 1 || ($i>0 && $lecciones[$i-1]["Progreso"] == 1)}
         </a>

@@ -295,7 +295,7 @@
                     </div>
                     
                     <div class="col col-xs-12">
-                        <strong>Duración: {$o.Moc_TiempoDedicacion}</strong>  
+                        <strong>Dedicación: {$o.Moc_TiempoDedicacion}</strong>  
                     </div>                    
                   </div>
                   <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10 ficha-mod-title">
