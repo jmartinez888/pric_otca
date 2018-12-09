@@ -2,6 +2,8 @@
 
 $(document).on('ready', function () { 
   $('#inContacto').ckeditor(function() { }, { toolbar : 'Basic' });
+  $('#inSoftware').ckeditor(function() { }, { toolbar : 'Basic' });
+  $('#inHardware').ckeditor(function() { }, { toolbar : 'Basic' });
 });
 
 
