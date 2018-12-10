@@ -37,7 +37,7 @@
                                             <td>{$numeropagina++}</td>
                                             <td>{$us.Usu_Nombre} {$us.Usu_Apellidos}</td>                
                                             <td >
-                                                <input type="checkbox" name="usu{$cont}" value="{$us.Usu_Email}">
+                                                <input type="checkbox" name="usu{$cont}" value="{$us.Usu_IdUsuario}">
                                                 {$cont=$cont+1}
                                             </td>                                            
                                         </tr>

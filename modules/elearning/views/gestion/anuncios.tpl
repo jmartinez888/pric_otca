@@ -1,7 +1,7 @@
 {include file='modules/elearning/views/gestion/menu/menu.tpl'}
 <div class="col-xs-12 col-sm-12 col-md-9 col-lg-10" style="margin-top: 20px">
 {include file='modules/elearning/views/gestion/menu/tag_url.tpl'}
-<div class="col-lg-12" >
+<div class="col col-xs-12" >
     {if  $tipo==0}
     <div class="panel panel-default">
         <div class="panel-heading collapsed">
@@ -13,14 +13,14 @@
                     <div style="width: 90%; margin: 0px auto">
                         <form class="form-horizontal" id="form2" role="form" data-toggle="validator" method="post" action="" autocomplete="on">
                             <div class="form-group">
-                                <label class="col-lg-3 control-label">Titulo : </label>
-                                <div class="col-lg-8">
+                                <label class="col-sm-2 control-label">Titulo : </label>
+                                <div class="col-sm-10">
                                     <input class="form-control" id ="titulo" type="text" name="titulo" value="{$datos.nombre|default:""}" placeholder="Titulo" required=""/>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-lg-3 control-label" >Descripción : </label>
-                                <div class="col-lg-8">
+                                <label class="col-sm-2 control-label" >Descripción : </label>
+                                <div class="col-sm-10">
                                     <textarea class="form-control" id ="descripcion" type="text" name="descripcion" placeholder="Descripción" required=""  rows="5">{$datos.apellidos|default:""}</textarea>
                                 </div>
                             </div>

@@ -1,6 +1,7 @@
 var _post = null;
 var _Per_IdPermiso_ = 0;
-$(document).on('ready', function () {   
+$(document).on('ready', function () { 
+$('#descripcion').ckeditor(function() { }, { });  
     $('#form3').validator().on('submit', function (e) {
     if (e.isDefaultPrevented()) {
 

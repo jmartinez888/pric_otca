@@ -37,6 +37,7 @@ class gestionController extends anunciosController {
         if($from=='elearning'){
             $anuncio = $_model->getAnuncio($this->filtrarInt($id));
             $usuarios = $_model->getEmailMatriculadosCurso($anuncio['Cur_IdCurso']);
+            $curso = $_model->getCursoXid($anuncio['Cur_IdCurso']);
         }
 
         if ($this->botonPress("bt_cancelarEditarAnuncio")) {
@@ -46,12 +47,31 @@ class gestionController extends anunciosController {
         }
 
         if ($this->botonPress("enviar")) 
-        {            
+        {          
+
             for($i=1; $i<=count($usuarios);$i++){
-                $variable='usu'.$i;
-                if(null !==$this->getSql($variable )){
-                    $this->sendEmail($this->getSql($variable ),$anuncio['Anc_Titulo'],$anuncio['Anc_Descripcion']);
+                // $variable='usu'.$i;
+                $Usu_IdUsuario = $this->getInt('usu'.$i);
+                $contenido = "";
+                if (null !== $this->getInt('usu'.$i) && $usuarios[$i]["Usu_IdUsuario"] == $Usu_IdUsuario){
+                    $contenido = str_replace("|nombre|",$usuarios[$i]["Usu_Nombre"],$anuncio['Anc_Descripcion']);
+
+                    $contenido = str_replace("|apellido|",$usuarios[$i]["Usu_Apellido"],$anuncio['Anc_Descripcion']);
+
+                    $contenido = str_replace("|usuario|",$usuarios[$i]["Usu_Usuario"],$anuncio['Anc_Descripcion']);
+
+                    $contenido = str_replace("|titulo_curso|",$curso["Cur_Titulo"],$anuncio['Anc_Descripcion']);
+                    
+                    
+                    $this->sendEmail($usuarios[$i]["Usu_Email"],$anuncio['Anc_Titulo'],$contenido);
+                    
+                    $this->_view->assign('_mensaje', 'Anuncio Enviado');
+
+                } else {
+                    # code...
                 }
+                
+                
             }
         }        
         // $this->_view->assign('idiomas',$this->_aclm->getIdiomas());        
