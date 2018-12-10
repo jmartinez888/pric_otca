@@ -299,7 +299,7 @@
           <p>{$modulo[0]['Moc_Descripcion']}</p>
         </div>
         <div class="modal-footer">
-          <a type="button" href="{BASE_URL}elearning/cursos/modulo/{$curso.Cur_IdCurso}/{$o.Moc_IdModuloCurso}/{$o.LECCIONES[0]['Lec_IdLeccion']}" class="btn btn-success" data-dismiss="modal">Close</a>
+          <a type="button" href="{BASE_URL}elearning/cursos/modulo/{$curso.Cur_IdCurso}/{$o.Moc_IdModuloCurso}/{$o.LECCIONES[0]['Lec_IdLeccion']}" class="btn btn-success" >Close</a>
         </div>
       </div>
       
