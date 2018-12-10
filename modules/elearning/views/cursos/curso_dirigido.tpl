@@ -177,7 +177,7 @@
               {$o.Moc_Descripcion}
             </div>
             <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10 ficha-mod-title">
-              <a href="{BASE_URL}elearning/cursos/modulo/{$curso.Cur_IdCurso}/{$o.Moc_IdModuloCurso}/{$o.LECCIONES[0]['Lec_IdLeccio']}"  class="btn btn-success">Iniciar</a>
+              <a href="{BASE_URL}elearning/cursos/modulo/{$curso.Cur_IdCurso}/{$o.Moc_IdModuloCurso}/{$o.LECCIONES[0]['Lec_IdLeccion']}"  class="btn btn-success pull-right">Iniciar</a>
               
             </div>
           </div>
