@@ -191,7 +191,7 @@
                 {/if}
                    
                 {if $l.Activo==0}
-                  {if ($session==1 && isset($inscripcion) && count($inscripcion)>0 && $inscripcion[0].Mat_Valor==1) && $o.Disponible==1 }
+                  {if ($session==1 && isset($inscripcion) && count($inscripcion)>0 && $inscripcion[0].Mat_Valor==1) && $l.Disponible==1 }
                     <a href="{BASE_URL}elearning/cursos/modulo/{$curso.Cur_IdCurso}/{$o.Moc_IdModuloCurso}/{$l.Lec_IdLeccion}">
                       <div class="tag-terminado"><center><strong>Revisar</strong></center></div>
                     </a>
