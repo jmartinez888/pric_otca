@@ -23,17 +23,11 @@
             <br>
             </div>
 
-            <div class="col-lg-3 row ic-sociales">
-            <br>
-            <br>
+            <div class="col-lg-3 row ic-sociales sharepost no-print" >
                 <!-- <a class="btn fa fa-facebook im_sociales" id="im_sociales" style="background: #3B5998" href="#"></a>
                 <a class="btn fa fa-twitter im_sociales" id="im_sociales" style="background: #55ACEE" href="#"></a>
                 <a class="btn fa fa-google-plus im_sociales" id="im_sociales" style="background: #C03A2A" href="#"></a> -->
-                <ul class="list-inline">
-                  <li class="share">
-                    <i class="fa fa-share-alt"></i>
-                    <h4><b>{$lenguaje["page_item_compartir"]}</b></h4>
-                  </li>
+                <ul class="list-inline">                  
                   <li class="facebook">
                     <div class="icon">
                       <a href="https://www.facebook.com/sharer/sharer.php?u={$_layoutParams.root}elearning/cursos/curso_dirigido/{$curso.Cur_IdCurso}" target="_blank" title="Facebook">
