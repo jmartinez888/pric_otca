@@ -90,7 +90,7 @@
               <div class="tag-lms"><center>Esta pendiente la aprobación de tu registro</center></div>
             {else}
               {if $inscripcion[0].Mat_Valor==1 }
-                {if $session && $progreso.Completo==1}
+                {if $session && $progreso.Completo==10}
                   {if !count($certificado)}
                     <button class="btn btn-success btn-certificado" style="margin-bottom: 10px" id="btnCertificado">
                       <strong><span class="glyphicon glyphicon-list-alt"></span> &nbsp;Obtener certificado</strong>
