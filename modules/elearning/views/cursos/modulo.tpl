@@ -206,6 +206,7 @@
                                     <div class="col-lg-12">
                                       <div class="alert alert-success" role="alert">
                                           <h3>¡{$lang->get('str_enhorabuen')}! ¡{$lang->get('elearning_cursos_usted_aprobo_examen')}!</h3>
+                                          <span>Usted debe obtener una nota minima de {($parametrosCurso.Par_NotaMinima / $parametrosCurso.Par_NotaMaxima) * 100}% para aprobar el examen.</span>
                                           <small>{$lang->get('str_obtuviste')} {$ultimoexamen.Exl_Nota} {$lang->get('elearning_cursos_puntos_de')} {$examen.Exa_Peso}
                                           </small>
                                           <h3></h3>
@@ -266,7 +267,7 @@
                                         <form method="post" action="{BASE_URL}elearning/cursos/_next_leccion/" >
                                           <input value="{$curso}" name="curso" hidden="hidden"/>
                                           <input value="{$leccion.Lec_IdLeccion}" name="leccion" hidden="hidden"/>
-                                          <button class="col-xs-offset-2 col-xs-2 btn btn-primary btn-next-previous">
+                                          <button class="col-xs-offset-5 col-xs-2 btn btn-primary btn-next-previous">
                                             <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
                                             {$lang->get('str_siguiente')}
                                           </button>
@@ -278,6 +279,7 @@
                                 <div class="col-lg-12">
                                   <div class="alert alert-danger" role="alert">
                                       <h3>{$lang->get('elearning_cursos_losiento_no_supera_examen')}.</h3>
+                                      <span>Usted debe obtener una nota minima de {($parametrosCurso.Par_NotaMinima / $parametrosCurso.Par_NotaMaxima) * 100}% para aprobar el examen.</span>
                                       <small>{$lang->get('str_obtuviste')} {$ultimoexamen.Exl_Nota} {$lang->get('elearning_cursos_puntos_de')} {$examen.Exa_Peso}</small>
                                       <h3></h3>
                                   </div>
@@ -304,7 +306,7 @@
                                           <div class="form-group">
                                               <label class="col-lg-12 control-label">{$lang->get('elearning_cursos_numero_intentos')}: {$intentos.intentos} {$lang->get('str_de')} {$examen.Exa_Intentos}</label>
                                               <div class="col-lg-12">
-                                                  <p>Usted debe obtener una nota minima de {($parametrosCurso.Par_NotaMinima / $parametrosCurso.Par_NotaMaxima) *100}% para aprobar el examen.</p>
+                                                  
                                                   <p>{$lang->get('elearning_cursos_presionar_comenzar_cuenta_intento')}.</p>
                                               </div>
                                           </div>
