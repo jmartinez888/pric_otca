@@ -107,15 +107,37 @@ class moduloModel extends Model {
         $modulos = $this->getArray($sql);
         $resultado = array();
         foreach ($modulos as $m) {
-          $lec = " SELECT (CASE WHEN pro.Pro_Valor IS NULL THEN 0 ELSE pro.Pro_Valor END) AS Disponible, LEC.* FROM (SELECT L.*, (CASE WHEN Lec_FechaHasta <= NOW() THEN 0 ELSE 1 END) as Activo
+          if ($id_usuario) {
+            $lec = " SELECT (CASE WHEN pro.Pro_Valor IS NULL THEN 0 ELSE pro.Pro_Valor END) AS Disponible, LEC.* FROM (SELECT L.*, (CASE WHEN Lec_FechaHasta <= NOW() THEN 0 ELSE 1 END) as Activo
                   FROM leccion L
                   WHERE L.Moc_IdModuloCurso = {$m['Moc_IdModuloCurso']}
                     AND L.Lec_Estado = 1 AND L.Row_Estado = 1) LEC 
-                    LEFT JOIN progreso_curso pro ON LEC.Lec_IdLeccion = pro.Lec_IdLeccion AND pro.Usu_IdUsuario = {$id_usuario}";
+                    LEFT JOIN progreso_curso pro ON LEC.Lec_IdLeccion = pro.Lec_IdLeccion AND pro.Usu_IdUsuario = {$id_usuario} ";
+          } else {
+            
+              $lec = "SELECT L.*, (CASE WHEN Lec_FechaHasta <= NOW() THEN 0 ELSE 1 END) as Activo
+                      FROM leccion L
+                      WHERE L.Moc_IdModuloCurso = {$m['Moc_IdModuloCurso']}
+                        AND L.Lec_Estado = 1 AND L.Row_Estado = 1";
+          }
+          
           $m["LECCIONES"] = $this->getArray($lec);
           array_push($resultado, $m);
         }
-        return $resultado;
+        if ($id_usuario != "" && $resultado!=null && count($resultado) >0 ){
+          $valor = array();
+          $estModAnt = 1;
+          foreach ($resultado as $i) {
+            $pro = $this->getProgresoModulo($i["Moc_IdModuloCurso"], $id_usuario);
+            $i["Completo"] = $pro["Completo"];
+            $i["Porcentaje"] = $pro["Porcentaje"];
+            $i["Disponible"] = $estModAnt == 1 ? 1 : $pro["Completo"] ;
+            array_push($valor, $i);
+            $estModAnt = $pro["Completo"];
+          }
+          $modulos = $valor;
+        }
+        return $modulos;
     }
 
     public function getNextModulo($modulo){
