@@ -69,7 +69,7 @@ class gestionController extends anunciosController {
 
                             $contenido = str_replace("|titulo_curso|",$curso[0]["Cur_Titulo"],$contenido);
 
-                            $contenido = str_replace("/public/ckeditor/",BASE_URL"/public/ckeditor/",$contenido);
+                            $contenido = str_replace("/public/ckeditor/",BASE_URL."/public/ckeditor/",$contenido);
                             
                             $this->sendEmail($usuarios[$j]["Usu_Email"],$anuncio['Anc_Titulo'],$contenido);
                             // echo $contenido;
