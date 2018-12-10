@@ -703,8 +703,14 @@ class cursosController extends elearningController {
                 // lecciones me quede aqui
                 $primeraLeccion = $model->getLeccionUno($objeto["Moc_IdModuloCurso"]);
 
-
-                $this->redireccionar("elearning/cursos/modulo/" . $curso . "/" . $posibleSiguienteMod["Moc_IdModuloCurso"] . "/" . $primeraLeccion[0]["Lec_IdLeccion"]);
+                if ($primeraLeccion["Lec_FechaDesde"] <= now() && $primeraLeccion["Lec_FechaHasta"] >= now()) {
+                  # code...
+                  $this->redireccionar("elearning/cursos/modulo/" . $curso . "/" . $posibleSiguienteMod["Moc_IdModuloCurso"] . "/" . $primeraLeccion[0]["Lec_IdLeccion"]);
+                } else {
+                  # code...
+                  $this->redireccionar("elearning/cursos/curso/" . $curso);
+                }
+                
             } else{
 
               // echo "holaaaaaaa"; exit;
