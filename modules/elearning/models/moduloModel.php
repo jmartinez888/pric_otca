@@ -112,13 +112,13 @@ class moduloModel extends Model {
                   FROM leccion L
                   WHERE L.Moc_IdModuloCurso = {$m['Moc_IdModuloCurso']}
                     AND L.Lec_Estado = 1 AND L.Row_Estado = 1) LEC 
-                    LEFT JOIN progreso_curso pro ON LEC.Lec_IdLeccion = pro.Lec_IdLeccion AND pro.Usu_IdUsuario = {$id_usuario} ";
+                    LEFT JOIN progreso_curso pro ON LEC.Lec_IdLeccion = pro.Lec_IdLeccion AND pro.Usu_IdUsuario = {$id_usuario} ORDER BY LEC.Lec_IdLeccion ASC ";
           } else {
             
               $lec = "SELECT L.*, (CASE WHEN Lec_FechaHasta <= NOW() THEN 0 ELSE 1 END) as Activo
                       FROM leccion L
                       WHERE L.Moc_IdModuloCurso = {$m['Moc_IdModuloCurso']}
-                        AND L.Lec_Estado = 1 AND L.Row_Estado = 1";
+                        AND L.Lec_Estado = 1 AND L.Row_Estado = 1 ORDER BY L.Lec_IdLeccion ASC ";
           }
           
           $m["LECCIONES"] = $this->getArray($lec);

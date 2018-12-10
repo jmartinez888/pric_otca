@@ -23,12 +23,33 @@
             <br>
             </div>
 
-            <div class="col-lg-3 row ic-sociales">
-            <br>
-            <br>
-                <a class="btn fa fa-facebook im_sociales" id="im_sociales" style="background: #3B5998" href="#"></a>
+            <div class="col-lg-3 row ic-sociales sharepost no-print" >
+                <!-- <a class="btn fa fa-facebook im_sociales" id="im_sociales" style="background: #3B5998" href="#"></a>
                 <a class="btn fa fa-twitter im_sociales" id="im_sociales" style="background: #55ACEE" href="#"></a>
-                <a class="btn fa fa-google-plus im_sociales" id="im_sociales" style="background: #C03A2A" href="#"></a>
+                <a class="btn fa fa-google-plus im_sociales" id="im_sociales" style="background: #C03A2A" href="#"></a> -->
+                <ul class="list-inline">                  
+                  <li class="facebook">
+                    <div class="icon">
+                      <a href="https://www.facebook.com/sharer/sharer.php?u={$_layoutParams.root}elearning/cursos/curso_dirigido/{$curso.Cur_IdCurso}" target="_blank" title="Facebook">
+                        <i class="fa fa-facebook"></i>
+                      </a>
+                    </div>
+                  </li>
+                  <li class="twitter">
+                    <div class="icon">
+                      <a href="https://twitter.com/home?status={$_layoutParams.root}elearning/cursos/curso_dirigido/{$curso.Cur_IdCurso}" target="_blank" title="Twitter">
+                        <i class="fa fa-twitter"></i>
+                      </a>
+                    </div>
+                  </li>
+                  <li class="google-plus">
+                    <div class="icon">
+                      <a href="https://plus.google.com/share?url={$_layoutParams.root}elearning/cursos/curso_dirigido/{$curso.Cur_IdCurso}" target="_blank" title="Google+">
+                        <i class="fa fa-google-plus"></i>
+                      </a>
+                    </div>
+                  </li>
+                </ul>
             </div>
 
           </div>
