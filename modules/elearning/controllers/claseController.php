@@ -49,6 +49,9 @@ class claseController extends elearningController {
     $DT_DESDE = (new DateTime($OLeccion["Lec_FechaDesde"]))->format('Y-m-d');;
     $DT_HASTA = (new DateTime($OLeccion["Lec_FechaHasta"]))->format('Y-m-d');;
 
+    $datos_modulo = $Mmodel->getModuloDatos($modulo);
+    $this->_view->assign("mod_datos", $datos_modulo);
+
     $this->_view->setTemplate(LAYOUT_FRONTEND);
     $this->_view->assign("curso", $curso);
     $this->_view->assign("modulo", $Mmodel->getModulo($modulo));

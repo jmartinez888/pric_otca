@@ -71,7 +71,7 @@
         {if isset($contenido) && count($contenido) > 0 }
           {foreach from=$contenido item=c}
             <div class="margin-top-10 item-contenido">
-              <h4><strong>Título:  {$c.CL_Titulo}</strong></h4><br> 
+              <h4><strong>{$c.CL_Titulo}</strong></h4><br> 
               <div class="">{$c.CL_Descripcion}</div>
               <input class="hidden_IdContenido estado" value="{$c.CL_IdContenido}"/>
               <input class="hidden_TituloContenido estado" value="{$c.CL_Titulo}"/>
