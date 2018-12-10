@@ -304,7 +304,7 @@
                                           <div class="form-group">
                                               <label class="col-lg-12 control-label">{$lang->get('elearning_cursos_numero_intentos')}: {$intentos.intentos} {$lang->get('str_de')} {$examen.Exa_Intentos}</label>
                                               <div class="col-lg-12">
-                                                  <p>Usted debe obtener una nota minima de {$parametrosCurso.Par_NotaMinima / $parametrosCurso.Par_NotaMaxima}% para aprobar el examen.</p>
+                                                  <p>Usted debe obtener una nota minima de {($parametrosCurso.Par_NotaMinima / $parametrosCurso.Par_NotaMaxima) *100}% para aprobar el examen.</p>
                                                   <p>{$lang->get('elearning_cursos_presionar_comenzar_cuenta_intento')}.</p>
                                               </div>
                                           </div>
