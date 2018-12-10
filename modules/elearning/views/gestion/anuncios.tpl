@@ -11,7 +11,7 @@
             <div class="panel-body">
                 <div id="nuevoRegistro">
                     <div style="width: 90%; margin: 0px auto">
-                        <form class="form-horizontal" id="form1" role="form" data-toggle="validator" method="post" action="" autocomplete="on">
+                        <form class="form-horizontal" id="form2" role="form" data-toggle="validator" method="post" action="" autocomplete="on">
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">Titulo : </label>
                                 <div class="col-lg-8">
@@ -38,6 +38,7 @@
     {/if}
     <div class="panel-body" >
         <input type="hidden" name="idCurso" value="{$id}" id="idCurso">
+        <input type="hidden" name="hidden_curso" value="{$id}" id="hidden_curso">
             <div class="row" style="text-align:right">
                 <div style="display:inline-block;padding-right:2em">
                     <input class="form-control" placeholder="Buscar anuncio" style="width: 150px; float: left; margin: 0px 10px;" name="palabraanuncio" id="palabraanuncio">

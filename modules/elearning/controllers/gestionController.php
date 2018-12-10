@@ -118,6 +118,7 @@ class gestionController extends elearningController {
     $this->_view->assign("anuncios", $anuncios);
     $this->_view->assign("tipo", $tipo);
     $this->_view->assign("id", $id);
+    $this->_view->assign("idcurso", $id);
     $this->_view->assign('numeropagina', $paginador->getNumeroPagina());
     $this->_view->assign('paginacionanuncios', $paginador->getView('paginacion_ajax_s_filas'));
     $this->_view->renderizar("anuncios");
