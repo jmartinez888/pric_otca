@@ -49,30 +49,37 @@ class gestionController extends anunciosController {
 
         if ($this->botonPress("enviar")) 
         {          
-
+            // print_r($usuarios);exit;
             for($i=1; $i<=count($usuarios);$i++){
                 // $variable='usu'.$i;
                 $Usu_IdUsuario = $this->getInt('usu'.$i);
                 $contenido = "";
-                if (null !== $this->getInt('usu'.$i) && $usuarios[$i]["Usu_IdUsuario"] == $Usu_IdUsuario){
-                    $contenido = str_replace("|nombre|",$usuarios[$i]["Usu_Nombre"],$anuncio['Anc_Descripcion']);
+                if (null !== $this->getInt('usu'.$i)){
+                    for ($j=0; $j < count($usuarios); $j++) { 
+                        # code...
+                        if ($usuarios[$j]["Usu_IdUsuario"] == $Usu_IdUsuario){
+                            // print_r($usuarios);
+                            // print_r($curso);
+                            $contenido = $anuncio['Anc_Descripcion'];
+                            $contenido = str_replace("|nombre|",$usuarios[$j]["Usu_Nombre"],$contenido);
 
-                    $contenido = str_replace("|apellido|",$usuarios[$i]["Usu_Apellido"],$anuncio['Anc_Descripcion']);
+                            $contenido = str_replace("|apellido|",$usuarios[$j]["Usu_Apellidos"],$contenido);
 
-                    $contenido = str_replace("|usuario|",$usuarios[$i]["Usu_Usuario"],$anuncio['Anc_Descripcion']);
+                            $contenido = str_replace("|usuario|",$usuarios[$j]["Usu_Usuario"],$contenido);
 
-                    $contenido = str_replace("|titulo_curso|",$curso["Cur_Titulo"],$anuncio['Anc_Descripcion']);
-                    
-                    
-                    $this->sendEmail($usuarios[$i]["Usu_Email"],$anuncio['Anc_Titulo'],$contenido);
-                    
-                    $this->_view->assign('_mensaje', 'Anuncio Enviado');
+                            $contenido = str_replace("|titulo_curso|",$curso[0]["Cur_Titulo"],$contenido);
+                            
+                            
+                            $this->sendEmail($usuarios[$j]["Usu_Email"],$anuncio['Anc_Titulo'],$contenido);
+                            // echo $contenido;
+                            $this->_view->assign('_mensaje', 'Anuncio Enviado');
 
-                } else {
-                    # code...
+                        } else {
+                            # code...
+                        }
+                        
+                    }
                 }
-                
-                
             }
         }        
         // $this->_view->assign('idiomas',$this->_aclm->getIdiomas());        
