@@ -176,9 +176,10 @@
               <strong>{$o.Moc_Titulo}</strong>
               {$o.Moc_Descripcion}
             </div>
+
             {if $o.LECCIONES[0]['Disponible'] == 0}
             <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10 ficha-mod-title">
-              <a href="{BASE_URL}elearning/cursos/modulo/{$curso.Cur_IdCurso}/{$o.Moc_IdModuloCurso}/{$o.LECCIONES[0]['Lec_IdLeccion']}"  class="btn btn-success pull-right">Iniciar</a>
+              <a data-toggle="modal" data-target="#myModal" class="btn btn-success pull-right">Iniciar</a>
             </div>
             {/if}
 
@@ -281,3 +282,27 @@
   </div>
   </div>
 </div>
+
+
+
+<!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">{$modulo[0]['Moc_Titulo']}</h4>
+        </div>
+        <div class="modal-body">
+          <p>{$modulo[0]['Moc_Descripcion']}</p>
+        </div>
+        <div class="modal-footer">
+          <a type="button" href="{BASE_URL}elearning/cursos/modulo/{$curso.Cur_IdCurso}/{$o.Moc_IdModuloCurso}/{$o.LECCIONES[0]['Lec_IdLeccion']}" class="btn btn-success" data-dismiss="modal">Close</a>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  
