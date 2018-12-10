@@ -107,7 +107,7 @@ class moduloModel extends Model {
         $modulos = $this->getArray($sql);
         $resultado = array();
         foreach ($modulos as $m) {
-          if ($id_usuario) {
+          if ($id_usuario>0) {
             $lec = " SELECT (CASE WHEN pro.Pro_Valor IS NULL THEN 0 ELSE pro.Pro_Valor END) AS Disponible, LEC.* FROM (SELECT L.*, (CASE WHEN Lec_FechaHasta <= NOW() THEN 0 ELSE 1 END) as Activo
                   FROM leccion L
                   WHERE L.Moc_IdModuloCurso = {$m['Moc_IdModuloCurso']}
