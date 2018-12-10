@@ -36,7 +36,7 @@
             {else}
               {if $leccion.Lec_Tipo == 3 }
                 {if isset($ultimoexamen) && count($ultimoexamen) }
-                  {if $ultimoexamen.Exl_Nota / $examen.Exa_Peso > $parametrosCurso.Par_NotaMinima / $parametrosCurso.Par_NotaMaxima}
+                  {if $ultimoexamen.Exl_Nota / $examen.Exa_Peso >= $parametrosCurso.Par_NotaMinima / $parametrosCurso.Par_NotaMaxima}
                     <!-- Para siguiente modulo tiene que aprobar el examen -->
                     <form method="post" action="{BASE_URL}elearning/cursos/_next_leccion/" style="display: inline-block">
                       <input value="{$curso}" name="curso" hidden="hidden"/>
@@ -201,7 +201,7 @@
                         </div>
                     {else}
                         {if isset($ultimoexamen) && count($ultimoexamen) }
-                            {if $ultimoexamen.Exl_Nota / $examen.Exa_Peso > $parametrosCurso.Par_NotaMinima / $parametrosCurso.Par_NotaMaxima}
+                            {if $ultimoexamen.Exl_Nota / $examen.Exa_Peso >= $parametrosCurso.Par_NotaMinima / $parametrosCurso.Par_NotaMaxima}
                                 <div class="row">
                                     <div class="col-lg-12">
                                       <div class="alert alert-success" role="alert">
