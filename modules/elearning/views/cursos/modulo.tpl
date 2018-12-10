@@ -262,6 +262,15 @@
                                                 <p>{$lang->get('elearning_cursos_usted_no_mas_intento')}</p>
                                             </div>
                                         </div>
+                                        <!-- Para siguiente modulo tiene que aprobar el examen -->
+                                        <form method="post" action="{BASE_URL}elearning/cursos/_next_leccion/" >
+                                          <input value="{$curso}" name="curso" hidden="hidden"/>
+                                          <input value="{$leccion.Lec_IdLeccion}" name="leccion" hidden="hidden"/>
+                                          <button class="col-xs-offset-2 col-xs-2 btn btn-primary btn-next-previous">
+                                            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                                            {$lang->get('str_siguiente')}
+                                          </button>
+                                        </form>
                                       </div>
                                     {/if}
                                 </div>                            
