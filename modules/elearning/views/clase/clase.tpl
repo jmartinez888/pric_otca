@@ -31,7 +31,7 @@
 <input value="{$leccion.Lec_IdLeccion}" id="hiddenLeccion" hidden="hidden" />
 <div class="row gradiente">
   <div class="col-lg-5 titulo-modulo">
-     <h4><strong> {$lang->get('str_modulo')} {$mod_datos.INDEX}: {$modulo["Moc_Titulo"]}</strong></h4>
+     <h4><strong> {$lang->get('str_modulo')} {$mod_datos.INDEX}:ss {$modulo["Moc_Titulo"]}</strong></h4>
   </div>
   <div class="col-lg-5 derecha" style="margin-top: 5px !important">
       <span>Lección {$leccion["Index"]} de {count($lecciones)}</span>
