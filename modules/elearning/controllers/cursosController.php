@@ -701,7 +701,7 @@ class cursosController extends elearningController {
 
 
                 // lecciones me quede aqui
-                $primeraLeccion = $model->getLeccionUno($objeto["Moc_IdModuloCurso"]);
+                $primeraLeccion = $model->getLeccionUno($posibleSiguienteMod["Moc_IdModuloCurso"]);
 
                 if (strtotime($primeraLeccion[0]["Lec_FechaDesde"]) <= strtotime(date("d-m-Y H:i:00",time())) && strtotime($primeraLeccion[0]["Lec_FechaHasta"]) >= strtotime(date("d-m-Y H:i:00",time()))) {
                   # code...
