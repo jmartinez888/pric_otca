@@ -1263,7 +1263,7 @@ class adminController extends foroController
         $contenido =$contenido. "<br><br>"."Copie el siguiente link: "."<a href= '" . $url ."/index/ficha/".$idforo."'>".$url ."/index/ficha/".$idforo."</a>";
         $fromName = $user["Usu_Nombre"]." ".$user["Usu_Apellidos"]." | FORO - PRIC" ;
         $Correo = new Correo();
-        $SendCorreo = $Correo->enviar($email, "NAME", $Subject, $contenido, $fromName,$user["Usu_Email"]);
+        $SendCorreo = $Correo->enviar($email, "NAME", $Subject, $contenido);
         $this->_view->assign('url', $url);
     }
 
