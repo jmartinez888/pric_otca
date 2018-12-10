@@ -174,7 +174,7 @@
             </div>
             <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10 ficha-mod-title">
               <strong>{$o.Moc_Titulo}</strong>
-              {$o.Moc_Descripcion}
+              {$o.Moc_Descripcion}{$o.LECCIONES[0]["Lec_IdLeccion"]}
             </div>
           </div>
           {foreach from=$o.LECCIONES item=l}
