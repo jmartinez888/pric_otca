@@ -664,7 +664,7 @@ class cursosController extends elearningController {
   public function _next_leccion(){
       if(!Session::get("autenticado")){ $this->redireccionar("elearning/"); }
       $leccion = $this->getTexto("leccion");
-      $curso = $this->getTexto("curso");
+      $curso = $this->getInt("curso");
 
       $model = $this->loadModel("leccion");
       $Emodel = $this->loadModel("examen");
