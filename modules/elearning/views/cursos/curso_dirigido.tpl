@@ -176,10 +176,12 @@
               <strong>{$o.Moc_Titulo}</strong>
               {$o.Moc_Descripcion}
             </div>
+            {if $o.LECCIONES[0]['Disponible'] == 0}
             <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10 ficha-mod-title">
               <a href="{BASE_URL}elearning/cursos/modulo/{$curso.Cur_IdCurso}/{$o.Moc_IdModuloCurso}/{$o.LECCIONES[0]['Lec_IdLeccion']}"  class="btn btn-success pull-right">Iniciar</a>
-              
             </div>
+            {/if}
+
           </div>
           {foreach from=$o.LECCIONES item=l}
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding-left: 0px; padding-right: 0px;">
