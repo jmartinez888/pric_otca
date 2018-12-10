@@ -125,7 +125,7 @@ class leccionModel extends Model {
     }
     // JM
     public function getLeccionUno($Moc_IdModuloCurso){
-      $sql = " SELECT MIN(Lec_IdLeccion) as PrimerLeccion FROM leccion L
+      $sql = " SELECT MIN(Lec_IdLeccion) as PrimerLeccion,* FROM leccion L
               WHERE L.Moc_IdModuloCurso = $Moc_IdModuloCurso
                 AND L.Lec_Estado = 1 AND L.Row_Estado = 1 ";
             
