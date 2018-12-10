@@ -24,6 +24,7 @@ class gestionController extends anunciosController {
         $this->_acl->acceso('editar_rol');
         $this->validarUrlIdioma();
         $this->_view->getLenguaje("index_inicio");
+        $this->_view->getLenguaje(['elearning_cursos']);
         $this->_view->setJs(array('anuncios'));
 
         $pagina = $this->getInt('pagina');
