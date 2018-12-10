@@ -703,7 +703,7 @@ class cursosController extends elearningController {
                 // lecciones me quede aqui
                 $primeraLeccion = $model->getLeccionUno($objeto["Moc_IdModuloCurso"]);
 
-                if ($primeraLeccion["Lec_FechaDesde"] <= now() && $primeraLeccion["Lec_FechaHasta"] >= now()) {
+                if ($primeraLeccion[0]["Lec_FechaDesde"] <= date() && $primeraLeccion[0]["Lec_FechaHasta"] >= date()) {
                   # code...
                   $this->redireccionar("elearning/cursos/modulo/" . $curso . "/" . $posibleSiguienteMod["Moc_IdModuloCurso"] . "/" . $primeraLeccion[0]["Lec_IdLeccion"]);
                 } else {
