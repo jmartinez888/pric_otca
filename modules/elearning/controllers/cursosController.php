@@ -694,10 +694,10 @@ class cursosController extends elearningController {
             // modulos
             $modulos_ = $model->getModulosClave($curso, Session::get("id_usuario"));
             $claveModulos = array_search($objeto["Moc_IdModuloCurso"], array_column($modulos_, "Moc_IdModuloCurso"));
-            $nextModulo = $modulos_[$claveModulos+1];
+            $nextModulo = $modulos_[$claveModulos+2];
 
-            if(count($modulos_) > $claveModulos+1){
-                $posibleSiguienteMod = $modulos_[$claveModulos+1];
+            if(count($modulos_) > $claveModulos+2){
+                $posibleSiguienteMod = $modulos_[$claveModulos+2];
 
 
                 // lecciones me quede aqui
