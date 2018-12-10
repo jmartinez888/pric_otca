@@ -177,7 +177,7 @@
               {$o.Moc_Descripcion}
             </div>
 
-            {if $o.LECCIONES[0]['Disponible'] == 0}
+            {if $o.LECCIONES[0]['Disponible'] == 0 && $index == 1}
             <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10 ficha-mod-title">
               <a data-toggle="modal" data-target="#myModal" class="btn btn-success pull-right">Iniciar</a>
             </div>
