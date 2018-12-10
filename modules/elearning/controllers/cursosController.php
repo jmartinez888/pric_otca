@@ -258,6 +258,8 @@ class cursosController extends elearningController {
       $lecciones = $mLeccion->getLeccionesLMS($id);
       $duracion = $model->getDuracionCurso($id);
       $certificado = $mCert->getCertificadoUsuarioCurso(Session::get("id_usuario"), $id);
+      // $modulo = $mModulo->getModulosCurso($id, Session::get("id_usuario"));
+      // dd($modulo);
 
       $this->_view->setTemplate(LAYOUT_FRONTEND);
       $this->_view->setCss(array("curso", "cursolms", "jp-curso"));

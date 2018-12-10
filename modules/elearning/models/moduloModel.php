@@ -101,7 +101,7 @@ class moduloModel extends Model {
         }
     }
 
-    public function getModulosCursoLMS($id){
+    public function getModulosCursoLMS($id, $id_usuario){
         $sql = "SELECT * FROM modulo_curso WHERE Cur_IdCurso = {$id}
                 AND Moc_Estado = 1 AND Row_Estado = 1 ORDER BY Moc_IdModuloCurso";
         $modulos = $this->getArray($sql);
@@ -114,7 +114,20 @@ class moduloModel extends Model {
           $m["LECCIONES"] = $this->getArray($lec);
           array_push($resultado, $m);
         }
-        return $resultado;
+        if ($id_usuario != "" && $resultado!=null && count($resultado) >0 ){
+          $valor = array();
+          $estModAnt = 1;
+          foreach ($resultado as $i) {
+            $pro = $this->getProgresoModulo($i["Moc_IdModuloCurso"], $id_usuario);
+            $i["Completo"] = $pro["Completo"];
+            $i["Porcentaje"] = $pro["Porcentaje"];
+            $i["Disponible"] = $estModAnt == 1 ? 1 : $pro["Completo"] ;
+            array_push($valor, $i);
+            $estModAnt = $pro["Completo"];
+          }
+          $modulos = $valor;
+        }
+        return $modulos;
     }
 
     public function getNextModulo($modulo){

@@ -38,7 +38,6 @@
     {/if}
     <div class="panel-body" >
         <input type="hidden" name="idCurso" value="{$id}" id="idCurso">
-        <input type="hidden" name="hidden_curso" value="{$id}" id="hidden_curso">
             <div class="row" style="text-align:right">
                 <div style="display:inline-block;padding-right:2em">
                     <input class="form-control" placeholder="Buscar anuncio" style="width: 150px; float: left; margin: 0px 10px;" name="palabraanuncio" id="palabraanuncio">

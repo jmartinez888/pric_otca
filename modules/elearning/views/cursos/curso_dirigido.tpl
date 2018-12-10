@@ -163,10 +163,14 @@
       </div>
       <div class="col-lg-12" style="padding-left: 0px; padding-right: 0px;">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 xxxxxxxxxxxx">
+        {$index = 1}
         {foreach from=$modulo item=o}
           <div class="ficha-mod col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding-bottom: 15px; margin-top: 15px">
             <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2" style="padding: 0px; text-align: center;">
-              <img class="w-100 img-modulo pr-5 pl-5" class="img-modulo" src="{BASE_URL}modules/elearning/views/cursos/img/contador-modulo-lms.png"/>
+              <img class="w-100 img-modulo pr-5 pl-5" class="img-modulo" src="{BASE_URL}modules/elearning/views/cursos/img/contador-modulo-{$index}.png"/>
+              <div class="col col-xs-12">
+                  <strong>Dedicación: {$o.Moc_TiempoDedicacion}</strong>  
+              </div>   
             </div>
             <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10 ficha-mod-title">
               <strong>{$o.Moc_Titulo}</strong>
@@ -177,9 +181,17 @@
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding-left: 0px; padding-right: 0px;">
               <div class="ficha-leccion {if $l.Activo==1}lec-lms-activo{/if}">
                 <h4><strong>{$l.Lec_Titulo}</strong></h4>
-                <span class="glyphicon glyphicon-calendar"></span> Fecha: {$l.Lec_FechaDesde}
+                <strong>Dedicación: {$l.Lec_TiempoDedicacion}</strong>
+                <br>
+                <span class="glyphicon glyphicon-calendar"></span> Fecha: 
+                {if ($l.Lec_FechaDesde|date_format:"%H:%M:%S") > 0}
+                    {$l.Lec_FechaDesde|date_format:" %D %H:%M:%S"}
+                {else}
+                    {$l.Lec_FechaDesde|date_format:"%Y-%m-%d"}
+                {/if}
+                   
                 {if $l.Activo==0}
-                  {if ($session==1 && isset($inscripcion) && count($inscripcion)>0 && $inscripcion[0].Mat_Valor==1) }
+                  {if ($session==1 && isset($inscripcion) && count($inscripcion)>0 && $inscripcion[0].Mat_Valor==1) && $o.Disponible==1 }
                     <a href="{BASE_URL}elearning/cursos/modulo/{$curso.Cur_IdCurso}/{$o.Moc_IdModuloCurso}/{$l.Lec_IdLeccion}">
                       <div class="tag-terminado"><center><strong>Revisar</strong></center></div>
                     </a>
@@ -208,6 +220,7 @@
               </div>
             </div>
           {/foreach}
+          {$index = $index + 1}
         {/foreach}
       </div>
       </div>
