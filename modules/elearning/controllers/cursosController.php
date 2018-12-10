@@ -714,7 +714,6 @@ class cursosController extends elearningController {
                 
             } else{
 
-              // echo "holaaaaaaa"; exit;
               $this->redireccionar("elearning/cursos/curso/" . $curso);
             }
         }
