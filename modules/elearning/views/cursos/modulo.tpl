@@ -125,7 +125,7 @@
                                         <label class="col-xs-12 control-label">{$i}. {$rl.Pre_Descripcion}</label>
                                         {$j = 1}
                                         {foreach item=ra from=$rl.Alt}
-                                        <div class="col-xs-12 margin-t-10">
+                                        <div class="col-xs-12 margin-t-10 text-bold text-success">
                                           <div class="col col-xs-1">
                                             <input type="radio" value="{$ra.Alt_IdAlternativa}" required="" class="col col-xs-6 radioalt" name="rpta_alt{$i-1}"/>
                                             {if $j == 1}

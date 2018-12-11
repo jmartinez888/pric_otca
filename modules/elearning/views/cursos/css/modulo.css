@@ -308,6 +308,6 @@ ul{
 }
 }*/
 
-.radioalt:checked{
-    font-weight: bold;
+.radioalt:checked+p{
+    /*font-weight: bold;*/
 }
