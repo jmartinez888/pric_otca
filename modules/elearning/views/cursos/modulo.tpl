@@ -151,7 +151,7 @@
                                             {/if} 
                                           </div>
                                           <div class="col col-xs-11">
-                                            <label class="">{$ra.Alt_Etiqueta}</label>
+                                            <p class="">{$ra.Alt_Etiqueta}</p>
                                           </div>
                                         </div>
                                         {$j=$j+1}
