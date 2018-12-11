@@ -1,7 +1,7 @@
 <input value="{BASE_URL}" id="hiddenURL" hidden="hidden" />
 <input value="{BASE_URL}elearning/" id="hidden_url" hidden="hidden" />
 <input value="{$modulo.Cur_IdCurso}" id="hiddenCurso" hidden="hidden" />
-<div class="col-lg-12 panel panel-default" style="margin-top:20px;">
+<div class="col-xs-12 panel panel-default" style="margin-top:20px;">
     <div class="row gradiente">
         <br>
         <div class="col-lg-5 titulo-modulo">
@@ -78,7 +78,7 @@
         </div>
         <div class="col-sm-12 col-md-9 col-lg-9" style="padding-left:0px; padding-right: 0px;">
           
-          <div class="col-lg-12"  style="padding-left:0px; padding-right:0px;">
+          <div class="col-xs-12"  style="padding-left:0px; padding-right:0px;">
             <div class="panel panel-default">
               <div class="panel-heading cabecera-titulo">
                 <h3 class="panel-title">
@@ -90,7 +90,7 @@
                 {if $leccion["Lec_Tipo"]==1 || $leccion["Lec_Tipo"]==6}
                   {if isset($cont_html) && count($cont_html)>0}
                       {foreach from=$cont_html item=h}
-                        <div class="col-lg-12" style="text-align: justify;">{html_entity_decode($h.CL_Descripcion)}</div>
+                        <div class="col-xs-12" style="text-align: justify;">{html_entity_decode($h.CL_Descripcion)}</div>
                       {/foreach}
                   {/if}
                 {/if}
@@ -111,7 +111,7 @@
                         
 
                     {if isset($preguntas) && count($preguntas)}                        
-                        <div  class="col-lg-12" style="padding-bottom: 20px;">
+                        <div  class="col-xs-12" style="padding-bottom: 20px;">
                             <form class="" role="form" method="post" action="" autocomplete="on">
                                 <input type="hidden" value="1" name="enviar" />
 
@@ -122,34 +122,57 @@
                                     <div class="row" style="margin-bottom: 20px;">
                                     {if $rl.Pre_Tipo==1}
                                     
-                                        <label class="col-lg-12 control-label">{$i}. {$rl.Pre_Descripcion}</label>
+                                        <label class="col-xs-12 control-label">{$i}. {$rl.Pre_Descripcion}</label>
+                                        {$j = 1}
                                         {foreach item=ra from=$rl.Alt}
-                                        <div class="col-lg-12">
-                                            <input type="radio" value="{$ra.Alt_IdAlternativa}" class="radioalt margin-top-10" name="rpta_alt{$i-1}" style="margin-top:10px;"/><label class="control-label">{$ra.Alt_Etiqueta}</label>
+                                        <div class="col-xs-12">
+                                            {if $j == 1}
+                                            <label class="">a) </label>
+                                            {/if}
+                                            {if $j == 2}
+                                            <label class="">b) </label>
+                                            {/if}
+                                            {if $j == 3}
+                                            <label class="">c) </label>
+                                            {/if}
+                                            {if $j == 4}
+                                            <label class="">d) </label>
+                                            {/if}
+                                            {if $j == 5}
+                                            <label class="">e) </label>
+                                            {/if}
+                                            {if $j == 6}
+                                            <label class="">f) </label>
+                                            {/if}
+                                            {if $j == 7}
+                                            <label class="">g) </label>
+                                            {/if}
+                                            <input type="radio" value="{$ra.Alt_IdAlternativa}" class="radioalt margin-t-10" name="rpta_alt{$i-1}"/> <label class="">{$ra.Alt_Etiqueta}</label>
                                         </div>
+                                        {$j++}
                                         {/foreach}
                                     {else if $rl.Pre_Tipo==2}                
-                                        <label class="col-lg-12 control-label">{$i}. {$rl.Pre_Descripcion}</label>
+                                        <label class="col-xs-12 control-label">{$i}. {$rl.Pre_Descripcion}</label>
                                         {$t=0}
                                         {foreach item=ra from=$rl.Alt}
-                                        <div class="col-lg-12">
+                                        <div class="col-xs-12">
                                             <input type="checkbox" value="{$ra.Alt_IdAlternativa}" class="radioalt margin-top-10" name="rpta2_alt{$i-1}_index{$t}" style="margin-top:10px;"/><label class="control-label">{$ra.Alt_Etiqueta}</label>
                                         </div>
                                         {$t=$t+1}
                                         {/foreach}
                                     {else if $rl.Pre_Tipo==3}
-                                        <label class="col-lg-12 control-label">{$i}. {$rl.Pre_Descripcion}</label>
+                                        <label class="col-xs-12 control-label">{$i}. {$rl.Pre_Descripcion}</label>
                                         {$arraydescripcion=explode("|", $rl.Pre_Descripcion2)}
-                                        <div class="col-lg-12" style="margin-top:10px;">
+                                        <div class="col-xs-12" style="margin-top:10px;">
                                         {$k=0}
                                         {for $j=0; $j<count($arraydescripcion);$j=$j+2}
                                         <label class="control-label">{$arraydescripcion[$j]}</label>{if $j+1<=count($arraydescripcion)-1}<input type="text" value="" name="rpta3_{$i-1}_index_{$k}" style="margin-left:5px; margin-right:5px;"/>{$k=$k+1}{/if}
                                         {/for}
                                         </div>
                                     {else if $rl.Pre_Tipo==4}                
-                                        <label class="col-lg-12 control-label">{$i}. {$rl.Pre_Descripcion}</label>
+                                        <label class="col-xs-12 control-label">{$i}. {$rl.Pre_Descripcion}</label>
                                         {for $j=0; $j<count($rl.Alt);$j=$j+2}
-                                        <div class="col-lg-12" style="margin-top:10px;">
+                                        <div class="col-xs-12" style="margin-top:10px;">
                                         <input type="hidden" value="{$rl.Alt[$j]['Alt_IdAlternativa']}"  name="rpta4_{$i-1}_index_{$j}" />
                                         <label class="control-label col-lg-8">{$j+1} {$rl.Alt[$j]['Alt_Etiqueta']}</label>
                                         {$l=1}
@@ -167,20 +190,20 @@
                                         <!-- {$m=1}
                                         <div class="col-lg-2">
                                         {for $j=1; $j<count($rl.Alt);$j=$j+2}
-                                        <label class="control-label col-lg-12">{$m}. {$rl.Alt[$j]['Alt_Etiqueta']}</label><br/>
+                                        <label class="control-label col-xs-12">{$m}. {$rl.Alt[$j]['Alt_Etiqueta']}</label><br/>
                                         {$m=$m+1}
                                         {/for}
                                         </div> -->
                                     {else if $rl.Pre_Tipo==5}                
-                                        <label class="col-lg-12 control-label">{$i}. {$rl.Pre_Descripcion}</label>
-                                        <div class="col-lg-12">
-                                            <textarea rows="5" placeholder="Respuesta" class="form-control col-lg-12" name="rpta_alt{$i-1}" id="rpta_alt{$i-1}" style="margin-top:10px;"></textarea>
+                                        <label class="col-xs-12 control-label">{$i}. {$rl.Pre_Descripcion}</label>
+                                        <div class="col-xs-12">
+                                            <textarea rows="5" placeholder="Respuesta" class="form-control col-xs-12" name="rpta_alt{$i-1}" id="rpta_alt{$i-1}" style="margin-top:10px;"></textarea>
                                         </div>
                                     {else if $rl.Pre_Tipo==7}                
-                                       <label class="col-lg-12 control-label">{$i}. {$rl.Pre_Descripcion}</label>
+                                       <label class="col-xs-12 control-label">{$i}. {$rl.Pre_Descripcion}</label>
                                         {$t=0}
                                         {foreach item=ra from=$rl.Alt}
-                                        <div class="col-lg-12">
+                                        <div class="col-xs-12">
                                             <input type="checkbox" value="{$ra.Alt_IdAlternativa}" class="radioalt margin-top-10" name="rpta7_alt{$i-1}_index{$t}" style="margin-top:10px;"/><label class="control-label">{$ra.Alt_Etiqueta}</label>
                                         </div>
                                         {$t=$t+1}
@@ -193,7 +216,7 @@
                                     {/foreach}
 
                                 <div class="form-group">
-                                    <div class="col-lg-12">
+                                    <div class="col-xs-12">
                                      <button class="btn btn-success margin-top-10" name="terminar" id="terminar">Terminar</button>
                                     </div>
                                 </div>
@@ -203,7 +226,7 @@
                         {if isset($ultimoexamen) && count($ultimoexamen) }
                             {if $ultimoexamen.Exl_Nota / $examen.Exa_Peso >= $parametrosCurso.Par_NotaMinima / $parametrosCurso.Par_NotaMaxima}
                                 <div class="row">
-                                    <div class="col-lg-12">
+                                    <div class="col-xs-12">
                                       <div class="alert alert-success" role="alert">
                                           <h3>¡{$lang->get('str_enhorabuen')}! ¡{$lang->get('elearning_cursos_usted_aprobo_examen')}!</h3>
                                           <small>Usted debe aprobar minimo el <strong  style="font-size: 15px;"> {($parametrosCurso.Par_NotaMinima / $parametrosCurso.Par_NotaMaxima) * 100}% </strong>del examen.</small><br>
@@ -212,7 +235,7 @@
                                           <h3></h3>
                                       </div>
                                     </div>
-                                    <div class="col-lg-12 circulo">
+                                    <div class="col-xs-12 circulo">
                                       <div class="progress" data-toggle="tooltip" data-placement="top" title="{$lang->get('elearning_cursos_tu_progeso')}" data-original-title="{$lang->get('elearning_cursos_tu_progeso')}">
                                         <div class="clip-1">
                                           <div class="slice-1" style="-webkit-transform:rotate({$ang_1}deg);-moz-transform:rotate({$ang_1}deg);-o-transform:rotate({$ang_1}deg);transform:rotate({$ang_1}deg);">
@@ -257,8 +280,8 @@
                                     {else}
                                     <div style="width: 100%; margin: 0px auto; text-align:center;">
                                         <div class="form-group">
-                                            <label class="col-lg-12 control-label">{$lang->get('elearning_cursos_numero_intentos')}: {$intentos.intentos} {$lang->get('str_de')} {$examen.Exa_Intentos}</label>
-                                            <div class="col-lg-12">
+                                            <label class="col-xs-12 control-label">{$lang->get('elearning_cursos_numero_intentos')}: {$intentos.intentos} {$lang->get('str_de')} {$examen.Exa_Intentos}</label>
+                                            <div class="col-xs-12">
                                             <p></p>
                                                 <p>{$lang->get('elearning_cursos_usted_no_mas_intento')}</p>
                                             </div>
@@ -276,7 +299,7 @@
                                     {/if}
                                 </div>                            
                             {else}
-                                <div class="col-lg-12">
+                                <div class="col-xs-12">
                                   <div class="alert alert-danger" role="alert">
                                       <h3>{$lang->get('elearning_cursos_losiento_no_supera_examen')}.</h3>
                                       <small>Usted debe aprobar minimo el <strong style="font-size: 15px;"> {($parametrosCurso.Par_NotaMinima / $parametrosCurso.Par_NotaMaxima) * 100}% </strong>del examen.</small><br>
@@ -284,7 +307,7 @@
                                       <h3></h3>
                                   </div>
                                 </div>
-                                <div class="col-lg-12 circulo">
+                                <div class="col-xs-12 circulo">
                                   <div class="progress" data-toggle="tooltip" data-placement="top" title="{$lang->get('elearning_cursos_tu_progeso')}" data-original-title="{$lang->get('elearning_cursos_tu_progeso')}">
                                     <div class="clip-1">
                                       <div class="slice-1" style="-webkit-transform:rotate({$ang_1}deg);-moz-transform:rotate({$ang_1}deg);-o-transform:rotate({$ang_1}deg);transform:rotate({$ang_1}deg);">
@@ -304,14 +327,14 @@
                                       <form class="" role="form" method="post" action="" autocomplete="on">
                                           <input type="hidden" value="1" name="enviar" />
                                           <div class="form-group">
-                                              <label class="col-lg-12 control-label">{$lang->get('elearning_cursos_numero_intentos')}: {$intentos.intentos} {$lang->get('str_de')} {$examen.Exa_Intentos}</label>
-                                              <div class="col-lg-12">
+                                              <label class="col-xs-12 control-label">{$lang->get('elearning_cursos_numero_intentos')}: {$intentos.intentos} {$lang->get('str_de')} {$examen.Exa_Intentos}</label>
+                                              <div class="col-xs-12">
                                                   
                                                   <p>{$lang->get('elearning_cursos_presionar_comenzar_cuenta_intento')}.</p>
                                               </div>
                                           </div>
                                           <div class="form-group">
-                                              <div class="col-lg-12">
+                                              <div class="col-xs-12">
                                                <button class="btn btn-success margin-top-10" name="comenzar" id="comenzar">{$lang->get('elearning_cursos_comenzar_prueba')}</button>
                                               </div>
                                           </div>
@@ -320,8 +343,8 @@
                                 {else}
                                   <div style="width: 100%; margin: 0px auto; text-align:center;">
                                     <div class="form-group">
-                                        <label class="col-lg-12 control-label">{$lang->get('elearning_cursos_numero_intentos')}: {$intentos.intentos} {$lang->get('str_de')} {$examen.Exa_Intentos}</label>
-                                        <div class="col-lg-12">
+                                        <label class="col-xs-12 control-label">{$lang->get('elearning_cursos_numero_intentos')}: {$intentos.intentos} {$lang->get('str_de')} {$examen.Exa_Intentos}</label>
+                                        <div class="col-xs-12">
                                         <p></p>
                                             <p>{$lang->get('elearning_cursos_usted_no_mas_intento')}</p>
                                         </div>
@@ -340,14 +363,14 @@
                                   <input type="hidden" value="1" name="enviar" />
                                   <div class="form-group">
                                       <h3>{$lang->get('elearning_cursos_usted_no_realizo_intento')}</h3>
-                                      <label class="col-lg-12 control-label">{$lang->get('elearning_cursos_numero_intentos')} {strtolower($lang->get('str_disponibles'))}: {$examen.Exa_Intentos}</label>
-                                      <div class="col-lg-12">
+                                      <label class="col-xs-12 control-label">{$lang->get('elearning_cursos_numero_intentos')} {strtolower($lang->get('str_disponibles'))}: {$examen.Exa_Intentos}</label>
+                                      <div class="col-xs-12">
                                       <p></p>
                                           <p>{$lang->get('elearning_cursos_presionar_comenzar_cuenta_intento')}.</p>
                                       </div>
                                   </div>
                                   <div class="form-group">
-                                      <div class="col-lg-12">
+                                      <div class="col-xs-12">
                                        <button class="btn btn-success margin-top-10" name="comenzar" id="comenzar">{$lang->get('elearning_cursos_comenzar_prueba')}</button>
                                       </div>
                                   </div>
