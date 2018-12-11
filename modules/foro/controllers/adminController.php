@@ -387,6 +387,8 @@ class adminController extends foroController
                 
 
             } else {
+                $foro = $this->_model->getForosComplit_x_Id($id_foro);
+                $IdiomaOriginal = $foro['Idi_IdIdioma'];        
 
                 $id_recurso = $this->getInt('hd_id_recurso');
                 $this->_model->deleteFileForo($id_foro);
