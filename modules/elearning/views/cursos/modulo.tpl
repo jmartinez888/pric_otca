@@ -125,9 +125,9 @@
                                         <label class="col-xs-12 control-label">{$i}. {$rl.Pre_Descripcion}</label>
                                         {$j = 1}
                                         {foreach item=ra from=$rl.Alt}
-                                        <div class="col-xs-12">
+                                        <div class="col-xs-12 margin-t-10">
                                           <div class="col col-xs-1">
-                                            <input type="radio" value="{$ra.Alt_IdAlternativa}" class="col col-xs-6 radioalt margin-t-10" name="rpta_alt{$i-1}"/>
+                                            <input type="radio" value="{$ra.Alt_IdAlternativa}" required="" class="col col-xs-6 radioalt" name="rpta_alt{$i-1}"/>
                                             {if $j == 1}
                                             <label class="col col-xs-6"> a) </label>
                                             {/if}
@@ -161,8 +161,8 @@
                                         <label class="col-xs-12 control-label">{$i}. {$rl.Pre_Descripcion}</label>
                                         {$t=0}
                                         {foreach item=ra from=$rl.Alt}
-                                        <div class="col-xs-12">
-                                            <input type="checkbox" value="{$ra.Alt_IdAlternativa}" class="radioalt margin-top-10" name="rpta2_alt{$i-1}_index{$t}" style="margin-top:10px;"/><label class="control-label">{$ra.Alt_Etiqueta}</label>
+                                        <div class="col-xs-12 margin-t-10">
+                                            <input type="checkbox" value="{$ra.Alt_IdAlternativa}" class="radioalt " name="rpta2_alt{$i-1}_index{$t}" /><label class="control-label">{$ra.Alt_Etiqueta}</label>
                                         </div>
                                         {$t=$t+1}
                                         {/foreach}
