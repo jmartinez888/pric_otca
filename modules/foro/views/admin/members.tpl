@@ -143,7 +143,7 @@
                                                    
                                                     <h2 style="display: block;margin: 0;padding: 0;color: #202020;font-family: Helvetica;font-size: 18px;font-style: normal;font-weight: bold;line-height: 125%;letter-spacing: normal;text-align: left;">INVITACION.</h2>
                                                     <p>Hola |nombre| |apellidos|, usted a sido invitado a participar en la discusión sobre |titulo_foro|. </p>
-                                                    <p>Debe ingresar al siguiente link para participar.</p>
+                                                    <p>Ingrese al siguiente link para participar.</p>
                                                      <a href= "{$_layoutParams.root}foro/index/ficha/{$foro.For_IdForo}">
                                                      {$_layoutParams.root}foro/index/ficha/{$foro.For_IdForo}</a>
                                                    
