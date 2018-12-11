@@ -25,23 +25,28 @@ $(document).on('ready', function () {
 
     $('body').on('click', '.foro_coment', function () {
         let _this = this;
-        $("#text_comentario_" + $(this).attr("id_foro") + "_" + $(this).attr("id_padre")).mentionsInput('getMentions', function(data) {
-            console.log(data)
+        if($("#text_comentario_" + $(_this).attr("id_foro") + "_" + $(_this).attr("id_padre")).val()!=""){
+            $("#text_comentario_" + $(this).attr("id_foro") + "_" + $(this).attr("id_padre")).mentionsInput('getMentions', function(data) {
+                console.log(data)
 
-          // JSON.stringify(data)
-            regitrar_comentario(
-                $(_this).attr("id_foro"),
-                $(_this).attr("id_usuario"),
-                $("#text_comentario_" + $(_this).attr("id_foro") + "_" + $(_this).attr("id_padre")).val(),
-                $(_this).attr("id_padre"),
-                data.map(v => v.id)
-                );
-            $("#text_comentario_" + $(_this).attr("id_foro") + "_" + $(_this).attr("id_padre")).val("");
-            $("#div_loading_" + $(_this).attr("id_foro") + "_" + $(_this).attr("id_padre")).html("");
-            $("#div_loading_" + $(_this).attr("id_foro") + "_" + $(_this).attr("id_padre")).removeClass("d-block");
-            $("#div_loading_" + $(_this).attr("id_foro") + "_" + $(_this).attr("id_padre")).addClass("d-none");
-            $("#text_comentario_" + $(_this).attr("id_foro") + "_" + $(_this).attr("id_padre")).mentionsInput('reset')
-        });
+              // JSON.stringify(data)
+                regitrar_comentario(
+                    $(_this).attr("id_foro"),
+                    $(_this).attr("id_usuario"),
+                    $("#text_comentario_" + $(_this).attr("id_foro") + "_" + $(_this).attr("id_padre")).val(),
+                    $(_this).attr("id_padre"),
+                    data.map(v => v.id)
+                    );
+                $("#text_comentario_" + $(_this).attr("id_foro") + "_" + $(_this).attr("id_padre")).val("");
+                $("#div_loading_" + $(_this).attr("id_foro") + "_" + $(_this).attr("id_padre")).html("");
+                $("#div_loading_" + $(_this).attr("id_foro") + "_" + $(_this).attr("id_padre")).removeClass("d-block");
+                $("#div_loading_" + $(_this).attr("id_foro") + "_" + $(_this).attr("id_padre")).addClass("d-none");
+                $("#text_comentario_" + $(_this).attr("id_foro") + "_" + $(_this).attr("id_padre")).mentionsInput('reset')
+            });
+        }else{
+            $("#text_comentario_" + $(_this).attr("id_foro") + "_" + $(_this).attr("id_padre")).focus();
+            $("#text_comentario_" + $(_this).attr("id_foro") + "_" + $(_this).attr("id_padre")).css({ 'background-color': "#fff2e0" });
+        }
 
     });
 
