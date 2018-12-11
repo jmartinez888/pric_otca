@@ -37,9 +37,9 @@ class cursoModel extends Model {
         $cursos = $this->getArray("SELECT * FROM curso WHERE Cur_IdCurso = {$id} AND Row_Estado = 1");
         $resultado = array();
         foreach ($cursos as $c) {
-          if($c["Moa_IdModalidad"]!=2){
+          // if($c["Moa_IdModalidad"]!=2){
             $c["Detalle"] = $this->DetalleLMS($c["Cur_IdCurso"]);
-          }
+          // }
           array_push($resultado, $c);
         }
         return $resultado;
