@@ -323,7 +323,7 @@
                                         <label class="col-lg-12 control-label">{$lang->get('elearning_cursos_numero_intentos')}: {$intentos.intentos} {$lang->get('str_de')} {$examen.Exa_Intentos}</label>
                                         <div class="col-lg-12">
                                         <p></p>
-                                            <p>{$lang->get('elearning_cursos_usted_no_mas_intento')}jejejejeje</p>
+                                            <p>{$lang->get('elearning_cursos_usted_no_mas_intento')}</p>
                                         </div>
                                         <div class="col-xs-12" style="font-size: 16px;">
                                           <div><strong><i class="glyphicon glyphicon-education"></i>

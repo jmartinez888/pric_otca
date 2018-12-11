@@ -280,6 +280,8 @@ class cursosController extends elearningController {
       $Lmodel = $this->loadModel("leccion");
       $Cmodel = $this->loadModel("curso");
       $Emodel = $this->loadModel("examen");
+      // $curs = $Cmodel->getCursoID($curso)[0];
+      // print_r($curs);exit;
 
       $obj_curso = null;
       if(strlen($curso)==0 || strlen($modulo)==0){
@@ -561,7 +563,7 @@ class cursosController extends elearningController {
       $this->_view->assign("materiales", $Lmodel->getMateriales($OLeccion["Lec_IdLeccion"]));
       $this->_view->assign("tareas", $tareas);
       $this->_view->assign("curso", $curso);
-      $this->_view->assign("curso_datos", $Cmodel->getCursoID($curso));
+      $this->_view->assign("curso_datos", $Cmodel->getCursoID($curso)[0]);
       $this->_view->setCss(array('modulo', 'jp-modulo'));
       $this->_view->setJs(array(//array(BASE_URL . 'modules/elearning/views/gestion/js/core/util.js'),
       'modulo'));
