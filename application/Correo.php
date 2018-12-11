@@ -15,7 +15,7 @@ class Correo
         // 0 = Apagado 
         // 1 = Mensaje de Cliente 
         // 2 = Mensaje de Cliente y Servidor 
-        $this->mail->SMTPDebug = 4;
+        $this->mail->SMTPDebug = 0;
         // Log del debug SMTP en formato HTML 
         $this->mail->Debugoutput = 'html';
         // $this->mail->Host = 'email-smtp.us-west-2.amazonaws.com';
