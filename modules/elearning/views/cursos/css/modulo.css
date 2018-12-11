@@ -307,3 +307,7 @@ ul{
     padding-bottom: 0px;
 }
 }*/
+
+.radioalt:checked{
+    font-weight: bold;
+}

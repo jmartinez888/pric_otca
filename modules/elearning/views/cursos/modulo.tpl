@@ -129,25 +129,25 @@
                                           <div class="col col-xs-1">
                                             <input type="radio" value="{$ra.Alt_IdAlternativa}" required="" class="col col-xs-6 radioalt" name="rpta_alt{$i-1}"/>
                                             {if $j == 1}
-                                            <label class="col col-xs-6"> a) </label>
+                                            <p class="col col-xs-6"> a) </p>
                                             {/if}
                                             {if $j == 2}
-                                            <label class="col col-xs-6"> b) </label>
+                                            <p class="col col-xs-6"> b) </p>
                                             {/if}
                                             {if $j == 3}
-                                            <label class="col col-xs-6"> c) </label>
+                                            <p class="col col-xs-6"> c) </p>
                                             {/if}
                                             {if $j == 4}
-                                            <label class="col col-xs-6"> d) </label>
+                                            <p class="col col-xs-6"> d) </p>
                                             {/if} 
                                             {if $j == 5}
-                                            <label class="col col-xs-6"> e) </label>
+                                            <p class="col col-xs-6"> e) </p>
                                             {/if}
                                             {if $j == 6}
-                                            <label class="col col-xs-6"> f) </label>
+                                            <p class="col col-xs-6"> f) </p>
                                             {/if}
                                             {if $j == 7}
-                                            <label class="col col-xs-6"> g) </label>
+                                            <p class="col col-xs-6"> g) </p>
                                             {/if} 
                                           </div>
                                           <div class="col col-xs-11">
@@ -159,10 +159,36 @@
 
                                     {else if $rl.Pre_Tipo==2}                
                                         <label class="col-xs-12 control-label">{$i}. {$rl.Pre_Descripcion}</label>
-                                        {$t=0}
+                                        {$t = 0}{$j = 1}
                                         {foreach item=ra from=$rl.Alt}
                                         <div class="col-xs-12 margin-t-10">
-                                            <input type="checkbox" value="{$ra.Alt_IdAlternativa}" class="radioalt " name="rpta2_alt{$i-1}_index{$t}" /><label class="control-label">{$ra.Alt_Etiqueta}</label>
+                                          <div class="col col-xs-1">
+                                            <input type="checkbox" value="{$ra.Alt_IdAlternativa}" required="" class=" col col-xs-6 radioalt " name="rpta2_alt{$i-1}_index{$t}" />
+                                            {if $j == 1}
+                                            <p class="col col-xs-6"> a) </p>
+                                            {/if}
+                                            {if $j == 2}
+                                            <p class="col col-xs-6"> b) </p>
+                                            {/if}
+                                            {if $j == 3}
+                                            <p class="col col-xs-6"> c) </p>
+                                            {/if}
+                                            {if $j == 4}
+                                            <p class="col col-xs-6"> d) </p>
+                                            {/if} 
+                                            {if $j == 5}
+                                            <p class="col col-xs-6"> e) </p>
+                                            {/if}
+                                            {if $j == 6}
+                                            <p class="col col-xs-6"> f) </p>
+                                            {/if}
+                                            {if $j == 7}
+                                            <p class="col col-xs-6"> g) </p>
+                                            {/if} 
+                                          </div>
+                                          <div class="col col-xs-11">
+                                            <p class="control-lasbel">{$ra.Alt_Etiqueta}</p>
+                                          </div>                                            
                                         </div>
                                         {$t=$t+1}
                                         {/foreach}
