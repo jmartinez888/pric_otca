@@ -4,9 +4,9 @@ class _gestionModuloModel extends Model {
 
   public function __construct() { parent::__construct(); }
 
-  public function insertModulo($curso, $titulo, $descripcion){
-    $sql = "INSERT INTO modulo_curso(Cur_IdCurso, Moc_Titulo, Moc_Descripcion, Moc_Estado)
-            VALUES({$curso}, '{$titulo}', '{$descripcion}', 0)";
+  public function insertModulo($curso, $titulo, $descripcion, $dedicacion){
+    $sql = "INSERT INTO modulo_curso(Cur_IdCurso, Moc_Titulo, Moc_Descripcion, Moc_TiempoDedicacion, Moc_Estado)
+            VALUES({$curso}, '{$titulo}', '{$descripcion}', '{$dedicacion}', 0)";
     $this->execQuery($sql);
   }
 
@@ -33,10 +33,11 @@ class _gestionModuloModel extends Model {
     $this->execQuery("UPDATE modulo_curso SET Row_Estado = 0 WHERE Moc_IdModuloCurso = $mod");
   }
 
-  public function updateModulo($id, $titulo, $descripcion){
+  public function updateModulo($id, $titulo, $descripcion, $dedicacion){
     $this->execQuery("UPDATE modulo_curso SET
                         Moc_Titulo = '{$titulo}',
-                        Moc_Descripcion = '{$descripcion}'
+                        Moc_Descripcion = '{$descripcion}',
+                        Moc_TiempoDedicacion = '{$dedicacion}'
                       WHERE Moc_IdModuloCurso = $id");
   }
 }

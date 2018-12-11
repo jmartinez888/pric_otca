@@ -48,9 +48,13 @@
         <input name="id" id="hidden_modulo" hidden="hidden" value="{$modulo.Moc_IdModuloCurso}" />        
         <input class="form-control" name="titulo" value="{$modulo.Moc_Titulo}" />
       </div>
-      <div class="col-xs-12  margin-t-10"><strong>Descripcion</strong></div>
+      <div class="col-xs-12 margin-t-10"><strong>Descripcion</strong></div>
       <div class="col-xs-12">
         <textarea class="form-control" name="descripcion">{$modulo.Moc_Descripcion}</textarea>
+      </div>
+      <div class="col-xs-12 margin-t-10"><strong>Tiempo de Dedicación</strong></div>
+      <div class="col-xs-12">    
+        <input class="form-control" name="dedicacion" value="{$modulo.Moc_TiempoDedicacion}" />
       </div>
       </form>
       <div class="col-xs-12 margin-t-10">
@@ -144,6 +148,10 @@
         <div class="col-xs-12"><h5><strong>Descripción</strong></h5></div>
         <div class="col-xs-12">
           <textarea class="form-control" name="descripcion" id="inDescripcion" rows="10"></textarea>
+        </div>
+        <div class="col-xs-12 margin-t-10"><strong>Tiempo de Dedicación</strong></div>
+        <div class="col-xs-12">    
+          <input class="form-control" name="dedicacion" />
         </div>
       </form>
       <div class="col-xs-12"></br></div>

@@ -37,31 +37,6 @@ color: #31708f !important;
 background-color: #d9edf7 !important;
 border-color: #bce8f1;
 }
-.sharepost .share h4{
-display: inline-block;
-}
-.sharepost .icon {
-font-size: 20px;
-padding-top: 2px;
-width: 28px;
-height: 32px;
-text-align: center;
-}
-.sharepost ul li a {
-color: #fff;
-}
-.sharepost .email {
-background-color: #71655d
-}
-.sharepost .facebook {
-background-color: #3c599f;
-}
-.sharepost .twitter {
-background-color: #40b0ff;
-}
-.sharepost .google-plus {
-background-color: #ce4438;
-}
 #publicacion_relevante, #publicacion_reciente, #evento_interes, #dato_interes, #agenda {
 max-height: none !important;
 }

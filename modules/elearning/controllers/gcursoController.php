@@ -114,7 +114,7 @@ class gcursoController extends elearningController {
     $id = Session::get("id_usuario");
     $modalidad = $this->getTexto("modalidad");
     $titulo = $this->getTexto("curso_titulo");
-    $descripcion = $this->getTexto("curso_descripcion");
+    $descripcion = $this->getPostParam("curso_descripcion");
 
     $this->curso->saveCurso($id, $modalidad, $titulo, $descripcion);
     $curso = $this->curso->getCursoXRegistro($id);
@@ -135,7 +135,7 @@ class gcursoController extends elearningController {
   public function _registrar_detalle_curso(){
     $id = $this->getTexto("id");
     $titulo = $this->getTexto("titulo");
-    $descripcion = $this->getTexto("descripcion");
+    $descripcion = $this->getPostParam("descripcion");
     $this->curso->saveDetCurso($id, $titulo, $descripcion);
 
     $this->service->Success("Se registró el objetivo");
@@ -148,11 +148,11 @@ class gcursoController extends elearningController {
     $descripcion = $this->getTexto('descripcion');
     $objgeneral = $this->getTexto('objgeneral');
     $publico = $this->getTexto('publico');
-    $software = $this->getTexto('software');
-    $hardware = $this->getTexto('hardware');
-    $metodologia = $this->getTexto('metodologia');
+    $software = $this->getPostParam('software');
+    $hardware = $this->getPostParam('hardware');
+    $metodologia = $this->getPostParam('metodologia');
     $vacantes = $this->getTexto('vacantes');
-    $contacto = $this->getTexto('contacto');
+    $contacto = $this->getPostParam('contacto');
 
     $model = $this->loadModel('_gestionCurso');
     $model->updateCurso($id, $titulo, $descripcion, $objgeneral, $publico, $software, $hardware, $metodologia, $vacantes, $contacto);

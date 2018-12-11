@@ -19,12 +19,12 @@ class Correo
         // Log del debug SMTP en formato HTML 
         $this->mail->Debugoutput = 'html';
         // $this->mail->Host = 'email-smtp.us-west-2.amazonaws.com';
-        $this->mail->Host = 'smtp.gmail.com';
+        $this->mail->Host = 'in-v3.mailjet.com';
         $this->mail->SMTPAuth = true;
         // $this->mail->Username = 'AKIAJ4CISRDL4GEUDMXA';
-        $this->mail->Username = 'pruebanombrea@gmail.com';
+        $this->mail->Username = 'cafc285eeb726418e5a33495991c9516';
         // $this->mail->Password = 'AqP5InJ8BqxcNu9yMvO02yOwiwpbr61aaRbV0h99PXxX';
-        $this->mail->Password = '1357902468@pna';
+        $this->mail->Password = 'f65683300e23445d5f8e5e85630461ee';
         $this->mail->SMTPSecure = 'tls'; //tls or ssl
         $this->mail->Port = 587; //587 or 465
 
@@ -55,7 +55,7 @@ class Correo
 
     }
 
-    public function enviar($forEmail, $forName, $Subject, $contenido, $fromName = "Proyecto PRIC",$fromEmail='jhonmartinez888@gmail.com'){
+    public function enviar($forEmail, $forName, $Subject, $contenido, $fromName = "Proyecto PRIC",$fromEmail='noreply@atixw.com'){
         
         $this->mail->Subject = $Subject;
 

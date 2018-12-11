@@ -101,20 +101,43 @@ class moduloModel extends Model {
         }
     }
 
-    public function getModulosCursoLMS($id){
+    public function getModulosCursoLMS($id, $id_usuario){
         $sql = "SELECT * FROM modulo_curso WHERE Cur_IdCurso = {$id}
                 AND Moc_Estado = 1 AND Row_Estado = 1 ORDER BY Moc_IdModuloCurso";
         $modulos = $this->getArray($sql);
         $resultado = array();
         foreach ($modulos as $m) {
-          $lec = "SELECT L.*, (CASE WHEN Lec_FechaHasta <= NOW() THEN 0 ELSE 1 END) as Activo
+          if ($id_usuario>0) {
+            $lec = " SELECT (CASE WHEN pro.Pro_Valor IS NULL THEN 0 ELSE pro.Pro_Valor END) AS Disponible, LEC.* FROM (SELECT L.*, (CASE WHEN Lec_FechaHasta <= NOW() THEN 0 ELSE 1 END) as Activo
                   FROM leccion L
                   WHERE L.Moc_IdModuloCurso = {$m['Moc_IdModuloCurso']}
-                    AND L.Lec_Estado = 1 AND L.Row_Estado = 1";
+                    AND L.Lec_Estado = 1 AND L.Row_Estado = 1) LEC 
+                    LEFT JOIN progreso_curso pro ON LEC.Lec_IdLeccion = pro.Lec_IdLeccion AND pro.Usu_IdUsuario = {$id_usuario} ORDER BY LEC.Lec_IdLeccion ASC ";
+          } else {
+            
+              $lec = "SELECT L.*, (CASE WHEN Lec_FechaHasta <= NOW() THEN 0 ELSE 1 END) as Activo
+                      FROM leccion L
+                      WHERE L.Moc_IdModuloCurso = {$m['Moc_IdModuloCurso']}
+                        AND L.Lec_Estado = 1 AND L.Row_Estado = 1 ORDER BY L.Lec_IdLeccion ASC ";
+          }
+          
           $m["LECCIONES"] = $this->getArray($lec);
           array_push($resultado, $m);
         }
-        return $resultado;
+        if ($id_usuario != "" && $resultado!=null && count($resultado) >0 ){
+          $valor = array();
+          $estModAnt = 1;
+          foreach ($resultado as $i) {
+            $pro = $this->getProgresoModulo($i["Moc_IdModuloCurso"], $id_usuario);
+            $i["Completo"] = $pro["Completo"];
+            $i["Porcentaje"] = $pro["Porcentaje"];
+            $i["Disponible"] = $estModAnt == 1 ? 1 : $pro["Completo"] ;
+            array_push($valor, $i);
+            $estModAnt = $pro["Completo"];
+          }
+          $modulos = $valor;
+        }
+        return $modulos;
     }
 
     public function getNextModulo($modulo){

@@ -1,5 +1,14 @@
 ﻿// Menu(1);
 
+$(document).on('ready', function () { 
+  $('#inDescripcion').ckeditor(function() { }, { toolbar : 'Basic' });
+  $('#inContacto').ckeditor(function() { }, { toolbar : 'Basic' });
+  $('#inSoftware').ckeditor(function() { }, { toolbar : 'Basic' });
+  $('#inHardware').ckeditor(function() { }, { toolbar : 'Basic' });
+  $('#inMetodologia').ckeditor(function() { }, { toolbar : 'Basic' });
+});
+
+
 // Jhon Martinez
 $("#item_presentacion").click(function() {
   $(this).removeClass("active");
@@ -174,6 +183,8 @@ $("#btn_registrar").click(function(e){
   });
 });
 
+
+// Agregar Informacion
 $("#btnNuevoDetalle").click(function(e){
   e.preventDefault();
   var toggle = $("#toggle_NuevoDetalle").val();
@@ -197,6 +208,9 @@ $("#btnNuevoDetalle").click(function(e){
     $("#divDetallesCursos").append(html);
 
     InputValidate("#tmpNvInfoTitulo", 300);
+    $('#tmpNvInfoDetalle').ckeditor(function() { /* callback code */ 
+    }, { toolbar : 'Basic' });
+
     $("#tmpNvInfoTitulo").unbind("keypress").keypress(function(e){
       if (e.keyCode == 13){
         e.preventDefault();

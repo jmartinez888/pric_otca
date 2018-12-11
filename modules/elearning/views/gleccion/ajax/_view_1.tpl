@@ -71,11 +71,11 @@
         {if isset($contenido) && count($contenido) > 0 }
           {foreach from=$contenido item=c}
             <div class="margin-top-10 item-contenido">
-              <strong>{$c.CL_Titulo}</strong>
-              <div>{substr($c.CL_Descripcion, 0, 100)}...</div>
+              <h4><strong>{$c.CL_Titulo}</strong></h4><br> 
+              <div class="">{$c.CL_Descripcion}</div>
               <input class="hidden_IdContenido estado" value="{$c.CL_IdContenido}"/>
               <input class="hidden_TituloContenido estado" value="{$c.CL_Titulo}"/>
-              <input class="hidden_Contenido estado" value="{$c.CL_Descripcion}"/>
+              <!-- <input class="hidden_Contenido estado" value="{$c.CL_Descripcion}"/> -->
               <button class="btnEditar"><i class="glyphicon glyphicon-pencil"></i></button>
             </div>
           {/foreach}
@@ -83,11 +83,14 @@
           <div>Esta lección esta vacía</div>
         {/if}
       </div>
+      {if isset($contenido) && count($contenido) < 1 }
       <div class="col-lg-12">
         <button class="btn btn-success margin-top-10 pull-right" type="button" id="btn_nuevo_contenido">
           <i class="glyphicon glyphicon-book"></i> Agregar Contenido
         </button>
       </div>
+      {/if}
+
     </div>
   </div>
 </div>
@@ -104,13 +107,13 @@
       </div>
       <div class="panel-body">
         <form method="POST" action="gleccion/_registrar_contenido" id="frm_registro_contenido">
-          <div class="col-lg-12 margin-top-10"><strong>Titulo</strong></div>
+          <div class="col-lg-12 margin-t-10"><strong>Titulo</strong></div>
           <input hidden="hidden" value="{$leccion.Lec_IdLeccion}" name="leccion"/>
           <div class="col-lg-12"><input class="form-control" name="titulo" id="inTituloCon"/></div>
-          <div class="col-lg-12 margin-top-10"><strong>Contenido</strong></div>
+          <div class="col-lg-12 margin-t-10"><strong>Contenido</strong></div>
           <div class="col-lg-12">
             
-            <textarea class="form-control" id="inContenidoCon" name="contenido" rows="15" placeholder="Ingrese contenido html, a excepción de etiquetas Javascript"></textarea></div>
+            <textarea class="form-control" id="inContenidoCon" name="contenido" rows="15" placeholder="Ingrese contenido html, a excepción de etiquetas Javascript">{$contenido[0].CL_Descripcion}</textarea></div>
             
           <div class="col-lg-12 margin-top-10"><button class="btn btn-success" id="btn_registrar_contenido">Registrar</button></div>
         </form>
@@ -129,14 +132,14 @@
       </div>
       <div class="panel-body">
         <form method="POST" action="gleccion/_modificar_contenido" id="frm_modificar_contenido">
-          <div class="col-lg-12 margin-top-10"><strong>Titulo</strong></div>
+          <div class="col-lg-12 margin-t-10"><strong>Titulo</strong></div>
           <input hidden="hidden" name="id" id="inEditId"/>
           <div class="col-lg-12"><input class="form-control" name="titulo" id="inEditTitulo"/></div>
-          <div class="col-lg-12 margin-top-10"><strong>Contenido</strong></div>
+          <div class="col-lg-12 margin-t-10"><strong>Contenido</strong></div>
           <div class="col-lg-12">
-            <textarea class="form-control" id="inEditContenido" name="contenido" rows="15" placeholder="Ingrese contenido html, a excepción de etiquetas Javascript"></textarea>
+            <textarea class="form-control" id="inEditContenido" name="contenido" rows="15" placeholder="Ingrese contenido html, a excepción de etiquetas Javascript">{$contenido[0].CL_Descripcion}</textarea>
           </div>
-          <div class="col-lg-12 margin-top-10"><button class="btn btn-success" id="btn_editar_contenido">Actualizar</button></div>
+          <div class="col-lg-12 margin-t-10"><button class="btn btn-success" id="btn_editar_contenido">Actualizar</button></div>
         </form>
       </div>
     </div>

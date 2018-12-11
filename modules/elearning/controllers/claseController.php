@@ -61,6 +61,9 @@ class claseController extends elearningController {
     $DT_DESDE = (new DateTime($OLeccion["Lec_FechaDesde"]))->format('Y-m-d');;
     $DT_HASTA = (new DateTime($OLeccion["Lec_FechaHasta"]))->format('Y-m-d');;
 
+    $datos_modulo = $Mmodel->getModuloDatos($modulo);
+    $this->_view->assign("mod_datos", $datos_modulo);
+
     $this->_view->setTemplate(LAYOUT_FRONTEND);
     $this->_view->assign($data);
     $this->_view->assign("curso", $curso);
@@ -87,7 +90,7 @@ class claseController extends elearningController {
     }
     $pizarras = $Pmodel->getPizarras($OLeccion["Lec_IdLeccion"]);
     $mensajes = $chmodel->ListarChat($ocurso["Cur_IdCurso"], $OLeccion["Lec_IdLeccion"]);
-
+    $this->_view->getLenguaje("elearning_cursos");
     $this->_view->assign("chat", $mensajes);
     $this->_view->assign("pizarra", $pizarras);
     $this->_view->assign("alumnos", $alumnos);

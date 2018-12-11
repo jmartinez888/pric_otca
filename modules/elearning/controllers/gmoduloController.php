@@ -71,9 +71,10 @@ class gmoduloController extends elearningController {
     $id = $this->getTexto("id");
     $titulo = $this->getTexto("titulo");
     $descripcion = $this->getTexto("descripcion");
+    $dedicacion = $this->getTexto("dedicacion");
 
     $Mmodel = $this->loadModel("_gestionModulo");
-    $Mmodel->insertModulo($id, $titulo, $descripcion);
+    $Mmodel->insertModulo($id, $titulo, $descripcion, $dedicacion);
 
     $this->service->Success("Se resgistó el módulo con exito");
     $this->service->Send();
@@ -102,9 +103,10 @@ class gmoduloController extends elearningController {
     $id = $this->getTexto("id");
     $titulo = $this->getTexto("titulo");
     $descripcion = $this->getTexto("descripcion");
+    $dedicacion = $this->getTexto("dedicacion");
 
     $model = $this->loadModel("_gestionModulo");
-    $model->updateModulo($id, $titulo, $descripcion);
+    $model->updateModulo($id, $titulo, $descripcion, $dedicacion);
 
     $this->service->Success("Datos actualizados");
     $this->service->Send();

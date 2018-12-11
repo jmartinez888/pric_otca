@@ -22,13 +22,27 @@ class _gestionModel extends Model {
     {
         try{
             $alumnos = $this->_db->query(
-                " SELECT U.Usu_Nombre,U.Usu_Apellidos,U.Usu_DocumentoIdentidad,U.Usu_Email FROM usuario U
+                " SELECT U.* FROM usuario U
             INNER JOIN matricula_curso MC ON U.Usu_IdUsuario = MC.Usu_IdUsuario
             WHERE Cur_IdCurso = $curso "
             );           
             return $alumnos->fetchAll(PDO::FETCH_ASSOC);            
         } catch (PDOException $exception) {
             $this->registrarBitacora("elearning(_gestionCursoModel)", "getMatriculadosCurso", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }        
+    }
+
+    public function getCursoXid($curso)
+    {
+        try{
+            $alumnos = $this->_db->query(
+                " SELECT * FROM curso
+            WHERE Cur_IdCurso = $curso "
+            );           
+            return $alumnos->fetchAll(PDO::FETCH_ASSOC);            
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("elearning(_gestionCursoModel)", "getCursoXid", "Error Model", $exception);
             return $exception->getTraceAsString();
         }        
     }

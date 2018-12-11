@@ -53,9 +53,10 @@ class gleccionController extends elearningController {
         $tipo = $this->getTexto("tipo");
         $titulo = $this->getTexto("titulo");
         $descripcion = $this->getTexto("descripcion");
+        $dedicacion = $this->getTexto("dedicacion");
 
         $Mmodel = $this->loadModel("_gestionLeccion");
-        $Mmodel->insertLeccion($id, $tipo, $titulo, $descripcion);
+        $Mmodel->insertLeccion($id, $tipo, $titulo, $descripcion, $dedicacion);
 
         $this->service->Success("Se resgistó el módulo con exito");
         $this->service->Send();
@@ -449,7 +450,7 @@ class gleccionController extends elearningController {
   public function _modificar_contenido(){
     $id = $this->getTexto("id");
     $titulo = $this->getTexto("titulo");
-    $contenido = $this->getTexto("contenido");
+    $contenido = $this->getPostParam("contenido");
 
     $model = $this->loadModel("_gestionLeccion");
     $model->updateContenido($id, $titulo, $contenido);
@@ -461,7 +462,7 @@ class gleccionController extends elearningController {
   public function _registrar_contenido(){
     $leccion = $this->getTexto("leccion");
     $titulo = $this->getTexto("titulo");
-    $contenido = $this->getTexto("contenido");
+    $contenido = $this->getPostParam("contenido");
 
     $contenido = str_replace("<script>", "", $contenido);
     $contenido = str_replace("</script>", "", $contenido);
@@ -480,9 +481,10 @@ class gleccionController extends elearningController {
         $id = $this->getTexto("id_leccion");
         $titulo = $this->getTexto("titulo");
         $descripcion = $this->getTexto("descripcion");
+        $dedicacion = $this->getTexto("dedicacion");
 
         $model = $this->loadModel("_gestionLeccion");
-        $model->updateLeccion($id, $titulo, $descripcion);
+        $model->updateLeccion($id, $titulo, $descripcion, $dedicacion);
 
         $this->service->Success("Se resgistó el contenido con exito");
         $this->service->Send();

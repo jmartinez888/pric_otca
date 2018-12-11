@@ -67,6 +67,10 @@
         <div class="col-lg-12">
           <textarea class="form-control" name="descripcion" id="inDescripcion" rows="10"></textarea>
         </div>
+        <div class="col-xs-12 margin-t-10"><strong>Tiempo de Dedicación</strong></div>
+        <div class="col-xs-12">    
+          <input class="form-control" name="dedicacion" />
+        </div>
       </form>
       <div class="col-lg-12"></br></div>
       <div class="col-lg-12">

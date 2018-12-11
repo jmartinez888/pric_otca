@@ -118,6 +118,7 @@ class gestionController extends elearningController {
     $this->_view->assign("anuncios", $anuncios);
     $this->_view->assign("tipo", $tipo);
     $this->_view->assign("id", $id);
+    $this->_view->assign("idcurso", $id);
     $this->_view->assign('numeropagina', $paginador->getNumeroPagina());
     $this->_view->assign('paginacionanuncios', $paginador->getView('paginacion_ajax_s_filas'));
     $this->_view->renderizar("anuncios");
@@ -128,7 +129,7 @@ class gestionController extends elearningController {
         $_model = $this->loadModel("_gestionCurso");
         $idUsuario = $_model->registrarAnuncio(
                 $this->getSql('titulo'),
-                $this->getSql('descripcion'),
+                $this->getPostParam('descripcion'),
                 $id
             );
 
@@ -230,7 +231,7 @@ class gestionController extends elearningController {
 
         if ($this->botonPress("bt_editarAnuncio"))
         {
-            $id = $_model->editarAnuncio($this->filtrarInt($Anc_IdAnuncioCurso), $this->getSql('titulo'),$this->getSql('descripcion'));
+            $id = $_model->editarAnuncio($this->filtrarInt($Anc_IdAnuncioCurso), $this->getSql('titulo'),$this->getPostParam('descripcion'));
             if($id)
             {
                 $this->_view->assign('_mensaje', 'Anuncio editado Correctamente');

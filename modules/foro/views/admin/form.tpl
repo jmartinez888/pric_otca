@@ -31,7 +31,7 @@
                         {foreach from=$idiomas item=idi}
                         {if  isset($datos) && count($datos)}
                         {if $datos.Idi_IdIdioma==$idi.Idi_IdIdioma}
-                        <input type="hidden" value="{$idi.Idi_Idioma}" id="idiomaRadio" name="idiomaRadio">
+                        <input type="hidden" value="{$idi.Idi_IdIdioma}" id="idiomaRadio" name="idiomaRadio">
                         {/if}
                         <div class="radio">
                             <label>

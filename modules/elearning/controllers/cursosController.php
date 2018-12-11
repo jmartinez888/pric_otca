@@ -189,6 +189,7 @@ class cursosController extends elearningController {
       $mCert = $this->loadModel("certificado");
 
       $curso = $model->getCursoID($id)[0];
+      // print_r($curso);exit;
       if($curso["Moa_IdModalidad"]==2){ $this->redireccionar("elearning/cursos/curso_dirigido/" . $curso["Cur_IdCurso"]); }
       $inscritos = $mInsc->getInscritos($id);
       if(Session::get("autenticado")){
@@ -227,7 +228,8 @@ class cursosController extends elearningController {
       $this->_view->assign("titulo", $curso['Cur_Titulo']);
       $this->_view->assign("certificado", $certificado);
       $this->_view->assign("duracion", $duracion["Total"] . " Lecciones");
-      $this->_view->assign("detalle", $model->getDetalleCurso($curso["Cur_IdCurso"]));
+      $this->_view->assign("detalle", $model->getDetalleCurso($curso["Cur_IdCurso"])); 
+      // print_r($model->getDetalleCurso($curso["Cur_IdCurso"]));exit;
       $this->_view->assign("inscripcion",$mInsc->getInscripcion(Session::get("id_usuario"), $id));
       $this->_view->assign("session",Session::get("autenticado"));
       $this->_view->renderizar('curso');
@@ -256,11 +258,14 @@ class cursosController extends elearningController {
       $lecciones = $mLeccion->getLeccionesLMS($id);
       $duracion = $model->getDuracionCurso($id);
       $certificado = $mCert->getCertificadoUsuarioCurso(Session::get("id_usuario"), $id);
+      // $modulo = $mModulo->getModulosCurso($id, Session::get("id_usuario"));
+      // dd($modulo);
 
       $this->_view->setTemplate(LAYOUT_FRONTEND);
       $this->_view->setCss(array("curso", "cursolms", "jp-curso"));
       $this->_view->setJs(array(array(BASE_URL . 'modules/elearning/views/gestion/js/core/util.js'), "curso"));
       $this->_view->assign("curso", $curso);
+      $this->_view->assign("detalle", $model->getDetalleCurso($curso["Cur_IdCurso"])); 
       $this->_view->assign("inscritos", $inscritos);
       $this->_view->assign("titulo", $curso['Cur_Titulo']);
       $this->_view->assign("certificado", $certificado);
@@ -276,6 +281,8 @@ class cursosController extends elearningController {
       $Lmodel = $this->loadModel("leccion");
       $Cmodel = $this->loadModel("curso");
       $Emodel = $this->loadModel("examen");
+      // $curs = $Cmodel->getCursoID($curso)[0];
+      // print_r($curs);exit;
 
       $obj_curso = null;
       if(strlen($curso)==0 || strlen($modulo)==0){
@@ -557,6 +564,7 @@ class cursosController extends elearningController {
       $this->_view->assign("materiales", $Lmodel->getMateriales($OLeccion["Lec_IdLeccion"]));
       $this->_view->assign("tareas", $tareas);
       $this->_view->assign("curso", $curso);
+      $this->_view->assign("curso_datos", $Cmodel->getCursoID($curso)[0]);
       $this->_view->setCss(array('modulo', 'jp-modulo'));
       $this->_view->setJs(array(//array(BASE_URL . 'modules/elearning/views/gestion/js/core/util.js'),
       'modulo'));
@@ -660,14 +668,14 @@ class cursosController extends elearningController {
   public function _next_leccion(){
       if(!Session::get("autenticado")){ $this->redireccionar("elearning/"); }
       $leccion = $this->getTexto("leccion");
-      $curso = $this->getTexto("curso");
+      $curso = $this->getInt("curso");
 
       $model = $this->loadModel("leccion");
       $Emodel = $this->loadModel("examen");
       $objeto = $model->getLeccion($leccion);
 
       if($objeto["Lec_Tipo"] == 1 || $objeto["Lec_Tipo"] == 2 || $objeto["Lec_Tipo"] == 3 || $objeto["Lec_Tipo"] == 6 ){
-        $Emodel->updateProgreso(Session::get("id_usuario"), $examen['Lec_IdLeccion']);
+        $Emodel->updateProgreso(Session::get("id_usuario"), $leccion);
         $model->RegistrarProgreso($leccion, Session::get("id_usuario"));
       }
       // lecciones
@@ -690,24 +698,29 @@ class cursosController extends elearningController {
             // modulos
             $modulos_ = $model->getModulosClave($curso, Session::get("id_usuario"));
             $claveModulos = array_search($objeto["Moc_IdModuloCurso"], array_column($modulos_, "Moc_IdModuloCurso"));
-            $nextModulo = $modulos_[$claveModulos+1];
+            // $nextModulo = $modulos_[$claveModulos+1];
 
             if(count($modulos_) > $claveModulos+1){
                 $posibleSiguienteMod = $modulos_[$claveModulos+1];
 
 
                 // lecciones me quede aqui
-                $primeraLeccion = $model->getLeccionUno($objeto["Moc_IdModuloCurso"]);
+                $primeraLeccion = $model->getLeccionUno($posibleSiguienteMod["Moc_IdModuloCurso"]);
 
-
-                $this->redireccionar("elearning/cursos/modulo/" . $curso . "/" . $posibleSiguienteMod["Moc_IdModuloCurso"] . "/" . $primeraLeccion[0]["Lec_IdLeccion"]);
+                if (strtotime($primeraLeccion[0]["Lec_FechaDesde"]) <= strtotime(date("d-m-Y H:i:00",time())) && strtotime($primeraLeccion[0]["Lec_FechaHasta"]) >= strtotime(date("d-m-Y H:i:00",time()))) {
+                  # code...
+                  $this->redireccionar("elearning/cursos/modulo/" . $curso . "/" . $posibleSiguienteMod["Moc_IdModuloCurso"] . "/" . $primeraLeccion[0]["Lec_IdLeccion"]);
+                } else {
+                  # code...
+                  $this->redireccionar("elearning/cursos/modulo/" . $curso . "/" . $posibleSiguienteMod["Moc_IdModuloCurso"] . "/" . $primeraLeccion[0]["Lec_IdLeccion"]);
+                  // $this->redireccionar("elearning/cursos/curso/" . $curso);
+                }
+                
             } else{
-
-              // echo "holaaaaaaa"; exit;
+              // echo $curso ;exit;
               $this->redireccionar("elearning/cursos/curso/" . $curso);
             }
         }
-      // }
   }
 
   public function _send_examen(){
