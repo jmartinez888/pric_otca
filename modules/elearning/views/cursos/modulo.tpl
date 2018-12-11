@@ -126,28 +126,29 @@
                                         {$j = 1}
                                         {foreach item=ra from=$rl.Alt}
                                         <div class="col-xs-12">
+                                            <input type="radio" value="{$ra.Alt_IdAlternativa}" class="radioalt margin-t-10" name="rpta_alt{$i-1}"/>
                                             {if $j == 1}
-                                            <label class="">a) </label>
+                                            <label class=""> a) </label>
                                             {/if}
                                             {if $j == 2}
-                                            <label class="">b) </label>
+                                            <label class=""> b) </label>
                                             {/if}
                                             {if $j == 3}
-                                            <label class="">c) </label>
+                                            <label class=""> c) </label>
                                             {/if}
                                             {if $j == 4}
-                                            <label class="">d) </label>
-                                            {/if}
+                                            <label class=""> d) </label>
+                                            {/if} 
                                             {if $j == 5}
-                                            <label class="">e) </label>
+                                            <label class=""> e) </label>
                                             {/if}
                                             {if $j == 6}
-                                            <label class="">f) </label>
+                                            <label class=""> f) </label>
                                             {/if}
                                             {if $j == 7}
-                                            <label class="">g) </label>
-                                            {/if}
-                                            <input type="radio" value="{$ra.Alt_IdAlternativa}" class="radioalt margin-t-10" name="rpta_alt{$i-1}"/> <label class="">{$ra.Alt_Etiqueta}</label>
+                                            <label class=""> g) </label>
+                                            {/if} 
+                                            <label class="">{$ra.Alt_Etiqueta}</label>
                                         </div>
                                         {$j=$j+1}
                                         {/foreach}
