@@ -149,7 +149,7 @@
                                             {/if}
                                             <input type="radio" value="{$ra.Alt_IdAlternativa}" class="radioalt margin-t-10" name="rpta_alt{$i-1}"/> <label class="">{$ra.Alt_Etiqueta}</label>
                                         </div>
-                                        {$j++}
+                                        {$j=$j+1}
                                         {/foreach}
                                     {else if $rl.Pre_Tipo==2}                
                                         <label class="col-xs-12 control-label">{$i}. {$rl.Pre_Descripcion}</label>
