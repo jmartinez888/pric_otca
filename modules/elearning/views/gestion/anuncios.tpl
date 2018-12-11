@@ -24,6 +24,22 @@
                                     <textarea class="form-control" id ="descripcion" type="text" name="descripcion" placeholder="Descripción" required=""  rows="5">{$datos.apellidos|default:""}</textarea>
                                 </div>
                             </div>
+
+                            <div class=" col-xs-12 margin-t-10 " > 
+                                <blockquote style="margin: 0;">
+                                    <b style="font-size: 14px">NOTA: </b>
+                                    <em> 
+                                        <h5>
+                                            Variables utilizables: 
+                                        </h5>  
+                                        <p><strong>|nombre|</strong> = Nombre del alumno.</p>
+                                        <p><strong>|apellidos|</strong> =  Apellidos del alumno.</p>
+                                        <p><strong>|usuario|</strong> = Usuario del alumno.</p>
+                                        <p><strong>|titulo_curso|</strong> = Titulo del Curso</p>
+                                    </em>
+                                </blockquote> 
+                            </div>
+
                             <div class="form-group">
                                 <div class="col-lg-offset-2 col-lg-8">
                                     <button class="btn btn-success" id="bt_guardar" name="bt_guardar" type="submit" ><i class="glyphicon glyphicon-floppy-disk"> </i>&nbsp; Guardar</button>

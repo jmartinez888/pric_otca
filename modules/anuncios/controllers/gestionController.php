@@ -63,7 +63,7 @@ class gestionController extends anunciosController {
                             $contenido = $anuncio['Anc_Descripcion'];
                             $contenido = str_replace("|nombre|",$usuarios[$j]["Usu_Nombre"],$contenido);
 
-                            $contenido = str_replace("|apellido|",$usuarios[$j]["Usu_Apellidos"],$contenido);
+                            $contenido = str_replace("|apellidos|",$usuarios[$j]["Usu_Apellidos"],$contenido);
 
                             $contenido = str_replace("|usuario|",$usuarios[$j]["Usu_Usuario"],$contenido);
 
