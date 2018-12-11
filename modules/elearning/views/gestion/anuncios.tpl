@@ -15,13 +15,13 @@
                             <div class="form-group">
                                 <label class="col-sm-12 col-md-2 control-label">Titulo : </label>
                                 <div class="col-sm-12 col-md-10">
-                                    <input class="form-control" id ="titulo" type="text" name="titulo" value="{$datos.nombre|default:""}" placeholder="Titulo" required=""/>
+                                    <input class="form-control" id ="titulo" type="text" name="titulo" value="" placeholder="Titulo" required=""/>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-12 col-md-2 control-label" >Descripción : </label>
                                 <div class="col-sm-12 col-md-10">
-                                    <textarea class="form-control" id ="descripcion" type="text" name="descripcion" placeholder="Descripción" required=""  rows="5">{$datos.apellidos|default:""}</textarea>
+                                    <textarea class="form-control" id ="descripcion" type="text" name="descripcion" placeholder="Descripción" required=""  rows="5"></textarea>
                                 </div>
                             </div>
 

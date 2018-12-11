@@ -20,6 +20,17 @@
                         <textarea class="form-control" id ="descripcion" type="text" name="descripcion" placeholder="Descripción" required=""  rows="5">{$datos.Anc_Descripcion|default:""}</textarea>
                     </div>
                 </div>
+                <div class=" col-sm-12 col-md-offset-2 col-md-10 margin-t-10 " > 
+                    <blockquote style="margin: 0;">
+                        <b style="font-size: 14px">NOTA: Variables utilizables</b>
+                        <em> 
+                            <h5><strong>|nombre|</strong> = Nombre del alumno.</h5>
+                            <h5><strong>|apellidos|</strong> =  Apellidos del alumno.</h5>
+                            <h5><strong>|usuario|</strong> = Usuario del alumno.</h5>
+                            <h5><strong>|titulo_curso|</strong> = Titulo del Curso</h5>
+                        </em>
+                    </blockquote> 
+                </div>
                 <div class="form-group">
                     <div class="col-xs-6 col-sm-2 col-lg-offset-2 col-lg-2">
                         <button class="btn btn-success" type="submit" id="bt_editarAnuncio" name="bt_editarAnuncio" ><i class="glyphicon glyphicon-floppy-disk"> </i>&nbsp; {$lenguaje.button_ok}</button>
