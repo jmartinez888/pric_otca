@@ -387,6 +387,8 @@ class adminController extends foroController
                 
 
             } else {
+                $foro = $this->_model->getForosComplit_x_Id($id_foro);
+                $IdiomaOriginal = $foro['Idi_IdIdioma'];        
 
                 $id_recurso = $this->getInt('hd_id_recurso');
                 $this->_model->deleteFileForo($id_foro);
@@ -1220,14 +1222,15 @@ class adminController extends foroController
         $id_rol      = $this->getInt('id_rol');
         $rol_member  = $this->getTexto('ckey_rol');
         $model_index = $this->loadModel('index');
-        $mensaje = $this->getTexto('mensaje');
+        $mensaje = html_entity_decode($this->getTexto('mensaje'));
 
+      
         $result_inscrip = $model_index->inscribir_participante_foro($id_foro, $id_usuario, $id_rol, 1);
 
         if(count($result_inscrip)>0){
             // dd($result_inscrip);
             $result = $model_index->getEmail_Usuario($id_usuario);
-            $this->sendEmail($result, $mensaje,$id_foro);
+            $this->sendEmail($result, $mensaje,$id_foro,$id_usuario);
         }
         $pagina    = 1;
         $paginador = new Paginador();
@@ -1246,11 +1249,19 @@ class adminController extends foroController
         $this->_view->renderizar('ajax/listaMembers', false, true);
     }
 
-     public function sendEmail($Email, $mensaje,$idforo)
+     public function sendEmail($Email, $mensaje,$idforo,$id_usuario )
     {
         $model_user     = $this->loadModel('usuario', 'usuarios');
-        $idUsuario = Session::get('id_usuario');
-        $user = $model_user->getUsuario($idUsuario);
+      
+        $partip = $model_user->getUsuario($id_usuario);
+
+        $foro = $this->_model->getForos_x_Id($idforo);
+
+   
+        $mensaje = str_replace('|nombre|',$partip["Usu_Nombre"], $mensaje);
+        $mensaje = str_replace('|apellidos|',$partip["Usu_Apellidos"], $mensaje);
+        $mensaje = str_replace('|usuario|',$partip["Usu_Usuario"], $mensaje);
+        $mensaje = str_replace('|titulo_foro|',$foro["For_Titulo"], $mensaje);
 
         $obj = new Request();
         // echo $obj->getModulo();exit;
@@ -1258,10 +1269,13 @@ class adminController extends foroController
         $url = BASE_URL.$obj->getModulo();
         $email = $Email[0];       
         $Subject = 'PRIC - OTCA | Invitacion a participar en el foro';
-        $contenido = "<h2 style='display: block;margin: 0;padding: 0;color: #202020;font-family: Helvetica;font-size: 18px;font-style: normal;font-weight: bold;line-height: 125%;letter-spacing: normal;text-align: left;'>INVITACION.</h2>";
-        $contenido = $contenido .$mensaje . '<br>' . "<a href= '" . $url ."/index/ficha/".$idforo."'>Acceder</a>";
-        $contenido =$contenido. "<br><br>"."Copie el siguiente link: "."<a href= '" . $url ."/index/ficha/".$idforo."'>".$url ."/index/ficha/".$idforo."</a>";
+        
+        $contenido = $mensaje;
+
+        $idUsuario = Session::get('id_usuario');
+        $user = $model_user->getUsuario($idUsuario);
         $fromName = $user["Usu_Nombre"]." ".$user["Usu_Apellidos"]." | FORO - PRIC" ;
+
         $Correo = new Correo();
         $SendCorreo = $Correo->enviar($email, "NAME", $Subject, $contenido);
         $this->_view->assign('url', $url);
