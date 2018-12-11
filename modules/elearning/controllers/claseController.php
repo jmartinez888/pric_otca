@@ -17,11 +17,14 @@ class claseController extends elearningController {
   }
 
   public function clase($curso="", $modulo="", $leccion="", $id=""){
+    $this->_acl->autenticado();
     if($curso == "" || !is_numeric($curso)
     || $modulo == "" || !is_numeric($modulo)
       || $leccion == "" || !is_numeric($leccion) ){
       $this->redireccionar("elearning/");
     }
+    // $this->_acl->tienePermisos()
+
     $Cmodel = $this->loadModel("curso");
     $Mmodel = $this->loadModel("modulo");
     $Lmodel = $this->loadModel("leccion");
@@ -42,7 +45,16 @@ class claseController extends elearningController {
     if($lecciones==null && count($lecciones)==0){ $this->redireccionar("elearning/cursos"); }
     $ocurso = $ocurso[0];
     $alumnos = $Gmodel->getAlumnos($ocurso["Cur_IdCurso"]);
-
+    $data['is_docente'] = $Gmodel->validarDocenteCurso($curso, Session::get('id_usuario'));
+    $alumnos_format = [];
+    foreach ($alumnos as $key => $value) {
+      $alumnos_format[] = [
+        'id' => $value['Usu_IdUsuario'],
+        'usuario' => $value['Usu_Nombre'].' '.$value['Usu_Apellidos'],
+        'url' => $value['Usu_URLImage'],
+        'docente' => $value['Docente']
+      ];
+    }
     //VALIDACION FECHA
     date_default_timezone_set('America/Lima');
     $DT_ACTUAL = (new DateTime("now"))->format('Y-m-d');
@@ -50,6 +62,7 @@ class claseController extends elearningController {
     $DT_HASTA = (new DateTime($OLeccion["Lec_FechaHasta"]))->format('Y-m-d');;
 
     $this->_view->setTemplate(LAYOUT_FRONTEND);
+    $this->_view->assign($data);
     $this->_view->assign("curso", $curso);
     $this->_view->assign("modulo", $Mmodel->getModulo($modulo));
     $this->_view->assign("lecciones", $lecciones);
@@ -68,7 +81,8 @@ class claseController extends elearningController {
       exit;
     }
     if($OLeccion["Lec_LMSEstado"]==0){
-      $this->_view->renderizar("clase_espera");
+      $this->_view->assign("alumnos_json", json_encode($alumnos_format));
+      $this->_view->render("clase_espera");
       exit;
     }
     $pizarras = $Pmodel->getPizarras($OLeccion["Lec_IdLeccion"]);
@@ -77,10 +91,11 @@ class claseController extends elearningController {
     $this->_view->assign("chat", $mensajes);
     $this->_view->assign("pizarra", $pizarras);
     $this->_view->assign("alumnos", $alumnos);
+    $this->_view->assign("alumnos_json", json_encode($alumnos_format));
     $this->_view->assign("referencias", $Lmodel->getReferencias($OLeccion["Lec_IdLeccion"]));
     $this->_view->assign("materiales", $Lmodel->getMateriales($OLeccion["Lec_IdLeccion"]));
-    $this->_view->setJs(array("clase","colorPicker", "pizarra/Herramientas", "pizarra/events", "pizarras", "pizarra/base", "chat",array('https://apis.google.com/js/platform.js')));
-    $this->_view->renderizar("clase");
+    // $this->_view->setJs(array("clase","colorPicker", "pizarra/Herramientas", "pizarra/events", "pizarras", "pizarra/base", "chat",array('https://apis.google.com/js/platform.js')));
+    $this->_view->render("clase");
   }
 
   public function _registrar_interaccion(){
@@ -125,7 +140,12 @@ class claseController extends elearningController {
   public function iniciar($curso, $modulo, $leccion){
     $model = $this->loadModel("leccion");
     $model->EstadoLeccionLMS($leccion, 1);
-    $this->redireccionar("elearning/clase/clase/" . $curso . "/" . $modulo . "/" . $leccion);
+    if ($this->isAcceptJson()) {
+      $this->_view->responseJson(['success' => true]);
+    } else {
+
+      $this->redireccionar("elearning/clase/clase/" . $curso . "/" . $modulo . "/" . $leccion);
+    }
   }
 
   public function finalizar($curso, $modulo, $leccion){
