@@ -13,29 +13,29 @@
                     <div style="width: 90%; margin: 0px auto">
                         <form class="form-horizontal" id="form2" role="form" data-toggle="validator" method="post" action="" autocomplete="on">
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">Titulo : </label>
-                                <div class="col-sm-10">
+                                <label class="col-sm-12 col-md-2 control-label">Titulo : </label>
+                                <div class="col-sm-12 col-md-10">
                                     <input class="form-control" id ="titulo" type="text" name="titulo" value="{$datos.nombre|default:""}" placeholder="Titulo" required=""/>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-2 control-label" >Descripción : </label>
-                                <div class="col-sm-10">
+                                <label class="col-sm-12 col-md-2 control-label" >Descripción : </label>
+                                <div class="col-sm-12 col-md-10">
                                     <textarea class="form-control" id ="descripcion" type="text" name="descripcion" placeholder="Descripción" required=""  rows="5">{$datos.apellidos|default:""}</textarea>
                                 </div>
                             </div>
 
-                            <div class=" col-xs-12 margin-t-10 " > 
+                            <div class=" col-sm-12 col-mdoffset-2 col-md-10 margin-t-10 " > 
                                 <blockquote style="margin: 0;">
                                     <b style="font-size: 14px">NOTA: </b>
                                     <em> 
                                         <h5>
                                             Variables utilizables: 
                                         </h5>  
-                                        <p><strong>|nombre|</strong> = Nombre del alumno.</p>
-                                        <p><strong>|apellidos|</strong> =  Apellidos del alumno.</p>
-                                        <p><strong>|usuario|</strong> = Usuario del alumno.</p>
-                                        <p><strong>|titulo_curso|</strong> = Titulo del Curso</p>
+                                        <h5><strong>|nombre|</strong> = Nombre del alumno.</h5>
+                                        <h5><strong>|apellidos|</strong> =  Apellidos del alumno.</h5>
+                                        <h5><strong>|usuario|</strong> = Usuario del alumno.</h5>
+                                        <h5><strong>|titulo_curso|</strong> = Titulo del Curso</h5>
                                     </em>
                                 </blockquote> 
                             </div>
