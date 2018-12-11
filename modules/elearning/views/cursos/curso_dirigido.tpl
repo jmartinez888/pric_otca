@@ -104,7 +104,7 @@
         </a>
       </div> -->
 
-      <div class="col-lg-12" style="padding-top: 10px; position: relative">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding-top: 10px; position: relative">
         {if $session==1}
           {if isset($inscripcion) && count($inscripcion)>0}
             {if $inscripcion[0].Mat_Valor==2 }
@@ -128,7 +128,7 @@
                 </center>
 
                 {if Session::get('id_usuario')}
-                <div class="col-lg-12 p-rt-lt-0">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 p-rt-lt-0">
                   <div class="progress progress-estilo">
                     <div class="progress-bar progress-bar-striped" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: {$progreso.Porcentaje}%">
                       <div class="progress-porcentaje">
@@ -178,18 +178,18 @@
       </div>
 
       {if $session==1 && count($modulo)>0 }
-      <div class="col-lg-12">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
         <div><h3 style="font-family: 'Gill Sans MT';">Módulos del curso</h3></div>
         <hr class="cursos-hr">
       </div>
-      <div class="col-lg-12" style="padding-left: 0px; padding-right: 0px;">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding-left: 0px; padding-right: 0px;">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 xxxxxxxxxxxx">
         {$index = 1}
         {foreach from=$modulo item=o}
           <div class="ficha-mod col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding-bottom: 15px; margin-top: 15px">
             <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2" style="padding: 0px; text-align: center;">
               <img class="w-100 img-modulo pr-5 pl-5" class="img-modulo" src="{BASE_URL}modules/elearning/views/cursos/img/contador-modulo-{$index}.png"/>
-              <div class="col col-xs-12">
+              <div class="col col-xs-12 col-sm-12 col-md-12 col-lg-12">
                   <strong>Dedicación: {$o.Moc_TiempoDedicacion}</strong>  
               </div>   
             </div>
@@ -259,14 +259,14 @@
 
 
       {if $session==1}
-      <div class="col-lg-12"> <!-- RODRIGO 20180607 -->
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"> <!-- RODRIGO 20180607 -->
         <label style="margin-top: 20px; font-size:16px">Calificar curso</label>
         <hr class="cursos-hr">
         <textarea class="form-control estilo-textarea" rows="4" id="txCComentario" maxlength="450" placeholder="Escriba su comentario aquí."></textarea>
         <input type="text" id="inCUsuario" value="{$curso.Cur_IdCurso}" hidden="hidden">
         <input type="text" id="inCCurso" value="{Session::get('id_usuario')}" hidden="hidden">
       </div>
-      <div class="col-lg-8">
+      <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
         <div class="corazones no-selecionable" style="padding-top: 10px">
           <span class="glyphicon glyphicon-star item-calificar" tag="1"></span>
           <span class="glyphicon glyphicon-star item-calificar" tag="2"></span>
@@ -275,24 +275,24 @@
           <span class="glyphicon glyphicon-star item-calificar" tag="5"></span>
         </div>
       </div>
-      <div class="col-lg-4">
+      <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
         <button class="btn btn-default pull-right btn-calificar" id="btnCalificar">
           <strong><span class="glyphicon glyphicon-star"></span>&nbsp; Calificar</strong>
         </button>
       </div>
       {/if}
-      <div class="col-lg-12" style="margin-top: 10px; font-size:16px">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-top: 10px; font-size:16px">
         <label>Valoraciones del curso: </label>
       </div>
-      <div class="col-lg-12">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
         <hr class="cursos-hr">
       </div>
-      <div class="col-lg-12">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
         <div id="calificaciones"></div>
       </div> <!-- RODRIGO 20180607 -->
 
 
-          <div class="col-lg-12">
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <br/>
           </div>
 
