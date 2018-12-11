@@ -58,8 +58,7 @@
         <!-- <script type="text/javascript">
         var jQuery_1_11_2 = $.noConflict(true);
         </script> -->
-        <script type="text/javascript" src="{$_layoutParams.root_clear}public/js/socket.io/socket.io.js"></script>
-        <script type="text/javascript" src="{$_layoutParams.root_clear}public/js/socket.io/socket.client.js"></script>
+
         <script type="text/javascript" src="{$_layoutParams.root_clear}public/js/datetime-picker/bootstrap-datetimepicker.js"></script>
         <script type="text/javascript" src="{$_layoutParams.root_clear}public/js/datetime-picker/bootstrap-datetimepicker.es.js"></script>
         <!--RODRIGO-->
@@ -120,7 +119,7 @@
                                             </a>
                                         </li>
                                         <!-- Menu Body -->
-                                        <!-- 
+                                        <!--
                                         <li class="user-body">
                                             <div class="row">
                                                 <div class="col-xs-4 text-center">
@@ -132,7 +131,7 @@
                                                 <div class="col-xs-4 text-center">
                                                     <a href="#">Friends</a>
                                                 </div>
-                                            </div>                                           
+                                            </div>
                                         </li>
                                         -->
                                         <!-- Menu Footer-->
@@ -529,7 +528,7 @@
             });
             });
             </script>
-            
+
             <!-- <script src="//code.jquery.com/jquery-1.11.2.min.js"></script> -->
             <!-- <script src="{$_layoutParams.ruta_js}jquery-3.2.1.slim.min.js" type="text/javascript"></script> -->
             <!-- <script src="{$_layoutParams.ruta_js}bootstrap.min.js" type="text/javascript"></script> -->

@@ -1,3 +1,4 @@
+}
 #CONTROL_PIZARRA{
 
 }
@@ -27,7 +28,7 @@
   /*position: absolute;
   top: 0px;
   left: 0px;*/
-  z-index: 10;
+  /*z-index: 10;*/
 }
 
 #marcador{
@@ -77,10 +78,43 @@
 }
 
 #herramientas-canvas{
-  display: inline-block;
-  width: auto;
+  width: 30px;
+  position: absolute;
+/*   background:rgba(10,23,50,0.2); */
+  padding: 0px 0px 0px 4px;
+  z-index: 1;
+  display:  flex;
+  height:100%;
+  align-items: center;
+}
+#herramientas-canvas button {
+
+
+  height: 30px;
+  width: 30px;
+  border: 1px solid black;
+  background:#f9e7e7;
+  margin: 0px;
+  padding: 0px;
+
+
+}
+#herramientas-canvas button.toolscanvas:first-child {
+  border-radius:0px 10px 0px 0px;
 }
 
+#herramientas-canvas button.toolscanvas:nth-child(7) {
+  border-radius:0px 0px 10px 0px;
+}
+#herramientas-canvas button.toolscanvas:last-child {
+  border-radius:0px 0px 10px 0px;
+}
+
+#herramientas-canvas button#btn_show_tool{
+  height: 50px;
+  width: 15px;
+  border-radius:0px 10px 10px 0px;
+}
 .btnHerramienta{
   width: 50px;
   height: 30px;
@@ -136,8 +170,8 @@
 #panel-pizarra-final{
   position: relative;
   display: inline-block;
-  height: 400px;
-  width: 700px;
+  /*height: 400px;
+  width: 700px;*/
 }
 
 .img-pizarra-mini{
@@ -173,3 +207,63 @@
     float: left;
     margin: 5px;
 }
+
+.label_options_object {
+  /*width: 90px;*/
+}
+
+.item-pizarra{
+  border: 2px solid black;
+  position: relative;
+  width: 100%;
+}
+
+.item-pizarra img{
+  width: 100%;
+  height: 100%;
+  padding: 0px;
+  margin: 0px;
+}
+
+.panel-item-pizarra {
+  width: 100%;
+  display: inline-block;
+}
+.item-pizarra .number_pizarra {
+  position: absolute;
+  /*background: rgba(100,100,100,0.2);*/
+  width: 100%;
+  height: 100%;
+  top: 0px;
+  vertical-align: middle;
+  text-align: center;
+  line-height: 121px;
+  font-size: 5em;
+}
+
+
+@media (min-width: 768px) {
+  .panel-item-pizarra {
+    width: 161px;
+  }
+  .item-pizarra {
+    width: 161px;
+  }
+}
+@media (min-width: 992px) {
+  .panel-item-pizarra {
+    width: 208px;
+  }
+  .item-pizarra {
+    width: 208px;
+  }
+}
+@media (min-width: 1200px) {
+  .panel-item-pizarra {
+    width: 193px;
+  }
+  .item-pizarra {
+    width: 193px;
+  }
+}
+
