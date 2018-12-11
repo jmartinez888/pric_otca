@@ -156,14 +156,15 @@
 
           {if isset($detalle) && count($detalle)>0}
           <div class="col-xs-12 text-curso">
-            <div><strong><i class="glyphicon glyphicon-record"></i>
-            &nbsp;Información Adicional</strong></div>
+            
             {foreach from=$detalle item=d}
-              <ul>
-                <li class="list-objetivos">
-                <b>{$d.DC_Titulo} :</b></li>
+             
+                <div class="list-objetipvos">
+                  <strong><i class="glyphicon glyphicon-record"></i>
+            &nbsp;{$d.DC_Titulo} :</strong>
+                </div>
                 {$d.DC_Descripcion}
-              </ul>
+             
             {/foreach}
           </div>
           {/if}
