@@ -138,9 +138,28 @@
                                         <hr>
                                         <div class="col-md-12 col-xs-12 col-lg-12 col-sm-12">
                                             <div class="form-group">
-                                                <label for="ta_mensaje_usuario">Mensaje</label>
-                                                <textarea  class="form-control"  id="ta_mensaje_usuario" name="ta_mensaje_usuario" ></textarea>
+                                                <label for="ta_mensaje_usuario"></label>
+                                                <textarea  class="form-control"  id="ta_mensaje_usuario" name="ta_mensaje_usuario">
+                                                   
+                                                    <h2 style="display: block;margin: 0;padding: 0;color: #202020;font-family: Helvetica;font-size: 18px;font-style: normal;font-weight: bold;line-height: 125%;letter-spacing: normal;text-align: left;">INVITACION.</h2>
+                                                    <p>Hola |nombre| |apellidos|, usted a sido invitado a participar en la discusión sobre |titulo_foro|. </p>
+                                                    <p>Debe ingresar al siguiente link para participar.</p>
+                                                     <a href= "{$_layoutParams.root}foro/index/ficha/{$foro.For_IdForo}">
+                                                     {$_layoutParams.root}foro/index/ficha/{$foro.For_IdForo}</a>
+                                                   
+                                                </textarea>
                                             </div>
+                                        </div>
+                                        <div class="col-md-12 col-xs-12 col-lg-12 col-sm-12 margin-t-10 "> 
+                                            <blockquote style="margin: 0;">
+                                                <b style="font-size: 14px">NOTA: Variables utilizables</b>
+                                                <em> 
+                                                    <h5><strong>|nombre|</strong> = Nombre del participante.</h5>
+                                                    <h5><strong>|apellidos|</strong> =  Apellidos del participante.</h5>
+                                                    <h5><strong>|usuario|</strong> = Usuario del participante.</h5>
+                                                    <h5><strong>|titulo_foro|</strong> = Titulo del foro</h5>
+                                                </em>
+                                            </blockquote> 
                                         </div>
                                     </div>
                                 </div>
