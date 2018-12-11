@@ -25,13 +25,10 @@
                                 </div>
                             </div>
 
-                            <div class=" col-sm-12 col-mdoffset-2 col-md-10 margin-t-10 " > 
+                            <div class=" col-sm-12 col-md-offset-2 col-md-10 margin-t-10 " > 
                                 <blockquote style="margin: 0;">
-                                    <b style="font-size: 14px">NOTA: </b>
+                                    <b style="font-size: 14px">NOTA: Variables utilizables</b>
                                     <em> 
-                                        <h5>
-                                            Variables utilizables: 
-                                        </h5>  
                                         <h5><strong>|nombre|</strong> = Nombre del alumno.</h5>
                                         <h5><strong>|apellidos|</strong> =  Apellidos del alumno.</h5>
                                         <h5><strong>|usuario|</strong> = Usuario del alumno.</h5>
