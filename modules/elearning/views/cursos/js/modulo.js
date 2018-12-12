@@ -5,6 +5,7 @@ $(window).resize(function(){
 }); $(window).resize();
 function selectRadioClick(radioSelect){
   name = $(radioSelect).attr("name");
+  $(".radioalt").removeClass("text-bold");
   $("#"+name).parent().parent().addClass("text-bold");
 }
 $(document).ready(function(){
