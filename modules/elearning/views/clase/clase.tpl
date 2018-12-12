@@ -102,12 +102,11 @@
 
                   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="tmp_mini_pizarras">
 
-                  {foreach from=$pizarra item=p}
-                    <div class="panel-item-pizarra">
+                  {foreach from=$pizarra item=p key=i}
+                    <div class="panel-item-pizarra" @click="onClick_seleccionPizarra({$p.Piz_IdPizarra})">
                       <div class="panel item-pizarra">
-                        <img src="{BASE_URL}files/elearning/_pizarra/{$p.Piz_ImgFondo}" />
-
-                        {* <strong class="number_pizarra">{$i + 1}</strong}> *}
+                        <img ref="pizarrabg_{$p.Piz_IdPizarra}" src="{BASE_URL}files/elearning/_pizarra/{$p.Piz_ImgFondo}" />
+                        <strong class="number_pizarra">{$i + 1}</strong}>
                       </div>
                     </div>
                     {* <div class="pizarra-mini">
@@ -179,7 +178,7 @@
                     <div id="herramientas-canvas" style="" class="no-seleccionable">
                       <div @mouseleave="show_tools = false">
                       {* <div> *}
-                        <button :class="{ hidden: !show_tools }" class="toolscanvas" @click="onClick_createObject('lapiz')"><span class="glyphicon glyphicon-minus"></span></button>
+                        <button :class="{ hidden: !show_tools }" class="toolscanvas" @click="onClick_createObject('lapiz')"><span class="glyphicon glyphicon-pencil"></span></button>
                         {* <button :class="{hidden: !show_tools}" class="toolscanvas" @click="onClick_openCuadrado">animate</button> *}
                         <button :class="{ hidden: !show_tools }" type="button" class="toolscanvas" @click="onClick_createObject('rect')" ><i class="glyphicon glyphicon-unchecked"></i></button>
                         <button :class="{ hidden: !show_tools }" type="button" class="toolscanvas" @click="onClick_createObject('circulo')" ><i class="glyphicon glyphicon-play-circle"></i></button>
@@ -206,10 +205,10 @@
                   {if isset($pizarra) || count($pizarra) > 0 }
                     {foreach from=$pizarra item=p}
 
-                      <img class="pizarra-fondo-item" style="width: {$p.Piz_ImgWidth}px; height: {$p.Piz_ImgHeight}px;
+                     {*  <img class="pizarra-fondo-item" style="width: {$p.Piz_ImgWidth}px; height: {$p.Piz_ImgHeight}px;
                         top: {$p.Piz_ImgY}px; left: {$p.Piz_ImgX}px;
                         {if $leccion.Lec_LMSPizarra != $p.Piz_IdPizarra}display:none{/if}" id="pizarra-fondo-{$p.Piz_IdPizarra}"
-                        src="{BASE_URL}files/elearning/_pizarra/{$p.Piz_ImgFondo}" />
+                        src="{BASE_URL}files/elearning/_pizarra/{$p.Piz_ImgFondo}" /> *}
 
                     {/foreach}
                   {/if}

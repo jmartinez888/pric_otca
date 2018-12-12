@@ -244,26 +244,26 @@
 
 @media (min-width: 768px) {
   .panel-item-pizarra {
-    width: 161px;
+    width: 159px;
   }
   .item-pizarra {
-    width: 161px;
+    width: 157px;
   }
 }
 @media (min-width: 992px) {
   .panel-item-pizarra {
-    width: 208px;
+    width: 206px;
   }
   .item-pizarra {
-    width: 208px;
+    width: 204px;
   }
 }
 @media (min-width: 1200px) {
   .panel-item-pizarra {
-    width: 193px;
+    width: 191px;
   }
   .item-pizarra {
-    width: 193px;
+    width: 189px;
   }
 }
 

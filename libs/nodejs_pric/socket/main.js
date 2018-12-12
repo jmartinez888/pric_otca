@@ -84,7 +84,7 @@ module.exports = function(app, test){
       });
 
       socket.on('pos_cursor', (pos) => {
-        console.log(pos)
+        // console.log(pos)
         socket.broadcast.emit('move_mouse', pos)
       })
 
@@ -96,11 +96,11 @@ module.exports = function(app, test){
         socket.broadcast.emit('alumnos_eliminar_objetos', ids)
       })
       socket.on('change_object', (pos) => {
-        console.log(pos)
+        // console.log(pos)
         socket.broadcast.emit('change_object_alumno', pos)
       })
       socket.on('create_object', (pos) => {
-        console.log(pos)
+        // console.log(pos)
         socket.broadcast.emit('change_object_alumno', pos)
       })
     }
