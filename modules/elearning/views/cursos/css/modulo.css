@@ -309,5 +309,5 @@ ul{
 }*/
 
 #espacio_blanco:focus{
-    background-color: green;
+    background-color: green !important;
 }
