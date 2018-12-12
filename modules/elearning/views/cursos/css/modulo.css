@@ -313,9 +313,13 @@ ul{
     margin-bottom: 3px;
     border: 1px solid #ccc;
 }
+#espacio_blanco:hover{
+    background-color: #bdffc2 ;
+    border-color: #3c8dbc ;
+    box-shadow: 0 0 8px 0px #3c8dbc ;
+}
 #espacio_blanco:focus{
     background-color: #bdffc2 ;
     border-color: #3c8dbc ;
     box-shadow: 0 0 8px 0px #3c8dbc ;
-    
 }
