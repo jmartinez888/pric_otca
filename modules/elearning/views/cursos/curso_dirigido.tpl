@@ -299,7 +299,7 @@
                         <div class="tag-terminado"><center><strong>Revisar lección</strong></center></div>
                       </a>
                     {else}
-                      {if $l.Lec_Tipo==4}
+                      {if $l.Lec_Tipo==4 && ($l.Lec_FechaHasta|date_format) < ($smarty.now|date_format)}
                         <div class="tag-terminado"><center><strong>Clase Concluida</strong></center></div>
                       {elseif $l.Lec_Tipo==5 }
                         <div class="tag-terminado"><center><strong>Exámen Concluido</strong></center></div>
