@@ -304,8 +304,12 @@
                             <div class="tag-terminado"><center><strong>Clase Concluida</strong></center></div>
                           {/if}
                           {if ($l.Lec_FechaHasta|date_format) == ($smarty.now|date_format) }
+                          <div class="div_en_linea">
+                            <span class="en_linea text-success">En linea</span>
+                          </div>
                             <a href="{BASE_URL}elearning/cursos/modulo/{$curso.Cur_IdCurso}/{$o.Moc_IdModuloCurso}/{$l.Lec_IdLeccion}">
-                            <div class="tag-terminado"><center><strong>En linea</strong></center></div>
+                              <div class="tag-terminado"><center><strong>En linea</strong></center></div>
+                            </a>
                           {/if}
                       {elseif $l.Lec_Tipo==5 }
                         <div class="tag-terminado"><center><strong>Exámen Concluido</strong></center></div>
