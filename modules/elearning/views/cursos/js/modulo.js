@@ -4,9 +4,10 @@ $(window).resize(function(){
   $("#frame-video").attr("height", ancho + "px");
 }); $(window).resize();
 function selectRadioClick(radioSelect){
-  // name = $(radioSelect).attr("name");
-  $(".radioalt").parent().parent().removeClass("text-bold");
-  $("#"+radioSelect).parent().parent().addClass("text-bold");
+  // name = $(radioSelect).attr("name"); input[name*='nation']
+  $("input[name='"+radioSelect+"']").parent().parent().removeClass("text-bold");
+  // $("#"+radioSelect).parent().parent().addClass("text-bold");
+  radioSelect.parent().parent().addClass("text-bold");
 }
 $(document).ready(function(){
   (function ($){
