@@ -163,7 +163,7 @@
                                         {foreach item=ra from=$rl.Alt}
                                         <div class="col-xs-12 margin-t-10">
                                           <div class="col col-xs-1">
-                                            <input type="checkbox" value="{$ra.Alt_IdAlternativa}" required="" class=" col col-xs-6 radioalt " name="rpta2_alt{$i-1}_index{$t}" />
+                                            <input type="checkbox" value="{$ra.Alt_IdAlternativa}" required="" onclick="selectRadioClick(this);" class=" col col-xs-6 radioalt " name="rpta2_alt{$i-1}_index{$t}" id="rpta_alt{$i-1}_{$j}"/>
                                             {if $j == 1}
                                             <p class="col col-xs-6"> a) </p>
                                             {/if}
@@ -191,6 +191,7 @@
                                           </div>                                            
                                         </div>
                                         {$t=$t+1}
+                                        {$j=$j+1}
                                         {/foreach}
                                     {else if $rl.Pre_Tipo==3}
                                         <label class="col-xs-12 control-label">{$i}. {$rl.Pre_Descripcion}</label>
