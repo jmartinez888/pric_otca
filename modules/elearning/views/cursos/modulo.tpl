@@ -250,9 +250,7 @@
                                     {/foreach}
 
                                 <div class="form-group">
-                                    <div class="col-xs-12">
-                                     <button class="btn btn-success margin-top-10" name="terminar" id="terminar">Terminar</button>
-                                    </div>
+                                    <button class="btn btn-success margin-t-10" name="terminar" id="terminar">Terminar</button>
                                 </div>
                             </form>
                         </div>
