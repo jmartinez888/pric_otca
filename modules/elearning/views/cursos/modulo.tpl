@@ -200,7 +200,7 @@
                                         <div class="col-xs-12" style="margin-top:10px;">
                                         {$k = 0}
                                         {for $j = 0; $j < count($arraydescripcion); $j = $j + 2}
-                                        {$arraydescripcion[$j]} {if $j + 1 <= count($arraydescripcion) - 1}<input type="text" value="" placeholder="{$arraydescripcion[$j-1]}" required="" class="text-bold text-success" name="rpta3_{$i-1}_index_{$k}" id="espacio_blanco" />{$k = $k + 1}{/if}
+                                        {$arraydescripcion[$j]} {if $j + 1 <= count($arraydescripcion) - 1}<input type="text" value="" placeholder="{$arraydescripcion[$j+1]}" required="" class="text-bold text-success" name="rpta3_{$i-1}_index_{$k}" id="espacio_blanco" />{$k = $k + 1}{/if}
                                         {/for}
                                         </div>
                                     {else if $rl.Pre_Tipo==4}                
