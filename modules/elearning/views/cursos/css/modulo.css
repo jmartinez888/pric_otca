@@ -308,6 +308,6 @@ ul{
 }
 }*/
 
-.radioalt:checked+p{
-    /*font-weight: bold;*/
+#espacio_blanco:focus{
+    background-color: green;
 }
