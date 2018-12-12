@@ -129,27 +129,27 @@
                                           <div class="col col-xs-1">
                                             
                                             {if $j == 1}
-                                            <p class="col col-xs-6">a) </p>
+                                            <p class="col col-xs-3">a) </p>
                                             {/if}
                                             {if $j == 2}
-                                            <p class="col col-xs-6">b) </p>
+                                            <p class="col col-xs-3">b) </p>
                                             {/if}
                                             {if $j == 3}
-                                            <p class="col col-xs-6">c) </p>
+                                            <p class="col col-xs-3">c) </p>
                                             {/if}
                                             {if $j == 4}
-                                            <p class="col col-xs-6">d) </p>
+                                            <p class="col col-xs-3">d) </p>
                                             {/if} 
                                             {if $j == 5}
-                                            <p class="col col-xs-6">e) </p>
+                                            <p class="col col-xs-3">e) </p>
                                             {/if}
                                             {if $j == 6}
-                                            <p class="col col-xs-6">f) </p>
+                                            <p class="col col-xs-3">f) </p>
                                             {/if}
                                             {if $j == 7}
-                                            <p class="col col-xs-6">g) </p>
+                                            <p class="col col-xs-3">g) </p>
                                             {/if} 
-                                            <input type="radio" value="{$ra.Alt_IdAlternativa}" required="" onclick="selectRadioClick(this);" class="col col-xs-6 radioalt" name="rpta_alt{$i-1}" id="rpta_alt{$i-1}_{$j}" /> 
+                                            <input type="radio" value="{$ra.Alt_IdAlternativa}" required="" onclick="selectRadioClick(this);" class="col col-xs-9 radioalt" name="rpta_alt{$i-1}" id="rpta_alt{$i-1}_{$j}" /> 
                                           </div>
                                           <div class="col col-xs-11">
                                             <p class="">{$ra.Alt_Etiqueta}</p>
@@ -163,30 +163,29 @@
                                         {$t = 0}{$j = 1}
                                         {foreach item=ra from=$rl.Alt}
                                         <div class="col-xs-12 margin-t-10">
-                                          <div class="col col-xs-1">
-                                            
+                                          <div class="col col-xs-1">  
                                             {if $j == 1}
-                                            <p class="col col-xs-6">a) </p>
+                                            <p class="col col-xs-3">a) </p>
                                             {/if}
                                             {if $j == 2}
-                                            <p class="col col-xs-6">b) </p>
+                                            <p class="col col-xs-3">b) </p>
                                             {/if}
                                             {if $j == 3}
-                                            <p class="col col-xs-6">c) </p>
+                                            <p class="col col-xs-3">c) </p>
                                             {/if}
                                             {if $j == 4}
-                                            <p class="col col-xs-6">d) </p>
+                                            <p class="col col-xs-3">d) </p>
                                             {/if} 
                                             {if $j == 5}
-                                            <p class="col col-xs-6">e) </p>
+                                            <p class="col col-xs-3">e) </p>
                                             {/if}
                                             {if $j == 6}
-                                            <p class="col col-xs-6">f) </p>
+                                            <p class="col col-xs-3">f) </p>
                                             {/if}
                                             {if $j == 7}
-                                            <p class="col col-xs-6">g) </p>
+                                            <p class="col col-xs-3">g) </p>
                                             {/if} 
-                                            <input type="checkbox" value="{$ra.Alt_IdAlternativa}" onclick="selectRadioClick(this);" class=" col col-xs-6 radioalt " name="rpta2_alt{$i-1}_index{$t}" id="rpta_alt{$i-1}_{$j}"/> 
+                                            <input type="checkbox" value="{$ra.Alt_IdAlternativa}" onclick="selectRadioClick(this);" class=" col col-xs-9 radioalt " name="rpta2_alt{$i-1}_index{$t}" id="rpta_alt{$i-1}_{$j}"/> 
                                           </div>
                                           <div class="col col-xs-11">
                                             <p class="control-lasbel">{$ra.Alt_Etiqueta}</p>
@@ -196,9 +195,9 @@
                                         {$j=$j+1}
                                         {/foreach}
                                     {else if $rl.Pre_Tipo==3}
-                                        <p class="col-xs-12 control-label">{$i}. {$rl.Pre_Descripcion}</p>
+                                        <p class="col-dxs-12 control-label">{$i}. {$rl.Pre_Descripcion}</p>
                                         {$arraydescripcion=explode("|", $rl.Pre_Descripcion2)}
-                                        <div class="col-xs-12" style="margin-top:10px;">
+                                        <div class="col-xsd-12" style="margin-top:10px;">
                                         {$k = 0}
                                         {for $j = 0; $j < count($arraydescripcion); $j = $j + 2}
                                         <p class="control-label">{$arraydescripcion[$j]}</p>{if $j + 1 <= count($arraydescripcion) - 1}<input type="text" value="" required="" name="rpta3_{$i-1}_index_{$k}" style="margin-left:5px; margin-right:5px;"/>{$k = $k + 1}{/if}
