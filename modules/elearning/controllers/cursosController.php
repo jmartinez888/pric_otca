@@ -313,9 +313,7 @@ class cursosController extends elearningController {
 
       $datos_modulo = $Mmodel->getModuloDatos($modulo);
 
-      $indice_leccion = $clave + 1;
-      $final = count($lecciones) == $indice_leccion ? true : false;
-
+      
       // if($OLeccion==null){
       //   $this->redireccionar("elearning/cursos");
       // }
@@ -336,6 +334,9 @@ class cursosController extends elearningController {
           $clave = array_search($OLeccion["Lec_IdLeccion"], array_column($lecciones, "Lec_IdLeccion"));
           // print($lecciones);
           $tmp = $lecciones[$clave];
+          $indice_leccion = $clave + 1;
+          $final = count($lecciones) == $indice_leccion ? true : false;
+
           $tareas = $Tmodel->getTrabajoXLeccion($OLeccion["Lec_IdLeccion"]);
       } else {
         # code...
