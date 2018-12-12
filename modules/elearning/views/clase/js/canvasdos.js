@@ -3,6 +3,7 @@ new Vue({
 	el: '#modulo-contenedor',
 	data: function () {
 		return {
+			canvas_leccion: [],
 			show_tools: false,
 			obj_canvas: null,
 			current_element: 'none',
@@ -33,6 +34,26 @@ new Vue({
 		}
 	},
 	methods: {
+		onClick_seleccionPizarra: function (leccion_id) {
+			console.log(leccion_id)
+			// console.log(this.$refs['pizarrabg_' + leccion_id])
+			// canvasdocente.setBackgroundImage(this.$refs['pizarrabg_' + leccion_id], x => {
+			// 	console.log(x)
+			// })
+			canvasdocente.setBackgroundImage(this.$refs['pizarrabg_' + leccion_id].src, canvasdocente.renderAll.bind(canvasdocente), {
+			    // Optionally add an opacity lvl to the image
+			    // backgroundImageOpacity: 0.5,
+			    // should the image be resized to fit the container?
+			    // backgroundImageStretch: false
+			});
+		  // fabric.Image.fromElement(this.$refs['pizarrabg_' + leccion_id], function(img) {
+    //    // add background image
+    //    	canvasdocente.setBackgroundImage(img, canvasdocente.renderAll.bind(canvasdocente), {
+    //       scaleX: canvasdocente.width / img.width,
+    //       scaleY: canvasdocente.height / img.height
+    //    });
+    //   });
+		},
 		onMouseenter_showTools: function () {
 			console.log('hola!!!')
 			this.show_tools = true
@@ -242,7 +263,9 @@ new Vue({
 		this.$refs.opciones_canvas.classList.remove('hidden')
 		this.$refs.panel_pizarra_final.classList.remove('hidden')
 
-		canvasdocente = new fabric.Canvas('micanvas')
+		canvasdocente = new fabric.Canvas('micanvas', {
+			backgroundColor: 'white'
+		})
 		canvasdocente.on('mouse:down', function(options) {
 		});
 		canvasdocente.on('object:modified', function(options) {
@@ -262,90 +285,6 @@ new Vue({
 		canvasdocente.on('mouse:move', (e) => {
 		  this.objSocket.emit('pos_cursor', e.pointer)
 		});
-		// canvasdocente.on('object:added', function(options, ff) {
-		// 	// console.log(options)
-		// 	// console.log(ff)
-		// });
-
-		// this.rect = new fabric.Rect({
-		//   left: 600,
-		//   top: 100,
-		//   fill: 'red',
-		//   width: 47,
-		//   height: 20,
-		//   objeto_id: 123456
-		// });
-
-
-		// console.log(this.rect);
-
-		// // "add" rectangle onto canvas
-
-		// canvasdocente.add(this.rect);
-
-		// this.texto = new fabric.Text('hello world', { left: 100, top: 100 });
-		// canvasdocente.add(this.texto);
-
-
-
-		// var circle = new fabric.Circle({
-		//   radius: 100,
-		//   fill: '#eef',
-		//   scaleY: 0.5,
-		//   originX: 'center',
-		//   originY: 'center'
-		// });
-		// // http://local.github/modules/elearning/views/clase/img/mouse_off.png
-		// var texto = new fabric.Text('hello world', {
-		//   fontSize: 30,
-		//   originX: 'center',
-		//   originY: 'center'
-		// });
-
-		// this.group = new fabric.Group([ circle, texto ], {
-		//   left: 150,
-		//   top: 100,
-		//   angle: -10
-		// });
-
-		// canvasdocente.add(this.group);
-
-		// var circle1 = new fabric.Circle({
-		//   radius: 50,
-		//   fill: 'red',
-		//   left: 0
-		// });
-		// var circle2 = new fabric.Circle({
-		//   radius: 50,
-		//   fill: 'green',
-		//   left: 100
-		// });
-		// var circle3 = new fabric.Circle({
-		//   radius: 50,
-		//   fill: 'blue',
-		//   left: 200
-		// });
-
-		// this.group2 = new fabric.Group([ circle1, circle2, circle3 ], {
-		//   left: 200,
-		//   top: 100
-		// });
-
-		// canvasdocente.add(this.group2);
-		// 	var _this = this
-		// 	fabric.Image.fromURL(_root_ + 'public/img/corazon.png', function(img) {
-		//   var img1 = img.scale(0.1).set({ left: 100, top: 100 });
-
-		//   fabric.Image.fromURL(_root_ + 'public/img/corazon.png', function(img) {
-		//     var img2 = img.scale(0.1).set({ left: 175, top: 175 });
-
-		//     fabric.Image.fromURL(_root_ + 'public/img/corazon.png', function(img) {
-		//       var img3 = img.scale(0.1).set({ left: 250, top: 250 });
-
-		//       canvasdocente.add(new fabric.Group([ img1, img2, img3], { left: 200, top: 200 }))
-		//     });
-		//   });
-		// });
 
 		this.objSocket.init(() => {
 
