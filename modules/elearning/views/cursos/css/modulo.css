@@ -307,10 +307,12 @@ ul{
     padding-bottom: 0px;
 }
 }*/
-
+#espacio_blanco{
+    border-radius: 10px;
+}
 #espacio_blanco:focus{
-    background-color: green ;
+    background-color: #bdffc2 ;
     border-color: #3c8dbc ;
-    box-shadow: none ;
-    border-radius: 4px;
+    box-shadow: 0 0 8px 0px #3c8dbc ;
+    
 }
