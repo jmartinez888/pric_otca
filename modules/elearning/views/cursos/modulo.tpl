@@ -119,7 +119,7 @@
                                     {foreach item=rl from=$preguntas}
                                     <input type="hidden" value="{$rl.Pre_IdPregunta}"  name="id_preg{$i-1}" />
                                     <input type="hidden" value="{$rl.Pre_Tipo}"  name="tipo_preg{$i-1}" />
-                                    <div class="row" style="margin-bottom: 20px;">
+                                    <div class="row" >
                                     {if $rl.Pre_Tipo==1}
                                     
                                         <label class="col-xs-12 control-label">{$i}. {$rl.Pre_Descripcion}</label>
