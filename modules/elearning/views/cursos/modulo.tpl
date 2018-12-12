@@ -185,7 +185,12 @@
                                             {if $j == 7}
                                             <p class="col col-xs-3">g) </p>
                                             {/if} 
+
                                             <input type="checkbox" value="{$ra.Alt_IdAlternativa}" onclick="selectRadioClick(this);" class=" col col-xs-9 radioalt " name="rpta2_alt{$i-1}_index{$t}" id="rpta_alt{$i-1}_{$j}"/> 
+
+                                            {if $ra.Alt_Check == 0}
+                                            <input type="hidden" value="{$ra.Alt_IdAlternativa}" name="rpta2_alt{$i-1}_index{$t}_hd" id="rpta_alt{$i-1}_{$j}_hd">
+                                            {/if}
                                           </div>
                                           <div class="col col-xs-11">
                                             <p class="control-lasbel">{$ra.Alt_Etiqueta}</p>

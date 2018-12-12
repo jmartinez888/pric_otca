@@ -393,12 +393,12 @@ class cursosController extends elearningController {
                           $alt = $preguntas[$i]['Alt'];
                           // echo "Multiple::::"; print_r($alt);
                           for($j = 0; $j < count($alt); $j++){
+                              $puntosrpta = 0;
                               if($this->getSql('rpta2_alt'.$i.'_index'.$j)){
-                                echo "true(".$this->getSql('rpta2_alt'.$i.'_index'.$j).")";
-                                  $puntosrpta = 0;
+                                  echo "true(".$this->getSql('rpta2_alt'.$i.'_index'.$j).")";
                                   foreach ($alt as $k) {
                                       // if($k['Alt_Check'])
-                                      if($this->getInt('rpta2_alt'.$i.'_index'.$j) == $k['Alt_IdAlternativa']){
+                                      if($this->getInt('rpta2_alt'.$i.'_index'.$j) == $k['Alt_IdAlternativa'] && $k['Alt_Check'] == 1){
                                           $puntosrpta = $k['Alt_Puntos'];
                                           $puntos = $puntos + $puntosrpta;
                                       }
@@ -406,7 +406,16 @@ class cursosController extends elearningController {
                                   // echo "P2:".$puntosrpta;
                                   $Emodel->insertRespuesta($this->getInt('id_preg'.$i), Session::get("idintento"), $this->getInt('rpta2_alt'.$i.'_index'.$j),null,null,$puntosrpta);
                               } else {
-                                echo "cero(".$this->getSql('rpta2_alt'.$i.'_index'.$j).")";
+                                  echo "cero(".$this->getSql('rpta2_alt'.$i.'_index'.$j.'_hd').")";
+                                  foreach ($alt as $k) {
+                                        // if($k['Alt_Check'])
+                                      if($this->getInt('rpta2_alt'.$i.'_index'.$j.'_hd') == $k['Alt_IdAlternativa'] && $k['Alt_Check'] == 0){
+                                          $puntosrpta = $k['Alt_Puntos'];
+                                          $puntos = $puntos + $puntosrpta;
+                                      }
+                                  }
+                                  // echo "P2:".$puntosrpta;
+                                  $Emodel->insertRespuesta($this->getInt('id_preg'.$i), Session::get("idintento"), $this->getInt('rpta2_alt'.$i.'_index'.$j.'_hd'),null,null,$puntosrpta);
                               }
                           }
                       } else if($tipo == 3){
