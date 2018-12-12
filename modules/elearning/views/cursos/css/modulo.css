@@ -323,3 +323,7 @@ ul{
     border-color: #3c8dbc ;
     box-shadow: 0 0 8px 0px #3c8dbc ;
 }
+.alt_:hover{
+    font-weight: bold;
+    color: #3c763d;
+}

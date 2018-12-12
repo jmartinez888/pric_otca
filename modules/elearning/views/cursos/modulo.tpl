@@ -125,7 +125,7 @@
                                         <label class="col-xs-12 control-label " style="margin-bottom: 15px;">{$i}. {$rl.Pre_Descripcion}</label>
                                         {$j = 1}
                                         {foreach item=ra from=$rl.Alt}
-                                        <div class="col-xs-12 ">
+                                        <div class="col-xs-12 alt_">
                                           <div class="col col-xs-1">
                                             
                                             {if $j == 1}
@@ -162,7 +162,7 @@
                                         <label class="col-xs-12 control-label">{$i}. {$rl.Pre_Descripcion}</label>
                                         {$t = 0}{$j = 1}
                                         {foreach item=ra from=$rl.Alt}
-                                        <div class="col-xs-12">
+                                        <div class="col-xs-12 alt_">
                                           <div class="col col-xs-1">  
                                             {if $j == 1}
                                             <p class="col col-xs-3">a) </p>
