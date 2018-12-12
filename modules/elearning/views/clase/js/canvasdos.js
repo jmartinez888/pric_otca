@@ -1,5 +1,5 @@
 var canvasdocente = null
-new Vue({
+var mivue = new Vue({
 	el: '#modulo-contenedor',
 	data: function () {
 		return {
@@ -131,7 +131,7 @@ new Vue({
 				}
 			}
 		},
-		addObjectCanvas: function (obj, emitData = true, addCanvas = true, dataUrl = false) {
+		addObjectCanvas: function (obj, emitData = true, addCanvas = true, dataUrl = false, selected = false) {
 			obj.on('selected', (e) => {
 				console.log('selected')
 				console.log(e)
@@ -181,19 +181,19 @@ new Vue({
 		onClick_createObject: function (opc) {
 
 			console.log('create ' + opc)
+			canvasdocente.discardActiveObject()
+			canvasdocente.renderAll()
 			switch (opc) {
-				case 'lapiz':
-					if (canvasdocente.isDrawingMode) {
+				case 'normal':
 						canvasdocente.isDrawingMode = this.lapizOn = false
 						this.current_type = 'none'
-					} else {
+
+					break;
+				case 'lapiz':
 						canvasdocente.isDrawingMode = this.lapizOn = true
 						this.opcelements.fill = canvasdocente.freeDrawingBrush.color
 						this.opcelements.strokeWidth = canvasdocente.freeDrawingBrush.width
 						this.current_type = 'lapiz'
-					}
-
-
 
 					break;
 				case 'rect':

@@ -178,10 +178,11 @@
                     <div id="herramientas-canvas" style="" class="no-seleccionable">
                       <div @mouseleave="show_tools = false">
                       {* <div> *}
+                        <button :class="{ hidden: !show_tools }" class="toolscanvas" @click="onClick_createObject('normal')"><i class="glyphicon glyphicon-screenshot"></i></button>
                         <button :class="{ hidden: !show_tools }" class="toolscanvas" @click="onClick_createObject('lapiz')"><span class="glyphicon glyphicon-pencil"></span></button>
                         {* <button :class="{hidden: !show_tools}" class="toolscanvas" @click="onClick_openCuadrado">animate</button> *}
                         <button :class="{ hidden: !show_tools }" type="button" class="toolscanvas" @click="onClick_createObject('rect')" ><i class="glyphicon glyphicon-unchecked"></i></button>
-                        <button :class="{ hidden: !show_tools }" type="button" class="toolscanvas" @click="onClick_createObject('circulo')" ><i class="glyphicon glyphicon-play-circle"></i></button>
+                        <button :class="{ hidden: !show_tools }" type="button" class="toolscanvas" @click="onClick_createObject('circulo')" ><i class="glyphicon glyphicon-record"></i></button>
                         <button :class="{ hidden: !show_tools }" class="toolscanvas" @click="onClick_createObject('texto')"><i class="glyphicon glyphicon-text-color"></i></button>
                         <button :class="{ hidden: !show_tools }" class="toolscanvas" @click="onClick_createObject('image')">
                           <input @change="onChange_loadImage" ref="fileimg" id="fileimg" type="file" name="" value="" placeholder="" class="hidden">
@@ -195,7 +196,7 @@
                         <button class="btnHerramienta herr_piz" id="btnImagen"><span class="glyphicon glyphicon-picture"></span></button>
                         <button class="btnHerramienta herr_piz" id="btnCaptura"><span class="glyphicon glyphicon-facetime-video"></span></button>
                         <button class="btnHerramienta herr_piz" id="btnBorrarPizarra"><span class="glyphicon glyphicon-trash"></span></button> *}
-                        <button id="btn_show_tool" :class="{ hidden: show_tools }" @mouseenter="onMouseenter_showTools" type="button" class="">></button>
+                        <button id="btn_show_tool" :class="{ hidden: show_tools }" @mouseenter="onMouseenter_showTools" type="button" class=""><i class="glyphicon glyphicon-triangle-right"></i></button>
                       </div>
                     </div>
 
