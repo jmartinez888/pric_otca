@@ -319,9 +319,10 @@ class cursosController extends elearningController {
       $indice_leccion = $clave + 1;
       $final = count($lecciones) == $indice_leccion ? true : false;
 
-      if($OLeccion==null){
-        $this->redireccionar("elearning/cursos");
-      }
+      // if($OLeccion==null){
+      //   $this->redireccionar("elearning/cursos");
+      // }
+      
       $lang = $this->_view->getLenguaje(['elearning_cursos'], false, true);
 
       $Tmodel = $this->loadModel("trabajo");
