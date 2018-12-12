@@ -341,4 +341,8 @@ $(document).ready(function(){
       $("#examen-contenido").remove();
     }, 300);
   }
+
+  function selectRadioClick(radioSelect){
+    radioSelect.parent().parent().addClass("text-bold")
+  }
 });
