@@ -5,6 +5,7 @@
         {if $o["Progreso"] == 1 || ($i>0 && $lecciones[$i-1]["Progreso"] == 1)}
         <a href="{BASE_URL}elearning/cursos/modulo/{$curso}/{$modulo.Moc_IdModuloCurso}/{$o.Lec_IdLeccion}" class="nounderline">
         {/if}
+          <li style="position: relative; color: #fff" {if isset($leccion) && count($leccion)}ss {if $o["Lec_IdLeccion"] == $leccion["Lec_IdLeccion"]} class="item-active" {/if} {/if}ss>
             {if $o["Progreso"] == 1 && $o["Lec_Tipo"] == 3 }
                 <div style="color: #d5ff67">Lección {$o.Index}: <div>
                 <span style="color: #d5ff67"> {$o.Lec_Titulo} <strong>(Aprobado)</strong></span>

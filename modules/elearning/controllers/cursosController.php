@@ -575,7 +575,7 @@ class cursosController extends elearningController {
       }
       
           
-      print_r($datos_modulo);
+      // print_r($datos_modulo);
       $obj_modulo = $Mmodel->getModulo($modulo);
       $this->_view->setTemplate(LAYOUT_FRONTEND);
       $this->_view->assign("mod_datos", $datos_modulo);
