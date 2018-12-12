@@ -575,7 +575,7 @@ class cursosController extends elearningController {
       }
       
           
-      print_r($Mmodel->getModulosCursoLMS($curso, Session::get("id_usuario"))[$datos_modulo['INDEX']]);
+      print_r($Mmodel->getModulosCursoLMS($curso, Session::get("id_usuario"))[$datos_modulo['INDEX']-1]);
       $obj_modulo = $Mmodel->getModulo($modulo);
       $this->_view->setTemplate(LAYOUT_FRONTEND);
       $this->_view->assign("mod_datos", $datos_modulo);
