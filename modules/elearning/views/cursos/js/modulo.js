@@ -4,7 +4,8 @@ $(window).resize(function(){
   $("#frame-video").attr("height", ancho + "px");
 }); $(window).resize();
 function selectRadioClick(radioSelect){
-  radioSelect.parent().parent().addClass("text-bold");
+  name = $(radioSelect).attr("name");
+  $("#"+name).parent().parent().addClass("text-bold");
 }
 $(document).ready(function(){
   (function ($){
