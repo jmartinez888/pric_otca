@@ -252,7 +252,7 @@
       </div>
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding-left: 0px; padding-right: 0px;">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 xxxxxxxxxxxx">
-        {$index = 1}
+        {$index = 1} {$iniciar = 0}
         {foreach from=$modulo item=o}
           <div class="ficha-mod col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding-bottom: 15px; margin-top: 15px">
             <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2" style="padding: 0px; text-align: center;">
@@ -266,11 +266,12 @@
               {$o.Moc_Descripcion}
             </div>
             {if isset($o.LECCIONES[0]) && count($o.LECCIONES)>0}
-            {if $o.LECCIONES[0]['Disponible'] == 0 && $index == 1}
-            <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10 ficha-mod-title">
-              <a  href="{BASE_URL}elearning/cursos/modulo/{$curso.Cur_IdCurso}/{$o.Moc_IdModuloCurso}/{$o.LECCIONES[0]['Lec_IdLeccion']}" class="btn btn-success pull-right">Iniciar</a>
-            </div>
-            {/if}
+              {if $o.LECCIONES[0]['Disponible'] == 0 && $iniciar == 0}
+                <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10 ficha-mod-title">
+                  <a  href="{BASE_URL}elearning/cursos/modulo/{$curso.Cur_IdCurso}/{$o.Moc_IdModuloCurso}" class="btn btn-success pull-right">Iniciar</a>
+                </div>
+                {$iniciar = 1}
+              {/if}
             {/if}
 
           </div>

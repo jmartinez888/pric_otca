@@ -3,7 +3,20 @@ $(window).resize(function(){
   ancho = ancho * (9 / 16);
   $("#frame-video").attr("height", ancho + "px");
 }); $(window).resize();
+function selectRadioClick(radioSelect){
+  // name = $(radioSelect).attr("name"); input[name*='nation']
+  $("input[name='"+$(radioSelect).attr("name")+"']").parent().parent().removeClass("text-bold").removeClass("text-success");
+  // $("#"+radioSelect).parent().parent().addClass("text-bold");
 
+  // $("#"+$(radioSelect).attr("id")).parent().parent().addClass("text-bold").addClass("text-success");
+  // $("#"+$(radioSelect).attr("id")).parent().parent().addClass("text-bold");
+
+  if (document.getElementById($(radioSelect).attr("id")).checked == false){
+    $("#"+$(radioSelect).attr("id")).parent().parent().removeClass("text-bold").removeClass("text-success");
+  } else {
+    $("#"+$(radioSelect).attr("id")).parent().parent().addClass("text-bold").addClass("text-success");
+  }
+}
 $(document).ready(function(){
   (function ($){
       $.fn.Ventana = function (m) {
@@ -341,4 +354,6 @@ $(document).ready(function(){
       $("#examen-contenido").remove();
     }, 300);
   }
+
+
 });
