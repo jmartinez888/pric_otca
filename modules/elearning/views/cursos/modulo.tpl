@@ -195,12 +195,12 @@
                                         {$j=$j+1}
                                         {/foreach}
                                     {else if $rl.Pre_Tipo==3}
-                                        <p class="col-dxs-12 control-label">{$i}. {$rl.Pre_Descripcion}</p>
+                                        <label class="col-xs-12 control-label">{$i}. {$rl.Pre_Descripcion}</label>
                                         {$arraydescripcion=explode("|", $rl.Pre_Descripcion2)}
-                                        <div class="col-xsd-12" style="margin-top:10px;">
+                                        <div class="col-xs-12" style="margin-top:10px;">
                                         {$k = 0}
                                         {for $j = 0; $j < count($arraydescripcion); $j = $j + 2}
-                                        <p class="control-label">{$arraydescripcion[$j]}</p>{if $j + 1 <= count($arraydescripcion) - 1}<input type="text" value="" required="" name="rpta3_{$i-1}_index_{$k}" style="margin-left:5px; margin-right:5px;"/>{$k = $k + 1}{/if}
+                                        {$arraydescripcion[$j]} {if $j + 1 <= count($arraydescripcion) - 1}<input type="text" value="" required="" name="rpta3_{$i-1}_index_{$k}" style="margin-left:5px; margin-right:5px;"/>{$k = $k + 1}{/if}
                                         {/for}
                                         </div>
                                     {else if $rl.Pre_Tipo==4}                
