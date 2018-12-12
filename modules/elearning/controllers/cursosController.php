@@ -575,7 +575,7 @@ class cursosController extends elearningController {
       }
       
           
-
+      print_r($datos_modulo);
       $obj_modulo = $Mmodel->getModulo($modulo);
       $this->_view->setTemplate(LAYOUT_FRONTEND);
       $this->_view->assign("mod_datos", $datos_modulo);
@@ -587,12 +587,12 @@ class cursosController extends elearningController {
           $this->_view->assign("leccion", $OLeccion);
           $this->_view->assign("referencias", $Lmodel->getReferencias($OLeccion["Lec_IdLeccion"]));
           $this->_view->assign("materiales", $Lmodel->getMateriales($OLeccion["Lec_IdLeccion"]));
+          $this->_view->assign("tareas", $tareas);
       }
 
       if ($curso != 0) {
         $this->_view->assign("titulo",$lang->get('str_modulo').': '.$obj_modulo['Moc_Titulo']);
       }
-      $this->_view->assign("tareas", $tareas);
       $this->_view->assign("curso", $curso);
       $this->_view->assign("curso_datos", $Cmodel->getCursoID($curso)[0]);
       $this->_view->setCss(array('modulo', 'jp-modulo'));
