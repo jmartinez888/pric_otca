@@ -740,10 +740,10 @@ class cursosController extends elearningController {
 
                 if (strtotime($primeraLeccion[0]["Lec_FechaDesde"]) <= strtotime(date("d-m-Y H:i:00",time())) && strtotime($primeraLeccion[0]["Lec_FechaHasta"]) >= strtotime(date("d-m-Y H:i:00",time()))) {
                   # code...
-                  $this->redireccionar("elearning/cursos/modulo/" . $curso . "/" . $posibleSiguienteMod["Moc_IdModuloCurso"] . "/" . $primeraLeccion[0]["Lec_IdLeccion"]);
+                  $this->redireccionar("elearning/cursos/modulo/" . $curso . "/" . $posibleSiguienteMod["Moc_IdModuloCurso"] );
                 } else {
                   # code...
-                  $this->redireccionar("elearning/cursos/modulo/" . $curso . "/" . $posibleSiguienteMod["Moc_IdModuloCurso"] . "/" . $primeraLeccion[0]["Lec_IdLeccion"]);
+                  $this->redireccionar("elearning/cursos/modulo/" . $curso . "/" . $posibleSiguienteMod["Moc_IdModuloCurso"] );
                   // $this->redireccionar("elearning/cursos/curso/" . $curso);
                 }
                 
