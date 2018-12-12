@@ -429,7 +429,8 @@
                         {/if}
                     {/if}
                 {else}
-                    <h2>{$modulo["Moc_Descripcion"]}</h2>
+                    <h1 class="text-center">Bienvenido al  {$lang->get('str_modulo')}  {$mod_datos.INDEX}: {$modulo["Moc_Titulo"]}</h1><br>
+                    <h2 class="text-center">{$modulo["Moc_Descripcion"]}</h2><br>
 
                     {if isset($modulo.LECCIONES[0]) && count($modulo.LECCIONES) > 0}
                         {if $modulo.LECCIONES[0]['Disponible'] == 0}
