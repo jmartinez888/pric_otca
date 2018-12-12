@@ -11,10 +11,10 @@ function selectRadioClick(radioSelect){
   // $("#"+$(radioSelect).attr("id")).parent().parent().addClass("text-bold").addClass("text-success");
   // $("#"+$(radioSelect).attr("id")).parent().parent().addClass("text-bold");
 
-  if ($(radioSelect).checked()!=false){
-    $("#"+$(radioSelect).attr("id")).parent().parent().addClass("text-bold").addClass("text-success");
-  } else {
+  if ($(radioSelect).checked === false){
     $("#"+$(radioSelect).attr("id")).parent().parent().removeClass("text-bold").removeClass("text-success");
+  } else {
+    $("#"+$(radioSelect).attr("id")).parent().parent().addClass("text-bold").addClass("text-success");
   }
 }
 $(document).ready(function(){
