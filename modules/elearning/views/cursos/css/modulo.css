@@ -308,7 +308,7 @@ ul{
 }
 }*/
 #espacio_blanco{
-    border-radius: 10px;
+    border-radius: 4px;
 }
 #espacio_blanco:focus{
     background-color: #bdffc2 ;
