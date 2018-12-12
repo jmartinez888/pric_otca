@@ -309,5 +309,8 @@ ul{
 }*/
 
 #espacio_blanco:focus{
-    background-color: green !important;
+    background-color: green ;
+    border-color: #3c8dbc ;
+    box-shadow: none ;
+    border-radius: 4px;
 }
