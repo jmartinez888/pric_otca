@@ -490,7 +490,7 @@ class cursosController extends elearningController {
                       $Emodel->insertProgreso(Session::get("id_usuario"), $examen['Lec_IdLeccion']);
                   }
 
-                  // exit;
+                  exit;
                   Session::set("intento", 0);
                   $this->redireccionar("elearning/cursos/modulo/".$examen['Cur_IdCurso'].'/'.$examen['Moc_IdModulo'].'/'.$examen['Lec_IdLeccion']);
               }
