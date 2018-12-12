@@ -434,7 +434,7 @@
                     {if isset($modulo.LECCIONES[0]) && count($modulo.LECCIONES)>0}
                         {if $modulo.LECCIONES[0]['Disponible'] == 0 && $iniciar == 0}
                           <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10 ficha-mod-title">
-                            <a  href="{BASE_URL}elearning/cursos/modulo/{$curso.Cur_IdCurso}/{$modulo.Moc_IdModuloCurso}/{$modulo.LECCIONES[0]['Lec_IdLeccion']}" class="btn btn-success pull-right">Iniciar</a>
+                            <a  href="{BASE_URL}elearning/cursos/modulo/{$curso}/{$modulo.Moc_IdModuloCurso}/{$modulo.LECCIONES[0]['Lec_IdLeccion']}" class="btn btn-success pull-right">Iniciar</a>
                           </div>
                         {/if}
                     {/if}
