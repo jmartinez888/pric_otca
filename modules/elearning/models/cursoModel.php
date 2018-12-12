@@ -122,7 +122,12 @@ class cursoModel extends Model {
               FROM curso C
               INNER JOIN usuario  U ON U.Usu_IdUsuario = C.Usu_IdUsuario
               WHERE C.Cur_IdCurso = {$curso} AND U.Usu_Estado = 1 AND C.Cur_Estado = 1";
-      return $this->getArray($sql)[0];
+      $array= $this->getArray($sql);
+      if(count($array)){
+        return $array[0];
+      }else{
+        return array("Docente"=>"","Cur_Vacantes"=>"0","Matriculados"=>"0");     
+      }
     }
 
     public function getAnunciosCountTotal($curso){
