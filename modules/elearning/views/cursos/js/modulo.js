@@ -3,7 +3,9 @@ $(window).resize(function(){
   ancho = ancho * (9 / 16);
   $("#frame-video").attr("height", ancho + "px");
 }); $(window).resize();
-
+function selectRadioClick(radioSelect){
+  radioSelect.parent().parent().addClass("text-bold")
+}
 $(document).ready(function(){
   (function ($){
       $.fn.Ventana = function (m) {
@@ -342,7 +344,5 @@ $(document).ready(function(){
     }, 300);
   }
 
-  function selectRadioClick(radioSelect){
-    radioSelect.parent().parent().addClass("text-bold")
-  }
+  
 });
