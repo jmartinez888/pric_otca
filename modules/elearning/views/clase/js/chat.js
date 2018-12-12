@@ -201,9 +201,9 @@ $(document).ready(() => {
 
   CHAT.forEach(function(row){
     if(row.usuario==USUARIO.id){
-      AddMensaje(1, row.usuario, moment(row.hora), row.msn);
+      AddMensaje(1, row.usuario, moment(row.fecha), row.msn);
     }else{
-      AddMensaje(2, row.usuario, moment(row.hora), row.msn);
+      AddMensaje(2, row.usuario, moment(row.fecha), row.msn);
     }
   });
 
@@ -225,9 +225,11 @@ $(document).ready(() => {
     }
     socketChat.on('CHAT', msg => {
       console.log(msg)
+
       if(USUARIO.id == msg.usuario){
         AddMensaje(1, msg.id, moment(msg.hora), msg.msg);
       }else{
+        $('#chatAudio')[0].play()
         AddMensaje(2, msg.id, moment(msg.hora), msg.msg);
       }
     })

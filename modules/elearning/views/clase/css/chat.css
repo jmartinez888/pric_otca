@@ -181,6 +181,16 @@
 #chat-base-leccion .mensaje-chat-text .sujeto-link strong {
   padding:6px 6px;
 }
+
+#chat-base-leccion p.p-mensaje {
+  padding: 6px 4px;
+  margin:0px 0px 2px 0px;
+  text-align: left;
+  width: 100%;
+  overflow-wrap: break-word;
+}
+
+
 .mensaje-me p.p-time {
   padding: 2px 4px;
   margin:0px 0px 2px 0px;
@@ -382,6 +392,7 @@ margin: 0px;
   margin:0px 0px 2px 0px;
   text-align: left;
   width: 100%;
+  overflow-wrap: break-word;
 }
 #chat-base-espera p.p-time {
   padding: 0px 6px;

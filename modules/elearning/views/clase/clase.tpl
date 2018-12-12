@@ -106,7 +106,7 @@
                     <div class="panel-item-pizarra" @click="onClick_seleccionPizarra({$p.Piz_IdPizarra})">
                       <div class="panel item-pizarra">
                         <img ref="pizarrabg_{$p.Piz_IdPizarra}" src="{BASE_URL}files/elearning/_pizarra/{$p.Piz_ImgFondo}" />
-                        <strong class="number_pizarra">{$i + 1}</strong}>
+                        <strong class="number_pizarra">{$i + 1}</strong>
                       </div>
                     </div>
                     {* <div class="pizarra-mini">
@@ -128,6 +128,11 @@
               </div>
               {/if}
               {include file='modules/elearning/views/clase/menu/pizarra.tpl'}
+            {else}
+
+                  {foreach from=$pizarra item=p key=i}
+                        <img ref="pizarrabg_{$p.Piz_IdPizarra}" src="{BASE_URL}files/elearning/_pizarra/{$p.Piz_ImgFondo}" class="hidden"/>
+                  {/foreach}
             {/if}
             {* <div class="col-sm-12">
               <canvas height="400px" width="650px" id="micanvasdos" style="border: 1px solid red" class=""></canvas>
@@ -149,10 +154,10 @@
             <div id="col-xs-12 col-sm-12 col-md-12 col-lg-12 CONTROL_PIZARRA" class="no-seleccionable">
               <center>
                 {if $ocurso.Usu_IdUsuario!=$usuario}
-                <div id="mouse-helper">
+                {* <div id="mouse-helper">
                   <img id="mouse_on" src="{BASE_URL}modules/elearning/views/clase/img/mouse_on.png" style="display: none"/>
                   <img id="mouse_off" src="{BASE_URL}modules/elearning/views/clase/img/mouse_off.png"/>
-                </div>
+                </div> *}
                 {/if}
                 <div id="cursor-helper"></div>
                 <div id="borrador-helper"></div>
@@ -178,10 +183,11 @@
                     <div id="herramientas-canvas" style="" class="no-seleccionable">
                       <div @mouseleave="show_tools = false">
                       {* <div> *}
+                        <button :class="{ hidden: !show_tools }" class="toolscanvas" @click="onClick_createObject('normal')"><i class="glyphicon glyphicon-screenshot"></i></button>
                         <button :class="{ hidden: !show_tools }" class="toolscanvas" @click="onClick_createObject('lapiz')"><span class="glyphicon glyphicon-pencil"></span></button>
                         {* <button :class="{hidden: !show_tools}" class="toolscanvas" @click="onClick_openCuadrado">animate</button> *}
                         <button :class="{ hidden: !show_tools }" type="button" class="toolscanvas" @click="onClick_createObject('rect')" ><i class="glyphicon glyphicon-unchecked"></i></button>
-                        <button :class="{ hidden: !show_tools }" type="button" class="toolscanvas" @click="onClick_createObject('circulo')" ><i class="glyphicon glyphicon-play-circle"></i></button>
+                        <button :class="{ hidden: !show_tools }" type="button" class="toolscanvas" @click="onClick_createObject('circulo')" ><i class="glyphicon glyphicon-record"></i></button>
                         <button :class="{ hidden: !show_tools }" class="toolscanvas" @click="onClick_createObject('texto')"><i class="glyphicon glyphicon-text-color"></i></button>
                         <button :class="{ hidden: !show_tools }" class="toolscanvas" @click="onClick_createObject('image')">
                           <input @change="onChange_loadImage" ref="fileimg" id="fileimg" type="file" name="" value="" placeholder="" class="hidden">
@@ -195,7 +201,7 @@
                         <button class="btnHerramienta herr_piz" id="btnImagen"><span class="glyphicon glyphicon-picture"></span></button>
                         <button class="btnHerramienta herr_piz" id="btnCaptura"><span class="glyphicon glyphicon-facetime-video"></span></button>
                         <button class="btnHerramienta herr_piz" id="btnBorrarPizarra"><span class="glyphicon glyphicon-trash"></span></button> *}
-                        <button id="btn_show_tool" :class="{ hidden: show_tools }" @mouseenter="onMouseenter_showTools" type="button" class="">></button>
+                        <button id="btn_show_tool" :class="{ hidden: show_tools }" @mouseenter="onMouseenter_showTools" type="button" class=""><i class="glyphicon glyphicon-triangle-right"></i></button>
                       </div>
                     </div>
 
