@@ -395,7 +395,7 @@ class cursosController extends elearningController {
                           for($j = 0; $j < count($alt); $j++){
                               $puntosrpta = 0;
                               if($this->getSql('rpta2_alt'.$i.'_index'.$j)){
-                                  echo "true(".$this->getSql('rpta2_alt'.$i.'_index'.$j).")";
+                                  // echo "true(".$this->getSql('rpta2_alt'.$i.'_index'.$j).")";
                                   foreach ($alt as $k) {
                                       // if($k['Alt_Check'])
                                       if($this->getInt('rpta2_alt'.$i.'_index'.$j) == $k['Alt_IdAlternativa'] && $k['Alt_Check'] == 1){
@@ -406,7 +406,7 @@ class cursosController extends elearningController {
                                   // echo "P2:".$puntosrpta;
                                   $Emodel->insertRespuesta($this->getInt('id_preg'.$i), Session::get("idintento"), $this->getInt('rpta2_alt'.$i.'_index'.$j),null,null,$puntosrpta);
                               } else {
-                                  echo "cero(".$this->getSql('rpta2_alt'.$i.'_index'.$j.'_hd').")";
+                                  // echo "cero(".$this->getSql('rpta2_alt'.$i.'_index'.$j.'_hd').")";
                                   foreach ($alt as $k) {
                                         // if($k['Alt_Check'])
                                       if($this->getInt('rpta2_alt'.$i.'_index'.$j.'_hd') == $k['Alt_IdAlternativa'] && $k['Alt_Check'] == 0){
@@ -499,7 +499,7 @@ class cursosController extends elearningController {
                       $Emodel->insertProgreso(Session::get("id_usuario"), $examen['Lec_IdLeccion']);
                   }
 
-                  exit;
+                  // exit;
                   Session::set("intento", 0);
                   $this->redireccionar("elearning/cursos/modulo/".$examen['Cur_IdCurso'].'/'.$examen['Moc_IdModulo'].'/'.$examen['Lec_IdLeccion']);
               }
