@@ -394,6 +394,7 @@ class cursosController extends elearningController {
                           // echo "Multiple::::"; print_r($alt);
                           for($j = 0; $j < count($alt); $j++){
                               if($this->getSql('rpta2_alt'.$i.'_index'.$j)){
+                                echo $this->getSql('rpta2_alt'.$i.'_index'.$j);
                                   $puntosrpta = 0;
                                   foreach ($alt as $k) {
                                       // if($k['Alt_Check'])
@@ -405,7 +406,7 @@ class cursosController extends elearningController {
                                   // echo "P2:".$puntosrpta;
                                   $Emodel->insertRespuesta($this->getInt('id_preg'.$i), Session::get("idintento"), $this->getInt('rpta2_alt'.$i.'_index'.$j),null,null,$puntosrpta);
                               } else {
-
+                                echo "cero";
                               }
                           }
                       } else if($tipo == 3){
