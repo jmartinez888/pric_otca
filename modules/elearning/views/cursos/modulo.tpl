@@ -125,7 +125,7 @@
                                         <label class="col-xs-12 control-label">{$i}. {$rl.Pre_Descripcion}</label>
                                         {$j = 1}
                                         {foreach item=ra from=$rl.Alt}
-                                        <div class="col-xs-12 margin-t-10 ">
+                                        <div class="col-xs-12 ">
                                           <div class="col col-xs-1">
                                             
                                             {if $j == 1}
@@ -162,7 +162,7 @@
                                         <label class="col-xs-12 control-label">{$i}. {$rl.Pre_Descripcion}</label>
                                         {$t = 0}{$j = 1}
                                         {foreach item=ra from=$rl.Alt}
-                                        <div class="col-xs-12 margin-t-10">
+                                        <div class="col-xs-12">
                                           <div class="col col-xs-1">  
                                             {if $j == 1}
                                             <p class="col col-xs-3">a) </p>
@@ -263,7 +263,7 @@
                                     <div class="col-xs-12">
                                       <div class="alert alert-success" role="alert">
                                           <h3>¡{$lang->get('str_enhorabuen')}! ¡{$lang->get('elearning_cursos_usted_aprobo_examen')}!</h3>
-                                          <small>Usted debe aprobar minimo el <strong  style="font-size: 15px;"> {($parametrosCurso.Par_NotaMinima / $parametrosCurso.Par_NotaMaxima) * 100}% </strong>del examen.</small><br>
+                                          <small>Porcentaje minimo para aprobar el examen: <strong style="font-size: 15px;"> {($parametrosCurso.Par_NotaMinima / $parametrosCurso.Par_NotaMaxima) * 100}% </strong>.</small><br>
                                           <small>{$lang->get('str_obtuviste')} {$ultimoexamen.Exl_Nota} {$lang->get('elearning_cursos_puntos_de')} {$examen.Exa_Peso}
                                           </small>
                                           <h3></h3>
@@ -336,7 +336,7 @@
                                 <div class="col-xs-12">
                                   <div class="alert alert-danger" role="alert">
                                       <h3>{$lang->get('elearning_cursos_losiento_no_supera_examen')}.</h3>
-                                      <small>Usted debe aprobar minimo el <strong style="font-size: 15px;"> {($parametrosCurso.Par_NotaMinima / $parametrosCurso.Par_NotaMaxima) * 100}% </strong>del examen.</small><br>
+                                      <small>Porcentaje minimo para aprobar el examen: <strong style="font-size: 15px;"> {($parametrosCurso.Par_NotaMinima / $parametrosCurso.Par_NotaMaxima) * 100}% </strong>.</small><br>
                                       <small>{$lang->get('str_obtuviste')} {$ultimoexamen.Exl_Nota} {$lang->get('elearning_cursos_puntos_de')} {$examen.Exa_Peso}</small>
                                       <h3></h3>
                                   </div>
