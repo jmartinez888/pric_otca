@@ -106,7 +106,7 @@
                     <div class="panel-item-pizarra" @click="onClick_seleccionPizarra({$p.Piz_IdPizarra})">
                       <div class="panel item-pizarra">
                         <img ref="pizarrabg_{$p.Piz_IdPizarra}" src="{BASE_URL}files/elearning/_pizarra/{$p.Piz_ImgFondo}" />
-                        <strong class="number_pizarra">{$i + 1}</strong}>
+                        <strong class="number_pizarra">{$i + 1}</strong>
                       </div>
                     </div>
                     {* <div class="pizarra-mini">
@@ -128,6 +128,11 @@
               </div>
               {/if}
               {include file='modules/elearning/views/clase/menu/pizarra.tpl'}
+            {else}
+
+                  {foreach from=$pizarra item=p key=i}
+                        <img ref="pizarrabg_{$p.Piz_IdPizarra}" src="{BASE_URL}files/elearning/_pizarra/{$p.Piz_ImgFondo}" class="hidden"/>
+                  {/foreach}
             {/if}
             {* <div class="col-sm-12">
               <canvas height="400px" width="650px" id="micanvasdos" style="border: 1px solid red" class=""></canvas>
@@ -149,10 +154,10 @@
             <div id="col-xs-12 col-sm-12 col-md-12 col-lg-12 CONTROL_PIZARRA" class="no-seleccionable">
               <center>
                 {if $ocurso.Usu_IdUsuario!=$usuario}
-                <div id="mouse-helper">
+                {* <div id="mouse-helper">
                   <img id="mouse_on" src="{BASE_URL}modules/elearning/views/clase/img/mouse_on.png" style="display: none"/>
                   <img id="mouse_off" src="{BASE_URL}modules/elearning/views/clase/img/mouse_off.png"/>
-                </div>
+                </div> *}
                 {/if}
                 <div id="cursor-helper"></div>
                 <div id="borrador-helper"></div>

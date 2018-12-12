@@ -8,6 +8,7 @@ var mivue = new Vue({
 			obj_canvas: null,
 			current_element: 'none',
 			current_type: 'none',
+			current_pizarra: 0,
 			lapizOn: false,
 			elementos: [],
 			rect: null,
@@ -34,25 +35,68 @@ var mivue = new Vue({
 		}
 	},
 	methods: {
-		onClick_seleccionPizarra: function (leccion_id) {
-			console.log(leccion_id)
-			// console.log(this.$refs['pizarrabg_' + leccion_id])
-			// canvasdocente.setBackgroundImage(this.$refs['pizarrabg_' + leccion_id], x => {
-			// 	console.log(x)
-			// })
-			canvasdocente.setBackgroundImage(this.$refs['pizarrabg_' + leccion_id].src, canvasdocente.renderAll.bind(canvasdocente), {
-			    // Optionally add an opacity lvl to the image
-			    // backgroundImageOpacity: 0.5,
-			    // should the image be resized to fit the container?
-			    // backgroundImageStretch: false
-			});
-		  // fabric.Image.fromElement(this.$refs['pizarrabg_' + leccion_id], function(img) {
-    //    // add background image
-    //    	canvasdocente.setBackgroundImage(img, canvasdocente.renderAll.bind(canvasdocente), {
-    //       scaleX: canvasdocente.width / img.width,
-    //       scaleY: canvasdocente.height / img.height
-    //    });
-    //   });
+		onClick_seleccionPizarra: function (pizarra) {
+			if (pizarra != this.current_pizarra) {
+				let p = this.canvas_leccion.find(v => {
+					return v.pizarra == this.current_pizarra
+				})
+				if (p == undefined) {
+					console.log('new')
+					//cuando current_pizarra == 0
+					canvasdocente.clear()
+					canvasdocente.setBackgroundImage(this.$refs['pizarrabg_' + pizarra].src, x => {
+						canvasdocente.renderAll.bind(canvasdocente)
+						this.canvas_leccion.push({
+							pizarra: pizarra,
+							json: ''
+						})
+						canvasdocente.renderAll()
+						this.objSocket.emit('send_all_data_canvas', canvasdocente.toJSON(['objecto_id']))
+					}, {
+					    backgroundImageStretch: false
+					});
+
+
+				} else {
+					console.log(p)
+					let solicita = this.canvas_leccion.find(v => {
+						return v.pizarra == pizarra
+					})
+					p.json = canvasdocente.toJSON(['objecto_id'])
+					if (solicita == undefined) {
+						canvasdocente.clear()
+						canvasdocente.setBackgroundImage(this.$refs['pizarrabg_' + pizarra].src, () => {
+
+							canvasdocente.renderAll.bind(canvasdocente)
+							this.canvas_leccion.push({
+								pizarra: pizarra,
+								json: ''
+							})
+							canvasdocente.renderAll()
+							this.objSocket.emit('send_all_data_canvas', canvasdocente.toJSON(['objecto_id']))
+
+						}, {
+						    backgroundImageStretch: false
+						});
+
+					} else {
+						// this.objSocket.emit('send_all_data_canvas', solicita.json)
+						canvasdocente.loadFromJSON(solicita.json, x => {
+							canvasdocente.getObjects().forEach(obj => {
+								this.addEventosObjeto(obj)
+							})
+							this.objSocket.emit('send_all_data_canvas', solicita.json)
+						})
+					}
+
+
+				}
+
+				this.current_pizarra = pizarra
+			}
+
+
+
 		},
 		onMouseenter_showTools: function () {
 			console.log('hola!!!')
@@ -78,6 +122,7 @@ var mivue = new Vue({
 		},
 		onClick_eliminarLimpiar: function () {
 			canvasdocente.clear()
+			canvasdocente.setBackgroundColor('white', () => canvasdocente.renderAll())
 			this.objSocket.emit('limpiar_canvas')
 		},
 		onClick_eliminarObjecto: function () {
@@ -131,7 +176,8 @@ var mivue = new Vue({
 				}
 			}
 		},
-		addObjectCanvas: function (obj, emitData = true, addCanvas = true, dataUrl = false, selected = false) {
+		addEventosObjeto (obj) {
+
 			obj.on('selected', (e) => {
 				console.log('selected')
 				console.log(e)
@@ -166,6 +212,9 @@ var mivue = new Vue({
 					event: 'modified'
 				})
 			})
+		},
+		addObjectCanvas: function (obj, emitData = true, addCanvas = true, dataUrl = false, selected = false) {
+			this.addEventosObjeto(obj)
 			if (emitData) {
 				this.objSocket.emit('create_object', {
 					data: obj.toObject(),
