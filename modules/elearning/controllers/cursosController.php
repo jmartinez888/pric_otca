@@ -575,12 +575,12 @@ class cursosController extends elearningController {
       }
       
           
-      print_r($Mmodel->getModulosCursoLMS($curso, Session::get("id_usuario"))[$datos_modulo['INDEX']-1]);
+      // print_r($Mmodel->getModulosCursoLMS($curso, Session::get("id_usuario"))[$datos_modulo['INDEX']-1]);
       $obj_modulo = $Mmodel->getModulo($modulo);
       $this->_view->setTemplate(LAYOUT_FRONTEND);
       $this->_view->assign("mod_datos", $datos_modulo);
       // $this->_view->assign("modulo", $obj_modulo);
-      $this->_view->assign("modulo", $Mmodel->getModulosCursoLMS($modulo, Session::get("id_usuario"))[$datos_modulo['INDEX']-1]);
+      $this->_view->assign("modulo", $Mmodel->getModulosCursoLMS($curso, Session::get("id_usuario"))[$datos_modulo['INDEX']-1]);
       $this->_view->assign("lecciones", $lecciones);
       // $this->_view->assign("examenes", $examenes);
       if (isset($OLeccion) && isset($OLeccion["Lec_IdLeccion"])) {

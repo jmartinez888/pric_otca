@@ -429,7 +429,7 @@
                         {/if}
                     {/if}
                 {else}
-                    {$modulo[0]["Moc_Descripcion"]}
+                    {$modulo["Moc_Descripcion"]}
 
                     {if isset($modulo.LECCIONES[0]) && count($modulo.LECCIONES)>0}
                         {if $modulo.LECCIONES[0]['Disponible'] == 0 && $iniciar == 0}
