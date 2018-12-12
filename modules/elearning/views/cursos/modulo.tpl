@@ -91,7 +91,7 @@
                   {if isset($leccion) && count($leccion)}
                   <strong>{$leccion["Lec_Titulo"]}</strong>
                   {else}
-                  <strong>Bienvenido al  {$lang->get('str_modulo')}  {$mod_datos.INDEX}: {$modulo[0]["Moc_Titulo"]}</strong>
+                  <strong>Bienvenido al  {$lang->get('str_modulo')}  {$mod_datos.INDEX}: {$modulo[$mod_datos.INDEX]["Moc_Titulo"]}</strong>
                   {/if}
                 </h3>
               </div>
@@ -429,12 +429,12 @@
                         {/if}
                     {/if}
                 {else}
-                    {$modulo[0]["Moc_Descripcion"]}
+                    {$modulo[$mod_datos.INDEX]["Moc_Descripcion"]}
 
-                    {if isset($modulo.LECCIONES[0]) && count($modulo.LECCIONES)>0}
-                        {if $modulo.LECCIONES[0]['Disponible'] == 0 && $iniciar == 0}
+                    {if isset($modulo[$mod_datos.INDEX][LECCIONES][0]) && count($modulo[$mod_datos.INDEX][LECCIONES])>0}
+                        {if $modulo[$mod_datos.INDEX][LECCIONES][0]['Disponible'] == 0 && $iniciar == 0}
                           <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10 ficha-mod-title">
-                            <a  href="{BASE_URL}elearning/cursos/modulo/{$curso.Cur_IdCurso}/{$modulo.Moc_IdModuloCurso}/{$modulo.LECCIONES[0]['Lec_IdLeccion']}" class="btn btn-success pull-right">Iniciar</a>
+                            <a  href="{BASE_URL}elearning/cursos/modulo/{$curso.Cur_IdCurso}/{$modulo[$mod_datos.INDEX].Moc_IdModuloCurso}/{$modulo[$mod_datos.INDEX].LECCIONES[0]['Lec_IdLeccion']}" class="btn btn-success pull-right">Iniciar</a>
                           </div>
                         {/if}
                     {/if}
