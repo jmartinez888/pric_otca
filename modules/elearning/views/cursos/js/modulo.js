@@ -5,9 +5,9 @@ $(window).resize(function(){
 }); $(window).resize();
 function selectRadioClick(radioSelect){
   // name = $(radioSelect).attr("name"); input[name*='nation']
-  $("input[name='"+$(radioSelect).attr("name")+"']").parent().parent().removeClass("text-bold");
+  $("input[name='"+$(radioSelect).attr("name")+"']").parent().parent().removeClass("text-bold","text-success");
   // $("#"+radioSelect).parent().parent().addClass("text-bold");
-  $("#"+$(radioSelect).attr("id")).parent().parent().addClass("text-bold");
+  $("#"+$(radioSelect).attr("id")).parent().parent().addClass("text-bold","text-success");
 }
 $(document).ready(function(){
   (function ($){
