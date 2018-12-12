@@ -75,7 +75,7 @@
                     {if $_acl->permiso("editar_curso")} <th>Operaciones</th> {/if}
                 </tr>
                 {foreach from=$cursos item=c}
-                    <tr>
+                    <tr {if $c.Row_Estado == 0} class="bg-danger" {/if}>
                         <td>
                           <div class="col-xs-2" style="border-right: 1px solid #c1bcbc; "><img class="img-banner ma-w-100 " style="border: 1px solid #c1bcbc;" src="{BASE_URL}modules/elearning/views/cursos/img/portada/{$c.Cur_UrlBanner}" />
 
