@@ -199,7 +199,7 @@
                                         <div class="col-xs-12" style="margin-top:10px;">
                                         {$k=0}
                                         {for $j=0; $j<count($arraydescripcion);$j=$j+2}
-                                        <label class="control-label">{$arraydescripcion[$j]}</label>{if $j+1<=count($arraydescripcion)-1}<input type="text" value="" name="rpta3_{$i-1}_index_{$k}" style="margin-left:5px; margin-right:5px;"/>{$k=$k+1}{/if}
+                                        <label class="control-label">{$arraydescripcion[$j]}</label>{if $j+1<=count($arraydescripcion)-1}<input type="text" value="" required="" name="rpta3_{$i-1}_index_{$k}" style="margin-left:5px; margin-right:5px;"/>{$k=$k+1}{/if}
                                         {/for}
                                         </div>
                                     {else if $rl.Pre_Tipo==4}                
