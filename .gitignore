@@ -1,3 +1,4 @@
+/libs/nodejs_pric/node_modules/*
 /tmp/*
 .tmp/*
 /tmp/*/*
@@ -14,7 +15,13 @@ application/Config.php
 /libs/vendor/dompdf/dompdf/lib/fonts/
 libs/vendor/dompdf/dompdf/lib/fonts/
 
+
+
 /libs/vendor/sabberworm/php-css-parser/tests
 
 /lang/*
 /lenguaje/*
+
+
+
+

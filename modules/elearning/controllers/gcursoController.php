@@ -145,7 +145,7 @@ class gcursoController extends elearningController {
   public function _modificar_curso(){
     $id = $this->getTexto('id');
     $titulo = $this->getTexto('titulo');
-    $descripcion = $this->getTexto('descripcion');
+    $descripcion = $this->getPostParam('descripcion');
     $objgeneral = $this->getTexto('objgeneral');
     $publico = $this->getTexto('publico');
     $software = $this->getPostParam('software');

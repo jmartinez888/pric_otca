@@ -104,7 +104,75 @@
         </a>
       </div> -->
 
+          {if isset($objetivos) && count($objetivos)>0}
+          <div class="col-xs-12 text-curso">
+            <div><strong><i class="glyphicon glyphicon-record"></i>
+            &nbsp;Objetivos</strong></div>
+            {foreach from=$objetivos item=o}
+              <ul>
+                <li class="list-objetivos">
+                {$o.CO_Titulo}</li>
+              </ul>
+            {/foreach}
+          </div>
+          {/if}
+
+          <div class="col-xs-12">
+            <br/>
+          </div>
+          {if strlen($curso.Cur_PublicoObjetivo) > 2 && !empty($curso.Cur_PublicoObjetivo)}
+          <div class="col-xs-12" style="font-size: 16px;">
+            <div><strong><i class="glyphicon glyphicon-globe"></i>
+            &nbsp;{$lang->get('elearning_cursos_publico_objetivo')}</strong></div>
+            <div style="padding-left: 25px">{$curso.Cur_PublicoObjetivo|default:"---"}</div> <br/>
+          </div>
+          {/if}
+          {if strlen($curso.Cur_Metodologia) > 2 && !empty($curso.Cur_Metodologia)}
+          <div class="col-xs-12" style="font-size: 16px;">
+            <div><strong><i class="glyphicon glyphicon-cog"></i>
+            &nbsp;{$lang->get('str_metodologia')}</strong></div>
+            <div style="padding-left: 25px">{$curso.Cur_Metodologia|default:"---"}</div> <br/>
+          </div>
+          {/if}
+          {if strlen($curso['Detalle'].Docente) > 2 && !empty($curso['Detalle'].Docente)}
+          <div class="col-xs-12" style="font-size: 16px;">
+            <div><strong><i class="glyphicon glyphicon-education"></i>
+            &nbsp;{$lang->get('str_docente')}</strong></div>
+            <div style="padding-left: 25px"><a href="{BASE_URL}elearning/cursos/ficha/{$curso.Cur_IdCurso}">{$curso['Detalle'].Docente|default:"---"}</a>   </div> <br/>
+          </div>
+          {/if}
+          {if strlen($curso.Cur_Contacto) > 2 && !empty($curso.Cur_Contacto)}
+          <div class="col-xs-12" style="font-size: 16px;">
+            <div><strong><i class="glyphicon glyphicon-user"></i>
+            &nbsp;{$lang->get('str_contacto')}</strong></div>
+            <div style="padding-left: 25px">
+              {$curso.Cur_Contacto|default:"---"}
+              <!-- <a href="{BASE_URL}elearning/cursos/ficha/{$curso.Cur_IdCurso}" style="display: inline-block;">
+                {$lang->get('str_detalle')}
+              </a> -->
+            </div> <br/>
+          </div>
+          {/if}
+
+          {if isset($detalle) && count($detalle)>0}
+          <div class="col-xs-12 text-curso">
+            
+            {foreach from=$detalle item=d}
+             
+                <div class="list-objetipvos">
+                  <strong><i class="glyphicon glyphicon-record"></i>
+            &nbsp;{$d.DC_Titulo} :</strong>
+                </div>
+                {$d.DC_Descripcion}
+             
+            {/foreach}
+          </div>
+          {/if}
+
+
+
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding-top: 10px; position: relative">
+
         {if $session==1}
           {if isset($inscripcion) && count($inscripcion)>0}
             {if $inscripcion[0].Mat_Valor==2 }
@@ -184,7 +252,7 @@
       </div>
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding-left: 0px; padding-right: 0px;">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 xxxxxxxxxxxx">
-        {$index = 1}
+        {$index = 1} {$iniciar = 0}
         {foreach from=$modulo item=o}
           <div class="ficha-mod col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding-bottom: 15px; margin-top: 15px">
             <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2" style="padding: 0px; text-align: center;">
@@ -198,11 +266,12 @@
               {$o.Moc_Descripcion}
             </div>
             {if isset($o.LECCIONES[0]) && count($o.LECCIONES)>0}
-            {if $o.LECCIONES[0]['Disponible'] == 0 && $index == 1}
-            <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10 ficha-mod-title">
-              <a  href="{BASE_URL}elearning/cursos/modulo/{$curso.Cur_IdCurso}/{$o.Moc_IdModuloCurso}/{$o.LECCIONES[0]['Lec_IdLeccion']}" class="btn btn-success pull-right">Iniciar</a>
-            </div>
-            {/if}
+              {if $o.LECCIONES[0]['Disponible'] == 0 && $iniciar == 0}
+                <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10 ficha-mod-title">
+                  <a  href="{BASE_URL}elearning/cursos/modulo/{$curso.Cur_IdCurso}/{$o.Moc_IdModuloCurso}" class="btn btn-success pull-right">Iniciar</a>
+                </div>
+                {$iniciar = 1}
+              {/if}
             {/if}
 
           </div>
@@ -230,7 +299,7 @@
                         <div class="tag-terminado"><center><strong>Revisar lección</strong></center></div>
                       </a>
                     {else}
-                      {if $l.Lec_Tipo==4}
+                      {if $l.Lec_Tipo==4 && ($l.Lec_FechaHasta|date_format) < ($smarty.now|date_format)}
                         <div class="tag-terminado"><center><strong>Clase Concluida</strong></center></div>
                       {elseif $l.Lec_Tipo==5 }
                         <div class="tag-terminado"><center><strong>Exámen Concluido</strong></center></div>

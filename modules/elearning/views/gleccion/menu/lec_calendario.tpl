@@ -1,4 +1,4 @@
-<div class="col-lg-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 <div class="panel panel-default margin-top-10">
   <div class="panel-heading">
     <h3 class="panel-title">
@@ -77,7 +77,7 @@ $(document).ready(function(){
         SubmitForm($("#form-fecha"), false, function(data, a){
           Mensaje("Se actualizó la fecha de la lección", function(){
             location.href = _root_ + _modulo + "/gleccion/_view_leccion/" + $("#hidden_curso").val() + "/" + $("#hidden_modulo").val() + "/" + $("#hidden_leccion").val();
-          
+
             // CargarPagina("gleccion/_view_leccion", {
             //   curso: $("#hidden_curso").val(),
             //   modulo : $("#hidden_modulo").val(),

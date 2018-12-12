@@ -70,6 +70,7 @@
 
 <script type="text/javascript">
 $(document).ready(function(){
+	return;
 	$("#btn-agregar-pizarra").click(function(){
 		var params = {
 			route: "files/elearning/_pizarra",
@@ -120,9 +121,9 @@ $(document).ready(function(){
 		  });
 	});
 
-	$("#btn-cancelar-nueva-pizarra").click(function(){ 
+	$("#btn-cancelar-nueva-pizarra").click(function(){
 		$("#panelNuevaPizarra").modal("hide");
-		ClearAll(); 
+		ClearAll();
 	});
 
 	function SocketNuevaPizarra(){

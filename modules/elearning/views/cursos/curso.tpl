@@ -122,22 +122,28 @@
           <div class="col-xs-12">
             <br/>
           </div>
-
+          {if strlen($curso.Cur_PublicoObjetivo) > 2 && !empty($curso.Cur_PublicoObjetivo)}
           <div class="col-xs-12" style="font-size: 16px;">
             <div><strong><i class="glyphicon glyphicon-globe"></i>
             &nbsp;{$lang->get('elearning_cursos_publico_objetivo')}</strong></div>
             <div style="padding-left: 25px">{$curso.Cur_PublicoObjetivo|default:"---"}</div> <br/>
           </div>
+          {/if}
+          {if strlen($curso.Cur_Metodologia) > 2 && !empty($curso.Cur_Metodologia)}
           <div class="col-xs-12" style="font-size: 16px;">
             <div><strong><i class="glyphicon glyphicon-cog"></i>
             &nbsp;{$lang->get('str_metodologia')}</strong></div>
             <div style="padding-left: 25px">{$curso.Cur_Metodologia|default:"---"}</div> <br/>
           </div>
+          {/if}
+          {if strlen($curso['Detalle'].Docente) > 2 && !empty($curso['Detalle'].Docente)}
           <div class="col-xs-12" style="font-size: 16px;">
             <div><strong><i class="glyphicon glyphicon-education"></i>
             &nbsp;{$lang->get('str_docente')}</strong></div>
             <div style="padding-left: 25px"><a href="{BASE_URL}elearning/cursos/ficha/{$curso.Cur_IdCurso}">{$curso['Detalle'].Docente|default:"---"}</a>   </div> <br/>
           </div>
+          {/if}
+          {if strlen($curso.Cur_Contacto) > 2 && !empty($curso.Cur_Contacto)}
           <div class="col-xs-12" style="font-size: 16px;">
             <div><strong><i class="glyphicon glyphicon-user"></i>
             &nbsp;{$lang->get('str_contacto')}</strong></div>
@@ -148,6 +154,7 @@
               </a> -->
             </div> <br/>
           </div>
+          {/if}
 
           {if isset($detalle) && count($detalle)>0}
           <div class="col-xs-12 text-curso">

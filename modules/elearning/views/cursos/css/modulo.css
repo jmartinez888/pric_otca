@@ -97,7 +97,7 @@ element.style {
 }
 
 p {
-    margin: 0 0 10px;
+    margin: 0 0 5px;
 }
 
 .course-title-container {
@@ -307,3 +307,23 @@ ul{
     padding-bottom: 0px;
 }
 }*/
+#espacio_blanco{
+    border-radius: 4px;
+    width: 150px;
+    margin-bottom: 3px;
+    border: 1px solid #ccc;
+}
+#espacio_blanco:hover{
+    background-color: #bdffc2 ;
+    border-color: #3c8dbc ;
+    box-shadow: 0 0 8px 0px #3c8dbc ;
+}
+#espacio_blanco:focus{
+    background-color: #bdffc2 ;
+    border-color: #3c8dbc ;
+    box-shadow: 0 0 8px 0px #3c8dbc ;
+}
+.alt_:hover{
+    font-weight: bold;
+    color: #3c763d;
+}

@@ -1,4 +1,4 @@
-#chat-container{
+#chat-base-leccion #chat-container{
   font-size:12px;
   position: fixed;
   bottom: 0px;
@@ -11,7 +11,7 @@
   border: 1px solid gray;
 }
 
-#chat-header{
+#chat-base-leccion #chat-header{
   background-color: #6BA740;
   width: 100%;
   height: 28px;
@@ -23,7 +23,7 @@
   position: relative;
 }
 
-#btnMinin{
+#chat-base-leccion #btnMinin{
   /* border: 1px solid gray; */
   background-color: transparent;
   padding: 3px;
@@ -33,16 +33,16 @@
   border-radius: 10px;
 }
 
-#btnMinin:hover{
+#chat-base-leccion .btnMinin-btn:hover{
   opacity: 0.6;
 }
 
-#chat-body{
+#chat-base-leccion #chat-body{
   position: relative;
 }
 
 
-#chat-text-body{
+#chat-base-leccion #chat-text-body{
   width: 100%;
   position: absolute;
   bottom: 0px;
@@ -54,7 +54,7 @@
 }
 
 
-#chat-text-input{
+#chat-base-leccion #chat-text-input{
   width: 100%;
   height: 30px;
   /* position: absolute; */
@@ -64,10 +64,9 @@
   margin-right: 6px;
 }
 
-#chat-text-send{
+#chat-base-leccion #chat-text-send{
   /* position: absolute; */
   /* right: 3px; */
-  bor: 3px;
   border: 0px;
   border-radius: 30px;
   background: white;
@@ -76,7 +75,28 @@
   padding: 9px;
 }
 
-#chat-msn-body{
+#chat-base-leccion #chat-msn-body-usuarios{
+  width: 100%;
+  height: 510px;
+  background: #e0e0de;
+  list-style-type: none;
+  display: flex;
+  position:relative;
+  flex-direction: column;
+  overflow-y:scroll;
+}
+
+#chat-base-leccion #chat-msn-body-usuarios .content-msn{
+  padding:4px;
+}
+
+#chat-base-leccion #chat-msn-body-usuarios .mensaje-me{
+  display:flex;
+  background-color:white;
+  border-radius: 4px;
+}
+
+#chat-base-leccion #chat-msn-body{
   width: 100%;
   height: 476px;
   background: #e0e0de;
@@ -84,10 +104,11 @@
   display: flex;
   flex-direction: column;
   overflow-y: scroll;
+  overflow-x: hidden;
 }
 
 
-.mensaje-me{
+#chat-base-leccion #chat-msn-body .mensaje-me{
   background-color: white;
   width: 80%;
   margin-right: 18px;
@@ -97,7 +118,7 @@
   display:flex;
 }
 
-.mensaje-other{
+#chat-base-leccion #chat-msn-body .mensaje-other{
   background-color: whitesmoke;
   width: 80%;
   border-radius: 4px;
@@ -107,7 +128,7 @@
   display:flex;
 }
 
-.mensaje-other:before{
+#chat-base-leccion #chat-msn-body .mensaje-other:before{
     height: 40px;
     content:"";
     top: 9px;
@@ -121,7 +142,7 @@
     border-left-width: 15px;
 
 }
-.mensaje-me:after{
+#chat-base-leccion #chat-msn-body .mensaje-me:after{
     content:"";
     position: absolute;
     right: 3px;
@@ -130,49 +151,271 @@
     border-color: white transparent transparent transparent;
 }
 
-.content-msn{
+#chat-base-leccion .content-msn{
   width: 100%;
   position: relative;
 }
 
-.avatar{
+#chat-base-leccion .avatar{
   width: 30px;
   height: 30px;
   margin: 5px;
   display: inline-block;
 }
 
-.img-circle-msn{
+#chat-base-leccion .img-circle-msn{
   width: 30px;
   height: 30px;
   background-color: gray;
   border-radius: 50%;
 }
 
-.mensaje-chat-text{
+#chat-base-leccion .mensaje-chat-text{
   width: 100%;
   padding: 3px 3px 1px 3px;
   display: inline-block;
 }
-.mensaje-chat-text .sujeto-link  {
+#chat-base-leccion .mensaje-chat-text .sujeto-link  {
   display: flex;
 }
-.mensaje-chat-text .sujeto-link strong {
+#chat-base-leccion .mensaje-chat-text .sujeto-link strong {
   padding:6px 6px;
 }
-p.p-mensaje {
+
+#chat-base-leccion p.p-mensaje {
   padding: 6px 4px;
   margin:0px 0px 2px 0px;
-}
-p.p-time {
-  padding: 0px 6px;
+  text-align: left;
+  width: 100%;
+  overflow-wrap: break-word;
 }
 
-#btnMinin_Close {
+
+.mensaje-me p.p-time {
+  padding: 2px 4px;
+  margin:0px 0px 2px 0px;
+  text-align: right;
+}
+.mensaje-other p.p-time {
+  padding: 0px 6px;
+  margin:0px 0px 2px 0px;
+  text-align: left;
+}
+
+#chat-base-leccion #chat-msn-body-usuarios p.p-time {
+  padding: 0px 6px;
+  margin: 0px;
+  float:right;
+}
+
+#chat-base-leccion #btnMinin_Close {
 
 margin: 0px;
 }
-span.name-chat {
+#chat-base-leccion span.name-chat {
     line-height: 1.8em;
 
+}
+
+
+
+
+/*EN ESPERA*/
+
+#chat-base-espera #chat-container{
+  font-size:12px;
+  z-index: 4000;
+}
+
+#chat-base-espera #chat-header{display: none;}
+
+#chat-base-espera #btnMinin{
+  /* border: 1px solid gray; */
+  background-color: transparent;
+  padding: 3px;
+  cursor: pointer;
+  float: right;
+  line-height: 1em;
+  border-radius: 10px;
+}
+
+#chat-base-espera .btnMinin-btn:hover{
+  opacity: 0.6;
+}
+
+#chat-base-espera #chat-body{
+  position: relative;
+}
+
+
+#chat-base-espera #chat-text-body{
+  width: 100%;
+  position: relative;
+  bottom: 0px;
+  left: 0px;
+  height: 45px;
+  background-color: #e0e0de;
+  padding: 6px 4px 4px 4px;
+  display: flex;
+  flex-basis: 100%;
+}
+
+
+#chat-base-espera #chat-text-input{
+  width: 100%;
+  height: 30px;
+  /* position: absolute; */
+  border: none;
+  border-radius: 4px;
+  padding: 2px 10px;
+  margin-right: 6px;
+}
+
+#chat-base-espera #chat-text-send{
+  /* position: absolute; */
+  /* right: 3px; */
+  border: 0px;
+  border-radius: 30px;
+  background: white;
+  height: 30px;
+  font-size: 1em;
+  padding: 9px;
+}
+
+#chat-base-espera #chat-msn-body-usuarios{
+  width: 250px;
+  height: 470px;
+  background: #e0e0de;
+  list-style-type: none;
+  display: flex;
+  position:relative;
+  flex-direction: column;
+  overflow-y:scroll;
+}
+
+#chat-base-espera #chat-msn-body-usuarios .content-msn{
+  padding:4px;
+}
+
+#chat-base-espera #chat-msn-body-usuarios .mensaje-me{
+  display:flex;
+  background-color:white;
+  border-radius: 4px;
+}
+
+#chat-base-espera #chat-msn-body{
+  height: 470px;
+  background: #e0e0de;
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+  flex-grow: 1;
+}
+
+
+#chat-base-espera #chat-msn-body .mensaje-me{
+  background-color: white;
+  width: 400px;
+  margin-right: 18px;
+  border-radius: 4px 0px 4px 4px;
+  float:right;
+  margin-top:4px;
+  display:flex;
+}
+
+#chat-base-espera #chat-msn-body .mensaje-other{
+  background-color: whitesmoke;
+  width: 400px;
+  border-radius: 4px;
+  float:left;
+  margin-top:4px;
+  margin-left:16px;
+  display:flex;
+}
+
+#chat-base-espera #chat-msn-body .mensaje-other:before{
+    height: 40px;
+    content:"";
+    top: 9px;
+    left:2px;
+    position:absolute;
+    border-top: 0 solid #f5f5f5;
+    border-left: 0 solid transparent;
+    border-bottom: 0 solid transparent;
+    border-right: 0 solid transparent;
+    border-top-width: 10px;
+    border-left-width: 15px;
+
+}
+#chat-base-espera #chat-msn-body .mensaje-me:after{
+    content:"";
+    position: absolute;
+    right: 3px;
+    border-style: solid;
+    border-width: 12px 15px 0 0;
+    border-color: white transparent transparent transparent;
+}
+
+#chat-base-espera .content-msn{
+  width: 100%;
+  position: relative;
+}
+
+#chat-base-espera .avatar{
+  width: 30px;
+  height: 30px;
+  margin: 5px;
+  display: inline-block;
+}
+
+#chat-base-espera .img-circle-msn{
+  width: 30px;
+  height: 30px;
+  background-color: gray;
+  border-radius: 50%;
+}
+
+#chat-base-espera .mensaje-chat-text{
+  width: 100%;
+  padding: 3px 3px 1px 3px;
+  display: inline-block;
+}
+#chat-base-espera .mensaje-chat-text .sujeto-link  {
+  display: flex;
+}
+#chat-base-espera .mensaje-chat-text .sujeto-link strong {
+  padding:6px 6px;
+}
+#chat-base-espera p.p-mensaje {
+  padding: 6px 4px;
+  margin:0px 0px 2px 0px;
+  text-align: left;
+  width: 100%;
+  overflow-wrap: break-word;
+}
+#chat-base-espera p.p-time {
+  padding: 0px 6px;
+  margin: 0px 0px 2px 0px;
+  text-align: right;
+}
+
+#chat-base-espera #chat-msn-body-usuarios p.p-time {
+  padding: 0px 6px;
+  margin: 0px;
+  float:right;
+}
+
+#chat-base-espera #btnMinin_Close {
+
+margin: 0px;
+}
+#chat-base-espera span.name-chat {
+    line-height: 1.8em;
+
+}
+
+#chat-base-espera .chat-body {
+  display: flex;
+  flex-wrap: wrap;
 }
