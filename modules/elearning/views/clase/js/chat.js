@@ -225,9 +225,11 @@ $(document).ready(() => {
     }
     socketChat.on('CHAT', msg => {
       console.log(msg)
+
       if(USUARIO.id == msg.usuario){
         AddMensaje(1, msg.id, moment(msg.hora), msg.msg);
       }else{
+        $('#chatAudio')[0].play()
         AddMensaje(2, msg.id, moment(msg.hora), msg.msg);
       }
     })
