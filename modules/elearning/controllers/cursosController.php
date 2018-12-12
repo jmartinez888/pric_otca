@@ -424,7 +424,7 @@ class cursosController extends elearningController {
                           // echo "EnBLanco::::"; print_r($alt);
                           for($j = 0; $j < count($alt); $j++){
                           $puntosrpta = 0;
-                          if($this->getSql('rpta3_'.$i.'_index_'.$j) == $alt[$j]['Alt_Etiqueta']){
+                          if(strtolower($this->getSql('rpta3_'.$i.'_index_'.$j)) == strtolower($alt[$j]['Alt_Etiqueta'])){
                               $puntosrpta = $alt[$j]['Alt_Puntos'];
                               $puntos = $puntos + $puntosrpta;
                           }
