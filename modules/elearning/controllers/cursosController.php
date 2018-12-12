@@ -309,9 +309,6 @@ class cursosController extends elearningController {
       $lecciones = $Lmodel->getLecciones($modulo, Session::get("id_usuario"));
       // $examenes= $Emodel->getExamensModulo($modulo);
 
-      $clave = array_search($OLeccion["Lec_IdLeccion"], array_column($lecciones, "Lec_IdLeccion"));
-  // print($lecciones);
-      $tmp = $lecciones[$clave];
       // $datos_modulo = $Mmodel->getModuloDatos($OLeccion["Moc_IdModuloCurso"]);
 
       $datos_modulo = $Mmodel->getModuloDatos($modulo);
@@ -322,12 +319,12 @@ class cursosController extends elearningController {
       // if($OLeccion==null){
       //   $this->redireccionar("elearning/cursos");
       // }
-      
+
       $lang = $this->_view->getLenguaje(['elearning_cursos'], false, true);
 
       $Tmodel = $this->loadModel("trabajo");
       $TTmodel = $this->loadModel("tarea");
-      $tareas = $Tmodel->getTrabajoXLeccion($OLeccion["Lec_IdLeccion"]);
+
 
       // if($tareas != null && count($tareas)>0){
       //   for($i=0; $i<count($tareas);$i++){
@@ -336,6 +333,10 @@ class cursosController extends elearningController {
       // }
       if ($leccion) {        
           $OLeccion = $Lmodel->getLeccion($leccion, $modulo, Session::get("id_usuario"));
+          $clave = array_search($OLeccion["Lec_IdLeccion"], array_column($lecciones, "Lec_IdLeccion"));
+          // print($lecciones);
+          $tmp = $lecciones[$clave];
+          $tareas = $Tmodel->getTrabajoXLeccion($OLeccion["Lec_IdLeccion"]);
       } else {
         # code...
       }
