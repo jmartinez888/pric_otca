@@ -84,7 +84,7 @@
                                             <p data-toggle="tooltip" data-placement="bottom" class="glyphicon glyphicon-ok-sign " title="{$lenguaje.label_habilitado}" style="color: #088A08;"></p>
                                         {/if}
                                         </td>
-                                        {if $_acl->permiso("editar_rol")}
+                                        <!-- {if $_acl->permiso("editar_rol")} -->
                                         <td style=" text-align: center">
                                             {if  $rl.Emitido>=0}
                                             <a data-toggle="tooltip" data-placement="bottom" class="btn btn-default btn-sm glyphicon glyphicon-refresh estado-examen" title="{$lenguaje.tabla_opcion_cambiar_est}" Exa_Porcentaje = "{$rl.Exa_Porcentaje}"
@@ -105,7 +105,7 @@
                                                 class="btn btn-default btn-sm  glyphicon glyphicon-trash confirmar-eliminar-examen" {/if}
                                             id_examen="{$rl.Exa_IdExamen}" data-placement="bottom" > </a>
                                             {/if}
-                                            {/if}
+                                            <!-- {/if} -->
                                         </td>
                                     </tr>
                                 {/foreach}
