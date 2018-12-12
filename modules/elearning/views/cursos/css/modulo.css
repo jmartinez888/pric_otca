@@ -309,6 +309,7 @@ ul{
 }*/
 #espacio_blanco{
     border-radius: 4px;
+    width: 150px;
 }
 #espacio_blanco:focus{
     background-color: #bdffc2 ;
