@@ -305,7 +305,7 @@
                           {/if}
                           {if ($l.Lec_FechaHasta|date_format) == ($smarty.now|date_format) }
                             <a href="{BASE_URL}elearning/cursos/modulo/{$curso.Cur_IdCurso}/{$o.Moc_IdModuloCurso}/{$l.Lec_IdLeccion}">
-                            <div class="tag-terminado"><center><strong>Entrar</strong></center></div>
+                            <div class="tag-terminado"><center><strong>En linea</strong></center></div>
                           {/if}
                       {elseif $l.Lec_Tipo==5 }
                         <div class="tag-terminado"><center><strong>Exámen Concluido</strong></center></div>
