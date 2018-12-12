@@ -92,7 +92,7 @@
                                         <p data-toggle="tooltip" data-placement="bottom" class="glyphicon glyphicon-ok-sign " title="{$lenguaje.label_habilitado}" style="color: #088A08;"></p>
                                     {/if}
                                 </td>               
-                                    {if $_acl->permiso("editar_rol")}
+                                    <!-- {if $_acl->permiso("editar_rol")} -->
                                     <td style=" text-align: center">
                                         <a data-toggle="tooltip" data-placement="bottom" class="btn btn-default btn-sm glyphicon glyphicon-refresh estado-pregunta" title="{$lenguaje.tabla_opcion_cambiar_est}" id_pregunta="{$rl.Pre_IdPregunta}" Pre_Puntos = "{$rl.Pre_Puntos}" estado="{$rl.Pre_Estado}"> </a>
                                         
@@ -109,7 +109,7 @@
                                         id_pregunta="{$rl.Pre_IdPregunta}" data-placement="bottom" > </a>
                                         
                                     </td>
-                                    {/if}
+                                    <!-- {/if} -->
                                 </tr>
                             {/foreach}
                             <tr>
