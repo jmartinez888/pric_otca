@@ -438,6 +438,10 @@
                           <div class="col-xs-12 ficha-mod-title text-center">
                             <a  href="{BASE_URL}elearning/cursos/modulo/{$curso}/{$modulo.Moc_IdModuloCurso}/{$modulo.LECCIONES[0]['Lec_IdLeccion']}" class="btn btn-success ">Iniciar</a>
                           </div>
+                        {else}
+                          <div class="col-xs-12 ficha-mod-title text-center">
+                            <a  href="{BASE_URL}elearning/cursos/modulo/{$curso}/{$modulo.Moc_IdModuloCurso}/{$modulo.LECCIONES[0]['Lec_IdLeccion']}" class="btn btn-danger ">Revisar</a>
+                          </div>
                         {/if}
                     {/if}
 
