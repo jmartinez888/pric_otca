@@ -91,7 +91,7 @@
                   {if isset($leccion) && count($leccion)}
                   <strong>{$leccion["Lec_Titulo"]}</strong>
                   {else}
-                  <strong>Bienvenido al  {$lang->get('str_modulo')}  {$mod_datos.INDEX}: {$mod_datos["Moc_Titulo"]}</strong>
+                  <strong>Bienvenido al  {$lang->get('str_modulo')}  {$mod_datos.INDEX}: {$modulo["Moc_Titulo"]}</strong>
                   {/if}
                 </h3>
               </div>
@@ -429,7 +429,7 @@
                         {/if}
                     {/if}
                 {else}
-                    {$mod_datos["Moc_Descripcion"]}
+                    {$modulo["Moc_Descripcion"]}
                 {/if}
               </div>
               
