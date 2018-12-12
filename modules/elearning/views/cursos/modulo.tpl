@@ -430,9 +430,18 @@
                     {/if}
                 {else}
                     {$modulo["Moc_Descripcion"]}
+
+                    {if isset($o.LECCIONES[0]) && count($o.LECCIONES)>0}
+                        {if $o.LECCIONES[0]['Disponible'] == 0 && $iniciar == 0}
+                          <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10 ficha-mod-title">
+                            <a  href="{BASE_URL}elearning/cursos/modulo/{$curso.Cur_IdCurso}/{$o.Moc_IdModuloCurso}/{$o.LECCIONES[0]['Lec_IdLeccion']}" class="btn btn-success pull-right">Iniciar</a>
+                          </div>
+                        {/if}
+                    {/if}
+
                 {/if}
               </div>
-              
+
               {if isset($leccion) && count($leccion)}
               <div class="panel-footer" style="background-color: transparent;">
                   <div class="row" style="padding-left:0px; padding-right: 0px;">
