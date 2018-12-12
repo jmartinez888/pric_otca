@@ -346,14 +346,14 @@ class cursosController extends elearningController {
       else if($OLeccion["Lec_Tipo"] == 3){
           $examen = $Emodel->getExamenxLeccion($OLeccion["Lec_IdLeccion"]);
 
-          if ($idexamen && $idexamen = $examen["Exa_IdExamen"]) {
+          if ($idexamen && $idexamen == $examen["Exa_IdExamen"]) {
               // $this->_view->setTemplate(LAYOUT_FRONTEND);
               // $this->_view->setJs(array(array(BASE_URL . 'modules/elearning/views/gestion/js/core/util.js'), "index"));
 
               // echo $intento[0]; exit;
               // print_r($examen);
-            echo Session::get("preguntas")[0]["Exa_IdExamen"];
-            echo $idexamen;
+            // echo Session::get("preguntas")[0]["Exa_IdExamen"];
+            // echo $idexamen;
               $peso = $Emodel->getExamenPeso($idexamen);
               if (Session::get("intento") < 1 || Session::get("preguntas")[0]["Exa_IdExamen"] != $idexamen){
                   $preguntas = $Emodel->getPreguntas($idexamen);
