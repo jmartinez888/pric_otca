@@ -201,9 +201,9 @@ $(document).ready(() => {
 
   CHAT.forEach(function(row){
     if(row.usuario==USUARIO.id){
-      AddMensaje(1, row.usuario, moment(row.hora), row.msn);
+      AddMensaje(1, row.usuario, moment(row.fecha), row.msn);
     }else{
-      AddMensaje(2, row.usuario, moment(row.hora), row.msn);
+      AddMensaje(2, row.usuario, moment(row.fecha), row.msn);
     }
   });
 
