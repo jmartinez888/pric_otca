@@ -224,7 +224,7 @@ class formularioController extends elearningController {
 			if ($curso ) {
 				$data['titulo'] = $curso->Cur_Titulo.' - '.$data['titulo'];
 				$frm = $curso->getFormularioActivo();
-				$data['obj_curso'] = $curso;
+				$data['obj_curso'] = $data['curso'] = $curso;
 				if ($frm) {
 					$data['respuesta'] = $frm->getRespuestaByUsuario(Session::get('id_usuario'));
 					$data['formulario'] = $frm;
@@ -326,6 +326,8 @@ class formularioController extends elearningController {
 					$pregunta->Fpr_Orden = $max + 1;
 					$pregunta->Fpr_Pregunta = '';
 					$pregunta->Fpr_Descripcion = '';
+					$pregunta->Fpr_Obligatorio = 0;
+					$pregunta->Fpr_PoseeDescripcion = 0;
 					$pregunta->Fpr_Tipo = $tipo;
 					$pregunta->Frm_IdFormulario = $frm->Frm_IdFormulario;
 					if (isset($_POST['pregunta_padre']) && $_POST['pregunta_padre'] != 0) {
@@ -417,9 +419,22 @@ class formularioController extends elearningController {
 		$frm_id = $this->getInt('formulario_id');
 		if (is_numeric($id) && $id == $frm_id) {
 			$row = Formulario::find($id);
-			$row->Frm_Titulo = $_POST['values']['pregunta'];
-			$row->Frm_Descripcion = $_POST['values']['descripcion'];
-			$row->save();
+			if ($row) {
+				$lecc_frm = $row->leccion_formulario;
+				if ($lecc_frm) {
+					//obtener la leccion para modificar el título y desripción
+					$mod_leccion = $this->loadModel('_gestionLeccion');
+
+					$leccion = $mod_leccion::find($lecc_frm->Lec_IdLeccion);
+					$leccion->Lec_Titulo = $_POST['values']['pregunta'];
+					$leccion->Lec_Descripcion = $_POST['values']['descripcion'];
+					$leccion->save();
+
+				}
+				$row->Frm_Titulo = $_POST['values']['pregunta'];
+				$row->Frm_Descripcion = $_POST['values']['descripcion'];
+				$row->save();
+			}
 		}
 	}
 	public function store () {

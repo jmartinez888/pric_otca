@@ -24,6 +24,9 @@ class Formulario extends Eloquent
   public function preguntasTodas () {
     return $this->hasMany('App\FormularioPreguntas', 'Frm_IdFormulario');
   }
+  public function leccion_formulario () {
+    return $this->hasOne('App\LeccionFormulario', 'Frm_IdFormulario');
+  }
   public function respuesta () {
     return $this->hasOne('App\FormularioUsuarioRespuestas', 'Frm_IdFormulario');
   }

@@ -2,6 +2,7 @@
 
 use App\Formulario;
 use App\FormularioUsuarioRespuestas;
+use App\Leccion;
 use Dompdf\Adapter\CPDF;
 use Dompdf\Dompdf;
 use Dompdf\Exception;
@@ -228,7 +229,7 @@ class cursosController extends elearningController {
       $this->_view->assign("titulo", $curso['Cur_Titulo']);
       $this->_view->assign("certificado", $certificado);
       $this->_view->assign("duracion", $duracion["Total"] . " Lecciones");
-      $this->_view->assign("detalle", $model->getDetalleCurso($curso["Cur_IdCurso"])); 
+      $this->_view->assign("detalle", $model->getDetalleCurso($curso["Cur_IdCurso"]));
       // print_r($model->getDetalleCurso($curso["Cur_IdCurso"]));exit;
       $this->_view->assign("inscripcion",$mInsc->getInscripcion(Session::get("id_usuario"), $id));
       $this->_view->assign("session",Session::get("autenticado"));
@@ -265,7 +266,7 @@ class cursosController extends elearningController {
       $this->_view->setCss(array("curso", "cursolms", "jp-curso"));
       $this->_view->setJs(array(array(BASE_URL . 'modules/elearning/views/gestion/js/core/util.js'), "curso"));
       $this->_view->assign("curso", $curso);
-      $this->_view->assign("detalle", $model->getDetalleCurso($curso["Cur_IdCurso"])); 
+      $this->_view->assign("detalle", $model->getDetalleCurso($curso["Cur_IdCurso"]));
       $this->_view->assign("inscritos", $inscritos);
       $this->_view->assign("titulo", $curso['Cur_Titulo']);
       $this->_view->assign("certificado", $certificado);
@@ -313,7 +314,7 @@ class cursosController extends elearningController {
 
       $datos_modulo = $Mmodel->getModuloDatos($modulo);
 
-      
+
       // if($OLeccion==null){
       //   $this->redireccionar("elearning/cursos");
       // }
@@ -329,7 +330,7 @@ class cursosController extends elearningController {
       //     $tareas[$i]["Archivos"] = $Tmodel->getArchivos($tareas[$i]["Tra_IdTrabajo"]);
       //   }
       // }
-      if ($leccion) {        
+      if ($leccion) {
           $OLeccion = $Lmodel->getLeccion($leccion, $modulo, Session::get("id_usuario"));
           $clave = array_search($OLeccion["Lec_IdLeccion"], array_column($lecciones, "Lec_IdLeccion"));
           // print($lecciones);
@@ -341,7 +342,7 @@ class cursosController extends elearningController {
       } else {
         # code...
       }
-      
+
       if (isset($OLeccion) && isset($OLeccion["Lec_Tipo"])) {
           if($OLeccion["Lec_Tipo"] == 1 || $OLeccion["Lec_Tipo"] == 6){
               //$Lmodel->RegistrarProgreso($OLeccion["Lec_IdLeccion"], Session::get("id_usuario"));
@@ -463,10 +464,10 @@ class cursosController extends elearningController {
                               if ($this->getSql('rpta_alt'.$i) && strlen(trim($this->getSql('rpta_alt'.$i)," ")) > 0) {
                                 $puntosrpta = $preguntas[$i]["Pre_Puntos"];
                                 $puntos = $puntos + $puntosrpta;
-                              } 
+                              }
 
                               $Emodel->insertRespuesta($this->getInt('id_preg'.$i), Session::get("idintento"), NULL, NULL, $this->getSql('rpta_alt'.$i),$puntosrpta);
-                          } else{
+                          } else {
                               $cont2=0;
                               // print_r($preguntas[$i]['Alt']);
                               for($j=0; $j < count($preguntas[$i]['Alt']); $j++){
@@ -567,14 +568,22 @@ class cursosController extends elearningController {
           else if ($OLeccion["Lec_Tipo"] == 5){
             $this->redireccionar("elearning/clase/examen/" . $curso . "/" .$modulo  . "/" . $OLeccion["Lec_IdLeccion"]);
             exit;
-          } 
+          } else if ($OLeccion['Lec_Tipo'] == 10) {
+            $temp_leccion = Leccion::find($OLeccion['Lec_IdLeccion']);
+            $data['formulario'] = $frm = $temp_leccion->leccion_formulario->formulario;
+            $data['respuesta'] = $frm->getRespuestaByUsuario(Session::get('id_usuario'));
+            $data['curso'] = $data['obj_curso'] = $obj_curso;
+            // dd($data['formulario']->preguntas);
+            $this->_view->assign($data);
+            // $formulario = $
+          }
 
 
       } else {
-          
+
       }
-      
-          
+
+
       // print_r($Mmodel->getModulosCursoLMS($curso, Session::get("id_usuario"))[$datos_modulo['INDEX']-1]);
       $obj_modulo = $Mmodel->getModulo($modulo);
       $this->_view->setTemplate(LAYOUT_FRONTEND);
@@ -599,7 +608,7 @@ class cursosController extends elearningController {
       $this->_view->setCss(array('modulo', 'jp-modulo'));
       $this->_view->setJs(array(//array(BASE_URL . 'modules/elearning/views/gestion/js/core/util.js'),
       'modulo'));
-      $this->_view->renderizar('modulo');
+      $this->_view->render('modulo');
   }
 
   public function calendario_curso($id = ""){
@@ -746,7 +755,7 @@ class cursosController extends elearningController {
                   $this->redireccionar("elearning/cursos/modulo/" . $curso . "/" . $posibleSiguienteMod["Moc_IdModuloCurso"] );
                   // $this->redireccionar("elearning/cursos/curso/" . $curso);
                 }
-                
+
             } else{
               // echo $curso ;exit;
               $this->redireccionar("elearning/cursos/curso/" . $curso);
