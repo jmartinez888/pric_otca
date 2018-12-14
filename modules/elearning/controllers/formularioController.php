@@ -103,6 +103,7 @@ class formularioController extends elearningController {
 					  $preguntas = $frm->preguntasTodas;
 					  $success_insert = true;
 					  $pre_respuestas = [];
+					  dd($preguntas);
 					  dd($_POST);
 					  foreach ($_POST as $key => $value) {
 					  	$t = explode('_', $key);
