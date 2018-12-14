@@ -97,6 +97,7 @@ class formularioController extends elearningController {
 			$curso = $mod_curso::find($curso_id);
 			if ($curso) {
 				$frm = $curso->getFormularioActivo();
+				dd($frm);
 				if ($frm) {
 					$respuesta = $frm->getRespuestaByUsuario(Session::get('id_usuario'));
 					if ($respuesta == null) {
