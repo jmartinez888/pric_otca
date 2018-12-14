@@ -573,6 +573,7 @@ class cursosController extends elearningController {
             $data['formulario'] = $frm = $temp_leccion->leccion_formulario->formulario;
             $data['respuesta'] = $frm->getRespuestaByUsuario(Session::get('id_usuario'));
             $data['curso'] = $data['obj_curso'] = $obj_curso;
+            $data['redireccion'] = 'elearning/cursos/modulo/'.$curso.'/'.$modulo.'/'.$OLeccion['Lec_IdLeccion'];
             // dd($data['formulario']->preguntas);
             $this->_view->assign($data);
             // $formulario = $

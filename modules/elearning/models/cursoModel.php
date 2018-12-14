@@ -30,7 +30,7 @@ class cursoModel extends Model {
       return $this->hasMany('App\Formulario', 'Cur_IdCurso');
     }
     public function getFormularioActivo () {
-      return $this->formularios()->activos()->first();
+      return $this->formularios()->activos()->tipoDefault()->first();
     }
     //END
     public function getCursoID($id){
@@ -126,7 +126,7 @@ class cursoModel extends Model {
       if(count($array)){
         return $array[0];
       }else{
-        return array("Docente"=>"","Cur_Vacantes"=>"0","Matriculados"=>"0");     
+        return array("Docente"=>"","Cur_Vacantes"=>"0","Matriculados"=>"0");
       }
     }
 

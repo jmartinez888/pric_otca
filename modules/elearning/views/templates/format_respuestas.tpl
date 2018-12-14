@@ -1,9 +1,15 @@
 <form role="form" action="{$_layoutParams.root}elearning/formulario/store_respuesta/{$obj_curso['Cur_IdCurso']}" method="post" enctype="multipart/form-data" id="frm_enviar_respuesta">
+
                   <div class="form-group">
                     <h1>{$formulario->Frm_Titulo}</h1>
                     <p>{$formulario->Frm_Descripcion}</p>
                   </div>
                   <hr>
+
+                  <input type="hidden" name="formulario_id" value="{$formulario.Frm_IdFormulario}">
+                  {if isset($redireccion)}
+                    <input type="hidden" name="redireccion" value="{$redireccion}">
+                  {/if}
                   {foreach $formulario->preguntas as $pre}
                     <div class="form-group">
                       {if ($pre->Fpr_Tipo == 'titulo_a' || $pre->Fpr_Tipo == 'titulo_b')}

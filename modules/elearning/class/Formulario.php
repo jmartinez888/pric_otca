@@ -18,6 +18,10 @@ class Formulario extends Eloquent
   public function scopeActivos ($query) {
     return $query->where('Frm_Estado', 1);
   }
+
+  public function scopeTipoDefault ($query) {
+    return $query->where('Frm_Tipo', 0);
+  }
   public function preguntas () {
     return $this->hasMany('App\FormularioPreguntas', 'Frm_IdFormulario')->whereNull('Fpr_Parent')->orderBy('Fpr_Orden', 'asc');
   }
