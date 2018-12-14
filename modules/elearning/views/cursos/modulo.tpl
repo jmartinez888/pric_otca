@@ -437,7 +437,7 @@
                           {include 'format_respuestas.tpl'}
                         {else}
                           <div class="col-lg-12">
-                            <h3>Formulario ya fue respondido</h3>
+                            <h3>{$formulario->Frm_Mensaje}</h3>
                           </div>
                         {/if}
                       {else}
