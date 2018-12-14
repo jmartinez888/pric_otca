@@ -19,12 +19,12 @@ class Correo
         // Log del debug SMTP en formato HTML 
         $this->mail->Debugoutput = 'html';
         // $this->mail->Host = 'email-smtp.us-west-2.amazonaws.com';
-        $this->mail->Host = 'in-v3.mailjet.com';
+        $this->mail->Host = 'smtp.sendgrid.net';
         $this->mail->SMTPAuth = true;
         // $this->mail->Username = 'AKIAJ4CISRDL4GEUDMXA';
-        $this->mail->Username = 'cafc285eeb726418e5a33495991c9516';
+        $this->mail->Username = 'apikey';
         // $this->mail->Password = 'AqP5InJ8BqxcNu9yMvO02yOwiwpbr61aaRbV0h99PXxX';
-        $this->mail->Password = 'f65683300e23445d5f8e5e85630461ee';
+        $this->mail->Password = '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';
         $this->mail->SMTPSecure = 'tls'; //tls or ssl
         $this->mail->Port = 587; //587 or 465
 
@@ -60,7 +60,10 @@ class Correo
         $this->mail->Subject = $Subject;
 
         $this->mail->IsHTML(true);
+        //$this->mail->MsgHTML = $this->body_html($contenido);
+        //$this->mail->AltBody = $this->body_html($contenido);
         $this->mail->Body   = $this->body_html($contenido);
+     
 
         $this->mail->SetFrom($fromEmail, $fromName);
         // $this->mail->FromName = 'Jhon Martinez - PRIC';
