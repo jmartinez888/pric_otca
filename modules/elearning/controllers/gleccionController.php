@@ -22,7 +22,40 @@ class gleccionController extends elearningController {
         $this->service = new ServiceResult();
         $this->examen = $this->loadModel("examen");
     }
+    public function store_encuesta ($curso_id) {
+        $this->_acl->autenticado();
+        // dd($_POST);
+        if (is_numeric($curso_id) && $curso_id != 0) {
+            $titulo = $this->getTexto('titulo');
+            $desc = $this->getTexto('descripcion');
+            $tiempo = $this->getTexto('tiempo');
+            $modulo = $this->getTexto('modulo');
+            if ($modulo != 0) {
+                $Mmodel = $this->loadModel("_gestionLeccion");
+                $leccion_id = $Mmodel->insertLeccion($modulo, 10, $titulo, $desc, $tiempo);
 
+                    //registrar un formulario y su relación
+                $frm = new Formulario();
+                $frm->Frm_Titulo = $titulo;
+                $frm->Frm_Descripcion = $desc;
+                $frm->Cur_IdCurso = $curso_id;
+                $frm->Frm_Titulo = $titulo;
+                $frm->Frm_Estado = 1;
+                $frm->Frm_Tipo = 1;
+                $frm->Frm_Mensaje = 'Gracias por contestar esta encuesta';
+                if ($frm->save()) {
+                    $lf = new LeccionFormulario();
+                    $lf->Lec_IdLeccion = $leccion_id;
+                    $lf->Frm_IdFormulario = $frm->Frm_IdFormulario;
+                    if ($lf->save()) {
+                        $this->redireccionar('elearning/gleccion/encuestas/'.$curso_id);
+
+                    }
+                }
+
+            }
+        }
+    }
     public function agregar_encuesta ($curso_id) {
         $this->_acl->autenticado();
         // dd($this->_acl->getPermisos());
@@ -214,11 +247,13 @@ class gleccionController extends elearningController {
                     $frm->Frm_Titulo = $titulo;
                     $frm->Frm_Estado = 1;
                     $frm->Frm_Tipo = 1;
+                    $frm->Frm_Mensaje = 'Gracias por contestar esta encuesta';
                     if ($frm->save()) {
                         $lf = new LeccionFormulario();
                         $lf->Lec_IdLeccion = $leccion_id;
                         $lf->Frm_IdFormulario = $frm->Frm_IdFormulario;
                         if ($lf->save()) {
+
 
                         }
                     }

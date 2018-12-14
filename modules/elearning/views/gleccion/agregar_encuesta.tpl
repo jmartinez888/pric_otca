@@ -54,7 +54,7 @@
 					  </div>
 					  <div class="form-group">
 					    <label for="modulo">Módulo</label>
-					    <select name="" id="modulo" class="form-control" required="required">
+					    <select name="modulo" id="modulo" class="form-control" required="required">
 					    	{foreach $modulos as $mod}
 					    		<option value="{$mod.Moc_IdModuloCurso}">{$mod.Moc_Titulo}</option>
 					    	{/foreach}
