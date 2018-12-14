@@ -3,6 +3,7 @@
 use App\Formulario;
 use App\Leccion;
 use App\LeccionFormulario;
+use Illuminate\Database\Capsule\Manager as DB;
 
 /**
  * Description of loginController
@@ -21,20 +22,55 @@ class gleccionController extends elearningController {
         $this->service = new ServiceResult();
         $this->examen = $this->loadModel("examen");
     }
+
+    public function agregar_encuesta ($curso_id) {
+        $this->_acl->autenticado();
+        // dd($this->_acl->getPermisos());
+        if ($this->_acl->tienePermisos('crear_encuestas_leccion')) {
+            $this->_view->setTemplate(LAYOUT_FRONTEND);
+
+            $data = [];
+            $lang = $this->_view->getLenguaje(['elearning_cursos', 'elearning_formulario_responder'], false, true);
+            if (is_numeric($curso_id) && $curso_id != 0) {
+                $mod_curso = $this->loadModel("_gestionCurso");
+                $curso = $mod_curso->getCursoById($curso_id);
+                $mod_modulo = $this->loadModel("_gestionModulo");
+                $modulos = $mod_modulo->getModulos($curso_id);
+                $data['curso'] = $curso;
+                $data['modulos'] = $modulos;
+                $data['idcurso'] = $curso['Cur_IdCurso'];
+                $data['other_tags'] = ['Agregar encuestas'];
+                $this->_view->assign($data);
+                $this->_view->render('agregar_encuesta');
+            }
+        } else {
+             $this->redireccionar('');
+        }
+    }
+
     public function eliminar_encuesta ($leccion_id) {
         $this->_acl->autenticado();
+        $res = ['success' => false, 'msg' => ''];
         if ($this->_acl->tienePermisos('crear_encuestas_leccion')) {
             $lecc_form = LeccionFormulario::findByLeccion($leccion_id);
             if ($lecc_form) {
                 $leccion = Leccion::find($lecc_form->Lec_IdLeccion);
-                if ($lecc_frm) {
-
-                }
+                $formulario = Formulario::find($lecc_form->Frm_IdFormulario);
+                DB::transaction(function () use($lecc_form, $leccion, $formulario, &$res) {
+                    if ($lecc_form) {
+                        $lecc_form->delete();
+                        $leccion->delete();
+                        $formulario->delete();
+                        $res['success'] = true;
+                        $res['msg'] = 'Elemento eliminado';
+                    }
+                });
 
             }
         } else {
-            $this->redireccionar('');
+            $res['msg'] = 'No posee permisos';
         }
+        $this->_view->responseJson($res);
     }
     public function encuestas ($curso_id) {
         $this->_acl->autenticado();
@@ -57,6 +93,7 @@ class gleccionController extends elearningController {
                 $data['encuestas'] = $encuestas;
                 $data['active'] = 'encuestas';
                 $data['curso'] = $curso;
+                $data['idcurso'] = $curso['Cur_IdCurso'];
                 $data['other_tags'] = [$lang->get('str_encuestas')];
 
                 $data['titulo'] = $lang->get('str_encuestas').' - '.str_limit($curso['Cur_Titulo'], 20);
