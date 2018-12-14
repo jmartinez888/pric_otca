@@ -1,6 +1,7 @@
 <?php
 
 use App\Formulario;
+use App\Leccion;
 use App\LeccionFormulario;
 
 /**
@@ -19,6 +20,54 @@ class gleccionController extends elearningController {
         $this->getLibrary("ServiceResult");
         $this->service = new ServiceResult();
         $this->examen = $this->loadModel("examen");
+    }
+    public function eliminar_encuesta ($leccion_id) {
+        $this->_acl->autenticado();
+        if ($this->_acl->tienePermisos('crear_encuestas_leccion')) {
+            $lecc_form = LeccionFormulario::findByLeccion($leccion_id);
+            if ($lecc_form) {
+                $leccion = Leccion::find($lecc_form->Lec_IdLeccion);
+                if ($lecc_frm) {
+
+                }
+
+            }
+        } else {
+            $this->redireccionar('');
+        }
+    }
+    public function encuestas ($curso_id) {
+        $this->_acl->autenticado();
+        if ($this->_acl->tienePermisos('crear_encuestas_leccion')) {
+            $this->_view->setTemplate(LAYOUT_FRONTEND);
+            $data = [];
+            $lang = $this->_view->getLenguaje(['elearning_cursos', 'elearning_formulario_responder'], false, true);
+            if (is_numeric($curso_id) && $curso_id != 0) {
+                $mod_curso = $this->loadModel("_gestionCurso");
+                $curso = $mod_curso->getCursoById($curso_id);
+                $mod_modulo = $this->loadModel("_gestionModulo");
+                $mod_leccion = $this->loadModel("_gestionLeccion");
+                $modulos = $mod_modulo->getModulos($curso_id);
+                $mod_ids = [];
+                foreach ($modulos as $key => $value) {
+                    $mod_ids[] = $value['Moc_IdModuloCurso'];
+                }
+                $encuestas = Leccion::getByModulos($mod_ids)->getEncuestas()->get();
+                // dd($encuestas);
+                $data['encuestas'] = $encuestas;
+                $data['active'] = 'encuestas';
+                $data['curso'] = $curso;
+                $data['other_tags'] = [$lang->get('str_encuestas')];
+
+                $data['titulo'] = $lang->get('str_encuestas').' - '.str_limit($curso['Cur_Titulo'], 20);
+
+                $this->_view->assign($data);
+                $this->_view->render('encuestas');
+            }
+        } else {
+            $this->redireccionar('');
+        }
+
     }
     public function encuesta ($leccion_id) {
         $this->_acl->autenticado();
