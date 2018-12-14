@@ -12,6 +12,12 @@
             <div class="tag-url" id="tag-url-leccion">{$leccion.Lec_Titulo}</div>
             {/if}
           {/if}
+          {if isset($other_tags)}
+            {foreach $other_tags as $tags}
+              <i class="glyphicon glyphicon-menu-right"></i>&nbsp;&nbsp;
+              <div class="tag-url">{$tags}</div>
+            {/foreach}
+          {/if}
       </h3>
     </div>
   </div>
