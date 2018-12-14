@@ -54,6 +54,24 @@
   background: gray !important;
 }
 
+.div_en_linea{
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: content;
+  height: 20px;
+}
+.en_linea{
+  
+  border: solid 1px #fcfefc;
+  background-color: #1ac008;
+  width: 20px;
+  height: 20px;
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
+}
+
 @media (max-width: 767px) {
 
   .ficha-leccion{

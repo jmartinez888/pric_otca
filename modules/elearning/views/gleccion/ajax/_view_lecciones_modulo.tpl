@@ -25,14 +25,14 @@
 {include file='modules/elearning/views/gestion/menu/tag_url.tpl'}
 <!--  Tabs-->
 <div class="col-xs-12">
-  <ul class="nav nav-tabs">
-    <li role="presentation" class="active" id="item_modulo"><a href="#">MÓDULO</a></li>
-    <li role="presentation" id="item_lecciones" ><a href="#">LECCIONES</a></li>
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active" id="item_modulo"><a href="#item" aria-controls="item">MÓDULO</a></li>
+    <li role="presentation" id="item_lecciones" ><a href="#lecciones" aria-controls="lecciones">LECCIONES</a></li>
   </ul>
 </div>
 
 <!-- Modulo -->
-<div {if isset($active) && $active == "mod" } class="col-xs-12  div_modulo display-block" {else} class="col-xs-12  div_modulo" {/if} id="panelModulos">
+<div {if isset($active) && $active == "mod" } class="col-xs-12  div_modulo display-block tab-pane" {else} class="col-xs-12  div_modulo tab-pane" {/if} id="item" role="tabpanel">
   <div class="panel panel-default" style="border-top: 0; border-top-left-radius: 0; border-top-right-radius: 0;">
     <!-- <div class="panel-heading">
       <h3 class="panel-title">
@@ -45,7 +45,7 @@
       <div class="col-xs-12"><strong>Titulo</strong></div>
       <div class="col-xs-12">
         <input hidden="hidden" id="hidden_curso" name="id_curso" value="{$curso.Cur_IdCurso}" />
-        <input name="id" id="hidden_modulo" hidden="hidden" value="{$modulo.Moc_IdModuloCurso}" />        
+        <input name="id" id="hidden_modulo" hidden="hidden" value="{$modulo.Moc_IdModuloCurso}" />
         <input class="form-control" name="titulo" value="{$modulo.Moc_Titulo}" />
       </div>
       <div class="col-xs-12 margin-t-10"><strong>Descripcion</strong></div>
@@ -53,7 +53,7 @@
         <textarea class="form-control" name="descripcion">{$modulo.Moc_Descripcion}</textarea>
       </div>
       <div class="col-xs-12 margin-t-10"><strong>Tiempo de Dedicación</strong></div>
-      <div class="col-xs-12">    
+      <div class="col-xs-12">
         <input class="form-control" name="dedicacion" value="{$modulo.Moc_TiempoDedicacion}" />
       </div>
       </form>
@@ -65,7 +65,7 @@
 </div>
 
 <!-- Lecciones -->
-<div class="col-xs-12 div_lecciones" id="panelModulos">
+<div class="col-xs-12 div_lecciones tab-pane" id="lecciones" role="tabpanel">
   <div class="panel panel-default" style="border-top: 0; border-top-left-radius: 0; border-top-right-radius: 0;">
     <!-- <div class="panel-heading">
       <h3 class="panel-title">
@@ -90,15 +90,18 @@
                       <td>{substr($c.Lec_Descripcion, 0, 100)}...</td>
                       <td>
                         <input class="hidden_IdLeccion estado" value="{$c.Lec_IdLeccion}"/>
-                        
-                        <button class="btnFinalizarReg"><i class="glyphicon glyphicon-pencil"></i></button>
+                        {if $c['Lec_Tipo'] == 10}<!-- encuesta -->
+                          <a href="{$_layoutParams.root}elearning/gleccion/encuesta/{$c['Lec_IdLeccion']}" class="btn btn-default btn-sm btnFinalizarReg"><i class="glyphicon glyphicon-pencil"></i></a>
+                        {else}
+                          <button class="btn btn-default btn-sm btnFinalizarReg"><i class="glyphicon glyphicon-pencil"></i></button>
+                        {/if}
 
                         {if $c.Lec_Estado == 1 }
-                        <button class="btnDeshabilitar"><i class="glyphicon glyphicon-ok"></i></button>
+                        <button class="btn btn-default btn-sm btnDeshabilitar"><i class="glyphicon glyphicon-ok"></i></button>
                         {else}
-                        <button class="btnHabilitar"><i class="glyphicon glyphicon-remove"></i></button>
+                        <button class="btn btn-default btn-sm btnHabilitar"><i class="glyphicon glyphicon-remove"></i></button>
                         {/if}
-                        <button class="btnEliminar"><i class="glyphicon glyphicon-trash"></i></button>
+                        <button class="btn btn-default btn-sm btnEliminar"><i class="glyphicon glyphicon-trash"></i></button>
                       </td>
                   </tr>
               {/foreach}
@@ -106,7 +109,7 @@
         {else}
           <div>Aun no registraste ninguna lección al módulo</div>
         {/if}
-        
+
         <div class="col-xs-12">
           <button class="btn btn-success pull-right" type="button" id="btn_nueva_leccion">
             <i class="glyphicon glyphicon-book"></i> Nueva Lección
@@ -150,7 +153,7 @@
           <textarea class="form-control" name="descripcion" id="inDescripcion" rows="10"></textarea>
         </div>
         <div class="col-xs-12 margin-t-10"><strong>Tiempo de Dedicación</strong></div>
-        <div class="col-xs-12">    
+        <div class="col-xs-12">
           <input class="form-control" name="dedicacion" />
         </div>
       </form>

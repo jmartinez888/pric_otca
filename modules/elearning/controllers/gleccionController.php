@@ -1,5 +1,9 @@
 <?php
 
+use App\Formulario;
+use App\Leccion;
+use App\LeccionFormulario;
+
 /**
  * Description of loginController
  * @author ROLORO
@@ -17,7 +21,107 @@ class gleccionController extends elearningController {
         $this->service = new ServiceResult();
         $this->examen = $this->loadModel("examen");
     }
+    public function eliminar_encuesta ($leccion_id) {
+        $this->_acl->autenticado();
+        if ($this->_acl->tienePermisos('crear_encuestas_leccion')) {
+            $lecc_form = LeccionFormulario::findByLeccion($leccion_id);
+            if ($lecc_form) {
+                $leccion = Leccion::find($lecc_form->Lec_IdLeccion);
+                if ($lecc_frm) {
 
+                }
+
+            }
+        } else {
+            $this->redireccionar('');
+        }
+    }
+    public function encuestas ($curso_id) {
+        $this->_acl->autenticado();
+        if ($this->_acl->tienePermisos('crear_encuestas_leccion')) {
+            $this->_view->setTemplate(LAYOUT_FRONTEND);
+            $data = [];
+            $lang = $this->_view->getLenguaje(['elearning_cursos', 'elearning_formulario_responder'], false, true);
+            if (is_numeric($curso_id) && $curso_id != 0) {
+                $mod_curso = $this->loadModel("_gestionCurso");
+                $curso = $mod_curso->getCursoById($curso_id);
+                $mod_modulo = $this->loadModel("_gestionModulo");
+                $mod_leccion = $this->loadModel("_gestionLeccion");
+                $modulos = $mod_modulo->getModulos($curso_id);
+                $mod_ids = [];
+                foreach ($modulos as $key => $value) {
+                    $mod_ids[] = $value['Moc_IdModuloCurso'];
+                }
+                $encuestas = Leccion::getByModulos($mod_ids)->getEncuestas()->get();
+                // dd($encuestas);
+                $data['encuestas'] = $encuestas;
+                $data['active'] = 'encuestas';
+                $data['curso'] = $curso;
+                $data['other_tags'] = [$lang->get('str_encuestas')];
+
+                $data['titulo'] = $lang->get('str_encuestas').' - '.str_limit($curso['Cur_Titulo'], 20);
+
+                $this->_view->assign($data);
+                $this->_view->render('encuestas');
+            }
+        } else {
+            $this->redireccionar('');
+        }
+
+    }
+    public function encuesta ($leccion_id) {
+        $this->_acl->autenticado();
+        // dd($this->_acl->getPermisos());
+        if ($this->_acl->tienePermisos('crear_encuestas_leccion')) {
+            $this->_view->setTemplate(LAYOUT_FRONTEND);
+
+            $data = [];
+            $lang = $this->_view->getLenguaje(['elearning_cursos', 'elearning_formulario_responder'], false, true);
+            if (is_numeric($leccion_id) && $leccion_id != 0) {
+                $mod_leccion = $this->loadModel("_gestionLeccion");
+                $mod_modulo = $this->loadModel("_gestionModulo");
+                $leccion = $mod_leccion->getLeccionId($leccion_id);
+                $modulo = $mod_modulo->getModuloId($leccion["Moc_IdModuloCurso"]);
+                // dd($modulo);
+
+
+                if ($leccion) {
+
+                    $data["modulo"] =  $modulo;
+                    $data["leccion"] =  $leccion;
+                    $data['idLeccion'] =  $leccion_id;
+
+                    $mod_curso = $this->loadModel("_gestionCurso");
+
+                    $curso = $mod_curso->getCursoById($modulo['Cur_IdCurso']);
+                    $data['titulo'] = $lang->get('str_encuesta').' - '.str_limit($curso['Cur_Titulo'], 20);
+                    // $data['active'] = 'examen';
+
+                    $data['idcurso'] = $curso['Cur_IdCurso'];
+                    $data['curso'] = $curso;
+
+                    $lecc_frm = LeccionFormulario::findByLeccion($leccion_id);
+                    // dd($lecc_frm->formulario);
+                    $data['formulario'] = null;
+                    $data['respuestas'] = null;
+                    if ($lecc_frm)
+                        $formulario = $data['formulario'] = $lecc_frm->formulario;
+                        if (isset($formulario) && $formulario != null) {
+                            $data['respuestas'] = $formulario->respuestas;
+                        }
+
+                    //buscar formulario
+                }
+
+
+            }
+
+            $this->_view->assign($data);
+            $this->_view->render('encuesta');
+        } else {
+            $this->redireccionar('');
+        }
+    }
     public function _view_lecciones_modulo($id_curso = 0, $id_modulo = 0){
         // $curso = $this->getTexto("curso");
         // $modulo = $this->getTexto("modulo");
@@ -45,18 +149,45 @@ class gleccionController extends elearningController {
         $this->_view->assign("lecciones", $lecciones);
         $this->_view->assign("modulo", $modulo);
         $this->_view->assign("curso", $curso);
+
+        $this->_view->assign("titulo", $modulo['Moc_Titulo'].' - '.$curso['Cur_Titulo']);
         $this->_view->render("ajax/_view_lecciones_modulo");
     }
 
     public function _registrar_leccion(){
+        // dd($_REQUEST);
         $id = $this->getTexto("id");
-        $tipo = $this->getTexto("tipo");
-        $titulo = $this->getTexto("titulo");
-        $descripcion = $this->getTexto("descripcion");
-        $dedicacion = $this->getTexto("dedicacion");
+        if (is_numeric($id) && $id != 0) {
+            $mod_modulo = $this->loadModel("_gestionModulo");
+            $modulo = $mod_modulo->getModuloId($id);
+            if ($modulo) {
+                $tipo = $this->getTexto("tipo");
+                $titulo = $this->getTexto("titulo");
+                $descripcion = $this->getTexto("descripcion");
+                $dedicacion = $this->getTexto("dedicacion");
 
-        $Mmodel = $this->loadModel("_gestionLeccion");
-        $Mmodel->insertLeccion($id, $tipo, $titulo, $descripcion, $dedicacion);
+                $Mmodel = $this->loadModel("_gestionLeccion");
+                $leccion_id = $Mmodel->insertLeccion($id, $tipo, $titulo, $descripcion, $dedicacion);
+                if ($tipo == 10) {
+                    //registrar un formulario y su relación
+                    $frm = new Formulario();
+                    $frm->Frm_Titulo = $titulo;
+                    $frm->Frm_Descripcion = $descripcion;
+                    $frm->Cur_IdCurso = $modulo['Cur_IdCurso'];
+                    $frm->Frm_Titulo = $titulo;
+                    $frm->Frm_Estado = 1;
+                    if ($frm->save()) {
+                        $lf = new LeccionFormulario();
+                        $lf->Lec_IdLeccion = $leccion_id;
+                        $lf->Frm_IdFormulario = $frm->Frm_IdFormulario;
+                        if ($lf->save()) {
+
+                        }
+                    }
+                }
+
+            }
+        }
 
         $this->service->Success("Se resgistó el módulo con exito");
         $this->service->Send();
@@ -223,6 +354,8 @@ class gleccionController extends elearningController {
                 $this->_view->assign("Lec_Tipo",$leccion["Lec_Tipo"]);
                 $view = "ajax/_view_1";
                 break;
+
+
         }
         $this->_view->render($view);
     }

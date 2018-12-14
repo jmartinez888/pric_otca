@@ -225,6 +225,9 @@
   .side-menu2{
     border-left: 5px solid #00979c;
   }
+  a.side-menu2{
+    display: block;
+  }
 
   .side-menu2:hover, .side-menu2.active {
     border-left: 5px solid #355D3A;
@@ -485,6 +488,15 @@
           <span> Examen </span>
         </li>
       </div>
+    </ul>
+    <ul>
+      <a href="{$_layoutParams.root}elearning/gleccion/encuestas" class="side-menu2 {if isset($active) && $active == 'encuestas'}active{/if}">
+        <li class="side-menu side-menu-center-mid" style="position: relative">
+          <i class="fa fa-edit"></i>
+          &nbsp;
+          <span> Encuestas </span>
+        </li>
+      </a>
     </ul>
     <ul id="item-anuncios-curso">
       <div class="side-menu2 {if $active == 'anuncios'}active{/if}">

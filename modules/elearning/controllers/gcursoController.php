@@ -23,30 +23,34 @@ class gcursoController extends elearningController {
   public function formulario ($curso_id) {
     $this->_acl->autenticado();
     //verificar que el rol sea de docente o permiso de editar formulario
-    $lang = $this->_view->getLenguaje(['elearning_gcurso', 'elearning_formulario_responder'], false, true);
+    if ($this->_acl->tienePermisos('crear_formulario')) {
+      $lang = $this->_view->getLenguaje(['elearning_gcurso', 'elearning_formulario_responder'], false, true);
 
-    $data['titulo'] = $lang->get('elearning_gcurso_gestion_formulario');
-    $this->_view->setTemplate(LAYOUT_FRONTEND);
-    $curso = $this->curso->getCursoXId($curso_id);
-    if ($curso['Moa_IdModalidad'] == 3) {
-      $formulario = Formulario::getByCurso($curso['Cur_IdCurso']);
-      $formulario = $formulario->count() > 0 ? $formulario[0] : null;
-      $data['respuestas'] = [];
-      if ($formulario) {
-        $data['respuestas'] = $formulario->respuestas;
+      $data['titulo'] = $lang->get('elearning_gcurso_gestion_formulario');
+      $this->_view->setTemplate(LAYOUT_FRONTEND);
+      $curso = $this->curso->getCursoXId($curso_id);
+      if ($curso['Moa_IdModalidad'] == 3) {
+        $formulario = Formulario::getByCurso($curso['Cur_IdCurso']);
+        $formulario = $formulario->count() > 0 ? $formulario[0] : null;
+        $data['respuestas'] = [];
+        if ($formulario) {
+          $data['respuestas'] = $formulario->respuestas;
 
+        }
+        // dd($formulario);
+        // $data_vue = [
+        //   'formulario_id' => $formulario != null ? $formulario : null
+        // ];
+        $data['menu'] = 'curso';
+        $data['curso'] = $curso;
+        $data['titulo'] = $curso['Cur_Titulo'].' - '.$data['titulo'];
+        $data['formulario'] = $formulario;
+        // $data['data_frm'] = $data_vue;
+        $this->_view->assign($data);
+        $this->_view->render('formulario');
+      } else {
+        $this->redireccionar('elearning/gestion');
       }
-      // dd($formulario);
-      // $data_vue = [
-      //   'formulario_id' => $formulario != null ? $formulario : null
-      // ];
-      $data['menu'] = 'curso';
-      $data['curso'] = $curso;
-      $data['titulo'] = $curso['Cur_Titulo'].' - '.$data['titulo'];
-      $data['formulario'] = $formulario;
-      // $data['data_frm'] = $data_vue;
-      $this->_view->assign($data);
-      $this->_view->render('formulario');
     } else {
       $this->redireccionar('elearning/gestion');
     }
