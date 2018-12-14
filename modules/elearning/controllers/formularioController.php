@@ -460,6 +460,7 @@ class formularioController extends elearningController {
 					$new->Frm_Titulo = 'Titulo';
 					$new->Frm_Descripcion = '';
 					$new->Cur_IdCurso = $curso_id;
+					$new->Frm_Mensaje = 'Gracias por contestar esta encuesta';
 					if ($new->save()) {
 						$this->redireccionar('elearning/gcurso/formulario/'.$curso_id);
 					}
