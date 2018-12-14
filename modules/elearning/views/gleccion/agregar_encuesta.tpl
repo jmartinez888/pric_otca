@@ -27,7 +27,7 @@
         </div>
     </div>
     <div class="col-sm-12 pb-4">
-      <a href="{$_layoutParams.root}elearning/gleccion/_view_finalizar_registro/{$idcurso}" class="btn btn-danger margin-t-10 " id="btn_nuevo" ><i class="glyphicon glyphicon-triangle-left"></i> Regresar</a>
+      <a href="{$_layoutParams.root}elearning/gleccion/encuestas/{$idcurso}" class="btn btn-danger margin-t-10 " id="btn_nuevo" ><i class="glyphicon glyphicon-triangle-left"></i> Regresar</a>
     </div>
 
 		<div class="col-sm-12">
@@ -35,38 +35,33 @@
         <div class="panel-heading cabecera-titulo">
           <h3 class="panel-title">
             <i class="glyphicon glyphicon-list-alt"></i>&nbsp;&nbsp;
-            <strong>{$lang->get('str_encuestas')}</strong>
+            <strong>{$lang->get('str_registro')}</strong>
           </h3>
         </div>
         <div class="panel-body" style=" margin: 15px 25px">
-          <div class="col-lg-12" id="formulario_encuestas_vue">
-          	<a href="{$_layoutParams.root}elearning/gleccion/agregar_encuesta/{$curso['Cur_IdCurso']}" class="btn btn-success margin-t-10 " id="" ><i class="glyphicon glyphicon-triangle-plus"></i> Agregar encuesta</a>
-            <div class="table-responsive" style="width: 100%">
-              <table class="table" id="tblMisCursos">
-                <thead>
-                  <tr>
-                    <th>{$lang->get('str_encuesta')}</th>
-                    <th>{$lang->get('str_descripcion')}</th>
-                    <th>{$lang->get('str_modulo')}</th>
-                    <th>{$lang->get('str_operacion')}</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {foreach $encuestas as $item}
-                    <tr>
-                      <td>{$item->Lec_Titulo}</td>
-                      <td>{$item->Lec_Descripcion}</td>
-                      <td>{$item->modulo->Moc_Titulo}</td>
-                      <td>
-                        <a href="{$_layoutParams.root}elearning/gleccion/encuesta/{$item->Lec_IdLeccion}" class="btn btn-default  btn-sm" data-toggle="tooltip" data-placement="bottom" title="{$lang->get('str_ver_respuestas')}"><i class="glyphicon glyphicon-pencil"></i></a>
-                        <button data-id="{$item->Lec_IdLeccion}" @click="onClick_deleteEncuesta({$item->Lec_IdLeccion})" class="btn btn-default  btn-sm" data-toggle="tooltip" data-placement="bottom" title="{$lang->get('str_eliminar')}"><i class="glyphicon glyphicon-trash"></i></button>
-                      </td>
-                    </tr>
-                  {/foreach}
-                </tbody>
-              </table>
-            </div>
-          </div>
+        	<form action="{$_layoutParams.root}elearning/gleccion/store_encuesta/{$idcurso}" method="POST" class="form-horizontal" role="form">
+        		<div class="form-group">
+					    <label for="titulo">Titulo</label>
+					    <input type="text" class="form-control" name="titulo" id="titulo" placeholder="Título" required="required">
+					  </div>
+        		<div class="form-group">
+					    <label for="descripcion">Descripción</label>
+					    <textarea name="descripcion" id="descripcion" class="form-control" rows="3" required="required" placeholder="Descripción"></textarea>
+					  </div>
+        		<div class="form-group">
+					    <label for="tiempo">Tiempo</label>
+					    <input type="text" class="form-control" id="tiempo" name="tiempo" placeholder="Tiempo">
+					  </div>
+					  <div class="form-group">
+					    <label for="modulo">Módulo</label>
+					    <select name="" id="modulo" class="form-control" required="required">
+					    	{foreach $modulos as $mod}
+					    		<option value="{$mod.Moc_IdModuloCurso}">{$mod.Moc_Titulo}</option>
+					    	{/foreach}
+					    </select>
+					  </div>
+					  <button type="submit" class="btn btn-default">Registrar</button>
+        	</form>
         </div>
       </div>
 		</div>

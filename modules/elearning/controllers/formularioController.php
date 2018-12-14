@@ -97,17 +97,19 @@ class formularioController extends elearningController {
 			$curso = $mod_curso::find($curso_id);
 			if ($curso) {
 				$frm = $curso->getFormularioActivo();
+				dd($frm);
 				if ($frm) {
 					$respuesta = $frm->getRespuestaByUsuario(Session::get('id_usuario'));
 					if ($respuesta == null) {
 					  $preguntas = $frm->preguntasTodas;
 					  $success_insert = true;
 					  $pre_respuestas = [];
-					  // dd($_POST);
+					  dd($preguntas);
+					  dd($_POST);
 					  foreach ($_POST as $key => $value) {
 					  	$t = explode('_', $key);
 					  	$pregunta = $preguntas->where('Fpr_IdForPreguntas', end($t))->first();
-					  	print_r($pregunta->Fpr_IdForPreguntas);
+					  	// print_r($pregunta->Fpr_IdForPreguntas);
 					  	if ($pregunta) {
 					  		$pres = new FormularioUsuarioRespuestasDetalles();
 					  		$pres->Fpr_IdForPreguntas = $pregunta->Fpr_IdForPreguntas;

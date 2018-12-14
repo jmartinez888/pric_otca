@@ -490,7 +490,7 @@
       </div>
     </ul>
     <ul>
-      <a href="{$_layoutParams.root}elearning/gleccion/encuestas" class="side-menu2 {if isset($active) && $active == 'encuestas'}active{/if}">
+      <a href="{$_layoutParams.root}elearning/gleccion/encuestas/{$curso['Cur_IdCurso']}" class="side-menu2 {if isset($active) && $active == 'encuestas'}active{/if}">
         <li class="side-menu side-menu-center-mid" style="position: relative">
           <i class="fa fa-edit"></i>
           &nbsp;
