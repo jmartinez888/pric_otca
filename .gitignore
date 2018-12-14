@@ -15,7 +15,8 @@ application/Config.php
 /libs/vendor/dompdf/dompdf/lib/fonts/
 libs/vendor/dompdf/dompdf/lib/fonts/
 
-
+/libs/nodejs_pric/node_modules/*
+.libs/nodejs_pric/node_modules/*
 
 /libs/vendor/sabberworm/php-css-parser/tests
 

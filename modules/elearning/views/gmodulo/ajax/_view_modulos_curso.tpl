@@ -24,13 +24,13 @@
                       <td>{$c.Moc_Descripcion}</td>
                       <td>
                         <input class="hidden_IdModulo estado" value="{$c.Moc_IdModuloCurso}"/>
-                        <button class="btnFinalizarReg"><i class="glyphicon glyphicon-pencil"></i></button>
+                        <button class="btn btn-default btn-sm btnFinalizarReg"><i class="glyphicon glyphicon-pencil"></i></button>
                         {if $c.Moc_Estado == 0 }
-                        <button class="btnDeshabilitar"><i class="glyphicon glyphicon-remove"></i></button>
+                        <button class="btn btn-default btn-sm btnDeshabilitar"><i class="glyphicon glyphicon-remove"></i></button>
                         {else}
-                        <button class="btnHabilitar"><i class="glyphicon glyphicon-ok"></i></button>
+                        <button class="btn btn-default btn-sm btnHabilitar"><i class="glyphicon glyphicon-ok"></i></button>
                         {/if}
-                        <button class="btnEliminar"><i class="glyphicon glyphicon-trash"></i></button>
+                        <button class="btn btn-default btn-sm btnEliminar"><i class="glyphicon glyphicon-trash"></i></button>
                       </td>
                   </tr>
               {/foreach}
@@ -68,7 +68,7 @@
           <textarea class="form-control" name="descripcion" id="inDescripcion" rows="10"></textarea>
         </div>
         <div class="col-xs-12 margin-t-10"><strong>Tiempo de Dedicación</strong></div>
-        <div class="col-xs-12">    
+        <div class="col-xs-12">
           <input class="form-control" name="dedicacion" />
         </div>
       </form>

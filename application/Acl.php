@@ -403,7 +403,7 @@ class ACL
         }
     }
     /**
-     * [tienePermisos valida más de un permiso de usuario]
+     * [tienePermisos valida que se posean los permisos asignados]
      * @param  [string || array(strings)] $keys [permiso o grupo de permisos]
      * @return [boolean]                   []
      */

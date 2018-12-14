@@ -1,13 +1,16 @@
 <?php
 
 class _gestionLeccionModel extends Model {
+  protected $table = 'leccion';
+  protected $primaryKey = 'Lec_IdLeccion';
+  public $timestamps = false;
 
   public function __construct() { parent::__construct(); }
 
   public function insertLeccion($modulo, $tipo, $titulo, $descripcion, $dedicacion){
-    $sql = "INSERT INTO leccion(Moc_IdModuloCurso, Lec_Tipo, Lec_Titulo, Lec_Descripcion, Lec_TiempoDedicacion, Lec_LMSEstado, Lec_Estado)
-            VALUES({$modulo}, {$tipo}, '{$titulo}', '{$descripcion}', '{$dedicacion}', 0, 1)";
-    $this->execQuery($sql);
+    $sql = "INSERT INTO leccion(Moc_IdModuloCurso, Lec_Tipo, Lec_Titulo, Lec_Descripcion, Lec_TiempoDedicacion, Lec_LMSEstado, Lec_Estado) VALUES({$modulo}, {$tipo}, '{$titulo}', '{$descripcion}', '{$dedicacion}', 0, 1);
+    ";
+    return $this->execQuery($sql, true);
   }
 
   public function getTipoLecccion($lms = ""){
