@@ -213,6 +213,7 @@ class gleccionController extends elearningController {
                     $frm->Cur_IdCurso = $modulo['Cur_IdCurso'];
                     $frm->Frm_Titulo = $titulo;
                     $frm->Frm_Estado = 1;
+                    $frm->Frm_Tipo = 1;
                     if ($frm->save()) {
                         $lf = new LeccionFormulario();
                         $lf->Lec_IdLeccion = $leccion_id;
