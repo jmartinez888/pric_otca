@@ -11,15 +11,15 @@
         <div class="col-xs-12">
             <div class=" " style="margin-bottom: 0px !important">
                 <div class="text-center text-bold" style="margin-top: 20px; margin-bottom: 20px; color: #267161;">
-                {if isset($idLeccion) && $idLeccion > 0}
+                <!-- {if isset($idLeccion) && $idLeccion > 0} -->
                     {include file='modules/elearning/views/gestion/menu/tag_url.tpl'}
-                {else}
+                <!-- {else}
                     {$titulo}
-                {/if}
+                {/if} -->
                 </div>
             </div>
         </div>
-        <h3>Examenes</h3>
+        <h3>Respuestas</h3>
         <hr class="cursos-hr">
     </div>
     <div class="col-xs-12">
@@ -31,70 +31,68 @@
                         <input type="hidden" class="estado" id="hidden_leccion" value="{$idLeccion}" />
 
                     {/if}
+                    <input type="hidden" name="Exl_IdExamenAlumno" id="Exl_IdExamenAlumno" value="{$examen}">
                     <input type="hidden" name="idcurso" id="idcurso" value="{$idcurso}">
                     <input type="hidden" name="hidden_curso" id="hidden_curso" value="{$idcurso}">
-                    <input class="form-control" placeholder="Buscar examen" style="width: 300px; float: left; margin: 0px 10px;" name="palabraexamen" id="palabraexamen">
-                    <button class="btn btn-success" style=" float: left" type="button" id="buscarexamen"  ><i class="glyphicon glyphicon-search"></i></button>
+                    <input class="form-control" placeholder="Buscar examen" style="width: 300px; float: left; margin: 0px 10px;" name="palabraExamenAlumno" id="palabraExamenAlumno">
+                    <button class="btn btn-success" style=" float: left" type="button" id="buscarExamenAlumno"  ><i class="glyphicon glyphicon-search"></i></button>
                 </div>
             </div>
-            <div id="listarexamens">
+            <div id="listarExamensAlumno">
                 <div class="col-xs-12">
-                    <input type="hidden" name="porcentaje" id="porcentaje" value="{$porcentaje|default:'0'}">
-                    {if $porcentaje <= 100}
-                        {if isset($idLeccion) && $idLeccion > 0}
-                            <input type="hidden" class="estado" id="hidden_habilitado" value="{$Exa_Habilitado|default:'0'}" />
-
-                            <a href="{$_layoutParams.root}elearning/gleccion/_view_leccion/{$idcurso}/{$modulo.Moc_IdModuloCurso}/{$idLeccion}" class="btn btn-danger margin-t-10 " id="btn_nuevo" ><i class="glyphicon glyphicon-triangle-left"></i> Regresar</a>
-
-                            <a href="{$_layoutParams.root}elearning/examen/nuevoexamen/{$idcurso}/{$idLeccion}" class="btn btn-primary margin-t-10 " id="btn_nuevo" > <i class="glyphicon glyphicon-plus"></i> Nuevo</a>
-                        {else}
-                         <a href="{$_layoutParams.root}elearning/examen/nuevoexamen/{$idcurso}" class="btn btn-primary margin-t-10 glyphicon glyphicon-plus" id="btn_nuevo" > Nuevo</a>
-                        {/if}
-                    {else}
-                     <a data-toggle="modal"  data-target="#msj-invalido" class="btn btn-danger margin-t-10 glyphicon glyphicon-plus" data-placement="bottom" > Nuevo</a>
-                    {/if}
-                    {if isset($examens) && count($examens)}
+                    <!-- <input type="hidden" name="porcentaje" id="porcentaje" value="{$porcentaje|default:'0'}"> -->
+                    {if isset($respuestas) && count($respuestas)}
                         <div class="table-responsive">
                             <table class="table" style="  margin: 20px auto">
                                 <tr >
                                     <th style=" text-align: center">Nº</th>
-                                    <th style=" text-align: center">Título</th>
-                                    <th style=" text-align: center">Intentos</th>
-                                    <th style=" text-align: center">Porcentaje</th>
+                                    <th style=" text-align: center">Alumno</th>
+                                    <th style=" text-align: center">Fecha</th>
+                                    <th style=" text-align: center">Intento</th>
                                     <th style=" text-align: center">Estado</th>
                                     <th style=" text-align: center">Opciones</th>
                                 </tr>
-                                {foreach item=rl from=$examens}
+                                {$i = 0}{$c = 0}{$z = 0}
+                                {foreach item=rl from=$respuestas}
                                     <tr {if $rl.Row_Estado==0}
-                    {if $_acl->permiso("ver_eliminados")}
-                        class="btn-danger"
-                    {else}
-                        hidden {$numeropagina = $numeropagina-1}
-                    {/if}
-                {/if}>
+                                            {if $_acl->permiso("ver_eliminados")}
+                                                class="btn-danger"
+                                            {else}
+                                                hidden {$numeropagina = $numeropagina-1}
+                                            {/if}
+                                        {/if} > 
+                                        {if $i == 0}
+                                            {$i = $rl.Usu_IdUsuario}
+                                            {$c = 1}
+                                            <!-- {$numeropagina} =={$rl.Usu_IdUsuario}==> 1.) i = {$i}; c = {$c}; <br> -->
+                                        {else}
+                                            {if $i == $rl.Usu_IdUsuario}
+                                                {$c = $c + 1}
+                                                <!-- {$numeropagina} =={$rl.Usu_IdUsuario}==> 2.) i = {$i}; c = {$c}; <br> -->
+                                            {else}
+                                                {$c = 1}{$i = $rl.Usu_IdUsuario}
+                                                <!-- {$numeropagina} =={$rl.Usu_IdUsuario}==> 3.) i = {$i}; c = {$c}; <br> -->
+                                            {/if}                                            
+                                        {/if}
+
                                         <td style=" text-align: center">{$numeropagina++}</td>
-                                        <td style=" text-align: center">{$rl.Exa_Titulo}</td>
-                                        <td style=" text-align: center">{$rl.Exa_Intentos}</td>
-                                        <td style=" text-align: center">{$rl.Exa_Porcentaje}%</td>
+                                        <td style=" text-align: center">{$rl.Usu_Nombre} {$rl.Usu_Apellidos}</td>
+                                        <td style=" text-align: center">{$rl.Exl_Fecha}</td>
+                                        <td style=" text-align: center">{$rl.Exl_Intento|default:$c}</td>
                                         <td style=" text-align: center">
-                                        {if $rl.Exa_Estado==0}
+                                        {if $rl.Exl_Estado==0}
                                             <p data-toggle="tooltip" data-placement="bottom" class="glyphicon glyphicon-remove-sign " title="{$lenguaje.label_deshabilitado}" style="color: #DD4B39;"></p>
                                         {/if}
-                                        {if $rl.Exa_Estado==1}
+                                        {if $rl.Exl_Estado==1}
                                             <p data-toggle="tooltip" data-placement="bottom" class="glyphicon glyphicon-ok-sign " title="{$lenguaje.label_habilitado}" style="color: #088A08;"></p>
                                         {/if}
                                         </td>
-                                        <!-- {if $_acl->permiso("editar_rol")} -->
                                         <td style=" text-align: center">
-                                            {if  $rl.Emitido>=0}
-                                            <a data-toggle="tooltip" data-placement="bottom" class="btn btn-default btn-sm glyphicon glyphicon-refresh estado-examen" title="{$lenguaje.tabla_opcion_cambiar_est}" Exa_Porcentaje = "{$rl.Exa_Porcentaje}"
-                                            id_examen="{$rl.Exa_IdExamen}" estado="{$rl.Exa_Estado}"> </a>
-                                            {/if}
-                                            <a data-toggle="tooltip" data-placement="bottom" class="btn btn-default btn-sm glyphicon glyphicon-edit" id="btn-Editar" title="Editar" href="{$_layoutParams.root}elearning/examen/editarexamen/{$idcurso}/{$rl.Exa_IdExamen}"></a>
+                                            <a data-toggle="tooltip" data-placement="bottom" class="btn btn-default btn-sm glyphicon glyphicon-refresh estado-examen-alumno" title="{$lenguaje.tabla_opcion_cambiar_est}" 
+                                            id_examen_alumno="{$rl.Exl_IdExamenAlumno}" estado="{$rl.Exl_Estado}"> </a>
 
-                                             <a data-toggle="tooltip" data-placement="bottom" class="btn btn-default btn-sm glyphicon glyphicon-question-sign btn-preguntas" title="Preguntas" href="{$_layoutParams.root}elearning/examen/preguntas/{$idcurso}/{$rl.Exa_IdExamen}"></a>
+                                            <a data-toggle="tooltip" data-placement="bottom" class="btn btn-default btn-sm glyphicon glyphicon-eye-open" id="btn-Editar" title="Editar" href="{$_layoutParams.root}elearning/examen/editarexamen/{$idcurso}/{$rl.Exa_IdExamen}/"></a>
 
-                                            {if  $rl.Emitido>=0}
                                             <a
                                             {if $rl.Row_Estado==0}
                                                 data-toggle="tooltip"
@@ -102,21 +100,16 @@
                                             {else}
                                                 data-book-id="{$rl.Pre_Descripcion}"
                                                 data-toggle="modal"  data-target="#confirm-delete"
-                                                class="btn btn-default btn-sm  glyphicon glyphicon-trash confirmar-eliminar-examen" 
+                                                class="btn btn-default btn-sm  glyphicon glyphicon-trash confirmar-eliminar-examen"  
                                             {/if}
                                             id_examen="{$rl.Exa_IdExamen}" data-placement="bottom" > </a>
-                                            {/if}
 
-                                            {if $rl.Emitido>=1}
-                                             <a data-toggle="tooltip" data-placement="bottom" class="btn btn-default btn-sm glyphicon glyphicon-folder-open btn-respuestas" title="Ver Respuestas" href="{$_layoutParams.root}elearning/examen/intentos/{$idcurso}/{$rl.Exa_IdExamen}"></a>
-                                            {/if}
-                                            <!-- {/if} -->
                                         </td>
                                     </tr>
                                 {/foreach}
                             </table>
                         </div>
-                        {$paginacionexamens|default:""}
+                        {$paginacionExamensAlumno|default:""}
                     {else}
                         No hay registros
                     {/if}

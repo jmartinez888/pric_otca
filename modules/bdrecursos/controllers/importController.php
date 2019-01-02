@@ -501,7 +501,7 @@ class importController extends bdrecursosController
     public function rss($recurso = false)
     {
         error_reporting(0);
-        include_once ROOT . 'libs' . DS . 'simplepie' . DS . 'simplepie.php';
+        include_once ROOT . 'libs' . DS . 'simplepie' . DS . 'autoloader.php';
         
         //$this->validarUrlIdioma();
 

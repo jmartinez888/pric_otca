@@ -1,4 +1,4 @@
-<input type="text" id="inHiddenCurso" value="{$curso.Cur_IdCurso}" hidden="hidden"> <!-- RODRIGO 20180607 -->
+<input type="text" id="inHiddenCurso" value="{$curso.Cur_IdCurso}" hidden="hidden">
 <div class="col-lg-12">
   <div class="col-lg-12 referencia-curso-total">
     <a class="referencia-curso" href="{BASE_URL}elearning/cursos/">Cursos</a>  /  {$curso.Cur_Titulo}
@@ -222,15 +222,14 @@
               {/if}
             {/if}
           {else}
-            {if $curso.Usu_IdUsuario != Session::get("id_usuario")}
               <a href="{BASE_URL}elearning/cursos/_inscripcion/{$curso.Moa_IdModalidad}/{$curso.Cur_IdCurso}">
                 <button class="btn btn-group btn-inscribir">Inscribirme</button>
-              </a>
-            {else}
-              <a href="{BASE_URL}elearning/gestion/matriculados/{$curso.Cur_IdCurso}">
-                <button class="btn btn-default btn-gestion">Gestión de Curso</button>
-              </a>
-            {/if}
+              </a>            
+          {/if}
+          {if $curso.Usu_IdUsuario == Session::get("id_usuario")}
+            <a href="{BASE_URL}elearning/gestion/matriculados/{$curso.Cur_IdCurso}">
+              <button class="btn btn-success btn-gestion">Gestión de Curso</button>
+            </a>
           {/if}
         {else}
           <div class="col-lg-12 anuncio">
@@ -288,34 +287,31 @@
                     {$l.Lec_FechaDesde|date_format:"%Y-%m-%d"}
                 {/if}
                    
-                {if $l.Activo==0}
-                  {if ($session==1 && isset($inscripcion) && count($inscripcion)>0 && $inscripcion[0].Mat_Valor==1) && $l.Disponible==1 }
+                {if $l.Activo == 0}
+                  {if ($session == 1 && isset($inscripcion) && count($inscripcion) > 0 && $inscripcion[0].Mat_Valor == 1) && $l.Disponible == 1 }
                     <a href="{BASE_URL}elearning/cursos/modulo/{$curso.Cur_IdCurso}/{$o.Moc_IdModuloCurso}/{$l.Lec_IdLeccion}">
                       <div class="tag-terminado"><center><strong>Revisar</strong></center></div>
                     </a>
                   {else}
-                    {if $curso.Usu_IdUsuario == Session::get('id_usuario')}
-                      <a href="{BASE_URL}elearning/cursos/modulo/{$curso.Cur_IdCurso}/{$o.Moc_IdModuloCurso}/{$l.Lec_IdLeccion}">
-                        <div class="tag-terminado"><center><strong>Revisar lección</strong></center></div>
-                      </a>
-                    {else}
                       {if $l.Lec_Tipo==4 }
-                          {if ($l.Lec_FechaHasta|date_format) < ($smarty.now|date_format) }
-                            <div class="tag-terminado"><center><strong>Clase Concluida</strong></center></div>
-                          {/if}
-                          {if ($l.Lec_FechaHasta|date_format) == ($smarty.now|date_format) }
-                          <div class="div_en_linea">
-                            <span class="en_linea text-success">En linea</span>
-                          </div>
-                            <a href="{BASE_URL}elearning/cursos/modulo/{$curso.Cur_IdCurso}/{$o.Moc_IdModuloCurso}/{$l.Lec_IdLeccion}">
-                              <div class="tag-terminado"><center><strong>En linea</strong></center></div>
-                            </a>
+                          {if ($l.Lec_FechaHasta|date_format) < ($now|date_format) && $l.Disponible == 0}
+                              <div class="tag-terminado"><center><strong>Clase Concluida</strong></center></div>
+                          {else}
+                              {if ($l.Lec_FechaHasta|date_format) == ($smarty.now|date_format) && $l.Disponible == 1}
+                              <div class="col col-xs-2 div_en_linea">
+                                    <span style="right: ;" class="col col-xs-10 text-bold text-success text-right"> En linea&nbsp; </span>
+                                    <span class="col col-xs-2 en_linea text-success"></span>
+                              </div>
+                                <a href="{BASE_URL}elearning/cursos/modulo/{$curso.Cur_IdCurso}/{$o.Moc_IdModuloCurso}/{$l.Lec_IdLeccion}">
+                                  <div class="tag-terminado"><center><strong>Entrar</strong></center></div>
+                                </a>
+                              {/if}
                           {/if}
                       {elseif $l.Lec_Tipo==5 }
                         <div class="tag-terminado"><center><strong>Exámen Concluido</strong></center></div>
                       {else}
                       {/if}
-                    {/if}
+
                   {/if}
                 {else}
                   {if $l.Lec_Tipo==4 }
