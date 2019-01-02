@@ -7,7 +7,6 @@ if ($("#contblanco").val() > 0) {
     contblanco = $("#contblanco").val();
 }
 
-
 // Menu(1);
 $(document).on('ready', function () {   
     // $('#form1').validator().on('submit', function (e) {
@@ -75,7 +74,6 @@ $(document).on('ready', function () {
             $("#cargando").hide();
             $("#" + nombrelista).html(data);
         });
-
 
     }
 
@@ -219,14 +217,18 @@ $(document).on('ready', function () {
         $("#cargando").show();       
         buscarpregunta($("#palabrapregunta").val(), $("#idexamen").val());
     }); 
-
     $("body").on('click', "#buscarexamen", function () { 
         $("#cargando").show();     
         if (parseInt($("#hidden_leccion").val()) > 0) {
             buscarexamen($("#palabraexamen").val(), $("#idcurso").val(), $("#hidden_leccion").val());                      
         } else {
-            buscarexamen($("#palabraexamen").val(), $("#idcurso").val()), 0;
+            buscarexamen($("#palabraexamen").val(), $("#idcurso").val());
         }  
+    }); 
+
+    $("body").on('click', "#buscarExamenAlumno", function () { 
+        $("#cargando").show();
+        buscarExamenAlumno($("#palabraExamenAlumno").val());
     }); 
 
     // $("body").on('click', '.estado-examen', function() {
@@ -325,7 +327,6 @@ $(document).on('ready', function () {
             if (parseInt($("#porcentaje").val()) > 100 ) {
                 mensaje([["error"," El porcentaje se superó...!! "]]);
             }
-            
         }
       } else {
           $("#cargando").show();
@@ -358,7 +359,6 @@ $(document).on('ready', function () {
           });
         }
     });
-
     $("body").on('click', '.confirmar-eliminar-examen', function() {
         
         if (_post && _post.readyState != 4) {
@@ -428,7 +428,6 @@ $(document).on('ready', function () {
             $('[data-toggle="tooltip"]').tooltip(); 
         });
     });
-
     $("body").on('click', '.estado-pregunta', function() {
         _estado = $(this).attr("estado");
         if (_estado === undefined) {
@@ -493,7 +492,6 @@ $(document).on('ready', function () {
         _Mod_Idpregunta_ = _id_pregunta;
         _Row_Estado_ = 0;
     });
-
     $("body").on('click', '.confirmar-habilitar-pregunta', function() {
         $("#cargando").show();
         if (_post && _post.readyState != 4) {
@@ -525,7 +523,6 @@ $(document).on('ready', function () {
             $('[data-toggle="tooltip"]').tooltip(); 
         });
     });
-
     $("body").on('click', '.eliminar_pregunta', function() {
         $("#cargando").show();
         // _Per_IdPermiso = _eliminar;
@@ -546,6 +543,51 @@ $(document).on('ready', function () {
             $('[data-toggle="tooltip"]').tooltip(); 
         });
     });
+
+
+    // EXAMEN_ALUMNO======================================================
+
+    $("body").on('click', '.estado-examen-alumno', function() {
+        _estado = $(this).attr("estado");
+        if (_estado === undefined) {
+            _estado = 0;
+        }
+        if (!_estado) {
+             _estado = 0;
+        }
+
+        $("#cargando").show();
+        if (_post && _post.readyState != 4) {
+            _post.abort();
+        }
+
+        _id_examen = $(this).attr("id_examen_alumno");
+        if (_id_examen === undefined) {
+            _id_examen = 0;
+        }
+
+        _post = $.post(_root_ + 'elearning/examen/_cambiarEstadoExamenAlumno',
+            {                    
+                idcurso: $("#idcurso").val(),
+                _Lec_IdLeccion: $("#hidden_leccion").val(),
+                pagina: $(".pagination .active span").html(),
+                palabra: $("#palabraExamenAlumno").val(),
+                filas:$("#s_filas_"+'listarExamensAlumno').val(),
+                _Exl_IdExamenAlumno: _id_examen,
+                _Exl_Estado: _estado
+            },
+        function(data) {
+            $("#listarExamensAlumno").html('');
+            $("#cargando").hide();
+            $("#listarExamensAlumno").html(data);
+          // mensaje(JSON.parse(data));
+          // Select all elements with data-toggle="tooltips" in the document
+            $('[data-toggle="tooltip"]').tooltip(); 
+        });
+    });
+
+
+
 });
 
 
@@ -575,6 +617,21 @@ function buscarexamen(criterio, idcurso, idleccion=0) {
         $("#listarexamens").html('');
         $("#cargando").hide();
         $("#listarexamens").html(data);
+    });
+}
+
+function buscarExamenAlumno(criterio, Exl_IdExamenAlumno=0) {
+    $("#cargando").show();
+    $.post(_root_ + 'elearning/examen/_buscarexamensAlumno',
+    {
+        palabra:criterio,
+        idcurso:$("#idcurso").val(),
+        _Exl_IdExamenAlumno:$("#Exl_IdExamenAlumno").val()
+        
+    }, function (data) {
+        $("#listarExamensAlumno").html('');
+        $("#cargando").hide();
+        $("#listarExamensAlumno").html(data);
     });
 }
 

@@ -272,6 +272,7 @@ class cursosController extends elearningController {
       $this->_view->assign("duracion", $duracion["Total"] . " Lecciones");
       $this->_view->assign("modulo", $mModulo->getModulosCursoLMS($id, Session::get("id_usuario")));
       $this->_view->assign("session", Session::get("autenticado"));
+      $this->_view->assign("now", date_create('now')->format('Y-m-d H:i:s'));
       $this->_view->assign("inscripcion", $inscripcion);
       $this->_view->renderizar('curso_dirigido');
   }
@@ -283,10 +284,8 @@ class cursosController extends elearningController {
       $Emodel = $this->loadModel("examen");
       // $curs = $Cmodel->getCursoID($curso)[0];
       // print_r($curs);exit;
-
       $obj_curso = null;
       if(strlen($curso)==0 || strlen($modulo)==0){
-
         $this->redireccionar("elearning/");
       }
       if(!Session::get("autenticado")){
@@ -296,7 +295,6 @@ class cursosController extends elearningController {
       if(!is_numeric($curso) || !is_numeric($modulo)){
         $this->redireccionar("elearning/");
       }
-
       if(!$Mmodel->validarCursoModulo($curso, $modulo)){
         $this->redireccionar("elearning/cursos");
       }
@@ -322,7 +320,6 @@ class cursosController extends elearningController {
 
       $Tmodel = $this->loadModel("trabajo");
       $TTmodel = $this->loadModel("tarea");
-
 
       // if($tareas != null && count($tareas)>0){
       //   for($i=0; $i<count($tareas);$i++){

@@ -256,7 +256,7 @@ class examenModel extends Model {
         }
     }
 
-     public function getExamensRowCount($condicion = "")
+    public function getExamensRowCount($condicion = "")
     {
         try{
             $sql = " SELECT COUNT(e.Exa_IdExamen) AS CantidadRegistros, SUM(e.Exa_Porcentaje) as Suma_Porcentaje FROM examen e $condicion ";
@@ -269,6 +269,40 @@ class examenModel extends Model {
         }
     }
 
+    public function getExamensAlumnoRowCount($condicion = "")
+    {
+        try{
+            $sql = " SELECT COUNT(ea.Exa_IdExamen) AS CantidadRegistros, u.Usu_Nombre, u.Usu_Apellidos, e.*, ea.* FROM examen_alumno ea 
+                INNER JOIN examen e ON ea.Exa_IdExamen = e.Exa_IdExamen
+                INNER JOIN usuario u ON ea.Usu_IdUsuario = u.Usu_IdUsuario $condicion ";
+            $result = $this->_db->prepare($sql);
+            $result->execute();
+            return $result->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("elearning(examenModel)", "getExamensAlumnoRowCount", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
+
+    public function getExamensAlumnoCondicion($pagina,$registrosXPagina,$condicion = "")
+    {
+        try{
+            $registroInicio = 0;
+            if ($pagina > 0) {
+                $registroInicio = ($pagina - 1) * $registrosXPagina;                
+            }
+            $sql = " SELECT u.Usu_Nombre, u.Usu_Apellidos, e.*, ea.* FROM examen_alumno ea 
+                INNER JOIN examen e ON ea.Exa_IdExamen = e.Exa_IdExamen
+                INNER JOIN usuario u ON ea.Usu_IdUsuario = u.Usu_IdUsuario $condicion 
+                LIMIT $registroInicio, $registrosXPagina ";
+            $result = $this->_db->query($sql);
+            // echo $sql;
+            return $result->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("elearning(examenModel)", "getExamensAlumnoCondicion", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
 
     public function getExamensCondicion($pagina,$registrosXPagina,$condicion = "")
     {
@@ -547,6 +581,7 @@ class examenModel extends Model {
         }
     }
 
+
     public function eliminarHabilitarpregunta($iMod_Idpregunta = 0, $iRow_Estado = 0)
     {
         try{
@@ -563,7 +598,6 @@ class examenModel extends Model {
             return $exception->getTraceAsString();
         }
     }
-
     public function insertPregunta($examen, $descripcion, $valor, $tipo, $descripcion2='', $puntos){
         try {             
             $sql = "call s_i_pregunta(?,?,?,?,?,?)";
@@ -581,7 +615,6 @@ class examenModel extends Model {
             return $exception->getTraceAsString();
         }
     }
-
     public function updatePregunta($pregunta, $descripcion, $valor, $puntos){
         try {             
             $sql = " UPDATE pregunta  SET
@@ -598,7 +631,6 @@ class examenModel extends Model {
             return $exception->getTraceAsString();
         }
     }
-
     public function updatePregunta2($pregunta, $descripcion, $descripcion2, $valor, $puntos){
         try {             
             $sql = "UPDATE pregunta SET
@@ -633,7 +665,6 @@ class examenModel extends Model {
             return $exception->getTraceAsString();
         }
     }
-
     public function updateRelacionAlternativa($pregunta, $descripcion){
         try {             
             $sql = "UPDATE alternativa SET
@@ -648,6 +679,7 @@ class examenModel extends Model {
         }
     }
 
+
     public function getAlternativas($pregunta = "")
     {
         try{
@@ -660,7 +692,6 @@ class examenModel extends Model {
             return $exception->getTraceAsString();
         }
     }
-
     public function deleteAlternativa($pregunta = "")
     {
         try{
@@ -673,7 +704,6 @@ class examenModel extends Model {
             return $exception->getTraceAsString();
         }
     }
-
     public function getValorPregunta($pregunta = "")
     {
         try{
@@ -686,7 +716,6 @@ class examenModel extends Model {
             return $exception->getTraceAsString();
         }
     }
-
     public function getMaxIntentos($idexamen)
     {
         try{
@@ -700,7 +729,7 @@ class examenModel extends Model {
         }
     }
 
-
+    // Intentos y Respuestas
     public function getIntentos($idexamen, $idusuario)
     {
         try{
@@ -714,6 +743,32 @@ class examenModel extends Model {
         }
     }
 
+    public function cambiarEstadoExamenAlumno($Exl_IdExamenAlumno, $Exa_Estado)
+    {
+        try{
+            if($Exa_Estado == 0)
+            {
+                $sql = "call s_u_cambiar_estado_examen_alumno(?,1)";
+                $result = $this->_db->prepare($sql);
+                $result->bindParam(1, $Exl_IdExamenAlumno, PDO::PARAM_INT);
+                $result->execute();
+
+                return $result->rowCount(PDO::FETCH_ASSOC);                
+            }
+            if($Exa_Estado == 1)
+            {
+                $sql = "call s_u_cambiar_estado_examen_alumno(?,0)";
+                $result = $this->_db->prepare($sql);
+                $result->bindParam(1, $Exl_IdExamenAlumno, PDO::PARAM_INT);
+                $result->execute();
+
+                return $result->rowCount(PDO::FETCH_ASSOC);
+            }
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("elearning(examenModel)", "cambiarEstadoExamenAlumno", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
     public function insertExamenAlumno($iExa_IdExamen, $iUsu_IdUsuario){
         try {             
             $sql = "call s_i_examen_alumno(?,?)";
@@ -727,24 +782,6 @@ class examenModel extends Model {
             return $exception->getTraceAsString();
         }
     }
-
-    // public function insertRespuesta($Pre_IdPregunta, $Exl_IdExamenAlumno, $Alt_IdAlternativa,$iAlt_IdAlternativa_Relacion, $Res_Respuesta="", $Res_Puntos=""){
-    //     try {             
-    //         $sql = "call s_i_respuesta(?,?,?,?,?,?)";
-    //         $result = $this->_db->prepare($sql);
-    //         $result->bindParam(1, $Pre_IdPregunta, PDO::PARAM_INT);
-    //         $result->bindParam(2, $Exl_IdExamenAlumno, PDO::PARAM_INT);
-    //         $result->bindParam(3, $Alt_IdAlternativa, PDO::PARAM_INT); 
-    //         $result->bindParam(4, $iAlt_IdAlternativa_Relacion, PDO::PARAM_INT); 
-    //         $result->bindParam(5, $Res_Respuesta, PDO::PARAM_STR);       
-    //         $result->bindParam(6, $Res_Puntos, PDO::PARAM_INT);                
-    //         $result->execute();
-    //         return $result->fetch();
-    //     } catch (PDOException $exception) {
-    //         $this->registrarBitacora("elearning(examenModel)", "insertRespuesta", "Error Model", $exception);
-    //         return $exception->getTraceAsString();
-    //     }
-    // }
 
     public function insertRespuesta($Pre_IdPregunta=0, $Exl_IdExamenAlumno=0, $Alt_IdAlternativa=0,$iAlt_IdAlternativa_Relacion=0, $Res_Respuesta="", $puntos=0){
         try {

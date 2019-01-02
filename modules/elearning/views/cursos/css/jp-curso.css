@@ -97,8 +97,8 @@
     background-color: #007cbe;
     color: #FFF;
     position: relative;
-    padding: 10px 40px;
-    margin: 20px auto;
+    margin: 0 0 0 10px;
+    padding: 10px ;
     margin-left: 20px;
     font-weight: bold;
 }
@@ -201,5 +201,6 @@
     padding-left: 0px;
 }
 .btn-gestion{
-    margin-bottom: 20px;
+    margin: 0 0 0 10px;
+    padding: 10px ;
 }
