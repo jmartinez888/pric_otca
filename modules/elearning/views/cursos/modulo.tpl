@@ -1,3 +1,5 @@
+{extends 'template.tpl'}
+{block 'contenido'}
 <input value="{BASE_URL}" id="hiddenURL" hidden="hidden" />
 <input value="{BASE_URL}elearning/" id="hidden_url" hidden="hidden" />
 <input value="{$modulo.Cur_IdCurso}" id="hiddenCurso" hidden="hidden" />
@@ -82,10 +84,10 @@
           {include file='modules/elearning/views/cursos/menu/lecciones.tpl'}
         </div>
         <div class="col-sm-12 col-md-9 col-lg-9" style="padding-left:0px; padding-right: 0px;">
-          
+
           <div class="col-xs-12"  style="padding-left:0px; padding-right:0px;">
             <div class="panel panel-default">
-              
+
               <div class="panel-heading cabecera-titulo">
                 <h3 class="panel-title">
                   {if isset($leccion) && count($leccion)}
@@ -118,7 +120,7 @@
                       {/if}
                     {/if}
                     {if $leccion["Lec_Tipo"]==3}
-                        {if isset($preguntas) && count($preguntas)}                        
+                        {if isset($preguntas) && count($preguntas)}
                             <div  class="col-xs-12" style="padding-bottom: 20px;">
                                 <form class="" role="form" method="post" action="" autocomplete="on">
                                     <input type="hidden" value="1" name="enviar" />
@@ -129,13 +131,13 @@
                                         <input type="hidden" value="{$rl.Pre_Tipo}"  name="tipo_preg{$i-1}" />
                                         <div class="row" >
                                         {if $rl.Pre_Tipo==1}
-                                        
+
                                             <label class="col-xs-12 control-label " style="margin-bottom: 15px;">{$i}. {$rl.Pre_Descripcion}</label>
                                             {$j = 1}
                                             {foreach item=ra from=$rl.Alt}
                                             <div class="col-xs-12 alt_">
                                               <div class="col col-xs-1">
-                                                
+
                                                 {if $j == 1}
                                                 <p class="col col-xs-3">a) </p>
                                                 {/if}
@@ -147,7 +149,7 @@
                                                 {/if}
                                                 {if $j == 4}
                                                 <p class="col col-xs-3">d) </p>
-                                                {/if} 
+                                                {/if}
                                                 {if $j == 5}
                                                 <p class="col col-xs-3">e) </p>
                                                 {/if}
@@ -156,8 +158,8 @@
                                                 {/if}
                                                 {if $j == 7}
                                                 <p class="col col-xs-3">g) </p>
-                                                {/if} 
-                                                <input type="radio" value="{$ra.Alt_IdAlternativa}" required="" onclick="selectRadioClick(this);" class="col col-xs-9 radioalt" name="rpta_alt{$i-1}" id="rpta_alt{$i-1}_{$j}" /> 
+                                                {/if}
+                                                <input type="radio" value="{$ra.Alt_IdAlternativa}" required="" onclick="selectRadioClick(this);" class="col col-xs-9 radioalt" name="rpta_alt{$i-1}" id="rpta_alt{$i-1}_{$j}" />
                                               </div>
                                               <div class="col col-xs-11">
                                                 <p class="">{$ra.Alt_Etiqueta}</p>
@@ -166,12 +168,12 @@
                                             {$j=$j+1}
                                             {/foreach}
 
-                                        {else if $rl.Pre_Tipo==2}                
+                                        {else if $rl.Pre_Tipo==2}
                                             <label class="col-xs-12 control-label">{$i}. {$rl.Pre_Descripcion}</label>
                                             {$t = 0}{$j = 1}
                                             {foreach item=ra from=$rl.Alt}
                                             <div class="col-xs-12 alt_">
-                                              <div class="col col-xs-1">  
+                                              <div class="col col-xs-1">
                                                 {if $j == 1}
                                                 <p class="col col-xs-3">a) </p>
                                                 {/if}
@@ -183,7 +185,7 @@
                                                 {/if}
                                                 {if $j == 4}
                                                 <p class="col col-xs-3">d) </p>
-                                                {/if} 
+                                                {/if}
                                                 {if $j == 5}
                                                 <p class="col col-xs-3">e) </p>
                                                 {/if}
@@ -192,9 +194,9 @@
                                                 {/if}
                                                 {if $j == 7}
                                                 <p class="col col-xs-3">g) </p>
-                                                {/if} 
+                                                {/if}
 
-                                                <input type="checkbox" value="{$ra.Alt_IdAlternativa}" onclick="selectRadioClick(this);" class=" col col-xs-9 radioalt " name="rpta2_alt{$i-1}_index{$t}" id="rpta_alt{$i-1}_{$j}"/> 
+                                                <input type="checkbox" value="{$ra.Alt_IdAlternativa}" onclick="selectRadioClick(this);" class=" col col-xs-9 radioalt " name="rpta2_alt{$i-1}_index{$t}" id="rpta_alt{$i-1}_{$j}"/>
 
                                                 {if $ra.Alt_Check == 0}
                                                 <input type="hidden" value="{$ra.Alt_IdAlternativa}" name="rpta2_alt{$i-1}_index{$t}_hd" id="rpta_alt{$i-1}_{$j}_hd">
@@ -202,7 +204,7 @@
                                               </div>
                                               <div class="col col-xs-11">
                                                 <p class="control-lasbel">{$ra.Alt_Etiqueta}</p>
-                                              </div>                                            
+                                              </div>
                                             </div>
                                             {$t=$t+1}
                                             {$j=$j+1}
@@ -216,7 +218,7 @@
                                             {$arraydescripcion[$j]} {if $j + 1 <= count($arraydescripcion) - 1}<input type="text" value="" required="" class="text-bold text-success" name="rpta3_{$i-1}_index_{$k}" id="espacio_blanco" />{$k = $k + 1}{/if}
                                             {/for}
                                             </div>
-                                        {else if $rl.Pre_Tipo==4}                
+                                        {else if $rl.Pre_Tipo==4}
                                             <label class="col-xs-12 control-label">{$i}. {$rl.Pre_Descripcion}</label>
                                             {for $j=0; $j<count($rl.Alt);$j=$j+2}
                                             <div class="col-xs-12" style="margin-top:10px;">
@@ -241,12 +243,12 @@
                                             {$m=$m+1}
                                             {/for}
                                             </div> -->
-                                        {else if $rl.Pre_Tipo==5}                
+                                        {else if $rl.Pre_Tipo==5}
                                             <label class="col-xs-12 control-label">{$i}. {$rl.Pre_Descripcion}</label>
                                             <div class="col-xs-12">
                                                 <textarea rows="5" placeholder="Respuesta" class="form-control col-xs-12" name="rpta_alt{$i-1}" required="" id="rpta_alt{$i-1}" style="margin-top:10px;"></textarea>
                                             </div>
-                                        {else if $rl.Pre_Tipo==7}                
+                                        {else if $rl.Pre_Tipo==7}
                                            <label class="col-xs-12 control-label">{$i}. {$rl.Pre_Descripcion}</label>
                                             {$t=0}
                                             {foreach item=ra from=$rl.Alt}
@@ -342,7 +344,7 @@
                                             </form>
                                           </div>
                                         {/if}
-                                    </div>                            
+                                    </div>
                                 {else}
                                     <div class="col-xs-12">
                                       <div class="alert alert-danger" role="alert">
@@ -374,7 +376,7 @@
                                               <div class="form-group">
                                                   <label class="col-xs-12 control-label">{$lang->get('elearning_cursos_numero_intentos')}: {$intentos.intentos} {$lang->get('str_de')} {$examen.Exa_Intentos}</label>
                                                   <div class="col-xs-12">
-                                                      
+
                                                       <p>{$lang->get('elearning_cursos_presionar_comenzar_cuenta_intento')}.</p>
                                                   </div>
                                               </div>
@@ -428,6 +430,21 @@
                             {/if}
                         {/if}
                     {/if}
+                    {if $leccion['Lec_Tipo'] == 10}
+                    <div class="col-xs-12" style="text-align: justify;">
+                      {if isset($formulario) && $formulario != null}
+                        {if (!isset($respuesta) || $respuesta->Fur_Completado == 0)}
+                          {include 'format_respuestas.tpl'}
+                        {else}
+                          <div class="col-lg-12">
+                            <h3>{$formulario->Frm_Mensaje}</h3>
+                          </div>
+                        {/if}
+                      {else}
+                        <h3>Encuesta no encontrada</h3>
+                      {/if}
+                    </div>
+                    {/if}
                 {else}
                     <br><br>
                     <h1 class="text-center text-bold text-lg">Bienvenido al  {$lang->get('str_modulo')}  {$mod_datos.INDEX}: {$modulo["Moc_Titulo"]}</h1><br>
@@ -463,7 +480,7 @@
 
         </div>
 
-<!-- 
+<!--
               <div class="col-xs-12" style="padding-left:0px; padding-right: 0px;">
                 {include file='modules/elearning/views/cursos/menu/info_leccion.tpl'}
               </div> -->
@@ -473,6 +490,9 @@
     </div>
 </div>
 
-      
+{/block}
 
+
+{block 'js' append}
 <script type="text/javascript" src="{BASE_URL}modules/elearning/views/gestion/js/core/util.js"></script>
+{/block}
