@@ -25,7 +25,7 @@ class formularioController extends elearningController {
 		$this->_view->responseJson($res);
 	}
 	public function respuesta ($respuesta_id) {
-		//if ($this->_acl->tienePermisos('ver_respuestas_formulario_alumnos')) {
+		if ($this->_acl->tienePermisos('ver_respuestas_formulario_alumnos')) {
 			$lang = $this->_view->getLenguaje('elearning_formulario_responder', false, true);
 			$this->curso = $this->loadModel("_gestionCurso");
 
@@ -75,9 +75,9 @@ class formularioController extends elearningController {
 					$this->redireccionar('');
 				}
 			}
-		/*} else {
+		} else {
 			$this->redireccionar('');
-		}*/
+		}
 
 	}
 	public function store_respuesta ($curso_id) {
