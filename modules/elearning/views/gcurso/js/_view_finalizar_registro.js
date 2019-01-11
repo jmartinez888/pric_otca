@@ -1,13 +1,8 @@
 ﻿// Menu(1);
 
 $(document).on('ready', function () { 
-  $('#inDescripcion').ckeditor(function() { }, { toolbar : 'Basic' });
-  $('#inContacto').ckeditor(function() { }, { toolbar : 'Basic' });
-  $('#inSoftware').ckeditor(function() { }, { toolbar : 'Basic' });
-  $('#inHardware').ckeditor(function() { }, { toolbar : 'Basic' });
-  $('#inMetodologia').ckeditor(function() { }, { toolbar : 'Basic' });
+  cargarCKeditor();
 });
-
 
 // Jhon Martinez
 $("#item_presentacion").click(function() {
@@ -45,6 +40,38 @@ $("#btn_regresar").click(function(){
   CargarPagina("gcurso/_view_mis_cursos/", {}, false, false);
 });
 
+$("body").on('click', ".idioma_s", function () {
+    var id = $(this).attr("id");
+    var idIdioma = $("#hd_" + id).val();
+    gestionIdiomas($("#hidden_curso").val(), $("#IdiomaOriginal").val(), idIdioma);
+    // buscar($("#palabra").val(), $("#buscarTipo").val(), $("#idPadreIdiomas").val(),idIdioma);
+}); 
+
+function gestionIdiomas(Cur_IdCurso, idIdiomaOriginal, idIdioma) {
+    $("#cargando").show();
+    $.post(_root_  + _modulo + '/gcurso/gestion_idiomas',
+            {
+                idIdioma: idIdioma,
+                Cur_IdCurso: Cur_IdCurso,
+                idIdiomaOriginal: idIdiomaOriginal
+            }, function (data) {
+        $("#gestion_idiomas").html('');
+        $("#cargando").hide();
+        $("#gestion_idiomas").html(data);
+
+        cargarCKeditor();
+        // $('textarea#editor1').ckeditor();
+        // $('form').validator();
+    });
+}
+function cargarCKeditor(){
+  $('#inDescripcion').ckeditor(function() { }, { toolbar : 'Basic' });
+  $('#inContacto').ckeditor(function() { }, { toolbar : 'Basic' });
+  $('#inSoftware').ckeditor(function() { }, { toolbar : 'Basic' });
+  $('#inHardware').ckeditor(function() { }, { toolbar : 'Basic' });
+  $('#inMetodologia').ckeditor(function() { }, { toolbar : 'Basic' });
+
+}
 function CargarObjetivosEspecificos(){
   $('[data-toggle="tooltip"]').tooltip(); 
   // alert("aaaa"+$("#hidden_curso").val());
@@ -71,8 +98,6 @@ function CargarObjetivosEspecificos(){
       });
     }, 1000);
 }
-
-
 
 function CargarDetalleCurso(){
     CargarPagina("gcurso/_partial_detalle_curso/",
@@ -305,7 +330,7 @@ $("#btnNuevoDetalle").click(function(e){
 
 $("#btn-subir-imagen").click(function(e){
   var params = {
-    route: "modules/elearning/views/cursos/img/portada",
+    route: "files/elearning/cursos/img/portada",
     pre: $("hidden_curso").val()
   };
   InitUploader(function(a){
@@ -318,7 +343,7 @@ $("#btn-subir-imagen").click(function(e){
     AsincTaks("gcurso/_actualizar_img", parametros, function(data){
       Mensaje("Se actualizó el banner", function(){
         var DATA = JSON.parse(data);
-        $("#img_banner_new").attr("src", _root_ + "modules/elearning/views/cursos/img/portada/" + DATA.data[0].url);
+        $("#img_banner_new").attr("src", _root_ + "files/elearning/cursos/img/portada/" + DATA.data[0].url);
         // CargarPagina("gcurso/_view_finalizar_registro/", { id: $("hidden_curso").val() }, false, false);
       });
     }, false, false);

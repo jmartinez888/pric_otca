@@ -285,7 +285,7 @@ class certificadoController extends elearningController {
                 echo ("parent.location.href='agregar_silabos4.php';");
                 echo ("</script>");
             }else{
-                $carpeta = "modules/elearning/views/certificado/img/";
+                $carpeta = "files/elearning/certificados/img/";
                 opendir($carpeta);
                 $destino = $carpeta.$_FILES["img"]["name"];
                 copy($_FILES["img"]["tmp_name"],$destino);
@@ -367,7 +367,7 @@ class certificadoController extends elearningController {
                 $this->redireccionar("elearning/certificado/plantilla_certificado_editar/".$id);
 
             }else{
-                $carpeta = "modules/elearning/views/certificado/img/";
+                $carpeta = "files/elearning/certificados/img/";
                 opendir($carpeta);
                 $destino = $carpeta.$_FILES["img"]["name"];
                 copy($_FILES["img"]["tmp_name"],$destino);

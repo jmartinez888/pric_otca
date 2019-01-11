@@ -16,11 +16,66 @@ class _gestionCursoModel extends Model {
   }
 
   public function getMatriculados($curso){
-    $sql = "SELECT * FROM usuario U
+    $sql = "SELECT U.Usu_Nombre, U.Usu_Apellidos, U.Usu_Estado, U.Usu_IdUsuario, U.Usu_Usuario, MC.* FROM usuario U
             INNER JOIN matricula_curso MC ON U.Usu_IdUsuario = MC.Usu_IdUsuario
             WHERE Cur_IdCurso = {$curso}";
     return $this->getArray($sql);
   }
+
+  // public function getLeccionAlumnoXXXXXX($Cur_IdCurso=0, $Usu_IdUsuario=0)
+  // {
+  //   $sqla = " CREATE TEMPORARY TABLE tabla_tmp1 AS ( 
+  //           SELECT mc.Moc_IdModuloCurso, mc.Moc_Titulo, l.Lec_IdLeccion, l.Lec_Titulo FROM leccion l
+  //           INNER JOIN modulo_curso mc ON l.Moc_IdModuloCurso = mc.Moc_IdModuloCurso
+  //           INNER JOIN progreso_curso pc ON l.Lec_IdLeccion = pc.Lec_IdLeccion
+  //           WHERE pc.Usu_IdUsuario = {$Usu_IdUsuario} AND mc.Cur_IdCurso = {$Cur_IdCurso} AND l.Lec_Estado = 1 AND l.Row_Estado = 1 AND mc.Moc_Estado = 1 AND mc.Row_Estado = 1 ); 
+  //            CREATE TEMPORARY TABLE tabla_tmp2 AS ( 
+  //           SELECT mc.Moc_IdModuloCurso, mc.Moc_Titulo, l.Lec_IdLeccion, l.Lec_Titulo FROM leccion l
+  //           INNER JOIN modulo_curso mc ON l.Moc_IdModuloCurso = mc.Moc_IdModuloCurso
+  //           INNER JOIN progreso_curso pc ON l.Lec_IdLeccion = pc.Lec_IdLeccion
+  //           WHERE pc.Usu_IdUsuario = {$Usu_IdUsuario} AND mc.Cur_IdCurso = {$Cur_IdCurso} AND l.Lec_Estado = 1 AND l.Row_Estado = 1 AND mc.Moc_Estado = 1 AND mc.Row_Estado = 1 );";
+  //   $this->execQuery($sqla);
+
+  //   $sql = " SELECT mc.Moc_IdModuloCurso, mc.Moc_Titulo, l.Lec_IdLeccion, l.Lec_Titulo FROM leccion l
+  //           INNER JOIN modulo_curso mc ON l.Moc_IdModuloCurso = mc.Moc_IdModuloCurso
+  //           WHERE l.Lec_IdLeccion = ( SELECT MAX(Lec_IdLeccion) FROM tabla_tmp1 WHERE Moc_IdModuloCurso = (SELECT MAX(Moc_IdModuloCurso) FROM tabla_tmp2) )";
+
+  //   $result = $this->getArray($sql);
+
+  //   $sqlc = " DROP TEMPORARY TABLE IF EXISTS tabla_tmp1; DROP TEMPORARY TABLE IF EXISTS tabla_tmp2;";
+  //   $this->execQuery($sqlc);
+  //   if (isset($result[0]) && count($result[0])) {
+  //     return $result[0]; 
+  //   } else {
+  //     $result["Lec_Titulo"] = "";
+  //     $result["Moc_Titulo"] = "";
+  //     return $result; 
+  //   }    
+  // }
+  public function getLeccionAlumno($Cur_IdCurso=0, $Usu_IdUsuario=0)
+  {
+    
+    $sql = " SELECT mc.Moc_IdModuloCurso, mc.Moc_Titulo, MAX(pc.Lec_IdLeccion) AS Lec_IdLeccion, l.Lec_Titulo FROM leccion l
+            INNER JOIN modulo_curso mc ON l.Moc_IdModuloCurso = mc.Moc_IdModuloCurso
+            INNER JOIN progreso_curso pc ON l.Lec_IdLeccion = pc.Lec_IdLeccion
+            WHERE pc.Usu_IdUsuario = {$Usu_IdUsuario} AND mc.Cur_IdCurso = {$Cur_IdCurso} AND mc.Moc_IdModuloCurso =  (SELECT (CASE WHEN MC.Moc_IdModuloCurso IS NULL THEN 0 ELSE MAX(MC.Moc_IdModuloCurso) END)  AS Moc_IdModuloCurso FROM leccion L1
+                        INNER JOIN progreso_curso PC1 ON PC1.Lec_IdLeccion = L1.Lec_IdLeccion AND PC1.Usu_IdUsuario = {$Usu_IdUsuario}
+                        INNER JOIN modulo_curso MC ON L1.Moc_IdModuloCurso = MC.Moc_IdModuloCurso
+                        WHERE MC.Cur_IdCurso = {$Cur_IdCurso} AND PC1.Pro_Valor = 1 AND L1.Lec_Estado = 1 AND L1.Row_Estado = 1
+                          AND MC.Moc_Estado = 1 AND MC.Row_Estado = 1) 
+            AND pc.Pro_Valor = 1 AND l.Lec_Estado = 1 AND l.Row_Estado = 1 AND mc.Moc_Estado = 1 AND mc.Row_Estado = 1  ";
+
+    $result = $this->getArray($sql);
+
+    if (isset($result[0]) && count($result[0])) {
+      return $result[0]; 
+    } else {
+      $result["Lec_Titulo"] = "";
+      $result["Moc_Titulo"] = "";
+      return $result; 
+    }    
+  }
+
 
   public function updateMatricula($curso, $usuario, $estado){
     $sql = "UPDATE matricula_curso SET Mat_Valor = {$estado}
@@ -78,6 +133,45 @@ class _gestionCursoModel extends Model {
   public function getCursoById($id) {
       $res = $this->getArray("SELECT * FROM curso WHERE Cur_IdCurso = $id");
       return count($res) > 0 ? $res[0] : null;
+  }
+
+  public function getCursoTraducido($condicion = '', $Idi_IdIdioma) {
+      try{            
+          $cursos = $this->_db->query(
+                 "SELECT 
+                 c.Cur_IdCurso,
+                 c.Usu_IdUsuario,
+                 c.Moa_IdModalidad,       
+                 fn_TraducirContenido('curso','Cur_UrlBanner',c.Cur_IdCurso,'$Idi_IdIdioma',c.Cur_UrlBanner) Cur_UrlBanner,       
+                 fn_TraducirContenido('curso','Cur_UrlImgPresentacion',c.Cur_IdCurso,'$Idi_IdIdioma',c.Cur_UrlImgPresentacion) Cur_UrlImgPresentacion, 
+                 fn_TraducirContenido('curso','Cur_UrlVideoPresentacion',c.Cur_IdCurso,'$Idi_IdIdioma',c.Cur_UrlVideoPresentacion) Cur_UrlVideoPresentacion,
+                 fn_TraducirContenido('curso','Cur_Titulo',c.Cur_IdCurso,'$Idi_IdIdioma',c.Cur_Titulo) Cur_Titulo,
+                 fn_TraducirContenido('curso','Cur_Descripcion',c.Cur_IdCurso,'$Idi_IdIdioma',c.Cur_Descripcion) Cur_Descripcion,
+                 fn_TraducirContenido('curso','Cur_PublicoObjetivo',c.Cur_IdCurso,'$Idi_IdIdioma',c.Cur_PublicoObjetivo) Cur_PublicoObjetivo,
+                 fn_TraducirContenido('curso','Cur_ObjetivoGeneral',c.Cur_IdCurso,'$Idi_IdIdioma',c.Cur_ObjetivoGeneral) Cur_ObjetivoGeneral,
+                 fn_TraducirContenido('curso','Cur_Metodologia',c.Cur_IdCurso,'$Idi_IdIdioma',c.Cur_Metodologia) Cur_Metodologia,
+                 fn_TraducirContenido('curso','Cur_ReqHardware',c.Cur_IdCurso,'$Idi_IdIdioma',c.Cur_ReqHardware) Cur_ReqHardware,
+                 fn_TraducirContenido('curso','Cur_ReqSoftware',c.Cur_IdCurso,'$Idi_IdIdioma',c.Cur_ReqSoftware) Cur_ReqSoftware,
+                 fn_TraducirContenido('curso','Cur_Contacto',c.Cur_IdCurso,'$Idi_IdIdioma',c.Cur_Contacto) Cur_Contacto,
+                 c.Cur_Duracion,
+                 c.Cur_Vacantes,
+                 c.Cur_FechaDesde,
+                 c.Cur_FechaHasta,
+                 c.Cur_Certificacion,
+                 c.Cur_FechaReg,
+                 c.Cur_FechaRegFinal,
+                 c.Cur_EstadoRegistro,
+                 c.Cur_Estado,
+                 c.Row_Estado,
+                 fn_devolverIdioma('curso',c.Cur_IdCurso,'$Idi_IdIdioma',c.Idi_IdIdioma) Idi_IdIdioma
+
+                 FROM curso c $condicion"
+         );
+         return $cursos->fetch(PDO::FETCH_ASSOC);
+      } catch (PDOException $exception) {
+          $this->registrarBitacora("elearning(_gestionCursoModel)", "getCursoTraducido", "Error Model", $exception);
+          return $exception->getTraceAsString();
+      }
   }
 
   public function getCursoXId($id) {

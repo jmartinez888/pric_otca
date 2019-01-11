@@ -31,8 +31,34 @@ $(document).ready(function() {
 
     $('button').click(function(e) {
         e.preventDefault();
-        alert("This is a demo.\n :-)");
+        // alert("This is a demo.\n :-)");
     });
+
+    $("#btnCambiarImg").click(function(e){
+        e.preventDefault();
+        var params = {
+            route: "files/usuarios/img",
+            pre: $("#idusuario").val()
+        };
+        InitUploader(function(a){
+            var json = JSON.parse(a);
+            var url = _root_ + "elearning/usuario/_actualizar_img"; 
+            var data = { id: $("#idusuario").val(), img: json.data[0].url };
+            alert(url);
+            $.ajax({
+                url: url,
+                data: data,
+                type: "post",
+                success: function(a){
+                    var data = JSON.parse(a);
+                    $("#perfil-img").attr("src", _root_ +
+                        "files/usuarios/img/" + data.mensaje);
+                }
+            });
+
+        }, params);
+    });
+
 });
 
 function editContraDiv(idusuario) {        

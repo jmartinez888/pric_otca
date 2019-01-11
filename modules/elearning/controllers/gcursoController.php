@@ -92,25 +92,71 @@ class gcursoController extends elearningController {
   public function _view_finalizar_registro($idcurso = 0)
   {
     // $id = $this->getTexto("id");
-    // $idcurso = 1;
+    // $idcurso = 1;    
+    $_arquitectura = $this->loadModel('index','arquitectura');
+
     $this->_view->setTemplate(LAYOUT_FRONTEND);
     $lang = $this->_view->getLenguaje(['elearning_gcurso', 'elearning_cursos'], false, true);
     if(!is_numeric($idcurso) && strlen($idcurso)==0){ $idcurso = Session::get("learn_param_curso"); }
     if(strlen($idcurso)==0){ exit; }
     $datos = $this->curso->getCursoById($idcurso);
     $parametros = $this->curso->getParametros($idcurso);
-
+    // print_r($datos);exit;
     Session::set("learn_param_curso", $idcurso);
     Session::set("learn_url_tmp", "gcurso/_view_finalizar_registro");
+
+    $this->_view->assign('idiomas',$_arquitectura->getIdiomas());
 
     $this->_view->assign('modalidad', $datos["Moa_IdModalidad"]);
     $this->_view->assign('curso', $datos);
     $this->_view->assign('menu', 'curso');
     $this->_view->assign('titulo', $lang->get('elearning_gcurso_ficha_curso').' - '.str_limit($datos['Cur_Titulo'], 20));
-    $this->_view->assign('active', 'ficha_curso');
+    // $this->_view->assign('active', 'ficha_curso');
     $this->_view->assign('idcurso', $idcurso);
     $this->_view->assign('parametros', $parametros);
+    $this->_view->assign('IdiomaOriginal',$datos["Idi_IdIdioma"]);
     $this->_view->render('ajax/_view_finalizar_registro');
+  }
+
+  public function gestion_idiomas() {
+      $this->_view->getLenguaje(['elearning_gcurso', 'elearning_cursos'], false, true);   
+      $_arquitectura = $this->loadModel('index','arquitectura');
+      $condicion1 = '';
+      $Idi_IdIdioma = $this->getPostParam('idIdioma');      
+      $Cur_IdCurso = $this->getPostParam('Cur_IdCurso');
+      
+      $condicion1 .= " WHERE c.Cur_IdCurso = $Cur_IdCurso ";            
+      // $datos = $this->_arquitectura->getPaginaTraducida($condicion1,$Idi_IdIdioma);
+      // echo $condicion1;
+      $datos = $this->curso->getCursoTraducido($condicion1, $Idi_IdIdioma);
+      $parametros = $this->curso->getParametros($Cur_IdCurso);
+      // print_r($datos); echo $datos["Idi_IdIdioma"];
+      // echo $Idi_IdIdioma;
+      $this->_view->assign('idiomas',$_arquitectura->getIdiomas());
+      if ($datos["Idi_IdIdioma"]==$Idi_IdIdioma) {
+          $this->_view->assign('curso',$datos);    
+          // $this->_view->assign('contenido',$datos);
+      } else {
+          $datos["Cur_UrlBanner"]="";
+          $datos["Cur_UrlImgPresentacion"]="";
+          $datos["Cur_UrlVideoPresentacion"]="";
+          $datos["Cur_Titulo"]="";
+          $datos["Cur_Descripcion"]="";
+          $datos["Cur_PublicoObjetivo"]="";
+          $datos["Cur_ObjetivoGeneral"]="";
+          $datos["Cur_Metodologia"]="";
+          $datos["Cur_ReqHardware"]="";
+          $datos["Cur_ReqSoftware"]="";
+          $datos["Cur_Contacto"]="";
+          $datos["Idi_IdIdioma"]=$Idi_IdIdioma;
+
+          $this->_view->assign('curso',$datos);  
+          // $this->_view->assign('contenido',$datos);  
+      }            
+      $this->_view->assign('IdiomaOriginal',$this->getPostParam('idIdiomaOriginal'));
+      $this->_view->assign('parametros', $parametros);
+      
+      $this->_view->renderizar('ajax/gestion_idiomas', false, true);
   }
 
   public function _registrar_curso()

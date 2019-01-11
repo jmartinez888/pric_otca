@@ -16,6 +16,7 @@ class usuarioController extends elearningController {
 	}
 
 	public function perfil(){
+      	$lang = $this->_view->getLenguaje('elearning_cursos', false, true);
 		$usuario = Session::get("id_usuario");
 		$model = $this->loadModel("usuario");
 		$usuario = $model->getUsuarioXId($usuario);
