@@ -9,6 +9,7 @@ class errorController extends Controller
     public function index()
     {
         $this->validarUrlIdioma();
+        $this->_view->setTemplate(LAYOUT_FRONTEND);
         $this->_view->getLenguaje("index_inicio");
         $this->_view->assign('titulo', 'Error');
         $this->_view->assign('mensaje', $this->_getError());

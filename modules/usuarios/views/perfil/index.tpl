@@ -52,7 +52,16 @@
                             <div class="user-panel" >
                                 <!-- <img  class=" glyphicon glyphicon-user ">  -->
                                 <div class=" image">
-                                    <img src="{$_layoutParams.root_clear}/views/layout/backend/img/user2-160x160.jpg" class="img-circle" style="  max-width: 160px;" alt="User Image">
+                                    <input type="hidden" name="idusuario" id="idusuario" value="{$usuario.Usu_IdUsuario}">
+                                    <img
+                                    {if !is_null($usuario.Usu_URLImage) && !empty($usuario.Usu_URLImage)}
+                                    src="{$_layoutParams.root_clear}/files/usuarios/img/{$usuario.Usu_URLImage}" 
+                                    {else}
+                                    src="{$_layoutParams.root_clear}/views/layout/backend/img/user2-160x160.jpg"
+                                    {/if}
+                                    id="perfil-img"
+                                     class="img-circle" style="  max-width: 160px;" alt="User Image">
+                                    <button id="btnCambiarImg" class="btn btn-default">Cambiar</button>
                                 </div>                            
                             </div>
                         </div>
@@ -115,7 +124,7 @@
                                     {foreach from=$cursos item=c}
                                         <tr>
                                             <td>
-                                              <div class="col-xs-2" style="border-right: 1px solid #c1bcbc; "><img class="img-banner " style="border: 1px solid #c1bcbc;" src="{BASE_URL}modules/elearning/views/cursos/img/portada/{$c.Cur_UrlBanner}" />
+                                              <div class="col-xs-2" style="border-right: 1px solid #c1bcbc; "><img class="img-banner " style="max-width: 100%; border: 1px solid #c1bcbc;" src="{BASE_URL}modules/elearning/views/cursos/img/portada/{$c.Cur_UrlBanner}" />
                                                 {if $c.Moa_IdModalidad == 1}
                                                 <div class="col-xs-12 text-center " style=" background: #EF5350; color: white; font-weight: bold; font-size: 10px;">MOOC</div>
                                                 {/if}
@@ -173,4 +182,5 @@
     {else}
         {$lenguaje.no_registros}
     {/if}
+    {include file='modules/elearning/views/uploader/uploader.tpl'}
 </div>

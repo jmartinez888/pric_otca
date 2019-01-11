@@ -149,7 +149,7 @@ class cursoModel extends Model {
               FROM
               (SELECT COUNT(X.nProgreso) as Lecciones, SUM(X.nProgreso) as Completos FROM
                 (SELECT 1 as CONTADOR, (CASE WHEN PC1.Pro_IdProgreso IS NULL THEN 0
-                              ELSE PC1.Pro_Valor END) as nProgreso
+                              ELSE PC1.Pro_Valor END) as nProgreso 
                   FROM leccion L1
                 LEFT JOIN progreso_curso PC1 ON PC1.Lec_IdLeccion = L1.Lec_IdLeccion
                   AND PC1.Usu_IdUsuario = {$id_usuario}

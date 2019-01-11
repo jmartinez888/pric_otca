@@ -12,7 +12,7 @@ class perfilController extends usuariosController {
     }
 
     public function index($idUsuario = false) {
-        $this->_acl->acceso('ver_perfil');
+        // $this->_acl->acceso('ver_perfil');
         $this->validarUrlIdioma();
         $this->_view->setTemplate(LAYOUT_FRONTEND);
         if (Session::get('id_usuario')!=$idUsuario){            
@@ -51,8 +51,9 @@ class perfilController extends usuariosController {
     }
     
     public function editarPerfil($usuarioID=0) {
-        $this->_acl->acceso('editar_perfil');
+        // $this->_acl->acceso('editar_perfil');
         $this->validarUrlIdioma();
+        $this->_view->setTemplate(LAYOUT_FRONTEND);
         $this->_view->getLenguaje("index_inicio");
 //          $this->_acl->acceso('admin');
         //$this->_view->setJs(array('index'));
@@ -77,6 +78,7 @@ class perfilController extends usuariosController {
     public function editarContrasena($usuarioID=0) {
         $this->_acl->acceso('editar_perfil');
         $this->validarUrlIdioma();
+        $this->_view->setTemplate(LAYOUT_FRONTEND);
         $this->_view->getLenguaje("index_inicio");
         //$this->_acl->acceso('admin');
         //$this->_view->setJs(array('index'));

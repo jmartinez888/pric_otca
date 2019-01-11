@@ -132,12 +132,11 @@
                                         <div class="row" >
                                         {if $rl.Pre_Tipo==1}
 
-                                            <label class="col-xs-12 control-label " style="margin-bottom: 15px;">{$i}. {$rl.Pre_Descripcion}</label>
+                                            <label class="col-xs-12 control-label " style="margin-bottom: 15px;">{$i}. {$rl.Pre_Descripcion} <small> <em> - Pregunta con respuesta única. </em> </small> </label>
                                             {$j = 1}
                                             {foreach item=ra from=$rl.Alt}
                                             <div class="col-xs-12 alt_">
                                               <div class="col col-xs-1">
-
                                                 {if $j == 1}
                                                 <p class="col col-xs-3">a) </p>
                                                 {/if}
@@ -169,7 +168,7 @@
                                             {/foreach}
 
                                         {else if $rl.Pre_Tipo==2}
-                                            <label class="col-xs-12 control-label">{$i}. {$rl.Pre_Descripcion}</label>
+                                            <label class="col-xs-12 control-label">{$i}. {$rl.Pre_Descripcion} <small> <em> - Pregunta con respuesta multiple. </em> </small> </label>
                                             {$t = 0}{$j = 1}
                                             {foreach item=ra from=$rl.Alt}
                                             <div class="col-xs-12 alt_">
@@ -210,7 +209,7 @@
                                             {$j=$j+1}
                                             {/foreach}
                                         {else if $rl.Pre_Tipo==3}
-                                            <label class="col-xs-12 control-label">{$i}. {$rl.Pre_Descripcion}</label>
+                                            <label class="col-xs-12 control-label">{$i}. {$rl.Pre_Descripcion} <small> <em> - Pregunta con rellenar espacios en blanco. </em> </small> </label>
                                             {$arraydescripcion=explode("|", $rl.Pre_Descripcion2)}
                                             <div class="col-xs-12" style="margin-top:10px;">
                                             {$k = 0}
@@ -219,7 +218,7 @@
                                             {/for}
                                             </div>
                                         {else if $rl.Pre_Tipo==4}
-                                            <label class="col-xs-12 control-label">{$i}. {$rl.Pre_Descripcion}</label>
+                                            <label class="col-xs-12 control-label">{$i}. {$rl.Pre_Descripcion} <small> <em> - Pregunta con relacionar respuesta. </em> </small> </label>
                                             {for $j=0; $j<count($rl.Alt);$j=$j+2}
                                             <div class="col-xs-12" style="margin-top:10px;">
                                             <input type="hidden" value="{$rl.Alt[$j]['Alt_IdAlternativa']}"  name="rpta4_{$i-1}_index_{$j}" />
@@ -244,12 +243,12 @@
                                             {/for}
                                             </div> -->
                                         {else if $rl.Pre_Tipo==5}
-                                            <label class="col-xs-12 control-label">{$i}. {$rl.Pre_Descripcion}</label>
+                                            <label class="col-xs-12 control-label">{$i}. {$rl.Pre_Descripcion} <small> <em> - Pregunta con respuesta abierta. </em> </small> </label>
                                             <div class="col-xs-12">
                                                 <textarea rows="5" placeholder="Respuesta" class="form-control col-xs-12" name="rpta_alt{$i-1}" required="" id="rpta_alt{$i-1}" style="margin-top:10px;"></textarea>
                                             </div>
                                         {else if $rl.Pre_Tipo==7}
-                                           <label class="col-xs-12 control-label">{$i}. {$rl.Pre_Descripcion}</label>
+                                           <label class="col-xs-12 control-label">{$i}. {$rl.Pre_Descripcion} <small> <em> - Pregunta con combinación exacta. </em> </small> </label>
                                             {$t=0}
                                             {foreach item=ra from=$rl.Alt}
                                             <div class="col-xs-12">

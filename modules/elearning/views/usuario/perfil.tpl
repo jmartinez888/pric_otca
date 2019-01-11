@@ -1,7 +1,7 @@
 <div class="col-lg-12">
   	{include file='modules/elearning/views/cursos/menu/lateral.tpl'}
 	<input hidden="hidden" id="hidden_url" value="{BASE_URL}/elearning/" />
-	<input hidden="hidden" id="hidden_base_url" value="{BASE_URL}" />
+	<input hidden="hidden" id="hidden_base_url" value="{BASE_URL}files/" />
   	<div class="col-lg-10" style="margin-top: 20px">
   		<div class="panel panel-default margin-top-10">
 	        <div class="panel-heading">
@@ -14,7 +14,7 @@
 	        	<form id="frm-actualizar" method="post" action="{BASE_URL}elearning/usuario/_actualizar_perfil">
 			        <input hidden="hidden" id="hiddenUsuario" name="id" value="{Session::get('id_usuario')}" />
 		        	<div class="col-lg-6" style="position: relative;">
-			        	<img src="{BASE_URL}modules/elearning/views/usuario/_contenido/_perfil/{$usuario.Usu_URLImage}" 
+			        	<img src="{BASE_URL}files/elearning/usuarios/perfil/{$usuario.Usu_URLImage}" 
 			        	class="img-perfil" id="perfil-img" style="height: 200px" />
 			        	<button id="btnCambiarImg" class="btn btn-default">Cambiar</button>
 		        	</div>

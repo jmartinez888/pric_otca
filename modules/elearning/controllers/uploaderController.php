@@ -1,4 +1,3 @@
-
 <?php
 
 /**
@@ -37,8 +36,7 @@ class uploaderController extends elearningController {
       $tmp_ruta_archivo = $ruta . $pre_name;
       // $tmp_name_archivo = $this->Prefijo() . "-" . $pre . "-" . $name;
 
-
-      if(move_uploaded_file($tmp_name, $tmp_ruta_archivo)) {
+      if(move_uploaded_file($tmp_name, $tmp_ruta_archivo) {
         array_push($resultados, array( "estado" => 1, "url" => $pre_name, "name_file" => $name  ));
 			} else {
         array_push($resultados, array( "estado" => 0, "url" => $pre_name, "name_file" => $name  ));

@@ -50,7 +50,7 @@
                             <a data-toggle="tooltip" data-placement="bottom" class="btn btn-default btn-sm glyphicon glyphicon-refresh estado-examen-alumno" title="{$lenguaje.tabla_opcion_cambiar_est}" 
                             id_examen_alumno="{$rl.Exl_IdExamenAlumno}" estado="{$rl.Exl_Estado}"> </a>
 
-                            <a data-toggle="tooltip" data-placement="bottom" class="btn btn-default btn-sm glyphicon glyphicon-eye-open" id="btn-Editar" title="Editar" href="{$_layoutParams.root}elearning/examen/editarexamen/{$idcurso}/{$rl.Exa_IdExamen}/"></a>
+                            <a data-toggle="tooltip" data-placement="bottom" class="btn btn-default btn-sm glyphicon glyphicon-eye-open" id="btn-Editar" title="Editar" href="{$_layoutParams.root}elearning/examen/corregirExamenAlumno/{$rl.Exa_IdExamen}/"></a>
 
                             <a
                             {if $rl.Row_Estado==0}

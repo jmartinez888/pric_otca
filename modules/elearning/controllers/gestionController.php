@@ -59,6 +59,21 @@ class gestionController extends elearningController {
     $curso = $model->getCursoID($id);
 
     $matriculados = $_model->getMatriculados($id);
+    //$lista = $matriculados;
+    for ($i=0; $i < count($matriculados); $i++) { 
+        // progreso por alumno
+        $progreso = $model->getProgresoCurso($id, $matriculados[$i]["Usu_IdUsuario"]);
+        $matriculados[$i]["Completo"] = $progreso["Completo"];
+        $matriculados[$i]["Porcentaje"] = $progreso["Porcentaje"];
+
+        // ultima leccion aprobada
+        $leccion = $_model->getLeccionAlumno($id, $matriculados[$i]["Usu_IdUsuario"] );
+        $matriculados[$i]["Lec_Titulo"] = $leccion["Lec_Titulo"];
+        $matriculados[$i]["Moc_Titulo"] = $leccion["Moc_Titulo"];
+
+    }
+    // print_r($matriculados);exit;
+
     $lang = $this->_view->getLenguaje('elearning_cursos', false, true);
     $data['titulo'] = $lang->get('str_alumnos').' - '.str_limit($curso[0]['Cur_Titulo'], 20);
     $data['active'] = 'alumnos';

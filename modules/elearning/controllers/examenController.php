@@ -786,9 +786,7 @@ class examenController extends elearningController {
                   // echo "P3:".$puntosrpta;
                   $Emodel->insertRespuesta($this->getInt('id_preg'.$i), Session::get("idintento"),null,null, $this->getSql('rpta3_'.$i.'_index_'.$j),$puntosrpta);
                   }
-              }
-
-              else if($tipo==4){
+              } else if($tipo==4){
                   // JM --> Listo (Pregunta con respuesta relacionar)
                   $alt = $preguntas[$i]['Alt'];
                   for($j=0; $j < count($alt); $j=$j+2){
@@ -2042,7 +2040,7 @@ class examenController extends elearningController {
         $this->_view->renderizar('resultado', 'elearning');
     }
 
-    public function corregirExamenAlumno($id){
+    public function corregirExamenAlumnossss($id){
         // $this->_view->setCss(array("miscertificados"));
         $this->_view->setTemplate(LAYOUT_FRONTEND);
         $this->_view->setJs(array(array(BASE_URL . 'modules/elearning/views/gestion/js/core/util.js'), "index"));

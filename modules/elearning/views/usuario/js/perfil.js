@@ -1,7 +1,7 @@
 $("#btnCambiarImg").click(function(e){
 	e.preventDefault();
 	var params = {
-		route: "modules/elearning/views/usuario/_contenido/_perfil",
+		route: "files/elearning/usuarios/perfil",
 		pre: $("#hiddenUsuario").val()
 	};
 	InitUploader(function(a){
@@ -16,7 +16,7 @@ $("#btnCambiarImg").click(function(e){
 			success: function(a){
 				var data = JSON.parse(a);
 				$("#perfil-img").attr("src", $("#hidden_base_url").val() +
-					"modules/elearning/views/usuario/_contenido/_perfil/" + data.mensaje);
+					"elearning/usuarios/perfil/" + data.mensaje);
 			}
 		});
 
