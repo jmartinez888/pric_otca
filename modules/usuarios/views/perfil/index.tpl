@@ -113,11 +113,12 @@
                         </div>
                     </div>
                     <div class="row">
+                          {if isset($cursos) && count($cursos)}
                         <div class=" col-md-12 text-bold h3 "> 
-                            Mis Cursos
+                            {$lenguaje.mis_cursos}
                         </div>
                         <div class=" col-md-12 "> 
-                            {if isset($cursos) && count($cursos)}
+                          
                             <div class="table-responsive" style="width: 100%">
                                 <table class="table" id="tblMisCursos">
                                     
@@ -163,14 +164,8 @@
                                     {/foreach}
                                 </table>
                             </div>
-                            {else}
-                              {if strlen($busqueda) }
-                                No hay resultados para: {$busqueda}
-                              {else}
-                                No tienes cursos
-                              {/if}
-                            {/if}      
                         </div>
+                          {/if}     
                     </div>
                 </div>
                 <div class="panel-footer ">                    
