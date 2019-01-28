@@ -19,7 +19,7 @@
                                 <input class="form-control" type="password"  id="password" name="password" placeholder="{$lenguaje['frontend_modal_contrasenia']}" required/>                             
                             </div>   
                             <div class="form-group text-right">
-                                <button id="logear"  name="logear" class="btn btn-sm btn-success" type="submit" value="Login" >Login</button>
+                                <button id="logear"  name="logear" class="btn btn-sm btn-success" type="submit" value="Login" >{$lenguaje['text_iniciarsession']}</button>
                             </div>    
                             <!-- Change this to a button or input when using this as a form -->
 
@@ -66,7 +66,7 @@
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-sm-3 pull-right text-right">
-                                    <button type="button" name="registrar-login" id="registrar-login" tabindex="7" class="btn btn-sm btn-success" value="">Crear cuenta</button>
+                                    <button type="button" name="registrar-login" id="registrar-login" tabindex="7" class="btn btn-sm btn-success" value="">{$lenguaje['frontend_form_registrocrear']}</button>
                                 </div>
                             </div>
                         </div>
