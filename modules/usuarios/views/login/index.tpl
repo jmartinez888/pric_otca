@@ -9,11 +9,12 @@
                 <div class="panel-body">
                     <form role="form"method="post">
                         <fieldset>
-                            <label>{$lenguaje.label_iniciar|default}</label>
+                            <label>{$lenguaje['frontend_modal_usuario']}</label>
                             <div class="form-group">
                                 <input class="form-control" type="text" id="usuario" name="usuario" value="{$usuario|default:""}" placeholder="{$lenguaje['frontend_modal_usuario']}" required/>
 
                             </div>
+                             <label>{$lenguaje['frontend_modal_contrasenia']}</label>
                             <div class="form-group">
                                 <input class="form-control" type="password"  id="password" name="password" placeholder="{$lenguaje['frontend_modal_contrasenia']}" required/>                             
                             </div>   
