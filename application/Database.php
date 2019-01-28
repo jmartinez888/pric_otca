@@ -35,6 +35,7 @@ class Database extends PDO
             'password'  => DB_PASS,
             'charset'   => DB_CHAR,
             'collation' => 'utf8_general_ci',
+            'strict' => false,
             'prefix'    => '',
         ]);
 
