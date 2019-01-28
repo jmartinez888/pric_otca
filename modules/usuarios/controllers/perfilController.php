@@ -65,6 +65,9 @@ class perfilController extends usuariosController {
         $this->_view->setCss(array('perfil'));
         ///$this->_view->setTemplate(LAYOUT_FRONTEND);
         $id = $this->filtrarInt($usuarioID);
+        if (Session::get('id_usuario')!=$id){            
+            $this->_acl->acceso('editar_usuario');
+        }
         $condicion='';
         if ($this->botonPress("bt_guardarUsuario")) {
             $i = $this->editarUsuario($id);
