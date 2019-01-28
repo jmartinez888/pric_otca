@@ -20,6 +20,9 @@ class perfilController extends usuariosController {
         }
         $this->_view->assign('titulo', 'Perfil');
         $this->_view->getLenguaje("index_inicio");
+        $this->_view->getLenguaje("template_backend");        
+        $this->_view->getLenguaje("usuarios_perfil");
+
         $this->_view->setJs(array('perfil'));
         $this->_view->setCss(array('perfil'));
         //echo $idUsuario;
@@ -55,6 +58,8 @@ class perfilController extends usuariosController {
         $this->validarUrlIdioma();
         $this->_view->setTemplate(LAYOUT_FRONTEND);
         $this->_view->getLenguaje("index_inicio");
+        $this->_view->getLenguaje("template_backend_lang");
+        $this->_view->getLenguaje("usuarios_perfil");
 //          $this->_acl->acceso('admin');
         //$this->_view->setJs(array('index'));
         $this->_view->setCss(array('perfil'));
@@ -80,6 +85,8 @@ class perfilController extends usuariosController {
         $this->validarUrlIdioma();
         $this->_view->setTemplate(LAYOUT_FRONTEND);
         $this->_view->getLenguaje("index_inicio");
+        $this->_view->getLenguaje("template_backend_lang");
+        $this->_view->getLenguaje("usuarios_perfil");
         //$this->_acl->acceso('admin');
         //$this->_view->setJs(array('index'));
         $this->_view->setCss(array('perfil'));
