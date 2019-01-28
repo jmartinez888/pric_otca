@@ -4,12 +4,12 @@
         <div class="margin-t-10 col-md-offset-2 col-md-4 col-lg-offset-0 col-lg-6 " >  
             <div class="login-panel panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">{$lenguaje['text_iniciarsession']}</h3>
+                    <h3 class="panel-title"><strong>{$lenguaje['text_iniciarsession']}</strong></h3>
                 </div>
                 <div class="panel-body">
                     <form role="form"method="post">
                         <fieldset>
-                            <p>{$lenguaje.label_iniciar|default}</p>
+                            <label>{$lenguaje.label_iniciar|default}</label>
                             <div class="form-group">
                                 <input class="form-control" type="text" id="usuario" name="usuario" value="{$usuario|default:""}" placeholder="{$lenguaje['frontend_modal_usuario']}" required/>
 
@@ -39,11 +39,11 @@
                 <div class="panel-body">
                     <form id="register-form-pag" action="" >
                         <div class="form-group">
-                            <p for="">{$lenguaje['frontend_form_registronombre']}</p>
+                            <label for="">{$lenguaje['frontend_form_registronombre']}</label>
                             <input type="text" name="nombreRegistrar" id="nombreRegistrar" pattern="([a-zA-Z][\sa-zA-Z]+)" tabindex="1" class="form-control" placeholder="{$lenguaje['frontend_form_registronombre']}" value="">
                         </div>
                         <div class="form-group">
-                            <p for="">{$lenguaje['frontend_form_registroapellido']}</p>
+                            <label for="">{$lenguaje['frontend_form_registroapellido']}</label>
                             <input type="text" name="apellidosRegistrar" id="apellidosRegistrar" pattern="([a-zA-Z][\sa-zA-Z]+)" tabindex="2" class="form-control" placeholder="{$lenguaje['frontend_form_registroapellido']}" value="">
                         </div>
                         <div class="form-group">
@@ -60,7 +60,7 @@
                         </div>
                         <div class="form-group">
                             <label for="">{$lenguaje['frontend_form_registro_confcontrasenia']}</label>
-                            <input type="password" name="confirm-password" id="confirm-password" data-minlength="6" data-match="#contrasena" data-match-error="*Contraseña no coinciden" tabinde{$lenguaje['frontend_form_registro_confcontrasenia']}">
+                            <input type="password" name="confirm-password" id="confirm-password" data-minlength="6" data-match="#contrasena" data-match-error="*Contraseña no coinciden" tabindex="5" class="form-control" placeholder="{$lenguaje['frontend_form_registro_confcontrasenia']}">
                         </div>
                         <div class="form-group">
                             <div class="row">
