@@ -93,7 +93,9 @@ function SubmitForm(form, dom, success, m = false){
 	var post = {};
 	post.Enabled = function(){
 		setTimeout(function(){
-			inputs.prop("disabled", false); textareas.prop("disabled", false); slcs.prop("disabled", false);
+			inputs.prop("disabled", false); 
+			textareas.prop("disabled", false); 
+			slcs.prop("disabled", false);
 		}, 500);
 	};
 	AsincTaks(form.attr('action'), params, function(e){

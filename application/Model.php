@@ -104,6 +104,18 @@ class Model extends Eloquent{
         return $this->_db->lastInsertId();
     }
 
+    public function getContTrad($Cot_Tabla = "", $Cot_IdRegistro = "", $Idi_IdIdioma = "") {
+        try{
+            $sql = $this->_db->query(
+                  " SELECT * FROM contenido_traducido WHERE Cot_Tabla = '$Cot_Tabla' AND Cot_IdRegistro =  '$Cot_IdRegistro' AND Idi_IdIdioma = '$Idi_IdIdioma' "
+            );
+            return $sql->fetchAll();
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("arquitectura(indexModel)", "getContTradCurso", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
+
 }
 
 ?>
