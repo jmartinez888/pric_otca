@@ -293,7 +293,7 @@
                 {/if}
 
                 {if $l.Activo==0}
-                  {if ($session==1 && isset($inscripcion) && count($inscripcion)>0 && $inscripcion[0].Mat_Valor==1) && $l.Disponible==1 }
+                  {if ($session==1 && isset($inscripcion) && count($inscripcion)>0 && $inscripcion[0].Mat_Valor==1) && $l.Disponible==1}
                     <a href="{BASE_URL}elearning/cursos/modulo/{$curso.Cur_IdCurso}/{$o.Moc_IdModuloCurso}/{$l.Lec_IdLeccion}">
                       <div class="tag-terminado"><center><strong>Revisar</strong></center></div>
                     </a>
@@ -303,7 +303,7 @@
                         <div class="tag-terminado"><center><strong>{$lang->get('elearning_cursos_revisar_leccion')}</strong></center></div>
                       </a>
                     {else}
-                      {if $l.Lec_Tipo==4 }
+                      {if $l.Lec_Tipo==4}
                           {if ($l.Lec_FechaHasta|date_format) < ($smarty.now|date_format) }
                             <div class="tag-terminado"><center><strong>{$lang->get('elearning_cursos_clase_concluida')}</strong></center></div>
                           {/if}
@@ -315,16 +315,16 @@
                               <div class="tag-terminado"><center><strong>{$lang->get('str_en_linea')}</strong></center></div>
                             </a>
                           {/if}
-                      {elseif $l.Lec_Tipo==5 }
+                      {elseif $l.Lec_Tipo==5}
                         <div class="tag-terminado"><center><strong>{$lang->get('elearning_cursos_examen_concluido')}</strong></center></div>
                       {else}
                       {/if}
-
+                    {/if}
                   {/if}
                 {else}
-                  {if $l.Lec_Tipo==4 }
+                  {if $l.Lec_Tipo==4}
                     <div class="tag-terminado pendiente"><center>{$lang->get('elearning_cursos_clase_pendiente')}</center></div>
-                  {elseif $l.Lec_Tipo==5 }
+                  {elseif $l.Lec_Tipo==5}
                     <div class="tag-terminado pendiente"><center>{$lang->get('elearning_cursos_examen_pendiente')}</center></div>
                   {else}
                   {/if}
