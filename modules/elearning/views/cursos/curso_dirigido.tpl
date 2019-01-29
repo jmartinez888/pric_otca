@@ -27,9 +27,7 @@
             </div>
 
             <div class="col-lg-3 row ic-sociales sharepost no-print" >
-                <!-- <a class="btn fa fa-facebook im_sociales" id="im_sociales" style="background: #3B5998" href="#"></a>
-                <a class="btn fa fa-twitter im_sociales" id="im_sociales" style="background: #55ACEE" href="#"></a>
-                <a class="btn fa fa-google-plus im_sociales" id="im_sociales" style="background: #C03A2A" href="#"></a> -->
+              
                 <ul class="list-inline">
                   <li class="facebook">
                     <div class="icon">
@@ -101,12 +99,6 @@
         <div>{$curso.Cur_Descripcion}</div> <br/>
       </div>
 
-     <!--  <div class="col-lg-12 text-curso">
-        <a href="{BASE_URL}elearning/cursos/calendario_curso/{$curso.Cur_IdCurso}" class="btn btn-success">
-          <span class="glyphicon glyphicon-calendar"></span> Ver Calendario
-        </a>
-      </div> -->
-
           {if isset($objetivos) && count($objetivos)>0}
           <div class="col-xs-12 text-curso">
             <div><strong><i class="glyphicon glyphicon-record"></i>
@@ -150,9 +142,6 @@
             &nbsp;{$lang->get('str_contacto')}</strong></div>
             <div style="padding-left: 25px">
               {$curso.Cur_Contacto|default:"---"}
-              <!-- <a href="{BASE_URL}elearning/cursos/ficha/{$curso.Cur_IdCurso}" style="display: inline-block;">
-                {$lang->get('str_detalle')}
-              </a> -->
             </div> <br/>
           </div>
           {/if}
@@ -207,14 +196,6 @@
                       </div>
                     </div>
                   </div>
-
-
-                  <!--{if ($session==1 && isset($inscripcion) && count($inscripcion)>0 && $inscripcion[0].Mat_Valor==1) && ($curso.Usu_IdUsuario != Session::get('id_usuario')) }
-                    <a href="{BASE_URL}elearning/clase/clase/{$curso.Cur_IdCurso}"><button class="btn btn-success">ir a clase</button></a>
-                  {/if}
-                  {if $curso.Usu_IdUsuario == Session::get('id_usuario')}
-                    <a href="{BASE_URL}elearning/clase/clase/{$curso.Cur_IdCurso}"><button class="btn btn-success">Dar clase</button></a>
-                  {/if}-->
 
 
                 </div>
