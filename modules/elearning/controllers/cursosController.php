@@ -257,7 +257,7 @@ class cursosController extends elearningController {
       }
 
       $inscritos = $mInsc->getInscritos($id);
-      $lecciones = $mLeccion->getLeccionesLMS($id);
+      $lecciones = $mLeccion->getLeccionesLMS($id, Cookie::lenguaje());
       $duracion = $model->getDuracionCurso($id);
       $certificado = $mCert->getCertificadoUsuarioCurso(Session::get("id_usuario"), $id);
       // $modulo = $mModulo->getModulosCurso($id, Session::get("id_usuario"));
