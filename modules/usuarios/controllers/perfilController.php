@@ -84,7 +84,9 @@ class perfilController extends usuariosController {
     }
     
     public function editarContrasena($usuarioID=0) {
-        $this->_acl->acceso('editar_perfil');
+       if (Session::get('id_usuario')!=$usuarioID){            
+            $this->_acl->acceso('editar_usuario');
+        }
         $this->validarUrlIdioma();
         $this->_view->setTemplate(LAYOUT_FRONTEND);
         $this->_view->getLenguaje("index_inicio");
