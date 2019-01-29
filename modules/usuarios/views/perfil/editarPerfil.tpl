@@ -66,7 +66,7 @@
                         <div class="form-group">
                             <label class="col-lg-4 control-label">{$lenguaje.label_usuario} : </label>
                             <div class="col-lg-4">
-                                <input  class="form-control" id="usuario" type="text" data-minlength="5" pattern="([_A-z0-9])+" name="usuario" value="{$datos.Usu_Usuario|default:""}" placeholder="{$lenguaje.label_usuario}" required=""/>
+                                <input  class="form-control" id="usuario" type="text" data-minlength="5" pattern="([_A-z0-9])+" name="usuario" value="{$datos.Usu_Usuario|default:""}" placeholder="{$lenguaje.label_usuario}" readonly="readonly"/>
                             </div>
                             {if $_acl->permiso("editar_perfil")}
                             <div class="col-lg-3">                                
