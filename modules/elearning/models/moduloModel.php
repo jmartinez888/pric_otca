@@ -4,8 +4,19 @@ class moduloModel extends Model {
 
     public function __construct() { parent::__construct(); }
 
-    public function getModulosCurso($id, $id_usuario = ""){
-        $sql = "SELECT MC.*,
+    public function getModulosCurso($id, $id_usuario = "", $Idi_IdIdioma = "es"){
+        $sql = "SELECT 
+                MC.Moc_IdModuloCurso,
+                MC.Cur_IdCurso,
+                 fn_TraducirContenido('modulo_curso','Moc_Titulo', MC.Moc_IdModuloCurso,'$Idi_IdIdioma', MC.Moc_Titulo) Moc_Titulo,
+                 fn_TraducirContenido('modulo_curso','Moc_Descripcion', MC.Moc_IdModuloCurso,'$Idi_IdIdioma', MC.Moc_Descripcion) Moc_Descripcion,
+                 MC.Moc_TiempoDedicacion,
+                 MC.Moc_Porcentaje,
+                 MC.Moc_FechaReg,
+                  MC.Moc_Estado,
+                  MC.Row_Estado,
+                 fn_devolverIdioma('modulo_curso', MC.Moc_IdModuloCurso,'$Idi_IdIdioma', MC.Idi_IdIdioma) Idi_IdIdioma
+              ,
               (SELECT MIN(Lec_IdLeccion) FROM leccion L
               WHERE L.Moc_IdModuloCurso = MC.Moc_IdModuloCurso
                 AND L.Lec_Estado = 1 AND L.Row_Estado = 1) as PrimerLeccion
@@ -84,8 +95,19 @@ class moduloModel extends Model {
       }
     }
 
-    public function getModulo($id){
-        $sql = "SELECT * FROM modulo_curso WHERE Moc_IdModuloCurso = {$id}
+    public function getModulo($id,$Idi_IdIdioma="es"){
+        $sql = "SELECT 
+                Moc_IdModuloCurso,
+                Cur_IdCurso,
+                 fn_TraducirContenido('modulo_curso','Moc_Titulo', Moc_IdModuloCurso,'$Idi_IdIdioma', Moc_Titulo) Moc_Titulo,
+                 fn_TraducirContenido('modulo_curso','Moc_Descripcion', Moc_IdModuloCurso,'$Idi_IdIdioma', Moc_Descripcion) Moc_Descripcion,
+                 Moc_TiempoDedicacion,
+                 Moc_Porcentaje,
+                 Moc_FechaReg,
+                  Moc_Estado,
+                  Row_Estado,
+                 fn_devolverIdioma('modulo_curso',Moc_IdModuloCurso,'$Idi_IdIdioma',Idi_IdIdioma) Idi_IdIdioma
+                 FROM modulo_curso WHERE Moc_IdModuloCurso = {$id}
                 AND Moc_Estado = 1 AND Row_Estado = 1";
         $modulo = $this->getArray($sql);
         if($modulo!=null && count($modulo)>0){
@@ -101,8 +123,20 @@ class moduloModel extends Model {
         }
     }
 
-    public function getModulosCursoLMS($id, $id_usuario){
-        $sql = "SELECT * FROM modulo_curso WHERE Cur_IdCurso = {$id}
+    public function getModulosCursoLMS($id, $id_usuario, $Idi_IdIdioma="es"){
+        $sql = "SELECT 
+                Moc_IdModuloCurso,
+                Cur_IdCurso,
+                 fn_TraducirContenido('modulo_curso','Moc_Titulo', Moc_IdModuloCurso,'$Idi_IdIdioma', Moc_Titulo) Moc_Titulo,
+                 fn_TraducirContenido('modulo_curso','Moc_Descripcion', Moc_IdModuloCurso,'$Idi_IdIdioma', Moc_Descripcion) Moc_Descripcion,
+                 Moc_TiempoDedicacion,
+                 Moc_Porcentaje,
+                 Moc_FechaReg,
+                  Moc_Estado,
+                  Row_Estado,
+                 fn_devolverIdioma('modulo_curso',Moc_IdModuloCurso,'$Idi_IdIdioma',Idi_IdIdioma) Idi_IdIdioma
+
+                FROM modulo_curso WHERE Cur_IdCurso = {$id}
                 AND Moc_Estado = 1 AND Row_Estado = 1 ORDER BY Moc_IdModuloCurso";
         $modulos = $this->getArray($sql);
         $resultado = array();
