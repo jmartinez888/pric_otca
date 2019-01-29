@@ -226,7 +226,7 @@ class cursoModel extends Model {
       return $resultado[0];
     }
 
-    public function getDetalleCurso($curso){
+    public function getDetalleCurso($curso,$Idi_IdIdioma){
       $sql = " SELECT DC_IdDetCurso, Cur_IdCurso,
 
                  fn_TraducirContenido('detalle_curso','DC_Titulo',DC_IdDetCurso,'$Idi_IdIdioma',DC_Titulo) DC_Titulo,
