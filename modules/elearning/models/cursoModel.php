@@ -59,8 +59,6 @@ class cursoModel extends Model {
                  c.Cur_EstadoRegistro,
                  c.Cur_Estado,
                  c.Row_Estado,
-                 cc.Con_Descripcion,
-                 fn_TraducirContenido('constante','Con_Descripcion',cc.Cur_IdCurso,'$Idi_IdIdioma',cc.Con_Descripcion) Modalidad,
 
                  fn_devolverIdioma('curso',c.Cur_IdCurso,'$Idi_IdIdioma',c.Idi_IdIdioma) Idi_IdIdioma 
           FROM curso c WHERE c.Cur_IdCurso = {$id} AND c.Row_Estado = 1");
