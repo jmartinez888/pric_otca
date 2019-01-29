@@ -66,13 +66,13 @@
                         <div class="form-group">
                             <label class="col-lg-4 control-label">{$lenguaje.label_usuario} : </label>
                             <div class="col-lg-4">
-                                <input  class="form-control" id="usuario" type="text" data-minlength="5" pattern="([_A-z0-9])+" name="usuario" value="{$datos.Usu_Usuario|default:""}" placeholder="{$lenguaje.label_usuario}" readonly="readonly"/>
+                                <label  class="form-control">{$datos.Usu_Usuario|default:""}</label>
                             </div>
-                            {if $_acl->permiso("editar_perfil")}
+                           
                             <div class="col-lg-3">                                
                                 <a data-toggle="tooltip" data-placement="bottom" class="btn btn-dropbox btn-sm glyphicon glyphicon-edit" title="{$lenguaje.editar_contrasena}" href="{$_layoutParams.root}usuarios/perfil/editarContrasena/{$datos.Usu_IdUsuario}">&nbsp;{$lenguaje.editar_contrasena}</a>
                             </div>
-                            {/if}
+                           
                         </div> 
                         <div class="form-group">
                             <div class="col-lg-offset-2 col-lg-7 pull-right">
