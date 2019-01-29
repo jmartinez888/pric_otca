@@ -206,7 +206,8 @@ class gleccionController extends elearningController {
 
         $Lmodel = $this->loadModel("_gestionLeccion");
         $Cmodel = $this->loadModel("_gestionCurso");
-        $Mmodel = $this->loadModel("_gestionModulo");
+        $Mmodel = $this->loadModel("_gestionModulo");  
+        $_arquitectura = $this->loadModel('index','arquitectura');
 
         $curso = $Cmodel->getCursoXId($id_curso);
         $tipo = $Lmodel->getTipoLecccion( $curso["Moa_IdModalidad"]==2? " ": "" );
@@ -214,6 +215,9 @@ class gleccionController extends elearningController {
         $modulo = $Mmodel->getModuloId($id_modulo);
 
         Session::set("learn_url_tmp", "gleccion/_view_lecciones_modulo");
+        $this->_view->assign('idiomas',$_arquitectura->getIdiomas());
+
+        $this->_view->assign('IdiomaOriginal',$curso["Idi_IdIdioma"]);
         $this->_view->assign("tipo", $tipo);
         $this->_view->assign('menu', 'curso');
         $this->_view->assign("lecciones", $lecciones);
@@ -222,6 +226,54 @@ class gleccionController extends elearningController {
 
         $this->_view->assign("titulo", $modulo['Moc_Titulo'].' - '.$curso['Cur_Titulo']);
         $this->_view->render("ajax/_view_lecciones_modulo");
+    }
+
+    //JM-Ya
+    public function gestion_idiomas() {
+        // $this->_view->getLenguaje(['elearning_gcurso', 'elearning_cursos'], false, true);   
+        $_arquitectura = $this->loadModel('index','arquitectura');
+        $condicion1 = '';
+        $idIdiomaOriginal = $this->getPostParam('idIdiomaOriginal');  
+        $Idi_IdIdioma = $this->getPostParam('idIdioma');      
+        $Moc_IdModuloCurso = $this->getPostParam('Moc_IdModuloCurso');
+
+        // $condicion1 .= " WHERE m.Moc_IdModuloCurso = $Moc_IdModuloCurso ";            
+        // $datos = $this->_arquitectura->getPaginaTraducida($condicion1,$Idi_IdIdioma);
+        // echo $condicion1;
+        $Mmodel = $this->loadModel("_gestionModulo");
+        $datos = $Mmodel->getModuloId($Moc_IdModuloCurso);
+        // print_r($datos);
+        $this->_view->assign('idiomas',$_arquitectura->getIdiomas());
+        // echo $Idi_IdIdioma;
+        // echo $idIdiomaOriginal ;
+        if ($idIdiomaOriginal != $Idi_IdIdioma) { 
+            $Moc_TiempoDedicacion = $datos["Moc_TiempoDedicacion"];
+            $datos = array();
+            $datos["Moc_IdModuloCurso"] = $Moc_IdModuloCurso;
+            $datos["Cur_IdCurso"] = "";
+            $datos["Moc_Titulo"] = "";
+            $datos["Moc_Descripcion"] = "";
+            $datos["Moc_TiempoDedicacion"] = $Moc_TiempoDedicacion;
+            $datos["Moc_Porcentaje"] = "";
+            $datos["Idi_IdIdioma"] = $Idi_IdIdioma;
+            $datos["Moc_FechaReg"] = "";
+            $datos["Moc_Estado"] = "";
+            $datos["Row_Estado"] = "";
+
+            $contTrad = $Mmodel->getContTraducido("modulo_curso", $Moc_IdModuloCurso, $Idi_IdIdioma);
+            // print_r($contTrad);
+            for ($i=0; $i < count($contTrad); $i++) { 
+                $datos[$contTrad[$i]["Cot_Columna"]] = $contTrad[$i]["Cot_Traduccion"];
+            }
+          // print_r($datos);
+        }
+
+        $this->_view->assign('modulo',$datos);  
+
+        $this->_view->assign('IdiomaOriginal',$this->getPostParam('idIdiomaOriginal'));
+        // $this->_view->assign('parametros', $parametros);
+        // echo Cookie::lenguaje();
+        $this->_view->renderizar('ajax/gestion_idiomas', false, true);
     }
 
     public function _registrar_leccion(){

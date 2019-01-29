@@ -131,7 +131,7 @@ class cursosController extends elearningController {
       $paginador = new Paginador();
       $arrayRowCount = $model->getCursosRowCount($condicion);
       $totalRegistros = $arrayRowCount['CantidadRegistros'];
-      $cursos = $model->getCursosPaginado($pagina,CANT_REG_PAG,$condicion,$Usu_IdUsuario);
+      $cursos = $model->getCursosPaginado($pagina,CANT_REG_PAG,$condicion,$Usu_IdUsuario, Cookie::lenguaje());
       $paginador->paginar($totalRegistros,"listarCursos", "", $pagina, CANT_REG_PAG, true);
 
       $this->_view->assign('numeropagina', $paginador->getNumeroPagina());
@@ -151,20 +151,20 @@ class cursosController extends elearningController {
       $this->_view->renderizar('inicio');
   }
 
-  public function miscursos(){
-      if(!Session::get("autenticado")){ $this->redireccionar("elearning/"); }
-      $model = $this->loadModel("curso");
-      $mConstante = $this->loadModel("constante");
-      $cursos = $model->getCursoUsuario(Session::get("id_usuario"));
+    public function miscursos(){
+        if(!Session::get("autenticado")){ $this->redireccionar("elearning/"); }
+        $model = $this->loadModel("curso");
+        $mConstante = $this->loadModel("constante");
+        $cursos = $model->getCursoUsuario(Session::get("id_usuario"));
 
-      $this->_view->setTemplate(LAYOUT_FRONTEND);
-      $this->_view->setCss(array("index","jp-index", "jp-detalle-lateral2"));
-      $this->_view->assign("busqueda","");
-      $this->_view->assign("usu_curso",Session::get("usuario"));
-      $this->_view->assign("cursos",$cursos);
-      $this->_view->assign("c",1);
-      $this->_view->renderizar('inicio');
-  }
+        $this->_view->setTemplate(LAYOUT_FRONTEND);
+        $this->_view->setCss(array("index","jp-index", "jp-detalle-lateral2"));
+        $this->_view->assign("busqueda","");
+        $this->_view->assign("usu_curso",Session::get("usuario"));
+        $this->_view->assign("cursos",$cursos);
+        $this->_view->assign("c",1);
+        $this->_view->renderizar('inicio');
+    }
 
   public function miscursos_docente(){
       if(!Session::get("autenticado")){ $this->redireccionar("elearning/"); }

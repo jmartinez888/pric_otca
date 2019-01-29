@@ -26,6 +26,7 @@
                  <div class="box__success">Archivo(s) subidos!</div>
                  <div class="box__error">Error! <span></span>.</div>
                  <input name="route" value="" hidden="hidden" id="hidden-uploader-route"/>
+                 <input name="Idi_Ididioma" value="" hidden="hidden" id="hidden-uploader-Idi_Ididioma"/>
                </form>
                </center>
              </div>

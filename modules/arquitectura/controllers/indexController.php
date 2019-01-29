@@ -237,8 +237,7 @@ class indexController extends arquitecturaController
                     $this->getInt('idPadreEditar')
                 );
                 $this->_view->assign('_mensaje', 'Edicion Completado..!!');
-            }
-            else {
+            } else {
                 $this->_arquitectura->editarTraduccion(
                 $this->getSql('nombreEditar'),
                 $this->getSql('descripcionEditar'),

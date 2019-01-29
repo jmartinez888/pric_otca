@@ -24,19 +24,20 @@ class uploaderController extends elearningController {
     $ruta = $this->Route($this->getTexto("route"));
     $pre = $this->getTexto("pre");
     $pre = strlen($pre) > 0 ? $pre : "file";
+    $Idi_Ididioma = $this->getTexto("Idi_Ididioma");
+    $Idi_Ididioma = strlen($Idi_Ididioma) > 0 ? "_".$Idi_Ididioma : "";
     $ruta = ROOT . $ruta;
     $resultados = array();
-
+    // dom($Idi_Ididioma);
     for ($i = 0; $i < count($_FILES["files"]["name"]); $i++) {
       $name = str_replace(" ", "", trim($_FILES["files"]["name"][$i]));
       $type = $_FILES["files"]["type"][$i];
       $tmp_name = $_FILES["files"]["tmp_name"][$i];
       $ext = pathinfo($name, PATHINFO_EXTENSION);
-      $pre_name = $this->Prefijo() . "-" . $pre . "-" . md5($name).'.'.$ext;
+      $pre_name = $this->Prefijo() . "-" . $pre . "-" . md5($name).$Idi_Ididioma.'.'.$ext;
       $tmp_ruta_archivo = $ruta . $pre_name;
-      // $tmp_name_archivo = $this->Prefijo() . "-" . $pre . "-" . $name;
 
-      if(move_uploaded_file($tmp_name, $tmp_ruta_archivo) {
+      if(move_uploaded_file($tmp_name, $tmp_ruta_archivo)) {
         array_push($resultados, array( "estado" => 1, "url" => $pre_name, "name_file" => $name  ));
 			} else {
         array_push($resultados, array( "estado" => 0, "url" => $pre_name, "name_file" => $name  ));

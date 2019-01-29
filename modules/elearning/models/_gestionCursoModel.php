@@ -135,6 +135,19 @@ class _gestionCursoModel extends Model {
       return count($res) > 0 ? $res[0] : null;
   }
 
+
+  public function getContTradCurso($Cot_Tabla, $Cot_IdRegistro, $Idi_IdIdioma) {
+      try{
+          $sql = $this->_db->query(
+                  " SELECT * FROM contenido_traducido WHERE Cot_Tabla = '$Cot_Tabla' AND Cot_IdRegistro =  '$Cot_IdRegistro' AND Idi_IdIdioma = '$Idi_IdIdioma' "
+          );
+          return $sql->fetchAll();
+      } catch (PDOException $exception) {
+          $this->registrarBitacora("arquitectura(indexModel)", "getContTradCurso", "Error Model", $exception);
+          return $exception->getTraceAsString();
+      }
+  }
+
   public function getCursoTraducido($condicion = '', $Idi_IdIdioma) {
       try{            
           $cursos = $this->_db->query(
@@ -235,9 +248,31 @@ class _gestionCursoModel extends Model {
       return $this->getArray("SELECT MAX(Cur_IdCurso) as ID FROM curso WHERE Usu_IdUsuario = $id AND Row_Estado = 1")[0];
   }
 
-  public function getObjetivosXCurso($id, $estado) {
-      $sql = "SELECT * FROM curso_objetivos WHERE Cur_IdCurso = $id AND CO_Estado >= $estado AND Row_Estado = 1";
-      return $this->getArray($sql);
+  // public function getObjetivosXCurso($id, $estado) {
+  //     $sql = "SELECT * FROM curso_objetivos WHERE Cur_IdCurso = $id AND CO_Estado >= $estado AND Row_Estado = 1";
+  //     return $this->getArray($sql);
+  // }
+
+  public function getObjetivosXCurso($id, $Idi_IdIdioma, $estado) {
+      try{
+          $result = $this->_db->query(
+              " SELECT 
+              c.CO_IdObjetivo,
+              c.Cur_IdCurso,
+              fn_TraducirContenido('curso_objetivos','CO_Titulo',c.CO_IdObjetivo,'$Idi_IdIdioma',c.CO_Titulo) CO_Titulo, 
+              fn_TraducirContenido('curso_objetivos','CO_Descripcion',c.CO_IdObjetivo,'$Idi_IdIdioma',c.CO_Descripcion) CO_Descripcion, 
+              c.CO_FechaReg,
+              c.CO_Estado,
+              c.Row_Estado,
+              fn_devolverIdioma('curso_objetivos',c.CO_IdObjetivo,'$Idi_IdIdioma',c.Idi_IdIdioma) Idi_IdIdioma
+              FROM curso_objetivos c 
+              WHERE c.Cur_IdCurso = $id AND c.CO_Estado >= $estado AND c.Row_Estado = 1 "
+          );
+          return $result->fetchAll(PDO::FETCH_ASSOC);
+      } catch (PDOException $exception) {
+          $this->registrarBitacora("elearning(_gestionCursoModel)", "getObjetivosXCurso", "Error Model", $exception);
+          return $exception->getTraceAsString();
+      }
   }
 
   public function saveCurso($usuario, $modalidad, $titulo, $descripcion){
@@ -290,8 +325,10 @@ class _gestionCursoModel extends Model {
       return $this->getArray($sql);
   }
 
+  //Jhon Martinez
   public function updateCurso($id, $titulo, $descripcion, $objgeneral, $publico, $software, $hardware, $metodologia, $vacantes, $contacto){
-    $sql = "UPDATE curso SET
+    try {
+        $sql = " UPDATE curso SET
               Cur_Titulo = '{$titulo}',
               Cur_Descripcion = '{$descripcion}',
               Cur_ObjetivoGeneral = '{$objgeneral}',
@@ -302,22 +339,39 @@ class _gestionCursoModel extends Model {
               Cur_Vacantes = '{$vacantes}',
               Cur_Contacto = '{$contacto}'
             WHERE Cur_IdCurso = {$id} ";
-    $this->execQuery($sql);
+         // $this->execQuery($sql);
+        $result = $this->_db->prepare($sql);
+        $result->execute();
+        return $result->rowCount(PDO::FETCH_ASSOC);
+    } catch (PDOException $exception) {
+        $this->registrarBitacora("elearning(_gestionCursoModel)", "updateCurso", "Error Model", $exception);
+        return $exception->getTraceAsString();
+    }
+
   }
 
+  //Jhon Martinez
   public function updateBannerCurso($curso, $banner){
-    $sql = "UPDATE curso SET Cur_UrlBanner = '{$banner}' WHERE Cur_IdCurso = '{$curso}'";
-    $this->execQuery($sql);
-  }
+    try {
+        $sql = " UPDATE curso SET Cur_UrlBanner = '{$banner}' WHERE Cur_IdCurso = '{$curso}' ";
+         // $this->execQuery($sql);
+        $result = $this->_db->prepare($sql);
+        $result->execute();
+        return $result->rowCount(PDO::FETCH_ASSOC);
+    } catch (PDOException $exception) {
+        $this->registrarBitacora("elearning(_gestionCursoModel)", "updateBannerCurso", "Error Model", $exception);
+        return $exception->getTraceAsString();
+    }
 
+  }
   //Jhon Martinez
   public function updateVideoCurso($curso, $video){
     try {
         $sql = " UPDATE curso SET Cur_UrlVideoPresentacion = '{$video}' WHERE Cur_IdCurso = '{$curso}' ";
          // $this->execQuery($sql);
-         $result = $this->_db->prepare($sql);
-          $result->execute();
-          return $result->rowCount(PDO::FETCH_ASSOC);
+        $result = $this->_db->prepare($sql);
+        $result->execute();
+        return $result->rowCount(PDO::FETCH_ASSOC);
     } catch (PDOException $exception) {
         $this->registrarBitacora("elearning(_gestionCursoModel)", "updateVideoCurso", "Error Model", $exception);
         return $exception->getTraceAsString();
@@ -327,7 +381,7 @@ class _gestionCursoModel extends Model {
 
 
    public function getAnuncios($curso){
-      $sql = "SELECT * FROM anuncio_curso
+      $sql = " SELECT * FROM anuncio_curso
               WHERE Cur_IdCurso = {$curso}";
       return $this->getArray($sql);
     }

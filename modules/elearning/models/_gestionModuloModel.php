@@ -19,6 +19,10 @@ class _gestionModuloModel extends Model {
     $sql = "SELECT * FROM modulo_curso WHERE Moc_IdModuloCurso = {$curso} AND Row_Estado = 1";
     return $this->getArray($sql)[0];
   }
+  public function getContTraducido($Cot_Tabla = "", $Cot_IdRegistro = "", $Idi_IdIdioma = "")
+  {
+     return $this->getContTrad($Cot_Tabla, $Cot_IdRegistro, $Idi_IdIdioma);
+  }
 
   public function getCursoId($curso){
     $sql = "SELECT * FROM curso WHERE Cur_IdCurso = {$curso} AND Row_Estado = 1 ";

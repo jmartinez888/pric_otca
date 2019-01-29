@@ -10,7 +10,7 @@
         <div class="panel-body">
           <div class="col-lg-12" style="padding-left: 0px; padding-right: 0px;">
             <div class="col-lg-3 img-curso">
-              <img class="w-100" src="{BASE_URL}modules/elearning/views/cursos/img/portada/{$curso.Cur_UrlBanner}" />
+              <img class="w-100" src="{BASE_URL}files/elearning/cursos/img/portada/{$curso.Cur_UrlBanner}"" />
               {if $curso.Moa_IdModalidad == 2}
               <div class="col-xs-12 text-center " style="background: #2196F3; color: white; font-weight: bold; font-size: 18px;">LMS</div>
               {/if}
