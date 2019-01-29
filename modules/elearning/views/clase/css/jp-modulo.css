@@ -1,9 +1,4 @@
-.gradiente{
-	padding-bottom: 20px;
-}
-.titulo-modulo{
-	color: #4A4A4A;
-}
+
 .btn-next-previous{
     background-color: #007cbe;
     color: #FFF;
@@ -41,55 +36,34 @@
     position: relative;
 }
 
-.sidebar {
-    padding-top: 0px;
-    width: 100%;
-    height: 530px !important;
-    max-height: 530px !important;
-    padding-right: 0px;
-    overflow-y: auto;
-    background: #a0a0a0;
-    margin-bottom: 20px;
-    padding-bottom: 0px;
-}
-.side-menu li {
-    padding: 10px 20px;
-    cursor: pointer;
-    background-color: rgb(55, 57, 65);
-    font-weight: bold;
-    margin-bottom: 2px;
-    font-size: 15px;
-    text-align: left;
-}
-a.nounderline: link { text-decoration: none; }
-
-.item-active{
-  background-color: #386c77 !important;
-  color: #fff !important;
-}
-
-.item-leccion-concluida{
-  position: absolute;
-  right: 10px;
-  top:10px;
-  font-size: 20px;
-  color: #A8CF45;
-}
-.leccion-container{
-    height: 550px;
-}
-.cabecera-titulo{
-	color: #fff !important;
-	background: #a0a0a0!important;
-}
-.contenedor-clase{
-	overflow-y: auto;
-    height: 490px;
-	max-height: 490px;
-}
 @media (max-width: 992px) {
     .sidebar-reduce {
         height: inherit !important;
         max-height: inherit !important;
     }
+}
+/*B CURSOS MODULO*/
+#leccionar-container .sidebar .side-menu ul li a{
+    color: white;
+}
+#leccionar-container .sidebar .side-menu ul li:not(.leccion-active) {
+    /*display:none;*/
+}
+
+
+#leccionar-container .sidebar .side-menu ul li {
+
+    display: grid;
+    grid-template-columns: auto 50px 50px;
+
+
+}
+
+#leccionar-container .sidebar .side-menu ul li .item-menus {
+     place-self: center;
+     font-size: 1.4em;
+}
+
+#btn-show-leccion {
+    z-index: 1000;
 }

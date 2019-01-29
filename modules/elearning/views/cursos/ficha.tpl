@@ -22,7 +22,7 @@
 	    			</div>
 		        	<div class="col-lg-4">
 		        		<img class="img-perfil" 
-		        		src="{BASE_URL}modules/elearning/views/usuario/_contenido/_perfil/{$usuario.Usu_URLImage}">
+		        		src="{BASE_URL}files/elearning/usuarios/perfil/{$usuario.Usu_URLImage}">
 		        	</div>
 		        	<div class="col-lg-8">
 			        	<div class="col-lg-12">

@@ -160,6 +160,7 @@
                                 </div>              
                             {/if}
                         </div>
+                        
                         <div class="form-group">
                             <label class="col-lg-2 control-label">{$lenguaje.label_nombre} : </label>
                             <div class="col-lg-10">

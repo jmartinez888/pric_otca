@@ -209,10 +209,38 @@ class indexModel extends Model {
         }
     }
 
-    public function buscarCampoTraducido($tabla, $Pag_IdPagina, $columna, $Idi_IdIdioma) {
+    public function editarRegistroTraducido($Cot_Tabla="", $Cot_IdRegistro="", $Cot_Columna="", $Idi_IdIdioma="", $Cot_Traduccion="")
+    {
+
+        $ContTrad = $this->buscarCampoTraducido($Cot_Tabla, $Cot_IdRegistro, $Cot_Columna, $Idi_IdIdioma);
+
+        if (count($ContTrad) && isset($ContTrad['Cot_IdContenidoTraducido'])) {      
+            try {
+                $result = $this->_db->query(
+                    " UPDATE contenido_traducido SET Cot_Traduccion = '$Cot_Traduccion' WHERE Cot_IdContenidoTraducido = " . $ContTrad['Cot_IdContenidoTraducido'] . " "
+                    );
+                return $result->rowCount();
+            } catch (PDOException $exception) {
+                $this->registrarBitacora("arquitectura(indexModel)", "editarRegistroTraducido", "Error Model", $exception);
+                return $exception->getTraceAsString();
+            }   
+        } else {
+            try {
+                $result = $this->_db->query(
+                        " INSERT INTO contenido_traducido (Cot_Tabla, Cot_IdRegistro, Cot_Columna, Idi_IdIdioma, Cot_Traduccion) VALUES ('{$Cot_Tabla}', {$Cot_IdRegistro}, '{$Cot_Columna}', '{$Idi_IdIdioma}', '{$Cot_Traduccion}') "
+                        );
+                return $result->rowCount();
+            } catch (PDOException $exception) {
+                $this->registrarBitacora("arquitectura(indexModel)", "editarRegistroTraducido", "Error Model", $exception);
+                return $exception->getTraceAsString();
+            }   
+        }
+    }
+
+    public function buscarCampoTraducido($Cot_Tabla, $Cot_IdRegistro, $Cot_Columna, $Idi_IdIdioma) {
         try{
             $post = $this->_db->query(
-                    "SELECT * FROM contenido_traducido WHERE Cot_Tabla = '$tabla' AND Cot_IdRegistro =  $Pag_IdPagina AND  Cot_Columna = '$columna' AND Idi_IdIdioma= '$Idi_IdIdioma'");
+                    "SELECT * FROM contenido_traducido WHERE Cot_Tabla = '$Cot_Tabla' AND Cot_IdRegistro =  $Cot_IdRegistro AND  Cot_Columna = '$Cot_Columna' AND Idi_IdIdioma = '$Idi_IdIdioma' ");
             return $post->fetch();
         } catch (PDOException $exception) {
             $this->registrarBitacora("arquitectura(indexModel)", "buscarCampoTraducido", "Error Model", $exception);

@@ -102,8 +102,13 @@
                                             {else}
                                                 data-book-id="{$rl.Pre_Descripcion}"
                                                 data-toggle="modal"  data-target="#confirm-delete"
-                                                class="btn btn-default btn-sm  glyphicon glyphicon-trash confirmar-eliminar-examen" {/if}
+                                                class="btn btn-default btn-sm  glyphicon glyphicon-trash confirmar-eliminar-examen" 
+                                            {/if}
                                             id_examen="{$rl.Exa_IdExamen}" data-placement="bottom" > </a>
+                                            {/if}
+
+                                            {if $rl.Emitido>=1}
+                                             <a data-toggle="tooltip" data-placement="bottom" class="btn btn-default btn-sm glyphicon glyphicon-folder-open btn-respuestas" title="Ver Respuestas" href="{$_layoutParams.root}elearning/examen/intentos/{$idcurso}/{$rl.Exa_IdExamen}"></a>
                                             {/if}
                                             <!-- {/if} -->
                                         </td>

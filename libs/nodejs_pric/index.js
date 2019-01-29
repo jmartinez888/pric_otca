@@ -5,7 +5,10 @@ var PUERTO = 3000;
 var express = require('express');
 var app = express();
 var server = require('http').createServer(app);
-var socket = require('./socket/main')(server, true);
+var socket = require('./socket/main_v3')(server, true);
+
+// var server_canvas = require('http').createServer(app);
+// var socket_canvas = require('./socket/main_v2')(server_canvas, true);
 
 var script = require('./routes/script')(__dirname);
 var style = require('./routes/style')(__dirname);
@@ -16,3 +19,5 @@ app.use('/script', script);
 app.use('/style', style);
 
 server.listen(PUERTO, function(){ console.log('\n\nProyecto PRIC: \nPuerto *:' + PUERTO); });
+
+// server_canvas.listen(3001, function(){ console.log('\n\nProyecto PRIC: \nPuerto *:' + 3001); });

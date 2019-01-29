@@ -164,12 +164,12 @@ class leccionModel extends Model {
 
     /* PARA EL CASO LMS*/
     public function getLeccionesLMS($curso){
-      $sql = "SELECT * FROM leccion L
+      $sql = " SELECT * FROM leccion L
               INNER JOIN modulo_curso M ON L.Moc_IdModuloCurso = M.Moc_IdModuloCurso
               INNER JOIN curso C ON M.Cur_IdCurso = C.Cur_IdCurso AND C.Cur_IdCurso = {$curso}
               WHERE C.Cur_Estado = 1 AND M.Moc_Estado = 1 AND L.Lec_Estado = 1
                 AND C.Row_Estado = 1 AND M.Row_Estado = 1 AND L.Row_Estado = 1
-              ORDER BY L.Lec_FechaDesde ASC";
+              ORDER BY L.Lec_FechaDesde ASC ";
       $lecciones = $this->getArray($sql);
       return $lecciones;
     }

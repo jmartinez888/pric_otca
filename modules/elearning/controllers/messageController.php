@@ -1,5 +1,7 @@
 <?php
 
+use App\Leccion;
+
 class messageController extends elearningController {
 
     private $message;
@@ -10,6 +12,14 @@ class messageController extends elearningController {
         $this->getLibrary("ServiceResult");
         $this->service = new ServiceResult();
         $this->message = $this->loadModel("message");
+    }
+
+		
+
+    public function solicitar_activos () {
+        if ($this->has(['leccion_id', 'chat_modo', 'hash_online', 'usuario_id'])) {
+					
+        }
     }
 
     public function index(){

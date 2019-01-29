@@ -46,6 +46,7 @@ class examenController extends elearningController {
         $this->service->Send();
     }
 
+    // Examenes ======================================================================
     public function examens($idcurso=false, $idLeccion = false){
         // $codigo = $this->getTexto("certificado");
         // $this->_view->setCss(array("verificar"));
@@ -118,7 +119,6 @@ class examenController extends elearningController {
 
         $this->_view->renderizar('examens');
     }
-
     public function _cambiarEstadoExamen(){
         $this->_acl->acceso('agregar_rol');
         //Para Mensajes
@@ -162,7 +162,6 @@ class examenController extends elearningController {
         $this->_view->assign('_mensaje_json', $mensaje_json);
         $this->_buscarexamens();
     }
-
     public function _buscarexamens(){
         $txtBuscar = $this->getSql('palabra');
         $pagina = $this->getInt('pagina');
@@ -232,8 +231,7 @@ class examenController extends elearningController {
         $this->_view->assign('paginacionexamens', $paginador->getView('paginacion_ajax_s_filas'));
         $this->_view->renderizar('ajax/listarexamens', false, true);
     }
-    public function _eliminar_examen()
-    {
+    public function _eliminar_examen(){
         // $pagina = $this->getInt('pagina');
         // $filas=$this->getInt('filas');
         // $idcurso=$this->getInt('idcurso');
@@ -343,7 +341,6 @@ class examenController extends elearningController {
         $this->_view->assign('paginacionexamens', $paginador->getView('paginacion_ajax_s_filas'));
         $this->_view->renderizar('ajax/listarexamens', false, true);
     }
-
     public function _paginacion_listarexamens($txtBuscar = false){
         //$this->validarUrlIdioma();
         $pagina = $this->getInt('pagina');
@@ -413,7 +410,6 @@ class examenController extends elearningController {
         $this->_view->assign('paginacionexamens', $paginador->getView('paginacion_ajax_s_filas'));
         $this->_view->renderizar('ajax/listarexamens', false, true);
     }
-
     public function nuevoexamen($id = 0, $idLeccion = false){
         // $this->_view->setCss(array("verificar"));
         // $id = $this->getTexto("id");
@@ -468,7 +464,6 @@ class examenController extends elearningController {
         $this->_view->assign('titulo', $titulo["Cur_Titulo"]);
         $this->_view->renderizar('nuevoexamen', 'elearning');
     }
-
     public function editarexamen($id, $idExamen){
         // $this->_view->setCss(array("verificar"));
         // $id = $this->getTexto("id");
@@ -511,6 +506,363 @@ class examenController extends elearningController {
         $this->_view->assign('idcurso', $id);
         $this->_view->renderizar('editarexamen', 'elearning');
     }
+
+    // Respuestas (intentos)===================================================================================
+    public function intentos($idcurso = false, $idExamen = false, $idRespuesta = false){
+        $this->_view->setTemplate(LAYOUT_FRONTEND);
+        $this->_view->setJs(array(array(BASE_URL . 'modules/elearning/views/gestion/js/core/util.js'),array(BASE_URL . 'modules/elearning/views/gestion/js/framework/lodash.js'),array(BASE_URL . 'modules/elearning/views/gestion/js/core/controller.js'),array(BASE_URL . 'modules/elearning/views/gestion/js/index.js'),array(BASE_URL . 'modules/elearning/views/gestion/js/core/view.js'), "index"));
+        $this->_view->getLenguaje("index_inicio");
+
+        $pagina = $this->getInt('pagina');
+        $lang = $this->_view->getLenguaje('elearning_cursos', false, true);
+        //Filtro por Activos/Eliminados
+            
+        // $filtro = "  WHERE ea.Exa_IdExamen = $idExamen ";
+        // $condicion = " ";
+        $ordeBy = " ORDER BY u.Usu_Nombre ASC, u.Usu_Apellidos ASC, Exl_Fecha DESC ";
+        $condicion = "  WHERE ea.Exa_IdExamen = $idExamen ";
+        $soloActivos = 0;
+        if (!$this->_acl->permiso('ver_eliminados')) {
+            $soloActivos = 1;
+            $condicion .= " AND ea.Row_Estado = $soloActivos ";
+        } else {
+            $ordeBy .= ", ea.Row_Estado DESC ";
+        }
+
+        $Cmodel = $this->loadModel("_gestionCurso");
+
+        $curso = $Cmodel->getCursoById($idcurso);
+        $data['titulo'] = $lang->get('str_examen').' - '.str_limit($curso['Cur_Titulo'], 20);
+        $data['active'] = 'respuestas';
+        $this->_view->assign($data);
+        $paginador = new Paginador();
+        // echo "$idcurso";
+        $arrayRowCount = $this->examen->getExamensAlumnoRowCount($condicion);
+
+        // print_r($arrayRowCount);
+        // $ExamenAlumnos = $this->examen->getExamensAlumnoCondicion(0,CANT_REG_PAG, $condicion);
+
+        $this->_view->assign('respuestas',  $this->examen->getExamensAlumnoCondicion($pagina,CANT_REG_PAG, $condicion.$ordeBy));
+        // print_r($this->examen->getExamensAlumnoCondicion($pagina,CANT_REG_PAG, $condicion.$ordeBy));
+        $paginador->paginar( $arrayRowCount['CantidadRegistros'],"listarExamensAlumno", "", $pagina, CANT_REG_PAG, true);
+
+        // $porcentaje=$this->examen->getExamensPorcentaje($idcurso);
+
+        $titulo = $this->examen->getTituloCurso($idcurso);
+
+        $this->_view->assign('numeropagina', $paginador->getNumeroPagina());
+        $this->_view->assign('paginacionExamensAlumno', $paginador->getView('paginacion_ajax_s_filas'));
+        // print_r($porcentaje);
+        // $this->_view->assign('porcentaje', $porcentaje['Porcentaje'] );
+        // $this->_view->assign('titulo', 'Administracion de preguntas');
+        $this->_view->assign('idcurso', $idcurso);
+        $this->_view->assign('examen',$idExamen );
+        $this->_view->assign('titulo', $titulo["Cur_Titulo"]);
+
+        $this->_view->assign("curso", $curso);
+
+        $this->_view->renderizar('intentos');
+    }
+    public function _cambiarEstadoExamenAlumno(){
+        // $this->_acl->acceso('agregar_rol');
+        //Para Mensajes
+        $resultado = array();
+        $mensaje = "error";
+        $contenido = "";
+        //Para mensajes
+        $txtBuscar = $this->getSql('palabra');
+        $pagina = $this->getInt('pagina');
+        $filas = $this->getInt('filas');
+        $Exl_IdExamenAlumno = $this->getInt('_Exl_IdExamenAlumno');
+        $Exl_Estado = $this->getInt('_Exl_Estado');
+        $Lec_IdLeccion = $this->getInt('_Lec_IdLeccion');
+        // $idExamen=$this->getInt('idexamen');
+        // $idcurso=$this->getInt('idcurso');
+        // echo $Per_Estado."//".$Per_Idpregunta; exit;
+        if(!$Exl_IdExamenAlumno){
+            $contenido = 'Error parametro ID...!!';
+            $mensaje = "error";
+            array_push($resultado, array(0 => $mensaje, 1 => $contenido));
+        } else {
+            $rowCountEstado = $this->examen->cambiarEstadoExamenAlumno($Exl_IdExamenAlumno, $Exl_Estado);
+            if ($rowCountEstado > 0) {
+                if ($Exl_Estado == 1) {
+                    $contenido = ' Se cambio de estado correctamente a <b>Deshabilitado</b> <i data-toggle="tooltip" data-placement="bottom" class="glyphicon glyphicon-remove-sign" title="Deshabilitado" style="background: #FFF; color: #DD4B39; padding: 2px;"/> ...!! ';
+                }
+                if ($Exl_Estado == 0) {
+                     $contenido = ' Se cambio de estado correctamente a <b>Habilitado</b> <i data-toggle="tooltip" data-placement="bottom" class="glyphicon glyphicon-ok-sign" title="Habilitado" style=" background: #FFF;  color: #088A08; padding: 2px;"/> ...!! ';
+                }
+                $mensaje = "ok";
+                array_push($resultado, array(0 => $mensaje, 1 => $contenido));
+            } else {
+                $contenido = 'Error de variable(s) en consulta..!!';
+                $mensaje = "error";
+                array_push($resultado, array(0 => $mensaje, 1 => $contenido));
+            }
+        }
+        $mensaje_json = json_encode($resultado);
+        // echo($mensaje_json); exit();
+        $this->_view->assign('_mensaje_json', $mensaje_json);
+        $this->_buscarexamensAlumno();
+    }
+    public function _buscarexamensAlumno(){
+        $txtBuscar = $this->getSql('palabra');
+        $pagina = $this->getInt('pagina');
+        $idcurso = $this->getInt('idcurso');
+        $Exa_IdExamen = $this->getInt('_Exl_IdExamenAlumno');
+
+        $condicion = " ";
+        $soloActivos = 0;
+        // $condicion = "  WHERE ea.Exa_IdExamen = $Exa_IdExamen ";
+        // $soloActivos = 0;
+        // if (!$this->_acl->permiso('ver_eliminados')) {
+        //     $soloActivos = 1;
+        //     $condicion .= " AND ea.Row_Estado = $soloActivos ";
+        // }
+        
+        $ordeBy = " ORDER BY u.Usu_Nombre ASC, u.Usu_Apellidos ASC, Exl_Fecha DESC ";
+        if ($txtBuscar)
+        {
+            $condicion = " WHERE ea.Exa_IdExamen = $Exa_IdExamen AND (u.Usu_Nombre liKe '%$txtBuscar%' OR u.Usu_Apellidos like '%$txtBuscar%') ";
+            //Filtro por Activos/Eliminados
+            if (!$this->_acl->permiso('ver_eliminados')) {
+                $soloActivos = 1;
+                $condicion .= " AND ea.Row_Estado = $soloActivos ";
+            } else {
+                $ordeBy .= ", ea.Row_Estado DESC  ";
+            }
+        } else {
+            //Filtro por Activos/Eliminados
+            $condicion = " WHERE ea.Exa_IdExamen = $Exa_IdExamen ";
+            $ordeBy .= ", ea.Row_Estado DESC ";
+            if (!$this->_acl->permiso('ver_eliminados')) {
+                $soloActivos = 1;
+                $condicion = " WHERE ea.Exa_IdExamen = $Exa_IdExamen AND ea.Row_Estado = $soloActivos ";
+            }
+        }
+
+        $paginador = new Paginador();
+
+        $arrayRowCount = $this->examen->getExamensAlumnoRowCount($condicion);
+        $totalRegistros = $arrayRowCount['CantidadRegistros'];
+        // echo($totalRegistros);
+        // print_r($arrayRowCount); echo($condicion);exit;
+        // $porcentaje = $this->examen->getExamensPorcentaje($idcurso);
+        $this->_view->assign('respuestas', $this->examen->getExamensAlumnoCondicion($pagina,CANT_REG_PAG, $condicion.$ordeBy));
+        // $this->_view->assign('porcentaje', $porcentaje['Porcentaje'] );
+
+        $paginador->paginar( $totalRegistros ,"listarExamensAlumno", "$txtBuscar", $pagina, CANT_REG_PAG, true);
+
+        $this->_view->assign('idcurso', $idcurso);
+        $this->_view->assign('numeropagina', $paginador->getNumeroPagina());
+        $this->_view->assign('paginacionExamensAlumno', $paginador->getView('paginacion_ajax_s_filas'));
+        $this->_view->renderizar('ajax/listarExamensAlumno', false, true);
+    }
+    public function _paginacion_listarExamensAlumno($txtBuscar = false){
+        //$this->validarUrlIdioma();
+        $pagina = $this->getInt('pagina');
+        $filas=$this->getInt('filas');
+        $idcurso=$this->getInt('idcurso');
+        $totalRegistros = $this->getInt('total_registros');
+        $idleccion = $this->getInt('idleccion');
+
+        $condicion = " ";
+        $soloActivos = 0;
+        // $nombre = $this->getSql('palabra');
+            
+        $ordeBy = " ORDER BY u.Usu_Nombre ASC, u.Usu_Apellidos ASC, Exl_Fecha DESC ";
+        if ($txtBuscar)
+        {
+            $condicion = " WHERE ea.Exa_IdExamen = $Exa_IdExamen AND (u.Usu_Nombre liKe '%$txtBuscar%' OR u.Usu_Apellidos like '%$txtBuscar%') ";
+            //Filtro por Activos/Eliminados
+            if (!$this->_acl->permiso('ver_eliminados')) {
+                $soloActivos = 1;
+                $condicion .= " AND ea.Row_Estado = $soloActivos ";
+            } else {
+                $ordeBy .= ", ea.Row_Estado DESC  ";
+            }
+        } else {
+            //Filtro por Activos/Eliminados
+            $condicion = " WHERE ea.Exa_IdExamen = $Exa_IdExamen ";
+            $ordeBy .= ", ea.Row_Estado DESC ";
+            if (!$this->_acl->permiso('ver_eliminados')) {
+                $soloActivos = 1;
+                $condicion = " WHERE ea.Exa_IdExamen = $Exa_IdExamen AND ea.Row_Estado = $soloActivos ";
+            }
+        }
+
+
+        $paginador = new Paginador();
+        // $arrayRowCount = $this->_aclm->getpreguntasRowCount$arrayRowCount = 0,($condicion);
+        // $porcentaje = $this->examen->getExamensPorcentaje($idcurso);
+        $paginador->paginar( $totalRegistros,"listarexamens", "$txtBuscar", $pagina, $filas, true);
+
+        $this->_view->assign('examens', $this->examen->getExamensCondicion($pagina,$filas, $condicion));
+        $this->_view->assign('numeropagina', $paginador->getNumeroPagina());
+        // $this->_view->assign('porcentaje', $porcentaje['Porcentaje'] );
+        $this->_view->assign('idcurso', $idcurso);
+        //$this->_view->assign('cantidadporpagina',$registros);
+        $this->_view->assign('paginacionexamens', $paginador->getView('paginacion_ajax_s_filas'));
+        $this->_view->renderizar('ajax/listarExamensAlumno', false, true);
+    }
+    public function corregirExamenAlumno($idexamen){
+        $Emodel = $this->examen;
+        $peso = $Emodel->getExamenPeso($idexamen);
+
+        if (Session::get("intento") < 1 || Session::get("preguntas")[0]["Exa_IdExamen"] != $idexamen){
+            $preguntas = $Emodel->getPreguntas($idexamen);
+            Session::set("preguntas", $preguntas);
+            Session::set("intento", 1);
+        }
+
+        if ($this->botonPress("terminar")) {
+
+          $intento = $Emodel->insertExamenAlumno($idexamen,Session::get("id_usuario"));
+          Session::set("idintento", $intento[0]);
+
+          $puntos = 0;
+          $preguntas = Session::get("preguntas");
+          // print_r($preguntas);
+          for ($i = 0; $i < count($preguntas); $i++) {
+              $tipo = $this->getSql('tipo_preg'.$i);
+              // echo $i.":::tipo:::". $tipo . "\n";
+              // JM --> Listo (Pregunta tipo respuesta Unica)
+              // echo $puntos."::::".$i."\n";
+              if($tipo == 1){
+                  $alt = $preguntas[$i]['Alt'];
+                  // echo "Unico::::"; print_r($alt); echo "///. \n";
+                  $puntosrpta = 0;
+                  foreach ($alt as $k) {
+                      if($k['Alt_Valor'] == $preguntas[$i]['Pre_Valor'])
+                          if($this->getInt('rpta_alt'.$i) == $k['Alt_IdAlternativa']){
+                              // echo "P1_Rapt-alt:".$this->getInt('rpta_alt'.$i);
+                              $puntosrpta = $preguntas[$i]['Pre_Puntos'];
+                              $puntos = $puntos + $puntosrpta;
+                              // echo "P1:".$puntosrpta;
+                          }
+                  }
+                  $Emodel->insertRespuesta($this->getInt('id_preg'.$i), Session::get("idintento"), $this->getInt('rpta_alt'.$i),null,null,$puntosrpta);
+
+              } else if($tipo == 2){
+              // JM --> Listo (Pregunta con respuesta Multiple)
+                  $alt = $preguntas[$i]['Alt'];
+                  // echo "Multiple::::"; print_r($alt);
+                  for($j = 0; $j < count($alt); $j++){
+                      $puntosrpta = 0;
+                      if($this->getSql('rpta2_alt'.$i.'_index'.$j)){
+                          // echo "true(".$this->getSql('rpta2_alt'.$i.'_index'.$j).")";
+                          foreach ($alt as $k) {
+                              // if($k['Alt_Check'])
+                              if($this->getInt('rpta2_alt'.$i.'_index'.$j) == $k['Alt_IdAlternativa'] && $k['Alt_Check'] == 1){
+                                  $puntosrpta = $k['Alt_Puntos'];
+                                  $puntos = $puntos + $puntosrpta;
+                              }
+                          }
+                          // echo "P2:".$puntosrpta;
+                          $Emodel->insertRespuesta($this->getInt('id_preg'.$i), Session::get("idintento"), $this->getInt('rpta2_alt'.$i.'_index'.$j),null,null,$puntosrpta);
+                      } else {
+                          // echo "cero(".$this->getSql('rpta2_alt'.$i.'_index'.$j.'_hd').")";
+                          foreach ($alt as $k) {
+                                // if($k['Alt_Check'])
+                              if($this->getInt('rpta2_alt'.$i.'_index'.$j.'_hd') == $k['Alt_IdAlternativa'] && $k['Alt_Check'] == 0){
+                                  $puntosrpta = $k['Alt_Puntos'];
+                                  $puntos = $puntos + $puntosrpta;
+                              }
+                          }
+                          // echo "P2:".$puntosrpta;
+                          $Emodel->insertRespuesta($this->getInt('id_preg'.$i), Session::get("idintento"), $this->getInt('rpta2_alt'.$i.'_index'.$j.'_hd'),null,null,$puntosrpta);
+                      }
+                  }
+              } else if($tipo == 3){
+                  // JM --> Listo (Pregunta con respuesta en Blanco)
+                  $alt = $preguntas[$i]['Alt'];
+                  // echo "EnBLanco::::"; print_r($alt);
+                  for($j = 0; $j < count($alt); $j++){
+                  $puntosrpta = 0;
+                  if(strtolower($this->getSql('rpta3_'.$i.'_index_'.$j)) == strtolower($alt[$j]['Alt_Etiqueta'])){
+                      $puntosrpta = $alt[$j]['Alt_Puntos'];
+                      $puntos = $puntos + $puntosrpta;
+                  }
+                  // echo "P3:".$puntosrpta;
+                  $Emodel->insertRespuesta($this->getInt('id_preg'.$i), Session::get("idintento"),null,null, $this->getSql('rpta3_'.$i.'_index_'.$j),$puntosrpta);
+                  }
+              } else if($tipo==4){
+                  // JM --> Listo (Pregunta con respuesta relacionar)
+                  $alt = $preguntas[$i]['Alt'];
+                  for($j=0; $j < count($alt); $j=$j+2){
+                      $puntosrpta = 0;
+                      if($this->getInt('rpta4_'.$i.'_index_'.$j)==$alt[$j]['Alt_IdAlternativa'] && $this->getInt('rpta4_alt'.$i.'_index_'.$j)==$alt[$j]['Alt_Relacion']){
+                          $puntosrpta = $alt[$j]['Alt_Puntos'];
+                          $puntos = $puntos + $puntosrpta;
+                      }
+                      // echo "P4:".$puntosrpta;
+                      $Emodel->insertRespuesta($this->getInt('id_preg'.$i), Session::get("idintento"), $this->getInt('rpta4_'.$i.'_index_'.$j),$this->getInt('rpta4_alt'.$i.'_index_'.$j),NULL,$puntosrpta);
+                  }
+              }
+
+              else if($tipo == 5){
+                  // echo "string";
+                  // print_r($preguntas[$i]["Pre_Puntos"]);
+                  $puntosrpta = 0;
+                  if ($this->getSql('rpta_alt'.$i) && strlen(trim($this->getSql('rpta_alt'.$i)," ")) > 0) {
+                    $puntosrpta = $preguntas[$i]["Pre_Puntos"];
+                    $puntos = $puntos + $puntosrpta;
+                  } 
+
+                  $Emodel->insertRespuesta($this->getInt('id_preg'.$i), Session::get("idintento"), NULL, NULL, $this->getSql('rpta_alt'.$i),$puntosrpta);
+              } else{
+                  $cont2=0;
+                  // print_r($preguntas[$i]['Alt']);
+                  for($j=0; $j < count($preguntas[$i]['Alt']); $j++){
+
+                      if($this->getSql('rpta7_alt'.$i.'_index'.$j)){
+
+                          $alt=$preguntas[$i]['Alt'];
+                          $cont=0;
+                          $puntosrpta=0;
+
+                          foreach ($alt as $k) {
+                              if($k['Alt_Check']){
+                                  if($this->getInt('rpta7_alt'.$i.'_index'.$j)==$k['Alt_IdAlternativa'])
+                                      $cont2++;
+
+                                  $cont++;
+                              }
+                          }
+                          if($cont==$cont2){
+                              $puntosrpta=$preguntas[$i]['Pre_Puntos'];
+                              $puntos=$puntos+$puntosrpta;
+                          }
+                                 // echo "P7:".$puntosrpta;
+                          $Emodel->insertRespuesta($this->getInt('id_preg'.$i), Session::get("idintento"), $this->getInt('rpta7_alt'.$i.'_index'.$j),null,null,$puntosrpta);
+                      }
+                  }
+              }
+          }
+          // echo round($puntos, 0)."Finallllllll".$puntos;
+          $PuntosGuardados = $Emodel->updateNotaExamen(Session::get("idintento"), round($puntos, 0));
+
+          $examen = $Emodel->getExamen($idexamen);
+          $parametrosCurso = $Cmodel->getParametroCurso($curso);
+            // echo "string"; print_r($parametrosCurso);
+
+          $Emodel->updateProgreso(Session::get("id_usuario"), $examen['Lec_IdLeccion']);
+          if($puntos/$peso["Exa_Peso"] > $parametrosCurso[0]["Par_NotaMinima"]/$parametrosCurso[0]["Par_NotaMaxima"]){
+            // echo "string"; print_r($parametrosCurso);
+              $Emodel->insertProgreso(Session::get("id_usuario"), $examen['Lec_IdLeccion']);
+          }
+
+          // exit;
+          Session::set("intento", 0);
+          $this->redireccionar("elearning/cursos/modulo/".$examen['Cur_IdCurso'].'/'.$examen['Moc_IdModulo'].'/'.$examen['Lec_IdLeccion']);
+        }
+
+        $this->_view->assign('preguntas', Session::get("preguntas"));
+        $this->_view->assign('titulo', "Corregir Examen");
+        $this->_view->renderizar('corregir');
+    }
+
+
 
     public function actualizarlecciones(){
         $idModulo = $this->getInt('id');
@@ -1665,6 +2017,11 @@ class examenController extends elearningController {
                     // $this->_view->renderizar('examen');
     }
 
+
+
+
+
+
     public function resultado($puntos=0, $peso=0){
         // $this->_view->setCss(array("miscertificados"));
         $this->_view->setTemplate(LAYOUT_FRONTEND);
@@ -1683,7 +2040,7 @@ class examenController extends elearningController {
         $this->_view->renderizar('resultado', 'elearning');
     }
 
-    public function corregirExamenAlumno($id){
+    public function corregirExamenAlumnossss($id){
         // $this->_view->setCss(array("miscertificados"));
         $this->_view->setTemplate(LAYOUT_FRONTEND);
         $this->_view->setJs(array(array(BASE_URL . 'modules/elearning/views/gestion/js/core/util.js'), "index"));

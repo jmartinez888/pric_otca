@@ -51,56 +51,56 @@
     <div class="sidebar-left">
         <div class="side-menu">
             <ul>
-                <a href="{BASE_URL}foro/" class="nounderline">
+                <a href="{$_layoutParams.root}foro/" class="nounderline">
                     <div class="side-menu2">
                         <li style="position: relative"><span>Home</span></li>
                     </div>
                 </a>
             </ul>
             <ul>
-                <a href="{BASE_URL}foro/index/forum" class="nounderline">
+                <a href="{$_layoutParams.root}foro/index/forum" class="nounderline">
                     <div class="side-menu2">
                         <li style="position: relative"><span>Discusiones</span></li>
                     </div>
                 </a>
             </ul>
             <ul>
-                <a href="{BASE_URL}foro/index/query" class="nounderline">
+                <a href="{$_layoutParams.root}foro/index/query" class="nounderline">
                     <div class="side-menu2">
                         <li style="position: relative"><span>Consultas</span></li>
                     </div>
                 </a>
             </ul>
             <ul>
-                <a href="{BASE_URL}foro/index/webinar" class="nounderline">
+                <a href="{$_layoutParams.root}foro/index/webinar" class="nounderline">
                     <div class="side-menu2">
                         <li style="position: relative"><span>Webinars</span></li>
                     </div>
                 </a>
             </ul>
             <ul>
-                <a href="{BASE_URL}foro/index/workshop" class="nounderline">
+                <a href="{$_layoutParams.root}foro/index/workshop" class="nounderline">
                     <div class="side-menu2">
                         <li style="position: relative"><span>Workshop</span></li>
                     </div>
                 </a>
             </ul>  
             <ul>
-                <a href="{BASE_URL}foro/index/agenda" class="nounderline">
+                <a href="{$_layoutParams.root}foro/index/agenda" class="nounderline">
                     <div class="side-menu2">
                         <li style="position: relative"><span>Agenda</span></li>
                     </div>
                 </a>
             </ul>
             <ul>
-                <a href="{BASE_URL}foro/index/historico" class="nounderline">
+                <a href="{$_layoutParams.root}foro/index/historico" class="nounderline">
                     <div class="side-menu2">
                         <li style="position: relative"><span>Histórico</span></li>
                     </div>
                 </a>
             </ul>
             <ul>
-                <a href="{BASE_URL}foro/index/statistics" class="nounderline">
+                <a href="{$_layoutParams.root}foro/index/statistics" class="nounderline">
                     <div class="side-menu2">
                         <li style="position: relative"><span>Estadisticas</span></li>
                     </div>

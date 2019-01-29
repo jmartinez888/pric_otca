@@ -968,23 +968,25 @@ class documentosController extends Controller{
     public function descargar($archivo='',$idArchivo)
 	{
 		// $this->_acl->autenticado();
-        if (is_readable(ROOT_ARCHIVO_FISICO.$archivo)){
-           
-            $registro = $this->_documentos->registrarDescarga($_SERVER['REMOTE_ADDR'],  $this->filtrarInt($idArchivo));
-            
+        $fichero = ROOT_ARCHIVO_FISICO."documentos/".$archivo;
+        if (is_readable($fichero)){
+
+            $registro = $this->_documentos->registrarDescarga($this->filtrarTexto($_SERVER['REMOTE_ADDR']),  $this->filtrarInt($idArchivo));
+
             if (is_array($registro)) {
-                if ($registro  [0] > 0) {                    
-                    header('Location:'.URL_ARCHIVO_FISICO.$archivo);
-                    exit;
+                if ($registro  [0] > 0) {  
+                    if (file_exists($fichero)) {
+                        header('Content-Description: File Transfer');
+                        header('Content-Type: application/octet-stream');
+                        header('Content-Disposition: attachment; filename="'.basename($fichero).'"');
+                        readfile($fichero);
+                        exit;
+                    }           
                 }
             } else {                
                 $this->_view->assign('_error', $registro );
             }
-        }        
-        header('Location:'.URL_ARCHIVO_FISICO.$archivo);
-    }
-	
-	
-	
-	
+        }     
+        $this->redireccionar("error");   
+    }	
 }

@@ -43,7 +43,12 @@ class _gestionLeccionModel extends Model {
             INNER JOIN constante C ON C.Con_Valor = L.Lec_Tipo AND C.Con_Codigo = 2000
             WHERE L.Lec_IdLeccion = {$leccion}
               AND L.Row_Estado = 1";
-    return $this->getArray($sql)[0];
+    if (isset($this->getArray($sql)[0]) && count($this->getArray($sql)[0])) {      
+        return $this->getArray($sql)[0];
+    } else {
+        return $this->getArray($sql);
+    }
+              
   }
 
 

@@ -14,261 +14,261 @@
 
 
 function initMap() {
-     
+
  var myLatlng = new google.maps.LatLng(-11.5106611,-60.8686626);
-     
+
   // Create a map object and specify the DOM element for display.
   var map = new google.maps.Map(document.getElementById('map'), {
     center: {lat:-11.413054, lng: -60.443913},
     zoom: 3,
-     disableDefaultUI: true,
+    disableDefaultUI: true,
     styles:[
-    {
-      "elementType": "labels",
-      "stylers": [
-        {
-          "visibility": "off"
-        }
-      ]
-    },
-    {
-      "elementType": "labels.icon",
-      "stylers": [
-        {
-          "visibility": "off"
-        }
-      ]
-    },
-    {
-      "elementType": "labels.text.fill",
-      "stylers": [
-        {
-          "color": "#616161"
-        }
-      ]
-    },
-    {
-      "elementType": "labels.text.stroke",
-      "stylers": [
-        {
-          "color": "#f5f5f5"
-        }
-      ]
-    },
-    {
-      "featureType": "administrative",
-      "elementType": "geometry",
-      "stylers": [
-        {
-          "visibility": "off"
-        }
-      ]
-    },
-    {
-      "featureType": "administrative.land_parcel",
-      "elementType": "labels.text.fill",
-      "stylers": [
-        {
-          "color": "#bdbdbd"
-        }
-      ]
-    },
-    {
-      "featureType": "administrative.neighborhood",
-      "stylers": [
-        {
-          "visibility": "off"
-        }
-      ]
-    },
-    {
-      "featureType": "poi",
-      "stylers": [
-        {
-          "visibility": "off"
-        }
-      ]
-    },
-    {
-      "featureType": "poi",
-      "elementType": "geometry",
-      "stylers": [
-        {
-          "color": "#eeeeee"
-        }
-      ]
-    },
-    {
-      "featureType": "poi",
-      "elementType": "labels.text.fill",
-      "stylers": [
-        {
-          "color": "#757575"
-        }
-      ]
-    },
-    {
-      "featureType": "poi.park",
-      "elementType": "geometry",
-      "stylers": [
-        {
-          "color": "#e5e5e5"
-        }
-      ]
-    },
-    {
-      "featureType": "poi.park",
-      "elementType": "labels.text.fill",
-      "stylers": [
-        {
-          "color": "#9e9e9e"
-        }
-      ]
-    },
-    {
-      "featureType": "road",
-      "stylers": [
-        {
-          "visibility": "off"
-        }
-      ]
-    },
-    {
-      "featureType": "road",
-      "elementType": "geometry",
-      "stylers": [
-        {
-          "color": "#ffffff"
-        }
-      ]
-    },
-    {
-      "featureType": "road",
-      "elementType": "labels.icon",
-      "stylers": [
-        {
-          "visibility": "off"
-        }
-      ]
-    },
-    {
-      "featureType": "road.arterial",
-      "stylers": [
-        {
-          "visibility": "off"
-        }
-      ]
-    },
-    {
-      "featureType": "road.arterial",
-      "elementType": "labels.text.fill",
-      "stylers": [
-        {
-          "color": "#757575"
-        }
-      ]
-    },
-    {
-      "featureType": "road.highway",
-      "elementType": "geometry",
-      "stylers": [
-        {
-          "color": "#dadada"
-        }
-      ]
-    },
-    {
-      "featureType": "road.highway",
-      "elementType": "labels",
-      "stylers": [
-        {
-          "visibility": "off"
-        }
-      ]
-    },
-    {
-      "featureType": "road.highway",
-      "elementType": "labels.text.fill",
-      "stylers": [
-        {
-          "color": "#616161"
-        }
-      ]
-    },
-    {
-      "featureType": "road.local",
-      "stylers": [
-        {
-          "visibility": "off"
-        }
-      ]
-    },
-    {
-      "featureType": "road.local",
-      "elementType": "labels.text.fill",
-      "stylers": [
-        {
-          "color": "#9e9e9e"
-        }
-      ]
-    },
-    {
-      "featureType": "transit",
-      "stylers": [
-        {
-          "visibility": "off"
-        }
-      ]
-    },
-    {
-      "featureType": "transit.line",
-      "elementType": "geometry",
-      "stylers": [
-        {
-          "color": "#e5e5e5"
-        }
-      ]
-    },
-    {
-      "featureType": "transit.station",
-      "elementType": "geometry",
-      "stylers": [
-        {
-          "color": "#eeeeee"
-        }
-      ]
-    },
-    {
-      "featureType": "water",
-      "elementType": "geometry",
-      "stylers": [
-        {
-          "color": "#c9c9c9"
-        }
-      ]
-    },
-    {
-      "featureType": "water",
-      "elementType": "geometry.fill",
-      "stylers": [
-        {
-          "color": "#28488d"
-        },
-        {
-          "visibility": "on"
-        }
-      ]
-    },
-    {
-      "featureType": "water",
-      "elementType": "labels.text.fill",
-      "stylers": [
-        {
-          "color": "#9e9e9e"
-        }
-      ]
-    }
-  ]
+      {
+        "elementType": "labels",
+        "stylers": [
+          {
+            "visibility": "off"
+          }
+        ]
+      },
+      {
+        "elementType": "labels.icon",
+        "stylers": [
+          {
+            "visibility": "off"
+          }
+        ]
+      },
+      {
+        "elementType": "labels.text.fill",
+        "stylers": [
+          {
+            "color": "#616161"
+          }
+        ]
+      },
+      {
+        "elementType": "labels.text.stroke",
+        "stylers": [
+          {
+            "color": "#f5f5f5"
+          }
+        ]
+      },
+      {
+        "featureType": "administrative",
+        "elementType": "geometry",
+        "stylers": [
+          {
+            "visibility": "off"
+          }
+        ]
+      },
+      {
+        "featureType": "administrative.land_parcel",
+        "elementType": "labels.text.fill",
+        "stylers": [
+          {
+            "color": "#bdbdbd"
+          }
+        ]
+      },
+      {
+        "featureType": "administrative.neighborhood",
+        "stylers": [
+          {
+            "visibility": "off"
+          }
+        ]
+      },
+      {
+        "featureType": "poi",
+        "stylers": [
+          {
+            "visibility": "off"
+          }
+        ]
+      },
+      {
+        "featureType": "poi",
+        "elementType": "geometry",
+        "stylers": [
+          {
+            "color": "#eeeeee"
+          }
+        ]
+      },
+      {
+        "featureType": "poi",
+        "elementType": "labels.text.fill",
+        "stylers": [
+          {
+            "color": "#757575"
+          }
+        ]
+      },
+      {
+        "featureType": "poi.park",
+        "elementType": "geometry",
+        "stylers": [
+          {
+            "color": "#e5e5e5"
+          }
+        ]
+      },
+      {
+        "featureType": "poi.park",
+        "elementType": "labels.text.fill",
+        "stylers": [
+          {
+            "color": "#9e9e9e"
+          }
+        ]
+      },
+      {
+        "featureType": "road",
+        "stylers": [
+          {
+            "visibility": "off"
+          }
+        ]
+      },
+      {
+        "featureType": "road",
+        "elementType": "geometry",
+        "stylers": [
+          {
+            "color": "#ffffff"
+          }
+        ]
+      },
+      {
+        "featureType": "road",
+        "elementType": "labels.icon",
+        "stylers": [
+          {
+            "visibility": "off"
+          }
+        ]
+      },
+      {
+        "featureType": "road.arterial",
+        "stylers": [
+          {
+            "visibility": "off"
+          }
+        ]
+      },
+      {
+        "featureType": "road.arterial",
+        "elementType": "labels.text.fill",
+        "stylers": [
+          {
+            "color": "#757575"
+          }
+        ]
+      },
+      {
+        "featureType": "road.highway",
+        "elementType": "geometry",
+        "stylers": [
+          {
+            "color": "#dadada"
+          }
+        ]
+      },
+      {
+        "featureType": "road.highway",
+        "elementType": "labels",
+        "stylers": [
+          {
+            "visibility": "off"
+          }
+        ]
+      },
+      {
+        "featureType": "road.highway",
+        "elementType": "labels.text.fill",
+        "stylers": [
+          {
+            "color": "#616161"
+          }
+        ]
+      },
+      {
+        "featureType": "road.local",
+        "stylers": [
+          {
+            "visibility": "off"
+          }
+        ]
+      },
+      {
+        "featureType": "road.local",
+        "elementType": "labels.text.fill",
+        "stylers": [
+          {
+            "color": "#9e9e9e"
+          }
+        ]
+      },
+      {
+        "featureType": "transit",
+        "stylers": [
+          {
+            "visibility": "off"
+          }
+        ]
+      },
+      {
+        "featureType": "transit.line",
+        "elementType": "geometry",
+        "stylers": [
+          {
+            "color": "#e5e5e5"
+          }
+        ]
+      },
+      {
+        "featureType": "transit.station",
+        "elementType": "geometry",
+        "stylers": [
+          {
+            "color": "#eeeeee"
+          }
+        ]
+      },
+      {
+        "featureType": "water",
+        "elementType": "geometry",
+        "stylers": [
+          {
+            "color": "#c9c9c9"
+          }
+        ]
+      },
+      {
+        "featureType": "water",
+        "elementType": "geometry.fill",
+        "stylers": [
+          {
+            "color": "#28488d"
+          },
+          {
+            "visibility": "on"
+          }
+        ]
+      },
+      {
+        "featureType": "water",
+        "elementType": "labels.text.fill",
+        "stylers": [
+          {
+            "color": "#9e9e9e"
+          }
+        ]
+      }
+    ]
   });
 
 var contentString = '<div id="iw-container">'+
@@ -278,102 +278,6 @@ var contentString = '<div id="iw-container">'+
     'target="_blank" class="glyphicon glyphicon-share"></a></div>'
     '</div>';
 
-     // var contentString = '<div >'+
-     //  '<table bgcolor="#e4f1f1" border="1" bordercolor="#336666" cellpadding="3" cellspacing="0">' + 
-     //  '<tbody>' +
-     //  '<tr>' +
-     //    '<td class="tabletext" valign="top">'+
-     //    '<strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Cobertura de Bosques</font></font></strong></td>' +
-     //  '</tr>' + 
-     //  '<tr>' + 
-     //  '<td align="right" class="tabletext" valign="top">' + 
-     //    '<strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">+60000</font></font></strong></td>' +
-     //  '</tr>' + '</div>';
-
-    // var contentString = '<div class="table-responsive">' + 
-    //   '<table bgcolor="#e4f1f1" border="1" bordercolor="#336666" cellpadding="3" cellspacing="0">' + 
-    //   '<tbody>' + 
-    //   '<tr>' + 
-    //     '<td bgcolor="#336666" class="tabletext" colspan="2" valign="top">' +
-    //       '<strong>' +
-    //       '<font color="#ffffff"><font style="vertical-align: inherit;">' + 
-    //       '<font style="vertical-align: inherit;">Número de especies descritas en la Tierra</font></font></font>' +
-    //       '</strong>' +
-    //     '</td>' +
-    //   '</tr>' + 
-    //   '<tr>' +
-    //     '<td class="tabletext" valign="top">'+
-    //     '<strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Especies</font></font></strong></td>' +
-    //     '<td align="right" class="tabletext" valign="top">' + 
-    //     '<strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Número&nbsp;</font></font></strong></td>' +
-    //   '</tr>' + 
-    //   '<tr>' +
-    //     '<td class="tabletext" valign="top">' +
-    //     '<font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Bacteria</font></font></td>' +
-    //     '<td align="right" class="tabletext" valign="top">' + 
-    //     '<font style="vertical-align: inherit;"><font style="vertical-align: inherit;">4.000</font></font></td>' +
-    //   '</tr>' + 
-    //   '<tr>' +
-    //     '<td class="tabletext" valign="top">' +
-    //     '<font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Protoctistas (algas, protozoos)</font></font></td>' +
-    //     '<td align="right" class="tabletext" valign="top">' + 
-    //     '<font style="vertical-align: inherit;"><font style="vertical-align: inherit;">80,000</font></font></td>' +
-    //   '</tr>' + 
-    //   '<tr>' +
-    //     '<td class="tabletext" valign="top">' +
-    //     '<font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Animales - vertebrados</font></font></td>' +
-    //     '<td align="right" class="tabletext" valign="top">' + 
-    //     '<font style="vertical-align: inherit;"><font style="vertical-align: inherit;">52,000</font></font></td>' +
-    //   '</tr>' + 
-    //   '<tr>' +
-    //     '<td class="tabletext" valign="top">' +
-    //     '<font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Animales - invertebrados</font></font></td>' +
-    //     '<td align="right" class="tabletext" valign="top">' + 
-    //     '<font style="vertical-align: inherit;"><font style="vertical-align: inherit;">1,272,000</font></font></td>' +
-    //   '</tr>' + 
-    //   '<tr>' +
-    //     '<td class="tabletext" valign="top">' +
-    //     '<font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Hongos</font></font></td>' +
-    //     '<td align="right" class="tabletext" valign="top">' + 
-    //     '<font style="vertical-align: inherit;"><font style="vertical-align: inherit;">72,000</font></font></td>' +
-    //   '</tr>' + 
-    //   '<tr>' +
-    //     '<td class="tabletext" valign="top">' +
-    //     '<font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Plantas</font></font></td>' +
-    //     '<td align="right" class="tabletext" valign="top">' + 
-    //     '<font style="vertical-align: inherit;"><font style="vertical-align: inherit;">270,000</font></font></td>' +
-    //   '</tr>' + 
-    //   '<tr>' + 
-    //     '<td class="tabletext" valign="top"><em>&nbsp;</em></td>' +
-    //     '<td align="right" class="tabletext" valign="top">&nbsp;</td>' +
-    //   '</tr>' +
-    //   '<tr>' + 
-    //     '<td class="tabletext" valign="top">' +
-    //       '<strong>' +
-    //       '<font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Total de especies descritas</font></font>' + 
-    //       '</strong>' +
-    //     '</td>' +
-    //     '<td class="tabletext" valign="top">' +
-    //       '<strong>' +
-    //       '<font style="vertical-align: inherit;"><font style="vertical-align: inherit;">1,750,000 </font></font>' +
-    //       '</strong>' +
-    //     '</td>' +
-    //   '</tr>' + 
-    //   '<tr>' +
-    //     '<td class="tabletext" valign="top">' +
-    //     '<font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Posible total de todas las especies (incluidas las especies desconocidas)</font></font></td>' +
-    //     '<td align="right" class="tabletext" valign="top">' + 
-    //     '<font style="vertical-align: inherit;"><font style="vertical-align: inherit;">14,000,000</font></font></td>' +
-    //   '</tr>' +
-
-    //   '<tr align="right">' +
-    //   '<td bgcolor="#336666" class="tabletext" colspan="2" valign="top">' + 
-    //   '<font color="#ffffff"><em><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Fuente: PNUMA / Perspectiva del Medio Ambiente Mundial ( </font></font><a href="#ref3"><font color="#ffffff"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Ref. 3</font></font></font></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> )</font></font></em></font></td>' +
-    //   '</tr>' +
-    //   '</tbody>' +
-    //   '</table>' +
-    //   '</div>';
-
 var contentString2 = '<div id="iw-container">'+
     '<div class="iw-title">Áreas Protegidas</div>'+
     '<div class="iw-content">' +
@@ -382,10 +286,10 @@ var contentString2 = '<div id="iw-container">'+
     '</div>';
 
     // '<div>'+
-    
+
     // '<h4 id="firstHeading" class="firstHeading">Áreas Protegidas</h4>'+
     // '<div id="bodyContent">'+
-    // '<p><b>+340000</b></p>'+            
+    // '<p><b>+340000</b></p>'+
     // '</div>'+
     // '</div>';
 
@@ -399,7 +303,7 @@ var contentString3 = '<div id="iw-container">'+
     // '<div>'+
     // '<h4 id="firstHeading" class="firstHeading">Carga Hídrica de Cauce</h4>'+
     // '<div id="bodyContent">'+
-    // '<p><b>+323320</b></p>'+            
+    // '<p><b>+323320</b></p>'+
     // '</div>'+
     // '</div>';
 var contentString4 = '<div id="iw-container">'+
@@ -432,8 +336,7 @@ var cssInfoWindows = function(infowindowLocal){
       // Reference to the DIV that wraps the bottom of infowindow
       var iwOuter = $('.gm-style-iw');
 
-      iwOuter.css({'background-color': '#fff', 'box-shadow': '0 1px 6px rgba(24, 83, 14, 0.98)', 'border': '1px solid 3c763d',
-  'border-radius': '2px 2px 10px 10px'});
+      iwOuter.css({'background-color': '#fff', 'box-shadow': '0 1px 6px rgba(24, 83, 14, 0.98)', 'border': '1px solid 3c763d', 'border-radius': '2px 2px 10px 10px'});
       /* Since this div is in a position prior to .gm-div style-iw.
        * We use jQuery and create a iwBackground variable,
        * and took advantage of the existing reference .gm-style-iw for the previous div with .prev().
@@ -476,7 +379,8 @@ var cssInfoWindows = function(infowindowLocal){
     });
 };
 
-  
+
+//carga gráfica de la amazonía
 
 map.data.loadGeoJson(_root_ + 'public/img/Area_estudio_Amz.geojson');
 // map.data.loadGeoJson('http://35.198.18.102/pric_otca/public/img/Area_estudio_Amz.geojson');
@@ -520,7 +424,7 @@ var marker4 = new google.maps.Marker({
 marker.setMap(map);
 marker2.setMap(map);
 marker3.setMap(map);
-marker4.setMap(map);  
+marker4.setMap(map);
 
 cssInfoWindows(infowindow);
 cssInfoWindows(infowindow2);
@@ -551,7 +455,7 @@ marker.addListener('click', function(event) {
     infowindow3.close();
     infowindow4.close();
     infowindow.open(map, marker);
-    marker.setIcon(iconBase + 'ic-marker-1_hover.png'); 
+    marker.setIcon(iconBase + 'ic-marker-1_hover.png');
     animacionMarker(marker);
 });
 marker.addListener('mouseover', function(event) {
@@ -719,40 +623,6 @@ var animacionMarker = function(markerAnimar){
     }
 };
 
-// var ctaLayer = new google.maps.KmlLayer({
-//   url: 'http://191.232.182.250/pric_otca/public/img/Limite_biogeografico_Amz.kml',
-//   map: map
-// });
 
-//   map.addListener('center_changed', function() {
-//     // 3 seconds after the center of the map has changed, pan back to the
-//     // marker.
-//     window.setTimeout(function() {
-//       map.panTo(myLatlng);
-//     }, 3000);
-//   });
-
-//   ctaLayer.addListener('click', function() {
-//     map.setZoom(6);
-//     map.setCenter(myLatlng);
-//   });
-
-  
-
-  // map.data.addListener('mouseover', function(event) {
-  //   map.data.revertStyle();
-  //   map.data.overrideStyle(event.feature, {strokeWeight: 4});
-  // });
-  // map.data.addListener('mouseout', function(event) {
-  //     map.data.revertStyle();
-  // });
-
-
-  // marker.addListener('click', function() {
-  //   map.setZoom(4);
-  //   map.setCenter(marker.getPosition());
-  //   map.data.revertStyle();
-  //   map.data.overrideStyle(event.feature, {strokeWeight: 4});
-  // });
 
 }

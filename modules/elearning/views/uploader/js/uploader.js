@@ -43,8 +43,11 @@ function InitUploader(post, params){
   var ARCHIVOS = false;
 
   var route = params.route || "";
-
-  $("#hidden-uploader-route").val(route);
+  var idioma = params.Idi_Ididioma || "";
+  $("#hidden-uploader-route").val(route);  
+  $("#hidden-uploader-Idi_Ididioma").val(idioma);
+  alert(route);
+  alert(idioma);
   jQuery.event.props.push('dataTransfer');
   var isAdvancedUpload = function(){
     var div = document.createElement('div');
@@ -110,9 +113,8 @@ function InitUploader(post, params){
 
       $(".box__input").hide();
       $(".box__uploading").show();
-      // alert(ajaxData);
       $.ajax({
-        url: _root_ + _modulo + "/" + "uploader/post",
+        url: _root_ + "elearning/uploader/post",
         data: ajaxData,
         processData: false,
         contentType: false,

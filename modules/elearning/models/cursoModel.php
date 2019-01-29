@@ -79,11 +79,44 @@ class cursoModel extends Model {
     }
 
     public function getCursoUsuario($usuario){
-        $sql = "SELECT C.*, CC.Con_Descripcion as Modalidad FROM curso C
-                INNER JOIN constante CC ON CC.Con_Valor = C.Moa_IdModalidad AND CC.Con_Codigo = 1000
-                INNER JOIN matricula_curso MC ON C.Cur_IdCurso = MC.Cur_IdCurso
+        $sql = " SELECT 
+                 c.Cur_IdCurso,
+                 c.Usu_IdUsuario,
+                 c.Moa_IdModalidad,       
+                 fn_TraducirContenido('curso','Cur_UrlBanner',c.Cur_IdCurso,'$Idi_IdIdioma',c.Cur_UrlBanner) Cur_UrlBanner,       
+                 fn_TraducirContenido('curso','Cur_UrlImgPresentacion',c.Cur_IdCurso,'$Idi_IdIdioma',c.Cur_UrlImgPresentacion) Cur_UrlImgPresentacion, 
+                 fn_TraducirContenido('curso','Cur_UrlVideoPresentacion',c.Cur_IdCurso,'$Idi_IdIdioma',c.Cur_UrlVideoPresentacion) Cur_UrlVideoPresentacion,
+                 fn_TraducirContenido('curso','Cur_Titulo',c.Cur_IdCurso,'$Idi_IdIdioma',c.Cur_Titulo) Cur_Titulo,
+                 fn_TraducirContenido('curso','Cur_Descripcion',c.Cur_IdCurso,'$Idi_IdIdioma',c.Cur_Descripcion) Cur_Descripcion,
+                 fn_TraducirContenido('curso','Cur_PublicoObjetivo',c.Cur_IdCurso,'$Idi_IdIdioma',c.Cur_PublicoObjetivo) Cur_PublicoObjetivo,
+                 fn_TraducirContenido('curso','Cur_ObjetivoGeneral',c.Cur_IdCurso,'$Idi_IdIdioma',c.Cur_ObjetivoGeneral) Cur_ObjetivoGeneral,
+                 fn_TraducirContenido('curso','Cur_Metodologia',c.Cur_IdCurso,'$Idi_IdIdioma',c.Cur_Metodologia) Cur_Metodologia,
+                 fn_TraducirContenido('curso','Cur_ReqHardware',c.Cur_IdCurso,'$Idi_IdIdioma',c.Cur_ReqHardware) Cur_ReqHardware,
+                 fn_TraducirContenido('curso','Cur_ReqSoftware',c.Cur_IdCurso,'$Idi_IdIdioma',c.Cur_ReqSoftware) Cur_ReqSoftware,
+                 fn_TraducirContenido('curso','Cur_Contacto',c.Cur_IdCurso,'$Idi_IdIdioma',c.Cur_Contacto) Cur_Contacto,
+                 c.Cur_Duracion,
+                 c.Cur_Vacantes,
+                 c.Cur_FechaDesde,
+                 c.Cur_FechaHasta,
+                 c.Cur_Certificacion,
+                 c.Cur_FechaReg,
+                 c.Cur_FechaRegFinal,
+                 c.Cur_EstadoRegistro,
+                 c.Cur_Estado,
+                 c.Row_Estado,
+                 cc.Con_Descripcion,
+                 fn_TraducirContenido('constante','Con_Descripcion',cc.Cur_IdCurso,'$Idi_IdIdioma',cc.Con_Descripcion) Modalidad,
+
+                 fn_devolverIdioma('curso',c.Cur_IdCurso,'$Idi_IdIdioma',c.Idi_IdIdioma) Idi_IdIdioma
+
+            FROM curso c
+                INNER JOIN constante cc ON cc.Con_Valor = c.Moa_IdModalidad AND cc.Con_Codigo = 1000
+                INNER JOIN matricula_curso MC ON c.Cur_IdCurso = MC.Cur_IdCurso
+                
+
                 WHERE MC.Usu_IdUsuario = {$usuario} AND MC.Mat_Valor = 1
-                  AND C.Cur_Estado = 1 AND C.Row_Estado = 1";
+                  AND c.Cur_Estado = 1 AND c.Row_Estado = 1";
+
         $curso = $this->getArray($sql);
         $resultado = array();
         foreach ($curso as $c) {
@@ -149,7 +182,7 @@ class cursoModel extends Model {
               FROM
               (SELECT COUNT(X.nProgreso) as Lecciones, SUM(X.nProgreso) as Completos FROM
                 (SELECT 1 as CONTADOR, (CASE WHEN PC1.Pro_IdProgreso IS NULL THEN 0
-                              ELSE PC1.Pro_Valor END) as nProgreso
+                              ELSE PC1.Pro_Valor END) as nProgreso 
                   FROM leccion L1
                 LEFT JOIN progreso_curso PC1 ON PC1.Lec_IdLeccion = L1.Lec_IdLeccion
                   AND PC1.Usu_IdUsuario = {$id_usuario}
@@ -346,7 +379,7 @@ class cursoModel extends Model {
         }
     }
     // Jhon Martinez
-    public function getCursosPaginado($pagina = 1, $registrosXPagina = 1, $condicionActivos = "", $Usu_IdUsuario = false){
+    public function getCursosPaginado($pagina = 1, $registrosXPagina = 1, $condicionActivos = "", $Usu_IdUsuario = false, $Idi_IdIdioma = "es"){
 
         $registroInicio = 0;
         if ($pagina > 0) {
@@ -362,7 +395,19 @@ class cursoModel extends Model {
         try{
             $sql = " SELECT cur_so.*, COUNT(vc.Usu_IdUsuario) AS Valoraciones,
                     CAST((CASE WHEN AVG(vc.Val_Valor) > 0 THEN AVG(vc.Val_Valor) ELSE 0 END) AS DECIMAL(2,1)) AS Valor FROM
-                    (   SELECT cr.Cur_IdCurso, cr.Cur_UrlBanner, cr.Cur_Titulo, cr.Cur_Descripcion, cr.Usu_IdUsuario, cr.Cur_Vacantes, cr.Cur_FechaDesde, cr.Moa_IdModalidad, CONCAT(u.Usu_Nombre,' ',u.Usu_Apellidos) AS Docente, cc.Con_Descripcion AS Modalidad, SUM(CASE WHEN mt.Mat_Valor = 1 THEN 1 ELSE 0 END) AS Matriculados, (CASE WHEN cu_m.Matriculado = 1 THEN 1 ELSE 0 END) AS Inscrito FROM
+                    (   SELECT cr.Cur_IdCurso, 
+
+                 fn_TraducirContenido('curso','Cur_UrlBanner',cr.Cur_IdCurso,'$Idi_IdIdioma',cr.Cur_UrlBanner) Cur_UrlBanner,
+                 fn_TraducirContenido('curso','Cur_Titulo',cr.Cur_IdCurso,'$Idi_IdIdioma',cr.Cur_Titulo) Cur_Titulo,
+                 fn_TraducirContenido('curso','Cur_Descripcion',cr.Cur_IdCurso,'$Idi_IdIdioma',cr.Cur_Descripcion) Cur_Descripcion,
+
+
+
+                    cr.Usu_IdUsuario, cr.Cur_Vacantes, cr.Cur_FechaDesde, cr.Moa_IdModalidad, CONCAT(u.Usu_Nombre,' ',u.Usu_Apellidos) AS Docente, 
+
+                    fn_TraducirContenido('curso','Con_Descripcion',cr.Cur_IdCurso,'$Idi_IdIdioma',cc.Con_Descripcion) Modalidad, 
+
+                    SUM(CASE WHEN mt.Mat_Valor = 1 THEN 1 ELSE 0 END) AS Matriculados, (CASE WHEN cu_m.Matriculado = 1 THEN 1 ELSE 0 END) AS Inscrito FROM
                             ( SELECT cur.Cur_IdCurso, 1 AS Matriculado FROM curso cur
                               INNER JOIN matricula_curso mat ON cur.Cur_IdCurso = mat.Cur_IdCurso
                               WHERE cur.Cur_Estado = 1 AND cur.Row_Estado = 1 AND mat.Mat_Valor = 1 $andUsuario ) cu_m

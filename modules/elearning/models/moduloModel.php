@@ -8,10 +8,10 @@ class moduloModel extends Model {
         $sql = "SELECT MC.*,
               (SELECT MIN(Lec_IdLeccion) FROM leccion L
               WHERE L.Moc_IdModuloCurso = MC.Moc_IdModuloCurso
-                AND L.Lec_Estado = 1 AND L.Row_Estado = 1) as PrimerLeccion 
-            FROM modulo_curso MC WHERE MC.Cur_IdCurso = {$id} 
+                AND L.Lec_Estado = 1 AND L.Row_Estado = 1) as PrimerLeccion
+            FROM modulo_curso MC WHERE MC.Cur_IdCurso = {$id}
             AND MC.Moc_Estado = 1 AND MC.Row_Estado = 1";
-            
+
         $modulos = $this->getArray($sql);
 
         if ($id_usuario != "" && $modulos!=null && count($modulos) >0 ){
@@ -111,16 +111,16 @@ class moduloModel extends Model {
             $lec = " SELECT (CASE WHEN pro.Pro_Valor IS NULL THEN 0 ELSE pro.Pro_Valor END) AS Disponible, LEC.* FROM (SELECT L.*, (CASE WHEN Lec_FechaHasta <= NOW() THEN 0 ELSE 1 END) as Activo
                   FROM leccion L
                   WHERE L.Moc_IdModuloCurso = {$m['Moc_IdModuloCurso']}
-                    AND L.Lec_Estado = 1 AND L.Row_Estado = 1) LEC 
+                    AND L.Lec_Estado = 1 AND L.Row_Estado = 1) LEC
                     LEFT JOIN progreso_curso pro ON LEC.Lec_IdLeccion = pro.Lec_IdLeccion AND pro.Usu_IdUsuario = {$id_usuario} ORDER BY LEC.Lec_IdLeccion ASC ";
           } else {
-            
+
               $lec = "SELECT L.*, (CASE WHEN Lec_FechaHasta <= NOW() THEN 0 ELSE 1 END) as Activo
                       FROM leccion L
                       WHERE L.Moc_IdModuloCurso = {$m['Moc_IdModuloCurso']}
                         AND L.Lec_Estado = 1 AND L.Row_Estado = 1 ORDER BY L.Lec_IdLeccion ASC ";
           }
-          
+
           $m["LECCIONES"] = $this->getArray($lec);
           array_push($resultado, $m);
         }
@@ -141,13 +141,13 @@ class moduloModel extends Model {
     }
 
     public function getNextModulo($modulo){
-      $sql = "SELECT 
+      $sql = "SELECT
                 Moc_IdModuloCurso,
-                (SELECT MIN(l.Lec_IdLeccion) FROM leccion l WHERE l.Moc_IdModuloCurso = m.Moc_IdModuloCurso 
+                (SELECT MIN(l.Lec_IdLeccion) FROM leccion l WHERE l.Moc_IdModuloCurso = m.Moc_IdModuloCurso
                 AND l.Lec_Estado = 1 AND l.Row_Estado = 1) as Leccion
-              FROM modulo_curso m 
+              FROM modulo_curso m
               WHERE m.Moc_IdModuloCurso =
-              (SELECT MIN(Moc_IdModuloCurso) FROM modulo_curso 
+              (SELECT MIN(Moc_IdModuloCurso) FROM modulo_curso
               WHERE Cur_IdCurso = (SELECT Cur_IdCurso FROM modulo_curso WHERE Moc_IdModuloCurso = {$modulo})
                 AND Moc_IdModuloCurso > {$modulo}
                 AND Moc_Estado = 1 AND Row_Estado = 1)";
@@ -155,9 +155,9 @@ class moduloModel extends Model {
     }
 
     public function getModuloDatos($modulo){
-      $sql = "SELECT m.Moc_IdModuloCurso FROM modulo_curso m 
-              WHERE Cur_IdCurso = 
-              (SELECT Cur_IdCurso FROM modulo_curso 
+      $sql = "SELECT m.Moc_IdModuloCurso FROM modulo_curso m
+              WHERE Cur_IdCurso =
+              (SELECT Cur_IdCurso FROM modulo_curso
               WHERE Moc_IdModuloCurso = {$modulo})
               AND m.Moc_Estado = 1 AND m.Row_Estado = 1
               ORDER BY m.Moc_IdModuloCurso ASC";

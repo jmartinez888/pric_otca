@@ -10,7 +10,7 @@
           <strong>ALUMNOS INSCRITOS</strong>
         </h3>
       </div>
-      <div class="panel-body" style=" margin: 15px 25px">
+      <div class="panel-body" >
         <div class="col-lg-12">
           {if isset($matriculados) && count($matriculados)}
           <div class="table-responsive" style="width: 100%">
@@ -19,27 +19,34 @@
                       <th>Id</th>
                       <th>Alumnos</th>
                       <th>Usuario</th>
-                      <th>Operaciones</th>
+                      <th>Matrícula</th>
+                      <th>Porcentaje(%)</th>
+                      <th>Módulo</th>
+                      <th>Lección</th>
                   </tr>
                   {foreach from=$matriculados item=c}
                     <tr>
                         <td>{$c.Usu_IdUsuario}</td>
                         <td>{$c.Usu_Nombre} {$c.Usu_Apellidos}</td>
                         <td>{$c.Usu_Usuario}</td>
+
                         <td>
                           {if $c.Mat_Valor == 0 }
-                          <div><i class="glyphicon glyphicon-remove"></i> Rechazado</div>
+                          <div class="text-center"><i data-toggle="tooltip" data-placement="right" title="Rechazado" class="text-danger glyphicon glyphicon-remove"></i></div>
                           {else if $c.Mat_Valor == 1 }
-                          <div><i class="glyphicon glyphicon-ok"></i> Matriculado</div>
+                          <div class="text-center" ><i data-toggle="tooltip" data-placement="right" title="Matriculado" class="text-success glyphicon glyphicon-ok"></i> </div>
                           {else}
-                            <a href="{BASE_URL}elearning/gestion/matricular/{$curso.Cur_IdCurso}/{$c.Usu_IdUsuario}/Si">
-                              <button class="btnHabilitar"><i class="glyphicon glyphicon-ok"></i> Aprobar matricula</button>
+                            <a type="button" class=" btn btn-success btn-sm  glyphicon glyphicon-ok "  href="{BASE_URL}elearning/gestion/matricular/{$curso.Cur_IdCurso}/{$c.Usu_IdUsuario}/Si" data-toggle="tooltip" data-placement="right" title="Aprobar Matrícula" style="margin: 3px;">
                             </a>
-                            <a href="{BASE_URL}elearning/gestion/matricular/{$curso.Cur_IdCurso}/{$c.Usu_IdUsuario}/No">
-                              <button class="btnHabilitar"><i class="glyphicon glyphicon-remove"></i> Rechazar matricula</button>
+                            <a type="button" class=" btn btn-danger btn-sm  glyphicon glyphicon-remove " href="{BASE_URL}elearning/gestion/matricular/{$curso.Cur_IdCurso}/{$c.Usu_IdUsuario}/No" data-toggle="tooltip" data-placement="right" title="Rechazar Matrícula" style="margin: 3px;">                              
                             </a>
                           {/if}
                         </td>
+                        
+                        <td>{$c.Porcentaje}%</td>
+                        <td>{$c.Moc_Titulo}</td>
+                        <td>{$c.Lec_Titulo}</td>
+                        
                     </tr>
                   {/foreach}
               </table>

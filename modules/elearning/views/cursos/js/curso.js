@@ -1,4 +1,8 @@
 $(document).ready(function(){
+	$('.ficha-mod[data-id-modulo]').on('click', (e) => {
+		$('.modulo-lecciones[data-ref-modulo='+e.currentTarget.dataset.idModulo + ']').toggle()
+	})
+
 	var CALIFICACION = 0;
 	var SELECTED = true;
 	$(".item-calificar").click(function(){
@@ -39,7 +43,7 @@ $(document).ready(function(){
         var options = { mode : mode, popClose : close};
         $("div.printableArea").printArea( options );
     });
-	   
+
 	$("#btnCalificar").click(function(){
 		var texto = $("#txCComentario").val();
 		if(CALIFICACION==0){

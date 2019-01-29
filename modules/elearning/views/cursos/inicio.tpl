@@ -1,4 +1,4 @@
-<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 p-rt-lt-0" style="background-image: url({BASE_URL}modules/elearning/views/cursos/img/encabezado-elearning.jpg); background-repeat: no-repeat; background-size: auto 100%;">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 p-rt-lt-0" style="background-image: url({BASE_URL}modules/elearning/views/cursos/img/encabezado-elearning.jpg); background-repeat: no-repeat; background-size: auto 100%; min-height: 415px;">
     <div class="col-xs-12 col-md-6 col-sm-9 col-lg-5" style="color: white; font-weight: bold; font-size: 18px;">
         {include file='modules/elearning/views/cursos/menu/descripcion.tpl'}
     </div>
@@ -7,43 +7,43 @@
 <div class="col-sm-12 col-md-9 col-lg-10" style="padding-bottom: 20px; padding-top: 20px">
     <div class="col-xs-12 col-md-12 col-lg-12">
         <form class="form row" method="post" action="{BASE_URL}elearning/cursos/cursos">
-                <div class="col-sm-6 col-md-3">
-                    <div class="form-group">
-                    {if Session::get('id_usuario')}
-                        <select class="form-control" name="_mis_cursos" id="_mis_cursos">
-                            <option value="0" > {$lang->get('str_todos')} </option>
-                            <option value="1" {if $_mis_cursos == 1} selected="" {/if}> {$lang->get('str_inscritos')} </option>
-                            {if $_acl->permiso("agregar_usuario")}
-                            <option value="2" {if $_mis_cursos == 2} selected="" {/if}> {$lang->get('str_creados')} </option>
-                            {/if}
-                        </select>
-                    {/if}
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-3 " id="">
-                    <div class="form-group">
-                    <select class="form-control" name="_tipo_curso" id="_tipo_curso">
+            <div class="col-sm-6 col-md-3">
+                <div class="form-group">
+                {if Session::get('id_usuario')}
+                    <select class="form-control" name="_mis_cursos" id="_mis_cursos">
                         <option value="0" > {$lang->get('str_todos')} </option>
-                        {if isset($modalidades) && count($modalidades) }
-                            {foreach from=$modalidades item=m}
-                            <option value="{$m.Con_Valor}" {if $m.Con_Valor == $_tipo_curso} selected="" {/if}> {$m.Con_Descripcion} </option>
-                            {/foreach}
+                        <option value="1" {if $_mis_cursos == 1} selected="" {/if}> {$lang->get('str_inscritos')} </option>
+                        {if $_acl->permiso("agregar_usuario")}
+                        <option value="2" {if $_mis_cursos == 2} selected="" {/if}> {$lang->get('str_creados')} </option>
                         {/if}
                     </select>
-                    </div>
+                {/if}
                 </div>
+            </div>
+            <div class="col-sm-6 col-md-3 " id="">
+                <div class="form-group">
+                <select class="form-control" name="_tipo_curso" id="_tipo_curso">
+                    <option value="0" > {$lang->get('str_todos')} </option>
+                    {if isset($modalidades) && count($modalidades) }
+                        {foreach from=$modalidades item=m}
+                        <option value="{$m.Con_Valor}" {if $m.Con_Valor == $_tipo_curso} selected="" {/if}> {$m.Con_Descripcion} </option>
+                        {/foreach}
+                    {/if}
+                </select>
+                </div>
+            </div>
 
 
-                <div class="col-sm-12 col-md-6" id="">
-                    <div class="form-group">
-                        <div class="input-group">
-                            <input class="form-control" name="busqueda" placeholder="{$lang->get('elearning_cursos_buscar_curso')}" value="{$busqueda}">
-                            <span class="input-group-btn">
-                                <button class="btn btn-group btn-buscar" type="submit">{$lang->get('elearning_cursos_buscar_cursos')}</button>
-                            </span>
-                        </div>
+            <div class="col-sm-12 col-md-6" id="">
+                <div class="form-group">
+                    <div class="input-group">
+                        <input class="form-control" name="busqueda" placeholder="{$lang->get('elearning_cursos_buscar_curso')}" value="{$busqueda}">
+                        <span class="input-group-btn">
+                            <button class="btn btn-group btn-buscar" type="submit">{$lang->get('elearning_cursos_buscar_cursos')}</button>
+                        </span>
                     </div>
                 </div>
+            </div>
 
         </form>
     </div>
@@ -71,14 +71,14 @@
                             {if strlen($o.Cur_UrlBanner) >0 }
                                 <div class="container-item-image">
                                     <div>
-                                        <img class="curso-item-img" alt="Imagen" src="{BASE_URL}modules/elearning/views/cursos/img/portada/{$o.Cur_UrlBanner}" />
+                                        <img class="curso-item-img" alt="Imagen" src="{BASE_URL}files/elearning/cursos/img/portada/{$o.Cur_UrlBanner}" />
                                     </div>
                                     <div class="col-xs-3 curso-item-mod {if $o.Moa_IdModalidad==1} mooc {/if} {if $o.Moa_IdModalidad==2} lms {/if} {if $o.Moa_IdModalidad==3} pres {/if}">{$o.Modalidad|truncate:5:"."}</div>
                                 </div>
                             {else}
                                 <div class="container-item-image"><div>
                                     <div>
-                                        <img class="curso-item-img" alt="Imagen" src="{BASE_URL}modules/elearning/views/cursos/img/portada/default.png" />
+                                        <img class="curso-item-img" alt="Imagen" src="{BASE_URL}files/elearning/cursos/img/portada/default.jpg" />
                                     </div>
                                     <div class="col-xs-3 curso-item-mod {if $o.Moa_IdModalidad==1} mooc {/if} {if $o.Moa_IdModalidad==2} lms {/if} {if $o.Moa_IdModalidad==3} pres {/if}">{$o.Modalidad|truncate:5:"."}</div>
                                 </div>

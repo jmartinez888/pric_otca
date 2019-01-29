@@ -99,16 +99,26 @@ class gmoduloController extends elearningController {
     $this->service->Send();
   }
 
-  public function _actualizar_modulo(){
-    $id = $this->getTexto("id");
-    $titulo = $this->getTexto("titulo");
-    $descripcion = $this->getTexto("descripcion");
-    $dedicacion = $this->getTexto("dedicacion");
+    public function _actualizar_modulo(){
+        $Moc_IdModuloCurso = $this->getTexto("id");
+        $Moc_Titulo = $this->getTexto("titulo");
+        $Moc_Descripcion = $this->getTexto("descripcion");
+        $Moc_TiempoDedicacion = $this->getTexto("dedicacion");
+        $idiomaTradu = $this->getTexto("idiomaTradu");
+        $IdiomaOriginal = $this->getTexto("IdiomaOriginal");
+        if ($idiomaTradu == $IdiomaOriginal) {
+            $model = $this->loadModel("_gestionModulo");
+            $model->updateModulo($Moc_IdModuloCurso, $Moc_Titulo, $Moc_Descripcion, $Moc_TiempoDedicacion);
+        } else {            
+            $_arquitectura = $this->loadModel('index','arquitectura');
 
-    $model = $this->loadModel("_gestionModulo");
-    $model->updateModulo($id, $titulo, $descripcion, $dedicacion);
+            $rowCount1 = $_arquitectura->editarRegistroTraducido("modulo_curso", $Moc_IdModuloCurso, "Moc_Titulo", $idiomaTradu, $Moc_Titulo);
+            $rowCount2 = $_arquitectura->editarRegistroTraducido("modulo_curso", $Moc_IdModuloCurso, "Moc_Descripcion", $idiomaTradu, $Moc_Descripcion);
+        }
 
-    $this->service->Success("Datos actualizados");
-    $this->service->Send();
-  }
+
+        $this->service->Success("Datos actualizados");
+        $this->service->Send();
+    }
+
 }

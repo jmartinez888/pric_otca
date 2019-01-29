@@ -79,13 +79,13 @@
                         <div class="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul class="nav navbar-nav">
                                 <li class="nav-item" style="background: #565656;">
-                                    <a class="nav-link txt-color-white f-z-14" href="{$_layoutParams.root_clear}index/_loadLang/es">Español</a>
+                                    <a class="nav-link txt-color-white f-z-14 {if Cookie::lenguaje()=='es'}lang-active{/if}" href="{$_layoutParams.root_clear}index/_loadLang/es">Español</a>
                                 </li>
                                 <li class="nav-item" style="background: #565656;">
-                                    <a class="nav-link txt-color-white f-z-14" href="{$_layoutParams.root_clear}index/_loadLang/pt"> | Portugues</a>
+                                    <a class="nav-link txt-color-white f-z-14 {if Cookie::lenguaje()=='pt'}lang-active{/if}" href="{$_layoutParams.root_clear}index/_loadLang/pt"> | Portugues</a>
                                 </li>
                                 <li class="nav-item" style="background: #565656;">
-                                    <a class="nav-link txt-color-white f-z-14" href="{$_layoutParams.root_clear}index/_loadLang/en"> | English</a>
+                                    <a class="nav-link txt-color-white f-z-14 {if Cookie::lenguaje()=='en'}lang-active{/if}" href="{$_layoutParams.root_clear}index/_loadLang/en"> | English</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link txt-color-white f-z-14" href="{$_layoutParams.root}acercade/contacto"> | Contácto</a>
@@ -97,8 +97,8 @@
                                 <!-- Perfil User -->
                                 <li class="nav-item user user-menu ">
                                     <a href="#" class="nav-link txt-color-white f-z-14 dropdown-toggle" data-toggle="dropdown" aria-expanded="true" style="float: left; padding: 5px 5px 2px;">
-                                        {if Session::get('id_usuario') == 2}
-                                        <img src="{$_layoutParams.ruta_img}/jmartinez.jpg" class="user-image" alt="User Image">
+                                        {if trim(Session::get('Usu_URLImage')) != ""}
+                                       <img src="{$_layoutParams.root_archivo_fisico}usuarios/img/{Session::get('Usu_URLImage')}" class="user-image" alt="User Image">
                                         {else}
                                         <img src="{$_layoutParams.ruta_img}/user2-160x160.jpg" class="user-image" alt="User Image">
                                         {/if}
@@ -109,8 +109,8 @@
                                     <ul class="dropdown-menu info_ul" style="box-shadow: 0 0 11px #222 !important;">
                                         <!-- User image -->
                                         <li class="user-header">
-                                            {if Session::get('id_usuario') == 2}
-                                            <img src="{$_layoutParams.ruta_img}/jmartinez.jpg" class="img-circle" alt="User Image">
+                                            {if trim(Session::get('Usu_URLImage')) != ""}
+                                            <img src="{$_layoutParams.root_archivo_fisico}usuarios/img/{Session::get('Usu_URLImage')}" class="img-circle" alt="User Image">
                                             {else}
                                             <img src="{$_layoutParams.ruta_img}/user2-160x160.jpg" class="img-circle" alt="User Image">
                                             {/if}
@@ -389,129 +389,7 @@
                         <button type="button" class="close" data-dismiss="#modal-1">CLOSE &times;</button>
                         <h1 class="modal-title" >{$lenguaje["login_intranet"]}</h1>
                     </div> -->
-                    <div class="modal-body" >
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="panel panel-login">
-                                    <div class="panel-heading">
-                                        <div class="row">
-                                            <div class="col-xs-6">
-                                                <a href="#" class="active" id="login-form-link">{$lenguaje['text_iniciarsession']}</a>
-                                            </div>
-                                            <div class="col-xs-6">
-                                                <a href="#" id="register-form-link">{$lenguaje['frontend_modal_registrate']}</a>
-                                            </div>
-                                        </div>
-                                        <hr>
-                                    </div>
-                                    <div class="panel-body">
-                                        <div class="row">
-                                            <div class="col-lg-12">
-                                                <form id="login-form" action="#" method="post" role="form" style="display: block;">
-                                                    <input type="hidden" name="url" id="url" value="{$url}">
-                                                    <input type="hidden" name="hd_login_modulo" id="hd_login_modulo" value="">
-                                                    <div class="form-group">
-                                                        <label for="disabledTextInput">{$lenguaje['frontend_modal_usuario']}</label>
-                                                        <input type="text" name="usuarioLogin" id="usuarioLogin" tabindex="1" class="form-control" placeholder="{$lenguaje['frontend_modal_usuario']}" value="" required="">
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="disabledTextInput">{$lenguaje['frontend_modal_contrasenia']}</label>
-                                                        <div class="input-group">
-                                                            <input type="password" name="passwordLogin" id="passwordLogin" tabindex="2" class="form-control" placeholder="{$lenguaje['frontend_modal_contrasenia']}" required="" onkeypress="tecla_enter_login(event)">
-                                                            <span  class="input-group-addon btn btn-default btn-xs" id="show-pass"><i class="glyphicon glyphicon-eye-open" id="btn_ver_clave"></i></span>
-                                                        </div>
-                                                    </div>
-                                                    <!-- <div class="form-group text-center">
-                                                        <input type="checkbox" tabindex="3" class="" name="remember" id="remember">
-                                                        <label for="remember"> Recordarme</label>
-                                                    </div> -->
-                                                    <div class="form-group">
-                                                        <div class="row">
-                                                            <div class="col-sm-6 col-sm-offset-3">
-                                                                <button type="button" name="logear" id="logear" tabindex="4" class="form-control btn btn-login" >{$lenguaje['text_iniciarsession']}</button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <div class="row">
-                                                            <div class="col-sm-6 col-sm-offset-3">
-                                                                <div class="g-signin2" id="signin2"></div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <!-- <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div> -->
-                                                    <!-- <div class="g-signin2" data-width="250" data-height="50" data-longtitle="true"> -->
-                                                    <div class="form-group">
-                                                        <div class="row">
-                                                            <div class="col-lg-12">
-                                                                <div class="text-center">
-                                                                    <a href="#" tabindex="5" class="forgot-password" id="showRecPass">{$lenguaje['frontend_modal_olvidecontrasenia']}</a>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </form>
-                                                <div class="form-group hidden" id="divEnvioCorreo">
-                                                    <div class="form-group">
-                                                        <label for="disabledTextInput">{$lenguaje['frontend_modal_correorecuperacion']}</label>
-                                                        <div class="input-group">
-                                                            <input type="text" name="emailRecPass" id="emailRecPass" tabindex="7" class="form-control" placeholder="Correo Electronico" required="" >
-                                                            <span data-toggle="tooltip" data-placement="right" title="Enviar Correo"  class="input-group-addon btn btn-default btn-xs" id="btnRecPass"><i class="glyphicon glyphicon-envelope"></i></span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group hidden" id="divRecuperar">
-                                                </div>
-                                                <form id="register-form" action="" style="display: none;">
-                                                    <div class="form-group">
-                                                        <label for="">{$lenguaje['frontend_form_registronombre']}</label>
-                                                        <input type="text" name="nombreRegistrar" id="nombreRegistrar" pattern="([a-zA-Z][\sa-zA-Z]+)" tabindex="1" class="form-control" placeholder="{$lenguaje['frontend_form_registronombre']}" value="">
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="">{$lenguaje['frontend_form_registroapellido']}</label>
-                                                        <input type="text" name="apellidosRegistrar" id="apellidosRegistrar" pattern="([a-zA-Z][\sa-zA-Z]+)" tabindex="2" class="form-control" placeholder="{$lenguaje['frontend_form_registroapellido']}" value="">
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="">{$lenguaje['frontend_form_registrocorreo']}</label>
-                                                        <input type="email" name="emailRegistrar" id="emailRegistrar" tabindex="3" class="form-control" placeholder="{$lenguaje['frontend_form_registrocorreo']}" value="">
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="">{$lenguaje['frontend_modal_usuario']}</label>
-                                                        <input type="text" name="usuarioRegistrar" id="usuarioRegistrar" pattern="([_A-z0-9])+" tabindex="4" class="form-control" placeholder="{$lenguaje['frontend_modal_usuario']}" value="">
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="">{$lenguaje['frontend_modal_contrasenia']}</label>
-                                                        <input type="password" name="passwordRegistrar" id="passwordRegistrar" data-minlength="6" tabindex="5" class="form-control" placeholder="{$lenguaje['frontend_modal_contrasenia']}">
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="">{$lenguaje['frontend_form_registro_confcontrasenia']}</label>
-                                                        <input type="password" name="confirm-password" id="confirm-password" data-minlength="7" data-match="#passwordRegistrar" data-match-error="*Contraseña no coinciden" tabindex="6" class="form-control" placeholder="{$lenguaje['frontend_form_registro_confcontrasenia']}">
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <div class="row">
-                                                            <div class="col-sm-6 col-sm-offset-3">
-                                                                <button type="button" name="registrar-login" id="registrar-login" tabindex="8" class="form-control btn btn-register" value="">{$lenguaje['frontend_form_registrocrear']}</button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <div class="row">
-                                                            <div class="col-sm-6 col-sm-offset-3">
-                                                                <div id="registrar-gmail"></div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <a href="#" class="btn btn-default" data-dismiss="modal">{$lenguaje["login_intranet_3"]}</a>
-                    </div>
+                   {include file='modules/usuarios/views/login/ajax/modal_login.tpl'}
                 </div>
             </div>
         </div>

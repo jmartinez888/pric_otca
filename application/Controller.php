@@ -456,6 +456,11 @@ abstract class Controller
         }
     }
 
+    // public function getContTrad($Cot_Tabla, $Cot_IdRegistro, $Idi_IdIdioma)
+    // {
+    //     return Model::getContTrad($Cot_Tabla, $Cot_IdRegistro, $Idi_IdIdioma);
+    // }
+
 }
 
 ?>

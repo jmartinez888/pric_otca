@@ -1,6 +1,7 @@
 {extends 'template.tpl'}
 {block 'contenido'}
 <input type="text" id="inHiddenCurso" value="{$curso.Cur_IdCurso}" hidden="hidden"> <!-- RODRIGO 20180607 -->
+
 <div class="col-lg-12">
   <div class="col-lg-12 referencia-curso-total">
     <a class="referencia-curso" href="{BASE_URL}elearning/cursos/">Cursos</a>  /  {$curso.Cur_Titulo}
@@ -12,7 +13,7 @@
         <div class="panel-body">
           <div class="col-lg-12" style="padding-left: 0px; padding-right: 0px;">
             <div class="col-lg-3 img-curso">
-              <img class="w-100" src="{BASE_URL}modules/elearning/views/cursos/img/portada/{$curso.Cur_UrlBanner}" />
+              <img class="w-100" src="{BASE_URL}files/elearning/cursos/img/portada/{$curso.Cur_UrlBanner}"" />
               {if $curso.Moa_IdModalidad == 2}
               <div class="col-xs-12 text-center " style="background: #2196F3; color: white; font-weight: bold; font-size: 18px;">LMS</div>
               {/if}
@@ -224,7 +225,7 @@
               {/if}
             {/if}
           {else}
-            {if $curso.Usu_IdUsuario != Session::get("id_usuario")}
+            {if $curso.Usu_IdUsuario == Session::get("id_usuario")}
               <a href="{BASE_URL}elearning/cursos/_inscripcion/{$curso.Moa_IdModalidad}/{$curso.Cur_IdCurso}">
                 <button class="btn btn-group btn-inscribir">{$lang->get('str_inscribirme')}</button>
               </a>
@@ -318,7 +319,7 @@
                         <div class="tag-terminado"><center><strong>{$lang->get('elearning_cursos_examen_concluido')}</strong></center></div>
                       {else}
                       {/if}
-                    {/if}
+
                   {/if}
                 {else}
                   {if $l.Lec_Tipo==4 }

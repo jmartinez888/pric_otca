@@ -131,7 +131,7 @@ class cursosController extends elearningController {
       $paginador = new Paginador();
       $arrayRowCount = $model->getCursosRowCount($condicion);
       $totalRegistros = $arrayRowCount['CantidadRegistros'];
-      $cursos = $model->getCursosPaginado($pagina,CANT_REG_PAG,$condicion,$Usu_IdUsuario);
+      $cursos = $model->getCursosPaginado($pagina,CANT_REG_PAG,$condicion,$Usu_IdUsuario, Cookie::lenguaje());
       $paginador->paginar($totalRegistros,"listarCursos", "", $pagina, CANT_REG_PAG, true);
 
       $this->_view->assign('numeropagina', $paginador->getNumeroPagina());
@@ -151,20 +151,20 @@ class cursosController extends elearningController {
       $this->_view->renderizar('inicio');
   }
 
-  public function miscursos(){
-      if(!Session::get("autenticado")){ $this->redireccionar("elearning/"); }
-      $model = $this->loadModel("curso");
-      $mConstante = $this->loadModel("constante");
-      $cursos = $model->getCursoUsuario(Session::get("id_usuario"));
+    public function miscursos(){
+        if(!Session::get("autenticado")){ $this->redireccionar("elearning/"); }
+        $model = $this->loadModel("curso");
+        $mConstante = $this->loadModel("constante");
+        $cursos = $model->getCursoUsuario(Session::get("id_usuario"));
 
-      $this->_view->setTemplate(LAYOUT_FRONTEND);
-      $this->_view->setCss(array("index","jp-index", "jp-detalle-lateral2"));
-      $this->_view->assign("busqueda","");
-      $this->_view->assign("usu_curso",Session::get("usuario"));
-      $this->_view->assign("cursos",$cursos);
-      $this->_view->assign("c",1);
-      $this->_view->renderizar('inicio');
-  }
+        $this->_view->setTemplate(LAYOUT_FRONTEND);
+        $this->_view->setCss(array("index","jp-index", "jp-detalle-lateral2"));
+        $this->_view->assign("busqueda","");
+        $this->_view->assign("usu_curso",Session::get("usuario"));
+        $this->_view->assign("cursos",$cursos);
+        $this->_view->assign("c",1);
+        $this->_view->renderizar('inicio');
+    }
 
   public function miscursos_docente(){
       if(!Session::get("autenticado")){ $this->redireccionar("elearning/"); }
@@ -274,6 +274,7 @@ class cursosController extends elearningController {
       // dd($mModulo->getModulosCursoLMS($id, Session::get("id_usuario")));
       $this->_view->assign("modulo", $mModulo->getModulosCursoLMS($id, Session::get("id_usuario")));
       $this->_view->assign("session", Session::get("autenticado"));
+      $this->_view->assign("now", date_create('now')->format('Y-m-d H:i:s'));
       $this->_view->assign("inscripcion", $inscripcion);
       $this->_view->render('curso_dirigido');
   }
@@ -285,10 +286,8 @@ class cursosController extends elearningController {
       $Emodel = $this->loadModel("examen");
       // $curs = $Cmodel->getCursoID($curso)[0];
       // print_r($curs);exit;
-
       $obj_curso = null;
       if(strlen($curso)==0 || strlen($modulo)==0){
-
         $this->redireccionar("elearning/");
       }
       if(!Session::get("autenticado")){
@@ -298,7 +297,6 @@ class cursosController extends elearningController {
       if(!is_numeric($curso) || !is_numeric($modulo)){
         $this->redireccionar("elearning/");
       }
-
       if(!$Mmodel->validarCursoModulo($curso, $modulo)){
         $this->redireccionar("elearning/cursos");
       }
@@ -324,7 +322,6 @@ class cursosController extends elearningController {
 
       $Tmodel = $this->loadModel("trabajo");
       $TTmodel = $this->loadModel("tarea");
-
 
       // if($tareas != null && count($tareas)>0){
       //   for($i=0; $i<count($tareas);$i++){
