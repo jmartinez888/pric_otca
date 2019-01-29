@@ -197,7 +197,7 @@ class cursosController extends elearningController {
         $progreso = $model->getProgresoCurso($id, Session::get("id_usuario"));
         $this->_view->assign("progreso", $progreso);
       }
-      $modulo = $mModulo->getModulosCurso($id, Session::get("id_usuario"));
+      $modulo = $mModulo->getModulosCurso($id, Session::get("id_usuario"),Cookie::lenguaje());
       // dd($modulo);
       $duracion = $model->getDuracionCurso($id);
       $certificado = $mCert->getCertificadoUsuarioCurso(Session::get("id_usuario"), $id);
