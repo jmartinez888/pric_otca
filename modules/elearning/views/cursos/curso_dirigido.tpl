@@ -316,8 +316,7 @@
                             </a>
                           {/if}
                       {elseif $l.Lec_Tipo==5}
-                        <div class="tag-terminado"><center><strong>{$lang->get('elearning_cursos_examen_concluido')}</strong></center></div>
-                      {else}
+                        <div class="tag-terminado"><center><strong>{$lang->get('elearning_cursos_examen_concluido')}</strong></center></div>                 
                       {/if}
                     {/if}
                   {/if}
@@ -325,8 +324,7 @@
                   {if $l.Lec_Tipo==4}
                     <div class="tag-terminado pendiente"><center>{$lang->get('elearning_cursos_clase_pendiente')}</center></div>
                   {elseif $l.Lec_Tipo==5}
-                    <div class="tag-terminado pendiente"><center>{$lang->get('elearning_cursos_examen_pendiente')}</center></div>
-                  {else}
+                    <div class="tag-terminado pendiente"><center>{$lang->get('elearning_cursos_examen_pendiente')}</center></div>                 
                   {/if}
                 {/if}
               </div>
