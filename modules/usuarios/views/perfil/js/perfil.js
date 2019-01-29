@@ -44,7 +44,7 @@ $(document).ready(function() {
             var json = JSON.parse(a);
             var url = _root_ + "elearning/usuario/_actualizar_img"; 
             var data = { id: $("#idusuario").val(), img: json.data[0].url };
-            alert(url);
+            //alert(url);
             $.ajax({
                 url: url,
                 data: data,

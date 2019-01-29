@@ -6,17 +6,16 @@
  */
 class uploaderController extends elearningController {
 
-  public function __construct($lang,$url)
-  {
-    parent::__construct($lang,$url);
-  }
+	public function __construct($lang, $url) {
+		parent::__construct($lang, $url);
+	}
 
-  public function index(){
-    $this->_view->setCss(array("index"));
-    $this->_view->renderizar("index");
-  }
+	public function index() {
+		$this->_view->setCss(array("index"));
+		$this->_view->renderizar("index");
+	}
 
-  public function post(){
+	public function post() {
 
     // echo "string".$this->getTexto("route").$this->getTexto("pre");exit;
     $this->getLibrary("ServiceResult");
@@ -39,28 +38,29 @@ class uploaderController extends elearningController {
 
       if(move_uploaded_file($tmp_name, $tmp_ruta_archivo)) {
         array_push($resultados, array( "estado" => 1, "url" => $pre_name, "name_file" => $name  ));
+
 			} else {
-        array_push($resultados, array( "estado" => 0, "url" => $pre_name, "name_file" => $name  ));
+				array_push($resultados, array("estado" => 0, "url" => $pre_name, "name_file" => $name));
 			}
-    }
+		}
 
-    $service->Populate($resultados);
-    $service->Success("Se subieron los archivos con exito");
-    $service->Send();
-  }
+		$service->Populate($resultados);
+		$service->Success("Se subieron los archivos con exito");
+		$service->Send();
+	}
 
-  public function Prefijo(){
-    return date("Ymdhis");
-  }
+	public function Prefijo() {
+		return date("Ymdhis");
+	}
 
-  public function Route($ruta){
-    $ruta = explode('/', $ruta);
-    $ruta = array_filter($ruta);
+	public function Route($ruta) {
+		$ruta = explode('/', $ruta);
+		$ruta = array_filter($ruta);
 
-    $result = "";
-    foreach ($ruta as $r) {
-      $result .= $r . DS;
-    };
-    return $result;
-  }
+		$result = "";
+		foreach ($ruta as $r) {
+			$result .= $r . DS;
+		};
+		return $result;
+	}
 }

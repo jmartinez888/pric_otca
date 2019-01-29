@@ -67,7 +67,7 @@ class perfilModel extends Model
     public function editarUsuarioPerfil($iUsu_Nombre, $iUsu_Apellidos, $iUsu_DocumentoIdentidad, $iUsu_Direccion, $iUsu_Telefono, $iUsu_InstitucionLaboral, $iUsu_Cargo, $iUsu_Usuario, $iUsu_Email, $iUsu_IdUsuario
            )
     {
-            $iUsu_Password = Hash::getHash('sha1', $iUsu_Password, HASH_KEY);
+            //$iUsu_Password = Hash::getHash('sha1', $iUsu_Password, HASH_KEY);
             try {            
                 $sql = "call s_u_usuarioPerfil(?,?,?,?,?,?,?,?,?,?)";
                 $result = $this->_db->prepare($sql);
