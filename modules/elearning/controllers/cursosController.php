@@ -271,11 +271,12 @@ class cursosController extends elearningController {
       $this->_view->assign("titulo", $curso['Cur_Titulo']);
       $this->_view->assign("certificado", $certificado);
       $this->_view->assign("duracion", $duracion["Total"] . " Lecciones");
+      // dd($mModulo->getModulosCursoLMS($id, Session::get("id_usuario")));
       $this->_view->assign("modulo", $mModulo->getModulosCursoLMS($id, Session::get("id_usuario")));
       $this->_view->assign("session", Session::get("autenticado"));
       $this->_view->assign("now", date_create('now')->format('Y-m-d H:i:s'));
       $this->_view->assign("inscripcion", $inscripcion);
-      $this->_view->renderizar('curso_dirigido');
+      $this->_view->render('curso_dirigido');
   }
 
   public function modulo($curso= "", $modulo = "", $leccion = false, $idexamen = false){
@@ -747,6 +748,7 @@ class cursosController extends elearningController {
 
                 if (strtotime($primeraLeccion[0]["Lec_FechaDesde"]) <= strtotime(date("d-m-Y H:i:00",time())) && strtotime($primeraLeccion[0]["Lec_FechaHasta"]) >= strtotime(date("d-m-Y H:i:00",time()))) {
                   # code...
+
                   $this->redireccionar("elearning/cursos/modulo/" . $curso . "/" . $posibleSiguienteMod["Moc_IdModuloCurso"] );
                 } else {
                   # code...

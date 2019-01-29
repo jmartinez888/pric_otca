@@ -498,6 +498,15 @@
         </li>
       </a>
     </ul>
+    <ul>
+      <a href="{$_layoutParams.root}elearning/gleccion/pizarras/{$curso['Cur_IdCurso']}" class="side-menu2 {if isset($active) && $active == 'pizarras'}active{/if}">
+        <li class="side-menu side-menu-center-mid" style="position: relative">
+          <i class="fa fa-book"></i>
+          &nbsp;
+          <span> Pizarras </span>
+        </li>
+      </a>
+    </ul>
     <ul id="item-anuncios-curso">
       <div class="side-menu2 {if $active == 'anuncios'}active{/if}">
         <li class="side-menu side-menu-center-mid" style="position: relative">

@@ -177,9 +177,9 @@ p {
     background-color: rgba(0,0,0, .1);
 
 }
-ul{
+/*ul{
   padding-left: 0px !important;
-}
+}*/
 
 .item-leccion-concluida{
   position: absolute;

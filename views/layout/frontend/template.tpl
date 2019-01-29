@@ -63,7 +63,7 @@
         <script type="text/javascript" src="{$_layoutParams.root_clear}public/js/datetime-picker/bootstrap-datetimepicker.es.js"></script>
         <!--RODRIGO-->
     </head>
-    <body >
+    <body id="tag-body">
         <!-- HEADER PRINCIPAL -->
         <div class="container-fluid back-color-black min-height-32" >
             <div class="row ">
@@ -399,6 +399,9 @@
         <!-- <script src="{$_layoutParams.ruta_js}jquery-3.3.1.min.js" type="text/javascript"></script> -->
         <!--script type="text/javascript" src="{$_layoutParams.root_clear}public/js/jquery-1.11.2.min.js"></script-->
         <script language="javascript">
+        function base_url(url_ref, root = false) {
+            return (root ? '{$_layoutParams.root_clear}' : '{$_layoutParams.root}') + url_ref;
+        }
         $(document).ready(function() {
         $(".botonExcel").click(function(event) {
         $("#datos_a_enviar").val( $("<div>").append( $("#Exportar_a_Excel").eq(0).clone()).html());

@@ -90,7 +90,7 @@ class Cookie
         }
         else
         {         
-            $idioma =  $this->lenguaje();               
+            $idioma =  self::lenguaje();               
             Session::set('antlangsiigef', $idioma);
             Cookie::set('antlangsiigef',$idioma);         
         }

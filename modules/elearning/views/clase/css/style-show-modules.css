@@ -1,0 +1,152 @@
+.container-curso {
+
+}
+
+.container-curso .gradiente{
+    padding-bottom: 20px;
+    padding-top: 20px;
+}
+
+.container-curso .titulo-modulo {
+    color: #4A4A4A;
+    display:inline-grid;
+    grid-template-columns: auto 300px;
+    grid-template-rows: auto;
+
+}
+
+.container-curso .titulo-modulo .container-btn-curso {
+    align-self: center;
+    /* justify-self: right; */
+}
+
+.container-curso .section-paginador {
+    display:inline-grid;
+    grid-template-columns: auto auto auto;
+
+}
+
+.container-curso .section-paginador .container-btn-previous {
+    align-self: center;
+    justify-self: left;
+}
+
+.container-curso .section-paginador .text-current-leccion {
+    align-self: center;
+    justify-self: center;
+}
+
+.container-curso .section-paginador .container-btn-next {
+    align-self: center;
+    justify-self: right;
+}
+
+/*A CURSOSS MODULO*/
+.container-curso #leccionar-container .container-menu-lecciones  ul {
+
+list-style-type: none;
+
+padding:0px;
+
+margin-block-end: 0px;
+}
+.container-curso #leccionar-container .container-menu-lecciones  ul li a{
+    color: white;
+}
+.container-curso #leccionar-container .container-menu-lecciones  ul li a.nounderline: link { text-decoration: none; }
+.container-curso #leccionar-container .container-menu-lecciones  ul li:not(.leccion-active) {
+    /*display:none;*/
+}
+
+
+.container-curso #leccionar-container .container-menu-lecciones  ul li {
+     padding: 10px 20px;
+     cursor: pointer;
+     background-color: rgb(55, 57, 65);
+     font-weight: bold;
+     /* margin-bottom: 2px; */
+     font-size: 15px;
+     text-align: left;
+     display: grid;
+     grid-template-columns: auto 50px 50px;
+     border-bottom: 2px solid #386c77;
+}
+
+.container-curso #leccionar-container .container-menu-lecciones  ul li.item-active{
+  background-color: #386c77 !important;
+  color: #fff !important;
+}
+
+.container-curso #leccionar-container .container-menu-lecciones  ul li .item-menus {
+     place-self: center;
+     font-size: 1.4em;
+}
+
+.container-curso .contenido-leccion {
+
+}
+.container-curso .contenido-leccion #modulo-contenedor .panel.modulo-contenedor {
+
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
+}
+.container-curso .contenido-leccion #modulo-contenedor .panel.modulo-contenedor > .panel-heading {
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
+}
+.container-curso .contenido-leccion .panel.panel-leccion {
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
+}
+.container-curso .contenido-leccion .panel.panel-leccion > .cabecera-titulo{
+  background: #a0a0a0!important;
+  color: #fff !important;
+
+}
+.container-curso .contenido-leccion .panel.panel-leccion > .panel-body.contenedor-clase {
+  overflow-y: auto;
+  min-height: 490px;
+
+}
+
+.container-curso .descripcion-leccion .container-panel-descripcion .nav-tabs > li > a{
+    color: #393939;
+    font-weight: bold;
+    border: medium none;
+}
+.container-curso .descripcion-leccion .container-panel-descripcion .nav-tabs > li > a:hover{
+    background-color: #51758d !important;
+    border: medium none;
+    border-radius: 0;
+    color:#fff;
+}
+
+.container-curso .descripcion-leccion .container-panel-descripcion .active .active-tab{
+    color: #fff !important;
+    background-color: #51758d !important;
+}
+
+
+#btn-show-leccion {
+    z-index: 1000;
+}
+
+
+
+
+.item-leccion-concluida{
+  position: absolute;
+  right: 10px;
+  top:10px;
+  font-size: 20px;
+  color: #A8CF45;
+}
+/* .leccion-container{
+    height: 550px;
+} */
+
+/* .contenedor-clase{
+    overflow-y: auto;
+    height: 490px;
+    max-height: 490px;
+} */

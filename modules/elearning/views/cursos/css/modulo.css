@@ -2,29 +2,28 @@
     background-color: rgba(0,0,0, .3);
     height: 80px;
 }
-.sidebar-left {
+/*.sidebar-left {
     padding-top: 0px;
     width: 100%;
-    /*padding-right: 0px;*/
-}
 
-.sidebar {
+}*/
+
+/*.sidebar {
     padding-top: 0px;
     width: 100%;
-    /*height: 530px !important;*/
-    /*max-height: 530px !important;*/
+
     padding-right: 0px;
     overflow-y: auto;
-    /*background: #a0a0a0;*/
+
     margin-bottom: 20px;
     padding-bottom: 0px;
-}
+}*/
 
-.sidebarr:hover {
+/*.sidebarr:hover {
     overflow-y: scroll;
-}
+}*/
 
-.side-menu li {
+/*.side-menu li {
     padding: 5px 15px;
     cursor: pointer;
     background-color: rgb(55, 57, 65);
@@ -32,7 +31,7 @@
     margin-bottom: 2px;
     font-size: 15px;
     text-align: left;
-}
+}*/
 .contenedor {
     padding-top: 10px ;
     background-color: #ffffff;
@@ -41,12 +40,12 @@
 
 }
 
-li {
+/*li {
     display: list-item;
     text-align: -webkit-match-parent;
-}
+}*/
 
-a.nounderline: link { text-decoration: none; }
+/*a.nounderline: link { text-decoration: none; }*/
 
 
 .course-image {
@@ -96,9 +95,9 @@ element.style {
     font-size: 14px;
 }
 
-p {
+/*p {
     margin: 0 0 5px;
-}
+}*/
 
 .course-title-container {
     display: inherit;
@@ -203,9 +202,9 @@ p {
     background-color: rgba(0,0,0, .1);
 
 }
-ul{
+/*ul{
   padding-left: 0px !important;
-}
+}*/
 
 .item-leccion-concluida{
   position: absolute;
@@ -215,10 +214,10 @@ ul{
   color: #A8CF45;
 }
 
-.item-active{
+/*.item-active{
   background-color: #386c77 !important;
   color: #fff !important;
-}
+}*/
 
 /*Para progress fro vicer*/
 

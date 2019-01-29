@@ -4,6 +4,7 @@ new Vue({
 	el: '#modulo-contenedor',
 	data: function () {
 		return {
+			razoncambio: 1.77777777,
 			canvas_leccion: [],
 			obj_canvas: null,
 			elementos: [],
@@ -36,8 +37,7 @@ new Vue({
 	},
 	created: function () {
 		console.log('creta!')
-
-		this.objSocket = new AppSocket({ query: "id=" + USUARIO.id + "&curso=" + USUARIO.curso + "&tipo=2&leccion=" + LMS_LECCION + "&docente=" + USUARIO.docente})
+		this.objSocket = new AppSocket({query: "id=" + USUARIO.id + "&curso=" + USUARIO.curso + "&tipo=2&leccion=" + LMS_LECCION + "&docente=" + USUARIO.docente}, base_url('socket_canvas', true))
 
 
 
@@ -54,9 +54,31 @@ new Vue({
 
 	},
 	mounted: function () {
+		
+		// this.$refs.opciones_canvas.classList.remove('hidden')
+
+		this.$refs.panel_pizarra_final.classList.remove('hidden')
+		this.$refs.micanvas.width = this.$refs.panel_pizarra_final.offsetWidth - 4
+
+		let altura = (this.$refs.micanvas.width/this.razoncambio);
+
+		this.$refs.chatPanel.classList.remove('hidden')
+		// this.$refs.pizarraPanel.classList.remove('hidden')
+
+		this.$refs.chatPanel.style.height = (altura - this.$refs.navsPanel.offsetHeight) + 'px'
+		// this.$refs.pizarraPanel.style.height = (altura - this.$refs.navsPanel.offsetHeight) + 'px'
+		let tabCH = this.$refs.navsPanel.offsetHeight + 75
+		let tabBMT = this.$refs.navsPanel.offsetHeight + 30
+		$('#chat-msn-body')[0].style.height = (altura - tabCH) + 'px'
+		$('#chat-msn-body-usuarios')[0].style.height = (altura - tabBMT) + 'px'
+
+		this.$refs.refContainerChatPizarra.style.height = altura + 'px'
+		this.$refs.panel_pizarra_final.style.height = altura + 'px'
+		// this.$refs.panel_pizarra_final.offsetWidth
+		this.$refs.micanvas.height = altura - 2
+
 		canvasalumno = new fabric.Canvas('micanvas')
 		canvasalumno.selection = false
-		this.$refs.panel_pizarra_final.classList.remove('hidden')
 
 		fabric.Image.fromURL(_root_ + 'modules/elearning/views/clase/img/mouse_off.png', (oImg) => {
 					this.cursor_alumno = oImg.set('selectable', false)

@@ -80,7 +80,6 @@ class lenguajesController extends idiomasController {
 				$container_idiomas = [];
 				$container_files = [];
 				$files_value = [];
-
 				foreach ($idiomas as $key => $value) {
 					$path_idioma = ROOT.'lenguaje'.DS.$value->Idi_IdIdioma;
 					$container_idiomas[$value->Idi_IdIdioma] = [];
@@ -93,13 +92,11 @@ class lenguajesController extends idiomasController {
 					}
 				}
 				$container_files = array_unique($container_files);
-
 				foreach ($container_files as $key => $value_file) {
 					$vars_idioma = [];
 					$var_idioma = [];
 					$vars_file = [];
 					$files_value[$value_file] = [];
-					//obtener nombre de variables de fichero
 					foreach ($idiomas as $key => $value) {
 						$path_file = ROOT.'lenguaje'.DS.$value->Idi_IdIdioma.DS.$value_file;
 						if (is_readable($path_file)) {
@@ -137,7 +134,6 @@ class lenguajesController extends idiomasController {
 							$file->save();
 						}
 						if (+$file->Idif_IdIdiomaFile != 0) {
-							//crear variables
 							foreach ($variables as $var => $var_body) {
 								$new_variable = IdiomaFilesVars::get_var_by_name($var);
 								if ($new_variable == null) {

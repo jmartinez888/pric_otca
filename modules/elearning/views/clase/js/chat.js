@@ -1,15 +1,31 @@
-var VISIBLE = 1;
+var VISIBLE = 0;
 var USUARIOS_CONECTADOS = []
 
 $(document).ready(() => {
+  var TPL = {
+    msg_propio: $('#msg_propio').html(),
+    msg_otro: $('#msg_otro').html(),
+    status_conectado: $('#status_conectado').html()
+  }
+  Mustache.parse(TPL.msg_otro);
+  Mustache.parse(TPL.msg_propio);
+  Mustache.parse(TPL.status_conectado);
+
+  let LANGS = {
+    marcar_asistencia: 'Marcar asistencia',
+    asistencia_marcada: 'Asistencia marcada'
+  };
+  if (typeof PRELANG == 'object') {
+    LANGS = PRELANG
+  }
   var socketChat = new AppSocket({ query: "id=" + USUARIO.id + "&curso=" + USUARIO.curso + "&tipo=10&leccion=" + LMS_LECCION + "&docente=" + USUARIO.docente})
   if (VIEW_ESPERA) {
     $('#chat-msn-body-usuarios').removeClass('hidden')
   } else {
     if(VISIBLE==1){
-      $("#btnMinin_Close").hide();
-      $("#btnMinin_Usuarios").hide();
-      $("#btnMinin_Open").show();
+      // $("#btnMinin_Close").hide();
+      // $("#btnMinin_Usuarios").hide();
+      // $("#btnMinin_Open").show();
 
       $("#chat-body").hide();
       $("#chat-msn-body").hide();
@@ -19,43 +35,50 @@ $(document).ready(() => {
     }
     // });
     // $("#btnMinin").click();
-    $('#btnMinin_Open').on('click', () => {
 
-        $("#btnMinin_Close").show();
-        $("#btnMinin_Usuarios").show();
-        $("#btnMinin_Open").hide();
+    // $('#btnMinin_Open').on('click', () => {
 
-        $("#chat-body").show();
-        $("#chat-msn-body").show();
-        $("#chat-text-body").show();
-        $("#chat-container").css("height", "550px");
-        $("#chat-text-input").focus();
-        $("#chat-msn-body").scrollTop($("#chat-msn-body").prop('scrollHeight'));
-        VISIBLE = 1;
-    })
-    $('#btnMinin_Close').on('click', () => {
-        $("#btnMinin_Close").hide();
-        $("#btnMinin_Open").show();
-        $("#btnMinin_Usuarios").hide();
+    //     // $("#btnMinin_Close").show();
+    //     $("#btnMinin_Usuarios").show();
+    //     $("#btnMinin_Open").hide();
 
-        $("#chat-body").hide();
-        $("#chat-msn-body").hide();
-        $("#chat-text-body").hide();
-        $("#chat-container").css("height", "40px");
-        VISIBLE = 0;
-        HIDE_USERS = true
+    //     $("#chat-body").show();
+    //     $("#chat-msn-body").show();
+    //     $("#chat-text-body").show();
+    //     // $("#chat-container").css("height", "550px");
+    //     $("#chat-text-input").focus();
+    //     $("#chat-msn-body").scrollTop($("#chat-msn-body").prop('scrollHeight'));
+    //     VISIBLE = 1;
+    // })
+    // $('#btnMinin_Close').on('click', () => {
+    //     $("#btnMinin_Close").hide();
+    //     $("#btnMinin_Open").show();
+    //     $("#btnMinin_Usuarios").hide();
 
-    })
+    //     $("#chat-body").hide();
+    //     $("#chat-msn-body").hide();
+    //     $("#chat-text-body").hide();
+    //     $("#chat-container").css("height", "40px");
+    //     VISIBLE = 0;
+    //     HIDE_USERS = true
+
+    // })
     let HIDE_USERS = true;
-    $('#btnMinin_Usuarios').on('click', () => {
-      if (VISIBLE == 1) {
+    // $('#btnMinin_Usuarios').on('click', () => {
+    $('#btnMinin').on('click', () => {
+      if (VISIBLE == 0) {
         if (HIDE_USERS){
           $('#chat-msn-body-usuarios').removeClass('hidden')
+          $('#span-chat').removeClass('hidden')
+          $('#span-conectados').addClass('hidden')
           $('#chat-msn-body').hide()
           $("#chat-text-body").hide();
           HIDE_USERS = false
         } else {
           $('#chat-msn-body-usuarios').addClass('hidden')
+          
+          $('#span-conectados').removeClass('hidden')
+          $('#span-chat').addClass('hidden')
           $('#chat-msn-body').show()
           $("#chat-text-body").show();
           HIDE_USERS = true
@@ -148,18 +171,30 @@ $(document).ready(() => {
     }
     let html = '';
     USUARIOS_CONECTADOS.forEach(v => {
-
-      let tpl = `
-        <div class="content-msn">
-          <div class="mensaje-me">
-            <div class="mensaje-chat-text">
-                <div class="sujeto-link"><div class="avatar"><img class="img-circle-msn" /></div><strong>${v.nombre}</strong></div>
-                <p class="p-time"><small>${v.fecha_hora.fromNow()}</small></p>
-            </div>
-          </div>
-        </div>
-      `;
-      html += tpl
+      let asistencia = 1;
+      // let tpl = `
+      //   <div class="content-msn">
+      //     <div class="mensaje-me">
+      //       <div class="mensaje-chat-text">
+      //           <div class="sujeto-link">
+      //             <div class="avatar">
+      //               <i class="cursor-pointer fa fa-${asistencia == 1 ? 'check-circle' : 'circle'}" aria-hidden="true" title="${asistencia == 1 ? LANGS.asistencia_marcada : LANGS.marcar_asistencia}"></i>
+      //             </div>
+      //             <strong>${v.nombre}</strong>
+      //           </div>
+      //           <p class="p-time"><small>${v.fecha_hora.fromNow()}</small></p>
+      //       </div>
+      //     </div>
+      //   </div>
+      // `;
+      let tpl = Mustache.render(TPL.status_conectado, {
+        asistencia: asistencia,
+        faMode: asistencia == 1 ? 'check-circle' : 'circle',
+        title: asistencia == 1 ? LANGS.asistencia_marcada : LANGS.marcar_asistencia,
+        nombre: v.nombre,
+        fecha_from_now: v.fecha_hora.fromNow()
+      });
+      html += tpl;
     })
     $('#chat-msn-body-usuarios').html(html)
 
@@ -174,27 +209,35 @@ $(document).ready(() => {
       }
     });
     var control = "";
-    if(autor==1){
-      control = '<div class="content-msn">' +
-                  '<div class="mensaje-me">' +
-                    '<div class="mensaje-chat-text">' +
-                        '<div class="sujeto-link"><div class="avatar"><img class="img-circle-msn" /></div><strong>'+ usuario +'</strong></div>' +
-                        '<p class="p-mensaje">'+ mensaje +'</p>' +
-                        '<p class="p-time"><small data-time-message="' + fecha.format('YYYY-MM-DD HH:mm:ss') + '">'+ fecha.fromNow()+'</small></p>' +
-                    '</div>' +
-                  '</div>' +
-                '</div>';
-    }else{
-      control = '<div class="content-msn">' +
-                  '<div class="mensaje-other">' +
-                  '<div class="mensaje-chat-text">' +
-                      '<div class="sujeto-link"><div class="avatar"><img class="img-circle-msn"/></div><strong>'+ usuario +'</strong></div>' +
-                      '<p class="p-mensaje">'+ mensaje +'</p>' +
-                      '<p class="p-time"><small data-time-message="' + fecha.format('YYYY-MM-DD HH:mm:ss') + '">'+ fecha.fromNow()+'</small></p>' +
-                  '</div>' +
-                  '</div>' +
-                '</div>';
-    }
+    // if(autor==1){
+    //   control = '<div class="content-msn">' +
+    //               '<div class="mensaje-me">' +
+    //                 '<div class="mensaje-chat-text">' +
+    //                     '<div class="sujeto-link"><div class="avatar"><img class="img-circle-msn" /></div><strong>'+ usuario +'</strong></div>' +
+    //                     '<p class="p-mensaje">'+ mensaje +'</p>' +
+    //                     '<p class="p-time"><small data-time-message="' + fecha.format('YYYY-MM-DD HH:mm:ss') + '">'+ fecha.fromNow()+'</small></p>' +
+    //                 '</div>' +
+    //               '</div>' +
+    //             '</div>';
+      
+    // }else{
+    //   control = '<div class="content-msn">' +
+    //               '<div class="mensaje-other">' +
+    //               '<div class="mensaje-chat-text">' +
+    //                   '<div class="sujeto-link"><div class="avatar"><img class="img-circle-msn"/></div><strong>'+ usuario +'</strong></div>' +
+    //                   '<p class="p-mensaje">'+ mensaje +'</p>' +
+    //                   '<p class="p-time"><small data-time-message="' + fecha.format('YYYY-MM-DD HH:mm:ss') + '">'+ fecha.fromNow()+'</small></p>' +
+    //               '</div>' +
+    //               '</div>' +
+    //             '</div>';
+
+    // }
+    control = Mustache.render(autor == 1 ? TPL.msg_propio : TPL.msg_otro, {
+      usuario: usuario,
+      fecha_now: fecha.fromNow(),
+      fecha_format: fecha.format('YYYY-MM-DD HH:mm:ss'),
+      mensaje: mensaje
+    })
     $("#chat-msn-body").append(control).scrollTop($("#chat-msn-body").prop('scrollHeight'));
   }
 

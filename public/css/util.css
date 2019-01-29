@@ -43,18 +43,18 @@ and open the template in the editor.
     float: right;
 }
 
-table.table-minimal {
+/* table.table-minimal {
 
-}
+} */
 
 table.table-minimal tr td{
     margin: 0px;
     padding: 4px 4px;
 }
 
-.alert-msg {
+/* .alert-msg {
 
-}
+} */
 .alert-msg .label-msg {
     padding: 2px 16px;
 }
@@ -80,6 +80,9 @@ table.table-minimal tr td{
     font-weight: 600;
 }
 
+.p-0{
+    padding: 0px !important;
+}
 .pr-0{
     padding-right: 0px !important;
 }
@@ -199,4 +202,8 @@ background-color: #40b0ff;
 }
 .sharepost .google-plus {
 background-color: #ce4438;
+}
+
+.cursor-pointer {
+    cursor: pointer;
 }
