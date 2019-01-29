@@ -246,7 +246,7 @@ class cursosController extends elearningController {
       $mInsc = $this->loadModel("inscripcion");
       $mCert = $this->loadModel("certificado");
 
-      $curso = $model->getCursoID($id)[0];
+      $curso = $model->getCursoID($id,Cookie::lenguaje())[0];
       if($curso["Moa_IdModalidad"]==1){ $this->redireccionar("elearning/cursos/curso/" . $curso["Cur_IdCurso"]); }
       $inscripcion = $mInsc->getInscripcion(Session::get("id_usuario"), $id);
 
