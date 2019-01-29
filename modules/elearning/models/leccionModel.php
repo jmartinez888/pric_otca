@@ -47,11 +47,25 @@ class leccionModel extends Model {
       return $result[0];
     }
 
-    public function getLeccion($leccion = "", $modulo = "", $usuario = ""){
+    public function getLeccion($leccion = "", $modulo = "", $usuario = "", $Idi_IdIdioma = "es"){
       if($leccion==""){
         if($modulo!=""){
           if($usuario != ""){
-            $sql = "SELECT * FROM leccion WHERE Lec_Estado = 1 AND Row_Estado = 1
+            $sql = "SELECT 
+                Lec_IdLeccion,
+                Moc_IdModuloCurso,
+                fn_TraducirContenido('leccion','Lec_Titulo',Lec_IdLeccion,'$Idi_IdIdioma',Lec_Titulo) Lec_Titulo,
+                fn_TraducirContenido('leccion','Lec_Descripcion',Lec_IdLeccion,'$Idi_IdIdioma',Lec_Descripcion) Lec_Descripcion,
+                Lec_TiempoDedicacion,
+                Lec_Tipo,
+                Lec_FechaDesde,
+                Lec_FechaHasta,
+                Lec_FechaReg,
+                Lec_LMSEstado,
+                Lec_LMSPizarra,
+                Lec_Estado,
+                Row_Estado
+              FROM leccion WHERE Lec_Estado = 1 AND Row_Estado = 1
             AND Lec_IdLeccion =
             (SELECT IFNULL(
               MAX(PC.Lec_IdLeccion),

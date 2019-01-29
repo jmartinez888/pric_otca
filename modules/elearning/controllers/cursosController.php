@@ -238,7 +238,8 @@ class cursosController extends elearningController {
 
   public function curso_dirigido($id = ""){
       if($id == "" || !is_numeric($id) ){ $this->redireccionar("elearning/"); }
-      $this->_view->getLenguaje(['elearning_cursos']);
+      
+      $lang = $this->_view->getLenguaje('elearning_cursos', false, true);
       $model = $this->loadModel("curso");
       $mObj = $this->loadModel("objetivos");
       $mModulo = $this->loadModel("modulo");
@@ -266,13 +267,13 @@ class cursosController extends elearningController {
       $this->_view->setCss(array("curso", "cursolms", "jp-curso"));
       $this->_view->setJs(array(array(BASE_URL . 'modules/elearning/views/gestion/js/core/util.js'), "curso"));
       $this->_view->assign("curso", $curso);
-      $this->_view->assign("detalle", $model->getDetalleCurso($curso["Cur_IdCurso"]));
+      $this->_view->assign("detalle", $model->getDetalleCurso($curso["Cur_IdCurso"], Cookie::lenguaje()));
       $this->_view->assign("inscritos", $inscritos);
       $this->_view->assign("titulo", $curso['Cur_Titulo']);
       $this->_view->assign("certificado", $certificado);
       $this->_view->assign("duracion", $duracion["Total"] . " Lecciones");
       // dd($mModulo->getModulosCursoLMS($id, Session::get("id_usuario")));
-      $this->_view->assign("modulo", $mModulo->getModulosCursoLMS($id, Session::get("id_usuario")));
+      $this->_view->assign("modulo", $mModulo->getModulosCursoLMS($id, Session::get("id_usuario"), Cookie::lenguaje()));
       $this->_view->assign("session", Session::get("autenticado"));
       $this->_view->assign("now", date_create('now')->format('Y-m-d H:i:s'));
       $this->_view->assign("inscripcion", $inscripcion);
