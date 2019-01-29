@@ -97,8 +97,8 @@
                                 <!-- Perfil User -->
                                 <li class="nav-item user user-menu ">
                                     <a href="#" class="nav-link txt-color-white f-z-14 dropdown-toggle" data-toggle="dropdown" aria-expanded="true" style="float: left; padding: 5px 5px 2px;">
-                                        {if Session::get('id_usuario') == 2}
-                                        <img src="{$_layoutParams.ruta_img}/jmartinez.jpg" class="user-image" alt="User Image">
+                                        {if trim(Session::get('Usu_URLImage')) != ""}
+                                       <img src="{$_layoutParams.root_archivo_fisico}usuarios/img/{Session::get('Usu_URLImage')}" class="user-image" alt="User Image">
                                         {else}
                                         <img src="{$_layoutParams.ruta_img}/user2-160x160.jpg" class="user-image" alt="User Image">
                                         {/if}
@@ -109,8 +109,8 @@
                                     <ul class="dropdown-menu info_ul" style="box-shadow: 0 0 11px #222 !important;">
                                         <!-- User image -->
                                         <li class="user-header">
-                                            {if Session::get('id_usuario') == 2}
-                                            <img src="{$_layoutParams.ruta_img}/jmartinez.jpg" class="img-circle" alt="User Image">
+                                            {if trim(Session::get('Usu_URLImage')) != ""}
+                                            <img src="{$_layoutParams.root_archivo_fisico}usuarios/img/{Session::get('Usu_URLImage')}" class="img-circle" alt="User Image">
                                             {else}
                                             <img src="{$_layoutParams.ruta_img}/user2-160x160.jpg" class="img-circle" alt="User Image">
                                             {/if}
