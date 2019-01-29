@@ -63,7 +63,7 @@ class cursoModel extends Model {
                  fn_TraducirContenido('constante','Con_Descripcion',cc.Cur_IdCurso,'$Idi_IdIdioma',cc.Con_Descripcion) Modalidad,
 
                  fn_devolverIdioma('curso',c.Cur_IdCurso,'$Idi_IdIdioma',c.Idi_IdIdioma) Idi_IdIdioma 
-          FROM curso WHERE Cur_IdCurso = {$id} AND Row_Estado = 1");
+          FROM curso c WHERE c.Cur_IdCurso = {$id} AND c.Row_Estado = 1");
         $resultado = array();
         foreach ($cursos as $c) {
           // if($c["Moa_IdModalidad"]!=2){
