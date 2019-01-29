@@ -1,5 +1,5 @@
 <div class="col-lg-12" >
-  <div class="">
+  <div class="container-panel-descripcion">
     <ul class="nav nav-tabs">
         {if strlen($leccion["Lec_Descripcion"]) > 0 }
            <li class="active"><a class="active-tab" data-toggle="tab" href="#inf_curso">{$lang->get('elearning_cursos_informacion_leccion')}</a></li>

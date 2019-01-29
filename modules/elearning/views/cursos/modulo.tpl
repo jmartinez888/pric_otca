@@ -1,38 +1,53 @@
 {extends 'template.tpl'}
+{block 'css'}
+<link rel="stylesheet" type="text/css" href="{BASE_URL}modules/elearning/views/clase/css/style-show-modules.css">
+{/block}
 {block 'contenido'}
 <input value="{BASE_URL}" id="hiddenURL" hidden="hidden" />
 <input value="{BASE_URL}elearning/" id="hidden_url" hidden="hidden" />
 <input value="{$modulo.Cur_IdCurso}" id="hiddenCurso" hidden="hidden" />
-<div class="col-xs-12 panel panel-default" style="margin-top:20px;">
+<div class="container-curso col-xs-12 panel panel-default" style="margin-top:20px;">
     <div class="row gradiente">
-        <br>
         {if isset($leccion) && count($leccion)}
-        <div class="col-lg-5 titulo-modulo">
+        <div class="col-xs-12 col-md-12 col-sm-12 col-lg-12 titulo-modulo">
            <h4><strong> {$lang->get('str_modulo')} {$mod_datos.INDEX}: {$modulo["Moc_Titulo"]}</strong></h4>
+            {* <div class="col-sm-6 col-lg-2" style="margin-top: 5px !important"> *}
+              <div class="container-btn-curso">
+                <a class="btn btn-sm btn-success btn-group pull-right" href="{BASE_URL}elearning/cursos/curso/{$curso}">
+                  {* <button class="course-students-amount btn-regresar btn btn-group"> *}
+                    <span class="glyphicon glyphicon-hand-left" aria-hidden="true"></span>
+                    {$lang->get('elearning_cursos_volver_curso')}
+                  {* </button> *}
+                </a>
+              </div>
+            {* </div> *}
         </div>
 
-        <div class="col-sm-6 col-lg-5 derecha" style="margin-top: 5px !important">
-            <span>{$lang->get('str_leccion')} {$leccion["Index"]} {$lang->get('str_de')} {count($lecciones)}</span>
+        <div class="section-paginador col-sm-12 col-md-12 col-lg-12 col-xs-12 mb-4" >
+
             {if $leccion["Index"] > 1 }
-            <form method="post" action="{BASE_URL}elearning/cursos/_previous_leccion/" style="display: inline-block">
+            <form method="post" class="container-btn-previous" action="{BASE_URL}elearning/cursos/_previous_leccion/">
               <input value="{$curso}" name="curso" hidden="hidden"/>
               <input value="{$leccion.Lec_IdLeccion}" name="leccion" hidden="hidden"/>
-              <button class="course-students-amount btn btn-next-previous">
+              <button type="submit" class="btn btn-sm btn-next-previous">
                 <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
                 {$lang->get('str_anterior')}
               </button>
             </form>
             {else}
-            <button class="course-students-amount btn btn-default" disabled="disabled">
-                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-                {$lang->get('str_anterior')}
-            </button>
+            <div class="container-btn-previous">
+              <button class="btn btn-sm btn-default" disabled="disabled">
+                  <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                  {$lang->get('str_anterior')}
+              </button>
+            </div>
             {/if}
+            <span class="text-current-leccion">{$lang->get('str_leccion')} {$leccion["Index"]} {$lang->get('str_de')} {count($lecciones)}</span>
             {if $leccion["Index"] < {count($lecciones)} }
-            <form method="post" action="{BASE_URL}elearning/cursos/_next_leccion/" style="display: inline-block">
+            <form class="container-btn-next" method="post" action="{BASE_URL}elearning/cursos/_next_leccion/">
               <input value="{$curso}" name="curso" hidden="hidden"/>
               <input value="{$leccion.Lec_IdLeccion}" name="leccion" hidden="hidden"/>
-              <button class="course-students-amount btn btn-next-previous">
+              <button type="submit" class="btn btn-sm btn-next-previous">
                 <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
                 {$lang->get('str_siguiente')}
               </button>
@@ -42,10 +57,10 @@
                 {if isset($ultimoexamen) && count($ultimoexamen) }
                   {if $ultimoexamen.Exl_Nota / $examen.Exa_Peso >= $parametrosCurso.Par_NotaMinima / $parametrosCurso.Par_NotaMaxima}
                     <!-- Para siguiente modulo tiene que aprobar el examen -->
-                    <form method="post" action="{BASE_URL}elearning/cursos/_next_leccion/" style="display: inline-block">
+                    <form method="post" class="container-btn-next" action="{BASE_URL}elearning/cursos/_next_leccion/">
                       <input value="{$curso}" name="curso" hidden="hidden"/>
                       <input value="{$leccion.Lec_IdLeccion}" name="leccion" hidden="hidden"/>
-                      <button class="course-students-amount btn btn-next-previous">
+                      <button class="btn btn-sm btn-next-previous">
                         <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
                         {$lang->get('str_siguiente')}
                       </button>
@@ -54,10 +69,10 @@
                 {/if}
               {else}
               <!-- para el siguiente modulo -->
-                <form method="post" action="{BASE_URL}elearning/cursos/_next_leccion/" style="display: inline-block">
+                <form class="container-btn-next" method="post" action="{BASE_URL}elearning/cursos/_next_leccion/">
                   <input value="{$curso}" name="curso" hidden="hidden"/>
                   <input value="{$leccion.Lec_IdLeccion}" name="leccion" hidden="hidden"/>
-                  <button class="course-students-amount btn btn-next-previous">
+                  <button class="btn btn-sm btn-next-previous">
                     <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
                     {$lang->get('str_siguiente')}
                   </button>
@@ -65,30 +80,25 @@
               {/if}
             {/if}
         </div>
-        {else}
-        <div class="col-sm-6 col-lg-10"></div>
         {/if}
-        <div class="col-sm-6 col-lg-2" style="margin-top: 5px !important">
-          <a class="pull-right" href="{BASE_URL}elearning/cursos/curso/{$curso}">
-          <button class="course-students-amount btn-regresar btn btn-group">
-            <span class="glyphicon glyphicon-hand-left" aria-hidden="true"></span>
-            {$lang->get('elearning_cursos_volver_curso')}
-          </button>
-        </a>
-        </div>
+
     </div>
 
-    <div class="row">
-      <div class="col-xs-12 " style="background: #a0a0a0;">
-        <div class="col-sm-12 col-md-3 col-lg-3" style="padding-left:0px; padding-right: 0px;">
-          {include file='modules/elearning/views/cursos/menu/lecciones.tpl'}
-        </div>
-        <div class="col-sm-12 col-md-9 col-lg-9" style="padding-left:0px; padding-right: 0px;">
+    <div class="row contenido-lecciones">
+      {* <div class="col-xs-12 col-md-12 col-sm-12 col-lg-12" style="background: #a0a0a0;"> *}
+      <div class="col-xs-12 col-md-12 col-sm-12 col-lg-12">
+        {* <div class="col-sm-12 col-md-12 col-lg-12 p-0" style=""> *}
+          <div id="leccionar-container" data-open-menu="false">
+            {include file='modules/elearning/views/cursos/menu/lecciones.tpl'}
+          </div>
+        {* </div> *}
+      </div>
+    </div>
+    <div class="row contenido-leccion">
+          <div class="col-xs-12 col-md-12 col-sm-12 col-lg-12 ">
+            <div class="panel panel-leccion panel-default">
 
-          <div class="col-xs-12"  style="padding-left:0px; padding-right:0px;">
-            <div class="panel panel-default">
-
-              <div class="panel-heading cabecera-titulo">
+             {*  <div class="panel-heading cabecera-titulo">
                 <h3 class="panel-title">
                   {if isset($leccion) && count($leccion)}
                   <strong>{$leccion["Lec_Titulo"]}</strong>
@@ -96,7 +106,7 @@
                   <strong class="text-center"> {$lang->get('str_modulo')}  {$mod_datos.INDEX}: {$modulo["Moc_Titulo"]}</strong>
                   {/if}
                 </h3>
-              </div>
+              </div> *}
 
               <div class="panel-body contenedor-clase">
                 {if isset($leccion) && count($leccion)}
@@ -264,7 +274,7 @@
                                         {/foreach}
 
                                     <div class="form-group">
-                                        <button class="btn btn-success margin-t-10" name="terminar" id="terminar">Terminar</button>
+                                        <button class="btn btn-success margin-t-10" name="terminar" id="terminar">{$lang->get('str_terminar')}</button>
                                     </div>
                                 </form>
                             </div>
@@ -348,7 +358,7 @@
                                     <div class="col-xs-12">
                                       <div class="alert alert-danger" role="alert">
                                           <h3>{$lang->get('elearning_cursos_losiento_no_supera_examen')}.</h3>
-                                          <small>Porcentaje minimo para aprobar el examen: <strong style="font-size: 15px;"> {($parametrosCurso.Par_NotaMinima / $parametrosCurso.Par_NotaMaxima) * 100}% </strong>.</small><br>
+                                          <small>{$lang->get('elearning_cursos_porcentaje_aprobar_examen')}: <strong style="font-size: 15px;"> {($parametrosCurso.Par_NotaMinima / $parametrosCurso.Par_NotaMaxima) * 100}% </strong>.</small><br>
                                           <small>{$lang->get('str_obtuviste')} {$ultimoexamen.Exl_Nota} {$lang->get('elearning_cursos_puntos_de')} {$examen.Exa_Peso}</small>
                                           <h3></h3>
                                       </div>
@@ -440,23 +450,23 @@
                           </div>
                         {/if}
                       {else}
-                        <h3>Encuesta no encontrada</h3>
+                        <h3>{$lang->get('elearning_cursos_encuesta_no_encontrada')}</h3>
                       {/if}
                     </div>
                     {/if}
                 {else}
                     <br><br>
-                    <h1 class="text-center text-bold text-lg">Bienvenido al  {$lang->get('str_modulo')}  {$mod_datos.INDEX}: {$modulo["Moc_Titulo"]}</h1><br>
+                    <h1 class="text-center text-bold text-lg">{$lang->get('elearning_cursos_bienvenidos_al')}  {$lang->get('str_modulo')}  {$mod_datos.INDEX}: {$modulo["Moc_Titulo"]}</h1><br>
                     <h2 class="text-center">{$modulo["Moc_Descripcion"]}</h2><br>
 
                     {if isset($modulo.LECCIONES[0]) && count($modulo.LECCIONES) > 0}
                         {if $modulo.LECCIONES[0]['Disponible'] == 0}
                           <div class="col-xs-12 ficha-mod-title text-center">
-                            <a  href="{BASE_URL}elearning/cursos/modulo/{$curso}/{$modulo.Moc_IdModuloCurso}/{$modulo.LECCIONES[0]['Lec_IdLeccion']}" class="btn btn-success ">Iniciar</a>
+                            <a  href="{BASE_URL}elearning/cursos/modulo/{$curso}/{$modulo.Moc_IdModuloCurso}/{$modulo.LECCIONES[0]['Lec_IdLeccion']}" class="btn btn-success ">{$lang->get('str_iniciar')}</a>
                           </div>
                         {else}
                           <div class="col-xs-12 ficha-mod-title text-center">
-                            <a  href="{BASE_URL}elearning/cursos/modulo/{$curso}/{$modulo.Moc_IdModuloCurso}/{$modulo.LECCIONES[0]['Lec_IdLeccion']}" class="btn btn-danger ">Revisar</a>
+                            <a  href="{BASE_URL}elearning/cursos/modulo/{$curso}/{$modulo.Moc_IdModuloCurso}/{$modulo.LECCIONES[0]['Lec_IdLeccion']}" class="btn btn-danger ">{$lang->get('str_revisar')}</a>
                           </div>
                         {/if}
                     {/if}
@@ -464,7 +474,20 @@
                 {/if}
               </div>
 
-              {if isset($leccion) && count($leccion)}
+              {* {if isset($leccion) && count($leccion)}
+              <div class="panel-footer" style="background-color: transparent;">
+                  <div class="row" style="padding-left:0px; padding-right: 0px;">
+                    {include file='modules/elearning/views/cursos/menu/info_leccion.tpl'}
+                  </div>
+              </div>
+              {/if} *}
+
+            </div>
+          </div>
+    </div>
+    <div class="row descripcion-leccion">
+
+         {if isset($leccion) && count($leccion)}
               <div class="panel-footer" style="background-color: transparent;">
                   <div class="row" style="padding-left:0px; padding-right: 0px;">
                     {include file='modules/elearning/views/cursos/menu/info_leccion.tpl'}
@@ -472,20 +495,6 @@
               </div>
               {/if}
 
-            </div>
-          </div>
-
-
-
-        </div>
-
-<!--
-              <div class="col-xs-12" style="padding-left:0px; padding-right: 0px;">
-                {include file='modules/elearning/views/cursos/menu/info_leccion.tpl'}
-              </div> -->
-
-
-      </div>
     </div>
 </div>
 
@@ -494,4 +503,5 @@
 
 {block 'js' append}
 <script type="text/javascript" src="{BASE_URL}modules/elearning/views/gestion/js/core/util.js"></script>
+<script src="{BASE_URL}modules/elearning/views/clase/js/menu-interactive.js"></script>
 {/block}

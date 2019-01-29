@@ -1,25 +1,26 @@
 
 
 class AppSocket {
-  constructor (values) {
-    this._query = values
-    this.success_connection = false
+  constructor (values, url = '') {
+    this._query = values;
+    this.success_connection = false;
+    this.first_connection = false;
     this.OPES_SOCKET = [];
-    // this.StartServer()
+    this._url = url;
+    this.listeners = [];
   }
 
   emit (name, value) {
       this._socket.emit(name, value)
   }
   init (callback = () => {}) {
-    this._socket = io(_root_, this._query);
+    this._socket = io(this._url, this._query);
     this.StartServer(callback)
     // callback(this)
 
   }
   // SocketInstance(id, _connect, _disconnect, _receive, _reconnect){
   SocketInstance(id, opc = { _connect: () => {}, _disconnect: () => {}, _receive: () => {}, _reconnect: () => {}}){
-    console.log('socket instance b')
     var ope = {
       ID: id,
       connect: opc._connect,
@@ -33,7 +34,8 @@ class AppSocket {
     return ope;
   }
   on (name, callback) {
-      this._socket.on(name, callback)
+    this.listeners.push(name)
+    this._socket.on(name, callback)
   }
   AddSocketInstance(ope){
     this.OPES_SOCKET.push(ope);
@@ -45,27 +47,27 @@ class AppSocket {
 
   }
   StartServer(initDefault = () => {}){
+    
     this._socket.on('connect', () => {
-      // setTimeout(()=> {
-
-      //   console.log('conectado')
-      // }, 2000)
-      console.log('conectado')
       this.success_connection = true
-      initDefault(this)
+      initDefault(this);
       this.OPES_SOCKET.forEach((row) => {
         if (row!=null && row.ID!=null && row.connect!=null){
           row.connect();
         }
       });
     });
-    this._socket.on('disconnect', () => {
+
+    this._socket.on('disconnect', (ddd) => {
       this.success_connection = false
       this.OPES_SOCKET.forEach((row) => {
           if (row!=null && row.ID!=null && row.disconnect!=null){
             row.disconnect();
           }
       });
+      this.listeners.forEach(v => {
+        this._socket.removeListener(v);
+      })
     });
     this._socket.on('reconnect_attempt', () => {
       this.OPES_SOCKET.forEach((row) => {
@@ -74,14 +76,17 @@ class AppSocket {
         }
       });
     });
-    this._socket.on('connect_error', () => {
+    this._socket.on('connect_error', (data) => {
 
       this.OPES_SOCKET.forEach((row) => {
         if (row!=null && row.ID!=null && row.disconnect!=null){
           row.disconnect();
         }
       });
-      console.log("Error de conexion");
+      this.listeners.forEach(v => {
+        this._socket.removeListener(v);
+      })
+      console.log("CONNECT_ERROR");
     });
     this._socket.on('reconnect_error', () => {
       this.OPES_SOCKET.forEach((row) => {
@@ -89,12 +94,17 @@ class AppSocket {
           row.disconnect();
         }
       });
+      this.listeners.forEach(v => {
+        this._socket.removeListener(v);
+      })
       //console.log("Error de reconnect_error");
     });
     this._socket.on('reconnect_failed', () => {
-
+      this.listeners.forEach(v => {
+        this._socket.removeListener(v);
+      })
       //alert("Error de reconnect_failed");
-      console.log("Error de reconnect_failed");
+      console.log("RECONNECT_FAILED");
     });
   }
 }

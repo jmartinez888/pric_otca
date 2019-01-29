@@ -1,4 +1,5 @@
 $(window).resize(function(){
+
   var ancho = $("#frame-video").width();
   ancho = ancho * (9 / 16);
   $("#frame-video").attr("height", ancho + "px");

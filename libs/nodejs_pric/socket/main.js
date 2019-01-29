@@ -5,6 +5,28 @@ module.exports = function(app, test){
   var ADMIN = [];
   var TEST = test;
   var CONECTADOS = [];
+  var countInterval = 0;
+  //tipo = 10:chat, 2:canvas
+
+  var TIPO = {CHAT: 10, CANVAS: 2};
+
+  setInterval(() => {
+
+    console.log('------------------------------------')
+    console.log(countInterval++ + '\n')
+    console.log(CLIENTES)
+    console.log(ADMIN)
+    console.log(TEST)
+    console.log(CONECTADOS)
+    CONECTADOS.forEach(v => {
+      console.log(v.leccion)
+      if (typeof v.usuarios != 'undefined') {
+        v.usuarios.forEach(u => {
+          console.log(u)
+        })
+      }
+    })
+  }, 15000)
 
   function buscar_leccion (leccion_id) {
     console.log(CONECTADOS)
@@ -14,19 +36,26 @@ module.exports = function(app, test){
     })
   }
   io.on('connection', socket => {
+    
     let mi_nombre = 'ALUMNO-' + get(socket).id
     console.log('SOCKET-ID : ' + socket.id)
-    console.log("USUARIO >>> [ID:" + get(socket).id + '-' + (get(socket).docente == 1 ? 'DOC' : 'ALU') + '], [TIPO:' + get(socket).tipo + "], [LECCION:" + get(socket).leccion + "]");
+    console.log('-------------------------------------------');
+    console.log("************USUARIO >>> [ID:" + get(socket).id + '-' + (get(socket).docente == 1 ? 'DOC' : 'ALU') + '], [TIPO:' + get(socket).tipo + "], [LECCION:" + get(socket).leccion + "]");
+    console.log('-------------------------------------------');
 
     let tipo = get(socket).tipo;
     let alumno_id = get(socket).id;
     let leccion_id = get(socket).leccion;
     var leccion = buscar_leccion(leccion_id);
+    
 
 
-
-      if (tipo == 10) {
-        let ut = {id: alumno_id, nombre: '', hora: Date.now()};
+      if (tipo == TIPO.CHAT) {
+        let ut = {
+          id: alumno_id, 
+          nombre: '', 
+          hora: Date.now()
+        };
         if (leccion == undefined) {
           leccion = {leccion: get(socket).leccion, usuarios: [ut]}
           CONECTADOS.push(leccion);
@@ -56,7 +85,7 @@ module.exports = function(app, test){
 
 
     if (+get(socket).docente == 0) {
-      if (tipo == 2) {
+      if (tipo == TIPO.CANVAS) {
         console.log('soy un alumno')
         // setInterval(() => {
           console.log('hola profe soy ' + mi_nombre)
@@ -65,7 +94,7 @@ module.exports = function(app, test){
 
       }
     } else {
-      if (tipo == 2) {
+      if (tipo == TIPO.CANVAS) {
         console.log('hola alumno soy ' + mi_nombre)
         socket.emit('conexion_docente', {success: true})
 
@@ -76,7 +105,7 @@ module.exports = function(app, test){
       }
     }
     //canvas
-    if (tipo == 2) {
+    if (tipo == TIPO.CANVAS) {
       socket.on('render_img', function(msg){
         var result = { base64: msg }
         console.log(msg)
@@ -105,7 +134,7 @@ module.exports = function(app, test){
       })
     }
     //chat
-    if (tipo == 10) {
+    if (tipo == TIPO.CHAT) {
       socket.on('CHAT', (msg) => {
         console.log(msg);
         var result = { id: get(socket).id, msg: msg.mensaje, usuario: msg.usuario/*, fecha: msg.fecha*/ }

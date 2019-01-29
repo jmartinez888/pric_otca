@@ -1,8 +1,12 @@
+{extends 'template.tpl'}
+{block 'css'}
 <style>
   .sidebar-left{
     padding-top: 0px
   }
 </style>
+{/block}
+{block 'contenido'}
 <div class="row">
   <div class="col-lg-5 tittle-modulo ">
      <h4><strong> Módulo {$modulo.Index}: {$modulo["Moc_Titulo"]}</strong></h4>
@@ -71,3 +75,4 @@
 
   </div>
 </div>
+{/block}

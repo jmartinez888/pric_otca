@@ -1,4 +1,4 @@
-  <div id="chat-container" class="hidden" >
+  <div id="chat-container" class="" >
     <div id="chat-header">
       <span class="name-chat">Chat de Clase</span>
       <div id="btnMinin">
@@ -18,3 +18,4 @@
     </div>
     <audio id="chatAudio"><source src="{$_layoutParams.root_clear}public/media/notification.mp3" type="audio/mpeg"><source src="{$_layoutParams.root_clear}public/media/notification.wav" type="audio/wav"></audio>
   </div>
+  
