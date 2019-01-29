@@ -153,7 +153,7 @@ class perfilController extends usuariosController {
                 $this->getSql('telefono'),
                 $this->getSql('institucion'),
                 $this->getSql('cargo'),
-                $this->getSql('usuario'),
+                $usu['Usu_Usuario'],
                 $this->getSql('email'),
                 $this->getInt('idusuario')
             );
