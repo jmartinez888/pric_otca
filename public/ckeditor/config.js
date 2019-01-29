@@ -16,7 +16,7 @@ CKEDITOR.editorConfig = function( config ) {
 
     config.toolbar_Basic =
         [
-            ['Format','Styles','Font','FontSize','-','Bold', 'Italic','Underline','StrikeThrough','-', 'NumberedList', 'BulletedList', '-', 'Link', 'Unlink','-','JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock','.','About']
+            ['Source', '-','Format','Styles','Font','FontSize','-','Bold', 'Italic','Underline','StrikeThrough','-', 'NumberedList', 'BulletedList','-', 'Outdent', 'Indent', '-', 'Link', 'Unlink','-','JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock','.','About']
         ];
 };
 /*
