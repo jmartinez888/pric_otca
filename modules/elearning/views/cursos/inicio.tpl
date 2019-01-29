@@ -1,4 +1,4 @@
-<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 p-rt-lt-0" style="background-image: url({BASE_URL}modules/elearning/views/cursos/img/encabezado-elearning.jpg); background-repeat: no-repeat; background-size: auto 100%;">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 p-rt-lt-0" style="background-image: url({BASE_URL}modules/elearning/views/cursos/img/encabezado-elearning.jpg); background-repeat: no-repeat; background-size: auto 100%; min-height: 415px;">
     <div class="col-xs-12 col-md-6 col-sm-9 col-lg-5" style="color: white; font-weight: bold; font-size: 18px;">
         {include file='modules/elearning/views/cursos/menu/descripcion.tpl'}
     </div>
