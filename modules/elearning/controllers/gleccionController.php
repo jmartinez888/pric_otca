@@ -1,7 +1,8 @@
 <?php
 
-use App\Formulario;
 use App\Leccion;
+use App\Formulario;
+use App\LeccionAsistencia;
 use App\LeccionFormulario;
 use Illuminate\Database\Capsule\Manager as DB;
 
@@ -14,6 +15,106 @@ class gleccionController extends elearningController {
     protected $_link;
     protected $service;
 
+		public function registrar_asistencia () {
+			$res = ['success' => false, 'msg' => ''];
+			$this->_acl->autenticado();
+            if ($this->_acl->tienePermisos('iniciar_leccion_dirigida') && $this->has(['leccion_asistencia_id'])) 
+            $lang = $this->_view->LoadLenguaje(['elearning_cursos', 'elearning_formulario_responder'], false, true);{
+				$lecc_ass = LeccionAsistencia::find($this->getInt('leccion_asistencia_id'));
+				if ($lecc_ass) {
+                    $lecc_ass->Lea_Asistencia = 1;
+                    if ($lecc_ass->save()) {
+                        $res['success'] = true;
+                        $res['msg'] = $lang->get('elearning_cursos_asistencia_marcada');
+                    }
+
+				}
+            }
+            $this->_view->responseJson($res);
+		}
+		public function asistencia ($leccion_id) {
+			$this->_acl->autenticado();
+			if ($this->_acl->tienePermisos('iniciar_leccion_dirigida') && is_numeric($leccion_id) && $leccion_id != 0) {
+				$objLeccion = Leccion::find($leccion_id);
+				if ($objLeccion) {
+					$mod_curso = $this->loadModel("_gestionCurso");
+					$curso = $mod_curso->getCursoById($objLeccion->getCursoID());
+					$this->_view->setTemplate(LAYOUT_FRONTEND);
+					$lang = $this->_view->getLenguaje(['elearning_cursos', 'elearning_formulario_responder'], false, true);
+
+					$data['curso'] = $curso;
+					$data['idcurso'] = $curso['Cur_IdCurso'];
+					$data['other_tags'] = [$lang->get('str_asistencia')];
+					$data['titulo'] = $lang->get('str_asistencia').' - '.str_limit($curso['Cur_Titulo'], 20);
+					$data['active'] = 'asistencia';
+					$build = $objLeccion->leccion_asistencia()
+					->select(
+						'leccion_asistencia.*',
+						'usuario.Usu_IdUsuario',
+						'usuario.Usu_Nombre',
+						'usuario.Usu_Apellidos',
+						DB::raw('COUNT(Lea_IdLeccAsis) as total_sessiones')
+						)
+                    ->join('usuario', 'usuario.Usu_IdUsuario', 'leccion_asistencia.Usu_IdUsuario')
+                    ->whereNotIn('leccion_asistencia.Usu_IdUsuario', [$objLeccion->getDocente()])
+					->groupBy('leccion_asistencia.Usu_IdUsuario');
+					$alumnos = $build->get();
+					// dd($alumnos->toArray());
+					$data['alumnos'] = $alumnos->map(function($item) {
+						$item->NombreCompleto = $item->Usu_Nombre.' '.$item->Usu_Apellidos;
+						return $item;
+					});
+					$this->_view->assign($data);
+					$this->_view->render('asistencia_leccion');
+
+				} else {
+					$this->redireccionarReferer('elearning/cursos/cursos');
+				}
+			} else {
+				$this->redireccionarReferer('elearning/cursos/cursos');
+			}
+      
+		}
+    public function pizarras ($curso_id) {
+        $this->_acl->autenticado();
+        if ($this->_acl->tienePermisos('crear_pizarras')) {
+            $this->_view->setTemplate(LAYOUT_FRONTEND);
+            $lang = $this->_view->getLenguaje(['elearning_cursos', 'elearning_formulario_responder'], false, true);
+            if (is_numeric($curso_id) && $curso_id != 0) {
+							$mod_curso = $this->loadModel("_gestionCurso");
+							$curso = $mod_curso->getCursoById($curso_id);
+							// dd($curso);
+							if ($curso) {
+								$mod_modulo = $this->loadModel("_gestionModulo");
+								$mod_leccion = $this->loadModel("_gestionLeccion");
+								$modulos = $mod_modulo->getModulos($curso_id);
+								$mod_ids = [];
+								foreach ($modulos as $key => $value) {
+										$mod_ids[] = $value['Moc_IdModuloCurso'];
+								}
+								$pizarras = Leccion::getByModulos($mod_ids)->getPizarras()->get();
+								
+								$data['pizarras'] = $pizarras;
+                $data['active'] = 'pizarras';
+                $data['curso'] = $curso;
+                $data['idcurso'] = $curso['Cur_IdCurso'];
+                $data['other_tags'] = [$lang->get('str_pizarras')];
+
+                $data['titulo'] = $lang->get('str_encuestas').' - '.str_limit($curso['Cur_Titulo'], 20);
+
+                $this->_view->assign($data);
+                $this->_view->render('pizarras');
+							}
+
+
+
+            }
+        } else {
+            echo 'no posee';
+        }
+
+
+    }
     public function __construct($lang,$url)
     {
         parent::__construct($lang,$url);
@@ -319,6 +420,7 @@ class gleccionController extends elearningController {
     }
 
     public function _view_leccion($curso = 0, $modulo = 0, $leccion = 0){
+
         // $curso = $this->getTexto("curso");
         // $modulo = $this->getTexto("modulo");
         // $leccion = $this->getTexto("leccion");

@@ -256,27 +256,41 @@ abstract class Controller
 
         return 0;
     }
-
-    protected function redireccionar($ruta = false)
+    
+    protected function redireccionarReferer ($ruta = false, $absolute = false)
     {
-        if($ruta)
-        {
-            $leng = strpos($ruta, Cookie::lenguaje()."/");
-        //Para ver si la hay variable idioma en la url diferente a la del navegador
-            $leng_into_url = explode('/', $ruta)[0];
-
-            if($leng !== false)
-                header('location:' . BASE_URL . $ruta);
-            else if(strlen($leng_into_url) == 2)
-                 header('location:' . BASE_URL. $ruta);
-            else if(strlen($ruta) > 2)
-                 header('location:' . BASE_URL .Cookie::lenguaje().'/'. $ruta);
-            else
-                header('location:' . BASE_URL . Cookie::lenguaje());
+        if ($_SERVER['HTTP_REFERER'] != null && $_SERVER['SCRIPT_URI'] != $_SERVER['HTTP_REFERER']) {
+            $this->redireccionar($_SERVER['HTTP_REFERER'], true);
+        } else {
+            $this->redireccionar($ruta, $absolute);
+        }
+        
+    }
+    protected function redireccionar($ruta = false, $absolute = false)
+    {
+        if ($absolute) {
+            header('location:' . $ruta);
             exit;
         } else {
-            header('location:' . BASE_URL . Cookie::lenguaje());
-            exit;
+            if($ruta)
+            {
+                $leng = strpos($ruta, Cookie::lenguaje()."/");
+            //Para ver si la hay variable idioma en la url diferente a la del navegador
+                $leng_into_url = explode('/', $ruta)[0];
+    
+                if($leng !== false)
+                    header('location:' . BASE_URL . $ruta);
+                else if(strlen($leng_into_url) == 2)
+                     header('location:' . BASE_URL. $ruta);
+                else if(strlen($ruta) > 2)
+                     header('location:' . BASE_URL .Cookie::lenguaje().'/'. $ruta);
+                else
+                    header('location:' . BASE_URL . Cookie::lenguaje());
+                exit;
+            } else {
+                header('location:' . BASE_URL . Cookie::lenguaje());
+                exit;
+            }
         }
     }
 

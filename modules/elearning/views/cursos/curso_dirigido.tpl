@@ -1,3 +1,5 @@
+{extends 'template.tpl'}
+{block 'contenido'}
 <input type="text" id="inHiddenCurso" value="{$curso.Cur_IdCurso}" hidden="hidden"> <!-- RODRIGO 20180607 -->
 <div class="col-lg-12">
   <div class="col-lg-12 referencia-curso-total">
@@ -27,7 +29,7 @@
                 <!-- <a class="btn fa fa-facebook im_sociales" id="im_sociales" style="background: #3B5998" href="#"></a>
                 <a class="btn fa fa-twitter im_sociales" id="im_sociales" style="background: #55ACEE" href="#"></a>
                 <a class="btn fa fa-google-plus im_sociales" id="im_sociales" style="background: #C03A2A" href="#"></a> -->
-                <ul class="list-inline">                  
+                <ul class="list-inline">
                   <li class="facebook">
                     <div class="icon">
                       <a href="https://www.facebook.com/sharer/sharer.php?u={$_layoutParams.root}elearning/cursos/curso_dirigido/{$curso.Cur_IdCurso}" target="_blank" title="Facebook">
@@ -78,7 +80,7 @@
                 <br>
                 <strong style="color: #393939; font-size: 16px">{$inscritos}</strong>
                 <br>
-                <strong style="color: #393939; font-size: 16px">Alumnos</strong>
+                <strong style="color: #393939; font-size: 16px">{$lang->get('str_alumnos')}</strong>
                 <br><br>
               </div>
 
@@ -88,7 +90,7 @@
                 <br>
                 <strong style="color: #393939; font-size: 16px">4/5</strong>
                 <br>
-                <strong style="color: #393939; font-size: 16px">Valoración media</strong>
+                <strong style="color: #393939; font-size: 16px">{$lang->get('elearning_cursos_valoracion_media')}</strong>
               </div>
 
             </center>
@@ -107,7 +109,7 @@
           {if isset($objetivos) && count($objetivos)>0}
           <div class="col-xs-12 text-curso">
             <div><strong><i class="glyphicon glyphicon-record"></i>
-            &nbsp;Objetivos</strong></div>
+            &nbsp;{$lang->get('str_objetivos')}</strong></div>
             {foreach from=$objetivos item=o}
               <ul>
                 <li class="list-objetivos">
@@ -156,15 +158,15 @@
 
           {if isset($detalle) && count($detalle)>0}
           <div class="col-xs-12 text-curso">
-            
+
             {foreach from=$detalle item=d}
-             
+
                 <div class="list-objetipvos">
                   <strong><i class="glyphicon glyphicon-record"></i>
             &nbsp;{$d.DC_Titulo} :</strong>
                 </div>
                 {$d.DC_Descripcion}
-             
+
             {/foreach}
           </div>
           {/if}
@@ -176,22 +178,22 @@
         {if $session==1}
           {if isset($inscripcion) && count($inscripcion)>0}
             {if $inscripcion[0].Mat_Valor==2 }
-              <div class="tag-lms"><center>Esta pendiente la aprobación de tu registro</center></div>
+              <div class="tag-lms"><center>{$lang->get('elearning_cursos_pendiente_aprobacion_inscripcion')}</center></div>
             {else}
               {if $inscripcion[0].Mat_Valor==1 }
                 {if $session && $progreso.Completo==10}
                   {if !count($certificado)}
                     <button class="btn btn-success btn-certificado" style="margin-bottom: 10px" id="btnCertificado">
-                      <strong><span class="glyphicon glyphicon-list-alt"></span> &nbsp;Obtener certificado</strong>
+                      <strong><span class="glyphicon glyphicon-list-alt"></span> &nbsp;{$lang->get('elearning_cursos_obtener_certificado')}</strong>
                     </button>
                   {else}
                     <a class="btn btn-success btn-certificado" style="margin-bottom: 10px" href="">
-                      <strong><span class="glyphicon glyphicon-list-alt"></span> &nbsp;Visualizar certificado</strong>
+                      <strong><span class="glyphicon glyphicon-list-alt"></span> &nbsp;{$lang->get('elearning_cursos_visualizar_certificado')}</strong>
                     </a>
                   {/if}
                 {/if}
                 <center class="tag-inscrito">
-                  <span><strong>Inscrito:</strong>
+                  <span><strong>{$lang->get('str_inscrito')}:</strong>
                   {$inscripcion[0].Mat_FechaReg}</span>
                 </center>
 
@@ -200,7 +202,7 @@
                   <div class="progress progress-estilo">
                     <div class="progress-bar progress-bar-striped" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: {$progreso.Porcentaje}%">
                       <div class="progress-porcentaje">
-                        <strong>{$progreso.Porcentaje}% Completado</strong>
+                        <strong>{$progreso.Porcentaje}% {$lang->get('str_completado')}</strong>
                       </div>
                     </div>
                   </div>
@@ -218,27 +220,27 @@
                 {/if}
 
               {else}
-                <div class="tag-lms"><center>Registro rechazado</center></div>
+                <div class="tag-lms"><center>{$lang->ger('str_registro_rechazado')}</center></div>
               {/if}
             {/if}
           {else}
             {if $curso.Usu_IdUsuario != Session::get("id_usuario")}
               <a href="{BASE_URL}elearning/cursos/_inscripcion/{$curso.Moa_IdModalidad}/{$curso.Cur_IdCurso}">
-                <button class="btn btn-group btn-inscribir">Inscribirme</button>
+                <button class="btn btn-group btn-inscribir">{$lang->get('str_inscribirme')}</button>
               </a>
             {else}
               <a href="{BASE_URL}elearning/gestion/matriculados/{$curso.Cur_IdCurso}">
-                <button class="btn btn-default btn-gestion">Gestión de Curso</button>
+                <button class="btn btn-default btn-gestion">{$lang->get('elearning_cursos_gestion_curso')}</button>
               </a>
             {/if}
           {/if}
         {else}
           <div class="col-lg-12 anuncio">
-              <strong><i class="glyphicon glyphicon-warning-sign" style="font-size: 20px;"> </i>&nbsp; ¡Atención!</strong>
-              Para inscribirte en el curso necesitas una cuenta.</div>
+              <strong><i class="glyphicon glyphicon-warning-sign" style="font-size: 20px;"> </i>&nbsp; ¡{$lang->get('str_atencion')}!</strong>
+              {$lang->get('elearning_cursos_para_inscribir_crear_cuenta')}</div>
           <div class="col-lg-12">
                 <button data-toggle="modal" data-target="#modal-login" class="btn btn-group btn-success ini-sesion">
-                <strong>Iniciar Sesión</strong>
+                <strong>{$lang->get('str_iniciar_session')}</strong>
                 <i class="glyphicon glyphicon-log-in"></i>
               </button>
               </div>
@@ -247,19 +249,19 @@
 
       {if $session==1 && count($modulo)>0 }
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-        <div><h3 style="font-family: 'Gill Sans MT';">Módulos del curso</h3></div>
+        <div><h3 style="font-family: 'Gill Sans MT';">{$lang->get('str_modulos_curso')}</h3></div>
         <hr class="cursos-hr">
       </div>
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding-left: 0px; padding-right: 0px;">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 xxxxxxxxxxxx">
         {$index = 1} {$iniciar = 0}
         {foreach from=$modulo item=o}
-          <div class="ficha-mod col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding-bottom: 15px; margin-top: 15px">
+          <div class="ficha-mod col-xs-12 col-sm-12 col-md-12 col-lg-12" data-id-modulo="{$o.Moc_IdModuloCurso}" style="padding-bottom: 15px; margin-top: 15px">
             <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2" style="padding: 0px; text-align: center;">
               <img class="w-100 img-modulo pr-5 pl-5" class="img-modulo" src="{BASE_URL}modules/elearning/views/cursos/img/contador-modulo-{$index}.png"/>
               <div class="col col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                  <strong>Dedicación: {$o.Moc_TiempoDedicacion}</strong>  
-              </div>   
+                  <strong>{$lang->get('str_dedicacion')}: {$o.Moc_TiempoDedicacion}</strong>
+              </div>
             </div>
             <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10 ficha-mod-title">
               <strong>{$o.Moc_Titulo}</strong>
@@ -268,26 +270,27 @@
             {if isset($o.LECCIONES[0]) && count($o.LECCIONES)>0}
               {if $o.LECCIONES[0]['Disponible'] == 0 && $iniciar == 0}
                 <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10 ficha-mod-title">
-                  <a  href="{BASE_URL}elearning/cursos/modulo/{$curso.Cur_IdCurso}/{$o.Moc_IdModuloCurso}" class="btn btn-success pull-right">Iniciar</a>
+                  <a  href="{BASE_URL}elearning/cursos/modulo/{$curso.Cur_IdCurso}/{$o.Moc_IdModuloCurso}" class="btn btn-success pull-right">{$lang->get('str_iniciar')}</a>
                 </div>
                 {$iniciar = 1}
               {/if}
             {/if}
 
           </div>
+          <div class="modulo-lecciones" data-ref-modulo="{$o.Moc_IdModuloCurso}" style="display: none">
           {foreach from=$o.LECCIONES item=l}
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding-left: 0px; padding-right: 0px;">
               <div class="ficha-leccion {if $l.Activo==1}lec-lms-activo{/if}">
                 <h4><strong>{$l.Lec_Titulo}</strong></h4>
-                <strong>Dedicación: {$l.Lec_TiempoDedicacion}</strong>
+                <strong>{$lang->get('str_dedicacion')}: {$l.Lec_TiempoDedicacion}</strong>
                 <br>
-                <span class="glyphicon glyphicon-calendar"></span> Fecha: 
+                <span class="glyphicon glyphicon-calendar"></span> Fecha:
                 {if ($l.Lec_FechaDesde|date_format:"%H:%M:%S") > 0}
                     {$l.Lec_FechaDesde|date_format:" %D %H:%M:%S"}
                 {else}
                     {$l.Lec_FechaDesde|date_format:"%Y-%m-%d"}
                 {/if}
-                   
+
                 {if $l.Activo==0}
                   {if ($session==1 && isset($inscripcion) && count($inscripcion)>0 && $inscripcion[0].Mat_Valor==1) && $l.Disponible==1 }
                     <a href="{BASE_URL}elearning/cursos/modulo/{$curso.Cur_IdCurso}/{$o.Moc_IdModuloCurso}/{$l.Lec_IdLeccion}">
@@ -296,38 +299,39 @@
                   {else}
                     {if $curso.Usu_IdUsuario == Session::get('id_usuario')}
                       <a href="{BASE_URL}elearning/cursos/modulo/{$curso.Cur_IdCurso}/{$o.Moc_IdModuloCurso}/{$l.Lec_IdLeccion}">
-                        <div class="tag-terminado"><center><strong>Revisar lección</strong></center></div>
+                        <div class="tag-terminado"><center><strong>{$lang->get('elearning_cursos_revisar_leccion')}</strong></center></div>
                       </a>
                     {else}
                       {if $l.Lec_Tipo==4 }
                           {if ($l.Lec_FechaHasta|date_format) < ($smarty.now|date_format) }
-                            <div class="tag-terminado"><center><strong>Clase Concluida</strong></center></div>
+                            <div class="tag-terminado"><center><strong>{$lang->get('elearning_cursos_clase_concluida')}</strong></center></div>
                           {/if}
                           {if ($l.Lec_FechaHasta|date_format) == ($smarty.now|date_format) }
                           <div class="div_en_linea">
-                            <span class="en_linea text-success">En linea</span>
+                            <span class="en_linea text-success">{$lang->ger('str_en_linea')}</span>
                           </div>
                             <a href="{BASE_URL}elearning/cursos/modulo/{$curso.Cur_IdCurso}/{$o.Moc_IdModuloCurso}/{$l.Lec_IdLeccion}">
-                              <div class="tag-terminado"><center><strong>En linea</strong></center></div>
+                              <div class="tag-terminado"><center><strong>{$lang->get('str_en_linea')}</strong></center></div>
                             </a>
                           {/if}
                       {elseif $l.Lec_Tipo==5 }
-                        <div class="tag-terminado"><center><strong>Exámen Concluido</strong></center></div>
+                        <div class="tag-terminado"><center><strong>{$lang->get('elearning_cursos_examen_concluido')}</strong></center></div>
                       {else}
                       {/if}
                     {/if}
                   {/if}
                 {else}
                   {if $l.Lec_Tipo==4 }
-                    <div class="tag-terminado pendiente"><center>Clase Pendiente</center></div>
+                    <div class="tag-terminado pendiente"><center>{$lang->get('elearning_cursos_clase_pendiente')}</center></div>
                   {elseif $l.Lec_Tipo==5 }
-                    <div class="tag-terminado pendiente"><center>Exámen Pendiente</center></div>
+                    <div class="tag-terminado pendiente"><center>{$lang->get('elearning_cursos_examen_pendiente')}</center></div>
                   {else}
                   {/if}
                 {/if}
               </div>
             </div>
           {/foreach}
+          </div>
           {$index = $index + 1}
         {/foreach}
       </div>
@@ -339,9 +343,9 @@
 
       {if $session==1}
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"> <!-- RODRIGO 20180607 -->
-        <label style="margin-top: 20px; font-size:16px">Calificar curso</label>
+        <label style="margin-top: 20px; font-size:16px">{$lang->get('elearning_cursos_calificar_curso')}</label>
         <hr class="cursos-hr">
-        <textarea class="form-control estilo-textarea" rows="4" id="txCComentario" maxlength="450" placeholder="Escriba su comentario aquí."></textarea>
+        <textarea class="form-control estilo-textarea" rows="4" id="txCComentario" maxlength="450" placeholder="{$lang->get('elearning_cursos_escriba_comentario_aqui')}."></textarea>
         <input type="text" id="inCUsuario" value="{$curso.Cur_IdCurso}" hidden="hidden">
         <input type="text" id="inCCurso" value="{Session::get('id_usuario')}" hidden="hidden">
       </div>
@@ -356,12 +360,12 @@
       </div>
       <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
         <button class="btn btn-default pull-right btn-calificar" id="btnCalificar">
-          <strong><span class="glyphicon glyphicon-star"></span>&nbsp; Calificar</strong>
+          <strong><span class="glyphicon glyphicon-star"></span>&nbsp; {$lang->get('str_calificar')}</strong>
         </button>
       </div>
       {/if}
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-top: 10px; font-size:16px">
-        <label>Valoraciones del curso: </label>
+        <label>{$lang->get('elearning_cursos_valoracion_curso')}: </label>
       </div>
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
         <hr class="cursos-hr">
@@ -389,7 +393,7 @@
 <!-- Modal -->
   <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog">
-    
+
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header">
@@ -400,10 +404,13 @@
           <p>{$modulo[0]['Moc_Descripcion']}</p>
         </div>
         <div class="modal-footer">
-          <a type="button" href="{BASE_URL}elearning/cursos/modulo/{$curso.Cur_IdCurso}/{$o.Moc_IdModuloCurso}/{$o.LECCIONES[0]['Lec_IdLeccion']}" class="btn btn-success" >Close</a>
+          <a type="button" href="{BASE_URL}elearning/cursos/modulo/{$curso.Cur_IdCurso}/{$o.Moc_IdModuloCurso}/{$o.LECCIONES[0]['Lec_IdLeccion']}" class="btn btn-success" >{$lang->get('str_cerrar')}</a>
         </div>
       </div>
-      
+
     </div>
   </div>
-  
+{/block}
+
+{block 'js'}
+{/block}
