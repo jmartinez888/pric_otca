@@ -767,6 +767,10 @@ a.mas-jsoft {
 
 
 /*Modificado por JMartinez*/
+.lang-active {
+    background-color: #386c77;
+    color: #fefefe;
+}
 .nav .nav-item .nav-link:focus,
 .nav .nav-item .nav-link:hover{
 	background-color: #618c2f;

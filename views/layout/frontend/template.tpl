@@ -79,13 +79,13 @@
                         <div class="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul class="nav navbar-nav">
                                 <li class="nav-item" style="background: #565656;">
-                                    <a class="nav-link txt-color-white f-z-14" href="{$_layoutParams.root_clear}index/_loadLang/es">Español</a>
+                                    <a class="nav-link txt-color-white f-z-14 {if Cookie::lenguaje()=='es'}lang-active{/if}" href="{$_layoutParams.root_clear}index/_loadLang/es">Español</a>
                                 </li>
                                 <li class="nav-item" style="background: #565656;">
-                                    <a class="nav-link txt-color-white f-z-14" href="{$_layoutParams.root_clear}index/_loadLang/pt"> | Portugues</a>
+                                    <a class="nav-link txt-color-white f-z-14 {if Cookie::lenguaje()=='pt'}lang-active{/if}" href="{$_layoutParams.root_clear}index/_loadLang/pt"> | Portugues</a>
                                 </li>
                                 <li class="nav-item" style="background: #565656;">
-                                    <a class="nav-link txt-color-white f-z-14" href="{$_layoutParams.root_clear}index/_loadLang/en"> | English</a>
+                                    <a class="nav-link txt-color-white f-z-14 {if Cookie::lenguaje()=='en'}lang-active{/if}" href="{$_layoutParams.root_clear}index/_loadLang/en"> | English</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link txt-color-white f-z-14" href="{$_layoutParams.root}acercade/contacto"> | Contácto</a>
