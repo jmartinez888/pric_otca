@@ -90,6 +90,7 @@
       </div>        
     {/if}
     
+    <!-- TABS -->
     <div class="col-lg-12" style="padding-top: 15px;">
       <ul class="nav nav-tabs">
         <li role="presentation" class="active" id="item_presentacion"><a>PRESENTACIÓN</a></li>
@@ -182,48 +183,52 @@
 
         <div class="panel-body"  id="panelDetalle">
           <form method="post" action="gcurso/_modificar_curso" id="frm_registro">
-          <input hidden="hidden" id="hidden_curso" name="id" value="{$curso.Cur_IdCurso}"/>
-          <div class="col-lg-12"><h5><strong>Título del Curso</strong></h5></div>
-            <div class="col-lg-12">
-              <input name="titulo" id="inTitulo" class="form-control" value="{$curso.Cur_Titulo}"/>
-            </div>
-            <div class="col-lg-12"><h5><strong>Descripción del Curso</strong></h5></div>
-            <div class="col-lg-12">
-              <textarea class="form-control" id="inDescripcion" name="descripcion" rows="10">{$curso.Cur_Descripcion}</textarea>
-            </div>
-            <div class="col-lg-12 margin-top-10">
-              <strong></strong>
-            </div>
-            <div class="col-lg-12"><h5><strong>Objetivo General del Curso</strong></h5></div>
-            <div class="col-lg-12"><textarea class="form-control" id="inObjetivo" name="objgeneral" >{$curso.Cur_ObjetivoGeneral}</textarea></div>
-            <div class="col-lg-12 margin-top-10"><h5><strong>Objetivos Específicos</strong></h5></div>
-            <div id="divObjetivosEspecificos"></div>
-            <div class="col-xs-3">
-              <input class="estado" id="toggle_NuevoObjetivo" value="0" />
-              <button id="btnNuevoObjetivo" class="col-xs-12 btn btn-sm btn-warning" >Agregar objetivo</button>
-            </div>
-            <div class="col-lg-12 margin-top-10"><h5><strong>Público Objetivo</strong></h5></div>
-            <div class="col-lg-12"><textarea class="form-control" id="inPublico" name="publico" >{$curso.Cur_PublicoObjetivo}</textarea></div>
-            <div class="col-lg-12 margin-top-10"><h5><strong>N° Vacantes</strong></h5></div>
-            <div class="col-lg-12"><input type="number" class="form-control" id="inVacantes" name="vacantes" value="{$curso.Cur_Vacantes}"/></div>
-            <div class="col-lg-12 margin-top-10"><h5><strong>Contacto</strong></h5></div>
-            <div class="col-lg-12"><textarea class="form-control" id="inContacto" name="contacto" > {$curso.Cur_Contacto}</textarea> </div>
-            <div class="col-lg-12"><h5><strong>Requisitos Sotftware</strong></h5></div>
-            <div class="col-lg-12"><textarea class="form-control" id="inSoftware" name="software" >{$curso.Cur_ReqSoftware}</textarea></div>
-            <div class="col-lg-12"><h5><strong>Requisitos Hardware</strong></h5></div>
-            <div class="col-lg-12"><textarea class="form-control" id="inHardware" name="hardware" >{$curso.Cur_ReqHardware}</textarea></div>
-            <div class="col-lg-12"><h5><strong>Metodología</strong></h5></div>
-            <div class="col-lg-12"><textarea class="form-control" id="inMetodologia" name="metodologia" >{$curso.Cur_Metodologia}</textarea></div>
-            <div id="divDetallesCursos"></div>
-            <div class="col-xs-3">
-              <input class="estado" id="toggle_NuevoDetalle" value="0" />
-              <button id="btnNuevoDetalle" class="col-xs-12 btn btn-sm btn-warning" >Agregar información</button>
-            </div>
-            <div class="col-lg-12 margin-top-10" >
-              <button class="btn btn-success" style=" float: right" type="button" id="btn_registrar">
-                <i class="glyphicon glyphicon-book"></i> Actualizar Información
-              </button>
-            </div>
+
+            <input type="hidden" name="IdiomaOriginal" id="_IdiomaOriginal" value="{$IdiomaOriginal}"/>
+            <input type="hidden" name="idiomaTradu" value="{$curso.Idi_IdIdioma}"/>
+            <input type="hidden" id="hidden_curso_" name="id" value="{$curso.Cur_IdCurso}"/>
+
+            <div class="col-lg-12"><h5><strong>Título del Curso</strong></h5></div>
+              <div class="col-lg-12">
+                <input name="titulo" id="inTitulo" class="form-control" value="{$curso.Cur_Titulo}"/>
+              </div>
+              <div class="col-lg-12"><h5><strong>Descripción del Curso</strong></h5></div>
+              <div class="col-lg-12">
+                <textarea class="form-control" id="inDescripcion" name="descripcion" rows="10">{$curso.Cur_Descripcion}</textarea>
+              </div>
+              <div class="col-lg-12 margin-top-10">
+                <strong></strong>
+              </div>
+              <div class="col-lg-12"><h5><strong>Objetivo General del Curso</strong></h5></div>
+              <div class="col-lg-12"><textarea class="form-control" id="inObjetivo" name="objgeneral" >{$curso.Cur_ObjetivoGeneral}</textarea></div>
+              <div class="col-lg-12 margin-top-10"><h5><strong>Objetivos Específicos</strong></h5></div>
+              <div id="divObjetivosEspecificos"></div>
+              <div class="col-xs-3">
+                <input class="estado" id="toggle_NuevoObjetivo" value="0" />
+                <button id="btnNuevoObjetivo" class="col-xs-12 btn btn-sm btn-warning" >Agregar objetivo</button>
+              </div>
+              <div class="col-lg-12 margin-top-10"><h5><strong>Público Objetivo</strong></h5></div>
+              <div class="col-lg-12"><textarea class="form-control" id="inPublico" name="publico" >{$curso.Cur_PublicoObjetivo}</textarea></div>
+              <div class="col-lg-12 margin-top-10"><h5><strong>N° Vacantes</strong></h5></div>
+              <div class="col-lg-12"><input type="number" class="form-control" id="inVacantes" name="vacantes" value="{$curso.Cur_Vacantes}"/></div>
+              <div class="col-lg-12 margin-top-10"><h5><strong>Contacto</strong></h5></div>
+              <div class="col-lg-12"><textarea class="form-control" id="inContacto" name="contacto" > {$curso.Cur_Contacto}</textarea> </div>
+              <div class="col-lg-12"><h5><strong>Requisitos Sotftware</strong></h5></div>
+              <div class="col-lg-12"><textarea class="form-control" id="inSoftware" name="software" >{$curso.Cur_ReqSoftware}</textarea></div>
+              <div class="col-lg-12"><h5><strong>Requisitos Hardware</strong></h5></div>
+              <div class="col-lg-12"><textarea class="form-control" id="inHardware" name="hardware" >{$curso.Cur_ReqHardware}</textarea></div>
+              <div class="col-lg-12"><h5><strong>Metodología</strong></h5></div>
+              <div class="col-lg-12"><textarea class="form-control" id="inMetodologia" name="metodologia" >{$curso.Cur_Metodologia}</textarea></div>
+              <div id="divDetallesCursos"></div>
+              <div class="col-xs-3">
+                <input class="estado" id="toggle_NuevoDetalle" value="0" />
+                <button id="btnNuevoDetalle" class="col-xs-12 btn btn-sm btn-warning" >Agregar información</button>
+              </div>
+              <div class="col-lg-12 margin-top-10" >
+                <button class="btn btn-success" style=" float: right" type="button" id="btn_registrar">
+                  <i class="glyphicon glyphicon-book"></i> Actualizar Información
+                </button>
+              </div>
           </form>
         </div>
       </div>

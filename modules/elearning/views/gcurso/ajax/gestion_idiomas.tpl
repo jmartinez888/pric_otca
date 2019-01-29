@@ -105,8 +105,10 @@
 
         <div class="panel-body"  id="panelDetalle">
           <form method="post" action="gcurso/_modificar_curso" id="frm_registro">
-          <input hidden="hidden" id="hidden_curso" name="id" value="{$curso.Cur_IdCurso}"/>
-          <div class="col-lg-12"><h5><strong>Título del Curso</strong></h5></div>
+            <input type="hidden" name="IdiomaOriginal" id="_IdiomaOriginal" value="{$IdiomaOriginal}"/>
+            <input type="hidden" name="idiomaTradu" value="{$curso.Idi_IdIdioma}"/>
+            <input type="hidden" id="hidden_curso_" name="id" value="{$curso.Cur_IdCurso}"/>
+            <div class="col-lg-12"><h5><strong>Título del Curso</strong></h5></div>
             <div class="col-lg-12">
               <input name="titulo" id="inTitulo" class="form-control" value="{$curso.Cur_Titulo}"/>
             </div>
@@ -166,12 +168,11 @@
             <input {if $curso.Idi_IdIdioma != $IdiomaOriginal} disabled="" {/if} class="form-control" id="inParMaxNota" type="number"  min="0" value="{$parametros['Par_NotaMaxima']}"/>
           </div>
           <div class="col-lg-12" style="margin-top: 10px">
-            <button class="btn btn-success pull-right" id="btnParams"> Registrar Datos</button>
+            <button {if $curso.Idi_IdIdioma != $IdiomaOriginal} disabled="" {/if} class="btn btn-success pull-right" id="btnParams"> Registrar Datos</button>
           </div>
         </div>
       </div>
     </div>
-<script type="text/javascript" src="{$_url}gcurso/js/_view_finalizar_registro.js"></script>
 {else}
 <p>No hay datos</p>
 {/if}
