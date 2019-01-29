@@ -227,7 +227,14 @@ class cursoModel extends Model {
     }
 
     public function getDetalleCurso($curso){
-      $sql = "SELECT * FROM detalle_curso
+      $sql = " SELECT DC_IdDetCurso, Cur_IdCurso,
+
+                 fn_TraducirContenido('detalle_curso','DC_Titulo',DC_IdDetCurso,'$Idi_IdIdioma',DC_Titulo) DC_Titulo,
+                 fn_TraducirContenido('detalle_curso','DC_Descripcion',DC_IdDetCurso,'$Idi_IdIdioma',DC_Descripcion) DC_Descripcion,
+                 DC_FechaRegFinal, Row_Estado
+                 fn_devolverIdioma('detalle_curso',DC_IdDetCurso,'$Idi_IdIdioma',c.Idi_IdIdioma) Idi_IdIdioma
+
+              FROM detalle_curso
               WHERE Cur_IdCurso = {$curso} AND Row_Estado = 1";
       return $this->getArray($sql);
     }
