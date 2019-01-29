@@ -67,7 +67,7 @@
                             <label class="col-lg-4 control-label">{$lenguaje.label_usuario} : </label>
                             <div class="col-lg-4">
                                 <label  class="form-control">{$datos.Usu_Usuario|default:""}</label>
-                                <input type="hidden" name="usuario" id="usuario">
+                                <input type="hidden" name="usuario" id="usuario" value="{$datos.Usu_Usuario|default:''}">
                             </div>
                            
                             <div class="col-lg-3">                                
