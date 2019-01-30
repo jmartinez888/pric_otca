@@ -4,7 +4,7 @@ $(document).ready(function(){
     
     CargarPagina(url_tmp_session, {});
   }else{
-    CargarPagina("gcurso/_view_mis_cursos", {});
+    CargarPagina("gestion/_view_mis_cursos", {});
   }
 });
 
