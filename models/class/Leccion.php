@@ -64,10 +64,10 @@ class Leccion extends Eloquent
     $ls->Les_DateInicio = $fecha_inicio;
     $ls->Usu_IdUsuario = $usuario_id;
     $ls->Les_Tipo = LeccionSession::TIPO_ESPERA;
-    do {
+    //do {
       $date = new \DateTime();
       $thash = self::hashLeccion($this->Lec_IdLeccion, $this->getDocente(), $date->format('Y-m-d'));
-    } while(LeccionSession::existeHash($thash));
+    //} while(LeccionSession::existeHash($thash));
     $ls->Les_Hash = $thash;
     return $ls->save() ? $ls : null;
   }
