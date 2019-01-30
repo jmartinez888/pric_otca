@@ -10,7 +10,8 @@ class LeccionSession extends Eloquent
   protected $primaryKey = 'Les_IdLeccSess';
   public $timestamps = false;
 
-  public const CONCLUIDO    = 1;
+  public const CONCLUIDO      = 1;
+  public const NO_CONCLUIDO   = 0;
   public const TIPO_NONE      = 0;
   public const TIPO_ESPERA    = 1;
   public const TIPO_ONLINE    = 2;
@@ -35,7 +36,7 @@ class LeccionSession extends Eloquent
   }
 
   public function concluir ($fecha = false) {
-    $this->Les_DateFin = $fecha ? $fehca : DB::raw('NOW()');
+    $this->Les_DateFin = $fecha ? $fecha : DB::raw('NOW()');
     $this->Les_Concluido = LeccionSession::CONCLUIDO;
     $this->save();
   }

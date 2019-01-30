@@ -138,8 +138,8 @@ class claseController extends elearningController {
 			$session_activa = $obj_leccion->getSessionActiva();
 			$this->_view->assign('hash_session_activa', $session_activa->Les_Hash . '-' . $session_activa->Les_IdLeccSess);
 		}
-		var_dump($data);
-		exit;
+		// var_dump($data);
+		// exit;
 		// if($DT_ACTUAL < $DT_DESDE){
 		//   $this->_view->render("clase_falta");
 		//   exit;
@@ -322,11 +322,12 @@ class claseController extends elearningController {
 								$ls->Les_Padre = $espera_session->Les_IdLeccSess;
 							}
 							$ls->Lec_IdLeccion = $leccion;
-							$ls->Les_DateInicio = DB::raw('NOW()');
+              $ls->Les_DateInicio = DB::raw('NOW()');
+              $ls->Les_Tipo = LeccionSession::TIPO_ONLINE;
 							//APLICAR HASH ÚNICO PARA CADA LESSION
-							do {
-								$thash = Leccion::hashLeccion($leccion, $docente_id, (new DateTime("now"))->format('Y-m-d'));
-							} while (LeccionSession::existeHash($thash, true));
+							// do {
+							$thash = Leccion::hashLeccion($leccion, $docente_id, (new DateTime("now"))->format('Y-m-d H:i:s'));
+							// } while (LeccionSession::existeHash($thash, true));
 							// $ls->Les_Hash = Leccion::hashLeccion($leccion, $docente_id, (new DateTime("now"))->format('Y-m-d'));
 							$ls->Les_Hash = $thash;
 							$ls->save();

@@ -230,8 +230,8 @@ $(document).ready(() => {
         this.LECCION.SESSION_ID = hs[1]
         this.LECCION.SESSION_HASH = hs[0]
         this.socketChat = new AppSocket({query: "id=" + USUARIO.id + 
-          "&curso=" + USUARIO.curso + 
-          "&tipo=10&leccion=" + LMS_LECCION + 
+          "&cursos=" + USUARIO.curso +898 +
+          "&tipob=10&leccion=" + LMS_LECCION + 
           "&docente=" + USUARIO.docente + 
           '&leccion_session=' + hs[1] + 
           '&leccion_session_hash=' + hs[0] }, base_url('socket_chat', true))

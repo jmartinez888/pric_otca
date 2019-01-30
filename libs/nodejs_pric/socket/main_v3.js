@@ -52,6 +52,7 @@ module.exports = function(app, test){
     })
   }
   io.of('/socket_canvas').on('connection', socket => {
+    
     let mi_nombre = 'ALUMNO-' + get(socket).id
     let tipo = get(socket).tipo;
     let alumno_id = get(socket).id;
@@ -61,78 +62,90 @@ module.exports = function(app, test){
     var leccion = buscar_leccion(leccion_id);
 
     
-    console.log('[' + (tipo == TIPO.CANVAS ? 'CANVAS' : 'CHAT') + ' SOCKET-ID : ' + socket.id + ']')
+    console.log('[' + (+tipo == TIPO.CANVAS ? 'CANVAS' : 'CHAT') + ' SOCKET-ID : ' + socket.id + ']')
     console.log('------------------------------------------------------------------------------');
     console.log("************USUARIO >>> [ID:" + get(socket).id + '-' + (get(socket).docente == 1 ? 'DOC' : 'ALU') + '], [TIPO:' + get(socket).tipo + "], [LECCION:" + get(socket).leccion + "]");
     console.log('[' + leccion_session_hash + '-' + leccion_session + ']')
     console.log('------------------------------------------------------------------------------');
 
-
-    
-      //solo el que ionició la clase puede enviar datos al canvas
-      if (+get(socket).docente == 0) {
-        console.log('soy un alumno')
-        console.log('hola profe soy ' + mi_nombre)
-        //el alumo informa de una al docente que se conectó
-        io.emit('conexion_alumno', {success: true, name: mi_nombre})
-      } else {
-        console.log('soy docente')
-        console.log('hola alumno soy ' + mi_nombre)//p´rofesor
-        socket.emit('conexion_docente', {success: true})
-
-        socket.on('send_all_data_canvas', canvas_json => {
-          console.log(canvas_json)
-          socket.broadcast.emit('all_data_canvas', canvas_json)
-        })
-      }
-
-      socket.on('render_img', function(msg){
-        var result = { base64: msg }
-        console.log(msg)
-        io.emit('show_img', result);
-      });
-
-      socket.on('pos_cursor', (pos) => {
-        // console.log(pos)
-        socket.broadcast.emit('move_mouse', pos)
-      })
-
-      socket.on('limpiar_canvas', (pos) => {
-        socket.broadcast.emit('alumnos_limpiar_canvas', pos)
-      })
-
-      socket.on('eliminar_objetos', (ids) => {
-        socket.broadcast.emit('alumnos_eliminar_objetos', ids)
-      })
-      socket.on('change_object', (pos) => {
-        // console.log(pos)
-        socket.broadcast.emit('change_object_alumno', pos)
-      })
-      socket.on('create_object', (pos) => {
-        // console.log(pos)
-        socket.broadcast.emit('change_object_alumno', pos)
-      })
+    let nameRoom = 'ROOM-CANVAS-' + leccion_session;
+    socket.join(nameRoom)
+    socket.on('INIT_CANVAS', (msg) => {
+      console.log(msg)
+      console.log(nameRoom)
+      socket.on('CONFIRMACARGACANVAS', () => {
+        //solo el que ionició la clase puede enviar datos al canvas
+        if (+get(socket).docente == 0) {
+          console.log('soy un alumno')
+          console.log('hola profe soy ' + mi_nombre)
+          //el alumo informa de una al docente que se conectó
+          socket.to(nameRoom).emit('conexion_alumno', {success: true, name: mi_nombre})
+        } else {
+          console.log('soy docente')
+          console.log('hola alumno soy ' + mi_nombre)//p´rofesor
+          // socket.emit('conexion_docente', {success: true})
+          
+          socket.on('render_img', function(msg){
+            var result = { base64: msg }
+            console.log(msg)
+            io.emit('show_img', result);
+          });
       
-      socket.on('disconnect', () => {
-        console.log('>>> DISSCONECT ' + (tipo == TIPO.CHAT ? 'CHAT' : 'CANVAS'))
-        // let leccionremove = buscar_leccion(leccion_id);
-        // if (tipo == 10) {
-        //   leccionremove.usuarios.forEach((v, i) => {
-        //     if (v.id == alumno_id) {
-        //       leccionremove.usuarios.splice(i, 1)
-        //     }
-        //   })
-        //   // io.emit('TOTALES_LECCION', {conectados: leccion.usuarios.length, usuario: null});
-        //   socket.broadcast.emit('LEAVE_CONNECTION', {id: alumno_id})
-        // }
+          socket.on('pos_cursor', (pos) => {
+            // console.log(pos)
+            socket.broadcast.to(nameRoom).emit('move_mouse', pos)
+          })
+      
+          socket.on('limpiar_canvas', (pos) => {
+            socket.broadcast.to(nameRoom).emit('alumnos_limpiar_canvas', pos)
+          })
+      
+          socket.on('eliminar_objetos', (ids) => {
+            socket.broadcast.to(nameRoom).emit('alumnos_eliminar_objetos', ids)
+          })
+          socket.on('change_object', (pos) => {
+            // console.log(pos)
+            socket.broadcast.to(nameRoom).emit('change_object_alumno', pos)
+          })
+          socket.on('create_object', (pos) => {
+            // console.log(pos)
+            socket.broadcast.to(nameRoom).emit('change_object_alumno', pos)
+          })
   
+          socket.on('send_all_data_canvas', canvas_json => {
+            console.log(canvas_json)
+            socket.broadcast.to(nameRoom).emit('all_data_canvas', canvas_json)
+          })
+        }
       })
+      socket.emit('SESSION_CANVAS_SUCCESS', {success: true})
+
+
+    })
+    socket.on('disconnect', () => {
+      console.log('>>> DISSCONECT ' + (tipo == TIPO.CHAT ? 'CHAT' : 'CANVAS'))
+      // let leccionremove = buscar_leccion(leccion_id);
+      // if (tipo == 10) {
+      //   leccionremove.usuarios.forEach((v, i) => {
+      //     if (v.id == alumno_id) {
+      //       leccionremove.usuarios.splice(i, 1)
+      //     }
+      //   })
+      //   // io.emit('TOTALES_LECCION', {conectados: leccion.usuarios.length, usuario: null});
+      //   socket.broadcast.emit('LEAVE_CONNECTION', {id: alumno_id})
+      // }
+
+    })
+    
+   
+
     
   })
 
   io.of('/socket_chat').on('connection', socket => {
     let mi_nombre = 'ALUMNO-' + get(socket).id
-    let tipo = get(socket).tipo;
+    let tipo = get(socket).tipob;
+    
     let usuario_id = get(socket).id;
     let leccion_id = get(socket).leccion;
     let leccion_session = get(socket).leccion_session;
@@ -142,7 +155,7 @@ module.exports = function(app, test){
     
     console.log('[' + (tipo == TIPO.CANVAS ? 'CANVAS' : 'CHAT') + ' SOCKET-ID : ' + socket.id + ']')
     console.log('------------------------------------------------------------------------------');
-    console.log("************USUARIO >>> [ID:" + get(socket).id + '-' + (get(socket).docente == 1 ? 'DOC' : 'ALU') + '], [TIPO:' + get(socket).tipo + "], [LECCION:" + get(socket).leccion + "]");
+    console.log("************USUARIO >>> [ID:" + get(socket).id + '-' + (get(socket).docente == 1 ? 'DOC' : 'ALU') + '], [TIPO:' + tipo + "], [LECCION:" + get(socket).leccion + "]");
     console.log('[' + leccion_session_hash + '-' + leccion_session + ']')
     console.log('------------------------------------------------------------------------------');
 
@@ -264,7 +277,7 @@ module.exports = function(app, test){
       
       socket.leave(nameRoom);
       socket.leave(socket.id);
-      console.log('>>> DISSCONECT ' + (tipo == TIPO.CHAT ? 'CHAT' : 'CANVAS'))
+      console.log('>>> DISSCONECT ' + (+tipo == TIPO.CHAT ? 'CHAT' : 'CANVAS'))
       console.log('DISCONECT EN : ' + leccion_asistencia_detalles_id)
       if (leccion_asistencia_detalles_id != 0)
         ModLeccionAsistenciaDetalles.finalizarConexionActiva(leccion_asistencia_detalles_id);

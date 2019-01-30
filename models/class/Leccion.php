@@ -54,6 +54,7 @@ class Leccion extends Eloquent
   public function getSessionEnEspera ($fecha) {
     return $this->sessiones()->where('Les_Concluido', 0)
       ->where('Les_Tipo', LeccionSession::TIPO_ESPERA)
+      ->where('Les_Concluido', LeccionSession::NO_CONCLUIDO)
       ->where(DB::raw('DATE(Les_DateInicio)'), $fecha)
       ->orderBy('Les_DateInicio', 'asc')->first();
   }
