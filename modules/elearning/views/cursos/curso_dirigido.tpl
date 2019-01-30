@@ -171,9 +171,6 @@
             {/foreach}
           </div>
           {/if}
-
-
-
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding-top: 10px; position: relative">
 
         {if $session==1}
@@ -234,6 +231,11 @@
                 <button class="btn btn-default btn-gestion">{$lang->get('elearning_cursos_gestion_curso')}</button>
               </a>
             {/if}
+          {/if}
+          {if $curso.Usu_IdUsuario == Session::get("id_usuario")}
+          <a href="{BASE_URL}elearning/gestion/matriculados/{$curso.Cur_IdCurso}">
+                <button class="btn btn-default btn-gestion">{$lang->get('elearning_cursos_gestion_curso')}</button>
+          </a>
           {/if}
         {else}
           <div class="col-lg-12 anuncio">
