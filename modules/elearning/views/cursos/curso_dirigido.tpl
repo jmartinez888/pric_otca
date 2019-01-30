@@ -4,7 +4,7 @@
 
 <div class="col-lg-12">
   <div class="col-lg-12 referencia-curso-total">
-    <a class="referencia-curso" href="{BASE_URL}elearning/cursos/">{$lang->get('elearning_cursos_cursos')}</a>  /  {$curso.Cur_Titulo}
+    <a class="referencia-curso" href="{BASE_URL}elearning/cursos/">Cursos</a>  /  {$curso.Cur_Titulo}
   </div>
   {include file='modules/elearning/views/cursos/menu/lateral.tpl'}
   <div class="col-xs-12 col-sm-12 col-md-9 col-lg-10" style="margin-top: 20px; ">
@@ -13,7 +13,7 @@
         <div class="panel-body">
           <div class="col-lg-12" style="padding-left: 0px; padding-right: 0px;">
             <div class="col-lg-3 img-curso">
-              <img class="w-100" src="{BASE_URL}files/elearning/cursos/img/portada/{$curso.Cur_UrlBanner}" />
+              <img class="w-100" src="{BASE_URL}modules/elearning/views/cursos/img/portada/{$curso.Cur_UrlBanner}" />
               {if $curso.Moa_IdModalidad == 2}
               <div class="col-xs-12 text-center " style="background: #2196F3; color: white; font-weight: bold; font-size: 18px;">LMS</div>
               {/if}
@@ -27,7 +27,9 @@
             </div>
 
             <div class="col-lg-3 row ic-sociales sharepost no-print" >
-
+                <!-- <a class="btn fa fa-facebook im_sociales" id="im_sociales" style="background: #3B5998" href="#"></a>
+                <a class="btn fa fa-twitter im_sociales" id="im_sociales" style="background: #55ACEE" href="#"></a>
+                <a class="btn fa fa-google-plus im_sociales" id="im_sociales" style="background: #C03A2A" href="#"></a> -->
                 <ul class="list-inline">
                   <li class="facebook">
                     <div class="icon">
@@ -69,7 +71,7 @@
               <div class="col-lg-12">
                 <i class="glyphicon glyphicon-time" style="color: #16B8AD; font-size: 25px"></i>
                 <br>
-                <strong style="color: #393939; font-size: 16px">{$curso.Cur_Duracion|default:$duracion} {$lang->get('elearning_cursos_cant_lecciones')}</strong>
+                <strong style="color: #393939; font-size: 16px">{$curso.Cur_Duracion|default: $duracion}</strong>
                 <br><br>
               </div>
 
@@ -98,6 +100,12 @@
       <div class="col-lg-12 text-curso">
         <div>{$curso.Cur_Descripcion}</div> <br/>
       </div>
+
+     <!--  <div class="col-lg-12 text-curso">
+        <a href="{BASE_URL}elearning/cursos/calendario_curso/{$curso.Cur_IdCurso}" class="btn btn-success">
+          <span class="glyphicon glyphicon-calendar"></span> Ver Calendario
+        </a>
+      </div> -->
 
           {if isset($objetivos) && count($objetivos)>0}
           <div class="col-xs-12 text-curso">
@@ -142,6 +150,9 @@
             &nbsp;{$lang->get('str_contacto')}</strong></div>
             <div style="padding-left: 25px">
               {$curso.Cur_Contacto|default:"---"}
+              <!-- <a href="{BASE_URL}elearning/cursos/ficha/{$curso.Cur_IdCurso}" style="display: inline-block;">
+                {$lang->get('str_detalle')}
+              </a> -->
             </div> <br/>
           </div>
           {/if}
@@ -198,6 +209,14 @@
                   </div>
 
 
+                  <!--{if ($session==1 && isset($inscripcion) && count($inscripcion)>0 && $inscripcion[0].Mat_Valor==1) && ($curso.Usu_IdUsuario != Session::get('id_usuario')) }
+                    <a href="{BASE_URL}elearning/clase/clase/{$curso.Cur_IdCurso}"><button class="btn btn-success">ir a clase</button></a>
+                  {/if}
+                  {if $curso.Usu_IdUsuario == Session::get('id_usuario')}
+                    <a href="{BASE_URL}elearning/clase/clase/{$curso.Cur_IdCurso}"><button class="btn btn-success">Dar clase</button></a>
+                  {/if}-->
+
+
                 </div>
                 {/if}
 
@@ -238,7 +257,8 @@
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 xxxxxxxxxxxx">
         {$index = 1} {$iniciar = 0}
         {foreach from=$modulo item=o}
-          <div class="ficha-mod col-xs-12 col-sm-12 col-md-12 col-lg-12" data-id-modulo="{$o.Moc_IdModuloCurso}" style="padding-bottom: 15px; margin-top: 15px">
+         <!-- <div class="ficha-mod col-xs-12 col-sm-12 col-md-12 col-lg-12" data-id-modulo="{$o.Moc_IdModuloCurso}" style="padding-bottom: 15px; margin-top: 15px">-->
+          <div class="ficha-mod col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding-bottom: 15px; margin-top:15px">
             <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2" style="padding: 0px; text-align: center;">
               <img class="w-100 img-modulo pr-5 pl-5" class="img-modulo" src="{BASE_URL}modules/elearning/views/cursos/img/contador-modulo-{$index}.png"/>
               <div class="col col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -259,7 +279,8 @@
             {/if}
 
           </div>
-          <div class="modulo-lecciones" data-ref-modulo="{$o.Moc_IdModuloCurso}" style="display: none">
+          <!--  <div class="modulo-lecciones" data-ref-modulo="{$o.Moc_IdModuloCurso}" style="display: none">-->
+          <div class="modulo-lecciones">
           {foreach from=$o.LECCIONES item=l}
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding-left: 0px; padding-right: 0px;">
               <div class="ficha-leccion {if $l.Activo==1}lec-lms-activo{/if}">
@@ -317,10 +338,7 @@
       </div>
       </div>
       {/if}
-
-
-
-
+      
       {if $session==1}
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"> <!-- RODRIGO 20180607 -->
         <label style="margin-top: 20px; font-size:16px">{$lang->get('elearning_cursos_calificar_curso')}</label>
