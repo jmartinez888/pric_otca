@@ -3,9 +3,15 @@ var mivue = new Vue({
 	el: '#modulo-contenedor',
 	data: function () {
 		return {
+			altura_opciones: 64,
 			razoncambio: 1.77777777,
+			LECCION: {
+				ID: 0,
+				SESSION_ID: 0,
+				SESSION_HASH: ''
+			},
 			canvas_leccion: [],
-			show_tools: false,
+			show_tools: true,
 			obj_canvas: null,
 			current_element: 'none',
 			current_type: 'none',
@@ -34,6 +40,26 @@ var mivue = new Vue({
 				fill: '#000000'
 			}
 		}
+	},
+	watch: {
+		'opcelements.stroke': function (nv, ov) {
+			this.onClick_renderCanvas();
+		},
+		'opcelements.fill': function (nv, ov) {
+			this.onClick_renderCanvas();
+		},
+		'opcelements.strokeWidth': function (nv, ov) {
+			this.onClick_renderCanvas();
+		},
+		'opcelements.angle': function (nv, ov) {
+			this.onClick_renderCanvas();
+		},
+		'opcelements.fontSize': function (nv, ov) {
+			this.onClick_renderCanvas();
+		},
+		'opcelements.text': function (nv, ov) {
+			this.onClick_renderCanvas();
+		},
 	},
 	methods: {
 		fnOnResize_PanelPizarra: function (e) {
@@ -123,7 +149,10 @@ var mivue = new Vue({
 
 		},
 		showIn: function (opciones) {
-			return opciones.find(v => v == this.current_type) == undefined ? false : true
+			if (typeof opciones == 'string') {
+				return opciones == 'all'
+			} else
+				return opciones.find(v => v == this.current_type) == undefined ? false : true
 		},
 		onClick_eliminarLimpiar: function () {
 			canvasdocente.clear()
@@ -306,7 +335,11 @@ var mivue = new Vue({
 	},
 	created: function () {
 		console.log('creta!')
-		// this.objSocket = new AppSocket({query: "id=" + USUARIO.id + "&curso=" + USUARIO.curso + "&tipo=2&leccion=" + LMS_LECCION + "&docente=" + USUARIO.docente}, base_url('socket_canvas', true))
+		let hs = HASH_SESSION.split('-');
+		this.LECCION.ID = LMS_LECCION
+		this.LECCION.SESSION_ID = hs[1]
+		this.LECCION.SESSION_HASH = hs[0]
+		this.objSocket = new AppSocket({query: "id=" + USUARIO.id + "&curso=" + USUARIO.curso + "&tipo=2&leccion=" + LMS_LECCION + "&docente=" + USUARIO.docente + '&leccion_session=' + this.LECCION.SESSION_ID + '&leccion_session_hash=' + this.LECCION.SESSION_HASH}, base_url('socket_canvas', true))
 
 		//se coencto un alumno?
 
@@ -317,12 +350,13 @@ var mivue = new Vue({
 		
 		document.getElementById('tag-body').onresize = this.fnOnResize_PanelPizarra;
 		
-		this.$refs.opciones_canvas.classList.remove('hidden')
+		// this.$refs.opciones_canvas.classList.remove('hidden')
 
 		this.$refs.panel_pizarra_final.classList.remove('hidden')
 		this.$refs.micanvas.width = this.$refs.panel_pizarra_final.offsetWidth - 4
 
 		let altura = (this.$refs.micanvas.width/this.razoncambio);
+		
 
 		this.$refs.chatPanel.classList.remove('hidden')
 		this.$refs.pizarraPanel.classList.remove('hidden')
@@ -331,11 +365,11 @@ var mivue = new Vue({
 		this.$refs.pizarraPanel.style.height = (altura - this.$refs.navsPanel.offsetHeight) + 'px'
 		let tabCH = this.$refs.navsPanel.offsetHeight + 75
 		let tabBMT = this.$refs.navsPanel.offsetHeight + 30
-		$('#chat-msn-body')[0].style.height = (altura - tabCH) + 'px'
-		$('#chat-msn-body-usuarios')[0].style.height = (altura - tabBMT) + 'px'
+		$('#chat-msn-body')[0].style.height = (altura + this.altura_opciones - tabCH) + 'px'
+		$('#chat-msn-body-usuarios')[0].style.height = (altura + this.altura_opciones - tabBMT) + 'px'
 
-		this.$refs.refContainerChatPizarra.style.height = altura + 'px'
-		this.$refs.panel_pizarra_final.style.height = altura + 'px'
+		this.$refs.refContainerChatPizarra.style.height = (altura + this.altura_opciones) + 'px'
+		this.$refs.panel_pizarra_final.style.height = (altura + this.altura_opciones) + 'px'
 		// this.$refs.panel_pizarra_final.offsetWidth
 		this.$refs.micanvas.height = altura - 2
 
@@ -363,14 +397,18 @@ var mivue = new Vue({
 		});
 
 		this.objSocket.init(() => {
-
-			this.objSocket.on('conexion_alumno', res => {
-				//docente recive la conexión de un alumno y envia los datos del canvas
-				console.log('alumno conectado')
-				console.log(res)
-				if (res.success)
-					this.objSocket.emit('send_all_data_canvas', canvasdocente.toJSON())
+			this.objSocket.on('SESSION_CANVAS_SUCCESS', msg => {
+				console.log('SESSION_CANVAS_SUCCESS')
+				this.objSocket.on('conexion_alumno', res => {
+					//docente recive la conexión de un alumno y envia los datos del canvas
+					console.log('alumno conectado')
+					console.log(res)
+					if (res.success)
+						this.objSocket.emit('send_all_data_canvas', canvasdocente.toJSON())
+				})
+				this.objSocket.emit('CONFIRMACARGACANVAS','Iniciando desde docente')	
 			})
+			this.objSocket.emit('INIT_CANVAS','Iniciando desde docente')
 		})
 
 	}

@@ -94,6 +94,13 @@ class Model extends Eloquent{
 
     //Util Rodrigo Elearning
     public function getArray($query){
+        
+        // try {
+        //     $data = $this->_db->query($query);
+        // } catch (Exception $e) {
+        //     echo $query;
+        //     dd($e);
+        // }
         $data = $this->_db->query($query);
         return $data->fetchAll(PDO::FETCH_ASSOC);
     }
