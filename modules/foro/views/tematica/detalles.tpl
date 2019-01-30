@@ -21,7 +21,7 @@
 		<div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 p-rt-lt-0 text-right" style="margin-bottom: 15px; ">
 			<form class="form-inline" @submit.prevent="onSubmit_filtrarResultados">
 				<div class="form-group">
-					<input type="text" class="form-control" id="txt_buscar" placeholder="{$lang->get('str_buscar_en')}  {$tematica->Lit_Nombre|lower}" v-model="filter.text">
+					<input type="text" class="form-control" id="txt_buscar" placeholder="{$lenguaje['str_buscar_en']}  {$tematica->Lit_Nombre|lower}" v-model="filter.text">
 				</div>
 				<div class="form-group">
 					<label for="sel_tematica">Opciones</label>
