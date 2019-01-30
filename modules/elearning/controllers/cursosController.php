@@ -271,7 +271,7 @@ class cursosController extends elearningController {
       $this->_view->assign("inscritos", $inscritos);
       $this->_view->assign("titulo", $curso['Cur_Titulo']);
       $this->_view->assign("certificado", $certificado);
-      $this->_view->assign("duracion", $duracion["Total"]." ".$lang->get('elearning_cursos_cant_lecciones'));
+      $this->_view->assign("duracion", $duracion["Total"]);
       // dd($mModulo->getModulosCursoLMS($id, Session::get("id_usuario")));
       $this->_view->assign("modulo", $mModulo->getModulosCursoLMS($id, Session::get("id_usuario"), Cookie::lenguaje()));
       $this->_view->assign("session", Session::get("autenticado"));
