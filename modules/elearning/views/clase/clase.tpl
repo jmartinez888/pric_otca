@@ -186,31 +186,27 @@
                 </div>
                 <div class="col-sm-9 container-canvas-pizarra">
                   <div id="panel-pizarra-final" class="hidden w-100" ref="panel_pizarra_final">
+                    <div class="canvas-ssss">
+                      <canvas height="0px" width="0px" ref="micanvas" id="micanvas" class="no-seleccionablex"></canvas>
+                    </div>
+                    {* <img ref="temporal" src="" alt="" height="400px" width="650px"> *}
                     {if $is_docente}
-                    <div id="herramientas-canvas" style="" class="no-seleccionable">
-                      <div @mouseleave="show_tools = false">
+                    <div id="herramientas-canvas_v2" style="" class="no-seleccionable">
+                      {* <div @mouseleave="show_tools = false"> *}
+                      <div>
 
-                        <button :class="{ hidden: !show_tools }" class="toolscanvas" @click="onClick_createObject('normal')"><i
-                            class="glyphicon glyphicon-screenshot"></i></button>
-                        <button :class="{ hidden: !show_tools }" class="toolscanvas" @click="onClick_createObject('lapiz')"><span
-                            class="glyphicon glyphicon-pencil"></span></button>
+                        <button :class="{ hidden: !show_tools }" class="toolscanvas" @click="onClick_createObject('normal')"><i class="glyphicon glyphicon-screenshot"></i></button>
+                        <button :class="{ hidden: !show_tools }" class="toolscanvas" @click="onClick_createObject('lapiz')"><span class="glyphicon glyphicon-pencil"></span></button>
                         {* <button :class="{hidden: !show_tools}" class="toolscanvas" @click="onClick_openCuadrado">animate</button>
                         *}
-                        <button :class="{ hidden: !show_tools }" type="button" class="toolscanvas" @click="onClick_createObject('rect')"><i
-                            class="glyphicon glyphicon-unchecked"></i></button>
-                        <button :class="{ hidden: !show_tools }" type="button" class="toolscanvas" @click="onClick_createObject('circulo')"><i
-                            class="glyphicon glyphicon-record"></i></button>
-                        <button :class="{ hidden: !show_tools }" class="toolscanvas" @click="onClick_createObject('texto')"><i
-                            class="glyphicon glyphicon-text-color"></i></button>
+                        <button :class="{ hidden: !show_tools }" type="button" class="toolscanvas" @click="onClick_createObject('rect')"><i class="glyphicon glyphicon-unchecked"></i></button>
+                        <button :class="{ hidden: !show_tools }" type="button" class="toolscanvas" @click="onClick_createObject('circulo')"><i class="glyphicon glyphicon-record"></i></button>
+                        <button :class="{ hidden: !show_tools }" class="toolscanvas" @click="onClick_createObject('texto')"><i class="glyphicon glyphicon-text-color"></i></button>
                         <button :class="{ hidden: !show_tools }" class="toolscanvas" @click="onClick_createObject('image')">
-                          <input @change="onChange_loadImage" ref="fileimg" id="fileimg" type="file" name="" value=""
-                            placeholder="" class="hidden">
-                          <label class="toolscanvas" style="font-weight: 100; margin-bottom: inherit;" for="fileimg" /><i
-                            class="glyphicon glyphicon-picture"></i></button>
-                        <button :class="{ hidden: !show_tools }" type="button" class="toolscanvas" @click="onClick_eliminarObjecto"><i
-                            class="glyphicon glyphicon-erase"></i></button>
-                        <button :class="{ hidden: !show_tools }" type="button" class="toolscanvas" @click="onClick_eliminarLimpiar"><i
-                            class="glyphicon glyphicon-trash"></i></button>
+                          <input @change="onChange_loadImage" ref="fileimg" id="fileimg" type="file" name="" value="" placeholder="" class="hidden">
+                          <label class="toolscanvas" style="font-weight: 100; margin-bottom: inherit;" for="fileimg" /><i class="glyphicon glyphicon-picture"></i></button>
+                        <button :class="{ hidden: !show_tools }" type="button" class="toolscanvas" @click="onClick_eliminarObjecto"><i class="glyphicon glyphicon-erase"></i></button>
+                        <button :class="{ hidden: !show_tools }" type="button" class="toolscanvas" @click="onClick_eliminarLimpiar"><i class="glyphicon glyphicon-trash"></i></button>
                         {* <button class="btnHerramienta herr_piz" id="btnCuadrado"><span class="glyphicon glyphicon-unchecked"></span></button>
                         <button class="btnHerramienta" id="btnEtiqueta"><span class="glyphicon glyphicon-tag"></span></button>
                         <button class="btnHerramienta herr_piz" id="btnTexto"><span class="glyphicon glyphicon-text-color"></span></button>
@@ -219,91 +215,89 @@
                         <button class="btnHerramienta herr_piz" id="btnCaptura"><span class="glyphicon glyphicon-facetime-video"></span></button>
                         <button class="btnHerramienta herr_piz" id="btnBorrarPizarra"><span class="glyphicon glyphicon-trash"></span></button>
                         *}
-                        <button id="btn_show_tool" :class="{ hidden: show_tools }" @mouseenter="onMouseenter_showTools"
-                          type="button" class=""><i class="glyphicon glyphicon-triangle-right"></i></button>
+                        {* <button id="btn_show_tool" :class="{ hidden: show_tools }" @mouseenter="onMouseenter_showTools" type="button" class=""><i class="glyphicon glyphicon-triangle-right"></i></button> *}
                       </div>
                     </div>
+                    <div id="opciones_canvas" ref="opciones_canvas" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 ">
+                      {* <form class="form-inline" role="form" @submit.prevent="onClick_renderCanvas"> *}
+                        {* <div class="tool-option tool-option-color-border" v-if="showIn(['text', 'rect', 'circle'])"> *}
+                        <div class="tool-option tool-option-color-border" v-if="showIn('all')">
+                          <label class="" for="">Borde</label>
+                          <div class="">
+                            <input type="color" class="" style="" v-model="opcelements.stroke">
+                          </div>
+                        </div>
+
+                        <div class="tool-option tool-option-color-relleno">
+                          <label class="label_options_object " for="" v-if="showIn(['lapiz'])">Color</label>
+                          <label class="label_options_object " for="" v-else>Relleno</label>
+                          {* <label class="label_options_object " for="" v-if="showIn('all')">Relleno</label> *}
+                          <div class="">
+                            <input type="color" class=" form-controlxx" style="" v-model="opcelements.fill">
+                          </div>
+                        </div>
+
+                        {* <div class="tool-option tool-option-border-ancho" v-if="showIn(['text', 'rect', 'circle'])"> *}
+                        <div class="tool-option tool-option-border-ancho" v-if="showIn('all')">
+                          <label class="label_options_object " for="">Ancho borde</label>
+                          <div class="">
+                            {* <input v-if="showIn(['rect', 'circle'])" type="number" min="0" step="0.1" class=" form-controlxx" style="" v-model="opcelements.strokeWidth">
+                            <input v-if="showIn(['text'])" type="number" min="0" step="0.1" class=" form-controlxx" style="" v-model="opcelements.strokeWidth"> *}
+                            <input v-if="showIn('all')" type="number" min="0" step="0.1" class=" form-controlxx" style="" v-model="opcelements.strokeWidth">
+                          </div>
+                        </div>
+
+                        {* <div class="tool-option tool-option-ancho" v-if="showIn(['lapiz'])"> *}
+                        {* ANCHO DE CAJA *}
+                        {* <div class="tool-option tool-option-ancho" v-if="showIn('all')">
+                          <label class="label_options_object " for="">Ancho</label>
+                          <div class="">
+                            <input type="number" min="1" step="1" class=" form-controlxx" style="" v-model="opcelements.strokeWidth">
+                          </div>
+                        </div> *}
+
+                        {* <div class="tool-option tool-option-angulo" v-if="showIn(['rect', 'circle'])"> *}
+                        {* NO HY AFUNCTION *}
+                        {* <div class="tool-option tool-option-angulo" v-if="showIn('all')">
+                          <label class="label_options_object " for="">Ángulo</label>
+                          <div class="">
+                            <input type="number" class=" form-controlxx" style="" v-model="opcelements.angle">
+                          </div>
+                        </div> *}
+
+                        {* <div class="tool-option tool-option-fuente-size" v-if="showIn(['text'])"> *}
+                        <div class="tool-option tool-option-fuente-size" v-if="showIn('all')">
+                          <label class="label_options_object " for="">Tamaño letra</label>
+                          <div class="">
+                            <input type="number" step="1" min="1" v-model="opcelements.fontSize" class=" form-controlxx" id="" placeholder="00">
+                          </div>
+                        </div>
+
+                        {* <div class="tool-option tool-option-texto" v-if="showIn(['text'])"> *}
+                        <div class="tool-option tool-option-texto" v-if="showIn('all')">
+                          <label class="label_options_object" for="">Texto</label>
+                          <div class="">
+                            <input type="text" v-model="opcelements.text" class="form-controlxx" placeholder="Ingresar texto">
+                          </div>
+                        </div>
+
+
+
+
+                        {* <div class="clearfix"></div> *}
+                        {* <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+
+                          <button type="submit" v-if="current_type != 'none'" class="btn btn-primary btm-sm">Actualizar</button>
+                        </div> *}
+
+                      {* </form> *}
+
+                    </div>
                     {/if}
-                    <canvas height="0px" width="0px" ref="micanvas" id="micanvas" class="no-seleccionablex"></canvas>
-                    <img ref="temporal" src="" alt="" height="400px" width="650px">
                   </div>
                 </div>
               </div>
-              {if $is_docente}
-              <div id="opciones_canvas" ref="opciones_canvas" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 hidden">
-                <form class="form-inline" role="form" @submit.prevent="onClick_renderCanvas">
-                  <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4" v-if="showIn(['text', 'rect', 'circle'])">
-                    <label class="label_options_object col-sm-6 col-md-6 col-lg-6" for="">Color borde</label>
-                    <div class="col-sm-6 col-md-6 col-lg-6">
-                      <input type="color" class="col-xs-12 col-md-12 col-sm-12 col-lg-12 form-controlxx" style=""
-                        v-model="opcelements.stroke">
-                    </div>
-                  </div>
-
-                  <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4" v-if="current_type != 'none'">
-                    <label class="label_options_object col-sm-6 col-md-6 col-lg-6" for="" v-if="showIn(['lapiz'])">Color</label>
-                    <label class="label_options_object col-sm-6 col-md-6 col-lg-6" for="" v-else>Color relleno</label>
-                    <div class="col-sm-6 col-md-6 col-lg-6">
-                      <input type="color" class="col-xs-12 col-md-12 col-sm-12 col-lg-12 form-controlxx" style=""
-                        v-model="opcelements.fill">
-                    </div>
-                  </div>
-
-                  <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4" v-if="showIn(['text', 'rect', 'circle'])">
-                    <label class="label_options_object col-sm-6 col-md-6 col-lg-6" for="">Ancho borde</label>
-                    <div class="col-sm-6 col-md-6 col-lg-6">
-                      <input v-if="showIn(['rect', 'circle'])" type="number" min="0" step="0.1" class="col-xs-12 col-md-12 col-sm-12 col-lg-12 form-controlxx"
-                        style="" v-model="opcelements.strokeWidth">
-                      <input v-if="showIn(['text'])" type="number" min="0" step="0.1" class="col-xs-12 col-md-12 col-sm-12 col-lg-12 form-controlxx"
-                        style="" v-model="opcelements.strokeWidth">
-                    </div>
-                  </div>
-
-                  <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4" v-if="showIn(['lapiz'])">
-                    <label class="label_options_object col-sm-6 col-md-6 col-lg-6" for="">Ancho</label>
-                    <div class="col-sm-6 col-md-6 col-lg-6">
-                      <input type="number" min="1" step="1" class="col-xs-12 col-md-12 col-sm-12 col-lg-12 form-controlxx"
-                        style="" v-model="opcelements.strokeWidth">
-                    </div>
-                  </div>
-
-                  <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4" v-if="showIn(['rect', 'circle'])">
-                    <label class="label_options_object col-sm-6 col-md-6 col-lg-6" for="">Ángulo</label>
-                    <div class="col-sm-6 col-md-6 col-lg-6">
-                      <input type="number" class="col-xs-12 col-md-12 col-sm-12 col-lg-12 form-controlxx" style=""
-                        v-model="opcelements.angle">
-                    </div>
-                  </div>
-
-                  <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4" v-if="showIn(['text'])">
-                    <label class="label_options_object col-sm-6 col-md-6 col-lg-6" for="">Fuente</label>
-                    <div class="col-sm-6 col-md-6 col-lg-6">
-                      <input type="number" step="1" min="1" v-model="opcelements.fontSize" class="col-xs-12 col-md-12 col-sm-12 col-lg-12 form-controlxx"
-                        id="" placeholder="00">
-                    </div>
-                  </div>
-
-                  <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4" v-if="showIn(['text'])">
-                    <label class="label_options_object col-xs-12 col-sm-5 col-md-4 col-lg-4" for="">Texto</label>
-                    <div class="col-xs-12 col-sm-7 col-md-8 col-lg-8">
-                      <input type="text" v-model="opcelements.text" class="col-xs-12 col-md-12 col-sm-12 col-lg-12 form-controlxx"
-                        placeholder="Ingresar texto">
-                    </div>
-                  </div>
-
-
-
-
-                  <div class="clearfix"></div>
-                  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-
-                    <button type="submit" v-if="current_type != 'none'" class="btn btn-primary btm-sm">Actualizar</button>
-                  </div>
-
-                </form>
-
-              </div>
-              {/if}
+              
             </div>
 
           </div>
@@ -315,7 +309,7 @@
           <div class="panel-heading">
             <h3 class="panel-title">
               <i class="glyphicon glyphicon-list-alt"></i>&nbsp;&nbsp;
-              <strong>Opcionesxxx</strong>
+              <strong>{$lang->get('str_opciones')}</strong>
             </h3>
           </div>
           <div class="panel-body" style="margin: 0px">

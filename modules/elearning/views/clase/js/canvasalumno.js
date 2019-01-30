@@ -5,6 +5,11 @@ new Vue({
 	data: function () {
 		return {
 			razoncambio: 1.77777777,
+			LECCION: {
+				ID: 0,
+				SESSION_ID: 0,
+				SESSION_HASH: ''
+			},
 			canvas_leccion: [],
 			obj_canvas: null,
 			elementos: [],
@@ -37,7 +42,11 @@ new Vue({
 	},
 	created: function () {
 		console.log('creta!')
-		this.objSocket = new AppSocket({query: "id=" + USUARIO.id + "&curso=" + USUARIO.curso + "&tipo=2&leccion=" + LMS_LECCION + "&docente=" + USUARIO.docente}, base_url('socket_canvas', true))
+		let hs = HASH_SESSION.split('-');
+		this.LECCION.ID = LMS_LECCION
+		this.LECCION.SESSION_ID = hs[1]
+		this.LECCION.SESSION_HASH = hs[0]
+		this.objSocket = new AppSocket({query: "id=" + USUARIO.id + "&curso=" + USUARIO.curso + "&tipo=2&leccion=" + LMS_LECCION + "&docente=" + USUARIO.docente + '&leccion_session=' + this.LECCION.SESSION_ID + '&leccion_session_hash=' + this.LECCION.SESSION_HASH}, base_url('socket_canvas', true))
 
 
 
@@ -103,130 +112,146 @@ new Vue({
 		}, 30)
 		// canvasalumno.loadFromJSON()
 		this.objSocket.init(() => {
-			this.objSocket.on('all_data_canvas', canvas_json => {
-				console.log(canvas_json)
-				console.log('recibiendo canvas')
-				canvasalumno.clear()
-				canvasalumno.loadFromJSON(canvas_json, () => {
-					console.log(canvasalumno.getObjects())
-					if (!this.start_leccion) {
-					// if (true) {
+			
+			this.objSocket.on('SESSION_CANVAS_SUCCESS', msg => {
+				console.log('SESSION_CANVAS_SUCCESS');
+				console.log(msg)
+				this.objSocket.on('all_data_canvas', canvas_json => {
+					console.log(canvas_json)
+					console.log('recibiendo canvas')
+					canvasalumno.clear()
+					canvasalumno.loadFromJSON(canvas_json, () => {
+						console.log(canvasalumno.getObjects())
+						if (!this.start_leccion) {
+						// if (true) {
+	
+							this.start_leccion = true
+						}
+					})
+				})
 
-						this.objSocket.on('change_object_alumno', (msg) => {
-							console.log(msg)
-							let temp = null
-							temp = canvasalumno.getObjects().find(v => {
-								return v.objeto_id == msg.id
-							})
-							let create_object = (msg.event == 'create')
-
-							if (create_object || (temp == undefined)) {
-								console.log('created ' + msg.data.type)
-								let xx = null
-								switch (msg.data.type) {
-									case 'rect':
-											msg.data.objeto_id = msg.id
-											xx = new fabric.Rect(msg.data)
-										break;
-									case 'circle':
-											msg.data.objeto_id = msg.id
-											xx = new fabric.Circle(msg.data)
-										break;
-									case 'image':
-
-											fabric.Image.fromURL(msg.dataUrl, (o) => {
-												console.log('iamgen cargada')
-												o.objeto_id = msg.id
-												canvasalumno.add(o)
-											})
-											// xx = new fabric.Circle(msg.data)
-										break;
-									case 'path':
-											msg.data.objeto_id = msg.id
-											// fabric.Path.fromObject(msg.data)
-											//revisar la optención de objeto mediante otro métdo
-											fabric.util.enlivenObjects([msg.data], objs => {
-												// canvasalumno.add(objs[0])
-												xx = objs[0]
-											})
-
-										break;
-									default:
-										console.log('created by default')
+				
+				this.objSocket.on('change_object_alumno', (msg) => {
+					console.log(msg)
+					let temp = null
+					if (this.start_leccion) {
+						temp = canvasalumno.getObjects().find(v => {
+							return v.objeto_id == msg.id
+						})
+						let create_object = (msg.event == 'create')
+	
+						if (create_object || (temp == undefined)) {
+							console.log('created ' + msg.data.type)
+							let xx = null
+							switch (msg.data.type) {
+								case 'rect':
 										msg.data.objeto_id = msg.id
-											// fabric.Path.fromObject(msg.data)
-											//revisar la optención de objeto mediante otro métdo
-											fabric.util.enlivenObjects([msg.data], objs => {
-												// canvasalumno.add(objs[0])
-												xx = objs[0]
-											})
-										break;
-								}
-								if (xx != null) {
-									// this.elementos.push(xx)
-									canvasalumno.add(xx)
-								}
+										xx = new fabric.Rect(msg.data)
+									break;
+								case 'circle':
+										msg.data.objeto_id = msg.id
+										xx = new fabric.Circle(msg.data)
+									break;
+								case 'image':
+	
+										fabric.Image.fromURL(msg.dataUrl, (o) => {
+											console.log('iamgen cargada')
+											o.objeto_id = msg.id
+											canvasalumno.add(o)
+										})
+										// xx = new fabric.Circle(msg.data)
+									break;
+								case 'path':
+										msg.data.objeto_id = msg.id
+										// fabric.Path.fromObject(msg.data)
+										//revisar la optención de objeto mediante otro métdo
+										fabric.util.enlivenObjects([msg.data], objs => {
+											// canvasalumno.add(objs[0])
+											xx = objs[0]
+										})
+	
+									break;
+								default:
+									console.log('created by default')
+									msg.data.objeto_id = msg.id
+										// fabric.Path.fromObject(msg.data)
+										//revisar la optención de objeto mediante otro métdo
+										fabric.util.enlivenObjects([msg.data], objs => {
+											// canvasalumno.add(objs[0])
+											xx = objs[0]
+										})
+									break;
 							}
-							if (temp != undefined) {
-								switch (msg.event) {
-									case 'modified':
-										console.log('modified')
-										temp.setOptions(msg.data)
-										break
-									case 'moving':
-										console.log('moving')
-										temp.set({ left: msg.data.x, top: msg.data.y })
-										break
-								}
+							if (xx != null) {
+								// this.elementos.push(xx)
+								canvasalumno.add(xx)
 							}
+						}
+						if (temp != undefined) {
+							switch (msg.event) {
+								case 'modified':
+									console.log('modified')
+									temp.setOptions(msg.data)
+									break
+								case 'moving':
+									console.log('moving')
+									temp.set({ left: msg.data.x, top: msg.data.y })
+									break
+							}
+						}
+					}
 
-						})
-						this.objSocket.on('show_img', (msg) => {
-							fabric.util.enlivenObjects(msg.base64, (objects) => {
-							  var origRenderOnAddRemove = canvasalumno.renderOnAddRemove;
-							  canvasalumno.renderOnAddRemove = false;
-							  canvasalumno.clear();
-							  objects.forEach((o) => {
-							    canvasalumno.add(o);
-							    // canvasalumno.add(objects[0]);
-							  });
+				})
+				this.objSocket.on('show_img', (msg) => {
+					if (this.start_leccion) {
 
-							  canvasalumno.renderOnAddRemove = origRenderOnAddRemove;
-							  canvasalumno.renderAll();
+						fabric.util.enlivenObjects(msg.base64, (objects) => {
+							var origRenderOnAddRemove = canvasalumno.renderOnAddRemove;
+							canvasalumno.renderOnAddRemove = false;
+							canvasalumno.clear();
+							objects.forEach((o) => {
+								canvasalumno.add(o);
+								// canvasalumno.add(objects[0]);
 							});
-							console.log('recive on')
-							// theimage = msg.base64
-							// fabric.Image.fromURL(msg.base64, (oImg) => {
-							// 		oImg.set('selectable', false)
-							// 		canvasalumno.clear();
-							// 		canvasalumno.add(oImg);
-							// 	  // theimage = oImg
-							// });
-
-
-							// canvasalumno.loadFromJSON('{"objects":[{"type":"rect","left":50,"top":50,"width":20,"height":20,"fill":"green","overlayFill":null,"stroke":null,"strokeWidth":1,"strokeDashArray":null,"scaleX":1,"scaleY":1,"angle":0,"flipX":false,"flipY":false,"opacity":1,"selectable":true,"hasControls":true,"hasBorders":true,"hasRotatingPoint":false,"transparentCorners":true,"perPixelTargetFind":false,"rx":0,"ry":0},{"type":"circle","left":100,"top":100,"width":100,"height":100,"fill":"red","overlayFill":null,"stroke":null,"strokeWidth":1,"strokeDashArray":null,"scaleX":1,"scaleY":1,"angle":0,"flipX":false,"flipY":false,"opacity":1,"selectable":true,"hasControls":true,"hasBorders":true,"hasRotatingPoint":false,"transparentCorners":true,"perPixelTargetFind":false,"radius":50}],"background":"rgba(0, 0, 0, 0)"}')
-						})
-						this.objSocket.on('move_mouse', (pos) => {
-							if (this.cursor_alumno != null)
-								this.cursor_alumno.set({ left: pos.x, top: pos.y });
-							// canvasalumno.renderAll()
-						})
-						this.objSocket.on('alumnos_limpiar_canvas', res => {
-							canvasalumno.clear()
-						})
-
-						this.objSocket.on('alumnos_eliminar_objetos', res => {
-							let objs = canvasalumno.getObjects()
-							objs.forEach(v => {
-								if (res.find(x => x == v.objeto_id) != undefined)
-									canvasalumno.remove(v)
-							})
-
-						})
-						this.start_leccion = true
+	
+							canvasalumno.renderOnAddRemove = origRenderOnAddRemove;
+							canvasalumno.renderAll();
+						});
+						console.log('recive on')
+						// theimage = msg.base64
+						// fabric.Image.fromURL(msg.base64, (oImg) => {
+						// 		oImg.set('selectable', false)
+						// 		canvasalumno.clear();
+						// 		canvasalumno.add(oImg);
+						// 	  // theimage = oImg
+						// });
+	
+	
+						// canvasalumno.loadFromJSON('{"objects":[{"type":"rect","left":50,"top":50,"width":20,"height":20,"fill":"green","overlayFill":null,"stroke":null,"strokeWidth":1,"strokeDashArray":null,"scaleX":1,"scaleY":1,"angle":0,"flipX":false,"flipY":false,"opacity":1,"selectable":true,"hasControls":true,"hasBorders":true,"hasRotatingPoint":false,"transparentCorners":true,"perPixelTargetFind":false,"rx":0,"ry":0},{"type":"circle","left":100,"top":100,"width":100,"height":100,"fill":"red","overlayFill":null,"stroke":null,"strokeWidth":1,"strokeDashArray":null,"scaleX":1,"scaleY":1,"angle":0,"flipX":false,"flipY":false,"opacity":1,"selectable":true,"hasControls":true,"hasBorders":true,"hasRotatingPoint":false,"transparentCorners":true,"perPixelTargetFind":false,"radius":50}],"background":"rgba(0, 0, 0, 0)"}')
 					}
 				})
+				this.objSocket.on('move_mouse', (pos) => {
+					if (this.cursor_alumno != null && this.start_leccion)
+						this.cursor_alumno.set({ left: pos.x, top: pos.y });
+					// canvasalumno.renderAll()
+				})
+				this.objSocket.on('alumnos_limpiar_canvas', res => {
+					canvasalumno.clear()
+				})
+
+				this.objSocket.on('alumnos_eliminar_objetos', res => {
+					if (this.start_leccion) {
+						let objs = canvasalumno.getObjects()
+						objs.forEach(v => {
+							if (res.find(x => x == v.objeto_id) != undefined)
+								canvasalumno.remove(v)
+						})
+					}
+
+				})
+				this.objSocket.emit('CONFIRMACARGACANVAS', 'confirmado')
 			})
+			this.objSocket.emit('INIT_CANVAS', 'Iniciando desde alumno');
 		})
 	}
 })

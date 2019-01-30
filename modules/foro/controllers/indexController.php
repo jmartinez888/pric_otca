@@ -55,8 +55,9 @@ class indexController extends foroController {
 	}
 
 	public function forum() {
+		$lenguaje = Session::get("fileLenguaje");
 		$this->_view->setTemplate(LAYOUT_FRONTEND);
-		$this->_view->assign('titulo', "Discusiones");
+		$this->_view->assign('titulo', $Lenguaje["str_discusion"]);
 		$this->_view->setCss(array("jp-index"));
 		$this->_view->setJs(array('buscar_foro'));
 
@@ -68,8 +69,9 @@ class indexController extends foroController {
 	}
 
 	public function query() {
+		$lenguaje = Session::get("fileLenguaje");
 		$this->_view->setTemplate(LAYOUT_FRONTEND);
-		$this->_view->assign('titulo', "Consultas");
+		$this->_view->assign('titulo', $Lenguaje["str_consultas"]);
 		$this->_view->setCss(array("jp-index"));
 		$this->_view->setJs(array('buscar_foro'));
 
