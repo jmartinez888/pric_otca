@@ -42,13 +42,24 @@ class trabajoModel extends Model {
 		$this->execQuery($sql);
 	}
 
-	public function getTrabajoXLeccion($leccion){
+	public function getTrabajoXLeccion($leccion, $Idi_IdIdioma = "es"){
 			$sql = "SELECT
-							T.*,
-							(CASE WHEN NOW() BETWEEN Tra_FechaDesde AND Tra_FechaHasta THEN 1 ELSE 0 END) as Activo,
-							(CASE WHEN NOW() < Tra_FechaDesde THEN 1
-							ELSE (CASE WHEN NOW() > Tra_FechaHasta THEN 2 ELSE 0 END) END) as Condicion
-						FROM trabajo_leccion T
+						T.Tra_IdTrabajo,
+						T.Lec_IdLeccion,
+						T.Tra_Tipo,
+						fn_TraducirContenido('leccion','Tra_Titulo',T.Tra_IdTrabajo,'$Idi_IdIdioma',T.Tra_Titulo) Tra_Titulo,
+                		fn_TraducirContenido('leccion','Tra_Descripcion',T.Tra_IdTrabajo,'$Idi_IdIdioma',T.Tra_Descripcion) Tra_Descripcion,                
+						T.Tra_FechaDesde,
+						T.Tra_FechaHasta,
+						T.Tra_FechaReg,
+						T.Tra_Estado,
+						T.Row_Estado,
+						T.Tra_Porcentaje,
+                		fn_devolverIdioma('leccion',T.Tra_IdTrabajo,'$Idi_IdIdioma',T.Idi_IdIdioma) Idi_IdIdioma,
+						(CASE WHEN NOW() BETWEEN Tra_FechaDesde AND Tra_FechaHasta THEN 1 ELSE 0 END) as Activo,
+						(CASE WHEN NOW() < Tra_FechaDesde THEN 1
+						ELSE (CASE WHEN NOW() > Tra_FechaHasta THEN 2 ELSE 0 END) END) as Condicion
+					FROM trabajo_leccion T
             WHERE T.Row_Estado = 1 AND T.Tra_Estado = 1 AND T.Lec_IdLeccion = {$leccion}";
 			return $this->getArray($sql);
 	}

@@ -307,7 +307,7 @@ class cursosController extends elearningController {
       //if(!$Lmodel->validarLeccion($leccion, $modulo, Session::get("id_usuario"))){ $this->redireccionar("elearning/cursos"); }
       $obj_curso = $Cmodel::find($curso);
 
-      $lecciones = $Lmodel->getLecciones($modulo, Session::get("id_usuario"));
+      $lecciones = $Lmodel->getLecciones($modulo, Session::get("id_usuario"), Cookie::lenguaje());
       // $examenes= $Emodel->getExamensModulo($modulo);
 
       // $datos_modulo = $Mmodel->getModuloDatos($OLeccion["Moc_IdModuloCurso"]);
@@ -330,14 +330,14 @@ class cursosController extends elearningController {
       //   }
       // }
       if ($leccion) {
-          $OLeccion = $Lmodel->getLeccion($leccion, $modulo, Session::get("id_usuario"));
+          $OLeccion = $Lmodel->getLeccion($leccion, $modulo, Session::get("id_usuario"), Cookie::lenguaje());
           $clave = array_search($OLeccion["Lec_IdLeccion"], array_column($lecciones, "Lec_IdLeccion"));
           // print($lecciones);
           $tmp = $lecciones[$clave];
           $indice_leccion = $clave + 1;
           $final = count($lecciones) == $indice_leccion ? true : false;
 
-          $tareas = $Tmodel->getTrabajoXLeccion($OLeccion["Lec_IdLeccion"]);
+          $tareas = $Tmodel->getTrabajoXLeccion($OLeccion["Lec_IdLeccion"], Cookie::lenguaje());
       } else {
         # code...
       }
