@@ -67,7 +67,7 @@
             <ul>
                 <a href="{$_layoutParams.root}foro/index/query" class="nounderline">
                     <div class="side-menu2">
-                        <li style="position: relative"><span>Consultas</span></li>
+                        <li style="position: relative"><span>{$lenguaje.str_consultas}</span></li>
                     </div>
                 </a>
             </ul>
