@@ -257,7 +257,8 @@
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 xxxxxxxxxxxx">
         {$index = 1} {$iniciar = 0}
         {foreach from=$modulo item=o}
-          <div class="ficha-mod col-xs-12 col-sm-12 col-md-12 col-lg-12" data-id-modulo="{$o.Moc_IdModuloCurso}" style="padding-bottom: 15px; margin-top: 15px">
+         <!-- <div class="ficha-mod col-xs-12 col-sm-12 col-md-12 col-lg-12" data-id-modulo="{$o.Moc_IdModuloCurso}" style="padding-bottom: 15px; margin-top: 15px">-->
+          <div class="ficha-mod col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding-bottom: 15px; margin-top: 15px">
             <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2" style="padding: 0px; text-align: center;">
               <img class="w-100 img-modulo pr-5 pl-5" class="img-modulo" src="{BASE_URL}modules/elearning/views/cursos/img/contador-modulo-{$index}.png"/>
               <div class="col col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -278,7 +279,8 @@
             {/if}
 
           </div>
-          <div class="modulo-lecciones" data-ref-modulo="{$o.Moc_IdModuloCurso}" style="display: none">
+          <!--  <div class="modulo-lecciones" data-ref-modulo="{$o.Moc_IdModuloCurso}" style="display: none">-->
+          <div class="modulo-lecciones">
           {foreach from=$o.LECCIONES item=l}
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding-left: 0px; padding-right: 0px;">
               <div class="ficha-leccion {if $l.Activo==1}lec-lms-activo{/if}">
@@ -336,10 +338,7 @@
       </div>
       </div>
       {/if}
-
-
-
-
+      
       {if $session==1}
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"> <!-- RODRIGO 20180607 -->
         <label style="margin-top: 20px; font-size:16px">{$lang->get('elearning_cursos_calificar_curso')}</label>
