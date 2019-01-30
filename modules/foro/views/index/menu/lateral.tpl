@@ -60,7 +60,7 @@
             <ul>
                 <a href="{$_layoutParams.root}foro/index/forum" class="nounderline">
                     <div class="side-menu2">
-                        <li style="position: relative"><span>{$lenguaje.foro_admin_tematica}</span></li>
+                        <li style="position: relative"><span>{$lenguaje.str_discusione}</span></li>
                     </div>
                 </a>
             </ul>
