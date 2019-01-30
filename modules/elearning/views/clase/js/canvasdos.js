@@ -3,7 +3,7 @@ var mivue = new Vue({
 	el: '#modulo-contenedor',
 	data: function () {
 		return {
-			altura_opciones: 60,
+			altura_opciones: 64,
 			razoncambio: 1.77777777,
 			LECCION: {
 				ID: 0,
@@ -11,7 +11,7 @@ var mivue = new Vue({
 				SESSION_HASH: ''
 			},
 			canvas_leccion: [],
-			show_tools: false,
+			show_tools: true,
 			obj_canvas: null,
 			current_element: 'none',
 			current_type: 'none',
@@ -40,6 +40,26 @@ var mivue = new Vue({
 				fill: '#000000'
 			}
 		}
+	},
+	watch: {
+		'opcelements.stroke': function (nv, ov) {
+			this.onClick_renderCanvas();
+		},
+		'opcelements.fill': function (nv, ov) {
+			this.onClick_renderCanvas();
+		},
+		'opcelements.strokeWidth': function (nv, ov) {
+			this.onClick_renderCanvas();
+		},
+		'opcelements.angle': function (nv, ov) {
+			this.onClick_renderCanvas();
+		},
+		'opcelements.fontSize': function (nv, ov) {
+			this.onClick_renderCanvas();
+		},
+		'opcelements.text': function (nv, ov) {
+			this.onClick_renderCanvas();
+		},
 	},
 	methods: {
 		fnOnResize_PanelPizarra: function (e) {
@@ -129,7 +149,10 @@ var mivue = new Vue({
 
 		},
 		showIn: function (opciones) {
-			return opciones.find(v => v == this.current_type) == undefined ? false : true
+			if (typeof opciones == 'string') {
+				return opciones == 'all'
+			} else
+				return opciones.find(v => v == this.current_type) == undefined ? false : true
 		},
 		onClick_eliminarLimpiar: function () {
 			canvasdocente.clear()
@@ -327,7 +350,7 @@ var mivue = new Vue({
 		
 		document.getElementById('tag-body').onresize = this.fnOnResize_PanelPizarra;
 		
-		this.$refs.opciones_canvas.classList.remove('hidden')
+		// this.$refs.opciones_canvas.classList.remove('hidden')
 
 		this.$refs.panel_pizarra_final.classList.remove('hidden')
 		this.$refs.micanvas.width = this.$refs.panel_pizarra_final.offsetWidth - 4
