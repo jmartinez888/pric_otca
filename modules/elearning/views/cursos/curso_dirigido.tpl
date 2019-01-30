@@ -71,7 +71,7 @@
               <div class="col-lg-12">
                 <i class="glyphicon glyphicon-time" style="color: #16B8AD; font-size: 25px"></i>
                 <br>
-                <strong style="color: #393939; font-size: 16px">{$curso.Cur_Duracion|default: $duracion}</strong>
+                <strong style="color: #393939; font-size: 16px">{$curso.Cur_Duracion|default: $duracion} {$lang->get("elearning_cursos_cant_leccion")}</strong>
                 <br><br>
               </div>
 
@@ -176,7 +176,9 @@
         {if $session==1}
           {if isset($inscripcion) && count($inscripcion)>0}
             {if $inscripcion[0].Mat_Valor==2 }
-              <div class="tag-lms"><center>{$lang->get('elearning_cursos_pendiente_aprobacion_inscripcion')}</center></div>
+              <div class="tag-lms"><center>{$lang->get('elearning_cursos_pendiente_aprobacion_inscripcion')}
+              </center>
+            </div>
             {else}
               {if $inscripcion[0].Mat_Valor==1 }
                 {if $session && $progreso.Completo==10}
@@ -212,11 +214,8 @@
                   {if $curso.Usu_IdUsuario == Session::get('id_usuario')}
                     <a href="{BASE_URL}elearning/clase/clase/{$curso.Cur_IdCurso}"><button class="btn btn-success">Dar clase</button></a>
                   {/if}-->
-
-
                 </div>
                 {/if}
-
               {else}
                 <div class="tag-lms"><center>{$lang->ger('str_registro_rechazado')}</center></div>
               {/if}
@@ -226,16 +225,14 @@
               <a href="{BASE_URL}elearning/cursos/_inscripcion/{$curso.Moa_IdModalidad}/{$curso.Cur_IdCurso}">
                 <button class="btn btn-group btn-inscribir">{$lang->get('str_inscribirme')}</button>
               </a>
-            {else}
-              <a href="{BASE_URL}elearning/gestion/matriculados/{$curso.Cur_IdCurso}">
-                <button class="btn btn-default btn-gestion">{$lang->get('elearning_cursos_gestion_curso')}</button>
-              </a>
             {/if}
           {/if}
           {if $curso.Usu_IdUsuario == Session::get("id_usuario")}
-          <a href="{BASE_URL}elearning/gestion/matriculados/{$curso.Cur_IdCurso}">
-                <button class="btn btn-default btn-gestion">{$lang->get('elearning_cursos_gestion_curso')}</button>
-          </a>
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <a class="pull-right" href="{BASE_URL}elearning/gestion/matriculados/{$curso.Cur_IdCurso}">
+                  <button class="btn btn-default btn-gestion">{$lang->get('elearning_cursos_gestion_curso')}</button>
+            </a>
+          </div>
           {/if}
         {else}
           <div class="col-lg-12 anuncio">
