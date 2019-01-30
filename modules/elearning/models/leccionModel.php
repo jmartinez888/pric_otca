@@ -47,11 +47,25 @@ class leccionModel extends Model {
       return $result[0];
     }
 
-    public function getLeccion($leccion = "", $modulo = "", $usuario = ""){
+    public function getLeccion($leccion = "", $modulo = "", $usuario = "", $Idi_IdIdioma = "es"){
       if($leccion==""){
         if($modulo!=""){
           if($usuario != ""){
-            $sql = "SELECT * FROM leccion WHERE Lec_Estado = 1 AND Row_Estado = 1
+            $sql = "SELECT 
+                Lec_IdLeccion,
+                Moc_IdModuloCurso,
+                fn_TraducirContenido('leccion','Lec_Titulo',Lec_IdLeccion,'$Idi_IdIdioma',Lec_Titulo) Lec_Titulo,
+                fn_TraducirContenido('leccion','Lec_Descripcion',Lec_IdLeccion,'$Idi_IdIdioma',Lec_Descripcion) Lec_Descripcion,
+                Lec_TiempoDedicacion,
+                Lec_Tipo,
+                Lec_FechaDesde,
+                Lec_FechaHasta,
+                Lec_FechaReg,
+                Lec_LMSEstado,
+                Lec_LMSPizarra,
+                Lec_Estado,
+                Row_Estado
+              FROM leccion WHERE Lec_Estado = 1 AND Row_Estado = 1
             AND Lec_IdLeccion =
             (SELECT IFNULL(
               MAX(PC.Lec_IdLeccion),
@@ -91,8 +105,23 @@ class leccionModel extends Model {
       }
     }
 
-    public function getLecciones($modulo, $usuario = ""){
-      $sql = "SELECT * FROM leccion WHERE Moc_IdModuloCurso = {$modulo}
+    public function getLecciones($modulo, $usuario = "", $Idi_IdIdioma = "es"){
+      $sql = "SELECT 
+              Lec_IdLeccion,
+                Moc_IdModuloCurso,
+                fn_TraducirContenido('leccion','Lec_Titulo',Lec_IdLeccion,'$Idi_IdIdioma',Lec_Titulo) Lec_Titulo,
+                fn_TraducirContenido('leccion','Lec_Descripcion',Lec_IdLeccion,'$Idi_IdIdioma',Lec_Descripcion) Lec_Descripcion,
+                Lec_TiempoDedicacion,
+                Lec_Tipo,
+                Lec_FechaDesde,
+                Lec_FechaHasta,
+                Lec_FechaReg,
+                Lec_LMSEstado,
+                Lec_LMSPizarra,
+                Lec_Estado,
+                Row_Estado
+
+               FROM leccion WHERE Moc_IdModuloCurso = {$modulo}
               AND Lec_Estado = 1 AND Row_Estado = 1
               ORDER BY Lec_IdLeccion ASC";
       $lecciones = $this->getArray($sql);
@@ -163,8 +192,23 @@ class leccionModel extends Model {
     }
 
     /* PARA EL CASO LMS*/
-    public function getLeccionesLMS($curso){
-      $sql = " SELECT * FROM leccion L
+    public function getLeccionesLMS($curso, $Idi_IdIdioma = "es"){
+      $sql = " SELECT 
+                L.Lec_IdLeccion,
+                L.Moc_IdModuloCurso,
+                fn_TraducirContenido('leccion','Lec_Titulo',L.Lec_IdLeccion,'$Idi_IdIdioma',L.Lec_Titulo) Lec_Titulo,
+                fn_TraducirContenido('leccion','Lec_Descripcion',L.Lec_IdLeccion,'$Idi_IdIdioma',L.Lec_Descripcion) Lec_Descripcion,
+                L.Lec_TiempoDedicacion,
+                L.Lec_Tipo,
+                L.Lec_FechaDesde,
+                L.Lec_FechaHasta,
+                L.Lec_FechaReg,
+                L.Lec_LMSEstado,
+                L.Lec_LMSPizarra,
+                L.Lec_Estado,
+                L.Row_Estado
+
+                 FROM leccion L
               INNER JOIN modulo_curso M ON L.Moc_IdModuloCurso = M.Moc_IdModuloCurso
               INNER JOIN curso C ON M.Cur_IdCurso = C.Cur_IdCurso AND C.Cur_IdCurso = {$curso}
               WHERE C.Cur_Estado = 1 AND M.Moc_Estado = 1 AND L.Lec_Estado = 1

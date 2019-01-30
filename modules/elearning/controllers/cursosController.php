@@ -197,7 +197,7 @@ class cursosController extends elearningController {
         $progreso = $model->getProgresoCurso($id, Session::get("id_usuario"));
         $this->_view->assign("progreso", $progreso);
       }
-      $modulo = $mModulo->getModulosCurso($id, Session::get("id_usuario"));
+      $modulo = $mModulo->getModulosCurso($id, Session::get("id_usuario"),Cookie::lenguaje());
       // dd($modulo);
       $duracion = $model->getDuracionCurso($id);
       $certificado = $mCert->getCertificadoUsuarioCurso(Session::get("id_usuario"), $id);
@@ -228,7 +228,7 @@ class cursosController extends elearningController {
       $this->_view->assign("modulo", $modulo);
       $this->_view->assign("titulo", $curso['Cur_Titulo']);
       $this->_view->assign("certificado", $certificado);
-      $this->_view->assign("duracion", $duracion["Total"] . " Lecciones");
+      $this->_view->assign("duracion", $duracion["Total"] ." ".$lang->get('elearning_cursos_cant_lecciones'));
       $this->_view->assign("detalle", $model->getDetalleCurso($curso["Cur_IdCurso"]));
       // print_r($model->getDetalleCurso($curso["Cur_IdCurso"]));exit;
       $this->_view->assign("inscripcion",$mInsc->getInscripcion(Session::get("id_usuario"), $id));
@@ -238,7 +238,8 @@ class cursosController extends elearningController {
 
   public function curso_dirigido($id = ""){
       if($id == "" || !is_numeric($id) ){ $this->redireccionar("elearning/"); }
-      $this->_view->getLenguaje(['elearning_cursos']);
+      
+      $lang = $this->_view->getLenguaje('elearning_cursos', false, true);
       $model = $this->loadModel("curso");
       $mObj = $this->loadModel("objetivos");
       $mModulo = $this->loadModel("modulo");
@@ -246,7 +247,7 @@ class cursosController extends elearningController {
       $mInsc = $this->loadModel("inscripcion");
       $mCert = $this->loadModel("certificado");
 
-      $curso = $model->getCursoID($id)[0];
+      $curso = $model->getCursoID($id,Cookie::lenguaje())[0];
       if($curso["Moa_IdModalidad"]==1){ $this->redireccionar("elearning/cursos/curso/" . $curso["Cur_IdCurso"]); }
       $inscripcion = $mInsc->getInscripcion(Session::get("id_usuario"), $id);
 
@@ -256,7 +257,7 @@ class cursosController extends elearningController {
       }
 
       $inscritos = $mInsc->getInscritos($id);
-      $lecciones = $mLeccion->getLeccionesLMS($id);
+      $lecciones = $mLeccion->getLeccionesLMS($id, Cookie::lenguaje());
       $duracion = $model->getDuracionCurso($id);
       $certificado = $mCert->getCertificadoUsuarioCurso(Session::get("id_usuario"), $id);
       // $modulo = $mModulo->getModulosCurso($id, Session::get("id_usuario"));
@@ -266,13 +267,13 @@ class cursosController extends elearningController {
       $this->_view->setCss(array("curso", "cursolms", "jp-curso"));
       $this->_view->setJs(array(array(BASE_URL . 'modules/elearning/views/gestion/js/core/util.js'), "curso"));
       $this->_view->assign("curso", $curso);
-      $this->_view->assign("detalle", $model->getDetalleCurso($curso["Cur_IdCurso"]));
+      $this->_view->assign("detalle", $model->getDetalleCurso($curso["Cur_IdCurso"], Cookie::lenguaje()));
       $this->_view->assign("inscritos", $inscritos);
       $this->_view->assign("titulo", $curso['Cur_Titulo']);
       $this->_view->assign("certificado", $certificado);
-      $this->_view->assign("duracion", $duracion["Total"] . " Lecciones");
+      $this->_view->assign("duracion", $duracion["Total"]);
       // dd($mModulo->getModulosCursoLMS($id, Session::get("id_usuario")));
-      $this->_view->assign("modulo", $mModulo->getModulosCursoLMS($id, Session::get("id_usuario")));
+      $this->_view->assign("modulo", $mModulo->getModulosCursoLMS($id, Session::get("id_usuario"), Cookie::lenguaje()));
       $this->_view->assign("session", Session::get("autenticado"));
       $this->_view->assign("now", date_create('now')->format('Y-m-d H:i:s'));
       $this->_view->assign("inscripcion", $inscripcion);
