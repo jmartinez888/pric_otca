@@ -30,9 +30,9 @@
               <input value="{$curso}" name="curso" hidden="hidden"/>
               <input value="{$leccion.Lec_IdLeccion}" name="leccion" hidden="hidden"/>
               <button type="submit" class="btn btn-sm btn-next-previous">
+               <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
                 {$lang->get('str_anterior')}
-                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-              </button>
+               </button>
             </form>
             {else}
             <div class="container-btn-previous">
@@ -48,8 +48,8 @@
               <input value="{$curso}" name="curso" hidden="hidden"/>
               <input value="{$leccion.Lec_IdLeccion}" name="leccion" hidden="hidden"/>
               <button type="submit" class="btn btn-sm btn-next-previous">
-                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-                {$lang->get('str_siguiente')}
+               {$lang->get('str_siguiente')}
+               <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
               </button>
             </form>
             {else}
