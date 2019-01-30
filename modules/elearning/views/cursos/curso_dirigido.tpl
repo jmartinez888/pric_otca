@@ -71,7 +71,7 @@
               <div class="col-lg-12">
                 <i class="glyphicon glyphicon-time" style="color: #16B8AD; font-size: 25px"></i>
                 <br>
-                <strong style="color: #393939; font-size: 16px">{$curso.Cur_Duracion|default: $duracion} {$lang->get("elearning_cursos_cant_leccion")}</strong>
+                <strong style="color: #393939; font-size: 16px">{$curso.Cur_Duracion|default: $duracion} {$lang->get("elearning_cursos_cant_lecciones")}</strong>
                 <br><br>
               </div>
 
@@ -228,7 +228,7 @@
             {/if}
           {/if}
           {if $curso.Usu_IdUsuario == Session::get("id_usuario")}
-          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 p-rt-lt-0">
             <a class="pull-right" href="{BASE_URL}elearning/gestion/matriculados/{$curso.Cur_IdCurso}">
                   <button class="btn btn-default btn-gestion">{$lang->get('elearning_cursos_gestion_curso')}</button>
             </a>
