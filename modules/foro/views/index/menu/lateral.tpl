@@ -60,14 +60,14 @@
             <ul>
                 <a href="{$_layoutParams.root}foro/index/forum" class="nounderline">
                     <div class="side-menu2">
-                        <li style="position: relative"><span>Discusiones</span></li>
+                        <li style="position: relative"><span>{$lenguaje.str_discusion}</span></li>
                     </div>
                 </a>
             </ul>
             <ul>
                 <a href="{$_layoutParams.root}foro/index/query" class="nounderline">
                     <div class="side-menu2">
-                        <li style="position: relative"><span>Consultas</span></li>
+                        <li style="position: relative"><span>{$lenguaje.str_consultas}</span></li>
                     </div>
                 </a>
             </ul>
