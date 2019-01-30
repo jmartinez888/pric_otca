@@ -69,7 +69,7 @@
               <div class="col-lg-12">
                 <i class="glyphicon glyphicon-time" style="color: #16B8AD; font-size: 25px"></i>
                 <br>
-                <strong style="color: #393939; font-size: 16px">{$curso.Cur_Duracion|default: ($duracion." ".$lang->get('elearning_cursos_cant_lecciones'))}</strong>
+                <strong style="color: #393939; font-size: 16px">{$curso.Cur_Duracion|default:$duracion} {$lang->get('elearning_cursos_cant_lecciones')}</strong>
                 <br><br>
               </div>
 
