@@ -1,6 +1,7 @@
 $(document).ready(function(){
   var url_tmp_session = $("#hidden_tmp_session").val();
   if(url_tmp_session!=null && url_tmp_session.length > 0){
+    alert(url_tmp_session);
     CargarPagina(url_tmp_session, {});
   }else{
     CargarPagina("gestion/_view_mis_cursos", {});
