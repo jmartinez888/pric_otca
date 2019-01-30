@@ -228,7 +228,7 @@ class cursosController extends elearningController {
       $this->_view->assign("modulo", $modulo);
       $this->_view->assign("titulo", $curso['Cur_Titulo']);
       $this->_view->assign("certificado", $certificado);
-      $this->_view->assign("duracion", $duracion["Total"] . " Lecciones");
+      $this->_view->assign("duracion", $duracion["Total"] ." ".$lang->get('elearning_cursos_cant_lecciones'));
       $this->_view->assign("detalle", $model->getDetalleCurso($curso["Cur_IdCurso"]));
       // print_r($model->getDetalleCurso($curso["Cur_IdCurso"]));exit;
       $this->_view->assign("inscripcion",$mInsc->getInscripcion(Session::get("id_usuario"), $id));
