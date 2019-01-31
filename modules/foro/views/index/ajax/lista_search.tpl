@@ -33,7 +33,7 @@
             </td>
             <td class="f-z-14">
                 <small>
-                <strong>Iniciado:</strong>
+                <strong>{$lenguaje.foro_str_iniciado}</strong>
                 </small>
                 {assign var="datei" value=" "|explode:$foro.For_FechaCreacion}
                 <br>
@@ -42,7 +42,7 @@
                 <i class="fa fa-clock-o" aria-hidden="true"></i> {$datei[1]}
                 <br>
                 <small>
-                <strong>Finalizado:</strong>
+                <strong>{$lenguaje.foro_str_finalizado}</strong>
                 </small>
                 <br>
                 {assign var="datef" value=" "|explode:$foro.For_FechaCierre}
@@ -59,6 +59,6 @@
 {$paginacion|default:""}
 {else}
 <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12">
-    <h4>No se encontraron resultados!...</h4>
+    <h4> {$lenguaje.str_sin_resuitados}!...</h4>
 </div>
 {/if}

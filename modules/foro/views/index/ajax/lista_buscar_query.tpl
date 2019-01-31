@@ -6,7 +6,7 @@
     {$paginacion|default:""}
     {else}
     <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12">
-    	<h4>No se encontraron resultados!...</h4>
+    	<h4> {$lenguaje.str_sin_resuitados}!...</h4>
     </div>  
     {/if}
 </div>
