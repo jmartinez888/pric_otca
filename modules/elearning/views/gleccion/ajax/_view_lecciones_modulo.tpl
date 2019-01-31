@@ -103,10 +103,10 @@
         {if isset($lecciones) && count($lecciones) > 0 }
           <table class="table" id="tblMisCursos">
               <tr>
-                  <th>Leccion</th>
-                  <th>Tipo</th>
-                  <th>Descripción</th>
-                  <th>Operaciones</th>
+                  <th>{$lenguaje.elearning_cursos_leccion}</th>
+                  <th>{$lenguaje.elearning_cursos_tipo}</th>
+                  <th>{$lenguaje.elearning_cursos_descripcion}</th>
+                  <th>{$lenguaje.elearning_cursos_operaciones}</th>
               </tr>
               {foreach from=$lecciones item=c}
                   <tr>
@@ -132,13 +132,12 @@
               {/foreach}
           </table>
         {else}
-          <div>Aun no registraste ninguna lección al módulo</div>
+          <div>{$lenguaje.elearning_cursos_sin_leccion}</div>
         {/if}
 
         <div class="col-xs-12">
           <button class="btn btn-success pull-right" type="button" id="btn_nueva_leccion">
-            <i class="glyphicon glyphicon-book"></i> Nueva Lección
-          </button>
+            <i class="glyphicon glyphicon-book"></i>{$lenguaje.elearning_cursos_new_leccion}</button>
           </br>
         </div>
       </div>
@@ -151,17 +150,17 @@
     <div class="panel-heading">
       <h3 class="panel-title">
         <i class="glyphicon glyphicon-list-alt"></i>&nbsp;&nbsp;
-        <strong>NUEVA LECCIÓN</strong>
+        <strong>{$lenguaje.elearning_cursos_nueva_leccion}</strong>
       </h3>
     </div>
     <div class="panel-body" style=" margin: 15px 25px">
       <form method="post" action="gleccion/_registrar_leccion" id="frm_registro">
         <input hidden="hidden" name="id" value="{$modulo.Moc_IdModuloCurso}" />
-        <div class="col-xs-12"><h5><strong>Titulo</strong></h5></div>
+        <div class="col-xs-12"><h5><strong>{$lenguaje.elearning_cursos_titulo}</strong></h5></div>
         <div class="col-xs-12">
           <input class="form-control" name="titulo" id="inTitulo" />
         </div>
-        <div class="col-xs-12"><h5><strong>Tipo Lección</strong></h5></div>
+        <div class="col-xs-12"><h5><strong>{$lenguaje.elearning_cursos_tipo_leccion}</strong></h5></div>
 
         <div class="col-xs-4">
           <select class="form-control" name="tipo">
@@ -170,21 +169,19 @@
             {/foreach}
           </select>
         </div>
-        <div class="col-xs-8">
-          Aca se describe la leccion
-        </div>
-        <div class="col-xs-12"><h5><strong>Descripción</strong></h5></div>
+        <div class="col-xs-8">{$lenguaje.elearning_cursos_descripcion_leccion}</div>
+        <div class="col-xs-12"><h5><strong>{$lenguaje.elearning_cursos_descripcion}</strong></h5></div>
         <div class="col-xs-12">
           <textarea class="form-control" name="descripcion" id="inDescripcion" rows="10"></textarea>
         </div>
-        <div class="col-xs-12 margin-t-10"><strong>Tiempo de Dedicación</strong></div>
+        <div class="col-xs-12 margin-t-10"><strong>{$lenguaje.elearning_cursos_tiempo_dedicacion}</strong></div>
         <div class="col-xs-12">
           <input class="form-control" name="dedicacion" />
         </div>
       </form>
       <div class="col-xs-12"></br></div>
       <div class="col-xs-12">
-        <button class="btn btn-success" id="btn_guardar_leccion">Registrar</button>
+        <button class="btn btn-success" id="btn_guardar_leccion">{$lenguaje.elearning_cursos_mregistrar}</button>
       </div>
     </div>
   </div>
