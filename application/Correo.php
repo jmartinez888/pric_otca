@@ -8,7 +8,7 @@ class Correo
     private $base_url;
 
     public function __construct() {
-        $this->mail = new PHPMailer();
+        $this->mail = new utf8_decode(();
         $this->mail->CharSet = 'UTF-8';
         $this->mail->Encoding = 'base64';
         $this->mail->IsSMTP();
@@ -59,7 +59,7 @@ class Correo
 
     public function enviar($forEmail, $forName, $Subject, $contenido, $fromName = "Proyecto PRIC",$fromEmail='noreply@atixw.com'){
         
-        $this->mail->Subject ="=?ISO-8859-1?B?".base64_encode($Subject)."=?=";
+        $this->mail->Subject ="=?ISO-8859-1?B?".base64_encode(utf8_decode($Subject))."=?=";
 
         $this->mail->IsHTML(true);
         //$this->mail->MsgHTML = $this->body_html($contenido);
