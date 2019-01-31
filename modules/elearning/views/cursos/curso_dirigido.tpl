@@ -310,7 +310,7 @@
                           {/if}
                           {if ($l.Lec_FechaHasta|date_format) == ($smarty.now|date_format) }
                           <div class="div_en_linea">
-                            <span class="en_linea text-success">{$lang->ger('str_en_linea')}</span>
+                            <span class="en_linea text-success">{$lang->get('str_en_linea')}</span>
                           </div>
                             <a href="{BASE_URL}elearning/cursos/modulo/{$curso.Cur_IdCurso}/{$o.Moc_IdModuloCurso}/{$l.Lec_IdLeccion}">
                               <div class="tag-terminado"><center><strong>{$lang->get('str_en_linea')}</strong></center></div>
