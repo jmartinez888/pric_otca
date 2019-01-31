@@ -20,15 +20,15 @@
                     {if Session::get('autenticado')}
                     {if $_acl->Usu_IdUsuario() == $commen_body.Usu_IdUsuario || $Rol_Ckey=="facilitador_foro" || $Rol_Ckey=="moderador_foro" || $Rol_Ckey=="lider_foro" || $Rol_Ckey=="administrador_foro" || $Rol_Ckey=="administrador"}
                     {if $_acl->Usu_IdUsuario() == $commen_body.Usu_IdUsuario}
-                    <li><a comentario_="{$commen_body.Com_Descripcion}" id_comentario_editar="{$commen_body.Com_IdComentario}" id_foro="{$foro.For_IdForo}" class="editar_comentario_foro files_coment_editar" style="cursor: pointer;">Editar</a></li>
+                    <li><a comentario_="{$commen_body.Com_Descripcion}" id_comentario_editar="{$commen_body.Com_IdComentario}" id_foro="{$foro.For_IdForo}" class="editar_comentario_foro files_coment_editar" style="cursor: pointer;">{$lenguaje.foro_str_editar}</a></li>
                     {/if}
-                    <li><a id_foro="{$foro.For_IdForo}" id_comentario_delete="{$commen_body.Com_IdComentario}" class="eliminar_comentario_foro" style="cursor: pointer;">Eliminar</a></li>
+                    <li><a id_foro="{$foro.For_IdForo}" id_comentario_delete="{$commen_body.Com_IdComentario}" class="eliminar_comentario_foro" style="cursor: pointer;">{$lenguaje.foro_str_eliminar}</a></li>
                     {/if}
                     {if $_acl->Usu_IdUsuario() != $commen_body.Usu_IdUsuario}
-                    <li><a id_comentario_reportar="{$commen_body.Com_IdComentario}" class="reportar" style="cursor: pointer;" data-toggle="modal" data-target="#modal-reportar-comentario">Reportar</a></li>
+                    <li><a id_comentario_reportar="{$commen_body.Com_IdComentario}" class="reportar" style="cursor: pointer;" data-toggle="modal" data-target="#modal-reportar-comentario">{$lenguaje.foro_str_reportar}</a></li>
                     {/if}
                     {/if}
-                    <li><a href="{$_layoutParams.root}foro/index/ficha_comentario_completo/{$foro.For_IdForo}/{$commen_body.Com_IdComentario}" target="_blank" comentario_="{$commen_body.Com_Descripcion}" id_comentario_editar="{$commen_body.Com_IdComentario}" id_foro="{$foro.For_IdForo}" class="" style="cursor: pointer;">Ver comentario en otra página</a></li>
+                    <li><a href="{$_layoutParams.root}foro/index/ficha_comentario_completo/{$foro.For_IdForo}/{$commen_body.Com_IdComentario}" target="_blank" comentario_="{$commen_body.Com_Descripcion}" id_comentario_editar="{$commen_body.Com_IdComentario}" id_foro="{$foro.For_IdForo}" class="" style="cursor: pointer;">{$lenguaje.foro_str_comentarioenotrapagina}</a></li>
                 </ul>
             </div>
         </div>
@@ -40,12 +40,12 @@
                 {$commen_body.Com_Descripcion}
                 {else}
                 {substr($commen_body.Com_Descripcion, 0, 270)}
-                <a class="ver_mas" id_comentario_editar="{$commen_body.Com_IdComentario}" style="cursor: pointer;">...ver más</a>
+                <a class="ver_mas" id_comentario_editar="{$commen_body.Com_IdComentario}" style="cursor: pointer;">...{$lenguaje.str_vermas}</a>
                 {/if}
             </span>
             <span class="col col-xs-12 col-sm-12 col-md-12 col-lg-12 capaVer2_{$commen_body.Com_IdComentario}" style="display:none;" id_comentario_editar="{$commen_body.Com_IdComentario}">
                 {substr($commen_body.Com_Descripcion, 0, 1500)}
-                <a class="ver_menos" id_comentario_editar="{$commen_body.Com_IdComentario}" style="cursor: pointer;"> ver menos</a>
+                <a class="ver_menos" id_comentario_editar="{$commen_body.Com_IdComentario}" style="cursor: pointer;"> {$lenguaje.str_vermenos}</a>
             </span>
             <!-- Lilstado de file adjunto -->
             {if count($commen_body.Archivos)}
@@ -81,7 +81,7 @@
             <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 p-rt-lt-0">
                 {if !isset($is_hijo)}   
                     {if $comentar_foro || $Rol_Ckey == "administrador_foro" || $Rol_Ckey == "administrador"}
-                    <span class="pull-left" style="font-size: 15px;margin-top: 10px; cursor: pointer;"> <a id_comentario="{$commen_body.Com_IdComentario}" class="coment_coment">Responder</a></span>
+                    <span class="pull-left" style="font-size: 15px;margin-top: 10px; cursor: pointer;"> <a id_comentario="{$commen_body.Com_IdComentario}" class="coment_coment"> {$lenguaje.foro_str_responder}</a></span>
                     {/if}
                 {/if}
 
@@ -124,9 +124,9 @@
                 <li><span title="" data-toggle="tooltip" data-placement="bottom" data-original-title="Video"  class="foro_fileinput" for="files_video"><i class="fa fa-video-camera"></i><input name="files_doc" type="file" multiple="" class="files_coment" accept="video/*"></span></li>
                 <li><span title="" data-toggle="tooltip" data-placement="bottom" data-original-title="Audio"  class="foro_fileinput" for="files_son"><i class="fa fa-music"></i><input name="files_doc" type="file" multiple="" class="files_coment" accept="audio/*"></span></li>
             </ul>
-            <button type="button" id_foro="{$foro.For_IdForo}" id_usuario="{Session::get('id_usuario')}" id_padre="{$commen_body.Com_IdComentario}" class="btn btn-success green foro_coment_editado"><i class="fa fa-share"></i>Editar</button>
+            <button type="button" id_foro="{$foro.For_IdForo}" id_usuario="{Session::get('id_usuario')}" id_padre="{$commen_body.Com_IdComentario}" class="btn btn-success green foro_coment_editado"><i class="fa fa-share"></i> {$lenguaje.foro_str_editar}</button>
 
-            <button id_foro="{$foro.For_IdForo}"="" id_comentario_editar="{$commen_body.Com_IdComentario}" type="button" class="btn btn-warning green cancelar_comentario_foro"><i class="fa fa-times"></i>Cancelar
+            <button id_foro="{$foro.For_IdForo}"="" id_comentario_editar="{$commen_body.Com_IdComentario}" type="button" class="btn btn-warning green cancelar_comentario_foro"><i class="fa fa-times"></i>{$lenguaje.foro_str_cancelar}
             </button>
         </div>
         <!--Fin Para el editar en comentario principal -->
@@ -145,8 +145,8 @@
                         <li><span title="" data-toggle="tooltip" data-placement="bottom" data-original-title="Video"  class="foro_fileinput" for="files_video"><i class="fa fa-video-camera"></i><input name="files_doc" type="file" multiple="" class="files_coment" accept="video/*"></span></li>
                         <li><span title="" data-toggle="tooltip" data-placement="bottom" data-original-title="Audio"  class="foro_fileinput" for="files_son"><i class="fa fa-music"></i><input name="files_doc" type="file" multiple="" class="files_coment" accept="audio/*"></span></li>
                     </ul>
-                    <button  type="button" id_foro="{$foro.For_IdForo}" id_usuario="{Session::get('id_usuario')}" id_padre="{$commen_body.Com_IdComentario}" class="btn btn-success green foro_coment"><i class="fa fa-share"></i>Comentar</button>
-                    <button id_comentario_cancelar_responder="{$commen_body.Com_IdComentario}" type="button" class="btn btn-warning green cancelar_responder_comentario_foro"><i class="fa fa-times"></i>Cancelar</button>
+                    <button  type="button" id_foro="{$foro.For_IdForo}" id_usuario="{Session::get('id_usuario')}" id_padre="{$commen_body.Com_IdComentario}" class="btn btn-success green foro_coment"><i class="fa fa-share"></i>{$lenguaje.foro_str_comentar}</button>
+                    <button id_comentario_cancelar_responder="{$commen_body.Com_IdComentario}" type="button" class="btn btn-warning green cancelar_responder_comentario_foro"><i class="fa fa-times"></i> {$lenguaje.foro_str_cancelar}</button>
                 </div><!-- Status Upload  -->
             </div><!-- Widget Area -->
         </div>
