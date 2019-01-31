@@ -101,12 +101,12 @@ class Model extends Eloquent{
         //     echo $query;
         //     dd($e);
         // }
+        var_dump($query);
         $data = $this->_db->query($query);
         return $data->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function execQuery($query, $get_id = false){
-        var_dump($query);       
       $this->_db->query($query);
       if ($get_id)
         return $this->_db->lastInsertId();
