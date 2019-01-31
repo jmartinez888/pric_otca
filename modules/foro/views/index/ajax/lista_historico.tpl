@@ -3,7 +3,7 @@
 	<table class="table table-striped">
 		<thead>
 			<tr>
-				<th colspan="2">Detalles de histórico de Foro</th>
+				<th colspan="2"> {$lenguaje.foro_str_detalleshistoricoforo}</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -19,17 +19,17 @@
 						&nbsp;&nbsp;-&nbsp;&nbsp;
 						{timediff date=$foro.tiempo  lang=Cookie::lenguaje()}
 						&nbsp;&nbsp;-&nbsp;&nbsp;
-						{shortnumber number=$foro.Nvaloraciones_foro} voto(s)
+						{shortnumber number=$foro.Nvaloraciones_foro}  {$lenguaje.foro_str_votos}
 						&nbsp;&nbsp;-&nbsp;&nbsp;
-						{$foro.For_NParticipantes} participante(s)
+						{$foro.For_NParticipantes} {$lenguaje.foro_str_participantes}
 						&nbsp;&nbsp;-&nbsp;&nbsp;
-						{$foro.For_NComentarios}  comentario(s)
+						{$foro.For_NComentarios} {$lenguaje.str_comentarios}
 					</div>
 					
 				</td>
 				<td class="f-z-14">
 					<small>
-					<strong>Finalizado:</strong>
+					<strong>{$lenguaje.foro_str_finalizado}</strong>
 					</small>
 					{assign var="date" value=" "|explode:$foro.For_FechaCierre}
 					<br>
@@ -52,7 +52,7 @@
 	{$paginacion|default:""}
 	{else}
 	<div class="col-md-12 col-xs-12 col-sm-12 col-lg-12">
-    	<h4>No se encontraron resultados!...</h4>
+    	<h4> {$lenguaje.str_sin_resuitados}!...</h4>
     </div> 
 	{/if}
 </div>

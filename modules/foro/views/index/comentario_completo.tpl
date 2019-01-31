@@ -28,12 +28,12 @@
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 p-rt-lt-0" style="font-size: 12px;">
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 p-rt-lt-0">
                         <i class="glyphicon glyphicon-user" style="color: #777; text-align: center; vertical-align: middle; margin-bottom: 5px;"></i>
-                        Creado {timediff date=$foro["For_FechaCreacion"] lang=Cookie::lenguaje()}  por <strong>{$nombre_usuario}</strong>
+                        {$lenguaje.foro_str_creado} {timediff date=$foro["For_FechaCreacion"] lang=Cookie::lenguaje()}  {$lenguaje.foro_str_por} <strong>{$nombre_usuario}</strong>
                     </div>
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 p-rt-lt-0">
                         <div class="pull-right">
                             <i class="fa fa-users" style="color: #777; text-align: center; vertical-align: middle;"></i>
-                            Participantes: <strong>{$Numero_participantes_x_idForo}</strong>
+                            {$lenguaje.foro_str_participantes}: <strong>{$Numero_participantes_x_idForo}</strong>
                         </div>
                     </div>
                 </div>
@@ -58,7 +58,7 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-md-12 col-xs-12 col-lg-12 col-sm-12">
-                        <h2 class="col-xs-8">Reporta un Comentario</h2>
+                        <h2 class="col-xs-8">{$lenguaje.foro_str_reportarcomentario}</h2>
                         <input type="hidden" id="idcomentario" name="idcomentario">
                         <button title="cerrar" type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">×</span>
@@ -69,18 +69,19 @@
                                 <div class="col col-xs-1"><img src="{$_layoutParams.root_clear}public/img/advertencia.png">
                                 </div>
                                 <div class="col-xs-11">
-                                    Tus comentarios nos ayudan a determinar cuándo algo no es apropiado. A continuación indicanos cúal es tu motivo para reportar este comentario.</div>
+                                    {$lenguaje.foro_str_inforeportarcomentario}
+                                    </div>
                                 </div>                                   
                                 <div class="panel-body"> 
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
-                                                <label>Mensaje</label>
+                                                <label>{$lenguaje.foro_str_mensaje}</label>
                                                 <textarea class="form-control" id="ta_mensaje_reportar" name="ta_mensaje_reportar"></textarea>  
                                             </div>
                                         </div>
                                     </div>
-                                <button type="button" id_foro="{$foro.For_IdForo}" class="btn btn-primary btn-md enviar_reporte" data-dismiss="modal" style="margin-left: 88%;">Enviar</button>
+                                <button type="button" id_foro="{$foro.For_IdForo}" class="btn btn-primary btn-md enviar_reporte" data-dismiss="modal" style="margin-left: 88%;">{$lenguaje.foro_str_enviar}</button>
                                 </div>                               
                             </div>
                         </div>

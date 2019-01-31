@@ -54,37 +54,37 @@
                     </button>
                     <ul class="dropdown-menu" style="min-width: 200px;">
                         {if $_acl->permiso("editar_foro") || $id_usuario == $foro.Usu_IdUsuario}
-                        <li><a href="{$_layoutParams.root}foro/admin/form/edit/{$foro.For_Funcion}/{$foro.For_IdForo}" id_foro="{$foro.For_IdForo}" class="opciones_foro" style="cursor: pointer;">Editar<i class="i_opciones_foro glyphicon glyphicon-pencil pull-right"></i></a></li>
+                        <li><a href="{$_layoutParams.root}foro/admin/form/edit/{$foro.For_Funcion}/{$foro.For_IdForo}" id_foro="{$foro.For_IdForo}" class="opciones_foro" style="cursor: pointer;">{$lenguaje.foro_str_editar}<i class="i_opciones_foro glyphicon glyphicon-pencil pull-right"></i></a></li>
                         {/if}
                         {if $_acl->permiso("agregar_sub_discusion") && !isset($foro.For_IdPadre) && $foro.For_Funcion == 'forum' && $foro.Row_Estado == 1 && $foro.For_Estado == 1}
-                        <li><a  href="{$_layoutParams.root}foro/admin/form/new/forum/{$foro.For_IdForo}" class="opciones_foro" style="cursor: pointer;">Crear Sub Discusión<i class="i_opciones_foro glyphicon glyphicon-plus pull-right"></i></a></li>
+                        <li><a  href="{$_layoutParams.root}foro/admin/form/new/forum/{$foro.For_IdForo}" class="opciones_foro" style="cursor: pointer;">{$lenguaje.foro_str_crearsubdiscu}<i class="i_opciones_foro glyphicon glyphicon-plus pull-right"></i></a></li>
                         {/if}
                         {if $foro.For_Funcion != 'query'}
                         {if $_acl->permiso("listar_miembros")}
-                        <li><a href="{$_layoutParams.root}foro/admin/members/{$foro.For_IdForo}" id_foro="{$foro.For_IdForo}" class="opciones_foro" style="cursor: pointer;">Ver Miembros<i class="i_opciones_foro glyphicon glyphicon-user pull-right"></i></a></li>
+                        <li><a href="{$_layoutParams.root}foro/admin/members/{$foro.For_IdForo}" id_foro="{$foro.For_IdForo}" class="opciones_foro" style="cursor: pointer;">{$lenguaje.foro_str_vermiembros}<i class="i_opciones_foro glyphicon glyphicon-user pull-right"></i></a></li>
                         {/if}
                         {if $_acl->permiso("listar_actividades")}
-                        <li><a href="{$_layoutParams.root}foro/admin/actividad/{$foro.For_IdForo}" id_foro="{$foro.For_IdForo}" class="opciones_foro" style="cursor: pointer;">Ver Actividades<i class="i_opciones_foro glyphicon glyphicon-calendar pull-right"></i></a></li>
+                        <li><a href="{$_layoutParams.root}foro/admin/actividad/{$foro.For_IdForo}" id_foro="{$foro.For_IdForo}" class="opciones_foro" style="cursor: pointer;">{$lenguaje.foro_str_vermiembros}<i class="i_opciones_foro glyphicon glyphicon-calendar pull-right"></i></a></li>
                         {/if}
                         {/if}
                         {if ($_acl->permiso("habilitar_foro") || $id_usuario == $foro.Usu_IdUsuario) &&  $foro.For_Estado== 0}
-                        <li><a id_foro="{$foro.For_IdForo}" class="opciones_foro hablitarForo" style="cursor: pointer;">Habilitar<i class="i_opciones_foro glyphicon glyphicon-ok pull-right"></i></a></li>
+                        <li><a id_foro="{$foro.For_IdForo}" class="opciones_foro hablitarForo" style="cursor: pointer;">{$lenguaje.foro_str_habilitar}<i class="i_opciones_foro glyphicon glyphicon-ok pull-right"></i></a></li>
                         {else}
                         {if ($_acl->permiso("cerrar_foro") || $id_usuario == $foro.Usu_IdUsuario) && $foro.For_Estado== 0}
-                        <li><a id_foro="{$foro.For_IdForo}" class="opciones_foro cerrar_foro" estado="{$foro.For_Estado}" style="cursor: pointer;">Cerrar Foro<i class="i_opciones_foro glyphicon glyphicon-off pull-right"></i></a></li>
+                        <li><a id_foro="{$foro.For_IdForo}" class="opciones_foro cerrar_foro" estado="{$foro.For_Estado}" style="cursor: pointer;">{$lenguaje.foro_str_cerrarforo}<i class="i_opciones_foro glyphicon glyphicon-off pull-right"></i></a></li>
                         {/if}
                         {if ($_acl->permiso("deshabilitar_foro") || $id_usuario == $foro.Usu_IdUsuario) && ($foro.For_Estado== 1 || $foro.For_Estado == 2)}
-                        <li><a id_foro="{$foro.For_IdForo}" for_estado="{$foro.For_Estado}" class="opciones_foro deshablitarForo" style="cursor: pointer;">Deshabilitar<i class="i_opciones_foro glyphicon glyphicon-eye-close pull-right"></i></a></li>
+                        <li><a id_foro="{$foro.For_IdForo}" for_estado="{$foro.For_Estado}" class="opciones_foro deshablitarForo" style="cursor: pointer;">{$lenguaje.foro_str_desabilitar}<i class="i_opciones_foro glyphicon glyphicon-eye-close pull-right"></i></a></li>
                         {/if}
                         {/if}
                         {if (($_acl->permiso("eliminar_foro") || $id_usuario == $foro.Usu_IdUsuario)) && $foro.Row_Estado==1}
-                        <li><a id_foro="{$foro.For_IdForo}" class="opciones_foro eliminar_foro" Row_Estado="{$foro.Row_Estado}" style="cursor: pointer;">Eliminar<i class="i_opciones_foro glyphicon glyphicon-trash pull-right"></i></a></li>
+                        <li><a id_foro="{$foro.For_IdForo}" class="opciones_foro eliminar_foro" Row_Estado="{$foro.Row_Estado}" style="cursor: pointer;">{$lenguaje.foro_str_eliminar}<i class="i_opciones_foro glyphicon glyphicon-trash pull-right"></i></a></li>
                         {/if}
                         {if (($_acl->permiso("restaurar_foro") || $id_usuario == $foro.Usu_IdUsuario)) && $foro.Row_Estado==0}
-                        <li><a id_foro="{$foro.For_IdForo}" class="opciones_foro eliminar_foro" Row_Estado="{$foro.Row_Estado}" style="cursor: pointer;">Restaurar<i class="i_opciones_foro glyphicon glyphicon-refresh pull-right"></i></a></li>
+                        <li><a id_foro="{$foro.For_IdForo}" class="opciones_foro eliminar_foro" Row_Estado="{$foro.Row_Estado}" style="cursor: pointer;">{$lenguaje.foro_str_restaurar}<i class="i_opciones_foro glyphicon glyphicon-refresh pull-right"></i></a></li>
                         {/if}
                         {if $Rol_Ckey == "administrador" || $Rol_Ckey == "administrador_foro"}
-                        <li><a href="{$_layoutParams.root}foro/admin/" id_foro="{$foro.For_IdForo}" class="opciones_foro" style="cursor: pointer;">Ver todos los foros<i class="i_opciones_foro glyphicon glyphicon-list pull-right"></i></a></li>
+                        <li><a href="{$_layoutParams.root}foro/admin/" id_foro="{$foro.For_IdForo}" class="opciones_foro" style="cursor: pointer;">{$lenguaje.foro_str_vertodoslosforos}<i class="i_opciones_foro glyphicon glyphicon-list pull-right"></i></a></li>
                         {/if}
                     </ul>
                 </div>
@@ -101,12 +101,12 @@
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 p-rt-lt-0" style="font-size: 12px;">
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 p-rt-lt-0">
                         <i class="glyphicon glyphicon-user" style="color: #777; text-align: center; vertical-align: middle; margin-bottom: 5px;"></i>
-                        Creado {timediff date={$tiempo} lang=Cookie::lenguaje()}  por <strong>{$nombre_usuario}</strong>
+                        {$lenguaje.foro_str_creado} {timediff date={$tiempo} lang=Cookie::lenguaje()}  {$lenguaje.foro_str_por} <strong>{$nombre_usuario}</strong>
                     </div>
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 p-rt-lt-0">
                         <div class="pull-right">
                             <i class="fa fa-users" style="color: #777; text-align: center; vertical-align: middle;"></i>
-                            Participantes: <strong>{$Numero_participantes_x_idForo}</strong>
+                            {$lenguaje.foro_str_participantes}: <strong>{$Numero_participantes_x_idForo}</strong>
                         </div>
                     </div>
                 </div>
@@ -120,7 +120,7 @@
                 {if $foro.For_Funcion=="forum"}
                     {if count($foro.Sub_Foros)>0}
                     <div class="col col-xs-12 col-sm-12 col-md-12 col-lg-12 pull-left">
-                        <label class="">Sub Discusiones:</label>
+                        <label class="">{$lenguaje.foro_str_subdiscusiones}:</label>
                         {if !isset($foro.For_IdPadre)}
                         {if $foro.Row_Estado == 1 && $foro.For_Estado == 1}
                         <a type="button"  href="{$_layoutParams.root}foro/admin/form/new/forum/{$foro.For_IdForo}" class="btn btn-primary btn-sm pull-right" title="Nueva Sub Discusión" style="padding: 2px 10px;"> Crear &nbsp;<i class=" glyphicon glyphicon-plus pull-right"> </i></a>
@@ -169,7 +169,7 @@
                     <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 p-rt-lt-0">
                         <a class="pull-right regresar-tematica2" href="{$linea_tematica_url}">
                             <i class="glyphicon glyphicon-star" style="text-align: center; vertical-align: middle; margin-bottom: 3px;"></i>
-                            Temática: {$linea_tematica}
+                            {$lenguaje.foro_str_tematica}: {$linea_tematica}
                         </a>
                     </div>
                     <div class="col col-xs-12 col-sm-12 col-md-12 col-lg-12 padding-t-20">
@@ -230,13 +230,13 @@
                                     </div>
                                 {else}
                                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 p-rt-lt-0">
-                                        <button class="btn btn-primary btn-md inscribir_foro" id_foro="{$foro.For_IdForo}">Inscríbete para comentar
+                                        <button class="btn btn-primary btn-md inscribir_foro" id_foro="{$foro.For_IdForo}">{$lenguaje.foro_str_inscribeteparaparticipar}
                                         <i class="glyphicon glyphicon-log-in"></i></button>
                                     </div>
                                 {/if}
                             {else}
                                 <div>
-                                    <button class="btn btn-primary btn-md inscribir_foro" id_foro="{$foro.For_IdForo}">Inscríbete para participar
+                                    <button class="btn btn-primary btn-md inscribir_foro" id_foro="{$foro.For_IdForo}">{$lenguaje.foro_str_inscribeteparaparticipar}
                                     <i class="glyphicon glyphicon-log-in"></i></button>
                                 </div>
                             {/if}
@@ -249,10 +249,10 @@
                         {else}
                             <div class="">
                                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 anuncio">
-                                        <p>Para colgar su contribución inicie sesión.</p>
+                                        <p>{$lenguaje.foro_str_mensajeparainicarsesesion}</p>
                                     </div>
                                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 p-rt-lt-0">
-                                        <button data-toggle="modal" data-target="#modal-login" id="login-form-link" class="btn btn-group btn-success ini-sesion">Inicie Sesion <i class="glyphicon glyphicon-log-in"></i></button>
+                                        <button data-toggle="modal" data-target="#modal-login" id="login-form-link" class="btn btn-group btn-success ini-sesion">{$lenguaje.foro_str_iniciesesion} <i class="glyphicon glyphicon-log-in"></i></button>
                                         </div>
                             </div>
                         {/if}
@@ -262,7 +262,7 @@
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 p-rt-lt-0">
                             <h4>
                             <i class="glyphicon glyphicon-comment" style="color: #777; text-align: center; vertical-align: middle; margin-bottom: 3px;"></i>
-                            Comentarios: <strong>{$Numero_comentarios_x_idForo}</strong>
+                            {$lenguaje.str_comentarios}: <strong>{$Numero_comentarios_x_idForo}</strong>
                             </h4>
                     </div>
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 p-rt-lt-0" id="valoraciones_foro">
@@ -292,7 +292,7 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-md-12 col-xs-12 col-lg-12 col-sm-12">
-                        <h2 class="col-md-8 col-xs-8 col-lg-8 col-sm-8">Reporta un Comentario</h2>
+                        <h2 class="col-md-8 col-xs-8 col-lg-8 col-sm-8">{$lenguaje.foro_str_reportarcomentario}</h2>
                         <input type="hidden" id="idcomentario" name="idcomentario">
                         <button title="cerrar" type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
@@ -303,18 +303,19 @@
                                     <div class="col col-col-md-1 col-xs-1 col-lg-1 col-sm-1 "><img class="img-responsive" src="{$_layoutParams.root_clear}public/img/advertencia.png">
                                     </div>
                                     <div class="col-md-11 col-xs-11 col-lg-11 col-sm-11">
-                                    Tus comentarios nos ayudan a determinar cuándo algo no es apropiado. A continuación indicanos cúal es tu motivo para reportar este comentario.</div>
+                                    {$lenguaje.foro_str_inforeportarcomentario}
+                                    </div>
                                 </div>
                                 <div class="panel-body">
                                     <div class="row">
                                         <div class="col-md-12 col-xs-12 col-lg-12 col-sm-12">
                                             <div class="form-group">
-                                                <label>Mensaje</label>
+                                                <label>{$lenguaje.foro_str_mensaje}</label>
                                                 <textarea class="form-control" id="ta_mensaje_reportar" name="ta_mensaje_reportar"></textarea>
                                             </div>
                                         </div>
                                     </div>
-                                    <button type="button" id_foro="{$foro.For_IdForo}" class="btn btn-primary btn-md enviar_reporte" data-dismiss="modal" style="margin-left: 88%;">Enviar</button>
+                                    <button type="button" id_foro="{$foro.For_IdForo}" class="btn btn-primary btn-md enviar_reporte" data-dismiss="modal" style="margin-left: 88%;">{$lenguaje.foro_str_enviar}</button>
                                 </div>
                             </div>
                         </div>

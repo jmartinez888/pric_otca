@@ -20,7 +20,7 @@
 <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 p-rt-lt-0 text-right">
     <button data-toggle="modal" data-target="#modal-login" id="login-form-link" class="btn btn-comentar" style="">
     <i class="glyphicon glyphicon-comment"></i>
-    &nbsp;Comentar</button>
+    &nbsp;{$lenguaje.foro_str_comentar}</button>
 </div>
 <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 p-rt-lt-0 text-right">
     <span class="likes pull-right">

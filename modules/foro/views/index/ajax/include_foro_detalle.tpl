@@ -1,5 +1,5 @@
 <div class="addon">
-                    <label class="tit-integrante">Facilitado Por</label>
+                    <label class="tit-integrante"> {$lenguaje.foro_str_facilitadopor}</label>
                     <ul>
                             {foreach from=$facilitadores item=facilitador}
                             <li class=" clearfix">
@@ -21,7 +21,7 @@
                 </div>
                 {if count($foro.Archivos)>0}
                 <div class="addon">
-                    <label class="tit-integrante">Recursos</label>
+                    <label class="tit-integrante"> {$lenguaje.foro_str_recursos}</label>
                     <ul id="div_show_{$foro.For_IdForo}">
                                             {foreach from=$foro.Archivos  item=file}
                                             <li tabindex="-1" id="">
@@ -98,12 +98,12 @@
                     <div class="card">
                         <div class="form-login">
                             {if $foro.For_Funcion=="forum"}
-                            <h5>Iniciar sesión para contribuir</h5>
+                            <h5> {$lenguaje.foro_str_mensajeparainicarsesesionforo}</h5>
                             {else}
-                            <h5>Iniciar sesión para participar</h5>
+                            <h5>{$lenguaje.foro_str_mensajeparainicarsesesionotro}</h5>
                             {/if}
                             <div>
-                                <button data-toggle="modal" data-target="#modal-login" id="login-form-link" class="btn btn-group btn-success">Inicie Sesion <i class="glyphicon glyphicon-log-in"></i></button>
+                                <button data-toggle="modal" data-target="#modal-login" id="login-form-link" class="btn btn-group btn-success">{$lenguaje.foro_str_iniciesesion}<i class="glyphicon glyphicon-log-in"></i></button>
                             </div>
                         </div>
                     </div>
