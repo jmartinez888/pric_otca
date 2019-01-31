@@ -11,7 +11,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h4 class="panel-title">
-                        <strong>Foro</strong>
+                        <strong>{$lenguaje.foro_members_actividad}</strong>
                         </h4>
                     </div>
                     <div class="panel-body">
@@ -21,27 +21,27 @@
                                     <td colspan ="2"><a href="{$_layoutParams.root}foro/index/ficha/{$foro.For_IdForo}"> {$foro.For_Titulo}</a></td>
                                 </tr>
                                 <tr>
-                                    <td>Autor</td>
+                                    <td>{$lenguaje.foro_members_autor}</td>
                                     <td>{$foro.Usu_Usuario}</td>
                                 </tr>
                                 <tr>
-                                    <td>Miembros</td>
+                                    <td>{$lenguaje.foro_members_nmiembros}</td>
                                     <td>{$foro.For_NParticipantes}</td>
                                 </tr>
                                 <tr>
-                                    <td>Comentarios</td>
+                                    <td>{$lenguaje.foro_members_comentarios}</td>
                                     <td>{$foro.For_NComentarios}</td>
                                 </tr>
                                 <tr>
-                                    <td>Fecha Creacion</td>
+                                    <td>{$lenguaje.foro_members_fechacreacion}</td>
                                     <td>{$foro.For_FechaCreacion}</td>
                                 </tr>
                                 <tr>
-                                    <td>Fecha Cierre</td>
+                                    <td>{$lenguaje.foro_members_fechacierre}</td>
                                     <td>{$foro.For_FechaCierre}</td>
                                 </tr>
                                 <tr>
-                                    <td>Fecha Actualizacion</td>
+                                    <td>{$lenguaje.foro_members_fechaactualizacion}</td>
                                     <td>{$foro.For_Update}</td>
                                 </tr>
                             </tbody>
@@ -54,19 +54,19 @@
             <input type="hidden" id="ckey" name="ckey" value="{$Rol_Ckey}">
             <ul class="nav nav-tabs" role="tablist">
                 {if $Rol_Ckey=="lider_foro" || $Rol_Ckey=="administrador_foro" || $Rol_Ckey=="administrador"}
-                <li role="presentation" {if $Rol_Ckey=='lider_foro'} class="active" {/if}><a href="#tab_members" aria-controls="tab_members" role="tab" data-toggle="tab" class="tab_member" rol_member="lider_foro" id_foro="{$foro.For_IdForo|Default:0}">Lider</a></li>
+                <li role="presentation" {if $Rol_Ckey=='lider_foro'} class="active" {/if}><a href="#tab_members" aria-controls="tab_members" role="tab" data-toggle="tab" class="tab_member" rol_member="lider_foro" id_foro="{$foro.For_IdForo|Default:0}">{$lenguaje.foro_members_lider}</a></li>
                 {/if}
                 {if $Rol_Ckey=="lider_foro" || $Rol_Ckey=="administrador_foro" || $Rol_Ckey=="administrador"}
-                <li role="presentation" ><a href="#tab_members" aria-controls="tab_members" role="tab" data-toggle="tab" class="tab_member" rol_member="moderador_foro" id_foro="{$foro.For_IdForo|Default:0}">Moderador</a></li>
+                <li role="presentation" ><a href="#tab_members" aria-controls="tab_members" role="tab" data-toggle="tab" class="tab_member" rol_member="moderador_foro" id_foro="{$foro.For_IdForo|Default:0}">{$lenguaje.foro_members_moderador}</a></li>
                 {/if}
                 {if $Rol_Ckey=="moderador_foro" || $Rol_Ckey=="lider_foro" || $Rol_Ckey=="administrador_foro" || $Rol_Ckey=="administrador"}
-                <li role="presentation" {if $Rol_Ckey=='moderador_foro'} class="active" {/if}><a href="#tab_members" aria-controls="tab_members" role="tab" data-toggle="tab" class="tab_member" rol_member="facilitador_foro" id_foro="{$foro.For_IdForo|Default:0}">Facilitador</a></li>
+                <li role="presentation" {if $Rol_Ckey=='moderador_foro'} class="active" {/if}><a href="#tab_members" aria-controls="tab_members" role="tab" data-toggle="tab" class="tab_member" rol_member="facilitador_foro" id_foro="{$foro.For_IdForo|Default:0}">{$lenguaje.foro_members_facilitador}</a></li>
                 {/if}
                 {if $Rol_Ckey=="facilitador_foro" || $Rol_Ckey=="moderador_foro" || $Rol_Ckey=="lider_foro" || $Rol_Ckey=="administrador_foro" || $Rol_Ckey=="administrador"}
-                <li role="presentation" {if $Rol_Ckey=='facilitador_foro'} class="active" {/if}><a href="#tab_members" aria-controls="tab_members" role="tab" data-toggle="tab" class="tab_member" rol_member="participante_foro" id_foro="{$foro.For_IdForo|Default:0}">Participante</a></li>
+                <li role="presentation" {if $Rol_Ckey=='facilitador_foro'} class="active" {/if}><a href="#tab_members" aria-controls="tab_members" role="tab" data-toggle="tab" class="tab_member" rol_member="participante_foro" id_foro="{$foro.For_IdForo|Default:0}">{$lenguaje.foro_members_participante}</a></li>
                 {/if}
                 {if $Rol_Ckey=="facilitador_foro" || $Rol_Ckey=="moderador_foro" || $Rol_Ckey=="lider_foro" || $Rol_Ckey=="administrador_foro" || $Rol_Ckey=="administrador"}
-                <li class="pull-right"><a type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal-asignar-member" title="Asignar nuevo miembro al foro">Asignar</a></li>
+                <li class="pull-right"><a type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal-asignar-member" title="Asignar nuevo miembro al foro">{$lenguaje.foro_members_asignar}</a></li>
                 {/if}
                 <!-- ver -->
             </ul>
@@ -81,18 +81,18 @@
 </div>
 <!--  Modal Asignar Member -->
 <div class="modal fade top-space-0" id="modal-asignar-member" tabindex="-1" role="dialog">
-    <div class="modal-dialog login-dialog">
+    <div class="modal-dialog login-dialo modal-lg">
         <div class="modal-content">
             <div class="modal-body" >
                 <div class="row">
                     <div class="col-md-12 col-xs-12 col-lg-12 col-sm-12">
-                        <h2>Añadir miembro al Foro</h2>
+                        <h2>{$lenguaje.foro_members_aniadirmiembro}</h2>
                         <hr>
                         <div class="panel-group" >
                             <div class="panel panel-default">
                                 <div class="panel-heading">
                                     <h4 class="panel-title">
-                                    Localizar un usuario
+                                    {$lenguaje.foro_members_localizarusuario}
                                     </h4>
                                 </div>
                                 <div class="panel-body">
@@ -114,16 +114,16 @@
                                             <input type="text" class="form-control" style="width: 100%" id="tb_buscar_usuario" name="tb_buscar_usuario" placeholder="Buscar usuario por nombre">
                                         </div>
                                         <div class="col-md-2 col-xs-2 col-lg-2 col-sm-2 pull-right">
-                                            <button type="button" id="bt_buscar_user_foro" class="btn btn-default" id_foro="{$foro.For_IdForo}" >Buscar</button>
+                                            <button type="button" id="bt_buscar_user_foro" class="btn btn-default" id_foro="{$foro.For_IdForo}" >{$lenguaje.foro_members_buscar}</button>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="panel-heading">
                                     <div class="col-md-2 col-xs-4 col-lg-2 col-sm-2">
-                                        Seleccione
+                                        {$lenguaje.foro_members_seleccione}
                                     </div>
                                     <div class="col-md-10 col-xs-8 col-lg-10 col-sm-10">
-                                        Nombre
+                                        {$lenguaje.foro_members_nombre}
                                     </div>
                                     <div class="clearfix"></div>
                                 </div>
@@ -131,7 +131,7 @@
                                     <div id="lista_member_select">
                                         {if isset($lista_meber_select)}
                                         {else}
-                                        <span>Realice una busqueda</span>
+                                        <span>{$lenguaje.foro_members_realicebusqueda}</span>
                                         {/if}
                                     </div>
                                     <div class="row">
@@ -152,12 +152,12 @@
                                         </div>
                                         <div class="col-md-12 col-xs-12 col-lg-12 col-sm-12 margin-t-10 "> 
                                             <blockquote style="margin: 0;">
-                                                <b style="font-size: 14px">NOTA: Variables utilizables</b>
+                                                <b style="font-size: 14px">{$lenguaje.foro_members_notavariables}</b>
                                                 <em> 
-                                                    <h5><strong>|nombre|</strong> = Nombre del participante.</h5>
-                                                    <h5><strong>|apellidos|</strong> =  Apellidos del participante.</h5>
-                                                    <h5><strong>|usuario|</strong> = Usuario del participante.</h5>
-                                                    <h5><strong>|titulo_foro|</strong> = Titulo del foro</h5>
+                                                    <h5><strong>|nombre|</strong> = {$lenguaje.foro_members_nombreparticipante}</h5>
+                                                    <h5><strong>|apellidos|</strong> =  {$lenguaje.foro_members_apellidoparticipante}</h5>
+                                                    <h5><strong>|usuario|</strong> = {$lenguaje.foro_members_usuarioparticipante}</h5>
+                                                    <h5><strong>|titulo_foro|</strong> = {$lenguaje.foro_members_tituloforo}</h5>
                                                 </em>
                                             </blockquote> 
                                         </div>
@@ -169,7 +169,6 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal" id="bt_asignar_usuario" id_foro="{$foro.For_IdForo}" >Añadir</button>
             </div>
         </div>
     </div>
@@ -181,7 +180,7 @@
             <div class="modal-body" >
                 <div class="row">
                     <div class="col-md-12 col-xs-12 col-lg-12 col-sm-12">
-                        <h2>Permisos del Participante</h2>
+                        <h2>{$lenguaje.foro_members_permisosparticipante}</h2>
                         <hr>
                         <div class="panel-group" >
                             <div class="panel panel-default" id="listaPermisosMember">
