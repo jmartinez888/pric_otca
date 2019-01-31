@@ -59,6 +59,7 @@ class gcursoController extends elearningController {
 
   public function _view_mis_cursos()
   {
+    $this->_view->setTemplate(LAYOUT_FRONTEND);
     $id = Session::get("id_usuario");
     $busqueda = $this->getTexto('busqueda');
     // $cursos = $this->curso->getCursoXDocente($id, $busqueda);
@@ -72,21 +73,32 @@ class gcursoController extends elearningController {
 
     //print_r($cursos); exit;
     // $this->_view->setCss(array("jm-mis-cursos"));
-    Session::set("learn_url_tmp", "gcurso/_view_mis_cursos");
-    $this->_view->getLenguaje("learn");
+    // Session::set("learn_url_tmp", "gcurso/_view_mis_cursos");
+    // $this->_view->getLenguaje("learn");
+    $lang = $this->_view->getLenguaje(['elearning_gcurso', 'elearning_cursos'], false, true);
+
+    $this->_view->assign('menu', 'docente');
     $this->_view->assign('cursos', $cursos);
     $this->_view->assign('busqueda', $busqueda);
     $this->_view->assign('curso', $this->getTexto("id"));
-    $this->_view->renderizar('ajax/_view_mis_cursos', false, true);
+    $this->_view->render('ajax/_view_mis_cursos');
   }
 
   public function _view_registrar()
   {
-    Session::set("learn_url_tmp", "gcurso/_view_registrar");
+    // Session::set("learn_url_tmp", "gcurso/_view_registrar");
+    $this->_view->setTemplate(LAYOUT_FRONTEND);
     $modalidad = $this->curso->getModalidadCurso();
-    $this->_view->getLenguaje("learn");
+
+    // $this->_view->getLenguaje("learn");
+    $lang = $this->_view->getLenguaje(['elearning_gcurso', 'elearning_cursos'], false, true);
+    
+    $_arquitectura = $this->loadModel('index','arquitectura');
+    $this->_view->assign('idiomas',$_arquitectura->getIdiomas());
+    $this->_view->assign('menu', 'docente');
+    $this->_view->assign('idiomaCookie', Cookie::lenguaje());
     $this->_view->assign('modalidad', $modalidad);
-    $this->_view->renderizar('ajax/_view_registrar', false, true);
+    $this->_view->render('ajax/_view_registrar');
   }
 
   public function _view_finalizar_registro($idcurso = 0)
@@ -173,11 +185,12 @@ class gcursoController extends elearningController {
   public function _registrar_curso()
   {
     $id = Session::get("id_usuario");
+    $Idi_IdIdioma = $this->getTexto("idiomaRadio");
     $modalidad = $this->getTexto("modalidad");
     $titulo = $this->getTexto("curso_titulo");
     $descripcion = $this->getPostParam("curso_descripcion");
 
-    $this->curso->saveCurso($id, $modalidad, $titulo, $descripcion);
+    $this->curso->saveCurso($id, $modalidad, $titulo, $descripcion, $Idi_IdIdioma);
     $curso = $this->curso->getCursoXRegistro($id);
 
     $this->service->Success($curso);

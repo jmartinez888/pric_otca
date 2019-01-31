@@ -4,7 +4,7 @@
 
 <div class="col-lg-12">
   <div class="col-lg-12 referencia-curso-total">
-    <a class="referencia-curso" href="{BASE_URL}elearning/cursos/">Cursos</a>  /  {$curso.Cur_Titulo}
+    <a class="referencia-curso" href="{BASE_URL}elearning/cursos/">{$lang->get("elearning_cursos_cursos")}</a>  /  {$curso.Cur_Titulo}
   </div>
   {include file='modules/elearning/views/cursos/menu/lateral.tpl'}
   <div class="col-xs-12 col-sm-12 col-md-9 col-lg-10" style="margin-top: 20px; ">

@@ -275,9 +275,9 @@ class _gestionCursoModel extends Model {
       }
   }
 
-  public function saveCurso($usuario, $modalidad, $titulo, $descripcion){
-    $this->execQuery("INSERT INTO curso(Usu_IdUsuario, Cur_UrlBanner, Moa_IdModalidad, Cur_Titulo, Cur_Descripcion, Cur_Estado)
-      VALUES($usuario, 'default.jpg', $modalidad, '$titulo', '$descripcion', 0)");
+  public function saveCurso($usuario, $modalidad, $titulo, $descripcion, $Idi_IdIdioma){
+    $this->execQuery("INSERT INTO curso(Usu_IdUsuario, Cur_UrlBanner, Moa_IdModalidad, Cur_Titulo, Cur_Descripcion, Cur_Estado, Idi_IdIdioma)
+      VALUES($usuario, 'default.jpg', $modalidad, '$titulo', '$descripcion', 0, '$Idi_IdIdioma')");
   }
 
   public function updateEstadoCurso($curso, $estado){

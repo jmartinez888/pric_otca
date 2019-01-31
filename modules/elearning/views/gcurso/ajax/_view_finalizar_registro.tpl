@@ -42,7 +42,6 @@
 <!-- <link href="{$_url}gcurso/css/_view_finalizar_registro.css" rel="stylesheet" type="text/css"/> -->
 {/block}
 
-
 {block 'subcontenido'}
 {include file='modules/elearning/views/gestion/menu/tag_url.tpl'}
 
