@@ -1,5 +1,8 @@
+// $("#btn_nuevo_curso").click(function(){
+//   CargarPagina("gcurso/_view_registrar", {}, false, $(this));
+// });
 $("#btn_nuevo_curso").click(function(){
-  CargarPagina("gcurso/_view_registrar", {}, false, $(this));
+  Link("/gcurso/_view_registrar");
 });
 
 // $(".btnFinalizarReg").click(function(){
@@ -67,7 +70,8 @@ $(".btnHabilitar").click(function(){
 
 function ToggleEstado(curso, _estado){
   AsincTaks("gcurso/_estado_curso", { id : curso, estado : _estado }, function(a){
-    CargarPagina("gcurso/_view_mis_cursos", {}, false, $(this));
+    // CargarPagina("gcurso/_view_mis_cursos", {}, false, $(this));
+    Link("/gcurso/_view_mis_cursos");
   });
 }
 
@@ -79,4 +83,4 @@ $("#btn_buscar").click(function(){
   });
 });
 
-Menu(0);
+// Menu(0);

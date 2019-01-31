@@ -1,5 +1,7 @@
 $("#btn_inicio").click(function(){
-  CargarPagina("gestion/_inicio", {}, false, $(this));
+  // CargarPagina("gestion/_inicio", {}, false, $(this));
+  location.href = _root_ + _modulo + "/gestion/_inicio/" ;
+        
 });
 
 $("#slModalidad").change(function(){
@@ -23,7 +25,9 @@ $("#btn_guardar").click(function(){
       $("#btn_guardar").prop("disabled", false);
     }else{
       Mensaje("Curso registrado!", function(){
-        CargarPagina("gcurso/_view_finalizar_registro/", { id: ID_CURSO }, false, false);
+        // url = _root_ + _modulo + url; 
+        location.href = _root_ + _modulo + "/gcurso/_view_finalizar_registro/" + ID_CURSO;
+        // CargarPagina("gcurso/_view_finalizar_registro/", { id: ID_CURSO }, false, false);
       });
     }
   });

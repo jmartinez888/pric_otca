@@ -234,6 +234,7 @@ class _gestionCursoModel extends Model {
         if( strlen($Busqueda) ){
           $sql .=" AND cursi.Cur_Titulo like '%" . $Busqueda . "%' OR cursi.Cur_Descripcion like '%{$Busqueda}%' ";
         }
+        
         $sql .= " GROUP BY cursi.Cur_IdCurso ORDER BY cursi.Inscrito ";
 
         $result = $this->_db->query($sql);
@@ -275,9 +276,9 @@ class _gestionCursoModel extends Model {
       }
   }
 
-  public function saveCurso($usuario, $modalidad, $titulo, $descripcion){
-    $this->execQuery("INSERT INTO curso(Usu_IdUsuario, Cur_UrlBanner, Moa_IdModalidad, Cur_Titulo, Cur_Descripcion, Cur_Estado)
-      VALUES($usuario, 'default.jpg', $modalidad, '$titulo', '$descripcion', 0)");
+  public function saveCurso($usuario, $modalidad, $titulo, $descripcion, $Idi_IdIdioma){
+    $this->execQuery("INSERT INTO curso(Usu_IdUsuario, Cur_UrlBanner, Moa_IdModalidad, Cur_Titulo, Cur_Descripcion, Cur_Estado, Idi_IdIdioma)
+      VALUES($usuario, 'default.jpg', $modalidad, '$titulo', '$descripcion', 0, '$Idi_IdIdioma')");
   }
 
   public function updateEstadoCurso($curso, $estado){

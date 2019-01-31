@@ -1,44 +1,48 @@
+{extends 'index_elearning.tpl'}
+{block 'css' append}
 <style type="text/css">
   .contador{
-  color: #393939;
-}
+    color: #393939;
+  }
 
-.clasificacion {
-  /*display: inline-block;*/
-  /*font-size: 115%;*/
-  background: rgba(240,240,240,.8);
-  padding: 5px 10px 0px 10px;
-  /*position: absolute;*/
-  /*top: 0px;*/
-  /*right: 0px;*/
-  border-radius: 5px;
-  margin: 0px;
-  /*direction: rtl;*/
-  /*unicode-bidi: bidi-override;*/
-}
-.active {
-  color: orange;
-}
-.icon-alumnos{
-    border-left: 1px solid;
-    padding-left: 10px;
-    margin-left: 5px;
-}
-.titulo{
-    margin-bottom: 8px;
-}
+  .clasificacion {
+    /*display: inline-block;*/
+    /*font-size: 115%;*/
+    background: rgba(240,240,240,.8);
+    padding: 5px 10px 0px 10px;
+    /*position: absolute;*/
+    /*top: 0px;*/
+    /*right: 0px;*/
+    border-radius: 5px;
+    margin: 0px;
+    /*direction: rtl;*/
+    /*unicode-bidi: bidi-override;*/
+  }
+  .active {
+    color: orange;
+  }
+  .icon-alumnos{
+      border-left: 1px solid;
+      padding-left: 10px;
+      margin-left: 5px;
+  }
+  .titulo{
+      margin-bottom: 8px;
+  }
 
-/*.btn-sm{
-  padding: 3px 5px;
-}*/
-.btn-group-sm>.btn, .btn-sm {
-    padding: 4px 8px;
-    font-size: 16px;
-    line-height: unset;
-    font-weight: bold;
-}
+  /*.btn-sm{
+    padding: 3px 5px;
+  }*/
+  .btn-group-sm>.btn, .btn-sm {
+      padding: 4px 8px;
+      font-size: 16px;
+      line-height: unset;
+      font-weight: bold;
+  }
 </style>
+{/block}
 
+{block 'subcontenido'}
 <div class="col col-lg-12 ">
   <!-- <div class="panel panel-default"> -->
     <!-- <div class="panel-heading">
@@ -151,6 +155,8 @@
     </div>
   <!-- </div> -->
 </div>
+{/block}
 
-
+{block 'js' append}
 <script type="text/javascript" src="{$_url}gcurso/js/_view_mis_cursos.js"></script>
+{/block}
