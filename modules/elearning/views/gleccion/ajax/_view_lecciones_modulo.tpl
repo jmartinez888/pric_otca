@@ -44,8 +44,8 @@
     <!--  Tabs-->
     <div class="col-xs-12" style="padding-top: 15px;">
       <ul class="nav nav-tabs" role="tablist">
-        <li role="presentation" class="active" id="item_modulo"><a href="#item" aria-controls="item">MÓDULO</a></li>
-        <li role="presentation" id="item_lecciones" ><a href="#item" aria-controls="lecciones">LECCIONES</a></li>
+        <li role="presentation" class="active" id="item_modulo"><a href="#item" aria-controls="item">{$lenguaje.elearning_cursos_modulos}</a></li>
+        <li role="presentation" id="item_lecciones" ><a href="#item" aria-controls="lecciones">{$lenguaje.elearning_cursos_lecciones}</a></li>
       </ul>
     </div>
     <!-- Modulo -->
@@ -65,21 +65,21 @@
               <input hidden="hidden" name="IdiomaOriginal" value="{$modulo.Idi_IdIdioma}" />
               <input hidden="hidden" name="IdiomaOriginal" value="{$IdiomaOriginal}" />
 
-          <div class="col-xs-12"><strong>Titulo</strong></div>
+          <div class="col-xs-12"><strong>{$lenguaje.elearning_cursos_titulo}</strong></div>
           <div class="col-xs-12">
             <input class="form-control" name="titulo" value="{$modulo.Moc_Titulo}" />
           </div>
-          <div class="col-xs-12 margin-t-10"><strong>Descripcion</strong></div>
+          <div class="col-xs-12 margin-t-10"><strong>{$lenguaje.elearning_cursos_descripcion}</strong></div>
           <div class="col-xs-12">
             <textarea class="form-control" name="descripcion">{$modulo.Moc_Descripcion}</textarea>
           </div>
-          <div class="col-xs-12 margin-t-10"><strong>Tiempo de Dedicación</strong></div>
+          <div class="col-xs-12 margin-t-10"><strong>{$lenguaje.elearning_cursos_tiempo_dedicacion}</strong></div>
           <div class="col-xs-12">
             <input class="form-control" name="dedicacion" value="{$modulo.Moc_TiempoDedicacion}" />
           </div>
           </form>
           <div class="col-xs-12 margin-t-10">
-            <button id="btn_actualizar_modulo" class="btn btn-success">Actualizar Datos</button>
+            <button id="btn_actualizar_modulo" class="btn btn-success">{$lenguaje.elearning_cursos_actualizar_datos}</button>
           </div>
         </div>
       </div>

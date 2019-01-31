@@ -55,7 +55,7 @@ class indexController extends foroController {
 	}
 
 	public function forum() {
-		$lenguaje = Session::get("fileLenguaje");
+		$lenguaje = $this->_view->getLenguaje("foro_index_index");
 		$this->_view->setTemplate(LAYOUT_FRONTEND);
 		$this->_view->assign('titulo', $lenguaje["str_discusion"]);
 		$this->_view->setCss(array("jp-index"));
@@ -69,7 +69,7 @@ class indexController extends foroController {
 	}
 
 	public function query() {
-		$lenguaje = Session::get("fileLenguaje");
+		$lenguaje = $this->_view->getLenguaje("foro_index_index");
 		$this->_view->setTemplate(LAYOUT_FRONTEND);
 		$this->_view->assign('titulo', $lenguaje["str_consultas"]);
 		$this->_view->setCss(array("jp-index"));
@@ -83,7 +83,9 @@ class indexController extends foroController {
 	}
 
 	public function webinar() {
+		$lenguaje = $this->_view->getLenguaje("foro_index_index");
 		$this->_view->setTemplate(LAYOUT_FRONTEND);
+		$this->_view->assign('titulo', $lenguaje["str_webinars"]);
 		$this->_view->setCss(array("jp-index"));
 		$this->_view->setJs(array('buscar_foro'));
 
@@ -95,8 +97,9 @@ class indexController extends foroController {
 	}
 
 	public function workshop() {
+		$lenguaje = $this->_view->getLenguaje("foro_index_index");
 		$this->_view->setTemplate(LAYOUT_FRONTEND);
-		$this->_view->assign('titulo', "Workshop");
+		$this->_view->assign('titulo', $lenguaje["str_workshop"]);
 		$this->_view->setCss(array("jp-index"));
 		$this->_view->setJs(array('buscar_foro'));
 
@@ -176,7 +179,9 @@ class indexController extends foroController {
 	}
 
 	public function agenda() {
+		$lenguaje = $this->_view->getLenguaje("foro_index_index");
 		$this->_view->setTemplate(LAYOUT_FRONTEND);
+		$this->_view->assign('titulo', $lenguaje["str_agenda"]);
 		$this->_view->setJs(array('agenda', array(BASE_URL . 'public/js/fullcalendar/moment.min.js'), array(BASE_URL . 'public/js/fullcalendar/fullcalendar.min.js'), array(BASE_URL . 'public/js/fullcalendar/locale/es.js')));
 		$this->_view->setCss(array('agenda', 'jp-agenda', array(BASE_URL . "public/css/fullcalendar/fullcalendar.min.css")));
 		$this->_view->assign('titulo', "Agenda");
@@ -184,8 +189,9 @@ class indexController extends foroController {
 		$this->_view->renderizar('agenda');
 	}
 	public function historico() {
+		$lenguaje = $this->_view->getLenguaje("foro_index_index");
 		$this->_view->setTemplate(LAYOUT_FRONTEND);
-		$this->_view->assign('titulo', "Histórico");
+		$this->_view->assign('titulo', $lenguaje["str_historico"]);
 		$this->_view->setCss(array("historico", "jp-historico", "jp-index"));
 		$this->_view->setJs(array('buscar_foro'));
 
@@ -206,7 +212,9 @@ class indexController extends foroController {
 	}
 
 	public function statistics() {
+		$lenguaje = $this->_view->getLenguaje("foro_index_index");
 		$this->_view->setTemplate(LAYOUT_FRONTEND);
+		$this->_view->assign('titulo', $lenguaje["str_estadisticas"]);
 		$this->_view->setCss(array(
 			array('//github.com/downloads/lafeber/world-flags-sprite/flags32.css', true),
 			"statistics", "jp-statistics"));
@@ -244,6 +252,7 @@ class indexController extends foroController {
 			$this->redireccionar("foro");
 		}
 		$this->validarUrlIdioma();
+		$lenguaje = $this->_view->getLenguaje("foro_index_index");
 		$this->_view->setTemplate(LAYOUT_FRONTEND);
 		$this->_view->getLenguaje("foro_index_ficha");
 		$this->_view->setCss([
