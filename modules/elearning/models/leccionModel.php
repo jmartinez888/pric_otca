@@ -119,7 +119,8 @@ class leccionModel extends Model {
                 Lec_LMSEstado,
                 Lec_LMSPizarra,
                 Lec_Estado,
-                Row_Estado
+                Row_Estado,
+                fn_devolverIdioma('leccion',Lec_IdLeccion,'$Idi_IdIdioma',Idi_IdIdioma) Idi_IdIdioma
 
                FROM leccion WHERE Moc_IdModuloCurso = {$modulo}
               AND Lec_Estado = 1 AND Row_Estado = 1
