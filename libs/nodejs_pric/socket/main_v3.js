@@ -114,6 +114,7 @@ module.exports = function(app, test){
   
           socket.on('send_all_data_canvas', canvas_json => {
             console.log(canvas_json)
+            //solo existe en alumno
             socket.broadcast.to(nameRoom).emit('all_data_canvas', canvas_json)
           })
         }

@@ -3,7 +3,7 @@ var mivue = new Vue({
 	el: '#modulo-contenedor',
 	data: function () {
 		return {
-			altura_opciones: 64,
+			altura_opciones: 96,
 			razoncambio: 1.77777777,
 			LECCION: {
 				ID: 0,
@@ -82,7 +82,8 @@ var mivue = new Vue({
 							json: ''
 						})
 						canvasdocente.renderAll()
-						this.objSocket.emit('send_all_data_canvas', canvasdocente.toJSON(['objecto_id']))
+						this.objSocket.emit('send_all_data_canvas', {json: canvasdocente.toJSON(['objecto_id']), canvas: {width: this.$refs.micanvas.width, height: this.$refs.micanvas.height}})
+						// this.objSocket.emit('send_all_data_canvas', canvasdocente.toJSON(['objecto_id']))
 					}, {
 					    backgroundImageStretch: false
 					});
@@ -104,7 +105,7 @@ var mivue = new Vue({
 								json: ''
 							})
 							canvasdocente.renderAll()
-							this.objSocket.emit('send_all_data_canvas', canvasdocente.toJSON(['objecto_id']))
+							this.objSocket.emit('send_all_data_canvas', {json: canvasdocente.toJSON(['objecto_id']), canvas: {width: this.$refs.micanvas.width, height: this.$refs.micanvas.height}})
 
 						}, {
 						    backgroundImageStretch: false
@@ -116,7 +117,7 @@ var mivue = new Vue({
 							canvasdocente.getObjects().forEach(obj => {
 								this.addEventosObjeto(obj)
 							})
-							this.objSocket.emit('send_all_data_canvas', solicita.json)
+							this.objSocket.emit('send_all_data_canvas', {json: solicita.json, canvas: {width: this.$refs.micanvas.width, height: this.$refs.micanvas.height}})
 						})
 					}
 
@@ -234,6 +235,7 @@ var mivue = new Vue({
 			obj.on('moving', (x, y) => {
 				this.objSocket.emit('change_object', {
 					data: 	{x: x.target.left, y: x.target.top},
+					canvas:	{height: this.$refs.micanvas.height, width: this.$refs.micanvas.width},
 					id: 		x.target.objeto_id,
 					event: 	'moving'
 				})
@@ -404,7 +406,7 @@ var mivue = new Vue({
 					console.log('alumno conectado')
 					console.log(res)
 					if (res.success)
-						this.objSocket.emit('send_all_data_canvas', canvasdocente.toJSON())
+						this.objSocket.emit('send_all_data_canvas', {json: canvasdocente.toJSON(), canvas: {width: this.$refs.micanvas.width, height: this.$refs.micanvas.height}})
 				})
 				this.objSocket.emit('CONFIRMACARGACANVAS','Iniciando desde docente')	
 			})

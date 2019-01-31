@@ -332,9 +332,10 @@ width: 700px;*/
 
 #opciones_canvas {
   /*   background:red; */
-    border:1 solid black;
-    height: 30px;
-    overflow-y:hidden;
+  border:1 solid black;
+  height: 60px;
+  overflow-y:hidden;
+  text-align: center;
   }
   #opciones_canvas{
   /*   background:green; */
