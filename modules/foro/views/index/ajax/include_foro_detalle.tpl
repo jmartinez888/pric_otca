@@ -6,7 +6,7 @@
                                                 <a href="{$_layoutParams.root}usuarios/perfil/index/{$facilitador.Usu_IdUsuario}" target="_blank">
                                                     <div class="col col-xs-3 col-sm-3 col-md-3 col-lg-3">
                                                         {if !empty($facilitador.Usu_URLImage)}
-                                                        <img class="round" src="$facilitador.Usu_URLImage}" alt="falta">
+                                                        <img class="round" src="{$_layoutParams.root_archivo_fisico}usuarios/img/{$facilitador.Usu_URLImage}" alt="falta">
                                                         {else}
                                                         <img class="round" src="{$_layoutParams.root_clear}/views/layout/frontend/img/user2-160x160.jpg" alt="Perfil">
                                                         {/if}

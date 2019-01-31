@@ -3,19 +3,19 @@
     <div class="row">
         {if $Form_Funcion=="forum"}
         <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12">
-            <h3 class="titulo">Nueva Discusión</h3>
+            <h3 class="titulo">{$lenguaje.foro_discusion_nueva_discusion}</h3>
         </div>
         
         {elseif $Form_Funcion=="webinar"}
         <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12">
-            <h3 class="titulo">Nuevo Webinar</h3>
+            <h3 class="titulo">{$lenguaje.foro_discusion_nuevo_webinar}</h3>
         </div>
         {elseif $Form_Funcion=="workshop"}
         <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12">
-            <h3 class="titulo">Nuevo Workshop</h3>
+            <h3 class="titulo">{$lenguaje.foro_discusion_nuevo_workshop}</h3>
         </div>
         {elseif $Form_Funcion=="query"}
-        <h3 class="titulo">Nueva Consulta</h3>
+        <h3 class="titulo">{$lenguaje.foro_discusion_nueva_consulta}</h3>
         {/if}
         <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 p-rt-lt-0">
             <hr class="foro-hr-title-form">
@@ -55,21 +55,21 @@
                     <div class="clearfix"></div>
                 </div>
                 <div class="form-group">
-                    <label for="text_titulo">Título</label>
+                    <label for="text_titulo">{$lenguaje.foro_form_titulo}:</label>
                     <input type="text" placeholder="Ingrese Título del Foro" class="form-control" id="text_titulo" name="text_titulo" value="{$foro.For_Titulo|default:""}">
                 </div>
                 {if $Form_Funcion!="query"}
                 <div class="form-group">
-                    <label for="text_resumen">Resumen:</label>
+                    <label for="text_resumen">{$lenguaje.foro_form_resumen}:</label>
                     <textarea type="text" placeholder="Ingrese Resumen del Foro" class="form-control" id="text_resumen" name="text_resumen">{$foro.For_Resumen|default:""}</textarea>
                 </div>
                 <div class="form-group">
-                    <label for="text_palabras_claves">Etiquetas:</label>
+                    <label for="text_palabras_claves">{$lenguaje.foro_form_etiquetas}:</label>
                     <input type="text" placeholder="Ingrese etiquetas del Foro separadas por ," class="form-control" id="text_palabras_claves" name="text_palabras_claves" value="{$foro.For_PalabrasClaves|default:""}">
                 </div>
                 {/if}
                 <div class="form-group">
-                    <label for="text_descripcion">Descripción</label>
+                    <label for="text_descripcion">{$lenguaje.foro_form_descripcion}</label>
                     <textarea type="text" class="form-control" id="text_descripcion" name="text_descripcion">
                     {$foro.For_Descripcion|default:""}
                     </textarea>
@@ -87,19 +87,19 @@
     <div class="row">
         {if $Form_Funcion=="forum"}
         <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12">
-            <h3 class="titulo">Editar Discusión</h3>
+            <h3 class="titulo">{$lenguaje.foro_form_editardiscusion}</h3>
         </div>
         
         {elseif $Form_Funcion=="webinar"}
         <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12">
-            <h3 class="titulo">Editar Webinar</h3>
+            <h3 class="titulo">{$lenguaje.foro_form_editarwebinar}</h3>
         </div>
         {elseif $Form_Funcion=="workshop"}
         <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12">
-            <h3 class="titulo">Editar Workshop</h3>
+            <h3 class="titulo">{$lenguaje.foro_form_editarworkshop}</h3>
         </div>
         {elseif $Form_Funcion=="query"}
-        <h3 class="titulo">Editar Consulta</h3>
+        <h3 class="titulo">{$lenguaje.foro_form_editarconsulta}</h3>
         {/if}
         <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 p-rt-lt-0">
             <hr class="foro-hr-title-form">
@@ -134,18 +134,18 @@
             <div class="modal-body" >
                 <div class="row">
                     <div class="col-md-12 col-xs-12 col-lg-12 col-sm-12">
-                        <h2>Nueva Entidad</h2>
+                        <h2>{$lenguaje.foro_form_nuevaentidad}</h2>
                         <hr>
                         <div class="form-group" >
                             <div class="form-group">
-                                <label for="text_resumen">Nombre:</label>
+                                <label for="text_resumen">{$lenguaje.foro_form_nombre}:</label>
                                 <input type="text" placeholder="Ingrese nombre de la entidad" class="form-control" id="text_nombre_entidad" name="text_nombre_entidad">
                             </div>
                             <div class="form-group">
-                                <label for="text_palabras_claves">Siglas:</label>
+                                <label for="text_palabras_claves">{$lenguaje.foro_form_siglas}:</label>
                                 <input type="text" placeholder="Ingrese siglas  de la entidad" class="form-control" id="text_siglas_entidad" name="text_siglas_entidad" >
                             </div>
-                            <button id="bt_guardar_entidad" name="bt_guardar_entidad" type="button" class="btn btn-primary  pull-right">Guardar</button>
+                            <button id="bt_guardar_entidad" name="bt_guardar_entidad" type="button" class="btn btn-primary  pull-right">{$lenguaje.foro_form_guardar}</button>
                             
                             
                         </div>
