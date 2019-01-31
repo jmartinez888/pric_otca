@@ -66,7 +66,7 @@
                   
                     <div class="clearfix"> </div>
                     <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 margin-t-10">
-                        <h3 class="subtitle-foro">{$lenguaje.foro_index_str_act-reciente}</h3>
+                        <h3 class="subtitle-foro">{$lenguaje.foro_index_str_act_reciente}</h3>
                     </div>
                     <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12">
                         <hr class="cursos-hr-title-foro">
