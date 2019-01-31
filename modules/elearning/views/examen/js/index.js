@@ -16,11 +16,11 @@ $(document).on('ready', function () {
 
     //     }
     // });
-    try {
-        RefreshTagUrl();
-    } catch(e) {
+    // try {
+    //     RefreshTagUrl();
+    // } catch(e) {
        
-    }
+    // }
     
     $("#hidden_curso").val($("#idcurso").val());
 
