@@ -3,8 +3,10 @@ var mivue = new Vue({
 	el: '#modulo-contenedor',
 	data: function () {
 		return {
+			imgTransparent100x100: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAQAAADa613fAAAAaElEQVR42u3PQREAAAwCoNm/9CL496ABuREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREWkezG8AZQ6nfncAAAAASUVORK5CYII=',
 			altura_opciones: 96,
 			razoncambio: 1.77777777,
+			PIZARRAS: [],
 			LECCION: {
 				ID: 0,
 				SESSION_ID: 0,
@@ -66,6 +68,40 @@ var mivue = new Vue({
 		},
 	},
 	methods: {
+		formatItemPizarra: function (id) {
+			return `
+			<div class="panel item-pizarra">
+				<img ref="pizarrabg_${id}" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAQAAADa613fAAAAaElEQVR42u3PQREAAAwCoNm/9CL496ABuREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREWkezG8AZQ6nfncAAAAASUVORK5CYII=" />
+				<strong class="number_pizarra">${'asd'}</strong>
+			</div>
+			`
+		},
+		onClick_agregarPizarra: function (e) {
+			$.fn.Mensaje({
+		    mensaje: "¿Agregar pizarra vacía?",
+		    tipo: "SiNo",
+		    funcionSi: () => {
+					axios.post(base_url('elearning/pizarra/_registrar_pizarra'), parseData({
+						leccion: this.LECCION.ID,
+						modo: 'noimage'
+					})).then(res => {
+						if (res.data.estado == 1) {
+							$.fn.Mensaje({
+								mensaje: res.data.mensaje,
+								tipo: 'Aceptar',
+								funcionAceptar: () => {
+								 console.log('pizarra agregada')
+								if (res.data.data.data_pizarra)
+									this.PIZARRAS.push(res.data.data.data_pizarra)
+
+								}
+							});	
+						}
+					})
+				}
+		  });
+			
+		},
 		fnOnResize_PanelPizarra: function (e) {
 			console.log('dd')
 			console.log(this.$refs.panel_pizarra_final.offsetWidth)
@@ -79,7 +115,7 @@ var mivue = new Vue({
 					console.log('new')
 					//cuando current_pizarra == 0
 					canvasdocente.clear()
-					canvasdocente.setBackgroundImage(this.$refs['pizarrabg_' + pizarra].src, x => {
+					canvasdocente.setBackgroundImage(document.getElementById('pizarrabg_' + pizarra).src, x => {
 						canvasdocente.renderAll.bind(canvasdocente)
 						this.canvas_leccion.push({
 							pizarra: pizarra,
@@ -101,7 +137,7 @@ var mivue = new Vue({
 					p.json = canvasdocente.toJSON(['objecto_id'])
 					if (solicita == undefined) {
 						canvasdocente.clear()
-						canvasdocente.setBackgroundImage(this.$refs['pizarrabg_' + pizarra].src, () => {
+						canvasdocente.setBackgroundImage(document.getElementById('pizarrabg_' + pizarra).src, () => {
 
 							canvasdocente.renderAll.bind(canvasdocente)
 							this.canvas_leccion.push({
@@ -345,9 +381,9 @@ var mivue = new Vue({
 		let hs = HASH_SESSION.split('-');
 		this.LECCION.ID = LMS_LECCION
 		this.LECCION.SESSION_ID = hs[1]
+		this.PIZARRAS = PIZARRAS;
 		this.LECCION.SESSION_HASH = hs[0]
 		this.objSocket = new AppSocket({query: "id=" + USUARIO.id + "&curso=" + USUARIO.curso + "&tipo=2&leccion=" + LMS_LECCION + "&docente=" + USUARIO.docente + '&leccion_session=' + this.LECCION.SESSION_ID + '&leccion_session_hash=' + this.LECCION.SESSION_HASH}, base_url('socket_canvas', true))
-
 		//se coencto un alumno?
 
 

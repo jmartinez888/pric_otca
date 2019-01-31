@@ -155,7 +155,7 @@
                        {if $usuario==$ocurso.Usu_IdUsuario}
                           <div class="col-sm-12" style="display:grid; margin-bottom: 8px">
 
-                            <button class="btn btn-success pull-right" id="btn-agregar-pizarra">{$lang->get('elearning_cursos_agregar_pizarra')}</button>
+                            <button @click="onClick_agregarPizarra" type="button" class="btn btn-success pull-right" id="btn-agregar-pizarra">{$lang->get('elearning_cursos_agregar_pizarra')}</button>
                           </div>
                           {include file='modules/elearning/views/clase/menu/pizarra.tpl'}
                           {/if}
@@ -163,14 +163,19 @@
                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12  contenedor-mini-pizarras">
                           {* <label>Pizarras</label> *}
                           <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="tmp_mini_pizarras">
-                            {foreach from=$pizarra item=p key=i}
-                            <div class="panel-item-pizarra" @click="onClick_seleccionPizarra({$p.Piz_IdPizarra})">
+                            {* {foreach from=$pizarra item=p key=i} *}
+                            <div v-for="(piz, index) in PIZARRAS" class="panel-item-pizarra" @click="onClick_seleccionPizarra(piz.Piz_IdPizarra)">
                               <div class="panel item-pizarra">
-                                <img ref="pizarrabg_{$p.Piz_IdPizarra}" src="{BASE_URL}files/elearning/_pizarra/{$p.Piz_ImgFondo}" />
-                                <strong class="number_pizarra">{$i + 1}</strong>
+                                
+                                <img v-if="piz.Piz_ImgFondo == ''" :id="'pizarrabg_' + piz.Piz_IdPizarra" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAQAAADa613fAAAAaElEQVR42u3PQREAAAwCoNm/9CL496ABuREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREWkezG8AZQ6nfncAAAAASUVORK5CYII=" />
+                                
+                                <img v-else :id="'pizarrabg_' + piz.Piz_IdPizarra" :src="base_url('files/elearning/_pizarra/' + piz.Piz_ImgFondo, true)" />
+                                
+
+                                <strong class="number_pizarra">{literal}{{index + 1}}{/literal}</strong>
                               </div>
                             </div>
-                            {/foreach}
+                            {* {/foreach} *}
                           </div>
                         </div>
 
@@ -385,6 +390,8 @@
 <script type="text/javascript">
   var HASH_LECCION = '{$hash_leccion}';
   var HASH_SESSION = '{$hash_session_activa}';
+  
+  var PIZARRAS = {json_encode($pizarra)}
     DOCENTE_ID = {$docente_id};
     USUARIO = {
             id: {$usuario},
@@ -396,6 +403,7 @@
     LMS_URL = "{BASE_URL}";
     var VIEW_ESPERA = false;
 </script>
+<script src="{BASE_URL}modules/elearning/views/gestion/js/core/util.js" type="text/javascript"></script>
 <script type="text/javascript" src="{$_layoutParams.root_clear}public/js/socket.io/socket.io.js"></script>
 <script type="text/javascript" src="{$_layoutParams.root_clear}public/js/socket.io/socket.client.js"></script>
 <script src="{BASE_URL}public/js/mustache/mustache.min.js" type="text/javascript"></script>
