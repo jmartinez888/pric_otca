@@ -101,7 +101,6 @@ class Model extends Eloquent{
         //     echo $query;
         //     dd($e);
         // }
-        var_dump($query);
         $data = $this->_db->query($query);
         return $data->fetchAll(PDO::FETCH_ASSOC);
     }
