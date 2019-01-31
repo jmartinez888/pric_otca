@@ -26,7 +26,7 @@ class _gestionModuloModel extends Model {
 
   public function getCursoId($curso){
     $sql = "SELECT * FROM curso WHERE Cur_IdCurso = {$curso} AND Row_Estado = 1 ";
-    if (isset($this->getArray($sql)[0]) && count($this->getArray($sql)[0]) > 0) {
+    if (isset($this->getArray($sql)[0]) && count($this->getArray($sql)) > 0) {
       return $this->getArray($sql)[0];
     } else {
 
