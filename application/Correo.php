@@ -59,7 +59,7 @@ class Correo
 
     public function enviar($forEmail, $forName, $Subject, $contenido, $fromName = "Proyecto PRIC",$fromEmail='noreply@atixw.com'){
         
-        $this->mail->Subject = $Subject;
+        $this->mail->Subject ="=?ISO-8859-1?B?".base64_encode($Subject)."=?=";
 
         $this->mail->IsHTML(true);
         //$this->mail->MsgHTML = $this->body_html($contenido);
