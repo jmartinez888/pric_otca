@@ -137,7 +137,7 @@
 
         <div class="col-xs-12">
           <button class="btn btn-success pull-right" type="button" id="btn_nueva_leccion">
-            <i class="glyphicon glyphicon-book"></i>$lenguaje.elearning_cursos_new_leccion}</button>
+            <i class="glyphicon glyphicon-book"></i>{$lenguaje.elearning_cursos_new_leccion}</button>
           </br>
         </div>
       </div>
