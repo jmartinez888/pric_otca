@@ -153,6 +153,7 @@ class cursosController extends elearningController {
     $model = $this->loadModel("curso");
     $mConstante = $this->loadModel("constante");
     $cursos = $model->getCursoUsuario(Session::get("id_usuario"));
+    // print_r($curso);
 
     $this->_view->setTemplate(LAYOUT_FRONTEND);
     $this->_view->setCss(array("index", "jp-index", "jp-detalle-lateral2"));
@@ -186,7 +187,7 @@ class cursosController extends elearningController {
     $mInsc = $this->loadModel("inscripcion");
     $mCert = $this->loadModel("certificado");
 
-    $curso = $model->getCursoID($id)[0];
+    $curso = $model->getCursoID($id, Cookie::lenguaje())[0];
     // print_r($curso);exit;
     if ($curso["Moa_IdModalidad"] == 2) {$this->redireccionar("elearning/cursos/curso_dirigido/" . $curso["Cur_IdCurso"]);}
     $inscritos = $mInsc->getInscritos($id);
