@@ -189,7 +189,7 @@
                     <div class="canvas-ssss">
                       <canvas height="0px" width="0px" ref="micanvas" id="micanvas" class="no-seleccionablex"></canvas>
                     </div>
-                    {* <img ref="temporal" src="" alt="" height="400px" width="650px"> *}
+                    {* <img ref="temporal" src="" alt="" height="495px" width="796px"> *}
                     {if $is_docente}
                     <div id="herramientas-canvas_v2" style="" class="no-seleccionable">
                       {* <div @mouseleave="show_tools = false"> *}
