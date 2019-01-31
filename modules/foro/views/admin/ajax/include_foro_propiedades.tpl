@@ -1,6 +1,6 @@
 {if !empty($foro_padre)}
 <div class="panel panel-default">
-	<div class="panel-heading"><label>Discusión Principal</label> </div>
+	<div class="panel-heading"><label>{$lenguaje.foro_form_discusionprincipal}</label> </div>
 	<div class="panel-body">
 		
 		<a class="link-foro" href="http://pric.github:82/es/foro/index/ficha/52" target="_blank">
@@ -13,21 +13,21 @@
 			{$foro_padre.For_Resumen}
 			{/if}
 		</p>
-		<div class="detalles-act-reciente f-z-14">{$foro_padre.Usu_Usuario} &nbsp;&nbsp;-&nbsp;&nbsp; hace {$foro_padre.tiempo} &nbsp;&nbsp;-&nbsp;&nbsp; {$foro_padre.votos} voto(s) &nbsp;&nbsp;-&nbsp;&nbsp; {$foro_padre.For_TParticipantes|default:0} miembro(s) &nbsp;&nbsp;-&nbsp;&nbsp;{$foro_padre.For_TComentarios|default:0} comentario(s)</div>
+		<div class="detalles-act-reciente f-z-14">{$foro_padre.Usu_Usuario} &nbsp;&nbsp;-&nbsp;&nbsp; hace {$foro_padre.tiempo} &nbsp;&nbsp;-&nbsp;&nbsp; {$foro_padre.votos} {$lenguaje.foro_str_votos} &nbsp;&nbsp;-&nbsp;&nbsp; {$foro_padre.For_TParticipantes|default:0} {$lenguaje.foro_str_participantes} &nbsp;&nbsp;-&nbsp;&nbsp;{$foro_padre.For_TComentarios|default:0} {$lenguaje.str_comentarios}</div>
 		
 		
 	</div>
 </div>
 {/if}
 <div class="panel panel-default">
-	<div class="panel-heading panel_collapse" data-toggle="collapse" data-target="#panel_propiedades"><label>Propiedades de la Publicación</label> </div>
+	<div class="panel-heading panel_collapse" data-toggle="collapse" data-target="#panel_propiedades"><label>{$lenguaje.foro_form_propiedadespublicacion}</label> </div>
 	<div id="panel_propiedades" class="panel-body collapse in" >
 		<div class="form-horizontal">
 			<div class="form-group">
-				<label for="s_lista_tematica" class="col-lg-3 control-label">Temática</label>
+				<label for="s_lista_tematica" class="col-lg-3 control-label">{$lenguaje.foro_str_tematica}</label>
 				<div class="col-lg-8 col-md-6">
 					<select  class="form-control selectpicker" id="s_lista_tematica" name="s_lista_tematica" data-live-search="true" required>
-						<option value="">Seleccione!...</option>
+						<option value="">{$lenguaje.foro_form_seleccione}</option>
 						{foreach from=$linea_tematica item=item}
 						<option style="cursor: pointer;" value="{$item.Lit_IdLineaTematica}" {if !empty($foro)&&$foro.Lit_IdLineaTematica==$item.Lit_IdLineaTematica}selected{/if}>{$item.Lit_Nombre}</option>
 						{/foreach}
@@ -36,32 +36,32 @@
 			</div>
 			{if $Form_Funcion!="query"}
 			<div class="form-group">
-				<label for="s_lista_entidad" class="col-lg-3 control-label">Entidad</label>
+				<label for="s_lista_entidad" class="col-lg-3 control-label">{$lenguaje.foro_form_entidad}</label>
 				<div id="select_entidad" class="col-lg-8 col-md-6">
 					{include file='modules/foro/views/admin/ajax/include_select_entidad.tpl'}
 				</div>
 			</div>
 			
 			<div class="form-group">
-				<label for="text_date" class="col-lg-3 control-label">Fecha</label>
+				<label for="text_date" class="col-lg-3 control-label">{$lenguaje.foro_form_fecha}</label>
 				<div class="col-lg-8">
 					<div class="checkbox">
 						<label>
 							<input id="cb_start_date" name="cb_start_date"  type="checkbox" value="" class="cb_select_fecha" div_time="start_date_div">
-							Usar tiempo de publicación
+							{$lenguaje.foro_form_indicarfechainicio}
 						</label>
 						<div id="start_date_div" class="input-group" style="display: none">
 							<span class="input-group-btn">
 								<button class="bt_start_time btn btn-default" type="button" title="Reiniciar ">
 								<span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
-								<span class="sr-only">Calendario</span>
+								<span class="sr-only">{$lenguaje.foro_form_calendario}</span>
 								</button>
 							</span>
 							<input id="start_time" class="form-control" name="start_time" type="text" value="" readonly>
 							<span class="input-group-btn">
 								<button class="bt_clear_start_time btn btn-default" type="button" title="Reiniciar ">
 								<span class="glyphicon glyphicon-trash text-danger" aria-hidden="true"></span>
-								<span class="sr-only">Reiniciar </span>
+								<span class="sr-only">{$lenguaje.foro_form_reiniciar} </span>
 								</button>
 							</span>
 						</div>
@@ -69,20 +69,20 @@
 					<div class="checkbox">
 						<label>
 							<input type="checkbox" id="cb_end_date" name="cb_end_date"  value="" class="cb_select_fecha" div_time="end_date_div">
-							Usar tiempo de fin de publicación
+							{$lenguaje.foro_form_indicarfechafin}
 						</label>
 						<div id="end_date_div"  class="input-group" style="display: none">
 							<span class="input-group-btn">
 								<button class="bt_end_time btn btn-default" type="button" title="Reiniciar ">
 								<span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
-								<span class="sr-only">Calendario</span>
+								<span class="sr-only">{$lenguaje.foro_form_calendario}</span>
 								</button>
 							</span>
 							<input id="end_time" class="form-control" name="end_time" type="text" value="" readonly>
 							<span class="input-group-btn">
 								<button class="bt_clear_end_time btn btn-default" type="button" title="Reiniciar ">
 								<span class="glyphicon glyphicon-trash text-danger" aria-hidden="true"></span>
-								<span class="sr-only">Reiniciar </span>
+								<span class="sr-only">{$lenguaje.foro_form_reiniciar} </span>
 								</button>
 							</span>
 						</div>
@@ -91,20 +91,20 @@
 			</div>
 			
 			<div class="form-group">
-				<label for="s_lista_tipo" class="col-lg-3 control-label">Tipo</label>
+				<label for="s_lista_tipo" class="col-lg-3 control-label">{$lenguaje.foro_form_tipo}</label>
 				<div class="col-lg-6 col-md-6">
 					<select class="form-control" id="s_lista_tipo" name="s_lista_tipo">
-						<option value="1"{if !empty($foro)&&$foro.For_Tipo==1}selected{/if}>Abierto</option>
-						<option value="0"{if !empty($foro)&&$foro.For_Tipo==0}selected{/if}>Cerrado</option>
+						<option value="1"{if !empty($foro)&&$foro.For_Tipo==1}selected{/if}>{$lenguaje.foro_form_abierto}</option>
+						<option value="0"{if !empty($foro)&&$foro.For_Tipo==0}selected{/if}>{$lenguaje.foro_form_cerrado}</option>
 					</select>
 				</div>
 			</div>
 			<div class="form-group">
-				<label for="s_lista_estado" class="col-lg-3 control-label">Visible</label>
+				<label for="s_lista_estado" class="col-lg-3 control-label">{$lenguaje.foro_form_visible}</label>
 				<div class="col-lg-6 col-md-6">
 					<select class="form-control" id="s_lista_estado" name="s_lista_estado">
-						<option value="1"{if !empty($foro)&&$foro.For_Estado==1}selected{/if}>Público</option>
-						<option value="0"{if !empty($foro)&&$foro.For_Estado==0}selected{/if}>Oculto</option>
+						<option value="1"{if !empty($foro)&&$foro.For_Estado==1}selected{/if}>{$lenguaje.foro_form_publico}</option>
+						<option value="0"{if !empty($foro)&&$foro.For_Estado==0}selected{/if}>{$lenguaje.foro_form_oculto}</option>
 					</select>
 				</div>
 			</div>
@@ -115,7 +115,7 @@
 <div class="panel panel-default status-upload">
 	<div class="panel-heading">
 		<div class="col col-xs-12 col-sm-12 col-md-4 col-lg-6">
-			<label>Materiales de Apoyo</label>
+			<label>{$lenguaje.foro_form_materialesapoyo}</label>
 		</div>
 		
 		<div class="col col-xs-12 col-sm-12 col-md-8 col-lg-6">
@@ -152,21 +152,21 @@
 	{/if}
 </div>
 <div class="panel panel-default">
-	<div class="panel-heading"><label>Publicar</label> </div>
+	<div class="panel-heading"><label>{$lenguaje.foro_form_publicar}</label> </div>
 	<div class="panel-body">
 		{if !empty($foro)}
 		<a id="bt_regresar" name="bt_regresar" class="btn btn-link"
 			href="{$_layoutParams.root}foro/index/ficha/{$idForo}"
-		>Regresar</a>
+		>{$lenguaje.foro_form_regresar}</a>
 		{else}
 		<a id="bt_regresar" name="bt_regresar" class="btn btn-link"
 			href="{$_layoutParams.root}foro/index/{$Form_Funcion}"
 		>Regresar</a>
 		{/if}
 		{if !empty($foro)}
-		<a target="_blank" href="{$_layoutParams.root}foro/index/ficha/{$foro.For_IdForo}" class="btn btn-default " style="    margin-left: 10px;">Vista Previa</a>
+		<a target="_blank" href="{$_layoutParams.root}foro/index/ficha/{$foro.For_IdForo}" class="btn btn-default " style="    margin-left: 10px;">{$lenguaje.foro_form_vistaprevia}</a>
 		{/if}
-		<button id="bt_guardar" name="bt_guardar" type="submit" class="btn btn-primary ">Guardar</button>
+		<button id="bt_guardar" name="bt_guardar" type="submit" class="btn btn-primary ">{$lenguaje.foro_form_guardar}</button>
 	</div>
 	<div class="panel-heading">
 	</div>
