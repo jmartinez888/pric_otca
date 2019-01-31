@@ -9,6 +9,8 @@ class Correo
 
     public function __construct() {
         $this->mail = new PHPMailer();
+        $this->mail->CharSet = 'UTF-8';
+        $this->mail->Encoding = 'base64';
         $this->mail->IsSMTP();
         // $this->mail->CharSet="UTF-8";
         // Activamos / Desactivamos el "debug" de SMTP 
