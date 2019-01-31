@@ -137,8 +137,7 @@
 
         <div class="col-xs-12">
           <button class="btn btn-success pull-right" type="button" id="btn_nueva_leccion">
-            <i class="glyphicon glyphicon-book"></i> {$lenguaje.elearning_cursos_new_leccion}
-          </button>
+            <i class="glyphicon glyphicon-book"></i>$lenguaje.elearning_cursos_new_leccion}</button>
           </br>
         </div>
       </div>
@@ -161,7 +160,7 @@
         <div class="col-xs-12">
           <input class="form-control" name="titulo" id="inTitulo" />
         </div>
-        <div class="col-xs-12"><h5><strong>{$lenguaje.elearning_tipo_leccion}</strong></h5></div>
+        <div class="col-xs-12"><h5><strong>{$lenguaje.elearning_cursos_tipo_leccion}</strong></h5></div>
 
         <div class="col-xs-4">
           <select class="form-control" name="tipo">
@@ -170,9 +169,7 @@
             {/foreach}
           </select>
         </div>
-        <div class="col-xs-8">
-          {$lenguaje.elearning_cursos_descripcion_leccion}
-        </div>
+        <div class="col-xs-8">{$lenguaje.elearning_cursos_descripcion_leccion}</div>
         <div class="col-xs-12"><h5><strong>{$lenguaje.elearning_cursos_descripcion}</strong></h5></div>
         <div class="col-xs-12">
           <textarea class="form-control" name="descripcion" id="inDescripcion" rows="10"></textarea>
