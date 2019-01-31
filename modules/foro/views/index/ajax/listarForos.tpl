@@ -20,7 +20,7 @@
                             <span class="date">{$foro.For_FechaCreacion|date_format:"%d-%m-%Y"} {if ($foro.For_FechaCierre|date_format:"%d-%m-%Y")!=""} / {($foro.For_FechaCierre|date_format:"%d-%m-%Y")}{/if}</span>
                         </div>
                         <div class="col-md-6 text-right">
-                            Colaboraciones <span class="badge">{$foro.For_NComentarios}</span> 
+                            {$lenguaje.foro_str_colaboraciones} <span class="badge">{$foro.For_NComentarios}</span> 
                         </div>
                     </div>               
                 </div>
