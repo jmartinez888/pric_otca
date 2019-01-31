@@ -3,7 +3,7 @@
 {include file='modules/elearning/views/gestion/menu/tag_url.tpl'}
 <div class="col-lg-12">
   <ul class="nav nav-tabs">
-    <li role="presentation" class="active" style="font-weight: bold; "><a style="color: #009640;">{$lenguaje.elearning_cursos_modulos}</a></li>
+    <li role="presentation" class="active" style="font-weight: bold; "><a style="color: #009640;">{$lenguaje.elearning_gcurso_modulos}</a></li>
   </ul>
 </div>
 
@@ -14,9 +14,9 @@
         {if isset($modulos) && count($modulos) > 0 }
           <table class="table" id="tblMisCursos">
               <tr>
-                  <th>{$lenguaje.elearning_cursos_modulo}</th>
-                  <th>{$lenguaje.elearning_cursos_descripcion}</th>
-                  <th>{$lenguaje.elearning_cursos_operaciones}</th>
+                  <th>{$lenguaje.elearning_gcurso_modulo}</th>
+                  <th>{$lenguaje.elearning_gcurso_descripcion}</th>
+                  <th>{$lenguaje.elearning_gcurso_operaciones}</th>
               </tr>
               {foreach from=$modulos item=c}
                   <tr>
@@ -36,12 +36,12 @@
               {/foreach}
           </table>
         {else}
-          <div>{$lenguaje.elearning_cursos_sin_modulo}</div>
+          <div>{$lenguaje.elearning_gcurso_sin_modulo}</div>
         {/if}
       </div>
       <div class="col-lg-12">
         <button class="btn btn-success pull-right" type="button" id="btn_nuevo_modulo">
-          <i class="glyphicon glyphicon-book"></i> {$lenguaje.elearning_cursos_new_modulo}
+          <i class="glyphicon glyphicon-book"></i> {$lenguaje.elearning_gcurso_new_modulo}
         </button>
       </div>
     </div>
@@ -53,28 +53,28 @@
     <div class="panel-heading">
       <h3 class="panel-title">
         <i class="glyphicon glyphicon-list-alt"></i>&nbsp;&nbsp;
-        <strong>{$lenguaje.elearning_nuevo_modulo}</strong>
+        <strong>{$lenguaje.elearning_gcurso_nuevo_modulo}</strong>
       </h3>
     </div>
     <div class="panel-body" style=" margin: 15px 25px">
       <form method="post" action="gmodulo/_registrar_modulo" id="frm_registro">
         <input hidden="hidden" id="hidden_curso" name="id" value="{$curso.Cur_IdCurso}" />
-        <div class="col-lg-12"><h5><strong>{$lenguaje.elearning_cursos_mtitulo}</strong></h5></div>
+        <div class="col-lg-12"><h5><strong>{$lenguaje.elearning_gcurso_mtitulo}</strong></h5></div>
         <div class="col-lg-12">
           <input class="form-control" name="titulo" id="inTitulo" />
         </div>
-        <div class="col-lg-12"><h5><strong>{$lenguaje.elearning_cursos_mdescripcion}</strong></h5></div>
+        <div class="col-lg-12"><h5><strong>{$lenguaje.elearning_gcurso_mdescripcion}</strong></h5></div>
         <div class="col-lg-12">
           <textarea class="form-control" name="descripcion" id="inDescripcion" rows="10"></textarea>
         </div>
-        <div class="col-xs-12 margin-t-10"><strong>{$lenguaje.elearning_cursos_tiempo_dedicacion}</strong></div>
+        <div class="col-xs-12 margin-t-10"><strong>{$lenguaje.elearning_gcurso_tiempo_dedicacion}</strong></div>
         <div class="col-xs-12">
           <input class="form-control" name="dedicacion" />
         </div>
       </form>
       <div class="col-lg-12"></br></div>
       <div class="col-lg-12">
-        <button class="btn btn-success" id="btn_registrar_modulo">{$lenguaje.elearning_cursos_mregistrar}</button>
+        <button class="btn btn-success" id="btn_registrar_modulo">{$lenguaje.elearning_gcurso_mregistrar}</button>
       </div>
       <div class="col-lg-12"></br></div>
     </div>
