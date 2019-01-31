@@ -91,7 +91,7 @@ class gcursoController extends elearningController {
     $modalidad = $this->curso->getModalidadCurso();
 
     // $this->_view->getLenguaje("learn");
-    $lang = $this->_view->getLenguaje(['elearning_gcurso', 'elearning_cursos'], false, true);
+    $lang = $this->_view->getLenguaje(['elearning_gcurso','learn', 'elearning_cursos'], false, true);
     
     $_arquitectura = $this->loadModel('index','arquitectura');
     $this->_view->assign('idiomas',$_arquitectura->getIdiomas());
