@@ -64,7 +64,7 @@ class gcursoController extends elearningController {
     $busqueda = $this->getTexto('busqueda');
     // $cursos = $this->curso->getCursoXDocente($id, $busqueda);
 
-    $soloActivos = 0;
+    $soloActivos = 1;//0
     if (!$this->_acl->permiso('ver_eliminados')) {
       $soloActivos = 1;
       // $sql .= " AND cur.Row_Estado = $soloActivos ";

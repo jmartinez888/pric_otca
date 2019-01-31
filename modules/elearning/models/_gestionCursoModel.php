@@ -234,6 +234,7 @@ class _gestionCursoModel extends Model {
         if( strlen($Busqueda) ){
           $sql .=" AND cursi.Cur_Titulo like '%" . $Busqueda . "%' OR cursi.Cur_Descripcion like '%{$Busqueda}%' ";
         }
+        
         $sql .= " GROUP BY cursi.Cur_IdCurso ORDER BY cursi.Inscrito ";
 
         $result = $this->_db->query($sql);
