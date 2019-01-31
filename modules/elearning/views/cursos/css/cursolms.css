@@ -63,13 +63,23 @@
 }
 .en_linea{
   
-  border: solid 1px #fcfefc;
-  background-color: #1ac008;
-  width: 20px;
-  height: 20px;
-  -moz-border-radius: 50%;
-  -webkit-border-radius: 50%;
-  border-radius: 50%;
+border: solid 1px #fcfefc;
+  
+background-color: #1ac008;
+  
+width: 20px;
+  
+height: 20px;
+  
+padding: 4px;
+  
+-moz-border-radius: 50%;
+  
+-webkit-border-radius: 50%;
+  
+border-radius: 12%;
+  
+color: white;
 }
 
 @media (max-width: 767px) {
