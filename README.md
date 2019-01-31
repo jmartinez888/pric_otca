@@ -11,3 +11,8 @@ Revisar las configuraciones iniciales del framework en el siguiente link [framew
 
 terst napuche asdasd
 
+## Habilitacion de permisos de escitura para www-data
+Comando: sudo chmod -R g+w
+-> files/*
+-> lang/*
+-> tmp/*
