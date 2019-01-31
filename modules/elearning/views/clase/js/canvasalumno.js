@@ -5,6 +5,8 @@ new Vue({
 	data: function () {
 		return {
 			razoncambio: 1.77777777,
+			razonZoom: 0,
+			zoomAplicado: false,
 			LECCION: {
 				ID: 0,
 				SESSION_ID: 0,
@@ -41,6 +43,7 @@ new Vue({
 		}
 	},
 	created: function () {
+		console.log(this)
 		console.log('creta!')
 		let hs = HASH_SESSION.split('-');
 		this.LECCION.ID = LMS_LECCION
@@ -117,14 +120,24 @@ new Vue({
 				console.log('SESSION_CANVAS_SUCCESS');
 				console.log(msg)
 				this.objSocket.on('all_data_canvas', canvas_json => {
+					
+					if (!this.zoomAplicado) {
+						// if (+canvas_json.canvas.width > +this.$refs.micanvas.width)
+							this.razonZoom = this.$refs.micanvas.width/canvas_json.canvas.width;
+						// else
+							// this.razonZoom = canvas_json.canvas.width/this.$refs.micanvas.width;
+						this.zoomAplicado = true;
+						canvasalumno.setZoom(this.razonZoom);
+					}
+					console.log(this.$refs.micanvas.width)
+					console.log(this.razonZoom)
 					console.log(canvas_json)
 					console.log('recibiendo canvas')
 					canvasalumno.clear()
-					canvasalumno.loadFromJSON(canvas_json, () => {
+					canvasalumno.loadFromJSON(canvas_json.json, () => {
 						console.log(canvasalumno.getObjects())
 						if (!this.start_leccion) {
 						// if (true) {
-	
 							this.start_leccion = true
 						}
 					})

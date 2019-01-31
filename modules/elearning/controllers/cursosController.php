@@ -296,12 +296,14 @@ class cursosController extends elearningController {
     if (!is_numeric($curso) || !is_numeric($modulo)) {
       $this->redireccionar("elearning/");
     }
-    if (!$Mmodel->validarCursoModulo($curso, $modulo)) {
-      $this->redireccionar("elearning/cursos");
-    }
-    if (!$Mmodel->validarModuloUsuario($modulo, Session::get("id_usuario"))) {
-      $this->redireccionar("elearning/cursos");
-    }
+    
+    // if (!$Mmodel->validarCursoModulo($curso, $modulo)) {
+    //   $this->redireccionar("elearning/cursos");
+    // }
+    // if (!$Mmodel->validarModuloUsuario($modulo, Session::get("id_usuario"))) {
+    //   $this->redireccionar("elearning/cursos");
+    // }
+
     //if(!$Lmodel->validarLeccion($leccion, $modulo, Session::get("id_usuario"))){ $this->redireccionar("elearning/cursos"); }
     $obj_curso = $Cmodel::find($curso);
 

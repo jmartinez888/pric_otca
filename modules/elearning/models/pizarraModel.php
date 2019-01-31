@@ -4,12 +4,12 @@ class pizarraModel extends Model {
 
     public function __construct() { parent::__construct(); }
 
-    public function insertPizarra($leccion, $tipo, $titulo, $descripcion, $url, $width, $height, $x, $y){
+    public function insertPizarra($leccion, $tipo, $titulo, $descripcion, $url, $width, $height, $x, $y, $return_id = false){
       $sql = "INSERT INTO pizarra_leccion(Lec_IdLeccion, Piz_Tipo, Piz_Titulo, Piz_Descripcion, Piz_ImgFondo,
               Piz_ImgWidth, Piz_ImgHeight, Piz_ImgX, Piz_ImgY, Piz_FechaReg, Piz_Estado)
               VALUES({$leccion}, {$tipo}, '{$titulo}', '{$descripcion}', '{$url}', '{$width}', '{$height}',
               '{$x}', '{$y}', NOW(), 1)";
-      return $this->execQuery($sql);
+      return $this->execQuery($sql, $return_id);
     }
 
     public function updatePizarra($pizarra, $titulo, $descripcion, $url, $width, $height, $x, $y){

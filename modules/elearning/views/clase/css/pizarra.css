@@ -204,7 +204,7 @@ width: 700px;*/
   /* right: 0px; */
   /* top: 0px; */
   display: block;
-  overflow-y: auto;
+  /* overflow-y: auto; */
 }
 
 .pizarra-mini {
@@ -226,7 +226,7 @@ width: 700px;*/
 
 .item-pizarra img {
   width: 100%;
-  height: 100%;
+  height: 100px;
   padding: 0px;
   margin: 0px;
 }
@@ -248,7 +248,7 @@ width: 700px;*/
   font-size: 5em;
 }
 
-
+/* 
 @media (min-width: 768px) {
   .panel-item-pizarra {
     width: 159px;
@@ -277,7 +277,7 @@ width: 700px;*/
   .item-pizarra {
     width: 189px;
   }
-}
+} */
 
 
 /* .container-chat-pizarra {
@@ -302,8 +302,9 @@ width: 700px;*/
 /* .container-chat-pizarra .tab-content #chat-panel {} */
 
 .container-chat-pizarra .tab-content #pizarra-panel {
-  padding: 1em;
+  /* padding: 1em 0em; */
   overflow-y: scroll;
+  overflow-x: hidden;
 }
 
 /* .container-chat-pizarra .nav li{
@@ -332,9 +333,10 @@ width: 700px;*/
 
 #opciones_canvas {
   /*   background:red; */
-    border:1 solid black;
-    height: 30px;
-    overflow-y:hidden;
+  border:1 solid black;
+  height: 60px;
+  overflow-y:hidden;
+  text-align: center;
   }
   #opciones_canvas{
   /*   background:green; */

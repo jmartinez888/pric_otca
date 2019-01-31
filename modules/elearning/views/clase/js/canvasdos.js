@@ -3,12 +3,18 @@ var mivue = new Vue({
 	el: '#modulo-contenedor',
 	data: function () {
 		return {
-			altura_opciones: 64,
+			imgTransparent100x100: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAQAAADa613fAAAAaElEQVR42u3PQREAAAwCoNm/9CL496ABuREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREWkezG8AZQ6nfncAAAAASUVORK5CYII=',
+			altura_opciones: 96,
 			razoncambio: 1.77777777,
+			PIZARRAS: [],
 			LECCION: {
 				ID: 0,
 				SESSION_ID: 0,
 				SESSION_HASH: ''
+			},
+			CANVAS: {
+				width: 0,
+				height: 0
 			},
 			canvas_leccion: [],
 			show_tools: true,
@@ -62,6 +68,40 @@ var mivue = new Vue({
 		},
 	},
 	methods: {
+		formatItemPizarra: function (id) {
+			return `
+			<div class="panel item-pizarra">
+				<img ref="pizarrabg_${id}" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAQAAADa613fAAAAaElEQVR42u3PQREAAAwCoNm/9CL496ABuREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREWkezG8AZQ6nfncAAAAASUVORK5CYII=" />
+				<strong class="number_pizarra">${'asd'}</strong>
+			</div>
+			`
+		},
+		onClick_agregarPizarra: function (e) {
+			$.fn.Mensaje({
+		    mensaje: "¿Agregar pizarra vacía?",
+		    tipo: "SiNo",
+		    funcionSi: () => {
+					axios.post(base_url('elearning/pizarra/_registrar_pizarra'), parseData({
+						leccion: this.LECCION.ID,
+						modo: 'noimage'
+					})).then(res => {
+						if (res.data.estado == 1) {
+							$.fn.Mensaje({
+								mensaje: res.data.mensaje,
+								tipo: 'Aceptar',
+								funcionAceptar: () => {
+								 console.log('pizarra agregada')
+								if (res.data.data.data_pizarra)
+									this.PIZARRAS.push(res.data.data.data_pizarra)
+
+								}
+							});	
+						}
+					})
+				}
+		  });
+			
+		},
 		fnOnResize_PanelPizarra: function (e) {
 			console.log('dd')
 			console.log(this.$refs.panel_pizarra_final.offsetWidth)
@@ -75,14 +115,15 @@ var mivue = new Vue({
 					console.log('new')
 					//cuando current_pizarra == 0
 					canvasdocente.clear()
-					canvasdocente.setBackgroundImage(this.$refs['pizarrabg_' + pizarra].src, x => {
+					canvasdocente.setBackgroundImage(document.getElementById('pizarrabg_' + pizarra).src, x => {
 						canvasdocente.renderAll.bind(canvasdocente)
 						this.canvas_leccion.push({
 							pizarra: pizarra,
 							json: ''
 						})
 						canvasdocente.renderAll()
-						this.objSocket.emit('send_all_data_canvas', canvasdocente.toJSON(['objecto_id']))
+						this.objSocket.emit('send_all_data_canvas', {json: canvasdocente.toJSON(['objecto_id']), canvas: {width: this.CANVAS.width, height: this.CANVAS.height}})
+						// this.objSocket.emit('send_all_data_canvas', canvasdocente.toJSON(['objecto_id']))
 					}, {
 					    backgroundImageStretch: false
 					});
@@ -96,7 +137,7 @@ var mivue = new Vue({
 					p.json = canvasdocente.toJSON(['objecto_id'])
 					if (solicita == undefined) {
 						canvasdocente.clear()
-						canvasdocente.setBackgroundImage(this.$refs['pizarrabg_' + pizarra].src, () => {
+						canvasdocente.setBackgroundImage(document.getElementById('pizarrabg_' + pizarra).src, () => {
 
 							canvasdocente.renderAll.bind(canvasdocente)
 							this.canvas_leccion.push({
@@ -104,7 +145,7 @@ var mivue = new Vue({
 								json: ''
 							})
 							canvasdocente.renderAll()
-							this.objSocket.emit('send_all_data_canvas', canvasdocente.toJSON(['objecto_id']))
+							this.objSocket.emit('send_all_data_canvas', {json: canvasdocente.toJSON(['objecto_id']), canvas: {width: this.CANVAS.width, height: this.CANVAS.height}})
 
 						}, {
 						    backgroundImageStretch: false
@@ -116,7 +157,7 @@ var mivue = new Vue({
 							canvasdocente.getObjects().forEach(obj => {
 								this.addEventosObjeto(obj)
 							})
-							this.objSocket.emit('send_all_data_canvas', solicita.json)
+							this.objSocket.emit('send_all_data_canvas', {json: solicita.json, canvas: {width: this.CANVAS.width, height: this.CANVAS.height}})
 						})
 					}
 
@@ -234,6 +275,7 @@ var mivue = new Vue({
 			obj.on('moving', (x, y) => {
 				this.objSocket.emit('change_object', {
 					data: 	{x: x.target.left, y: x.target.top},
+					canvas:	{height: this.$refs.micanvas.height, width: this.$refs.micanvas.width},
 					id: 		x.target.objeto_id,
 					event: 	'moving'
 				})
@@ -334,13 +376,14 @@ var mivue = new Vue({
 		}
 	},
 	created: function () {
+		console.log(this)
 		console.log('creta!')
 		let hs = HASH_SESSION.split('-');
 		this.LECCION.ID = LMS_LECCION
 		this.LECCION.SESSION_ID = hs[1]
+		this.PIZARRAS = PIZARRAS;
 		this.LECCION.SESSION_HASH = hs[0]
 		this.objSocket = new AppSocket({query: "id=" + USUARIO.id + "&curso=" + USUARIO.curso + "&tipo=2&leccion=" + LMS_LECCION + "&docente=" + USUARIO.docente + '&leccion_session=' + this.LECCION.SESSION_ID + '&leccion_session_hash=' + this.LECCION.SESSION_HASH}, base_url('socket_canvas', true))
-
 		//se coencto un alumno?
 
 
@@ -352,8 +395,9 @@ var mivue = new Vue({
 		
 		// this.$refs.opciones_canvas.classList.remove('hidden')
 
-		this.$refs.panel_pizarra_final.classList.remove('hidden')
-		this.$refs.micanvas.width = this.$refs.panel_pizarra_final.offsetWidth - 4
+		// this.$refs.panel_pizarra_final.classList.remove('hidden')
+		this.$refs.micanvas.width = this.CANVAS.width = this.$refs.panel_pizarra_final.offsetWidth - 4
+		
 
 		let altura = (this.$refs.micanvas.width/this.razoncambio);
 		
@@ -371,7 +415,7 @@ var mivue = new Vue({
 		this.$refs.refContainerChatPizarra.style.height = (altura + this.altura_opciones) + 'px'
 		this.$refs.panel_pizarra_final.style.height = (altura + this.altura_opciones) + 'px'
 		// this.$refs.panel_pizarra_final.offsetWidth
-		this.$refs.micanvas.height = altura - 2
+		this.$refs.micanvas.height = this.CANVAS.height = altura - 2
 
 		canvasdocente = new fabric.Canvas('micanvas', {
 			backgroundColor: 'white'
@@ -404,7 +448,7 @@ var mivue = new Vue({
 					console.log('alumno conectado')
 					console.log(res)
 					if (res.success)
-						this.objSocket.emit('send_all_data_canvas', canvasdocente.toJSON())
+						this.objSocket.emit('send_all_data_canvas', {json: canvasdocente.toJSON(), canvas: {width: this.CANVAS.width, height: this.CANVAS.height}})
 				})
 				this.objSocket.emit('CONFIRMACARGACANVAS','Iniciando desde docente')	
 			})
