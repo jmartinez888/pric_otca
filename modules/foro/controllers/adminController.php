@@ -294,7 +294,7 @@ class adminController extends foroController
     {
         $this->validarUrlIdioma();
         $this->_view->setTemplate(LAYOUT_FRONTEND);
-        $this->_view->getLenguaje("foro_admin_index");
+        $this->_view->getLenguaje(["foro_admin_index","foro_index_index"]);
         $id_foro=$this->filtrarInt($id_foro);
        //Verificar errores en el URl
         if ($tipo != "new" && $tipo != "edit") {

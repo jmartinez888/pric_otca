@@ -64,7 +64,7 @@
                         <li><a href="{$_layoutParams.root}foro/admin/members/{$foro.For_IdForo}" id_foro="{$foro.For_IdForo}" class="opciones_foro" style="cursor: pointer;">{$lenguaje.foro_str_vermiembros}<i class="i_opciones_foro glyphicon glyphicon-user pull-right"></i></a></li>
                         {/if}
                         {if $_acl->permiso("listar_actividades")}
-                        <li><a href="{$_layoutParams.root}foro/admin/actividad/{$foro.For_IdForo}" id_foro="{$foro.For_IdForo}" class="opciones_foro" style="cursor: pointer;">{$lenguaje.foro_str_vermiembros}<i class="i_opciones_foro glyphicon glyphicon-calendar pull-right"></i></a></li>
+                        <li><a href="{$_layoutParams.root}foro/admin/actividad/{$foro.For_IdForo}" id_foro="{$foro.For_IdForo}" class="opciones_foro" style="cursor: pointer;">{$lenguaje.foro_str_actividades}<i class="i_opciones_foro glyphicon glyphicon-calendar pull-right"></i></a></li>
                         {/if}
                         {/if}
                         {if ($_acl->permiso("habilitar_foro") || $id_usuario == $foro.Usu_IdUsuario) &&  $foro.For_Estado== 0}
