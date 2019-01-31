@@ -74,35 +74,35 @@
             <ul>
                 <a href="{$_layoutParams.root}foro/index/webinar" class="nounderline">
                     <div class="side-menu2">
-                        <li style="position: relative"><span>Webinars</span></li>
+                        <li style="position: relative"><span>{$lenguaje.str_webinars}</span></li>
                     </div>
                 </a>
             </ul>
             <ul>
                 <a href="{$_layoutParams.root}foro/index/workshop" class="nounderline">
                     <div class="side-menu2">
-                        <li style="position: relative"><span>Workshop</span></li>
+                        <li style="position: relative"><span>{$lenguaje.str_workshop}</span></li>
                     </div>
                 </a>
             </ul>  
             <ul>
                 <a href="{$_layoutParams.root}foro/index/agenda" class="nounderline">
                     <div class="side-menu2">
-                        <li style="position: relative"><span>Agenda</span></li>
+                        <li style="position: relative"><span>{$lenguaje.str_agenda}</span></li>
                     </div>
                 </a>
             </ul>
             <ul>
                 <a href="{$_layoutParams.root}foro/index/historico" class="nounderline">
                     <div class="side-menu2">
-                        <li style="position: relative"><span>Histórico</span></li>
+                        <li style="position: relative"><span>{$lenguaje.str_historico}</span></li>
                     </div>
                 </a>
             </ul>
             <ul>
                 <a href="{$_layoutParams.root}foro/index/statistics" class="nounderline">
                     <div class="side-menu2">
-                        <li style="position: relative"><span>Estadisticas</span></li>
+                        <li style="position: relative"><span>{$lenguaje.str_estadisticas}</span></li>
                     </div>
                 </a>
             </ul>
