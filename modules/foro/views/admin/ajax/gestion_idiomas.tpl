@@ -17,21 +17,21 @@
         {/if}
     </div>
     <div class="form-group">
-        <label for="text_titulo">Título</label>
-        <input type="text" placeholder="Ingrese Título del Foro" class="form-control" id="text_titulo" name="text_titulo" value="{$foro.For_Titulo|default:""}">
+        <label for="text_titulo">{$lenguaje.foro_form_titulo}:</label>
+        <input type="text" placeholder="{$lenguaje.foro_form_titulo}" class="form-control" id="text_titulo" name="text_titulo" value="{$foro.For_Titulo|default:""}">
     </div>
     {if $Form_Funcion!="query"}
     <div class="form-group">
-        <label for="text_resumen">Resumen:</label>
-        <textarea type="text" placeholder="Ingrese Resumen del Foro" class="form-control" id="text_resumen" name="text_resumen">{$foro.For_Resumen|default:""}</textarea>
+        <label for="text_resumen">{$lenguaje.foro_form_resumen}:</label>
+        <textarea type="text" placeholder="{$lenguaje.foro_form_resumen}" class="form-control" id="text_resumen" name="text_resumen">{$foro.For_Resumen|default:""}</textarea>
     </div>
     <div class="form-group">
-        <label for="text_palabras_claves">Etiquetas:</label>
-        <input type="text" placeholder="Ingrese etiquetas del Foro separadas por ," class="form-control" id="text_palabras_claves" name="text_palabras_claves" value="{$foro.For_PalabrasClaves|default:""}">
+        <label for="text_palabras_claves">{$lenguaje.foro_form_etiquetas}:</label>
+        <input type="text" placeholder="{$lenguaje.foro_form_etiquetas}" class="form-control" id="text_palabras_claves" name="text_palabras_claves" value="{$foro.For_PalabrasClaves|default:""}">
     </div>
     {/if}
     <div class="form-group">
-        <label for="text_descripcion">Descripción</label>
+        <label for="text_descripcion">{$lenguaje.foro_form_descripcion}</label>
         <textarea type="text" class="form-control" id="text_descripcion" name="text_descripcion">
         {$foro.For_Descripcion|default:""}
         </textarea>

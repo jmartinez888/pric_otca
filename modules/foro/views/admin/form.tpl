@@ -56,12 +56,12 @@
                 </div>
                 <div class="form-group">
                     <label for="text_titulo">{$lenguaje.foro_form_titulo}:</label>
-                    <input type="text" placeholder="Ingrese Título del Foro" class="form-control" id="text_titulo" name="text_titulo" value="{$foro.For_Titulo|default:""}">
+                    <input type="text" placeholder="{$lenguaje.foro_form_titulo}" class="form-control" id="text_titulo" name="text_titulo" value="{$foro.For_Titulo|default:""}">
                 </div>
                 {if $Form_Funcion!="query"}
                 <div class="form-group">
                     <label for="text_resumen">{$lenguaje.foro_form_resumen}:</label>
-                    <textarea type="text" placeholder="Ingrese Resumen del Foro" class="form-control" id="text_resumen" name="text_resumen">{$foro.For_Resumen|default:""}</textarea>
+                    <textarea type="text" placeholder="{$lenguaje.foro_form_resumen}" class="form-control" id="text_resumen" name="text_resumen">{$foro.For_Resumen|default:""}</textarea>
                 </div>
                 <div class="form-group">
                     <label for="text_palabras_claves">{$lenguaje.foro_form_etiquetas}:</label>
