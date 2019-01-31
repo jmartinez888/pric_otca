@@ -115,8 +115,8 @@
           <div class="panel-heading">
             <h3 class="panel-title">
               <i class="glyphicon glyphicon-list-alt"></i>&nbsp;&nbsp;
-              <strong>Lección Dirigida: {$leccion.Lec_Titulo} <span id="icon-conectado"></span>&nbsp;&nbsp;<span id="totales_conectados">--</span>
-                en línea.</strong>
+              <strong>{$lang->get('str_leccion_dirigida')}: {$leccion.Lec_Titulo} <span id="icon-conectado"></span>&nbsp;&nbsp;<span id="totales_conectados">--</span>
+                {$lang->get('str_en_linea')}.</strong>
             </h3>
           </div>
           <div class="panel-body" style="margin: 0px">
@@ -136,11 +136,11 @@
                   <div role="tabpanel">
                     <ul class="nav nav-tabs" role="tablist" ref="navsPanel">
                       <li role="presentation" class="active">
-                        <a href="#chat-panel" aria-controls="chat-panel" role="tab" data-toggle="tab"><span>Usuarios</span></a>
+                        <a href="#chat-panel" aria-controls="chat-panel" role="tab" data-toggle="tab"><span>{$lang->get('str_usuario')}</span></a>
                       </li>
                       {if ($is_docente)}
                       <li role="presentation">
-                        <a href="#pizarra-panel" aria-controls="pizarra-panel" role="tab" data-toggle="tab"><span>Pizarras</span></a>
+                        <a href="#pizarra-panel" aria-controls="pizarra-panel" role="tab" data-toggle="tab"><span>{$lang->get('str_pizarras')}</span></a>
                       </li>
                       {/if}
                     </ul>
@@ -152,6 +152,13 @@
                       </div>
                       {if ($is_docente)}
                       <div role="tabpanel" class="tab-pane hidden" id="pizarra-panel" ref="pizarraPanel">
+                       {if $usuario==$ocurso.Usu_IdUsuario}
+                          <div class="col-sm-12" style="display:grid; margin-bottom: 8px">
+
+                            <button class="btn btn-success pull-right" id="btn-agregar-pizarra">{$lang->get('elearning_cursos_agregar_pizarra')}</button>
+                          </div>
+                          {include file='modules/elearning/views/clase/menu/pizarra.tpl'}
+                          {/if}
                         {if isset($pizarra) && count($pizarra) > 0 && $usuario==$ocurso.Usu_IdUsuario }
                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12  contenedor-mini-pizarras">
                           {* <label>Pizarras</label> *}
@@ -167,13 +174,7 @@
                           </div>
                         </div>
 
-                          {if $usuario==$ocurso.Usu_IdUsuario}
-                          <div class="col-sm-12">
-
-                            <button class="btn btn-success pull-right" id="btn-agregar-pizarra">Agregar Pizarra</button>
-                          </div>
-                          {include file='modules/elearning/views/clase/menu/pizarra.tpl'}
-                          {/if}
+                         
                         {/if}
                       </div>
                       {/if}
@@ -185,7 +186,7 @@
 
                 </div>
                 <div class="col-sm-9 container-canvas-pizarra">
-                  <div id="panel-pizarra-final" class="hidden w-100" ref="panel_pizarra_final">
+                  <div id="panel-pizarra-final" class="w-100" ref="panel_pizarra_final">
                     <div class="canvas-ssss">
                       <canvas height="0px" width="0px" ref="micanvas" id="micanvas" class="no-seleccionablex"></canvas>
                     </div>
@@ -319,7 +320,7 @@
             {if $usuario==$ocurso.Usu_IdUsuario}
             <a href="{BASE_URL}elearning/clase/finalizar/{$curso}/{$modulo.Moc_IdModuloCurso}/{$leccion.Lec_IdLeccion}">
               <button class="btn btn-success" id="btnFinalizarClase" style="margin-bottom: 10px">
-                Finalizar lección
+                {$lang->get('elearning_cursos_finalizar_leccion')}
               </button>
             </a>
             {else}
@@ -337,7 +338,7 @@
           <div class="panel-heading">
             <h3 class="panel-title">
               <i class="glyphicon glyphicon-list-alt"></i>&nbsp;&nbsp;
-              <strong>Link Video Conferencia</strong>
+              <strong>{$lang->get('elearning_cursos_link_video_conferencia')}</strong>
             </h3>
           </div>
           <div class="panel-body" style="margin: 0px">
@@ -347,12 +348,12 @@
             <div class="input-group">
               <input name="busqueda" class="form-control" id="in-link-videollamada" value="">
               <span class="input-group-btn">
-                <button class="btn btn.btn-success" id="btn-enviar-link">Enviar</button>
+                <button class="btn btn.btn-success" id="btn-enviar-link">{$lang->get('str_enviar')}</button>
               </span>
             </div>
             {else}
             <input value="" id="in-link-videollamada_receive" hidden="hidden" class="form-control" />
-            <button class="btn btn.btn-success" id="btn-ir-video">Ir VideoConferencia</button>
+            <button class="btn btn.btn-success" id="btn-ir-video">{$lang->get('elearning_cursos_ir_a_video')}</button>
             {/if}
           </div>
         </div>
@@ -384,23 +385,6 @@
 <script type="text/javascript">
   var HASH_LECCION = '{$hash_leccion}';
   var HASH_SESSION = '{$hash_session_activa}';
-  ALUMNOS = [];
-  CHAT = []; 
-  {foreach from = $alumnos item = a}
-  ALUMNOS.push({
-    id: {$a.Usu_IdUsuario},
-    usuario: "{$a.Usu_Nombre} {$a.Usu_Apellidos}",
-    url: "{$a.Usu_URLImage}",
-    docente: {$a.Docente}
-  }); 
-  {/foreach} 
-  {foreach from = $chat item = c}
-    CHAT.push({
-      usuario: {$c.Usu_IdUsuario},
-      msn: `{nl2br($c.Men_Descripcion)})`,
-      fecha: "{$c.Men_Fecha}"
-    }); 
-    {/foreach}
     DOCENTE_ID = {$docente_id};
     USUARIO = {
             id: {$usuario},

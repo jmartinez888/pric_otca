@@ -120,15 +120,17 @@ new Vue({
 				console.log('SESSION_CANVAS_SUCCESS');
 				console.log(msg)
 				this.objSocket.on('all_data_canvas', canvas_json => {
+					
 					if (!this.zoomAplicado) {
-						if (canvas_json.canvas.width < this.$refs.micanvas.width)
+						// if (+canvas_json.canvas.width > +this.$refs.micanvas.width)
 							this.razonZoom = this.$refs.micanvas.width/canvas_json.canvas.width;
-						else
-							this.razonZoom = canvas_json.canvas.width/this.$refs.micanvas.width;
+						// else
+							// this.razonZoom = canvas_json.canvas.width/this.$refs.micanvas.width;
 						this.zoomAplicado = true;
 						canvasalumno.setZoom(this.razonZoom);
 					}
-
+					console.log(this.$refs.micanvas.width)
+					console.log(this.razonZoom)
 					console.log(canvas_json)
 					console.log('recibiendo canvas')
 					canvasalumno.clear()

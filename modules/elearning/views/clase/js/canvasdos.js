@@ -10,6 +10,10 @@ var mivue = new Vue({
 				SESSION_ID: 0,
 				SESSION_HASH: ''
 			},
+			CANVAS: {
+				width: 0,
+				height: 0
+			},
 			canvas_leccion: [],
 			show_tools: true,
 			obj_canvas: null,
@@ -82,7 +86,7 @@ var mivue = new Vue({
 							json: ''
 						})
 						canvasdocente.renderAll()
-						this.objSocket.emit('send_all_data_canvas', {json: canvasdocente.toJSON(['objecto_id']), canvas: {width: this.$refs.micanvas.width, height: this.$refs.micanvas.height}})
+						this.objSocket.emit('send_all_data_canvas', {json: canvasdocente.toJSON(['objecto_id']), canvas: {width: this.CANVAS.width, height: this.CANVAS.height}})
 						// this.objSocket.emit('send_all_data_canvas', canvasdocente.toJSON(['objecto_id']))
 					}, {
 					    backgroundImageStretch: false
@@ -105,7 +109,7 @@ var mivue = new Vue({
 								json: ''
 							})
 							canvasdocente.renderAll()
-							this.objSocket.emit('send_all_data_canvas', {json: canvasdocente.toJSON(['objecto_id']), canvas: {width: this.$refs.micanvas.width, height: this.$refs.micanvas.height}})
+							this.objSocket.emit('send_all_data_canvas', {json: canvasdocente.toJSON(['objecto_id']), canvas: {width: this.CANVAS.width, height: this.CANVAS.height}})
 
 						}, {
 						    backgroundImageStretch: false
@@ -117,7 +121,7 @@ var mivue = new Vue({
 							canvasdocente.getObjects().forEach(obj => {
 								this.addEventosObjeto(obj)
 							})
-							this.objSocket.emit('send_all_data_canvas', {json: solicita.json, canvas: {width: this.$refs.micanvas.width, height: this.$refs.micanvas.height}})
+							this.objSocket.emit('send_all_data_canvas', {json: solicita.json, canvas: {width: this.CANVAS.width, height: this.CANVAS.height}})
 						})
 					}
 
@@ -336,6 +340,7 @@ var mivue = new Vue({
 		}
 	},
 	created: function () {
+		console.log(this)
 		console.log('creta!')
 		let hs = HASH_SESSION.split('-');
 		this.LECCION.ID = LMS_LECCION
@@ -354,8 +359,9 @@ var mivue = new Vue({
 		
 		// this.$refs.opciones_canvas.classList.remove('hidden')
 
-		this.$refs.panel_pizarra_final.classList.remove('hidden')
-		this.$refs.micanvas.width = this.$refs.panel_pizarra_final.offsetWidth - 4
+		// this.$refs.panel_pizarra_final.classList.remove('hidden')
+		this.$refs.micanvas.width = this.CANVAS.width = this.$refs.panel_pizarra_final.offsetWidth - 4
+		
 
 		let altura = (this.$refs.micanvas.width/this.razoncambio);
 		
@@ -373,7 +379,7 @@ var mivue = new Vue({
 		this.$refs.refContainerChatPizarra.style.height = (altura + this.altura_opciones) + 'px'
 		this.$refs.panel_pizarra_final.style.height = (altura + this.altura_opciones) + 'px'
 		// this.$refs.panel_pizarra_final.offsetWidth
-		this.$refs.micanvas.height = altura - 2
+		this.$refs.micanvas.height = this.CANVAS.height = altura - 2
 
 		canvasdocente = new fabric.Canvas('micanvas', {
 			backgroundColor: 'white'
@@ -406,7 +412,7 @@ var mivue = new Vue({
 					console.log('alumno conectado')
 					console.log(res)
 					if (res.success)
-						this.objSocket.emit('send_all_data_canvas', {json: canvasdocente.toJSON(), canvas: {width: this.$refs.micanvas.width, height: this.$refs.micanvas.height}})
+						this.objSocket.emit('send_all_data_canvas', {json: canvasdocente.toJSON(), canvas: {width: this.CANVAS.width, height: this.CANVAS.height}})
 				})
 				this.objSocket.emit('CONFIRMACARGACANVAS','Iniciando desde docente')	
 			})
