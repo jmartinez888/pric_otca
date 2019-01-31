@@ -65,7 +65,7 @@
                 </div>
                 <div class="form-group">
                     <label for="text_palabras_claves">{$lenguaje.foro_form_etiquetas}:</label>
-                    <input type="text" placeholder="Ingrese etiquetas del Foro separadas por ," class="form-control" id="text_palabras_claves" name="text_palabras_claves" value="{$foro.For_PalabrasClaves|default:""}">
+                    <input type="text" placeholder="{$lenguaje.foro_form_etiquetas}" class="form-control" id="text_palabras_claves" name="text_palabras_claves" value="{$foro.For_PalabrasClaves|default:""}">
                 </div>
                 {/if}
                 <div class="form-group">

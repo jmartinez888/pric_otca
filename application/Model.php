@@ -106,6 +106,7 @@ class Model extends Eloquent{
     }
 
     public function execQuery($query, $get_id = false){
+        var_dump($query);       
       $this->_db->query($query);
       if ($get_id)
         return $this->_db->lastInsertId();
