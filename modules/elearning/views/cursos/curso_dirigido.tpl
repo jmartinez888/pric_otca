@@ -172,7 +172,7 @@
           </div>
           {/if}
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding-top: 10px; position: relative">
-
+<!-- ssss{$session}sssssss{count($inscripcion)} -->
         {if $session==1}
           {if isset($inscripcion) && count($inscripcion)>0}
             {if $inscripcion[0].Mat_Valor==2 }
@@ -208,12 +208,13 @@
                   </div>
 
 
-                  <!--{if ($session==1 && isset($inscripcion) && count($inscripcion)>0 && $inscripcion[0].Mat_Valor==1) && ($curso.Usu_IdUsuario != Session::get('id_usuario')) }
+                  {if ($session==1 && isset($inscripcion) && count($inscripcion)>0 && $inscripcion[0].Mat_Valor==1) && ($curso.Usu_IdUsuario != Session::get('id_usuario')) }
                     <a href="{BASE_URL}elearning/clase/clase/{$curso.Cur_IdCurso}"><button class="btn btn-success">ir a clase</button></a>
                   {/if}
                   {if $curso.Usu_IdUsuario == Session::get('id_usuario')}
                     <a href="{BASE_URL}elearning/clase/clase/{$curso.Cur_IdCurso}"><button class="btn btn-success">Dar clase</button></a>
-                  {/if}-->
+                  {/if}
+
                 </div>
                 {/if}
               {else}
@@ -221,7 +222,7 @@
               {/if}
             {/if}
           {else}
-            {if $curso.Usu_IdUsuario == Session::get("id_usuario")}
+            {if $curso.Usu_IdUsuario != Session::get("id_usuario")}
               <a href="{BASE_URL}elearning/cursos/_inscripcion/{$curso.Moa_IdModalidad}/{$curso.Cur_IdCurso}">
                 <button class="btn btn-group btn-inscribir">{$lang->get('str_inscribirme')}</button>
               </a>
@@ -269,7 +270,13 @@
               {$o.Moc_Descripcion}
             </div>
             {if isset($o.LECCIONES[0]) && count($o.LECCIONES)>0}
-              {if $o.LECCIONES[0]['Disponible'] == 0 && $iniciar == 0}
+            {$falta = 0}
+            {foreach from = $o.LECCIONES item = ol}
+              {if $ol.Disponible == 0}
+                {$falta = 1}
+              {/if}
+            {/foreach}
+              {if $o.LECCIONES[0]['Disponible'] == 0 && $falta == 0 && $iniciar == 0}
                 <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10 ficha-mod-title">
                   <a  href="{BASE_URL}elearning/cursos/modulo/{$curso.Cur_IdCurso}/{$o.Moc_IdModuloCurso}" class="btn btn-success pull-right">{$lang->get('str_iniciar')}</a>
                 </div>
@@ -296,7 +303,7 @@
                 {if $l.Activo==0}
                   {if ($session==1 && isset($inscripcion) && count($inscripcion)>0 && $inscripcion[0].Mat_Valor==1) && $l.Disponible==1}
                     <a href="{BASE_URL}elearning/cursos/modulo/{$curso.Cur_IdCurso}/{$o.Moc_IdModuloCurso}/{$l.Lec_IdLeccion}">
-                      <div class="tag-terminado"><center><strong>Revisar</strong></center></div>
+                      <div class="tag-terminado"><center><strong>{$lang->get('elearning_cursos_revisar_leccion')}</strong></center></div>
                     </a>
                   {else}
                     {if $curso.Usu_IdUsuario == Session::get('id_usuario')}
