@@ -276,7 +276,7 @@
                           <strong>{$o.Moc_Titulo}</strong>
                           {$o.Moc_Descripcion}
                         </div>
-                        {if isset($o.LECCIONES[0]) && count($o.LECCIONES)>0}
+                        {if isset($o.LECCIONES[0]) && count($o.LECCIONES)>0 &&  isset($inscripcion) && count($inscripcion)>0 && $inscripcion[0].Mat_Valor==1}
                             {$falta = 0}
                             {foreach from = $o.LECCIONES item = ol}
                               {if $ol.Disponible == 0}
@@ -289,12 +289,12 @@
                               </div>
                               {$iniciar = 1}
                             {else}
-                              {if $o.LECCIONES[0]['Disponible'] == 0 && $iniciar == 0}
+                              <!-- {if $o.LECCIONES[0]['Disponible'] == 0 && $iniciar == 0}
                                   <div class="col col-xs-12 ">
                                     <a  href="{BASE_URL}elearning/cursos/modulo/{$curso.Cur_IdCurso}/{$o.Moc_IdModuloCurso}" class="btn btn-success pull-right">{$lang->get('str_iniciar')}</a>
                                   </div>
                                 {$iniciar = 1}
-                              {/if}
+                              {/if} -->
                             {/if}
                         {/if}
                     </div>
@@ -332,7 +332,7 @@
                                   {$lang->get('elearning_cursos_revisar_leccion')}
                               </a>
                           {else}
-                              {if $iniciarLeccion == 0 }
+                              {if $iniciarLeccion == 0 && $iniciar == 0}
                                   <a class=" btn btn-md btn-success pull-right" href="{BASE_URL}elearning/cursos/modulo/{$curso.Cur_IdCurso}/{$o.Moc_IdModuloCurso}/{$l.Lec_IdLeccion}">
                                       {$lang->get('str_iniciar')}
                                   </a>
