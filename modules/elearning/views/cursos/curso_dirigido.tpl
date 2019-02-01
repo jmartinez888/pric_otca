@@ -273,15 +273,24 @@
               {$falta = 0}
               {foreach from = $o.LECCIONES item = ol}
                 {if $ol.Disponible == 0}
-                  {$falta = 1}
+                  {$falta = $falta + 1}
                 {/if}
               {/foreach}
-              {if $o.LECCIONES[0]['Disponible'] == 0 && $falta == 0 && $iniciar == 0}
+              {if $falta == count($o.LECCIONES)}
+                  <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10 ficha-mod-title">
+                  <a  href="{BASE_URL}elearning/cursos/modulo/{$curso.Cur_IdCurso}/{$o.Moc_IdModuloCurso}" class="btn btn-success pull-right">{$lang->get('str_iniciar')}</a>
+                </div>
+                {$iniciar = 1}
+              {else}
+              {if $o.LECCIONES[0]['Disponible'] == 0 && $iniciar == 0}
                 <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10 ficha-mod-title">
                   <a  href="{BASE_URL}elearning/cursos/modulo/{$curso.Cur_IdCurso}/{$o.Moc_IdModuloCurso}" class="btn btn-success pull-right">{$lang->get('str_iniciar')}</a>
                 </div>
                 {$iniciar = 1}
               {/if}
+
+              {/if}
+
             {/if}
 
           </div>
