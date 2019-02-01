@@ -716,7 +716,7 @@ class cursosController extends elearningController {
     $Emodel = $this->loadModel("examen");
     $objeto = $model->getLeccion($leccion);
 
-    if ($objeto["Lec_Tipo"] == 1 || $objeto["Lec_Tipo"] == 2 || $objeto["Lec_Tipo"] == 3 || $objeto["Lec_Tipo"] == 6) {
+    if ($objeto["Lec_Tipo"] == 1 || $objeto["Lec_Tipo"] == 2 || $objeto["Lec_Tipo"] == 3 || $objeto["Lec_Tipo"] == 6 || $objeto["Lec_Tipo"] == 10) {
       $Emodel->updateProgreso(Session::get("id_usuario"), $leccion);
       $model->RegistrarProgreso($leccion, Session::get("id_usuario"));
     }
