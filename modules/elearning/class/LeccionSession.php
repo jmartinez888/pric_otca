@@ -25,7 +25,9 @@ class LeccionSession extends Eloquent
   public static function getSession ($leccion_id) {
     
   }
-
+  public function scopeSelectParaAsistencia ($query) {
+    return $query->select('Les_IdLeccSess', 'Lec_IdLeccion', 'Les_Tipo');
+  }
   public static function getSessionByHash ($hash, $solo_concluidas = false) {
     $build = self::where('Les_Hash', $hash);
     if ($solo_concluidas) {

@@ -4,7 +4,7 @@ namespace App;
 use Illuminate\Database\Capsule\Manager as DB;
 use Illuminate\Database\Eloquent\Model as Eloquent;
 
-class LeccionAsistencia extends Eloquent
+class LeccionAsistenciaDetalles extends Eloquent
 {
   protected $table = 'leccion_asistencia_detalles';
   protected $primaryKey = 'Lead_IdLecAsDet';

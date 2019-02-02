@@ -2,6 +2,7 @@
 
 use App\Leccion;
 use App\Formulario;
+use App\LeccionSession;
 use App\LeccionAsistencia;
 use App\LeccionFormulario;
 use Illuminate\Database\Capsule\Manager as DB;
@@ -14,6 +15,36 @@ class gleccionController extends elearningController {
 
     protected $_link;
     protected $service;
+
+		public function asistencia_detalles ($leccion_id, $usuario_id) {
+			// dd($leccion_id, $usuario_id);
+			$this->_acl->autenticado();
+			$success = false;
+			if ($this->_acl->tienePermisos('iniciar_leccion_dirigida') && is_numeric($leccion_id) && $leccion_id != 0 && is_numeric($usuario_id) && $usuario_id != 0) {
+				$objLeccion = Leccion::find($leccion_id);
+				$objUsuario = Leccion::find($usuario_id);
+
+				if ($objLeccion && $objUsuario) {
+					$success = true;
+					$asistencia = LeccionAsistencia::select('Lea_IdLeccAsis', 'Les_IdLeccSess')->getByUsuarioAndLeccion($usuario_id, $leccion_id)->get()->map(function($item) {
+						return [
+							'leccion_asistencia_id' => $item->Lea_IdLeccAsis,
+							'leccion_session_id'		=> $item->Les_IdLeccSess
+						];
+					});
+					$data['objLeccion'] = $objLeccion;
+					$data['asistencia_ref'] = $asistencia;
+					
+					$this->_view->setTemplate(LAYOUT_FRONTEND);
+					// dd($asistencia->toArray(), $asistencia[0]->detalles);
+					$this->_view->assign($data);
+					$this->_view->render('asistencia_leccion_detalles');
+				}
+			}
+			if (!$success) 
+				$this->redireccionarReferer('elearning/cursos/cursos');
+			
+		}
 
 		public function registrar_asistencia () {
 			$res = ['success' => false, 'msg' => ''];
@@ -53,17 +84,27 @@ class gleccionController extends elearningController {
 						'usuario.Usu_IdUsuario',
 						'usuario.Usu_Nombre',
 						'usuario.Usu_Apellidos',
+						DB::raw("GROUP_CONCAT(Les_IdLeccSess SEPARATOR '-') as str_sessiones"),
 						DB::raw('COUNT(Lea_IdLeccAsis) as total_sessiones')
 						)
                     ->join('usuario', 'usuario.Usu_IdUsuario', 'leccion_asistencia.Usu_IdUsuario')
                     ->whereNotIn('leccion_asistencia.Usu_IdUsuario', [$objLeccion->getDocente()])
 					->groupBy('leccion_asistencia.Usu_IdUsuario');
 					$alumnos = $build->get();
-					// dd($alumnos->toArray());
+					
 					$data['alumnos'] = $alumnos->map(function($item) {
 						$item->NombreCompleto = $item->Usu_Nombre.' '.$item->Usu_Apellidos;
+						$idss = explode('-', $item->str_sessiones);
+						$ssf = [];
+						foreach ($idss as $key => $value) {
+							$ttt = LeccionSession::selectParaAsistencia($value)->find($value);
+							$ttt->format_id = fill_zeros($value);
+							$ssf[] = $ttt;
+						}
+						$item->sessiones_format = $ssf;
 						return $item;
 					});
+					// dd($alumnos->toArray());
 					$this->_view->assign($data);
 					$this->_view->render('asistencia_leccion');
 
