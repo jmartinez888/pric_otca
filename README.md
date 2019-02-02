@@ -3,16 +3,15 @@
 Revisar las configuraciones iniciales del framework en el siguiente link [framework_mvc_php_multi-idioma](https://github.com/vicercavi/framework_mvc_php_multi-idioma)
 
 ## Datos de configuracion
-->Nombre de Base de datos: pric_otca
-->usuario: root
-->Contraseña: pric
+- **Nombre de Base de datos:** pric_otca
+- **Usuario:** root
+- **Contraseña:** pric
+- **Nombre de carpeta de proyecto:** pric_otca
 
-->Nombre de carpeta de proyecto: pric_otca
-
-terst napuche asdasd
 
 ## Habilitacion de permisos de escitura para www-data
 Comando: sudo chmod -R g+w
--> files/*
--> lang/*
--> tmp/*
+- files/*
+- lang/*
+- tmp/*
+- public/ckeditor/kcfinder/upload
