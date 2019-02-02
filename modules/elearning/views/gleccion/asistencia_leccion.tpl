@@ -47,6 +47,7 @@
                     <th>{$lang->get('str_alumno')}</th>
                     <th>{$lang->get('str_hora_inicio')}</th>
                     <th>{$lang->get('str_hora_fin')}</th>
+                    <th>{$lang->get('str_sessiones')}</th>
                     <th width="150">{$lang->get('str_operacion')}</th>
                   </tr>
                 </thead>
@@ -57,13 +58,22 @@
                       <td>{$item->Lea_Inicio}</td>
                       <td>{$item->Lea_Fin}</td>
                       <td>
+                        {foreach $item->sessiones_format as $ses}
+                          {if $ses->Les_Tipo == App\LeccionSession::TIPO_ONLINE}
+                            <span class="label label-primary">S.O:{$ses->Les_IdLeccSess}</span>
+                          {else}
+                            <span class="label label-success">S.E:{$ses->Les_IdLeccSess}</span>
+                          {/if}
+
+                        {/foreach}
+                      </td>
+                      <td>
                         {if $item->Lea_Asistencia == 0}
                         <button type="button" data-id="{$item->Lea_IdLeccAsis}" @click="onClick_marcarAsistencia" class="btn btn-default  btn-sm" data-toggle="tooltip" data-placement="bottom" title="{$lang->get('elearning_cursos_marcar_asistencia')}"><i data-id="{$item->Lea_IdLeccAsis}" class="fa fa-circle"></i></button>
                         {else}
                         <button  class="btn btn-default  btn-sm" data-toggle="tooltip" data-placement="bottom" title="{$lang->get('elearning_cursos_asistencia_marcada')}"><i class="fa fa-check-circle"></i></button>
                         {/if}
-                        {* <a href="{$_layoutParams.root}elearning/gleccion/asistencia/{$item->Lec_IdLeccion}" class="btn btn-default  btn-sm" data-toggle="tooltip" data-placement="bottom" title="{$lang->get('str_matriculados')}"><i class="glyphicon glyphicon-user"></i></a> *}
-                        {* <button data-id="{$item->Lec_IdLeccion}" @click="onClick_deleteEncuesta({$item->Lec_IdLeccion})" class="btn btn-default  btn-sm" data-toggle="tooltip" data-placement="bottom" title="{$lang->get('str_eliminar')}"><i class="glyphicon glyphicon-trash"></i></button> *}
+                        <a href="{$_layoutParams.root}elearning/gleccion/asistencia/{$item->Lec_IdLeccion}/usuario/{$item->Usu_IdUsuario}" class="btn btn-default  btn-sm" data-toggle="tooltip" data-placement="bottom" title="{$lang->get('str_detalles')}"><i class="glyphicon glyphicon-user"></i></a>
                       </td>
                     </tr>
                   {/foreach}
