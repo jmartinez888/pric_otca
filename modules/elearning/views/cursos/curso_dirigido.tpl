@@ -257,73 +257,90 @@
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 xxxxxxxxxxxx">
         {$index = 1} {$iniciar = 0} {$iniciarLeccion = 0}
         {foreach from=$modulo item=o}
-         <!-- <div class="ficha-mod col-xs-12 col-sm-12 col-md-12 col-lg-12" data-id-modulo="{$o.Moc_IdModuloCurso}" style="padding-bottom: 15px; margin-top: 15px">-->
-          <div class="ficha-mod col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding-bottom: 15px; margin-top:15px">
-            <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2" style="padding: 0px; text-align: center;">
-              <img class="w-100 img-modulo pr-5 pl-5" class="img-modulo" src="{BASE_URL}modules/elearning/views/cursos/img/contador-modulo-{$index}.png"/>
-              <div class="col col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                  <strong>{$lang->get('str_dedicacion')}: {$o.Moc_TiempoDedicacion}</strong>
-              </div>
-            </div>
-            <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10 ficha-mod-title">
-              <strong>{$o.Moc_Titulo}</strong>
-              {$o.Moc_Descripcion}
-            </div>
-            {if isset($o.LECCIONES[0]) && count($o.LECCIONES)>0}
-              {$falta = 0}
-              {foreach from = $o.LECCIONES item = ol}
-                {if $ol.Disponible == 0}
-                  {$falta = $falta + 1}
-                {/if}
-              {/foreach}
-              {if $falta == count($o.LECCIONES) && $iniciar == 0}
-                  <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10 ficha-mod-title">
-                  <a  href="{BASE_URL}elearning/cursos/modulo/{$curso.Cur_IdCurso}/{$o.Moc_IdModuloCurso}" class="btn btn-success pull-right">{$lang->get('str_iniciar')}</a>
+
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+              <div class="box box-solid  " >
+                <div class="box-body bg-success">
+
+                    <div class=" col-xs-12 col-sm-2 col-md-2 col-lg-2 text-center" >
+                      <div class="col col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                          <img class="w-100  pr-5 pl-5" src="{BASE_URL}modules/elearning/views/cursos/img/contador-modulo-{$index}.png"/>
+                      </div>
+                      <div class="col col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                          <strong>{$lang->get('str_dedicacion')}: {$o.Moc_TiempoDedicacion}</strong>
+                      </div>
+                    </div>
+
+                    <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10 ficha-mod-title">
+                        <div class="col col-xs-12" >
+                          <strong>{$o.Moc_Titulo}</strong>
+                          {$o.Moc_Descripcion}
+                        </div>
+                        {if isset($o.LECCIONES[0]) && count($o.LECCIONES)>0 &&  isset($inscripcion) && count($inscripcion)>0 && $inscripcion[0].Mat_Valor==1}
+                            {$falta = 0}
+                            {foreach from = $o.LECCIONES item = ol}
+                              {if $ol.Disponible == 0}
+                                {$falta = $falta + 1}
+                              {/if}
+                            {/foreach}
+                            {if $falta == count($o.LECCIONES) && $iniciar == 0}
+                              <div class="col col-xs-12">
+                                <a  href="{BASE_URL}elearning/cursos/modulo/{$curso.Cur_IdCurso}/{$o.Moc_IdModuloCurso}" class="btn btn-success pull-right">{$lang->get('str_iniciar')}</a>
+                              </div>
+                              {$iniciar = 1}
+                            {else}
+                              <!-- {if $o.LECCIONES[0]['Disponible'] == 0 && $iniciar == 0}
+                                  <div class="col col-xs-12 ">
+                                    <a  href="{BASE_URL}elearning/cursos/modulo/{$curso.Cur_IdCurso}/{$o.Moc_IdModuloCurso}" class="btn btn-success pull-right">{$lang->get('str_iniciar')}</a>
+                                  </div>
+                                {$iniciar = 1}
+                              {/if} -->
+                            {/if}
+                        {/if}
+                    </div>
+
+                    
+                  
                 </div>
-                {$iniciar = 1}
-              {else}
-                {if $o.LECCIONES[0]['Disponible'] == 0 && $iniciar == 0}
-                  <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10 ficha-mod-title">
-                    <a  href="{BASE_URL}elearning/cursos/modulo/{$curso.Cur_IdCurso}/{$o.Moc_IdModuloCurso}" class="btn btn-success pull-right">{$lang->get('str_iniciar')}</a>
-                  </div>
-                {$iniciar = 1}
-              {/if}
-
-              {/if}
-
-            {/if}
-
+              </div>
           </div>
           <!--  <div class="modulo-lecciones" data-ref-modulo="{$o.Moc_IdModuloCurso}" style="display: none">-->
-          <div class="modulo-lecciones">
+          <div class="col-xs-12 modulo-leccionesssss">
           {foreach from=$o.LECCIONES item=l}
-            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding-left: 0px; padding-right: 0px;">
-              <div class="ficha-leccion {if $l.Activo==1}lec-lms-activo{/if}">
-                <h4><strong>{$l.Lec_Titulo}</strong></h4>
+            <div class="box box-solid " >
+              <div class=" box-body  bg-info {if $l.Activo==1}lec-lms-activo{/if}">
+                <div class=" col-xs-12">
+                    <h4><strong>{$l.Lec_Titulo}</strong></h4>
+                </div>
+                <div class=" col-xs-12">
                 <strong>{$lang->get('str_dedicacion')}: {$l.Lec_TiempoDedicacion}</strong>
-                <br>
-                <span class="glyphicon glyphicon-calendar"></span> Fecha:
-                {if ($l.Lec_FechaDesde|date_format:"%H:%M:%S") > 0}
-                    {$l.Lec_FechaDesde|date_format:" %D %H:%M:%S"}
-                {else}
-                    {$l.Lec_FechaDesde|date_format:"%Y-%m-%d"}
-                {/if}
-
+                </div>
+                <div class=" col-xs-9">
+                    <span class="glyphicon glyphicon-calendar"></span> Fecha:
+                    {if ($l.Lec_FechaDesde|date_format:"%H:%M:%S") > 0}
+                        {$l.Lec_FechaDesde|date_format:" %D %H:%M:%S"}
+                    {else}
+                        {$l.Lec_FechaDesde|date_format:"%Y-%m-%d"}
+                    {/if}
+                </div>
+                
                 {if $l.Activo==0}
                   {if ($session==1 && isset($inscripcion) && count($inscripcion)>0 && $inscripcion[0].Mat_Valor==1)}
-                      {if $l.Disponible == 1 }
-                          <a href="{BASE_URL}elearning/cursos/modulo/{$curso.Cur_IdCurso}/{$o.Moc_IdModuloCurso}/{$l.Lec_IdLeccion}">
-                              <div class="tag-terminado"><center><strong>{$lang->get('elearning_cursos_revisar_leccion')}</strong></center></div>
-                          </a>
-                      {else}
-                          {if $iniciarLeccion == 0 }
-                              <a href="{BASE_URL}elearning/cursos/modulo/{$curso.Cur_IdCurso}/{$o.Moc_IdModuloCurso}/{$l.Lec_IdLeccion}">
-                                  <div class="tag-terminado"><center><strong>{$lang->get('str_iniciar')}</strong></center></div>
+                      <div class="col-xs-3">
+                          {if $l.Disponible == 1 }
+                              <a class=" btn btn-md btn-danger pull-right" href="{BASE_URL}elearning/cursos/modulo/{$curso.Cur_IdCurso}/{$o.Moc_IdModuloCurso}/{$l.Lec_IdLeccion}">
+                                  {$lang->get('elearning_cursos_revisar_leccion')}
                               </a>
-                              {$iniciarLeccion = 1}
+                          {else}
+                              {if $iniciarLeccion == 0 && $iniciar == 0}
+                                  <a class=" btn btn-md btn-success pull-right" href="{BASE_URL}elearning/cursos/modulo/{$curso.Cur_IdCurso}/{$o.Moc_IdModuloCurso}/{$l.Lec_IdLeccion}">
+                                      {$lang->get('str_iniciar')}
+                                  </a>
+                                  {$iniciarLeccion = 1}
+                              {/if}
                           {/if}
-                      {/if}
-
+                      </div>
+                      
                   {else}
                     {if $curso.Usu_IdUsuario == Session::get('id_usuario')}
                       <a href="{BASE_URL}elearning/cursos/modulo/{$curso.Cur_IdCurso}/{$o.Moc_IdModuloCurso}/{$l.Lec_IdLeccion}">
@@ -358,6 +375,7 @@
             </div>
           {/foreach}
           </div>
+
           {$index = $index + 1}
         {/foreach}
       </div>
