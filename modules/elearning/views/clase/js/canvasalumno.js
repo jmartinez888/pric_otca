@@ -12,6 +12,10 @@ new Vue({
 				SESSION_ID: 0,
 				SESSION_HASH: ''
 			},
+			CANVAS: {
+				width: 0,
+				height: 0
+			},
 			canvas_leccion: [],
 			obj_canvas: null,
 			elementos: [],
@@ -70,7 +74,7 @@ new Vue({
 		// this.$refs.opciones_canvas.classList.remove('hidden')
 
 		this.$refs.panel_pizarra_final.classList.remove('hidden')
-		this.$refs.micanvas.width = this.$refs.panel_pizarra_final.offsetWidth - 4
+		this.$refs.micanvas.width = this.CANVAS.width = this.$refs.panel_pizarra_final.offsetWidth - 4
 
 		let altura = (this.$refs.micanvas.width/this.razoncambio);
 
@@ -123,7 +127,8 @@ new Vue({
 					
 					if (!this.zoomAplicado) {
 						// if (+canvas_json.canvas.width > +this.$refs.micanvas.width)
-							this.razonZoom = this.$refs.micanvas.width/canvas_json.canvas.width;
+							this.razonZoom = this.CANVAS.width/canvas_json.canvas.width;
+							// this.razonZoom = this.$refs.micanvas.width/canvas_json.canvas.width;
 						// else
 							// this.razonZoom = canvas_json.canvas.width/this.$refs.micanvas.width;
 						this.zoomAplicado = true;
