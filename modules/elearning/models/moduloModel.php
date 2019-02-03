@@ -123,7 +123,7 @@ class moduloModel extends Model {
         }
     }
 
-    public function getModulosCursoLMS($id, $id_usuario, $Idi_IdIdioma="es"){
+    public function getModulosCursoLMS($Cur_IdCurso, $id_usuario, $Idi_IdIdioma="es"){
         $sql = "SELECT 
                 Moc_IdModuloCurso,
                 Cur_IdCurso,
@@ -136,7 +136,7 @@ class moduloModel extends Model {
                   Row_Estado,
                  fn_devolverIdioma('modulo_curso',Moc_IdModuloCurso,'$Idi_IdIdioma',Idi_IdIdioma) Idi_IdIdioma
 
-                FROM modulo_curso WHERE Cur_IdCurso = {$id}
+                FROM modulo_curso WHERE Cur_IdCurso = {$Cur_IdCurso}
                 AND Moc_Estado = 1 AND Row_Estado = 1 ORDER BY Moc_IdModuloCurso";
         $modulos = $this->getArray($sql);
         $resultado = array();

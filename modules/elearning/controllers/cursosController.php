@@ -195,7 +195,8 @@ class cursosController extends elearningController {
       $progreso = $model->getProgresoCurso($id, Session::get("id_usuario"));
       $this->_view->assign("progreso", $progreso);
     }
-    $modulo = $mModulo->getModulosCurso($id, Session::get("id_usuario"), Cookie::lenguaje());
+    // $modulo = $mModulo->getModulosCurso($id, Session::get("id_usuario"), Cookie::lenguaje());
+    $modulo = $mModulo->getModulosCursoLMS($id, Session::get("id_usuario"), Cookie::lenguaje());
     // dd($modulo);
     $duracion = $model->getDuracionCurso($id);
     $certificado = $mCert->getCertificadoUsuarioCurso(Session::get("id_usuario"), $id);
@@ -230,6 +231,7 @@ class cursosController extends elearningController {
     $this->_view->assign("detalle", $model->getDetalleCurso($curso["Cur_IdCurso"]));
     // print_r($model->getDetalleCurso($curso["Cur_IdCurso"]));exit;
     $this->_view->assign("inscripcion", $mInsc->getInscripcion(Session::get("id_usuario"), $id));
+    // print_r($mInsc->getInscripcion(Session::get("id_usuario"), $id));
     $this->_view->assign("session", Session::get("autenticado"));
     $this->_view->renderizar('curso');
   }
