@@ -124,43 +124,51 @@ class gleccionController extends elearningController {
 				if ($objLeccion) {				
 					DB::enableQueryLog();
 					$query = $objLeccion->leccion_asistencia()
+										->select(
+											'leccion_asistencia.*',
+											'usuario.Usu_IdUsuario',
+											'usuario.Usu_Nombre',
+											'usuario.Usu_Apellidos',
+											DB::raw("CONCAT(usuario.Usu_Nombre, ' ', usuario.Usu_Apellidos) as nombre_completo"),
+											DB::raw("GROUP_CONCAT(Les_IdLeccSess SEPARATOR '-') as str_sessiones"),
+											DB::raw('COUNT(Lea_IdLeccAsis) as total_sessiones')
+											)
+										->join('usuario', 'usuario.Usu_IdUsuario', 'leccion_asistencia.Usu_IdUsuario')
 										->whereNotIn('leccion_asistencia.Usu_IdUsuario', [$objLeccion->getDocente()])
 										->groupBy('leccion_asistencia.Usu_IdUsuario');
 					$records_total = $query->count();
 					$records_total_filter = $records_total;
+											
+					if ($this->has(['filter'])) {
+						// if ($_GET['filter']['filter_alumno'] != '') {
+							$query = $query->where(function($query) {
+								if ($_GET['filter']['filter_alumno'] != '') 
+									$query->orWhere(DB::raw("CONCAT(usuario.Usu_Nombre, ' ', usuario.Usu_Apellidos)"), 'like', '%'.$_GET['filter']['filter_alumno'].'%');
 
-					if ($this->filledGet('buscar')) {
-						// $query->where(function($q) {
-						// 	$q->orWhere('Ifv_VarName', 'like', '%'.$this->getTexto('buscar').'%');
-						// 		// ->orWhere('ODif_Descripcion', 'like', '%'.$_GET['buscar'].'%');
-						// });
-						// $records_total_filter = $query->count();
+								if (is_numeric($_GET['filter']['filter_session']) && $_GET['filter']['filter_session'] != -1) 
+									$query->where('leccion_asistencia.Les_IdLeccSess', $_GET['filter']['filter_session']);
+								
+									
+							});
+							$records_total_filter = $query->count();
+						// }
 					}
 
 					if ($this->has(['order', 'columns'])) {
-						// foreach ($_GET['order'] as $key => $value) {
-						// 	$nc = $_GET['columns'][$value['column']]['data'];
-						// 	switch ($nc) {
-						// 		case 'ingreso': $nc = 'Lead_Ingreso'; break;
-						// 		case 'salida': 	$nc = 'Lead_Salida'	;	break;
-						// 	}
-						// 	$query->orderBy($nc, $value['dir']);
-						// }
+						foreach ($_GET['order'] as $key => $value) {
+							$nc = $_GET['columns'][$value['column']]['data'];
+							switch ($nc) {
+								case 'nombre_completo': $nc = 'nombre_completo'; break;
+								case 'inicio': 	$nc = 'Lea_Inicio'	;	break;
+								case 'fin': 	$nc = 'Lea_Fin'	;	break;
+							}
+							$query->orderBy($nc, $value['dir']);
+						}
 					}
 					if ($this->filledGet('export')) {
 						$this->_export($query, $this->getTexto('export'));
 					} else {
-						$rows = $query->select(
-							'leccion_asistencia.*',
-							'usuario.Usu_IdUsuario',
-							'usuario.Usu_Nombre',
-							'usuario.Usu_Apellidos',
-							DB::raw("CONCAT(usuario.Usu_Nombre, ' ', usuario.Usu_Apellidos) as nombre_completo"),
-							DB::raw("GROUP_CONCAT(Les_IdLeccSess SEPARATOR '-') as str_sessiones"),
-							DB::raw('COUNT(Lea_IdLeccAsis) as total_sessiones')
-							)
-							->join('usuario', 'usuario.Usu_IdUsuario', 'leccion_asistencia.Usu_IdUsuario')
-							->offset($this->getInt('start'))
+						$rows = $query->offset($this->getInt('start'))
 							->limit($this->getInt('length'))
 							->get()->map(function($item) {
 								
@@ -218,8 +226,14 @@ class gleccionController extends elearningController {
 					$data['other_tags'] = [$lang->get('str_asistencia')];
 					$data['titulo'] = $lang->get('str_asistencia').' - '.str_limit($curso['Cur_Titulo'], 20);
 					$data['active'] = 'asistencia';
+
+					$data['sessiones'] = $objLeccion->sessiones()
+						->select('leccion_asistencia.Les_IdLeccSess')
+						->join('leccion_asistencia', 'leccion_asistencia.Les_IdLeccSess', 'leccion_session.Les_IdLeccSess')
+						->whereNotIn('leccion_asistencia.Usu_IdUsuario', [$objLeccion->getDocente()])
+						->groupBy('leccion_asistencia.Les_IdLeccSess')
+						->get();
 					
-					// dd($alumnos->toArray());
 					$this->_view->assign($data);
 					$this->_view->render('asistencia_leccion');
 
