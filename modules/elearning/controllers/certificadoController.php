@@ -370,7 +370,11 @@ class certificadoController extends elearningController {
                 $carpeta = "files/elearning/certificados/img/";
                 opendir($carpeta);
                 $destino = $carpeta.$_FILES["img"]["name"];
-                copy($_FILES["img"]["tmp_name"],$destino);
+                // if (file_exists( $destino )) {
+                //     # code...
+                // }
+                // copy($_FILES["img"]["tmp_name"],$destino);
+                move_uploaded_file($_FILES["img"]["tmp_name"],$destino);
 
                 $this->certificado->editarPlantilla($destino,$estiloAlumno, $estiloCurso,$estiloHoras,$estiloFecha,$id);
 
@@ -378,7 +382,7 @@ class certificadoController extends elearningController {
             }
         }
 
-         if ($this->botonPress("bt_SeleccionarPlantilla")) {
+        if ($this->botonPress("bt_SeleccionarPlantilla")) {
 
             $plantillas=$this->certificado->getAllPlantillaCertificado($plantilla['Cur_IdCurso']);
 

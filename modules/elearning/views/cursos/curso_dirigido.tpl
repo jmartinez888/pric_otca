@@ -190,7 +190,7 @@
                       <strong><span class="glyphicon glyphicon-list-alt"></span> &nbsp;{$lang->get('elearning_cursos_obtener_certificado')}</strong>
                     </button>
                   {else}
-                    <a class="btn btn-success btn-certificado" style="margin-bottom: 10px" href="">
+                    <a target="_blank" class="btn btn-success btn-certificado btn-certificado-size" style="margin-bottom: 10px" href="{BASE_URL}elearning/cursos/obtenerCertificado/{$certificado[0]['Cer_IdCertificado']}">
                       <strong><span class="glyphicon glyphicon-list-alt"></span> &nbsp;{$lang->get('elearning_cursos_visualizar_certificado')}</strong>
                     </a>
                   {/if}
