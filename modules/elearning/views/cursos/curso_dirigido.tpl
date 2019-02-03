@@ -184,7 +184,7 @@
             </div>
             {else}
               {if $inscripcion[0].Mat_Valor==1 }
-                {if $session && $progreso.Completo==10}
+                {if $session && $progreso.Completo==1}
                   {if !count($certificado)}
                     <button class="btn btn-success btn-certificado" style="margin-bottom: 10px" id="btnCertificado">
                       <strong><span class="glyphicon glyphicon-list-alt"></span> &nbsp;{$lang->get('elearning_cursos_obtener_certificado')}</strong>
