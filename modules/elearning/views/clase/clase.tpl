@@ -273,7 +273,7 @@
 
                         {* <div class="tool-option tool-option-fuente-size" v-if="showIn(['text'])"> *}
                         <div class="tool-option tool-option-fuente-size" v-if="showIn('all')">
-                          <label class="label_options_object " for="">Tamaño letra</label>
+                          <label class="label_options_object " for="">{$lang->get('elearning_cursos_tamanho_letra')}</label>
                           <div class="">
                             <input type="number" step="1" min="1" v-model="opcelements.fontSize" class=" form-controlxx" id="" placeholder="00">
                           </div>
@@ -281,9 +281,21 @@
 
                         {* <div class="tool-option tool-option-texto" v-if="showIn(['text'])"> *}
                         <div class="tool-option tool-option-texto" v-if="showIn('all')">
-                          <label class="label_options_object" for="">Texto</label>
+                          <label class="label_options_object" for="">{$lang->get('str_texto')}</label>
                           <div class="">
-                            <input type="text" v-model="opcelements.text" class="form-controlxx" placeholder="Ingresar texto">
+                            <input type="text" v-model="opcelements.text" class="form-controlxx" placeholder="{$lang->get('str_ingresar_texto')}">
+                          </div>
+                        </div>
+
+                        <div class="tool-option tool-option-texto" v-if="showIn('all')">
+                          <div class="">
+                            <a href="{BASE_URL}elearning/clase/finalizar/{$curso}/{$modulo.Moc_IdModuloCurso}/{$leccion.Lec_IdLeccion}">{$lang->get('elearning_cursos_finalizar_leccion')}</a>
+                          </div>
+                        </div>
+
+                        <div class="tool-option tool-option-texto" v-if="showIn('all')">
+                          <div class="">
+                            <a target="_blank" href="{BASE_URL}elearning/gleccion/asistencia/{$leccion.Lec_IdLeccion}">{$lang->get('elearning_cursos_ir_a_asistencia')}</a>
                           </div>
                         </div>
 
@@ -305,34 +317,6 @@
               </div>
               
             </div>
-
-          </div>
-        </div>
-      </div>
-      
-      <div class="col-lg-6">
-        <div class="panel panel-default margin-top-10">
-          <div class="panel-heading">
-            <h3 class="panel-title">
-              <i class="glyphicon glyphicon-list-alt"></i>&nbsp;&nbsp;
-              <strong>{$lang->get('str_opciones')}</strong>
-            </h3>
-          </div>
-          <div class="panel-body" style="margin: 0px">
-
-            <div id="placeholder-div1"></div>
-
-            {if $usuario==$ocurso.Usu_IdUsuario}
-            <a href="{BASE_URL}elearning/clase/finalizar/{$curso}/{$modulo.Moc_IdModuloCurso}/{$leccion.Lec_IdLeccion}">
-              <button class="btn btn-success" id="btnFinalizarClase" style="margin-bottom: 10px">
-                {$lang->get('elearning_cursos_finalizar_leccion')}
-              </button>
-            </a>
-            {else}
-            <!--button class="btn btn-success" id="btnsolicitarPizarra" style="margin-bottom: 10px">
-              Solicitar Pizarra
-            </button-->
-            {/if}
 
           </div>
         </div>
