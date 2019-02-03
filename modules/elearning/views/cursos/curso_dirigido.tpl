@@ -286,7 +286,7 @@
                                     {$falta = $falta + 1}
                                   {/if}
                                 {/foreach}
-                                {if $falta == count($o.LECCIONES) && $iniciar == 0}
+                                {if $falta == count($o.LECCIONES) && $iniciar == 0 && $iniciarLeccion == 0}
                                   <div class="col col-xs-12">
                                     <a  href="{BASE_URL}elearning/cursos/modulo/{$curso.Cur_IdCurso}/{$o.Moc_IdModuloCurso}" class="btn btn-success pull-right">{$lang->get('str_iniciar')}</a>
                                   </div>

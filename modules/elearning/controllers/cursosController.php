@@ -711,14 +711,14 @@ class cursosController extends elearningController {
 
   public function _next_leccion() {
     if (!Session::get("autenticado")) {$this->redireccionar("elearning/");}
-    $leccion = $this->getTexto("leccion");
+    $leccion = $this->getInt("leccion");
     $curso = $this->getInt("curso");
 
     $model = $this->loadModel("leccion");
     $Emodel = $this->loadModel("examen");
     $objeto = $model->getLeccion($leccion);
 
-    if ($objeto["Lec_Tipo"] == 1 || $objeto["Lec_Tipo"] == 2 || $objeto["Lec_Tipo"] == 3 || $objeto["Lec_Tipo"] == 6 || $objeto["Lec_Tipo"] == 10) {
+    if ($objeto["Lec_Tipo"] == 1 || $objeto["Lec_Tipo"] == 2 || $objeto["Lec_Tipo"] == 3 || $objeto["Lec_Tipo"] == 4 || $objeto["Lec_Tipo"] == 6 || $objeto["Lec_Tipo"] == 10) {
       $Emodel->updateProgreso(Session::get("id_usuario"), $leccion);
       $model->RegistrarProgreso($leccion, Session::get("id_usuario"));
     }
