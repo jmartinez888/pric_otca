@@ -15,6 +15,58 @@ class gleccionController extends elearningController {
 
     protected $_link;
     protected $service;
+		public function datatable_asistencia_detalles ($leccion_session_id) {
+			$res = ['success' => false];
+			$this->_acl->autenticado();
+			$success = false;
+			if ($this->_acl->tienePermisos('iniciar_leccion_dirigida') && is_numeric($leccion_session_id) && $leccion_session_id != 0) {
+				// DB::enableQueryLog();
+				$objAsistencia = LeccionAsistencia::find($leccion_session_id);
+
+				if ($objAsistencia) {
+					$query = $objAsistencia->detalles();
+					$records_total = $query->count();
+					$records_total_filter = $records_total;
+
+					if ($this->filledGet('buscar')) {
+						// $query->where(function($q) {
+						// 	$q->orWhere('Ifv_VarName', 'like', '%'.$this->getTexto('buscar').'%');
+						// 		// ->orWhere('ODif_Descripcion', 'like', '%'.$_GET['buscar'].'%');
+						// });
+						// $records_total_filter = $query->count();
+					}
+
+					if ($this->has(['order', 'columns'])) {
+						foreach ($_GET['order'] as $key => $value) {
+							$nc = $_GET['columns'][$value['column']]['data'];
+							switch ($nc) {
+								case 'ingreso': $nc = 'Lead_Ingreso'; break;
+								case 'salida': 	$nc = 'Lead_Salida'	;	break;
+							}
+							$query->orderBy($nc, $value['dir']);
+						}
+					}
+					
+					if ($this->filledGet('export')) {
+						$this->_export($query, $this->getTexto('export'));
+					} else {
+						$rows = $query->offset($this->getInt('start'))->limit($this->getInt('length'))->get()->map(function($item) {
+							return $item->formatToArray();
+						});
+						$data = [
+							'draw' => $this->getInt('draw'),
+							'recordsTotal' => $records_total,
+							'recordsFiltered' => $records_total_filter,
+							'data' => $rows,
+							// 'query' =>  DB::getQueryLog()
+						];
+						$this->_view->responseJson($data);
+					}
+				}
+			}
+			
+
+		}
 
 		public function asistencia_detalles ($leccion_id, $usuario_id) {
 			// dd($leccion_id, $usuario_id);
@@ -29,7 +81,8 @@ class gleccionController extends elearningController {
 					$asistencia = LeccionAsistencia::select('Lea_IdLeccAsis', 'Les_IdLeccSess')->getByUsuarioAndLeccion($usuario_id, $leccion_id)->get()->map(function($item) {
 						return [
 							'leccion_asistencia_id' => $item->Lea_IdLeccAsis,
-							'leccion_session_id'		=> $item->Les_IdLeccSess
+							'leccion_session_id'		=> $item->Les_IdLeccSess,
+							'leccion_session_id_format'		=> fill_zeros($item->Les_IdLeccSess)
 						];
 					});
 					$data['objLeccion'] = $objLeccion;
@@ -62,7 +115,93 @@ class gleccionController extends elearningController {
 				}
             }
             $this->_view->responseJson($res);
+		} 
+
+		public function datatable_asistencia ($leccion_id) {
+			$this->_acl->autenticado();
+			if ($this->_acl->tienePermisos('iniciar_leccion_dirigida') && is_numeric($leccion_id) && $leccion_id != 0) {
+				$objLeccion = Leccion::find($leccion_id);
+				if ($objLeccion) {				
+					DB::enableQueryLog();
+					$query = $objLeccion->leccion_asistencia()
+										->whereNotIn('leccion_asistencia.Usu_IdUsuario', [$objLeccion->getDocente()])
+										->groupBy('leccion_asistencia.Usu_IdUsuario');
+					$records_total = $query->count();
+					$records_total_filter = $records_total;
+
+					if ($this->filledGet('buscar')) {
+						// $query->where(function($q) {
+						// 	$q->orWhere('Ifv_VarName', 'like', '%'.$this->getTexto('buscar').'%');
+						// 		// ->orWhere('ODif_Descripcion', 'like', '%'.$_GET['buscar'].'%');
+						// });
+						// $records_total_filter = $query->count();
+					}
+
+					if ($this->has(['order', 'columns'])) {
+						// foreach ($_GET['order'] as $key => $value) {
+						// 	$nc = $_GET['columns'][$value['column']]['data'];
+						// 	switch ($nc) {
+						// 		case 'ingreso': $nc = 'Lead_Ingreso'; break;
+						// 		case 'salida': 	$nc = 'Lead_Salida'	;	break;
+						// 	}
+						// 	$query->orderBy($nc, $value['dir']);
+						// }
+					}
+					if ($this->filledGet('export')) {
+						$this->_export($query, $this->getTexto('export'));
+					} else {
+						$rows = $query->select(
+							'leccion_asistencia.*',
+							'usuario.Usu_IdUsuario',
+							'usuario.Usu_Nombre',
+							'usuario.Usu_Apellidos',
+							DB::raw("CONCAT(usuario.Usu_Nombre, ' ', usuario.Usu_Apellidos) as nombre_completo"),
+							DB::raw("GROUP_CONCAT(Les_IdLeccSess SEPARATOR '-') as str_sessiones"),
+							DB::raw('COUNT(Lea_IdLeccAsis) as total_sessiones')
+							)
+							->join('usuario', 'usuario.Usu_IdUsuario', 'leccion_asistencia.Usu_IdUsuario')
+							->offset($this->getInt('start'))
+							->limit($this->getInt('length'))
+							->get()->map(function($item) {
+								
+								$idss = explode('-', $item->str_sessiones);
+								$ssf = [];
+								foreach ($idss as $key => $value) {
+									$ttt = LeccionSession::selectParaAsistencia($value)->find($value);
+									// $ttt->format_id = fill_zeros($value);
+									$ssf[] = [
+										'id' => $value,
+										'format_id' => fill_zeros($value),
+										'tipo' 			=> $ttt->Les_Tipo,
+									];
+								}
+								$item->sessiones_format = $ssf;
+								
+								return [
+									'id' 								=> $item->Lea_IdLeccAsis,
+									'nombre_completo' 	=> $item->nombre_completo,
+									'inicio' 						=> $item->Lea_Inicio,
+									'fin' 							=> $item->Lea_Fin,
+									'usuario_id' 				=> $item->Usu_IdUsuario,
+									'leccion_id' 				=> $item->Lec_IdLeccion,
+									'asistencia' 				=> $item->Lea_Asistencia,
+									'sessiones_format' 	=> $ssf
+								];
+							});
+						$data = [
+							'draw' => $this->getInt('draw'),
+							'recordsTotal' => $records_total,
+							'recordsFiltered' => $records_total_filter,
+							'data' => $rows,
+							'query' =>  DB::getQueryLog()
+						];
+						$this->_view->responseJson($data);
+					}
+				}
+			}
+
 		}
+
 		public function asistencia ($leccion_id) {
 			$this->_acl->autenticado();
 			if ($this->_acl->tienePermisos('iniciar_leccion_dirigida') && is_numeric($leccion_id) && $leccion_id != 0) {
@@ -74,36 +213,12 @@ class gleccionController extends elearningController {
 					$lang = $this->_view->getLenguaje(['elearning_cursos', 'elearning_formulario_responder'], false, true);
 
 					$data['curso'] = $curso;
+					$data['obj_leccion'] = $objLeccion;
 					$data['idcurso'] = $curso['Cur_IdCurso'];
 					$data['other_tags'] = [$lang->get('str_asistencia')];
 					$data['titulo'] = $lang->get('str_asistencia').' - '.str_limit($curso['Cur_Titulo'], 20);
 					$data['active'] = 'asistencia';
-					$build = $objLeccion->leccion_asistencia()
-					->select(
-						'leccion_asistencia.*',
-						'usuario.Usu_IdUsuario',
-						'usuario.Usu_Nombre',
-						'usuario.Usu_Apellidos',
-						DB::raw("GROUP_CONCAT(Les_IdLeccSess SEPARATOR '-') as str_sessiones"),
-						DB::raw('COUNT(Lea_IdLeccAsis) as total_sessiones')
-						)
-                    ->join('usuario', 'usuario.Usu_IdUsuario', 'leccion_asistencia.Usu_IdUsuario')
-                    ->whereNotIn('leccion_asistencia.Usu_IdUsuario', [$objLeccion->getDocente()])
-					->groupBy('leccion_asistencia.Usu_IdUsuario');
-					$alumnos = $build->get();
 					
-					$data['alumnos'] = $alumnos->map(function($item) {
-						$item->NombreCompleto = $item->Usu_Nombre.' '.$item->Usu_Apellidos;
-						$idss = explode('-', $item->str_sessiones);
-						$ssf = [];
-						foreach ($idss as $key => $value) {
-							$ttt = LeccionSession::selectParaAsistencia($value)->find($value);
-							$ttt->format_id = fill_zeros($value);
-							$ssf[] = $ttt;
-						}
-						$item->sessiones_format = $ssf;
-						return $item;
-					});
 					// dd($alumnos->toArray());
 					$this->_view->assign($data);
 					$this->_view->render('asistencia_leccion');
