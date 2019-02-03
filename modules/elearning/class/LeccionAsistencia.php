@@ -41,17 +41,20 @@ class LeccionAsistencia extends Eloquent
       ->first();
   }
   
-  // public function formatToArray ($exclude = []) {
-  //   return [
-  //     'id' => $this->Frm_IdFormulario,
-  //     'titulo' => $this->Frm_Titulo,
-  //     'descripcion' => $this->Frm_Descripcion,
-  //     'create' => $this->Frm_CreatedAt,
-  //     'update' => $this->Frm_UpdatedAt,
-  //     'curso_id' => $this->Cur_IdCurso,
-  //     'estado' => $this->Frm_Estado
-  //   ];
-  // }
+  public function formatToArray ($exclude = []) {
+    return [
+      'id'      => $this->Lea_IdLeccAsis,
+      'usuario_id' => $this->Usu_IdUsuario,
+      'leccion_id' => $this->Lec_IdLeccion,
+      'leccion_session_id' => $this->Les_IdLeccSess,
+      'tiempo'  => $this->Lea_Tiempo,
+      'inicio'  => $this->Lea_Inicio,
+      'fin'     => $this->Lea_Fin,
+      'modo'     => $this->Lea_Modo,
+      'nombre_completo'     => $this->nombre_completo,
+      'asistencia'     => $this->Lea_Asistencia
+    ];
+  }
 }
 
 ?>
