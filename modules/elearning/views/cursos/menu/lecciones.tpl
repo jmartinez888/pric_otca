@@ -3,14 +3,12 @@
   {* <div class="side-menu"> *}
     <ul>
       {foreach from=$lecciones key=i item=o}
-
-
           <li style="position: relative; color: #fff" class="item-leccion {if isset($leccion) && count($leccion)} {if $o["Lec_IdLeccion"] == $leccion["Lec_IdLeccion"]} item-active {else} hidden {/if} {/if}">
-            {* {if $o["Progreso"] == 1 || ($i>0 && $lecciones[$i-1]["Progreso"] == 1)} *}
-            <a href="{BASE_URL}elearning/cursos/modulo/{$curso}/{$modulo.Moc_IdModuloCurso}/{$o.Lec_IdLeccion}" class="nounderline  cancel-href ">
-            {* {else}
-            <a href="#" onclick="return false" class="nounderline ">
-            {/if} *}
+            {if $o["Progreso"] == 1 || ($i>0 && $lecciones[$i-1]["Progreso"] == 1)} 
+                <a href="{BASE_URL}elearning/cursos/modulo/{$curso}/{$modulo.Moc_IdModuloCurso}/{$o.Lec_IdLeccion}" class="nounderline  cancel-href ">
+            {else}
+                <a href="#" onclick="return false" class="nounderline ">
+            {/if} 
               <p>
                 {if $o["Progreso"] == 1 && $o["Lec_Tipo"] == 3 }
                     <span style="color: #d5ff67">{$lang->get('str_leccion')} {$o.Index}: </span></br>
@@ -36,10 +34,7 @@
                 <span class="glyphicon glyphicon-triangle-left item-menus" id="btn-show-leccion"></span>
               {/if}
             {/if}
-
-
           </li>
-
       {/foreach}
     </ul>
   {* </div> *}
