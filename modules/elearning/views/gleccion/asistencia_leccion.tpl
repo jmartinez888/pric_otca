@@ -38,23 +38,43 @@
             <strong>{$lang->get('elearning_cursos_asistencia_alumno')}</strong>
           </h3>
         </div>
-        <div class="panel-body" style=" margin: 15px 25px">
-          <div class="col-lg-12" id="asistencia_leccion_vue">
-            <div class="table-responsive" style="width: 100%">
-              <table class="table" id="tbl_asistencia" ref="tbl_asistencia">
-                <thead>
-                  <tr>
-                    <th>{$lang->get('str_alumno')}</th>
-                    <th>{$lang->get('str_hora_inicio')}</th>
-                    <th>{$lang->get('str_hora_fin')}</th>
-                    <th>{$lang->get('str_sessiones')}</th>
-                    <th width="150">{$lang->get('str_operacion')}</th>
-                  </tr>
-                </thead>
-                <tbody>
-                </tbody>
-              </table>
-            </div>
+        <div class="panel-body" id="asistencia_leccion_vue">
+          <div class="col-lg-12">
+            <form class="form-inline" role="form" @submit.prevent="onSubmit_filtrar">
+              <div class="form-group">
+                <!-- <label class="" for="">label</label> -->
+                <input type="text" v-model="txt_buscar_alumno" class="form-control" id="" placeholder="{$lang->get('elearning_cursos_ingrese_nombre_alumno')}">
+              </div>
+              
+              <div class="form-group">
+                <label class="" for="">{$lang->get('str_session')}</label>
+                <select name=""  class="form-control" v-model="sel_session_leccion">
+                  <option value="-1">{$lang->get('str_todas')}</option>
+                  {foreach $sessiones as $item}
+                  <option value="{$item->Les_IdLeccSess}">{fill_zeros($item->Les_IdLeccSess)}</option>
+                  {/foreach}
+                </select>
+              </div>
+              
+              <button type="submit" class="btn btn-primary">{$lang->get('str_buscar')}</button>
+            </form>
+            
+          </div>
+          <div class="col-lg-12">
+            <table class="table wi-100" id="tbl_asistencia" ref="tbl_asistencia">
+              <thead>
+                <tr>
+                  <th>{$lang->get('str_alumno')}</th>
+                  <th>{$lang->get('str_hora_inicio')}</th>
+                  <th>{$lang->get('str_hora_fin')}</th>
+                  <th>{$lang->get('str_sessiones')}</th>
+                  <th width="150">{$lang->get('str_operacion')}</th>
+                </tr>
+              </thead>
+              <tbody>
+              </tbody>
+            </table>
+            
           </div>
         </div>
       </div>
