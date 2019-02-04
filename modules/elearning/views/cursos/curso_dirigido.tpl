@@ -190,7 +190,7 @@
                       <strong><span class="glyphicon glyphicon-list-alt"></span> &nbsp;{$lang->get('elearning_cursos_obtener_certificado')}</strong>
                     </button>
                   {else}
-                    <a class="btn btn-success btn-certificado" style="margin-bottom: 10px" href="">
+                    <a target="_blank" class="btn btn-success btn-certificado btn-certificado-size" style="margin-bottom: 10px" href="{BASE_URL}elearning/cursos/obtenerCertificado/{$certificado[0]['Cer_IdCertificado']}">
                       <strong><span class="glyphicon glyphicon-list-alt"></span> &nbsp;{$lang->get('elearning_cursos_visualizar_certificado')}</strong>
                     </a>
                   {/if}
@@ -286,7 +286,7 @@
                                     {$falta = $falta + 1}
                                   {/if}
                                 {/foreach}
-                                {if $falta == count($o.LECCIONES) && $iniciar == 0}
+                                {if $falta == count($o.LECCIONES) && $iniciar == 0 && $iniciarLeccion == 0}
                                   <div class="col col-xs-12">
                                     <a  href="{BASE_URL}elearning/cursos/modulo/{$curso.Cur_IdCurso}/{$o.Moc_IdModuloCurso}" class="btn btn-success pull-right">{$lang->get('str_iniciar')}</a>
                                   </div>

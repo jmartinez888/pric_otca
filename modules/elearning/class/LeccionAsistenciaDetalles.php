@@ -14,17 +14,16 @@ class LeccionAsistenciaDetalles extends Eloquent
     return $this->belongsTo('App\LeccionAsistencia', 'Lea_IdLeccAsis');
   }
   
-  // public function formatToArray ($exclude = []) {
-  //   return [
-  //     'id' => $this->Frm_IdFormulario,
-  //     'titulo' => $this->Frm_Titulo,
-  //     'descripcion' => $this->Frm_Descripcion,
-  //     'create' => $this->Frm_CreatedAt,
-  //     'update' => $this->Frm_UpdatedAt,
-  //     'curso_id' => $this->Cur_IdCurso,
-  //     'estado' => $this->Frm_Estado
-  //   ];
-  // }
+  public function formatToArray ($exclude = []) {
+    return [
+      'id' => $this->Lead_IdLecAsDet,
+      'usuario_id' => $this->Usu_IdUsuario,
+      'asistencia_id' => $this->Lea_IdLeccAsis,
+      'ingreso' => $this->Lead_Ingreso,
+      'salida' => $this->Lead_Salida,
+      'fuente' => $this->Lead_Fuente
+    ];
+  }
 }
 
 ?>

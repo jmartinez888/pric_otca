@@ -40,7 +40,10 @@
         </div>
         <div class="panel-body" style=" margin: 15px 25px">
           <div class="col-lg-12" id="asistencia_leccion_vue">
-            <table-asistencia-detalles v-for="tad in refids" :leccion-asistencia="tad.leccion_asistencia_id" :leccion-session="tad.leccion_session_id"></table-asistencia-detalles>
+            <table-asistencia-detalles v-for="tad in refids" 
+            :leccion-asistencia="tad.leccion_asistencia_id" 
+            :leccion-session="tad.leccion_session_id"
+            :leccion-session-format="tad.leccion_session_id_format"></table-asistencia-detalles>
           </div>
         </div>
       </div>
@@ -64,16 +67,17 @@
 {/block}
 {block 'template'}
 <template id="tpl-tbl-asistencia-detalles">
-  <table class="table table-bordered table-hover">
+  <table ref="tbl_detalles_horas" class="table table-bordered table-hover">
     <thead>
       <tr>
-        <th>{$lang->get('str_session')}&nbsp;:{literal}{{leccionSession}}{/literal}</th>
+        <th colspan="2">{$lang->get('str_session')}&nbsp;:{literal}{{leccionSessionFormat}}{/literal}</th>
+      </tr>
+      <tr>
+        <th>{$lang->get('str_inicio')}</th>
+        <th>{$lang->get('str_fin')}</th>
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td>asasd</td>
-      </tr>
     </tbody>
   </table>
   

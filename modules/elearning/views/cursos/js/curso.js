@@ -32,12 +32,12 @@ $(document).ready(function(){
 			}
 		}
 	});
-	   $(".printer").bind("click",function()
-                {
-                    $(".PrintArea").printArea();
-                });
+	$(".printer").bind("click",function()
+    {
+        $(".PrintArea").printArea();
+    });
 
-	   $("#printButton").click(function(){
+    $("#printButton").click(function(){
         var mode = 'iframe'; //popup
         var close = mode == "popup";
         var options = { mode : mode, popClose : close};
