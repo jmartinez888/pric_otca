@@ -73,6 +73,13 @@
               </thead>
               <tbody>
               </tbody>
+              <tfoot>
+                <tr>
+                  <td colspan="5" class="hidden view-pre-loader">
+                    <p>{$lang->get('str_asistencias')}: {literal}{{resumen_confirmados}}{/literal} {$lang->get('str_confirmadas')}, {literal}{{resumen_sin_confirmar}}{/literal} {$lang->get('str_sin_confirmar')}, {literal}{{resumen_total}}{/literal} {$lang->get('str_total')}</p>
+                  </td>
+                </tr>
+              </tfoot>
             </table>
             
           </div>

@@ -123,9 +123,13 @@ class gleccionController extends elearningController {
 				$objLeccion = Leccion::find($leccion_id);
 				if ($objLeccion) {				
 					DB::enableQueryLog();
+					//OBTENER EL Máximo valor de Lea_Asistencia, para considerar que asistió a alguna de las sessiones de la lección
 					$query = $objLeccion->leccion_asistencia()
 										->select(
 											'leccion_asistencia.*',
+											DB::raw("(SELECT MIN(Lead_Ingreso) from leccion_asistencia_detalles lad WHERE lad.Lea_IdLeccAsis = leccion_asistencia.Lea_IdLeccAsis limit 1) as fecha_min"),
+											DB::raw("(SELECT MAX(Lead_Salida) from leccion_asistencia_detalles lad WHERE lad.Lea_IdLeccAsis = leccion_asistencia.Lea_IdLeccAsis limit 1) as fecha_max"),
+											DB::raw("MAX(Lea_Asistencia) as confirma_asistencia"),
 											'usuario.Usu_IdUsuario',
 											'usuario.Usu_Nombre',
 											'usuario.Usu_Apellidos',
@@ -137,6 +141,8 @@ class gleccionController extends elearningController {
 										->whereNotIn('leccion_asistencia.Usu_IdUsuario', [$objLeccion->getDocente()])
 										->groupBy('leccion_asistencia.Usu_IdUsuario');
 					$records_total = $query->count();
+					$total_confirmados = 0;
+					$total_sin_confirmados = 0;
 					$records_total_filter = $records_total;
 											
 					if ($this->has(['filter'])) {
@@ -188,20 +194,24 @@ class gleccionController extends elearningController {
 								return [
 									'id' 								=> $item->Lea_IdLeccAsis,
 									'nombre_completo' 	=> $item->nombre_completo,
-									'inicio' 						=> $item->Lea_Inicio,
-									'fin' 							=> $item->Lea_Fin,
+									'inicio' 						=> $item->fecha_min,
+									'fin' 							=> $item->fecha_max,
 									'usuario_id' 				=> $item->Usu_IdUsuario,
 									'leccion_id' 				=> $item->Lec_IdLeccion,
-									'asistencia' 				=> $item->Lea_Asistencia,
+									// 'asistencia' 				=> $item->Lea_Asistencia,
+									'asistencia' 				=> $item->confirma_asistencia,
 									'sessiones_format' 	=> $ssf
 								];
 							});
 						$data = [
-							'draw' => $this->getInt('draw'),
-							'recordsTotal' => $records_total,
+							'draw' 						=> $this->getInt('draw'),
+							'recordsTotal' 		=> $records_total,
 							'recordsFiltered' => $records_total_filter,
-							'data' => $rows,
-							'query' =>  DB::getQueryLog()
+							'data' 						=> $rows,
+							'confirmadas' 		=> $total_confirmados,
+							'sin_confirmadas' => $total_sin_confirmados,
+							'total' 					=> $records_total,
+							'query'	 					=> DB::getQueryLog()
 						];
 						$this->_view->responseJson($data);
 					}

@@ -4,7 +4,10 @@ new Vue({
 		return {
 			td_tbl_asistencia: null,
 			txt_buscar_alumno: '',
-			sel_session_leccion: -1
+			sel_session_leccion: -1,
+			resumen_total: 0,
+			resumen_confirmados: 0,
+			resumen_sin_confirmar: 0
 		}
 	},
 	methods: {
@@ -82,6 +85,13 @@ new Vue({
 			columnDefs: [
 				{orderable: false,  targets: [3, 4]}
 			]
-		}).on('click', '.btn-marcar-asistencia', this.onClick_marcarAsistencia);
+		}).on('click', '.btn-marcar-asistencia', this.onClick_marcarAsistencia)
+		.on('draw', (x, datatable) => {
+			console.log(x)
+			this.resumen_total = datatable.json.total;
+			this.resumen_confirmados = datatable.json.confirmadas;
+			this.resumen_sin_confirmar = datatable.json.sin_confirmar;
+		});
+		$('.view-pre-loader').removeClass('hidden')
 	}
 })
