@@ -112,12 +112,12 @@ margin-block-end: 0px;
 .container-curso .descripcion-leccion .container-panel-descripcion .nav-tabs > li > a{
     color: #393939;
     font-weight: bold;
-    border: medium none;
+    /*border: medium none;*/
 }
 .container-curso .descripcion-leccion .container-panel-descripcion .nav-tabs > li > a:hover{
     background-color: #51758d !important;
-    border: medium none;
-    border-radius: 0;
+    /*border: medium none;*/
+    /*border-radius: 0;*/
     color:#fff;
 }
 
