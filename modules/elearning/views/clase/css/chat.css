@@ -425,6 +425,7 @@ line-height: 2.6em;
   text-align: left;
   width: 100%;
   overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 
