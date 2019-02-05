@@ -90,7 +90,7 @@ new Vue({
 			console.log(x)
 			this.resumen_total = datatable.json.total;
 			this.resumen_confirmados = datatable.json.confirmadas;
-			this.resumen_sin_confirmar = datatable.json.sin_confirmar;
+			this.resumen_sin_confirmar = datatable.json.sin_confirmadas;
 		});
 		$('.view-pre-loader').removeClass('hidden')
 	}

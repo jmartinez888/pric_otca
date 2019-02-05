@@ -11,7 +11,9 @@ class LeccionAsistencia extends Eloquent
   protected $primaryKey = 'Lea_IdLeccAsis';
   const CREATED_AT = 'Lea_CreatedAt';
   const UPDATED_AT = 'Lea_UpdatedAt';
-
+  
+  public const ASISTENCIA_FALTA = 0;
+  public const ASISTENCIA_CONFIRMADA = 1;
 
   public static function byLeccionAndAlumno ($leccion_id, $alumno_id) {
     return self::where('Lec_IdLeccion', $leccion_id)
@@ -36,6 +38,34 @@ class LeccionAsistencia extends Eloquent
       ->where('Lec_IdLeccion', $leccion_id);
   }
 
+  public function scopeSelectParaAsistencia ($query, $leccion_id, $docente_id) {
+    return $query->addSelect(
+      'leccion_asistencia.*',
+      DB::raw("MAX(Lea_Asistencia) as confirma_asistencia"),
+      DB::raw("CONCAT(usuario.Usu_Nombre, ' ', usuario.Usu_Apellidos) as nombre_completo")
+    )->join('usuario', 'usuario.Usu_IdUsuario', 'leccion_asistencia.Usu_IdUsuario')
+    ->where('leccion_asistencia.Lec_IdLeccion', $leccion_id)
+    ->whereNotIn('leccion_asistencia.Usu_IdUsuario', [$docente_id])
+    ->groupBy('leccion_asistencia.Usu_IdUsuario');
+    
+  }
+  public function scopeHhhh ($query) {
+    return $query->join('usuario', 'usuario.Usu_IdUsuario', 'leccion_asistencia.Usu_IdUsuario')
+    ->where('leccion_asistencia.Lec_IdLeccion', $leccion_id)
+    ->whereNotIn('leccion_asistencia.Usu_IdUsuario', [$docente_id])
+    ->groupBy('leccion_asistencia.Usu_IdUsuario');
+  }
+  public function scopeSelectParaAsistenciaComplemento ($query) {
+    return $query->addSelect('usuario.Usu_IdUsuario',
+      'usuario.Usu_Nombre',
+      'usuario.Usu_Apellidos',
+      DB::raw("(SELECT MIN(Lead_Ingreso) from leccion_asistencia_detalles lad WHERE lad.Lea_IdLeccAsis = leccion_asistencia.Lea_IdLeccAsis limit 1) as fecha_min"),
+      DB::raw("(SELECT MAX(Lead_Salida) from leccion_asistencia_detalles lad WHERE lad.Lea_IdLeccAsis = leccion_asistencia.Lea_IdLeccAsis limit 1) as fecha_max"),
+      // DB::raw("CONCAT(usuario.Usu_Nombre, ' ', usuario.Usu_Apellidos) as nombre_completo"),
+      DB::raw("GROUP_CONCAT(Les_IdLeccSess SEPARATOR '-') as str_sessiones"),
+      DB::raw('COUNT(Lea_IdLeccAsis) as total_sessiones')
+    );
+  }
   public function getByUsuario ($usuario_id) {
     return self::where('Usu_IdUsuario', $usuario_id)
       ->first();
