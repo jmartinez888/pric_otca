@@ -77,6 +77,7 @@ class gleccionController extends elearningController {
 				$objUsuario = Leccion::find($usuario_id);
 
 				if ($objLeccion && $objUsuario) {
+					$lang = $this->_view->LoadLenguaje(['elearning_cursos', 'elearning_formulario_responder'], false, true);
 					$success = true;
 					$asistencia = LeccionAsistencia::select('Lea_IdLeccAsis', 'Les_IdLeccSess')->getByUsuarioAndLeccion($usuario_id, $leccion_id)->get()->map(function($item) {
 						return [
@@ -86,6 +87,7 @@ class gleccionController extends elearningController {
 						];
 					});
 					$data['objLeccion'] = $objLeccion;
+					$data['titulo'] = $lang->get('elearning_cursos_asistencia_detalles');
 					$data['asistencia_ref'] = $asistencia;
 					
 					$this->_view->setTemplate(LAYOUT_FRONTEND);
@@ -102,19 +104,19 @@ class gleccionController extends elearningController {
 		public function registrar_asistencia () {
 			$res = ['success' => false, 'msg' => ''];
 			$this->_acl->autenticado();
-            if ($this->_acl->tienePermisos('iniciar_leccion_dirigida') && $this->has(['leccion_asistencia_id'])) 
-            $lang = $this->_view->LoadLenguaje(['elearning_cursos', 'elearning_formulario_responder'], false, true);{
+      if ($this->_acl->tienePermisos('iniciar_leccion_dirigida') && $this->has(['leccion_asistencia_id'])) {
+        $lang = $this->_view->LoadLenguaje(['elearning_cursos', 'elearning_formulario_responder'], false, true);
 				$lecc_ass = LeccionAsistencia::find($this->getInt('leccion_asistencia_id'));
 				if ($lecc_ass) {
-                    $lecc_ass->Lea_Asistencia = 1;
-                    if ($lecc_ass->save()) {
-                        $res['success'] = true;
-                        $res['msg'] = $lang->get('elearning_cursos_asistencia_marcada');
-                    }
+					$lecc_ass->Lea_Asistencia = 1;
+					if ($lecc_ass->save()) {
+							$res['success'] = true;
+							$res['msg'] = $lang->get('elearning_cursos_asistencia_marcada');
+					}
 
 				}
-            }
-            $this->_view->responseJson($res);
+      }
+      $this->_view->responseJson($res);
 		} 
 
 		public function datatable_asistencia ($leccion_id) {
@@ -123,34 +125,37 @@ class gleccionController extends elearningController {
 				$objLeccion = Leccion::find($leccion_id);
 				if ($objLeccion) {				
 					DB::enableQueryLog();
-					$query = $objLeccion->leccion_asistencia()
-										->select(
-											'leccion_asistencia.*',
-											'usuario.Usu_IdUsuario',
-											'usuario.Usu_Nombre',
-											'usuario.Usu_Apellidos',
-											DB::raw("CONCAT(usuario.Usu_Nombre, ' ', usuario.Usu_Apellidos) as nombre_completo"),
-											DB::raw("GROUP_CONCAT(Les_IdLeccSess SEPARATOR '-') as str_sessiones"),
-											DB::raw('COUNT(Lea_IdLeccAsis) as total_sessiones')
-											)
-										->join('usuario', 'usuario.Usu_IdUsuario', 'leccion_asistencia.Usu_IdUsuario')
-										->whereNotIn('leccion_asistencia.Usu_IdUsuario', [$objLeccion->getDocente()])
-										->groupBy('leccion_asistencia.Usu_IdUsuario');
-					$records_total = $query->count();
+					//OBTENER EL Máximo valor de Lea_Asistencia, para considerar que asistió a alguna de las sessiones de la lección
+					// $query = $objLeccion->leccion_asistencia()
+					$query_total = LeccionAsistencia::SelectParaAsistencia($objLeccion->Lec_IdLeccion, $objLeccion->getDocente());
+					
+					$query = LeccionAsistencia::SelectParaAsistencia($objLeccion->Lec_IdLeccion, $objLeccion->getDocente())
+						->SelectParaAsistenciaComplemento();
+					$records_total = $total_asistencia = DB::query()->selectRaw('count(*) total from ('.$query_total->toSql().') tt', $query_total->getBindings())->first()->total;
+					$total_confirmados = DB::query()->selectRaw('count(*) total_confirmadas from ('.$query_total->toSql().') tt', $query_total->getBindings())->where(DB::raw('confirma_asistencia'), LeccionAsistencia::ASISTENCIA_CONFIRMADA)->first()->total_confirmadas;
+					// dd($total_confirmados);
+					$total_sin_confirmados = DB::query()->selectRaw('count(*) total_sin_confirmadas from ('.$query_total->toSql().') tt', $query_total->getBindings())->where(DB::raw('confirma_asistencia'), LeccionAsistencia::ASISTENCIA_FALTA)->first()->total_sin_confirmadas;
 					$records_total_filter = $records_total;
 											
 					if ($this->has(['filter'])) {
 						// if ($_GET['filter']['filter_alumno'] != '') {
-							$query = $query->where(function($query) {
+							$query->where(function($query) {
 								if ($_GET['filter']['filter_alumno'] != '') 
 									$query->orWhere(DB::raw("CONCAT(usuario.Usu_Nombre, ' ', usuario.Usu_Apellidos)"), 'like', '%'.$_GET['filter']['filter_alumno'].'%');
 
 								if (is_numeric($_GET['filter']['filter_session']) && $_GET['filter']['filter_session'] != -1) 
-									$query->where('leccion_asistencia.Les_IdLeccSess', $_GET['filter']['filter_session']);
-								
-									
+									$query->where('leccion_asistencia.Les_IdLeccSess', $_GET['filter']['filter_session']);	
 							});
-							$records_total_filter = $query->count();
+							$query_total->where(function($query) {
+								if ($_GET['filter']['filter_alumno'] != '') 
+									$query->orWhere(DB::raw("CONCAT(usuario.Usu_Nombre, ' ', usuario.Usu_Apellidos)"), 'like', '%'.$_GET['filter']['filter_alumno'].'%');
+
+								if (is_numeric($_GET['filter']['filter_session']) && $_GET['filter']['filter_session'] != -1) 
+									$query->where('leccion_asistencia.Les_IdLeccSess', $_GET['filter']['filter_session']);	
+							});
+							$records_total_filter = $total_asistencia = DB::query()->selectRaw('count(*) total from ('.$query_total->toSql().') tt', $query_total->getBindings())->first()->total;
+							$total_confirmados = DB::query()->selectRaw('count(*) total_confirmadas from ('.$query_total->toSql().') tt', $query_total->getBindings())->where(DB::raw('confirma_asistencia'), LeccionAsistencia::ASISTENCIA_CONFIRMADA)->first()->total_confirmadas;
+							$total_sin_confirmados = DB::query()->selectRaw('count(*) total_sin_confirmadas from ('.$query_total->toSql().') tt', $query_total->getBindings())->where(DB::raw('confirma_asistencia'), LeccionAsistencia::ASISTENCIA_FALTA)->first()->total_sin_confirmadas;
 						// }
 					}
 
@@ -188,20 +193,24 @@ class gleccionController extends elearningController {
 								return [
 									'id' 								=> $item->Lea_IdLeccAsis,
 									'nombre_completo' 	=> $item->nombre_completo,
-									'inicio' 						=> $item->Lea_Inicio,
-									'fin' 							=> $item->Lea_Fin,
+									'inicio' 						=> $item->fecha_min,
+									'fin' 							=> $item->fecha_max,
 									'usuario_id' 				=> $item->Usu_IdUsuario,
 									'leccion_id' 				=> $item->Lec_IdLeccion,
-									'asistencia' 				=> $item->Lea_Asistencia,
+									// 'asistencia' 				=> $item->Lea_Asistencia,
+									'asistencia' 				=> $item->confirma_asistencia,
 									'sessiones_format' 	=> $ssf
 								];
 							});
 						$data = [
-							'draw' => $this->getInt('draw'),
-							'recordsTotal' => $records_total,
+							'draw' 						=> $this->getInt('draw'),
+							'recordsTotal' 		=> $records_total,
 							'recordsFiltered' => $records_total_filter,
-							'data' => $rows,
-							'query' =>  DB::getQueryLog()
+							'data' 						=> $rows,
+							'confirmadas' 		=> $total_confirmados,
+							'sin_confirmadas' => $total_sin_confirmados,
+							'total' 					=> $total_asistencia,
+							'query'	 					=> DB::getQueryLog()
 						];
 						$this->_view->responseJson($data);
 					}
