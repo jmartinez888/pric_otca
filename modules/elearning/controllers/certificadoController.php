@@ -340,33 +340,31 @@ class certificadoController extends elearningController {
         $this->_view->getLenguaje("elearning_certificado_plantilla");
         $plantilla=$this->certificado->getPlantillaCertificadoxId($id);
 
-         if ($this->botonPress("bt_editarPlantilla")) {
+        if ($this->botonPress("bt_guardarPlantilla")) {
 
-                $estiloAlumno="display:none;";
-                $estiloCurso="display:none;";
-                $estiloHoras="display:none;";
-                $estiloFecha="display:none;";
+            $estiloAlumno="display:none;";
+            $estiloCurso="display:none;";
+            $estiloHoras="display:none;";
+            $estiloFecha="display:none;";
 
+            if(null !==$this->getSql('ckbNombre'))
+                $estiloAlumno=$this->getSql('estiloAlumno');
 
-                if(null !==$this->getSql('ckbNombre'))
-                    $estiloAlumno=$this->getSql('estiloAlumno');
+            if(null !==$this->getSql('ckbCurso'))
+                $estiloCurso=$this->getSql('estiloCurso');
 
-                if(null !==$this->getSql('ckbCurso'))
-                    $estiloCurso=$this->getSql('estiloCurso');
+            if(null !==$this->getSql('ckbDuracion'))
+                $estiloHoras=$this->getSql('estiloHoras');
 
-                if(null !==$this->getSql('ckbDuracion'))
-                    $estiloHoras=$this->getSql('estiloHoras');
-
-                if(null !==$this->getSql('ckbFecha'))
-                    $estiloFecha=$this->getSql('estiloFecha');
+            if(null !==$this->getSql('ckbFecha'))
+                $estiloFecha=$this->getSql('estiloFecha');
 
             $tipo_doc=$_FILES['img']['type'];
             if($tipo_doc!=="image/jpg" && $tipo_doc!=="image/jpeg" && $tipo_doc!=="image/png"){
                 $this->certificado->editarPlantilla($plantilla['Plc_UrlImg'],$estiloAlumno, $estiloCurso,$estiloHoras,$estiloFecha,$id);
 
                 $this->redireccionar("elearning/certificado/plantilla_certificado_editar/".$id);
-
-            }else{
+            } else {
                 $carpeta = "files/elearning/certificados/img/";
                 opendir($carpeta);
                 $destino = $carpeta.$_FILES["img"]["name"];
@@ -383,7 +381,6 @@ class certificadoController extends elearningController {
         }
 
         if ($this->botonPress("bt_SeleccionarPlantilla")) {
-
             $plantillas=$this->certificado->getAllPlantillaCertificado($plantilla['Cur_IdCurso']);
 
             foreach ($plantillas as $k) {
@@ -391,9 +388,7 @@ class certificadoController extends elearningController {
             }
 
             $this->certificado->cambiarSelectedPlantilla($id,0);
-
         }
-
 
         if ($this->botonPress("bt_EliminarPlantilla")) {
 
