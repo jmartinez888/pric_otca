@@ -187,6 +187,7 @@ class claseController extends elearningController {
 							'msg_id' => $value['Men_IdMensaje'],
 							// 'estado' => $value['Row_Estado'],
 							'usuario_id' => $value['Usu_IdUsuario'],
+							'usuario_img' => $value['Usu_URLImage'],
 							'usuario_nombres' => $value['Usu_Nombre'],
 							'usuario_apellidos' => $value['Usu_Apellidos'],
 						];

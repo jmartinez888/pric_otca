@@ -1,4 +1,17 @@
+// Vue.component('message-chat', {
+//   template: '#msg_chat_v2',
+//   props: ['tipo', 'usuario', 'fecha_format', 'mensaje', 'fecha_now'],
+//   data: function () {
+//     return {
+//       msg: {
+//         propio: 1,
+//         otro: 0
+//       }
+//     }
+//   }
+// })
 $(document).ready(() => {
+  
   var chat_container = document.getElementById('chat-container')
   if (chat_container != null) {
     new Vue({
@@ -101,6 +114,7 @@ $(document).ready(() => {
           
           let control = Mustache.render(autor == this.MSG.PROPIO ? this.TPL.msg_propio : this.TPL.msg_otro, {
             usuario: usuario.usuario_nombres + ' ' + usuario.usuario_apellidos,
+            usuario_img_url: usuario.usuario_img_url,
             fecha_now: fecha.fromNow(),
             fecha_format: fecha.format('YYYY-MM-DD HH:mm:ss'),
             mensaje: mensaje
@@ -311,9 +325,10 @@ $(document).ready(() => {
             })).then(mensajes => {
               if (mensajes.data) {
                 mensajes.data.forEach(row => {
-                  this.AddMensaje(row.usuario_id == USUARIO.id ? this.MSG.PROPIO : this.MSG.OTRO, row.usuario_id, moment(row.msg_fecha), row.msg_descripcion, {
+                  this.AddMensaje(row.usuario_id == USUARIO.id ? this.MSG.PROPIO : this.MSG.OTRO, row.usuario_id, moment(row.msg_fecha), decodeHTML(row.msg_descripcion), {
                     usuario_nombres: row.usuario_nombres,
-                    usuario_apellidos: row.usuario_apellidos
+                    usuario_apellidos: row.usuario_apellidos,
+                    usuario_img_url: base_url('files/usuarios/img/' + row.usuario_img, true)
                   });
                 });
               }
@@ -337,6 +352,7 @@ $(document).ready(() => {
 
           
         })
+        
         setInterval(() => {
           $('[data-time-message]').each((i, e) => {
             let timetemp  = moment(e.dataset.timeMessage)

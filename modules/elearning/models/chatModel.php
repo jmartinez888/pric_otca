@@ -21,7 +21,8 @@ class chatModel extends Model {
               (SELECT M.*, 
                 U.Usu_Usuario,
                 U.Usu_Nombre,
-                U.Usu_Apellidos 
+                U.Usu_Apellidos,
+                U.Usu_URLImage
               FROM mensaje M
               INNER JOIN usuario U ON U.Usu_IdUsuario = M.Usu_IdUsuario
               WHERE M.Cur_IdCurso = {$curso} 

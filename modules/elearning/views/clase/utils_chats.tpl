@@ -1,7 +1,11 @@
 
-<template id="msg_propio">
+<template id="msg_chat_v2">
   <div class="content-msn">
-    <div class="mensaje-me">
+    <div :class="{
+      ctn-mensaje: true,
+      'mensaje-me': tipo == msg.propio,
+      'mensaje-other': tipo == msg.otro,
+    }">
       <div class="mensaje-chat-text">
           <div class="sujeto-link">
             <div class="avatar">
@@ -15,11 +19,34 @@
     </div>
   </div>
 </template>
+
+
+<template id="msg_propio">
+  <div class="content-msn">
+    <div class="mensaje-me ctn-mensaje">
+      <div class="mensaje-chat-text">
+          <div class="sujeto-link">
+            <div class="avatar">
+              <img class="img-circle-msn" src="{literal}{{usuario_img_url}}{/literal}"/>
+            </div>
+            <strong>{literal}{{usuario}}{/literal}</strong>
+          </div>
+          <p class="p-mensaje">{literal}{{mensaje}}{/literal}</p>
+          <p class="p-time"><small data-time-message="{literal}{{fecha_format}}{/literal}">{literal}{{fecha_now}}{/literal}</small></p>
+      </div>
+    </div>
+  </div>
+</template>
 <template id="msg_otro">
   <div class="content-msn">
-    <div class="mensaje-other">
+    <div class="mensaje-other ctn-mensaje">
     <div class="mensaje-chat-text">
-        <div class="sujeto-link"><div class="avatar"><img class="img-circle-msn"/></div><strong>{literal}{{usuario}}{/literal}</strong></div>
+        <div class="sujeto-link">
+          <div class="avatar">
+              <img class="img-circle-msn" src="{literal}{{usuario_img_url}}{/literal}"/>
+          </div>
+          <strong>{literal}{{usuario}}{/literal}</strong>
+        </div>
         <p class="p-mensaje">{literal}{{mensaje}}{/literal}</p>
         <p class="p-time"><small data-time-message="{literal}{{fecha_format}}{/literal}">{literal}{{fecha_now}}{/literal}</small></p>
     </div>
@@ -29,7 +56,7 @@
 
 <template id="status_conectado">
   <div class="content-msn">
-    <div class="mensaje-me">
+    <div class="mensaje-me ctn-mensaje">
       <div class="mensaje-chat-text">
           <div class="sujeto-link">
             <div class="avatar">
