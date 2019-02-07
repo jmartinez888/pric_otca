@@ -351,6 +351,7 @@ class certificadoController extends elearningController {
             $estiloCurso="display:none;";
             $estiloHoras="display:none;";
             $estiloFecha="display:none;";
+            $estiloCodigo="display:none;";
 
             if(null !==$this->getSql('ckbNombre'))
                 $estiloAlumno=$this->getSql('estiloAlumno');
@@ -364,9 +365,12 @@ class certificadoController extends elearningController {
             if(null !==$this->getSql('ckbFecha'))
                 $estiloFecha=$this->getSql('estiloFecha');
 
+            if(null !==$this->getSql('ckbCodigo'))
+                $estiloCodigo=$this->getSql('estiloCodigo');
+
             $tipo_doc=$_FILES['img']['type'];
             if($tipo_doc!=="image/jpg" && $tipo_doc!=="image/jpeg" && $tipo_doc!=="image/png"){
-                $this->certificado->editarPlantilla($plantilla['Plc_UrlImg'],$estiloAlumno, $estiloCurso,$estiloHoras,$estiloFecha,$id);
+                $this->certificado->editarPlantilla($plantilla['Plc_UrlImg'],$estiloAlumno, $estiloCurso,$estiloHoras,$estiloFecha,$estiloCodigo,$id);
 
                 $this->redireccionar("elearning/certificado/plantilla_certificado_editar/".$id);
             } else {
@@ -379,7 +383,7 @@ class certificadoController extends elearningController {
                 // copy($_FILES["img"]["tmp_name"],$destino);
                 move_uploaded_file($_FILES["img"]["tmp_name"],$destino);
 
-                $this->certificado->editarPlantilla($destino,$estiloAlumno, $estiloCurso,$estiloHoras,$estiloFecha,$id);
+                $this->certificado->editarPlantilla($destino,$estiloAlumno, $estiloCurso,$estiloHoras,$estiloFecha,$estiloCodigo,$id);
 
                 $this->redireccionar("elearning/certificado/plantilla_certificado_editar/".$id);
             }
