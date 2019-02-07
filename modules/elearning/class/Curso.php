@@ -25,4 +25,9 @@ class Curso extends Eloquent {
     return $res;
   }
 
+  public static function existeCurso ($curso_id) {
+    return self::where('Cur_IdCurso', $curso_id)->count() > 0;
+  }
+  
+
 }

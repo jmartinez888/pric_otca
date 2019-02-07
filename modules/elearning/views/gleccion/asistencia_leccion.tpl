@@ -27,7 +27,8 @@
         </div>
     </div>
     <div class="col-sm-12 pb-4">
-      <a href="{$_layoutParams.root}elearning/gcurso/_view_finalizar_registro/{$idcurso}" class="btn btn-danger margin-t-10 " id="btn_nuevo" ><i class="glyphicon glyphicon-triangle-left"></i> {$lang->get('str_regresar')}</a>
+      <a href="{$_layoutParams.root}elearning/gcurso/_view_finalizar_regis
+      tro/{$idcurso}" class="btn btn-danger margin-t-10 " id="btn_nuevo" ><i class="glyphicon glyphicon-triangle-left"></i> {$lang->get('str_regresar')}</a>
     </div>
 
 		<div class="col-sm-12">
@@ -86,15 +87,7 @@
         </div>
       </div>
 		</div>
-
 </div>
-
-
-
-
-
-
-
 
 {/block}
 {block 'template' append}
