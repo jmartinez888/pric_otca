@@ -60,9 +60,16 @@
       <div class="mensaje-chat-text">
           <div class="sujeto-link">
             <div class="avatar">
-              <img class="img-circle-msn">
+              <img class="img-circle-msn" src="{literal}{{usuario_img_url}}{/literal}">
             </div>
-            <strong>{literal}{{nombre}}{/literal}</strong>
+            <strong>
+              <span style="display: block">
+                {literal}{{nombre}}{/literal}
+              </span>
+              {literal}{{#is_docente}}{/literal}
+              <span class="label label-info">{$lang->get('str_docente')}</span>
+              {literal}{{/is_docente}}{/literal}
+            </strong>
           </div>
           <p class="p-time"><small>{literal}{{fecha_from_now}}{/literal}</small></p>
       </div>

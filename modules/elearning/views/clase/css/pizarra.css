@@ -302,7 +302,7 @@ width: 700px;*/
 /* .container-chat-pizarra .tab-content #chat-panel {} */
 
 .container-chat-pizarra .tab-content #pizarra-panel {
-  /* padding: 1em 0em; */
+  padding: 1em 0em;
   overflow-y: scroll;
   overflow-x: hidden;
 }

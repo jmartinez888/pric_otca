@@ -10,6 +10,8 @@ class Usuario extends Eloquent
   protected $primaryKey = 'Usu_IdUsuario';
   public $timestamps = false;
 
+  public const IMAGE_DEFAULT = 'default.png';
+
   // public static function activos () {
   // 	return self::where('Idi_Estado', 1)->get();
   // }
