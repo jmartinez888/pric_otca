@@ -217,7 +217,7 @@ module.exports = function(app, test){
           nameRoom += procesa.data.Les_IdLeccSess
           console.log(nameRoom);
           socket.join(nameRoom);
-          //PARA UNO
+          //enviarme lista de usuarios actuales
           socket.emit('SESSION_SUCCESS', {usuarios: ManagerSessions.getUsuariosEnSession(procesa.data.Les_IdLeccSess, true)})
           
           // ut.evento = 'new'
@@ -256,7 +256,7 @@ module.exports = function(app, test){
               console.log(data)
               socket.broadcast.to(nameRoom).emit('TOTALES_LECCION', {conectados: leccion.usuarios.length, usuario: {id: data.id, evento: 'new'}});
             })
-
+            //enviar lista de usuario al resto de los usuario en la sessión
             socket.broadcast.to(nameRoom).emit('NEW_CONNECTION', {usuarios: ManagerSessions.getUsuariosEnSession(procesa.data.Les_IdLeccSess, true)})
           })
           

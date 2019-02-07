@@ -81,12 +81,12 @@ new Vue({
 		this.$refs.chatPanel.classList.remove('hidden')
 		// this.$refs.pizarraPanel.classList.remove('hidden')
 
-		this.$refs.chatPanel.style.height = (altura - this.$refs.navsPanel.offsetHeight) + 'px'
+		this.$refs.chatPanel.style.height = (altura) + 'px'
 		// this.$refs.pizarraPanel.style.height = (altura - this.$refs.navsPanel.offsetHeight) + 'px'
-		let tabCH = this.$refs.navsPanel.offsetHeight + 75
-		let tabBMT = this.$refs.navsPanel.offsetHeight + 30
-		$('#chat-msn-body')[0].style.height = (altura - tabCH) + 'px'
-		$('#chat-msn-body-usuarios')[0].style.height = (altura - tabBMT) + 'px'
+		// let tabCH = this.$refs.navsPanel.offsetHeight + 75
+		// let tabBMT = this.$refs.navsPanel.offsetHeight + 30
+		$('#chat-msn-body')[0].style.height = (altura - 75) + 'px'
+		$('#chat-msn-body-usuarios')[0].style.height = (altura - 30) + 'px'
 
 		this.$refs.refContainerChatPizarra.style.height = altura + 'px'
 		this.$refs.panel_pizarra_final.style.height = altura + 'px'
