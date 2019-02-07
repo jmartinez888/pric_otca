@@ -13,15 +13,16 @@ class leccionModel extends Model {
                   AND L.Lec_Estado = 1 AND L.Row_Estado = 1";
       }else{
         $sql = "SELECT L.Lec_IdLeccion FROM leccion L INNER JOIN
-                (SELECT Moc_IdModuloCurso, Lec_IdLeccion FROM leccion WHERE Lec_IdLeccion = {$leccion}
-                AND Lec_Estado = 1 AND Row_Estado = 1)X
-                ON L.Moc_IdModuloCurso = X.Moc_IdModuloCurso AND L.Lec_IdLeccion < X.Lec_IdLeccion
-                  AND L.Lec_Estado = 1 AND L.Row_Estado = 1";
+                (SELECT Moc_IdModuloCurso, Lec_IdLeccion FROM leccion WHERE Lec_IdLeccion = {$leccion} AND Moc_IdModuloCurso = {$modulo} 
+                AND Lec_Estado = 1 AND Row_Estado = 1) X
+                ON L.Moc_IdModuloCurso = X.Moc_IdModuloCurso AND L.Lec_IdLeccion < X.Lec_IdLeccion AND L.Lec_Estado = 1 AND L.Row_Estado = 1";
       }
       $previo = $this->getArray($sql);
+      // print_r($previo);exit;
       if($leccion==""){
         return count($previo) > 0;
       }
+
       if($previo!=null && count($previo)>0){
         $lecPrev = $this->getProgresoLeccion($previo[0]["Lec_IdLeccion"], $usuario);
         if($lecPrev["Completo"]==1){
@@ -30,7 +31,7 @@ class leccionModel extends Model {
           return false;
         }
       }else{
-        return true;
+        return false;
       }
     }
 

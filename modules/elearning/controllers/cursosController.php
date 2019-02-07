@@ -297,7 +297,7 @@ class cursosController extends elearningController {
     // $curs = $Cmodel->getCursoID($curso)[0];
     // print_r($curs);exit;
     $obj_curso = null;
-    if (strlen($curso) == 0 || strlen($modulo) == 0) {
+    if (strlen($curso) == 0 || strlen($modulo) == 0 || $this->filtrarInt($curso) == 0 || $this->filtrarInt($modulo) == 0 ) {
       $this->redireccionar("elearning/");
     }
     if (!Session::get("autenticado")) {
@@ -315,8 +315,10 @@ class cursosController extends elearningController {
       $this->redireccionar("elearning/cursos");
     }
 
-    if(!$Lmodel->validarLeccion($leccion, $modulo, Session::get("id_usuario"))){ $this->redireccionar("elearning/cursos"); }
-
+    if ($leccion) {
+      if(!$Lmodel->validarLeccion($leccion, $modulo, Session::get("id_usuario"))){ $this->redireccionar("elearning/cursos"); }
+    }
+    
     $obj_curso = $Cmodel::find($curso);
 
     $lecciones = $Lmodel->getLecciones($modulo, Session::get("id_usuario"));
@@ -595,7 +597,7 @@ class cursosController extends elearningController {
       }
 
     } else {
-      $this->redireccionar("elearning/");
+      // $this->redireccionar("elearning/");
 
     }
 
