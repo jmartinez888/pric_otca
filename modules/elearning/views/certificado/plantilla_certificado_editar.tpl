@@ -55,8 +55,6 @@
                             <label class="control-label col col-xs-2" style="text-align: left;">%</label>
                         </div>
                     </div>
-
-                     
                 </div> 
 
                 <div  class="col-lg-12 col-xs-12 file-preview-zone" style="background: url('{$_layoutParams.root_clear}{$plantilla.Plc_UrlImg}'); background-size: 100%; -moz-background-size: 100%; -o-background-size: 100%; -webkit-background-size: 100%;  -khtml-background-size: 100%; width: 100%; height:21cm; position: relative; border: solid 1px black;" id="cuadro1" ondragenter="return enter_as(event)" ondragover="return over_as(event)" ondragleave="return leave_as(event)" ondrop="return drop_as(event)">
@@ -69,7 +67,7 @@
 
                     <div class="" style="{$plantilla.Plc_StyleFecha}" id="arrastrable4" draggable="true" ondragstart="start_as(event)" ondragend="end_as(event)"><b>Fecha de Curso</b><br/></div>
 
-                    <div class="" {if $plantilla.Plc_StyleCodigo!="display:none;" || !is_null($plantilla.Plc_StyleCodigo) } style="{$plantilla.Plc_StyleCodigo}" {else} style = "position: absolute; top: 582px; left: 350px; transform: translate(0%, 0%); font-size: 22px; z-index: 1000; border: 2px solid black; text-align: center; width: 20%;" {/if} id="arrastrable5" draggable="true" ondragstart="start_as(event)" ondragend="end_as(event)"><b>Codigo Certificado</b><br/></div>
+                    <div class="" style="{$plantilla.Plc_StyleCodigo}"  id="arrastrable5" draggable="true" ondragstart="start_as(event)" ondragend="end_as(event)"><b>Código Certificado</b><br/></div>
                 </div>
 
                 <div class="col col-xs-12">
