@@ -21,6 +21,8 @@ class gcursoController extends elearningController {
     $this->service = new ServiceResult();
   }
   public function formulario ($curso_id) {
+
+    $this->validarUrlIdioma();
     $this->_acl->autenticado();
     //verificar que el rol sea de docente o permiso de editar formulario
     if ($this->_acl->tienePermisos('crear_formulario')) {
@@ -59,6 +61,8 @@ class gcursoController extends elearningController {
 
   public function _view_mis_cursos()
   {
+
+    $this->validarUrlIdioma();
     $this->_view->setTemplate(LAYOUT_FRONTEND);
     $id = Session::get("id_usuario");
     $busqueda = $this->getTexto('busqueda');
@@ -86,6 +90,8 @@ class gcursoController extends elearningController {
 
   public function _view_registrar()
   {
+
+    $this->validarUrlIdioma();
     // Session::set("learn_url_tmp", "gcurso/_view_registrar");
     $this->_view->setTemplate(LAYOUT_FRONTEND);
     $modalidad = $this->curso->getModalidadCurso();
@@ -103,6 +109,8 @@ class gcursoController extends elearningController {
 
   public function _view_finalizar_registro($idcurso = 0)
   {
+    
+    $this->validarUrlIdioma();
     // $id = $this->getTexto("id");
     // $idcurso = 1;    
     $_arquitectura = $this->loadModel('index','arquitectura');
