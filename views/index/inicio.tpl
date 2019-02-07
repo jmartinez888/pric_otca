@@ -36,7 +36,7 @@
                     <div class="caption">
                     <h3>Cursos</h3>
                     <p style="text-align: justify;">Actualmente la plataforma PRIC ofrece una gran variedad de cursos en modalidades mooc y e-learning, tanto de larga duración, Másters y Expertos, como de Formación Continua y Especializada ...</p>
-                    <p><a href="{$_layoutParams.root}elearning" class="btn-jsoft btn btn-primary" role="button">ver más</a></p>
+                    <p><a href="{$_layoutParams.root}elearning" class="btn-jsoft btn btn-primary" role="button">{$lenguaje["label_ver_mas"]}</a></p>
                     </div>
                 </div>
             </div>
@@ -46,7 +46,7 @@
                     <div class="caption">
                     <h3>Discusiones</h3>
                     <p style="text-align: justify;">Discusión en línea asincrónico donde las personas publican mensajes alrededor de un tema, creando de esta forma un hilo de conversación jerárquico; los foros o discusiones, a su vez, ...</p>
-                    <p><a href="{$_layoutParams.root}foro" class="btn-jsoft btn btn-primary" role="button">ver más</a></p>
+                    <p><a href="{$_layoutParams.root}foro" class="btn-jsoft btn btn-primary" role="button">{$lenguaje["label_ver_mas"]}</a></p
                     </div>
                 </div>
             </div>
@@ -56,7 +56,7 @@
                     <div class="caption">
                     <h3>Documentos</h3>
                     <p style="text-align: justify;">En la actualidad lo habitual es almacenar toda la información de manera digital con el software pertinente y este es necesario que, entre otras cosas, ofrezca personalización e interoperatividad.</p>
-                    <p><a href="{$_layoutParams.root}dublincore/documentos" class="btn-jsoft btn btn-primary" role="button">ver más</a></p>
+                    <p><a href="{$_layoutParams.root}dublincore/documentos" class="btn-jsoft btn btn-primary" role="button">{$lenguaje["label_ver_mas"]}</a></p>
                     </div>
                 </div>
             </div>
@@ -161,7 +161,7 @@
                         </div>
                     </div>
                 </a>         
-                <a href="#" class="col-md-12 col-sm-12 col-xs-12  mas-jsoft">VER MÁS</a> 
+                <a href="#" class="col-md-12 col-sm-12 col-xs-12  mas-jsoft">{$lenguaje["label_ver_mas"]}</a> 
             </div>  
         </div>
     </div>

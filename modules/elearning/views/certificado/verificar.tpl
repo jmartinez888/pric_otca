@@ -1,19 +1,19 @@
 {include file='modules/elearning/views/cursos/menu/lateral.tpl'}
 <div class="col-lg-10" style="margin-bottom: 20px">    
     <div class="col-lg-12">
-        <h3>Verificación de Certificados</h3>
+        <h3>{$lenguaje["elearning_cursos_verificacion_certificados"]}</h3>
         <hr class="cursos-hr">
     </div>
     {if empty($certicado)&&!isset($certicado)}
         <div class="col-lg-12">
-            <p>Para verificar un Certificado generado por la Plataforma Elearning del PRIC, ingresa el código de verificación y haz click en "Verificar".</p>
+            <p>{$lenguaje["elearning_cursos_verificacion_certificados_p"]}</p>
 
             <div class="form-inline" style="margin-top: 20px">
                 <div class="form-group">
-                    <label for="txt_codigo">Código de Verificación: </label>
-                    <input type="text"placeholder="Ingrese Código" class="form-control" name="palabracertificado" id="txt_codigo">
+                    <label for="txt_codigo">{$lenguaje["elearning_cursos_label_codigo_verificacion"]} </label>
+                    <input type="text"placeholder="{$lenguaje["elearning_cursos_ingresecodigo"]}" class="form-control" name="palabracertificado" id="txt_codigo">
                 </div>            
-                <button type="button" class="btn btn-success" id="verificar_certificado">Verificar</button>
+                <button type="button" class="btn btn-success" id="verificar_certificado">{$lenguaje["elearning_cursos_verificarboton"]}</button>
             </div>
         </div>
         <div class="col-lg-12" style="margin-top: 30px">
