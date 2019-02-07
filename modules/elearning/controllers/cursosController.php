@@ -205,7 +205,7 @@ class cursosController extends elearningController {
     $modulo = $mModulo->getModulosCursoLMS($id, Session::get("id_usuario"), Cookie::lenguaje());
     // dd($modulo);
     $duracion = $model->getDuracionCurso($id);
-    $certificado = $mCert->getCertificadoUsuarioCurso(Session::get("id_usuario"), $id, Cookie::lenguaje());
+    $certificado = $mCert->getCertificadoUsuarioCurso(Session::get("id_usuario"), $id);
 
     $plantilla = $mCert->getPlantillaCertificado($id, Cookie::lenguaje());
 
@@ -266,7 +266,7 @@ class cursosController extends elearningController {
     $inscritos = $mInsc->getInscritos($id);
     $lecciones = $mLeccion->getLeccionesLMS($id, Cookie::lenguaje());
     $duracion = $model->getDuracionCurso($id);
-    $certificado = $mCert->getCertificadoUsuarioCurso(Session::get("id_usuario"), $id, Cookie::lenguaje());
+    $certificado = $mCert->getCertificadoUsuarioCurso(Session::get("id_usuario"), $id);
     // $modulo = $mModulo->getModulosCurso($id, Session::get("id_usuario"));
     // dd($modulo);
 
@@ -303,7 +303,6 @@ class cursosController extends elearningController {
       $this->redireccionar("elearning/");
     }
     if (!Session::get("autenticado")) {
-      // echo "string";exit;
       $this->redireccionar("elearning/");
     }
     if (!is_numeric($curso) || !is_numeric($modulo)) {
@@ -311,14 +310,18 @@ class cursosController extends elearningController {
     }
     
     if (!$Mmodel->validarCursoModulo($curso, $modulo)) {
+      echo "string";exit;
       $this->redireccionar("elearning/cursos");
     }
     if (!$Mmodel->validarModuloUsuario($modulo, Session::get("id_usuario"))) {
+      echo "string";exit;
       $this->redireccionar("elearning/cursos");
     }
 
     if ($leccion) {
-      if(!$Lmodel->validarLeccion($leccion, $modulo, Session::get("id_usuario"))){ $this->redireccionar("elearning/cursos"); }
+      if(!$Lmodel->validarLeccion($leccion, $modulo, Session::get("id_usuario"))){ 
+      echo "string";exit;
+        $this->redireccionar("elearning/cursos"); }
     }
 
     $obj_curso = $Cmodel::find($curso);

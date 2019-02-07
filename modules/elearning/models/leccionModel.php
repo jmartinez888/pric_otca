@@ -31,7 +31,7 @@ class leccionModel extends Model {
           return false;
         }
       }else{
-        return false;
+        return true;
       }
     }
 

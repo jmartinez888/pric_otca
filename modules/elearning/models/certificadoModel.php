@@ -97,15 +97,8 @@ class certificadoModel extends Model {
                 WHERE Usu_IdUsuario = '{$usuario}' ";
         return $this->getArray($sql);
     }
-    public function getCertificadoUsuarioCurso($usuario, $curso, $Idi_IdIdioma="es"){
-        $sql = "SELECT c.Cer_IdCertificado,
-        fn_TraducirContenido('certificado_curso','Cer_Codigo',c.Cer_IdCertificado,'$Idi_IdIdioma',c.Cer_Codigo) Cer_Codigo,
-        c.Cur_IdCurso,
-        c.Usu_IdUsuario,
-        c.Cer_FechaReg,
-        c.Row_Estado,
-        fn_devolverIdioma('certificado_curso',c.Cer_IdCertificado,'$Idi_IdIdioma',c.Idi_IdIdioma) Idi_IdIdioma
-        FROM certificado_curso c
+    public function getCertificadoUsuarioCurso($usuario, $curso){
+        $sql = "SELECT * FROM certificado_curso c
                 WHERE c.Usu_IdUsuario = '{$usuario}' AND c.Cur_IdCurso = {$curso}";
         return $this->getArray($sql);
     }
