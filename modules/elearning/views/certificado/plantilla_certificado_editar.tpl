@@ -69,7 +69,7 @@
 
                     <div class="" style="{$plantilla.Plc_StyleFecha}" id="arrastrable4" draggable="true" ondragstart="start_as(event)" ondragend="end_as(event)"><b>Fecha de Curso</b><br/></div>
 
-                    <div class="" {if $plantilla.Plc_StyleCodigo!="display:none;" || !is_null($plantilla.Plc_StyleCodigo) } style="{$plantilla.Plc_StyleCodigo}" {else} style = "position: absolute; top: 582px; left: 350px; transform: translate(0%, 0%); font-size: 22px; z-index: 1000; border: 2px solid black; text-align: center; width: 20%;" {/if} id="arrastrable5" draggable="true" ondragstart="start_as(event)" ondragend="end_as(event)"><b>Codigo Certificado</b><br/></div>
+                    <div class="" style="{$plantilla.Plc_StyleCodigo}"  id="arrastrable5" draggable="true" ondragstart="start_as(event)" ondragend="end_as(event)"><b>Código Certificado</b><br/></div>
                 </div>
 
                 <div class="col col-xs-12">
