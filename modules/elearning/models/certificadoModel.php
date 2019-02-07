@@ -97,9 +97,16 @@ class certificadoModel extends Model {
                 WHERE Usu_IdUsuario = '{$usuario}' ";
         return $this->getArray($sql);
     }
-    public function getCertificadoUsuarioCurso($usuario, $curso){
-        $sql = "SELECT * FROM certificado_curso
-                WHERE Usu_IdUsuario = '{$usuario}' AND Cur_IdCurso = {$curso}";
+    public function getCertificadoUsuarioCurso($usuario, $curso, $Idi_IdIdioma="es"){
+        $sql = "SELECT c.Cer_IdCertificado,
+        fn_TraducirContenido('certificado_curso','Cer_Codigo',c.Cer_IdCertificado,'$Idi_IdIdioma',c.Cer_Codigo) Cer_Codigo,
+        c.Cur_IdCurso,
+        c.Usu_IdUsuario,
+        c.Cer_FechaReg,
+        c.Row_Estado,
+        fn_devolverIdioma('certificado_curso',c.Cer_IdCertificado,'$Idi_IdIdioma',c.Idi_IdIdioma) Idi_IdIdioma
+        FROM certificado_curso c
+                WHERE c.Usu_IdUsuario = '{$usuario}' AND c.Cur_IdCurso = {$curso}";
         return $this->getArray($sql);
     }
 
@@ -133,10 +140,30 @@ class certificadoModel extends Model {
         }
     }
 
-    public function getPlantillaCertificado($idCurso)
+public function getPlantillaCertificado($idCurso, $Idi_IdIdioma="es")
     {
         try{
-            $sql = " SELECT * FROM plantilla_certificado WHERE cur_idcurso= $idCurso and plc_Seleccionado=1";
+            $sql = " SELECT p.Plc_IdPlantillaCertificado,
+            fn_TraducirContenido('plantilla_certificado','Plc_UrlImg',p.Plc_IdPlantillaCertificado,'$Idi_IdIdioma',p.Plc_UrlImg) Plc_UrlImg,
+            p.Plc_StyleNombre,
+            p.Plc_UbicacionXNombre,
+            p.Plc_UbicacionYNombre,
+            p.Plc_StyleCurso,
+            p.Plc_UbicacionXCurso,
+            p.Plc_UbicacionYCurso,
+            p.Plc_StyleHora,
+            p.Plc_UbicacionXHora,
+            p.Plc_UbicacionYHora,
+            p.Plc_StyleFecha,
+            p.Plc_UbicacionXFecha,
+            p.Plc_UbicacionYFecha,
+            p.Plc_StyleCodigo,
+            p.Plc_UbicacionXCodigo,
+            p.Plc_UbicacionYCodigo,
+            p.Plc_Seleccionado,
+            p.Cur_IdCurso,
+            fn_devolverIdioma('plantilla_certificado',p.Plc_IdPlantillaCertificado,'$Idi_IdIdioma',c.Idi_IdIdioma) Idi_IdIdioma
+            FROM plantilla_certificado p WHERE p.Cur_IdCurso= $idCurso and p.Plc_Seleccionado=1";
             $result = $this->_db->query($sql);
             return $result->fetch(PDO::FETCH_ASSOC);
         } catch (PDOException $exception) {
