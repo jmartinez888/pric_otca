@@ -289,6 +289,7 @@ class cursosController extends elearningController {
 
   public function modulo($curso = "", $modulo = "", $leccion = false, $idexamen = false) {
     $this->validarUrlIdioma();
+
     $Mmodel = $this->loadModel("modulo");
     $Lmodel = $this->loadModel("leccion");
     $Cmodel = $this->loadModel("curso");
@@ -307,14 +308,15 @@ class cursosController extends elearningController {
       $this->redireccionar("elearning/");
     }
     
-    // if (!$Mmodel->validarCursoModulo($curso, $modulo)) {
-    //   $this->redireccionar("elearning/cursos");
-    // }
-    // if (!$Mmodel->validarModuloUsuario($modulo, Session::get("id_usuario"))) {
-    //   $this->redireccionar("elearning/cursos");
-    // }
+    if (!$Mmodel->validarCursoModulo($curso, $modulo)) {
+      $this->redireccionar("elearning/cursos");
+    }
+    if (!$Mmodel->validarModuloUsuario($modulo, Session::get("id_usuario"))) {
+      $this->redireccionar("elearning/cursos");
+    }
 
-    //if(!$Lmodel->validarLeccion($leccion, $modulo, Session::get("id_usuario"))){ $this->redireccionar("elearning/cursos"); }
+    if(!$Lmodel->validarLeccion($leccion, $modulo, Session::get("id_usuario"))){ $this->redireccionar("elearning/cursos"); }
+
     $obj_curso = $Cmodel::find($curso);
 
     $lecciones = $Lmodel->getLecciones($modulo, Session::get("id_usuario"));
@@ -340,16 +342,21 @@ class cursosController extends elearningController {
     // }
 
     if ($leccion) {
-
+      // echo $modulo; echo $leccion;
       $OLeccion = $Lmodel->getLeccion($leccion, $modulo, Session::get("id_usuario"));
+      // print_r($OLeccion);exit;
+      if (isset($OLeccion) && count($OLeccion)) {
+        $clave = array_search($OLeccion["Lec_IdLeccion"], array_column($lecciones, "Lec_IdLeccion"));
+        // print($lecciones);
+        $tmp = $lecciones[$clave];
+        $indice_leccion = $clave + 1;
+        $final = count($lecciones) == $indice_leccion ? true : false;
 
-      $clave = array_search($OLeccion["Lec_IdLeccion"], array_column($lecciones, "Lec_IdLeccion"));
-      // print($lecciones);
-      $tmp = $lecciones[$clave];
-      $indice_leccion = $clave + 1;
-      $final = count($lecciones) == $indice_leccion ? true : false;
+        $tareas = $Tmodel->getTrabajoXLeccion($OLeccion["Lec_IdLeccion"]);
+      } else {
 
-      $tareas = $Tmodel->getTrabajoXLeccion($OLeccion["Lec_IdLeccion"]);
+      $this->redireccionar("elearning/");
+      }
     } else {
       # code...
     }
@@ -588,6 +595,7 @@ class cursosController extends elearningController {
       }
 
     } else {
+      $this->redireccionar("elearning/");
 
     }
 

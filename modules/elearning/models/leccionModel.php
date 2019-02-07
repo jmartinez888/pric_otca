@@ -73,7 +73,7 @@ class leccionModel extends Model {
               WHERE L.Moc_IdModuloCurso = {$modulo})
             ) as Lec_IdLeccion
             FROM leccion LE
-            LEFT JOIN progreso_curso PC ON PC.Lec_IdLeccion = LE.Lec_IdLeccion
+            INNER JOIN progreso_curso PC ON PC.Lec_IdLeccion = LE.Lec_IdLeccion
             WHERE LE.Moc_IdModuloCurso = {$modulo} AND PC.Usu_IdUsuario = {$usuario}
             AND PC.Pro_Valor = 1 AND LE.Lec_Estado = 1 AND LE.Row_Estado = 1)";
           }else{
@@ -87,7 +87,7 @@ class leccionModel extends Model {
           return null;
         }
       }else{
-        $sql = "SELECT * FROM leccion WHERE Lec_IdLeccion = {$leccion}
+        $sql = "SELECT * FROM leccion WHERE Lec_IdLeccion = {$leccion} 
                 AND Lec_Estado = 1 AND Row_Estado = 1";
       }
       $prev = $this->getArray($sql);
