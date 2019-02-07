@@ -864,10 +864,11 @@ class cursosController extends elearningController {
 
     if (!$plantilla) {
       $plantilla['Plc_UrlImg'] = "modules/elearning/views/certificado/img/pric.png";
-      $plantilla['Plc_StyleNombre'] = "position: absolute; top: 248px; left: 150px; transform: translate(0%, -50%); font-size: 30px; z-index: 1000; border: 2px solid black; text-align: center; width: 80%;";
-      $plantilla['Plc_StyleCurso'] = "position: absolute; top: 356px; left: 156px; transform: translate(0%, -50%); font-size: 30px; z-index: 1000; border: 2px solid black; text-align: center; width: 80%;";
-      $plantilla['Plc_StyleHora'] = "position: absolute; top: 404px; left: 316px; transform: translate(0%, -50%); font-size: 26px; z-index: 1000; border: 2px solid black; text-align: center; width: 5%;";
-      $plantilla['Plc_StyleFecha'] = "position: absolute; top: 562px; left: 741px; transform: translate(0%, -50%); font-size: 22px; z-index: 1000; border: 2px solid black; text-align: center; width: 30%;";
+      $plantilla['Plc_StyleNombre'] = "position: absolute; top: 248px; left: 150px; transform: translate(0%, 0%); font-size: 30px; z-index: 1000; border: 2px solid black; text-align: center; width: 80%;";
+      $plantilla['Plc_StyleCurso'] = "position: absolute; top: 356px; left: 156px; transform: translate(0%, 0%); font-size: 30px; z-index: 1000; border: 2px solid black; text-align: center; width: 80%;";
+      $plantilla['Plc_StyleHora'] = "position: absolute; top: 404px; left: 316px; transform: translate(0%, 0%); font-size: 26px; z-index: 1000; border: 2px solid black; text-align: center; width: 5%;";
+      $plantilla['Plc_StyleFecha'] = "position: absolute; top: 562px; left: 741px; transform: translate(0%, 0%); font-size: 22px; z-index: 1000; border: 2px solid black; text-align: center; width: 30%;";
+      $plantilla['Plc_StyleCodigo'] = "position: absolute; top: 700px; left: 130px; transform: translate(0%, 0%); font-size: 18px; z-index: 1000; border: 2px solid black; text-align: center; width: 20%;";
 
     }
 
@@ -898,8 +899,8 @@ class cursosController extends elearningController {
                     <div class='' style=' " . $plantilla['Plc_StyleNombre'] . "border:0; '><b>" . $certificado[0]['Usu_Nombre'] . " " . $certificado[0]['Usu_Apellidos'] . "</b></div>
                     <div class='col-lg-12 hidden-xs' style='" . $plantilla['Plc_StyleCurso'] . "border:0; '><b>" . $certificado[0]['Cur_Titulo'] . "</b></div>
                     <div class='col-lg-12 hidden-xs' style='" . $plantilla['Plc_StyleFecha'] . "border:0; '>" . $certificado[0]['Fecha_completa'] . "<br/></div>
-                     <div class='col-lg-12 hidden-xs' style='" . $plantilla['Plc_StyleHora'] . "border:0; '>" . $certificado[0]['Cur_Duracion'] . "</div>
-                    <div class='col-lg-12 col-xs-12' style='position: absolute; bottom:0; left: 5%;'><span style='font-size:13px'>Certificación de aprobación online</span><br/><span style='font-size:12px'>Código:" . $certificado[0]['Cer_Codigo'] . "</span></div>
+                    <div class='col-lg-12 hidden-xs' style='" . $plantilla['Plc_StyleHora'] . "border:0; '>" . $certificado[0]['Cur_Duracion'] . "</div>
+                    <div class='col-lg-12 hidden-xs'  style='". $plantilla['Plc_StyleCodigo'] . "border:0; '>" . "<span >Certificación de aprobación online</span><br/><span >Código:" . $certificado[0]['Cer_Codigo'] . "</span></div>
                     </div>
               <script type='text/javascript' src='views/layout/frontend/js/bootstrap.min.js' ></script>
           </body>";

@@ -343,7 +343,7 @@ class certificadoController extends elearningController {
         $this->_view->setCss(array("plantilla"));
         $this->_view->getLenguaje("index_inicio");
         $this->_view->getLenguaje("elearning_certificado_plantilla");
-        $plantilla=$this->certificado->getPlantillaCertificadoxId($id);
+        $plantilla = $this->certificado->getPlantillaCertificadoxId($id);
 
         if ($this->botonPress("bt_guardarPlantilla")) {
 
