@@ -161,7 +161,7 @@
                         </div>
                     </div>
                 </a>         
-                <a href="#" class="col-md-12 col-sm-12 col-xs-12  mas-jsoft">VER MÁS</a> 
+                <a href="#" class="col-md-12 col-sm-12 col-xs-12  mas-jsoft">{$lenguaje["label_ver_mas"]}</a> 
             </div>  
         </div>
     </div>
