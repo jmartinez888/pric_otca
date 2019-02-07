@@ -47,6 +47,14 @@ $(document).on('ready', function () {
             $("#arrastrable4").attr("style","display:none;");
     });
 
+    $('#ckbCodigo').change(function() {
+        if ($(this).is(':checked')) 
+            $("#arrastrable5").attr("style",$("#estiloCodigo").val());
+
+        else
+            $("#arrastrable5").attr("style","display:none;");
+    });
+
     $(".printer").bind("click",function() {
         $(".PrintArea").printArea();
     });
@@ -153,6 +161,19 @@ $(document).on('ready', function () {
         var ancho = document.getElementById("arrastrable4").style.width;
         $("input[name=ancho]").val(ancho.substr(0,2));
         hidden = "#estiloFecha";
+    });
+
+    $('body').on('click', '#arrastrable5', function () {
+    // $("#arrastrable4").click(function(){
+        selected = "#arrastrable5";
+        estilo = $("#arrastrable5").attr("style");
+        $("input[name=color]").val(rgba2hex( $("#arrastrable5").css("color") ));
+        var tamaño = $("#arrastrable5").css("font-size");
+        var array = tamaño.split('p');
+        $("input[name=tamaño]").val(array[0]);
+        var ancho = document.getElementById("arrastrable5").style.width;
+        $("input[name=ancho]").val(ancho.substr(0,2));
+        hidden = "#estiloCodigo";
     });
 
     $('body').on('change', 'input[name=color]', function () {
@@ -317,17 +338,7 @@ function start_as(e) {
 function end_as(e){
     e.target.style.opacity = ''; // Pone la opacidad del elemento a 1           
     e.dataTransfer.clearData("Data");
-
-    // if(e.target.id=="arrastrable1")
-    //      $("#estiloAlumno").val(e.target.style);
-    // else if(e.target.id=="arrastrable2")
-    //      $("#estiloCurso").val(e.target.style);
-    //  else if(e.target.id=="arrastrable3")
-    //      $("#estiloHoras").val(e.target.style);
-    //  else if(e.target.id=="arrastrable4")
-    //      $("#estiloFecha").val(e.target.style);
-
-
+    
     if(e.target.id=="arrastrable1"){
         selected = "#arrastrable1";
         estilo = $("#arrastrable1").attr("style");
@@ -335,11 +346,13 @@ function end_as(e){
         var tamaño=$("#arrastrable1").css("font-size");
         var array = tamaño.split('p');
         $("input[name=tamaño]").val(array[0]);
-        var ancho = $("#arrastrable1").width();
-        var anchoPadre=$("#cuadro1").width();
-        $("input[name=ancho]").val((ancho*100)/anchoPadre);
+        var ancho = document.getElementById("arrastrable1").style.width;
+        $("input[name=ancho]").val(ancho.substr(0,2));
+        // var ancho = $("#arrastrable1").width();
+        // var anchoPadre=$("#cuadro1").width();
+        // $("input[name=ancho]").val((ancho*100)/anchoPadre);
         $("#estiloAlumno").val(estilo);
-    }
+    } 
     else if(e.target.id=="arrastrable2"){
          selected= "#arrastrable2";
         estilo= $("#arrastrable2").attr("style");
@@ -347,27 +360,43 @@ function end_as(e){
         var tamaño=$("#arrastrable2").css("font-size");
         var array=tamaño.split('p');
         $("input[name=tamaño]").val(array[0]);
-        $("input[name=ancho]").val(10);
+        var ancho = document.getElementById("arrastrable2").style.width;
+        $("input[name=ancho]").val(ancho.substr(0,2));
         $("#estiloCurso").val(estilo);
-     }
-     else if(e.target.id=="arrastrable3"){
+    }
+    else if(e.target.id=="arrastrable3"){
         selected= "#arrastrable3";
         estilo= $(selected).attr("style");
          $("input[name=color]").val(rgba2hex( $(selected).css("color") ));
         var tamaño=$(selected).css("font-size");
         var array=tamaño.split('p')
         $("input[name=tamaño]").val(array[0]);
+        var ancho = document.getElementById("arrastrable3").style.width;
+        $("input[name=ancho]").val(ancho.substr(0,2));
         $("#estiloHoras").val(estilo);
-     }
-     else if(e.target.id=="arrastrable4"){
+    }
+    else if(e.target.id=="arrastrable4"){
         selected= "#arrastrable4";
         estilo= $(selected).attr("style");
-         $("input[name=color]").val(rgba2hex( $(selected).css("color") ));
+        $("input[name=color]").val(rgba2hex( $(selected).css("color") ));
         var tamaño=$(selected).css("font-size");
         var array=tamaño.split('p')
         $("input[name=tamaño]").val(array[0]);
+        var ancho = document.getElementById("arrastrable4").style.width;
+        $("input[name=ancho]").val(ancho.substr(0,2));
         $("#estiloFecha").val(estilo);
-     }
+    }
+    else if(e.target.id=="arrastrable5"){
+        selected= "#arrastrable5";
+        estilo= $(selected).attr("style");
+        $("input[name=color]").val(rgba2hex( $(selected).css("color") ));
+        var tamaño=$(selected).css("font-size");
+        var array=tamaño.split('p')
+        $("input[name=tamaño]").val(array[0]);
+        var ancho = document.getElementById("arrastrable5").style.width;
+        $("input[name=ancho]").val(ancho.substr(0,2));
+        $("#estiloCodigo").val(estilo);
+    }
 }
 
 function enter_as(e) {

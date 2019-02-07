@@ -148,11 +148,11 @@ class certificadoModel extends Model {
     public function getPlantillaCertificadoxId($id)
     {
         try{
-            $sql = " SELECT * FROM plantilla_certificado WHERE Plc_IdPlantillaCertificado= $id";
+            $sql = " SELECT * FROM plantilla_certificado WHERE Plc_IdPlantillaCertificado = $id";
             $result = $this->_db->query($sql);
             return $result->fetch(PDO::FETCH_ASSOC);
         } catch (PDOException $exception) {
-            $this->registrarBitacora("elearning(certificadoModel)", "getPlantillaCertificado", "Error Model", $exception);
+            $this->registrarBitacora("elearning(certificadoModel)", "getPlantillaCertificadoxId", "Error Model", $exception);
             return $exception->getTraceAsString();
         }
     }

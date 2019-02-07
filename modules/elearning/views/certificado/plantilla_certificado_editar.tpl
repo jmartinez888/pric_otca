@@ -8,7 +8,8 @@
                 <input type="hidden" {if $plantilla.Plc_StyleNombre!="display:none;"} value="{$plantilla.Plc_StyleNombre}" {else} value="position: absolute; top: 248px; left: 150px; transform: translate(0%, 0%); font-size: 30px; z-index: 1000; border: 2px solid black; text-align: center; width: 80%;" {/if} name="estiloAlumno" id="estiloAlumno"/>
                 <input type="hidden" {if $plantilla.Plc_StyleCurso!="display:none;"} value="{$plantilla.Plc_StyleCurso}" {else} value="position: absolute; top: 356px; left: 156px; transform: translate(0%, 0%); font-size: 30px; z-index: 1000; border: 2px solid black; text-align: center; width: 80%;" {/if} name="estiloCurso" id="estiloCurso"/>
                 <input type="hidden" {if $plantilla.Plc_StyleHora!="display:none;"} value="{$plantilla.Plc_StyleHora}" {else} value="position: absolute; top: 404px; left: 316px; transform: translate(0%, 0%); font-size: 26px; z-index: 1000; border: 2px solid black; text-align: center; width: 5%;" {/if} name="estiloHoras" id="estiloHoras"/>
-                <input type="hidden" {if $plantilla.Plc_StyleFecha!="display:none;"} value="{$plantilla.Plc_StyleFecha}" {else} value="position: absolute; top: 562px; left: 741px; transform: translate(0%, 0%); font-size: 22px; z-index: 1000; border: 2px solid black; text-align: center; width: 30%;" {/if} name="estiloFecha" id="estiloFecha"/>               
+                <input type="hidden" {if $plantilla.Plc_StyleFecha!="display:none;"} value="{$plantilla.Plc_StyleFecha}" {else} value="position: absolute; top: 562px; left: 741px; transform: translate(0%, 0%); font-size: 22px; z-index: 1000; border: 2px solid black; text-align: center; width: 30%;" {/if} name="estiloFecha" id="estiloFecha"/>     
+                <input type="hidden" {if $plantilla.Plc_StyleCodigo!="display:none;" || $plantilla.Plc_StyleCodigo!="" } value="{$plantilla.Plc_StyleCodigo}" {else} value="position: absolute; top: 582px; left: 350px; transform: translate(0%, 0%); font-size: 22px; z-index: 1000; border: 2px solid black; text-align: center; width: 20%;" {/if} name="estiloFCodigo" id="estiloFecha"/>             
                 
                 <div class="col-xs-12 ">  
                     <div class="form-group">
@@ -25,10 +26,10 @@
                             <input type="checkbox" name="ckbFecha" id="ckbFecha" value="first_checkbox" {if $plantilla.Plc_StyleFecha!="display:none;"}checked{/if}> Fecha
                         </label>
                         <label class=" col-xs-2" >
-                            <input type="checkbox" name="ckbCodigo" id="ckbCodigo" value="first_checkboxc" {if $plantilla.Plc_StyleFecha=="display:none;"}checked{/if}> Codigo certificado
+                            <input type="checkbox" name="ckbCodigo" id="ckbCodigo" value="first_checkboxc" {if $plantilla.Plc_StyleCodigo!="display:none;"}checked{/if}> Codigo certificado
                         </label>
                     </div>  
-                       
+
                     <div class="col col-md-4 col-lg-5">  
                         <div class=" form-group">                              
                             <label class="control-label col-xs-2 col-sm-2 col-md-2" for="img"> Fondo:</label>
@@ -64,9 +65,11 @@
 
                     <div class="" style="{$plantilla.Plc_StyleCurso}" id="arrastrable2" draggable="true" ondragstart="start_as(event)" ondragend="end_as(event)"><b>Título de Curso</b><br/></div>
 
+                    <div class="" style="{$plantilla.Plc_StyleHora}" id="arrastrable3" draggable="true" ondragstart="start_as(event)" ondragend="end_as(event)"><b>Duración</b><br/></div>
+
                     <div class="" style="{$plantilla.Plc_StyleFecha}" id="arrastrable4" draggable="true" ondragstart="start_as(event)" ondragend="end_as(event)"><b>Fecha de Curso</b><br/></div>
 
-                    <div class="" style="{$plantilla.Plc_StyleHora}" id="arrastrable3" draggable="true" ondragstart="start_as(event)" ondragend="end_as(event)"><b>Duración</b><br/></div>
+                    <div class="" {if $plantilla.Plc_StyleCodigo!="display:none;" || !is_null($plantilla.Plc_StyleCodigo) } style="{$plantilla.Plc_StyleCodigo}" {else} style = "position: absolute; top: 582px; left: 350px; transform: translate(0%, 0%); font-size: 22px; z-index: 1000; border: 2px solid black; text-align: center; width: 20%;" {/if} id="arrastrable5" draggable="true" ondragstart="start_as(event)" ondragend="end_as(event)"><b>Codigo Certificado</b><br/></div>
                 </div>
 
                 <div class="col col-xs-12">
