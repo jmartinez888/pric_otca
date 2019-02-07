@@ -288,6 +288,8 @@ class cursosController extends elearningController {
   }
 
   public function modulo($curso = "", $modulo = "", $leccion = false, $idexamen = false) {
+
+    $this->_acl->autenticado();
     $this->validarUrlIdioma();
 
     $Mmodel = $this->loadModel("modulo");
@@ -612,7 +614,7 @@ class cursosController extends elearningController {
     if ($curso != 0) {
       $this->_view->assign("titulo", $lang->get('str_modulo') . ': ' . $obj_modulo['Moc_Titulo']);
     } 
-    
+
     $this->_view->assign("curso", $curso);
     $this->_view->assign("curso_datos", $Cmodel->getCursoID($curso)[0]);
     $this->_view->setCss(array('modulo', 'jp-modulo'));
