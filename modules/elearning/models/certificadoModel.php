@@ -187,10 +187,10 @@ class certificadoModel extends Model {
         }
     }
 
-    public function editarPlantilla($iPlc_UrlImg, $iPlc_StyleNombre, $iPlc_StyleCurso, $iPlc_StyleHoras, $iPlc_StyleFecha,$iPlc_IdPlantillaCertificado) {
+    public function editarPlantilla($iPlc_UrlImg, $iPlc_StyleNombre, $iPlc_StyleCurso, $iPlc_StyleHora, $iPlc_StyleFecha,$iPlc_StyleCodigo,$iPlc_IdPlantillaCertificado) {
         try{
             $permiso = $this->_db->query(
-                " UPDATE plantilla_certificado SET Plc_UrlImg = '$iPlc_UrlImg', Plc_StyleNombre = '$iPlc_StyleNombre', Plc_StyleCurso = '$iPlc_StyleCurso', Plc_StyleHora = '$iPlc_StyleHoras', Plc_StyleFecha = '$iPlc_StyleFecha' WHERE Plc_IdPlantillaCertificado = $iPlc_IdPlantillaCertificado"
+                " UPDATE plantilla_certificado SET Plc_UrlImg = '$iPlc_UrlImg', Plc_StyleNombre = '$iPlc_StyleNombre', Plc_StyleCurso = '$iPlc_StyleCurso', Plc_StyleHora = '$iPlc_StyleHora', Plc_StyleFecha = '$iPlc_StyleFecha', Plc_StyleCodigo = '$iPlc_StyleCodigo' WHERE Plc_IdPlantillaCertificado = $iPlc_IdPlantillaCertificado"
             );
             return $permiso->rowCount(PDO::FETCH_ASSOC);
         } catch (PDOException $exception) {
