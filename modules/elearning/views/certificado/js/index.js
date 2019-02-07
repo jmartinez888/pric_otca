@@ -102,21 +102,21 @@ $(document).on('ready', function () {
     $('body').on('click', '#arrastrable1', function () {
     // $("#arrastrable1").click(function(){
         selected = "#arrastrable1";
-        estilo = $(selected).attr("style");
-        $("input[name=color]").val(rgba2hex( $(selected).css("color") ));
-        var tamaño = $(selected).css("font-size");
+        estilo = $("#arrastrable1").attr("style");
+        $("input[name=color]").val(rgba2hex( $("#arrastrable1").css("color") ));
+        var tamaño = $("#arrastrable1").css("font-size");
         var array = tamaño.split('p');
         $("input[name=tamaño]").val(array[0]);
-        $("input[name=ancho]").val($(selected).css("width"));
+        $("input[name=ancho]").val($("#arrastrable1").css("width"));
         hidden = "#estiloAlumno";
     });
 
     $('body').on('click', '#arrastrable2', function () {
     // $("#arrastrable2").click(function(){
         selected= "#arrastrable2";
-        estilo= $(selected).attr("style");
-         $("input[name=color]").val(rgba2hex( $(selected).css("color") ));
-        var tamaño=$(selected).css("font-size");
+        estilo= $("#arrastrable2").attr("style");
+         $("input[name=color]").val(rgba2hex( $("#arrastrable2").css("color") ));
+        var tamaño=$("#arrastrable2").css("font-size");
         var array=tamaño.split('p')
         $("input[name=tamaño]").val(array[0]);
         hidden="#estiloCurso";
@@ -125,9 +125,9 @@ $(document).on('ready', function () {
     $('body').on('click', '#arrastrable3', function () {
     // $("#arrastrable3").click(function(){
         selected= "#arrastrable3";
-        estilo= $(selected).attr("style");
-         $("input[name=color]").val(rgba2hex( $(selected).css("color") ));
-        var tamaño=$(selected).css("font-size");
+        estilo= $("#arrastrable3").attr("style");
+         $("input[name=color]").val(rgba2hex( $("#arrastrable3").css("color") ));
+        var tamaño=$("#arrastrable3").css("font-size");
         var array=tamaño.split('p')
         $("input[name=tamaño]").val(array[0]);
         hidden="#estiloHoras";
@@ -136,15 +136,15 @@ $(document).on('ready', function () {
     $('body').on('click', '#arrastrable4', function () {
     // $("#arrastrable4").click(function(){
         selected = "#arrastrable4";
-        estilo = $(selected).attr("style");
-        $("input[name=color]").val(rgba2hex( $(selected).css("color") ));
-        var tamaño = $(selected).css("font-size");
+        estilo = $("#arrastrable4").attr("style");
+        $("input[name=color]").val(rgba2hex( $("#arrastrable4").css("color") ));
+        var tamaño = $("#arrastrable4").css("font-size");
         var array = tamaño.split('p')
         $("input[name=tamaño]").val(array[0]);
         hidden = "#estiloFecha";
     });
 
-    $('body').on('change', '[input[name=color]', function () {
+    $('body').on('change', 'input[name=color]', function () {
     // $("input[name=color]").change(function(){
         // alert($('input[name=color]').val());
         $(selected).attr("style",estilo+"color:"+$(this).val()+";");
@@ -152,7 +152,7 @@ $(document).on('ready', function () {
         $(hidden).val(estilo);
     });
 
-    $('body').on('change', '[input[name=tamaño]', function () {
+    $('body').on('change', 'input[name=tamaño]', function () {
     // $("input[name=tamaño]").change(function(){
         // alert($('input[name=tamaño]').val());
         $(selected).attr("style",estilo+"font-size:"+$(this).val()+"px;");
@@ -160,7 +160,7 @@ $(document).on('ready', function () {
         $(hidden).val(estilo);
     });
 
-    $('body').on('change', '[input[name=ancho]', function () {
+    $('body').on('change', 'input[name=ancho]', function () {
     // $("input[name=ancho]").change(function(){
         // alert($('input[name=ancho]').val());
         $(selected).attr("style",estilo+"width:"+$(this).val()+"%;");
@@ -178,23 +178,24 @@ $(document).on('ready', function () {
     // $('#img').change(function(e) {
         addImage(e); 
     });
+    function addImage(e){
+        var file = e.target.files[0],
+        imageType = /image.*/;
+
+        if (!file.type.match(imageType))
+        return;
+
+        var reader = new FileReader();
+        reader.onload = fileOnload;
+        reader.readAsDataURL(file);
+    }
+      
+    function fileOnload(e) {
+        var result = e.target.result;
+        $('#cuadro1').attr("style","background-image: url('"+result+"'); background-size: 100%; -moz-background-size: 100%; -o-background-size: 100%; -webkit-background-size: 100%; -khtml-background-size: 100%;  height:21cm; position: relative;");
+    }
 });
-function addImage(e){
-    var file = e.target.files[0],
-    imageType = /image.*/;
 
-    if (!file.type.match(imageType))
-    return;
-
-    var reader = new FileReader();
-    reader.onload = fileOnload;
-    reader.readAsDataURL(file);
-}
-  
-function fileOnload(e) {
-    var result = e.target.result;
-    $('#cuadro1').attr("style","background-image: url('"+result+"'); background-size: 100%; -moz-background-size: 100%; -o-background-size: 100%; -webkit-background-size: 100%; -khtml-background-size: 100%;  height:21cm; position: relative;");
-}
 
 function buscarPermiso(criterio) {
     $("#cargando").show();
