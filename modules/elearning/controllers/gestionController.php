@@ -21,6 +21,7 @@ class gestionController extends elearningController {
 
   public function index()
   {
+    $this->validarUrlIdioma();
         if (!Session::get('autenticado')){ $this->redireccionar(); }
 
       $this->_view->setJs(array('framework/lodash', 'core/util','core/controller', 'core/view', 'index'));
@@ -45,11 +46,13 @@ class gestionController extends elearningController {
 
   public function _inicio()
   {
+    $this->validarUrlIdioma();
     Session::set("learn_url_tmp", "gcurso/_view_mis_cursos");
     $this->redireccionar("elearning/gestion/");
   }
 
   public function matriculados($id =""){
+    $this->validarUrlIdioma();
     if(!Session::get("autenticado")){ $this->redireccionar("elearning/"); }
     if($id == "" || !is_numeric($id) ){ $this->redireccionar("elearning/"); }
     $model = $this->loadModel("curso");
@@ -86,6 +89,7 @@ class gestionController extends elearningController {
   }
 
   public function anuncios($id ="",$tipo=0){
+    $this->validarUrlIdioma();
     if(!Session::get("autenticado")){ $this->redireccionar("elearning/"); }
     if($id == "" || !is_numeric($id) ){ $this->redireccionar("elearning/"); }
     $model = $this->loadModel("curso");
@@ -323,6 +327,7 @@ class gestionController extends elearningController {
 
      public function sendEmail($Email,$Subject,$contenido)
     {
+        $this->validarUrlIdioma();
         $fromName = 'PRIC - Anuncio de Curso';
         // Parametro ($forEmail, $forName, $Subject, $contenido, $fromName = "Proyecto PRIC")
         $Correo = new Correo();

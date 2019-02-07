@@ -256,6 +256,7 @@ class gleccionController extends elearningController {
       
 		}
     public function pizarras ($curso_id) {
+    $this->validarUrlIdioma();
         $this->_acl->autenticado();
         if ($this->_acl->tienePermisos('crear_pizarras')) {
             $this->_view->setTemplate(LAYOUT_FRONTEND);
@@ -319,6 +320,7 @@ class gleccionController extends elearningController {
 			}
 		}
     public function store_encuesta ($curso_id) {
+    $this->validarUrlIdioma();
         $this->_acl->autenticado();
         if (is_numeric($curso_id) && $curso_id != 0 && Curso::existeCurso($curso_id)) {
 					
@@ -585,6 +587,7 @@ class gleccionController extends elearningController {
     public function _view_lecciones_modulo($id_curso = 0, $id_modulo = 0){
         // $curso = $this->getTexto("curso");
         // $modulo = $this->getTexto("modulo");
+    $this->validarUrlIdioma();
 
         $this->_view->setTemplate(LAYOUT_FRONTEND);
          $lang = $this->_view->getLenguaje(['elearning_cursos'], false, true);
@@ -766,6 +769,7 @@ class gleccionController extends elearningController {
         // $curso = $this->getTexto("curso");
         // $modulo = $this->getTexto("modulo");
         // $leccion = $this->getTexto("leccion");
+    $this->validarUrlIdioma();
         $this->_view->setTemplate(LAYOUT_FRONTEND);
         if(strlen($curso)==0){ $curso = Session::get("learn_param_curso"); }
         if(strlen($modulo)==0){ $modulo = Session::get("learn_param_modulo"); }

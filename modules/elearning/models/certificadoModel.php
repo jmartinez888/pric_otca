@@ -97,9 +97,16 @@ class certificadoModel extends Model {
                 WHERE Usu_IdUsuario = '{$usuario}' ";
         return $this->getArray($sql);
     }
-    public function getCertificadoUsuarioCurso($usuario, $curso){
-        $sql = "SELECT * FROM certificado_curso
-                WHERE Usu_IdUsuario = '{$usuario}' AND Cur_IdCurso = {$curso}";
+    public function getCertificadoUsuarioCurso($usuario, $curso, $Idi_IdIdioma="es"){
+        $sql = "SELECT c.Cer_IdCertificado,
+        fn_TraducirContenido('certificado_curso','Cer_Codigo',c.Cer_IdCertificado,'$Idi_IdIdioma',c.Cer_Codigo) Cer_Codigo,
+        c.Cur_IdCurso,
+        c.Usu_IdUsuario,
+        c.Cer_FechaReg,
+        c.Row_Estado,
+        fn_devolverIdioma('certificado_curso',c.Cer_IdCertificado,'$Idi_IdIdioma',c.Idi_IdIdioma) Idi_IdIdioma
+        FROM certificado_curso c
+                WHERE c.Usu_IdUsuario = '{$usuario}' AND c.Cur_IdCurso = {$curso}";
         return $this->getArray($sql);
     }
 
@@ -133,10 +140,30 @@ class certificadoModel extends Model {
         }
     }
 
-    public function getPlantillaCertificado($idCurso)
+public function getPlantillaCertificado($idCurso, $Idi_IdIdioma="es")
     {
         try{
-            $sql = " SELECT * FROM plantilla_certificado WHERE cur_idcurso= $idCurso and plc_Seleccionado=1";
+            $sql = " SELECT p.Plc_IdPlantillaCertificado,
+            fn_TraducirContenido('plantilla_certificado','Plc_UrlImg',p.Plc_IdPlantillaCertificado,'$Idi_IdIdioma',p.Plc_UrlImg) Plc_UrlImg,
+            p.Plc_StyleNombre,
+            p.Plc_UbicacionXNombre,
+            p.Plc_UbicacionYNombre,
+            p.Plc_StyleCurso,
+            p.Plc_UbicacionXCurso,
+            p.Plc_UbicacionYCurso,
+            p.Plc_StyleHora,
+            p.Plc_UbicacionXHora,
+            p.Plc_UbicacionYHora,
+            p.Plc_StyleFecha,
+            p.Plc_UbicacionXFecha,
+            p.Plc_UbicacionYFecha,
+            p.Plc_StyleCodigo,
+            p.Plc_UbicacionXCodigo,
+            p.Plc_UbicacionYCodigo,
+            p.Plc_Seleccionado,
+            p.Cur_IdCurso,
+            fn_devolverIdioma('plantilla_certificado',p.Plc_IdPlantillaCertificado,'$Idi_IdIdioma',c.Idi_IdIdioma) Idi_IdIdioma
+            FROM plantilla_certificado p WHERE p.Cur_IdCurso= $idCurso and p.Plc_Seleccionado=1";
             $result = $this->_db->query($sql);
             return $result->fetch(PDO::FETCH_ASSOC);
         } catch (PDOException $exception) {
@@ -148,11 +175,11 @@ class certificadoModel extends Model {
     public function getPlantillaCertificadoxId($id)
     {
         try{
-            $sql = " SELECT * FROM plantilla_certificado WHERE Plc_IdPlantillaCertificado= $id";
+            $sql = " SELECT * FROM plantilla_certificado WHERE Plc_IdPlantillaCertificado = $id";
             $result = $this->_db->query($sql);
             return $result->fetch(PDO::FETCH_ASSOC);
         } catch (PDOException $exception) {
-            $this->registrarBitacora("elearning(certificadoModel)", "getPlantillaCertificado", "Error Model", $exception);
+            $this->registrarBitacora("elearning(certificadoModel)", "getPlantillaCertificadoxId", "Error Model", $exception);
             return $exception->getTraceAsString();
         }
     }
@@ -187,10 +214,10 @@ class certificadoModel extends Model {
         }
     }
 
-    public function editarPlantilla($iPlc_UrlImg, $iPlc_StyleNombre, $iPlc_StyleCurso, $iPlc_StyleHoras, $iPlc_StyleFecha,$iPlc_IdPlantillaCertificado) {
+    public function editarPlantilla($iPlc_UrlImg, $iPlc_StyleNombre, $iPlc_StyleCurso, $iPlc_StyleHora, $iPlc_StyleFecha,$iPlc_StyleCodigo,$iPlc_IdPlantillaCertificado) {
         try{
             $permiso = $this->_db->query(
-                " UPDATE plantilla_certificado SET Plc_UrlImg = '$iPlc_UrlImg', Plc_StyleNombre = '$iPlc_StyleNombre', Plc_StyleCurso = '$iPlc_StyleCurso', Plc_StyleHora = '$iPlc_StyleHoras', Plc_StyleFecha = '$iPlc_StyleFecha' WHERE Plc_IdPlantillaCertificado = $iPlc_IdPlantillaCertificado"
+                " UPDATE plantilla_certificado SET Plc_UrlImg = '$iPlc_UrlImg', Plc_StyleNombre = '$iPlc_StyleNombre', Plc_StyleCurso = '$iPlc_StyleCurso', Plc_StyleHora = '$iPlc_StyleHora', Plc_StyleFecha = '$iPlc_StyleFecha', Plc_StyleCodigo = '$iPlc_StyleCodigo' WHERE Plc_IdPlantillaCertificado = $iPlc_IdPlantillaCertificado"
             );
             return $permiso->rowCount(PDO::FETCH_ASSOC);
         } catch (PDOException $exception) {

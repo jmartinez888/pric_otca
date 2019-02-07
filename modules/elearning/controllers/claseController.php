@@ -23,6 +23,7 @@ class claseController extends elearningController {
 	}
 
 	public function clase($curso = "", $modulo = "", $leccion = "", $id = "") {
+    $this->validarUrlIdioma();
 		$this->_acl->autenticado();
 		$data['titulo'] = '';
 		if ($curso == "" || !is_numeric($curso)
@@ -42,6 +43,8 @@ class claseController extends elearningController {
 		if (!$Mmodel->validarCursoModulo($curso, $modulo)) {$this->redireccionar("elearning/cursos");}
 		if (!$Mmodel->validarModuloUsuario($modulo, Session::get("id_usuario"))) {$this->redireccionar("elearning/cursos");};
 
+    	if(!$Lmodel->validarLeccion($leccion, $modulo, Session::get("id_usuario"))){ $this->redireccionar("elearning/cursos"); }
+		
 		$OLeccion = $Lmodel->getLeccion($leccion, $modulo, Session::get("id_usuario"));
 
 		$obj_leccion = Leccion::find($leccion);

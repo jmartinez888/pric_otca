@@ -47,6 +47,7 @@ class certificadoController extends elearningController {
     }
 
     public function miscertificados(){
+    $this->validarUrlIdioma();
         // $codigo = $this->getTexto("certificado");
         $this->_view->setCss(array("verificar"));
         $this->_view->setTemplate(LAYOUT_FRONTEND);
@@ -182,6 +183,7 @@ class certificadoController extends elearningController {
 
     #metodo Otros reeditador por @vicercavi, ahora se llama verificar
     public function verificar($codigo = false) {
+    $this->validarUrlIdioma();
 
         $this->_view->setTemplate(LAYOUT_FRONTEND);
         $this->_view->getLenguaje(['elearning_cursos']);
@@ -243,6 +245,7 @@ class certificadoController extends elearningController {
 
     public function plantilla_opcion($idCurso){
         // $codigo = $this->getTexto("certificado");
+    $this->validarUrlIdioma();
         $this->_view->setTemplate(LAYOUT_FRONTEND);
         $this->_view->setJs(array(array(BASE_URL . 'modules/elearning/views/gestion/js/core/util.js'), "index"));
         $mod_curso = $this->loadModel('curso');
@@ -266,6 +269,7 @@ class certificadoController extends elearningController {
 
     public function plantilla_certificado($idCurso){
         // $codigo = $this->getTexto("certificado");
+    $this->validarUrlIdioma();
 
         $this->_view->setTemplate(LAYOUT_FRONTEND);
 
@@ -332,13 +336,14 @@ class certificadoController extends elearningController {
 
     public function plantilla_certificado_editar($id){
         // $codigo = $this->getTexto("certificado");
+    $this->validarUrlIdioma();
 
         $this->_view->setTemplate(LAYOUT_FRONTEND);
         $this->_view->setJs(array("index"));
         $this->_view->setCss(array("plantilla"));
         $this->_view->getLenguaje("index_inicio");
         $this->_view->getLenguaje("elearning_certificado_plantilla");
-        $plantilla=$this->certificado->getPlantillaCertificadoxId($id);
+        $plantilla = $this->certificado->getPlantillaCertificadoxId($id);
 
         if ($this->botonPress("bt_guardarPlantilla")) {
 
@@ -346,6 +351,7 @@ class certificadoController extends elearningController {
             $estiloCurso="display:none;";
             $estiloHoras="display:none;";
             $estiloFecha="display:none;";
+            $estiloCodigo="display:none;";
 
             if(null !==$this->getSql('ckbNombre'))
                 $estiloAlumno=$this->getSql('estiloAlumno');
@@ -359,9 +365,12 @@ class certificadoController extends elearningController {
             if(null !==$this->getSql('ckbFecha'))
                 $estiloFecha=$this->getSql('estiloFecha');
 
+            if(null !==$this->getSql('ckbCodigo'))
+                $estiloCodigo=$this->getSql('estiloCodigo');
+
             $tipo_doc=$_FILES['img']['type'];
             if($tipo_doc!=="image/jpg" && $tipo_doc!=="image/jpeg" && $tipo_doc!=="image/png"){
-                $this->certificado->editarPlantilla($plantilla['Plc_UrlImg'],$estiloAlumno, $estiloCurso,$estiloHoras,$estiloFecha,$id);
+                $this->certificado->editarPlantilla($plantilla['Plc_UrlImg'],$estiloAlumno, $estiloCurso,$estiloHoras,$estiloFecha,$estiloCodigo,$id);
 
                 $this->redireccionar("elearning/certificado/plantilla_certificado_editar/".$id);
             } else {
@@ -374,7 +383,7 @@ class certificadoController extends elearningController {
                 // copy($_FILES["img"]["tmp_name"],$destino);
                 move_uploaded_file($_FILES["img"]["tmp_name"],$destino);
 
-                $this->certificado->editarPlantilla($destino,$estiloAlumno, $estiloCurso,$estiloHoras,$estiloFecha,$id);
+                $this->certificado->editarPlantilla($destino,$estiloAlumno, $estiloCurso,$estiloHoras,$estiloFecha,$estiloCodigo,$id);
 
                 $this->redireccionar("elearning/certificado/plantilla_certificado_editar/".$id);
             }
