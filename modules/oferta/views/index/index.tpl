@@ -319,7 +319,7 @@
 			    	<!--paises-->
 			    	{if isset($paises) && count($paises)}
 			    	<div class="col-lg-12 p-rt-lt-0">
-						<center><h3 class="titulo2">Instituciones por países</h3></center>
+						<center><h3 class="titulo2">{$lenguaje["label_oferta_titulo2"]}</h3></center>
 					</div>
 					<div class="col-lg-12 p-rt-lt-0">
 						<hr class="cursos-hr">

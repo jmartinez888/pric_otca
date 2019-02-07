@@ -1,4 +1,17 @@
+// Vue.component('message-chat', {
+//   template: '#msg_chat_v2',
+//   props: ['tipo', 'usuario', 'fecha_format', 'mensaje', 'fecha_now'],
+//   data: function () {
+//     return {
+//       msg: {
+//         propio: 1,
+//         otro: 0
+//       }
+//     }
+//   }
+// })
 $(document).ready(() => {
+  
   var chat_container = document.getElementById('chat-container')
   if (chat_container != null) {
     new Vue({
@@ -6,6 +19,7 @@ $(document).ready(() => {
       mixins: [typeof MIXIN_CHAT == 'object' ? MIXIN_CHAT : {}],
       data: function () {
         return {
+          regexpURL: new RegExp(/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/),
           baseCurrentUsuario: null,
           objNotification: null,
           LANGS: {
@@ -88,7 +102,9 @@ $(document).ready(() => {
                 faMode: asistencia == 1 ? 'check-circle' : 'circle',
                 title: asistencia == 1 ? this.LANGS.asistencia_marcada : this.LANGS.marcar_asistencia,
                 nombre: v.usuario_nombres + ' ' + v.usuario_apellidos,
-                fecha_from_now: moment(v.inicio_asistencia).fromNow()
+                fecha_from_now: moment(v.inicio_asistencia).fromNow(),
+                usuario_img_url: base_url('files/usuarios/img/' + v.usuario_image_url, true),
+                is_docente: v.is_docente
               });
             }
             html += tpl;
@@ -101,6 +117,7 @@ $(document).ready(() => {
           
           let control = Mustache.render(autor == this.MSG.PROPIO ? this.TPL.msg_propio : this.TPL.msg_otro, {
             usuario: usuario.usuario_nombres + ' ' + usuario.usuario_apellidos,
+            usuario_img_url: usuario.usuario_img_url,
             fecha_now: fecha.fromNow(),
             fecha_format: fecha.format('YYYY-MM-DD HH:mm:ss'),
             mensaje: mensaje
@@ -138,6 +155,7 @@ $(document).ready(() => {
           this.AddMensaje(this.MSG.PROPIO, USUARIO.id, moment(data.hora), data.mensaje, {
             usuario_nombres: this.getCurrentUsuario().usuario_nombres,
             usuario_apellidos: this.getCurrentUsuario().usuario_apellidos,
+            usuario_img_url: base_url('files/usuarios/img/' + this.getCurrentUsuario().usuario_image_url, true)
           })
         
         },
@@ -176,6 +194,7 @@ $(document).ready(() => {
             this.AddMensaje(USUARIO.id == msg.usuario ? this.MSG.PROPIO : this.MSG.OTRO, msg.id, moment(msg.hora), msg.msg, {
               usuario_nombres: msg.data_usuario.usuario_nombres,
               usuario_apellidos: msg.data_usuario.usuario_apellidos,
+              usuario_img_url: base_url('files/usuarios/img/' + msg.data_usuario.usuario_img, true)
             });
           
           this.objNotification.pause()
@@ -183,6 +202,7 @@ $(document).ready(() => {
         
         },
         onSocket_NEW_CONNECTION: function (msg) {
+          console.log(msg)
           console.log('new connection')
           if (msg != null) {
           //   msg.evento = 'new'
@@ -297,6 +317,7 @@ $(document).ready(() => {
 
           this.socketChat.on('SESSION_SUCCESS', msg => {
             console.log('SESSION_SUCCESS')
+            console.log(msg)
             if (msg != null) {
               this.USUARIOS_CONECTADOS = msg.usuarios;
             
@@ -311,9 +332,10 @@ $(document).ready(() => {
             })).then(mensajes => {
               if (mensajes.data) {
                 mensajes.data.forEach(row => {
-                  this.AddMensaje(row.usuario_id == USUARIO.id ? this.MSG.PROPIO : this.MSG.OTRO, row.usuario_id, moment(row.msg_fecha), row.msg_descripcion, {
+                  this.AddMensaje(row.usuario_id == USUARIO.id ? this.MSG.PROPIO : this.MSG.OTRO, row.usuario_id, moment(row.msg_fecha), decodeHTML(row.msg_descripcion), {
                     usuario_nombres: row.usuario_nombres,
-                    usuario_apellidos: row.usuario_apellidos
+                    usuario_apellidos: row.usuario_apellidos,
+                    usuario_img_url: base_url('files/usuarios/img/' + row.usuario_img, true)
                   });
                 });
               }
@@ -337,6 +359,7 @@ $(document).ready(() => {
 
           
         })
+        
         setInterval(() => {
           $('[data-time-message]').each((i, e) => {
             let timetemp  = moment(e.dataset.timeMessage)

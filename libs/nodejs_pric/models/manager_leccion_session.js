@@ -63,7 +63,9 @@ module.exports = {
             leccion_id: v.Lec_IdLeccion,
             usuario_nombres: v.Usu_Nombre,
             usuario_apellidos: v.Usu_Apellidos,
-            usuario_image_url: v.Usu_URLImage
+            usuario_image_url: v.Usu_URLImage,
+            is_docente: s.data.obj_leccion.obj_modulo_curso.obj_curso.Usu_IdUsuario == v.Usu_IdUsuario
+            
           }
         });
       } else {

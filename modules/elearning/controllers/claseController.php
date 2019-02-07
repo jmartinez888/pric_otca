@@ -2,8 +2,9 @@
 
 use App\Curso;
 use App\Leccion;
-use App\LeccionAsistencia;
+use App\Usuario;
 use App\LeccionSession;
+use App\LeccionAsistencia;
 use Illuminate\Database\Capsule\Manager as DB;
 
 /**
@@ -187,6 +188,7 @@ class claseController extends elearningController {
 							'msg_id' => $value['Men_IdMensaje'],
 							// 'estado' => $value['Row_Estado'],
 							'usuario_id' => $value['Usu_IdUsuario'],
+							'usuario_img' => $value['Usu_URLImage'] ? $value['Usu_URLImage'] : Usuario::IMAGE_DEFAULT,
 							'usuario_nombres' => $value['Usu_Nombre'],
 							'usuario_apellidos' => $value['Usu_Apellidos'],
 						];

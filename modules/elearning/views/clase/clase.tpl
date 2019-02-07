@@ -122,7 +122,7 @@
           <div class="panel-body" style="margin: 0px">
 
 
-            <div class="row no-seleccionable" style="padding-bottom: 10px" id="leccion-contenido">
+            <div class="row no-seleccionable-nousar" style="padding-bottom: 10px" id="leccion-contenido">
 
               {if isset($pizarra) && count($pizarra) > 0 && $usuario==$ocurso.Usu_IdUsuario }
               <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12  contenedor-mini-pizarras">
@@ -134,16 +134,16 @@
 
 
                   <div role="tabpanel">
+                    {if ($is_docente)}
                     <ul class="nav nav-tabs" role="tablist" ref="navsPanel">
                       <li role="presentation" class="active">
                         <a href="#chat-panel" aria-controls="chat-panel" role="tab" data-toggle="tab"><span>{$lang->get('str_usuario')}</span></a>
                       </li>
-                      {if ($is_docente)}
                       <li role="presentation">
                         <a href="#pizarra-panel" aria-controls="pizarra-panel" role="tab" data-toggle="tab"><span>{$lang->get('str_pizarras')}</span></a>
                       </li>
-                      {/if}
                     </ul>
+                    {/if}
                     <div class="tab-content">
                       <div role="tabpanel" class="tab-pane active hidden" id="chat-panel" ref="chatPanel">
                         <div id="chat-derecha-leccion">
@@ -193,11 +193,11 @@
                 <div class="col-sm-9 container-canvas-pizarra">
                   <div id="panel-pizarra-final" class="w-100" ref="panel_pizarra_final">
                     <div class="canvas-ssss">
-                      <canvas height="0px" width="0px" ref="micanvas" id="micanvas" class="no-seleccionablex"></canvas>
+                      <canvas height="0px" width="0px" ref="micanvas" id="micanvas" class="no-seleccionable-nousarx"></canvas>
                     </div>
                     {* <img ref="temporal" src="" alt="" height="495px" width="796px"> *}
                     {if $is_docente}
-                    <div id="herramientas-canvas_v2" style="" class="no-seleccionable">
+                    <div id="herramientas-canvas_v2" style="" class="no-seleccionable-nousar">
                       {* <div @mouseleave="show_tools = false"> *}
                       <div>
 
