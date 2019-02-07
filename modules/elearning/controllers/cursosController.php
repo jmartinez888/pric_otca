@@ -318,7 +318,7 @@ class cursosController extends elearningController {
     if ($leccion) {
       if(!$Lmodel->validarLeccion($leccion, $modulo, Session::get("id_usuario"))){ $this->redireccionar("elearning/cursos"); }
     }
-    
+
     $obj_curso = $Cmodel::find($curso);
 
     $lecciones = $Lmodel->getLecciones($modulo, Session::get("id_usuario"));
@@ -356,11 +356,8 @@ class cursosController extends elearningController {
 
         $tareas = $Tmodel->getTrabajoXLeccion($OLeccion["Lec_IdLeccion"]);
       } else {
-
-      $this->redireccionar("elearning/");
+        $this->redireccionar("elearning/");
       }
-    } else {
-      # code...
     }
 
     if (isset($OLeccion) && isset($OLeccion["Lec_Tipo"])) {
@@ -595,11 +592,7 @@ class cursosController extends elearningController {
         $this->_view->assign($data);
         // $formulario = $
       }
-
-    } else {
-      // $this->redireccionar("elearning/");
-
-    }
+    } 
 
     // print_r($Mmodel->getModulosCursoLMS($curso, Session::get("id_usuario"))[$datos_modulo['INDEX']-1]);
     $obj_modulo = $Mmodel->getModulo($modulo);
@@ -610,7 +603,6 @@ class cursosController extends elearningController {
     $this->_view->assign("lecciones", $lecciones);
     // $this->_view->assign("examenes", $examenes);
     if (isset($OLeccion) && isset($OLeccion["Lec_IdLeccion"])) {
-
       $this->_view->assign("leccion", $OLeccion);
       $this->_view->assign("referencias", $Lmodel->getReferencias($OLeccion["Lec_IdLeccion"]));
       $this->_view->assign("materiales", $Lmodel->getMateriales($OLeccion["Lec_IdLeccion"]));
@@ -619,7 +611,8 @@ class cursosController extends elearningController {
 
     if ($curso != 0) {
       $this->_view->assign("titulo", $lang->get('str_modulo') . ': ' . $obj_modulo['Moc_Titulo']);
-    }
+    } 
+    
     $this->_view->assign("curso", $curso);
     $this->_view->assign("curso_datos", $Cmodel->getCursoID($curso)[0]);
     $this->_view->setCss(array('modulo', 'jp-modulo'));
