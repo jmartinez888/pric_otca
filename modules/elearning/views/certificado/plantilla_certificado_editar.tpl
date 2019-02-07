@@ -55,8 +55,6 @@
                             <label class="control-label col col-xs-2" style="text-align: left;">%</label>
                         </div>
                     </div>
-
-                     
                 </div> 
 
                 <div  class="col-lg-12 col-xs-12 file-preview-zone" style="background: url('{$_layoutParams.root_clear}{$plantilla.Plc_UrlImg}'); background-size: 100%; -moz-background-size: 100%; -o-background-size: 100%; -webkit-background-size: 100%;  -khtml-background-size: 100%; width: 100%; height:21cm; position: relative; border: solid 1px black;" id="cuadro1" ondragenter="return enter_as(event)" ondragover="return over_as(event)" ondragleave="return leave_as(event)" ondrop="return drop_as(event)">
