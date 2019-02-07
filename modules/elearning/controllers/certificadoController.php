@@ -47,6 +47,7 @@ class certificadoController extends elearningController {
     }
 
     public function miscertificados(){
+    $this->validarUrlIdioma();
         // $codigo = $this->getTexto("certificado");
         $this->_view->setCss(array("verificar"));
         $this->_view->setTemplate(LAYOUT_FRONTEND);
@@ -182,6 +183,7 @@ class certificadoController extends elearningController {
 
     #metodo Otros reeditador por @vicercavi, ahora se llama verificar
     public function verificar($codigo = false) {
+    $this->validarUrlIdioma();
 
         $this->_view->setTemplate(LAYOUT_FRONTEND);
         $this->_view->getLenguaje(['elearning_cursos']);
@@ -243,6 +245,7 @@ class certificadoController extends elearningController {
 
     public function plantilla_opcion($idCurso){
         // $codigo = $this->getTexto("certificado");
+    $this->validarUrlIdioma();
         $this->_view->setTemplate(LAYOUT_FRONTEND);
         $this->_view->setJs(array(array(BASE_URL . 'modules/elearning/views/gestion/js/core/util.js'), "index"));
         $mod_curso = $this->loadModel('curso');
@@ -266,6 +269,7 @@ class certificadoController extends elearningController {
 
     public function plantilla_certificado($idCurso){
         // $codigo = $this->getTexto("certificado");
+    $this->validarUrlIdioma();
 
         $this->_view->setTemplate(LAYOUT_FRONTEND);
 
@@ -332,6 +336,7 @@ class certificadoController extends elearningController {
 
     public function plantilla_certificado_editar($id){
         // $codigo = $this->getTexto("certificado");
+    $this->validarUrlIdioma();
 
         $this->_view->setTemplate(LAYOUT_FRONTEND);
         $this->_view->setJs(array("index"));

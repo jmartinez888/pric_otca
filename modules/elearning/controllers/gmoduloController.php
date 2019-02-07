@@ -17,6 +17,7 @@ class gmoduloController extends elearningController {
 
   public function _view_modulos_curso($idcurso = 0){
     // $idcurso = $this->getTexto("id");
+    $this->validarUrlIdioma();
     $this->_view->setTemplate(LAYOUT_FRONTEND);
     if(!is_numeric($idcurso) && strlen($idcurso)==0){ $idcurso = Session::get("learn_param_curso"); }
     if(strlen($idcurso)==0){ exit; }
@@ -39,6 +40,7 @@ class gmoduloController extends elearningController {
   }
 
   public function _view_tareas_curso($id=0){
+    $this->validarUrlIdioma();
     // $id = $this->getTexto("id");
     $this->_view->setTemplate(LAYOUT_FRONTEND);
     if(strlen($id)==0){ $id = Session::get("learn_param_curso"); }

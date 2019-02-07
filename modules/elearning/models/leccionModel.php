@@ -13,15 +13,16 @@ class leccionModel extends Model {
                   AND L.Lec_Estado = 1 AND L.Row_Estado = 1";
       }else{
         $sql = "SELECT L.Lec_IdLeccion FROM leccion L INNER JOIN
-                (SELECT Moc_IdModuloCurso, Lec_IdLeccion FROM leccion WHERE Lec_IdLeccion = {$leccion}
-                AND Lec_Estado = 1 AND Row_Estado = 1)X
-                ON L.Moc_IdModuloCurso = X.Moc_IdModuloCurso AND L.Lec_IdLeccion < X.Lec_IdLeccion
-                  AND L.Lec_Estado = 1 AND L.Row_Estado = 1";
+                (SELECT Moc_IdModuloCurso, Lec_IdLeccion FROM leccion WHERE Lec_IdLeccion = {$leccion} AND Moc_IdModuloCurso = {$modulo} 
+                AND Lec_Estado = 1 AND Row_Estado = 1) X
+                ON L.Moc_IdModuloCurso = X.Moc_IdModuloCurso AND L.Lec_IdLeccion < X.Lec_IdLeccion AND L.Lec_Estado = 1 AND L.Row_Estado = 1";
       }
       $previo = $this->getArray($sql);
+      // print_r($previo);exit;
       if($leccion==""){
         return count($previo) > 0;
       }
+
       if($previo!=null && count($previo)>0){
         $lecPrev = $this->getProgresoLeccion($previo[0]["Lec_IdLeccion"], $usuario);
         if($lecPrev["Completo"]==1){
@@ -30,7 +31,7 @@ class leccionModel extends Model {
           return false;
         }
       }else{
-        return true;
+        return false;
       }
     }
 
@@ -73,7 +74,7 @@ class leccionModel extends Model {
               WHERE L.Moc_IdModuloCurso = {$modulo})
             ) as Lec_IdLeccion
             FROM leccion LE
-            LEFT JOIN progreso_curso PC ON PC.Lec_IdLeccion = LE.Lec_IdLeccion
+            INNER JOIN progreso_curso PC ON PC.Lec_IdLeccion = LE.Lec_IdLeccion
             WHERE LE.Moc_IdModuloCurso = {$modulo} AND PC.Usu_IdUsuario = {$usuario}
             AND PC.Pro_Valor = 1 AND LE.Lec_Estado = 1 AND LE.Row_Estado = 1)";
           }else{
@@ -87,7 +88,7 @@ class leccionModel extends Model {
           return null;
         }
       }else{
-        $sql = "SELECT * FROM leccion WHERE Lec_IdLeccion = {$leccion}
+        $sql = "SELECT * FROM leccion WHERE Lec_IdLeccion = {$leccion} 
                 AND Lec_Estado = 1 AND Row_Estado = 1";
       }
       $prev = $this->getArray($sql);
