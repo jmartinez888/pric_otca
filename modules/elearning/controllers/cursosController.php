@@ -366,11 +366,11 @@ class cursosController extends elearningController {
     if (isset($OLeccion) && isset($OLeccion["Lec_Tipo"])) {
       if ($OLeccion["Lec_Tipo"] == 1 || $OLeccion["Lec_Tipo"] == 6) {
         //$Lmodel->RegistrarProgreso($OLeccion["Lec_IdLeccion"], Session::get("id_usuario"));
-        $html = $Lmodel->getContenido($OLeccion["Lec_IdLeccion"]);
+        $html = $Lmodel->getContenido($OLeccion["Lec_IdLeccion"], Cookie::lenguaje());
         $this->_view->assign("cont_html", $html);
       } else if ($OLeccion["Lec_Tipo"] == 2) {
         //$Lmodel->RegistrarProgreso($OLeccion["Lec_IdLeccion"], Session::get("id_usuario"));
-        $html = $Lmodel->getContenido($OLeccion["Lec_IdLeccion"]);
+        $html = $Lmodel->getContenido($OLeccion["Lec_IdLeccion"], Cookie::lenguaje());
         $this->_view->assign("html", $html[0]);
       } else if ($OLeccion["Lec_Tipo"] == 3) {
         $examen = $Emodel->getExamenxLeccion($OLeccion["Lec_IdLeccion"]);
