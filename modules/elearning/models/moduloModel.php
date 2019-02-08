@@ -62,19 +62,8 @@ class moduloModel extends Model {
       return $resultado[0];
     }
 
-    public function validarCursoModulo($curso, $modulo, $Idi_IdIdioma="es"){
-      $sql = "SELECT 
-      m.Moc_IdModuloCurso,
-      m.Cur_IdCurso,
-      fn_TraducirContenido('modulo_curso','Moc_Titulo', m.Moc_IdModuloCurso,'$Idi_IdIdioma', m.Moc_Titulo) Moc_Titulo,
-      fn_TraducirContenido('modulo_curso','Moc_Descripcion', m.Moc_IdModuloCurso,'$Idi_IdIdioma', m.Moc_Descripcion) Moc_Descripcion,
-      fn_TraducirContenido('modulo_curso','Moc_TiempoDedicacion', m.Moc_IdModuloCurso,'$Idi_IdIdioma', m.Moc_TiempoDedicacion) Moc_TiempoDedicacion,
-      m.Moc_Porcentaje,
-      m.Moc_FechaReg,
-      m.Moc_Estado,
-      m.Row_Estado,
-      fn_devolverIdioma('modulo_curso', m.Moc_IdModuloCurso,'$Idi_IdIdioma', m.Idi_IdIdioma) Idi_IdIdioma 
-      FROM modulo_curso m
+    public function validarCursoModulo($curso, $modulo){
+      $sql = "SELECT * FROM modulo_curso m
         INNER JOIN curso C ON C.Cur_IdCurso = m.Cur_IdCurso
         WHERE m.Cur_IdCurso = '{$curso}' AND m.Moc_IdModuloCurso = '{$modulo}'
           AND m.Moc_Estado = 1 AND m.Row_Estado = 1 AND C.Cur_Estado = 1 AND C.Row_Estado = 1";
