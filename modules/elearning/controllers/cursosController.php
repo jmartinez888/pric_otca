@@ -385,7 +385,7 @@ class cursosController extends elearningController {
           // echo $idexamen;
           $peso = $Emodel->getExamenPeso($idexamen);
           if (Session::get("intento") < 1 || Session::get("preguntas")[0]["Exa_IdExamen"] != $idexamen) {
-            $preguntas = $Emodel->getPreguntas($idexamen);
+            $preguntas = $Emodel->getPreguntas($idexamen, Cookie::lenguaje());
             Session::set("preguntas", $preguntas);
             Session::set("intento", 1);
           }
