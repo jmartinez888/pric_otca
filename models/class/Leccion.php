@@ -19,6 +19,7 @@ class Leccion extends Eloquent
   public  const TIPO_VIDEO            = 2;
   public  const TIPO_EXAMEN           = 3;
   public  const TIPO_DIRIGIDA         = 4;
+  public  const TIPO_PIZARRA         = 4;
   public  const TIPO_EXAMEN_DIRIGIDO  = 5;
   public  const TIPO_ENCUESTA         = 10;
 
@@ -82,12 +83,16 @@ class Leccion extends Eloquent
    * @return [array]            [description]
    */
   public function scopegetByModulos ($query, $modulos_id) {
-  	return $query->whereIn('Moc_IdModuloCurso', $modulos_id);
+  	return $query->whereIn('leccion.Moc_IdModuloCurso', $modulos_id);
   }
 
   
   public function scopegetEncuestas ($query) {
-  	return $query->where('Lec_Tipo', 10);
+  	return $query->where('Lec_Tipo', self::TIPO_ENCUESTA);
+  }
+
+  public function scopegetByTipo ($query, $tipo) {
+  	return $query->where('Lec_Tipo', $tipo);
   }
 
   public function scopeGetPizarras ($query) {

@@ -42,10 +42,12 @@
     <div class="col-xs-12 col-md-12 col-sm-12 col-lg-12 titulo-modulo">
       <h4><strong> {$lang->get('str_modulo')} {$mod_datos.INDEX}: {$modulo["Moc_Titulo"]}</strong></h4>
       <div class="container-btn-curso">
+        {if $is_docente}
         <a class="btn btn-sm btn-default btn-group" href="{BASE_URL}elearning/gestion/matriculados/{$curso}">
           <span class="glyphicon glyphicon-book" aria-hidden="true"></span>
           {$lang->get('elearning_cursos_gestion_curso')}
         </a>
+        {/if}
         
         <a class="btn btn-sm btn-success btn-group pull-right" href="{BASE_URL}elearning/cursos/curso/{$curso}">
           <span class="glyphicon glyphicon-hand-left" aria-hidden="true"></span>

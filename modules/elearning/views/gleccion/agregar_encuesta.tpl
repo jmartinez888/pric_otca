@@ -27,7 +27,7 @@
         </div>
     </div>
     <div class="col-sm-12 pb-4">
-      <a href="{$_layoutParams.root}elearning/gleccion/encuestas/{$idcurso}" class="btn btn-danger margin-t-10 " id="btn_nuevo" ><i class="glyphicon glyphicon-triangle-left"></i> Regresar</a>
+      <a href="{$_layoutParams.root}elearning/gleccion/{$modo}/{$idcurso}" class="btn btn-danger margin-t-10 " id="btn_nuevo" ><i class="glyphicon glyphicon-triangle-left"></i> {$lang->get('str_regresar')}</a>
     </div>
 
 		<div class="col-sm-12">
@@ -39,28 +39,28 @@
           </h3>
         </div>
         <div class="panel-body" style=" margin: 15px 25px">
-        	<form action="{$_layoutParams.root}elearning/gleccion/store_encuesta/{$idcurso}" method="POST" class="form-horizontal" role="form">
+        	<form action="{$target_url_store}" method="POST" class="form-horizontal" role="form">
         		<div class="form-group">
-					    <label for="titulo">Titulo</label>
-					    <input type="text" class="form-control" name="titulo" id="titulo" placeholder="Título" required="required">
+					    <label for="titulo">{$lang->get('str_titulo')}</label>
+					    <input type="text" class="form-control" name="titulo" id="titulo" placeholder="{$lang->get('str_titulo')}" required="required">
 					  </div>
         		<div class="form-group">
-					    <label for="descripcion">Descripción</label>
-					    <textarea name="descripcion" id="descripcion" class="form-control" rows="3" required="required" placeholder="Descripción"></textarea>
+					    <label for="descripcion">{$lang->get('str_descripcion')}</label>
+					    <textarea name="descripcion" id="descripcion" class="form-control" rows="3" required="required" placeholder="{$lang->get('str_descripcion')}"></textarea>
 					  </div>
         		<div class="form-group">
-					    <label for="tiempo">Tiempo</label>
-					    <input type="text" class="form-control" id="tiempo" name="tiempo" placeholder="Tiempo">
+					    <label for="tiempo">{$lang->get('str_tiempo')}</label>
+					    <input type="text" class="form-control" id="tiempo" name="tiempo" placeholder="{$lang->get('str_tiempo')}">
 					  </div>
 					  <div class="form-group">
-					    <label for="modulo">Módulo</label>
+					    <label for="modulo">{$lang->get('str_modulo')}</label>
 					    <select name="modulo" id="modulo" class="form-control" required="required">
 					    	{foreach $modulos as $mod}
 					    		<option value="{$mod.Moc_IdModuloCurso}">{$mod.Moc_Titulo}</option>
 					    	{/foreach}
 					    </select>
 					  </div>
-					  <button type="submit" class="btn btn-default">Registrar</button>
+					  <button type="submit" class="btn btn-default">{$lang->get('str_registrar')}</button>
         	</form>
         </div>
       </div>
