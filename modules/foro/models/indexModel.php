@@ -253,10 +253,8 @@ class indexModel extends Model {
     public function getLineaTematica($Lit_IdLineaTematica, $Idi_IdIdioma="es") {
         try {
             $post = $this->_db->query(
-                    "SELECT 
-                        fn_TraducirContenido('linea_tematica', 'Lit_Nombre', lt.Lit_IdLineaTematica, '$Idi_IdIdioma', lt.Lit_Nombre) Lit_Nombre, Row_Estado,
-                        fn_devolverIdioma('linea_tematica', lt.Lit_IdLineaTematica, '$Idi_IdIdioma', lt.Idi_IdIdioma) Idi_IdIdioma,
-                        Lit_IdLineaTematica lt
+                    "SELECT Lit_Nombre
+                        Lit_IdLineaTematica 
                         FROM linea_tematica
                         WHERE Lit_IdLineaTematica = {$Lit_IdLineaTematica}");
             return $post->fetch();
