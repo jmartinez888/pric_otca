@@ -123,7 +123,7 @@ class leccionModel extends Model {
                 Row_Estado,
                 fn_devolverIdioma('leccion',Lec_IdLeccion,'$Idi_IdIdioma',Idi_IdIdioma) Idi_IdIdioma
 
-               FROM leccion WHERE Moc_IdModuloCurso = {$modulo}
+               FROM leccion WHERE Moc_IdModuloCurso = $modulo 
               AND Lec_Estado = 1 AND Row_Estado = 1
               ORDER BY Lec_IdLeccion ASC";
       $lecciones = $this->getArray($sql);
