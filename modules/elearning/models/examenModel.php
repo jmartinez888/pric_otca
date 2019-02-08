@@ -28,10 +28,26 @@ class examenModel extends Model {
       return $this->getArray($sql);
     }
 
-    public function getExamenxLeccion($Lec_IdLeccion)
+    public function getExamenxLeccion($Lec_IdLeccion, $Idi_IdIdioma="es")
     {
         try{
-            $sql = " SELECT * FROM examen WHERE Lec_IdLeccion = $Lec_IdLeccion AND Exa_Estado = 1 AND Row_Estado = 1 ";
+            $sql = " SELECT e.Exa_IdExamen,
+            e.Cur_IdCurso,
+            e.Moc_IdModulo,
+            e.fn_TraducirContenido('examen','Exa_Titulo',e.Cur_IdCurso,'$Idi_IdIdioma',e.Exa_Titulo) Exa_Titulo,
+            e.Exa_Intentos,
+            e.Exa_Restrictivo,
+            e.Exa_Peso,
+            e.Exa_NroPreguntas,
+            e.Exa_FechaDesde,
+            e.Exa_FechaHasta,
+            e.Exa_Porcentaje,
+            e.Exa_FechaReg,
+            e.Lec_IdLeccion,
+            e.Exa_Estado,
+            e.Row_Estado,
+            fn_devolverIdioma('examen',e.Cur_IdCurso,'$Idi_IdIdioma',e.Idi_IdIdioma) Idi_IdIdioma 
+            FROM examen e WHERE Lec_IdLeccion = $Lec_IdLeccion AND Exa_Estado = 1 AND Row_Estado = 1 ";
             $result = $this->_db->prepare($sql);
             $result->execute();
             return $result->fetch(PDO::FETCH_ASSOC);
