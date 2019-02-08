@@ -309,7 +309,7 @@ class cursosController extends elearningController {
       $this->redireccionar("elearning/");
     }
     
-    if (!$Mmodel->validarCursoModulo($curso, $modulo)) {
+    if (!$Mmodel->validarCursoModulo($curso, $modulo, Cookie::lenguaje())) {
       $this->redireccionar("elearning/cursos");
     }
     if (!$Mmodel->validarModuloUsuario($modulo, Session::get("id_usuario"))) {
@@ -324,7 +324,7 @@ class cursosController extends elearningController {
 
     $obj_curso = $Cmodel::find($curso);
 
-    $lecciones = $Lmodel->getLecciones($modulo, Session::get("id_usuario"));
+    $lecciones = $Lmodel->getLecciones($modulo, Session::get("id_usuario"), Cookie::lenguaje());
     // $examenes= $Emodel->getExamensModulo($modulo);
 
     // $datos_modulo = $Mmodel->getModuloDatos($OLeccion["Moc_IdModuloCurso"]);
@@ -348,7 +348,7 @@ class cursosController extends elearningController {
 
     if ($leccion) {
       // echo $modulo; echo $leccion;
-      $OLeccion = $Lmodel->getLeccion($leccion, $modulo, Session::get("id_usuario"));
+      $OLeccion = $Lmodel->getLeccion($leccion, $modulo, Session::get("id_usuario"), Cookie::lenguaje());
       // print_r($OLeccion);exit;
       if (isset($OLeccion) && count($OLeccion)) {
         $clave = array_search($OLeccion["Lec_IdLeccion"], array_column($lecciones, "Lec_IdLeccion"));
@@ -357,7 +357,7 @@ class cursosController extends elearningController {
         $indice_leccion = $clave + 1;
         $final = count($lecciones) == $indice_leccion ? true : false;
 
-        $tareas = $Tmodel->getTrabajoXLeccion($OLeccion["Lec_IdLeccion"]);
+        $tareas = $Tmodel->getTrabajoXLeccion($OLeccion["Lec_IdLeccion"], Cookie::lenguaje());
       } else {
         $this->redireccionar("elearning/");
       }
@@ -366,11 +366,11 @@ class cursosController extends elearningController {
     if (isset($OLeccion) && isset($OLeccion["Lec_Tipo"])) {
       if ($OLeccion["Lec_Tipo"] == 1 || $OLeccion["Lec_Tipo"] == 6) {
         //$Lmodel->RegistrarProgreso($OLeccion["Lec_IdLeccion"], Session::get("id_usuario"));
-        $html = $Lmodel->getContenido($OLeccion["Lec_IdLeccion"]);
+        $html = $Lmodel->getContenido($OLeccion["Lec_IdLeccion"], Cookie::lenguaje());
         $this->_view->assign("cont_html", $html);
       } else if ($OLeccion["Lec_Tipo"] == 2) {
         //$Lmodel->RegistrarProgreso($OLeccion["Lec_IdLeccion"], Session::get("id_usuario"));
-        $html = $Lmodel->getContenido($OLeccion["Lec_IdLeccion"]);
+        $html = $Lmodel->getContenido($OLeccion["Lec_IdLeccion"], Cookie::lenguaje());
         $this->_view->assign("html", $html[0]);
       } else if ($OLeccion["Lec_Tipo"] == 3) {
         $examen = $Emodel->getExamenxLeccion($OLeccion["Lec_IdLeccion"]);

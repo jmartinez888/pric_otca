@@ -11,7 +11,14 @@ class indexModel extends Model {
             // $post = $this->_db->query(
             //         "SELECT f.*,(SELECT COUNT(Com_IdComentario) FROM comentarios c WHERE c.For_IdForo=f.For_IdForo) as For_TComentarios  FROM foro f WHERE f.For_Funcion LIKE '%$iFor_Funcion%' AND Row_Estado=1 ORDER BY f.For_FechaCreacion DESC");
             $post = $this->_db->query(
-                    "SELECT f.*,(SELECT COUNT(Com_IdComentario) FROM comentarios c
+                    "SELECT  fn_TraducirContenido('foro', 'For_Titulo', f.For_IdForo, '$Idi_IdIdiama', f.For_Titulo) For_Titulo,
+                             fn_TraducirContenido('foro', 'For_Resumen', f.For_IdForo, '$Idi_IdIdioma', f.For_Resumen) For_Resumen, 
+                             fn_TraducirContenido('foro', 'For_Descripcion', f.For_IdForo, '$Idi_IdIdiama', f.For_Descripcion) For_Descripcion, 
+                             fn_TraducirContenido('foro', 'For_PalabrasClaves', f.For_IdForo, '$Idi_IdIdiama', f.For_PalabrasClaves) For_PalabrasClaves, f.Row_Estado,
+                             fn_devolverIdioma('foro', f.For_IdForo, '$Idi_IdIdioma', f.Idi_IdIdioma) Idi_IdIdioma,
+                             f.For_FechaCreacion, f.For_FechaCierre, f.For_Update, f.For_Funcion, f.For_Tipo, f.For_Estado, f.For_IdPadre, f.Lit_IdLineaTematica, f.Usu_IdUsuario, f.Ent_Id_Entidad,
+                             f.Idi_IdIdioma, f.Rec_IdRecurso, f.Row_Estado,
+                     (SELECT COUNT(Com_IdComentario) FROM comentarios c
                                 WHERE c.For_IdForo=f.For_IdForo) AS For_NComentarios, u.Usu_Usuario
                     FROM foro f INNER JOIN usuario u ON u.Usu_IdUsuario=f.Usu_IdUsuario
                     WHERE f.For_Funcion LIKE '%$iFor_Funcion%' ORDER BY f.For_FechaCreacion DESC");
@@ -22,11 +29,16 @@ class indexModel extends Model {
         }
     }
 
-    public function getForosSearch($Condicion = "") {
+    public function getForosSearch($Condicion = "", $Idi_IdIdioma="es" ) {
         try {
             $post = $this->_db->query(
-                    "SELECT f.For_IdForo,f.For_Titulo,f.For_Resumen,f.For_Funcion,f.For_FechaCreacion,f.For_FechaCierre,f.For_Update,(SELECT COUNT(*) FROM comentarios c WHERE c.For_IdForo =f.For_IdForo and c.Com_Estado=1 and c.Row_Estado=1) AS For_NComentarios,
-                        (SELECT COUNT(uf.Usu_IdUsuario) FROM usuario_foro uf WHERE uf.For_IdForo = f.For_IdForo AND Usf_Estado=1 AND Row_Estado=1) AS For_NParticipantes, u.Usu_Usuario, u.Usu_Nombre, u.Usu_Apellidos, f.Idi_IdIdioma, f.For_Estado
+                    "SELECT f.For_IdForo, 
+                            fn_TraducirContenido('foro', 'For_Titulo', f.For_IdForo, '$Idi_IdIdiama', f.For_Titulo) For_Titulo, 
+                            fn_TraducirContenido('foro', 'For_Resumen', f.For_IdForo, '$Idi_IdIdioma', f.For_Resumen) For_Resumen, f.Row_Estado,
+                            fn_devolverIdioma('foro', f.For_IdForo, '$Idi_IdIdioma', f.Idi_IdIdioma) Idi_IdIdioma
+                            f.For_Funcion,f.For_FechaCreacion,f.For_FechaCierre,f.For_Update,
+                    (SELECT COUNT(*) FROM comentarios c WHERE c.For_IdForo =f.For_IdForo and c.Com_Estado=1 and c.Row_Estado=1) AS For_NComentarios,
+                    (SELECT COUNT(uf.Usu_IdUsuario) FROM usuario_foro uf WHERE uf.For_IdForo = f.For_IdForo AND Usf_Estado=1 AND Row_Estado=1) AS For_NParticipantes, u.Usu_Usuario, u.Usu_Nombre, u.Usu_Apellidos, f.Idi_IdIdioma, f.For_Estado
                     FROM foro f
                     INNER JOIN usuario u ON u.Usu_IdUsuario = f.Usu_IdUsuario $Condicion ");
             return $post->fetchAll();
@@ -36,7 +48,7 @@ class indexModel extends Model {
         }
     }
 
-    public function getForosPaginado($iFor_Filtros = "", $iFor_Filtros2 = "", $iPagina = 1, $iRegistrosXPagina = CANT_REG_PAG)
+    public function getForosPaginado($iFor_Filtros = "", $iFor_Filtros2 = "", $iPagina = 1, $iRegistrosXPagina = CANT_REG_PAG, $Idi_IdIdioma="es" )
     {
         try {
 
@@ -45,8 +57,14 @@ class indexModel extends Model {
                 $Inicio=0;
 
             //$sql = "call s_s_foro_admin(?,?,?,?)";
-            $sql="SELECT f.For_IdForo,f.For_Titulo,f.For_Resumen,f.For_Funcion,f.For_FechaCreacion,f.For_FechaCierre, f.For_Estado,f.For_Update,(SELECT COUNT(*) FROM comentarios c WHERE c.For_IdForo =f.For_IdForo AND c.Com_Estado=1 AND c.Row_Estado=1) AS For_NComentarios ,
-                (SELECT COUNT(uf.Usu_IdUsuario) FROM usuario_foro uf WHERE uf.For_IdForo = f.For_IdForo AND Usf_Estado=1 AND Row_Estado=1) AS For_NParticipantes,
+            $sql="SELECT f.For_IdForo,
+                         fn_TraducirContenido('foro', 'For_Titulo', f.For_IdForo, '$Idi_IdIdiama', f.For_Titulo) For_Titulo,
+                         fn_TraducirContenido('foro', 'For_Resumen', f.For_IdForo, '$Idi_IdIdioma', f.For_Resumen) For_Resumen, f.Row_Estado,
+                         fn_devolverIdioma('foro', f.For_IdForo, '$Idi_IdIdioma', f.Idi_IdIdioma) Idi_IdIdioma
+                         f.For_Funcion,f.For_FechaCreacion,f.For_FechaCierre, 
+                         f.For_Estado,f.For_Update,
+                 (SELECT COUNT(*) FROM comentarios c WHERE c.For_IdForo =f.For_IdForo AND c.Com_Estado=1 AND c.Row_Estado=1) AS For_NComentarios ,
+                 (SELECT COUNT(uf.Usu_IdUsuario) FROM usuario_foro uf WHERE uf.For_IdForo = f.For_IdForo AND Usf_Estado=1 AND Row_Estado=1) AS For_NParticipantes,
                 u.Usu_Usuario, f.Row_Estado, lit.Lit_Nombre, f.For_Tipo, f.Rec_IdRecurso 
                 FROM foro f 
                 INNER JOIN usuario u ON u.Usu_IdUsuario = f.Usu_IdUsuario
@@ -145,13 +163,21 @@ class indexModel extends Model {
         }
     }
 
-    public function getForosRecientes($iFor_Funcion) {
+    public function getForosRecientes($iFor_Funcion, $Idi_IdIdioma="es") {
         try {
             $post = $this->_db->query(
-                    "SELECT f.*,u.Usu_Usuario,(SELECT COUNT(Com_IdComentario) FROM comentarios c WHERE c.For_IdForo=f.For_IdForo) AS For_TComentarios,(SELECT COUNT(*) FROM usuario_foro uf WHERE uf.For_IdForo=f.For_IdForo AND uf.Row_Estado=1) AS For_TParticipantes
-                    FROM foro f
-                    INNER JOIN usuario u ON u.Usu_IdUsuario=f.Usu_IdUsuario
-                    WHERE f.For_Funcion LIKE '%$iFor_Funcion%' and f.For_Estado=1 AND f.Row_Estado=1 
+                    "SELECT f.For_IdForo,
+                            fn_TraducirContenido('foro', 'For_Titulo', f.For_IdForo, '$Idi_IdIdiama', f.For_Titulo) For_Titulo,
+                            fn_TraducirContenido('foro', 'For_Resumen', f.For_IdForo, '$Idi_IdIdioma', f.For_Resumen) For_Resumen, 
+                            fn_TraducirContenido('foro', 'For_Descripcion', f.For_IdForo, '$Idi_IdIdiama', f.For_Descripcion) For_Descripcion, 
+                            fn_TraducirContenido('foro', 'For_PalabrasClaves', f.For_IdForo, '$Idi_IdIdiama', f.For_PalabrasClaves) For_PalabrasClaves, f.Row_Estado,
+                            fn_devolverIdioma('foro', f.For_IdForo, '$Idi_IdIdioma', f.Idi_IdIdioma) Idi_IdIdioma,
+                            f.For_FechaCreacion, f.For_FechaCierre, f.For_Update, f.For_Funcion, f.For_Tipo, f.For_Estado, f.For_IdPadre, f.Lit_IdLineaTematica, f.Usu_IdUsuario, f.Ent_Id_Entidad,
+                            f.Idi_IdIdioma, f.Rec_IdRecurso, f.Row_Estado,u.Usu_Usuario,(SELECT COUNT(Com_IdComentario) 
+                    FROM comentarios c WHERE c.For_IdForo=f.For_IdForo) AS For_TComentarios,
+                    (SELECT COUNT(*) FROM usuario_foro uf WHERE uf.For_IdForo=f.For_IdForo AND uf.Row_Estado=1) AS For_TParticipantes
+                    FROM foro f 
+                    INNER JOIN usuario u ON u.Usu_IdUsuario=f.Usu_IdUsuario WHERE f.For_Funcion LIKE '%$iFor_Funcion%' and f.For_Estado=1 AND f.Row_Estado=1 
                     ORDER BY f.For_FechaCreacion DESC
                     LIMIT 5");
             return $post->fetchAll();
@@ -161,9 +187,19 @@ class indexModel extends Model {
         }
     }
 
-    public function getForo_x_idforo($iFor_IdForo) {
+    public function getForo_x_idforo($iFor_IdForo, $Id_IdIdioma="es") {
         try {
-            $sql= "SELECT f.*,(SELECT COUNT(Com_IdComentario) FROM comentarios c WHERE c.For_IdForo=f.For_IdForo) as For_TComentarios, (SELECT COUNT(*) FROM usuario_foro uf WHERE uf.For_IdForo=f.For_IdForo AND uf.Row_Estado=1) as For_TParticipantes FROM foro f where f.For_IdForo={$iFor_IdForo}";
+            $sql= "SELECT f.For_IdForo,
+                          fn_TraducirContenido('foro', 'For_Titulo', f.For_IdForo, '$Idi_IdIdiama', f.For_Titulo) For_Titulo,
+                          fn_TraducirContenido('foro', 'For_Resumen', f.For_IdForo, '$Idi_IdIdioma', f.For_Resumen) For_Resumen, 
+                          fn_TraducirContenido('foro', 'For_Descripcion', f.For_IdForo, '$Idi_IdIdiama', f.For_Descripcion) For_Descripcion, 
+                          fn_TraducirContenido('foro', 'For_PalabrasClaves', f.For_IdForo, '$Idi_IdIdiama', f.For_PalabrasClaves) For_PalabrasClaves, f.Row_Estado,
+                          fn_devolverIdioma('foro', f.For_IdForo, '$Idi_IdIdioma', f.Idi_IdIdioma) Idi_IdIdioma,
+                          f.For_FechaCreacion, f.For_FechaCierre, f.For_Update, f.For_Funcion, f.For_Tipo, f.For_Estado, f.For_IdPadre, f.Lit_IdLineaTematica, f.Usu_IdUsuario, f.Ent_Id_Entidad,
+                          f.Idi_IdIdioma, f.Rec_IdRecurso, 
+                   (SELECT COUNT(Com_IdComentario) FROM comentarios c WHERE c.For_IdForo=f.For_IdForo) as For_TComentarios, 
+                   (SELECT COUNT(*) FROM usuario_foro uf WHERE uf.For_IdForo=f.For_IdForo AND uf.Row_Estado=1) as For_TParticipantes 
+                   FROM foro f where f.For_IdForo={$iFor_IdForo}";
 
           
 
@@ -214,11 +250,12 @@ class indexModel extends Model {
         }
     }
 
-    public function getLineaTematica($Lit_IdLineaTematica) {
+    public function getLineaTematica($Lit_IdLineaTematica, $Idi_IdIdioma="es") {
         try {
             $post = $this->_db->query(
-                    "SELECT
-                        Lit_Nombre,
+                    "SELECT 
+                        fn_TraducirContenido('linea_tematica', 'Lit_Nombre', Lit_IdLineaTematica, '$Idi_IdIdioma', Lit_Nombre) Lit_Nombre, Row_Estado,
+                        fn_devolverIdioma('linea_tematica', Lit_IdLineaTematica, '$Idi_IdIdioma', Idi_IdIdioma) Idi_IdIdioma,
                         Lit_IdLineaTematica
                         FROM linea_tematica
                         WHERE Lit_IdLineaTematica = {$Lit_IdLineaTematica}");
@@ -254,10 +291,18 @@ class indexModel extends Model {
         }
     }
 
-    public function getSubForo_x_idforo($iFor_IdForo) {
+    public function getSubForo_x_idforo($iFor_IdForo, $Idi_IdIdioma="es") {
         try {
             $post = $this->_db->query(
-                    "SELECT f.*,(SELECT COUNT(Com_IdComentario) FROM comentarios c WHERE c.For_IdForo=f.For_IdForo) as For_TComentarios  FROM foro f where f.For_IdPadre={$iFor_IdForo}");
+                    "SELECT f.For_IdForo,
+                            fn_TraducirContenido('foro', 'For_Titulo', f.For_IdForo, '$Idi_IdIdiama', f.For_Titulo) For_Titulo,
+                            fn_TraducirContenido('foro', 'For_Resumen', f.For_IdForo, '$Idi_IdIdioma', f.For_Resumen) For_Resumen, 
+                            fn_TraducirContenido('foro', 'For_Descripcion', f.For_IdForo, '$Idi_IdIdiama', f.For_Descripcion) For_Descripcion, 
+                            fn_TraducirContenido('foro', 'For_PalabrasClaves', f.For_IdForo, '$Idi_IdIdiama', f.For_PalabrasClaves) For_PalabrasClaves, f.Row_Estado,
+                            fn_devolverIdioma('foro', f.For_IdForo, '$Idi_IdIdioma',f.Idi_IdIdioma) Idi_IdIdioma,
+                            f.For_FechaCreacion, f.For_FechaCierre, f.For_Update, f.For_Funcion, f.For_Tipo, f.For_Estado, f.For_IdPadre, f.Lit_IdLineaTematica, f.Usu_IdUsuario, f.Ent_Id_Entidad,
+                            f.Idi_IdIdioma, f.Rec_IdRecurso,
+                            (SELECT COUNT(Com_IdComentario) FROM comentarios c WHERE c.For_IdForo=f.For_IdForo) as For_TComentarios  FROM foro f where f.For_IdPadre={$iFor_IdForo}");
             return $post->fetchAll();
         } catch (PDOException $exception) {
             $this->registrarBitacora("foro(indexModel)", "getForos", "Error Model", $exception);
@@ -306,10 +351,14 @@ class indexModel extends Model {
         }
     }
 
-    public function getArchivos_x_idcomentario($iCom_IdComentario) {
+    public function getArchivos_x_idcomentario($iCom_IdComentario, $Idi_IdIdioma="es") {
         try {
             $post = $this->_db->query(
-                    "SELECT * FROM file_comentario WHERE Com_IdComentario = $iCom_IdComentario");
+                    "SELECT fco.Fim_IdForo, 
+                            fn_TraducirContenido('file_comentario', 'Fim_NombreFile', fco.Fim_IdForo, '$Idi_IdIdioma', fco.Fim_NombreFile) Fim_NombreFile,
+                            fn_devolverIdioma('file_comentario', fco.Fim_IdForo, '$Idi_IdIdioma', fco.Idi_IdIdioma) Idi_IdIdioma,
+                            fco.Fim_TipoFile, fco.Fim_SizeFile, fco.Com_IdComentario, fco.Rec_IdRecurso FROM file_comentario fco 
+                            WHERE Com_IdComentario = $iCom_IdComentario");
             return $post->fetchAll();
         } catch (PDOException $exception) {
             $this->registrarBitacora("foro(indexModel)", "getArchivos_x_idcomentario", "Error Model", $exception);
@@ -584,9 +633,12 @@ class indexModel extends Model {
         }
     }
 
-    public function getFacilitadores($iFor_IdForo) {
+    public function getFacilitadores($iFor_IdForo, $Idi_IdIdioma="es") {
         try {
-            $sql = "select u.Usu_IdUsuario,u.Usu_Nombre,u.Usu_Apellidos,u.Usu_URLImage,u.Usu_InstitucionLaboral,r.Rol_IdRol,r.Rol_Nombre from usuario_foro uf
+            $sql = "select u.Usu_IdUsuario,u.Usu_Nombre,u.Usu_Apellidos,u.Usu_URLImage,
+                    fn_TraducirContenido('usuario', 'Usu_InstitucionLaboral', u.Usu.IdUsuario, '$Idi_IdIdioma', u.Usu_InstitucionLaboral) Usu_InstitucionLaboral, u.Row_Estado,
+                    fn_devolverIdioma('usuario',u.Usu_IdUsuario,'$Idi_IdIdioma',u.Idi_IdIdioma) Idi_IdIdioma,
+                    r.Rol_IdRol,r.Rol_Nombre from usuario_foro uf
                     inner join usuario u on u.Usu_IdUsuario=uf.Usu_IdUsuario
                     inner join rol r on r.Rol_IdRol=uf.Rol_IdRol
                     where uf.For_IdForo= $iFor_IdForo and (r.Rol_Ckey = 'lider_foro' or r.Rol_Ckey = 'moderador_foro' or r.Rol_Ckey = 'facilitador_foro') AND uf.Row_Estado = 1 order by r.Rol_Nombre desc";
@@ -598,10 +650,15 @@ class indexModel extends Model {
         }
     }
 
-    public function getArchivos_x_idforo($iFor_IdForo) {
+    public function getArchivos_x_idforo($iFor_IdForo, $Idi_Idioma="es") {
         try {
             $post = $this->_db->query(
-                    "SELECT * FROM file_foro WHERE For_IdForo = $iFor_IdForo");
+                    "SELECT ffo.Fif_IdFileForo, 
+                            fn_TraducirContenido('file_foro', 'Fif_Titulo', ffo.Fif_IdFileForo, '$Idi_IdIdioma', ffo.Fif_Titulo) Fif_Titulo, 
+                            fn_TraducirContenido('file_foro', 'Fif_Resumen', ffo.Fif_IdFileForo, '$Idi_IdIdioma', ffo.Fif_Resumen) Fif_Resumen, 
+                            fn_TraducirContenido('file_foro', 'Fif_NombreFile', ffo.Fif_IdFileForo, '$Idi_IdIdioma', ffo.Fif_NombreFile) Fif_NombreFile,
+                            fn_devolverIdioma('file_foro', ffo.Fif_IdFileForo,'$Idi_IdIdioma', ffo.Idi_IdIdioma) Idi_IdIdioma,
+                            ffo.Fif_TipoFile, ffo.Fif_SizeFile, ffo.For_IdForo, ffo.For_IdForo, ffo.Dub_IdDublinCore, ffo.Fif_EsOutForo FROM file_foro ffo WHERE For_IdForo = $iFor_IdForo");
             return $post->fetchAll();
         } catch (PDOException $exception) {
             $this->registrarBitacora("foro(indexModel)", "getArchivos_x_idforo", "Error Model", $exception);
@@ -609,14 +666,20 @@ class indexModel extends Model {
         }
     }
 
-    public function getAgendaIndex() {
+    public function getAgendaIndex($Idi_IdIdioma="es") {
         try {
             $post = $this->_db->query(
                     "SELECT * FROM (
-                    (SELECT f.For_IdForo,0,f.For_Titulo,f.For_FechaCreacion,f.For_Funcion,f.For_Estado FROM foro f
+                    (SELECT f.For_IdForo,0,
+                            fn_TraducirContenido('foro', 'For_Titulo', f.For_IdForo, '$Idi_IdIdioma', f.For_Titulo) For_Titulo, f.Row_Estado,
+                            fn_devolverIdioma('foro', f.For_IdForo, '$Idi_IdIdioma', f.Idi_IdIdioma) Idi_IdIdioma,
+                            f.For_FechaCreacion,f.For_Funcion,f.For_Estado FROM foro f
                     WHERE f.For_Estado=1 AND f.Row_Estado=1 ORDER BY f.For_FechaCreacion DESC LIMIT 5)
                     UNION ALL
-                    (SELECT af.For_IdForo,af.Acf_IdActividadForo,af.Acf_Titulo,Act_FechaInicio,'activity',af.Act_Estado FROM actividad_foro af
+                    (SELECT af.For_IdForo,af.Acf_IdActividadForo,
+                            fn_TraducirContenido('actividad_foro', 'Act_Titulo', af.Acf_IdActividadForo, '$Idi_IdIdioma', af.Acf_Titulo) Acf_Titulo, af.Row_Estado,
+                            fn_devolverIdioma('actividad_foro', af.Acf_IdActividadForo, '$Idi_IdIdioma', af.Idi_IdIdioma) Idi_IdIdioma,
+                            Act_FechaInicio,'activity',af.Act_Estado FROM actividad_foro af
                     WHERE af.Act_Estado AND af.Row_Estado=1 ORDER BY Act_FechaInicio DESC LIMIT 5)) AS Agenda
                     ORDER BY For_FechaCreacion DESC LIMIT 5");
             return $post->fetchAll();
@@ -626,14 +689,20 @@ class indexModel extends Model {
         }
     }
 
-    public function getAgenda() {
+    public function getAgenda($Idi_IdIdioma="es") {
         try {
             $post = $this->_db->query(
                     "SELECT a.For_IdForo id, a.For_Titulo title, a.For_FechaCreacion 'start',a.For_FechaCierre 'end',a.For_Funcion, a.For_Estado FROM (
-                    (SELECT f.For_IdForo,f.For_Titulo,f.For_FechaCreacion,IFNULL(f.For_FechaCierre,f.For_FechaCreacion) For_FechaCierre,f.For_Funcion,f.For_Estado FROM foro f
+                    (SELECT f.For_IdForo,
+                            fn_TraducirContenido('foro', 'For_Titulo', f.For_IdForo, '$Idi_IdIdioma', f.For_Titulo) For_Titulo, f.Row_Estado
+                            fn_devolverIdioma('foro', f.For_IdForo, '$Idi_IdIdioma', f.Idi_IdIdioma) Idi_IdIdioma,
+                            f.For_FechaCreacion,IFNULL(f.For_FechaCierre,f.For_FechaCreacion) For_FechaCierre,f.For_Funcion,f.For_Estado FROM foro f
                     WHERE f.For_Estado=1 AND f.Row_Estado=1 ORDER BY f.For_FechaCreacion DESC)
                     UNION ALL
-                    (SELECT af.Acf_IdActividadForo,af.Acf_Titulo,Act_FechaInicio,Act_FechaFin,'activity',af.Act_Estado FROM actividad_foro af
+                    (SELECT af.Acf_IdActividadForo,
+                            fn_TraducirContenido('actividad_foro', 'Act_Titulo', af.Acf_IdActividadForo, '$Idi_IdIdioma', af.Acf_Titulo) Acf_Titulo, af.Row_Estado,
+                            fn_devolverIdioma('actividad_foro', af.Acf_IdActividadForo, '$Idi_IdIdioma', af.Idi_IdIdioma) Idi_IdIdioma,
+                            Act_FechaInicio,Act_FechaFin,'activity',af.Act_Estado FROM actividad_foro af
                     WHERE af.Act_Estado AND af.Row_Estado=1 ORDER BY Act_FechaInicio DESC)) AS a
                     ORDER BY For_FechaCreacion DESC");
             return $post->fetchAll();
@@ -643,13 +712,16 @@ class indexModel extends Model {
         }
     }
 
-    public function getHistorico($iFor_Filtro = "", $iPagina = 1, $iRegistrosXPagina = CANT_REG_PAG) {
+    public function getHistorico($iFor_Filtro = "", $iPagina = 1, $iRegistrosXPagina = CANT_REG_PAG, $Idi_IdIdioma="es") {
         try {
             $Inicio =($iPagina - 1) * $iRegistrosXPagina;
             if($Inicio<1)
                 $Inicio=0;
 
-            $sql="SELECT f.For_IdForo,f.For_Titulo, f.For_FechaCreacion,f.For_FechaCreacion, f.For_FechaCierre, f.For_Funcion,u.Usu_Usuario, u.Usu_Nombre, u.Usu_Apellidos,
+            $sql="SELECT f.For_IdForo,
+                         fn_TraducirContenido('foro', 'For_Titulo', f.For_IdForo, '$Idi_IdIdioma', f.For_Titulo) For_Titulo, f.Row_Estado
+                         fn_devolverIdioma('foro', f.For_IdForo, '$Idi_IdIdioma', f.Idi_IdIdioma) Idi_IdIdioma, 
+                         f.For_FechaCreacion,f.For_FechaCreacion, f.For_FechaCierre, f.For_Funcion,u.Usu_Usuario, u.Usu_Nombre, u.Usu_Apellidos,
                     (SELECT COUNT(Com_IdComentario) FROM comentarios c WHERE c.For_IdForo=f.For_IdForo and c.Com_Estado=1 and c.Row_Estado=1) AS For_NComentarios,
                     (SELECT COUNT(*) FROM usuario_foro uf WHERE uf.For_IdForo=f.For_IdForo AND uf.Usf_Estado=1 AND uf.Row_Estado=1) AS For_NParticipantes
                     FROM foro f
@@ -718,10 +790,13 @@ class indexModel extends Model {
         }
     }
 
-    public function getMiembrosPais() {
+    public function getMiembrosPais($Idi_IdIdioma="es") {
         try {
             $post = $this->_db->query(
-                    "SELECT p.Pai_Siglas,p.Pai_Nombre,COUNT(DISTINCT(u.Usu_IdUsuario)) Pai_CantidadUsuarios FROM usuario_foro uf
+                    "SELECT p.Pai_Siglas,
+                            fn_TraducirContenido('pais', 'Pai_Nombre', p.Pai_IdPais, '$Idi_IdIdioma', p.Pai_Nombre) Pai_Nombre,
+                            fn_devolverIdioma('pais', p.Pai_IdPais, '$Idi_IdIdioma', p.Idi_IdIdioma) Idi_IdIdioma,
+                            COUNT(DISTINCT(u.Usu_IdUsuario)) Pai_CantidadUsuarios FROM usuario_foro uf
                         INNER JOIN usuario u ON u.Usu_IdUsuario = uf.Usu_IdUsuario
                         INNER JOIN pais p ON p.Pai_IdPais = u.Pai_IdPais
                         WHERE Usf_Estado = 1 AND uf.Row_Estado=1 AND u.Row_Estado=1
@@ -734,10 +809,12 @@ class indexModel extends Model {
         }
     }
 
-    public function getResumenLineTematica() {
+    public function getResumenLineTematica($Idi_IdIdioma="es") {
         try {
             $post = $this->_db->query(
-                    "SELECT lt.Lit_IdLineaTematica,lt.Lit_Nombre,
+                    "SELECT lt.Lit_IdLineaTematica,
+                            fn_TraducirContenido('linea_tematica', 'Lit_Nombre', lt.Lit_IdLineaTematica, '$Idi_IdIdioma', lt.Lit_Nombre) Lit_Nombre, lt.Row_Estado,
+                            fn_devolverIdioma('linea_tematica', lt.Lit_IdLineaTematica, '$Idi_IdIdioma', lt.Idi_IdIdioma) Idi_IdIdioma,
 (SELECT COUNT(For_IdForo)
 FROM foro f
 WHERE f.For_Funcion = 'forum' AND Lit_IdLineaTematica =lt.Lit_IdLineaTematica AND f.For_Estado!=0 AND f.Row_Estado=1
