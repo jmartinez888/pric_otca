@@ -477,7 +477,7 @@ class examenModel extends Model {
         }
     }
 
-    public function getPreguntas($examen, Idi_IdIdioma = "es")
+    public function getPreguntas($examen, $Idi_IdIdioma = "es")
     {
         try{
             $sql = "  SELECT p.Pre_IdPregunta,
