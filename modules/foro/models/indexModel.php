@@ -631,9 +631,7 @@ class indexModel extends Model {
 
     public function getFacilitadores($iFor_IdForo, $Idi_IdIdioma="es") {
         try {
-            $sql = "select u.Usu_IdUsuario,u.Usu_Nombre,u.Usu_Apellidos,u.Usu_URLImage,
-                    fn_TraducirContenido('usuario', 'Usu_InstitucionLaboral', u.Usu.IdUsuario, '$Idi_IdIdioma', u.Usu_InstitucionLaboral) Usu_InstitucionLaboral, u.Row_Estado,
-                    fn_devolverIdioma('usuario', u.Usu.IdUsuario, '$Idi_IdIdioma', u.Idi_IdIdioma) Idi_IdIdioma,
+            $sql = "select u.Usu_IdUsuario,u.Usu_Nombre,u.Usu_Apellidos,u.Usu_URLImage, u.Usu_InstitucionLaboral
                     r.Rol_IdRol,r.Rol_Nombre from usuario_foro uf
                     inner join usuario u on u.Usu_IdUsuario=uf.Usu_IdUsuario
                     inner join rol r on r.Rol_IdRol=uf.Rol_IdRol
