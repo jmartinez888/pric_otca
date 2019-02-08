@@ -608,7 +608,7 @@ class cursosController extends elearningController {
     if (isset($OLeccion) && isset($OLeccion["Lec_IdLeccion"])) {
       $this->_view->assign("leccion", $OLeccion);
       $this->_view->assign("referencias", $Lmodel->getReferencias($OLeccion["Lec_IdLeccion"], Cookie::lenguaje()));
-      $this->_view->assign("materiales", $Lmodel->getMateriales($OLeccion["Lec_IdLeccion"]));
+      $this->_view->assign("materiales", $Lmodel->getMateriales($OLeccion["Lec_IdLeccion"], Cookie::lenguaje()));
       $this->_view->assign("tareas", $tareas);
     }
 
