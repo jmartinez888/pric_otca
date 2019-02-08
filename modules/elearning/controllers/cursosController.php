@@ -309,7 +309,7 @@ class cursosController extends elearningController {
       $this->redireccionar("elearning/");
     }
     
-    if (!$Mmodel->validarCursoModulo($curso, $modulo, Cookie::lenguaje())) {
+    if (!$Mmodel->validarCursoModulo($curso, $modulo)) {
       $this->redireccionar("elearning/cursos");
     }
     if (!$Mmodel->validarModuloUsuario($modulo, Session::get("id_usuario"))) {
