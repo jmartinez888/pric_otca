@@ -373,7 +373,7 @@ class cursosController extends elearningController {
         $html = $Lmodel->getContenido($OLeccion["Lec_IdLeccion"], Cookie::lenguaje());
         $this->_view->assign("html", $html[0]);
       } else if ($OLeccion["Lec_Tipo"] == 3) {
-        $examen = $Emodel->getExamenxLeccion($OLeccion["Lec_IdLeccion"]);
+        $examen = $Emodel->getExamenxLeccion($OLeccion["Lec_IdLeccion"], Cookie::lenguaje());
 
         if ($idexamen && $idexamen == $examen["Exa_IdExamen"]) {
           // $this->_view->setTemplate(LAYOUT_FRONTEND);
