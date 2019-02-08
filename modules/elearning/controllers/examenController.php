@@ -506,7 +506,7 @@ class examenController extends elearningController {
         $this->_view->assign('examen', $examen);
         $this->_view->assign('examenAlumno', $examenAlumno);
         $this->_view->assign('porcentaje', $Porcentaje);
-        $this->_view->assign('lecciones', $this->examen->getLecciones($examen['Moc_IdModulo']));
+        $this->_view->assign('lecciones', $this->examen->getLecciones($examen['Moc_IdModulo']), Cookie::lenguaje());
         $this->_view->assign('idcurso', $id);
         $this->_view->renderizar('editarexamen', 'elearning');
     }
