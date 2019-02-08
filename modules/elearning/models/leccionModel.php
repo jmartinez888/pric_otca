@@ -175,9 +175,17 @@ class leccionModel extends Model {
       }
     }
 
-    public function getContenido($leccion){
-      $sql = "SELECT * FROM contenido_leccion WHERE Lec_IdLeccion = {$leccion}
-              AND CL_Estado = 1 AND Row_Estado = 1";
+    public function getContenido($leccion, $Idi_IdIdioma="es"){
+      $sql = "SELECT c.CL_IdContenido,
+      c.Lec_IdLeccion,
+      fn_TraducirContenido('contenido','CL_Titulo',c.CL_IdContenido,'$Idi_IdIdioma',c.CL_Titulo) CL_Titulo,
+      fn_TraducirContenido('contenido','CL_Descripcion',c.CL_IdContenido,'$Idi_IdIdioma',c.CL_Descripcion) CL_Descripcion,
+      c.CL_FechaReg,
+      c.CL_Estado,
+      c.Row_Estado,
+      fn_devolverIdioma('contenido',c.CL_IdContenido,'$Idi_IdIdioma',c.Idi_IdIdioma) Idi_IdIdioma
+      FROM contenido_leccion c WHERE c.Lec_IdLeccion = {$leccion}
+              AND c.CL_Estado = 1 AND c.Row_Estado = 1";
       return $this->getArray($sql);
     }
 
