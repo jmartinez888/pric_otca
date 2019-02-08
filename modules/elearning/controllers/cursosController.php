@@ -901,7 +901,7 @@ class cursosController extends elearningController {
                     <div class='col-lg-12 hidden-xs' style='" . $plantilla['Plc_StyleCurso'] . "border:0; '><b>" . $certificado[0]['Cur_Titulo'] . "</b></div>
                     <div class='col-lg-12 hidden-xs' style='" . $plantilla['Plc_StyleFecha'] . "border:0; '>" . $certificado[0]['Fecha_completa'] . "<br/></div>
                     <div class='col-lg-12 hidden-xs' style='" . $plantilla['Plc_StyleHora'] . "border:0; '>" . $certificado[0]['Cur_Duracion'] . "</div>
-                    <div class='col-lg-12 hidden-xs'  style='". $plantilla['Plc_StyleCodigo'] . "border:0; '>" . "<span >Certificación de aprobación online</span><br/><span >Código:" . $certificado[0]['Cer_Codigo'] . "</span></div>
+                    <div class='col-lg-12 hidden-xs'  style='". $plantilla['Plc_StyleCodigo'] . "border:0; '>" . $certificado[0]['Cer_Codigo'] . " </div>
                     </div>
               <script type='text/javascript' src='views/layout/frontend/js/bootstrap.min.js' ></script>
           </body>";
