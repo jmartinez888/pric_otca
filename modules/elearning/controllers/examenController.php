@@ -480,7 +480,7 @@ class examenController extends elearningController {
         Session::set("learn_param_curso", $id);
         // $lecciones=$this->examen->getLecciones($id);
 
-        $modulos = $this->examen->getModulos($id);
+        $modulos = $this->examen->getModulos($id, Cookie::lenguaje());
 
         if ($this->botonPress("prepararPregunta")) {
             $this->redireccionar('elearning/examen/preguntas/'.$id.'/'.$idExamen);
