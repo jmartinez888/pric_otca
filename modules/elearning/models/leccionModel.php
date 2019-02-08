@@ -203,8 +203,17 @@ class leccionModel extends Model {
       return $this->getArray($sql);
     }
 
-    public function getMateriales($leccion){
-      $sql = "SELECT * FROM material_leccion
+    public function getMateriales($leccion, $Idi_IdIdioma="es"){
+      $sql = "SELECT Mat_IdMaterial,
+      Lec_IdLeccion,
+      fn_TraducirContenido('material_leccion','Mat_Descripcion',Mat_IdMaterial,'$Idi_IdIdioma',Mat_Descripcion) Mat_Descripcion,
+      Mat_Enlace,
+      Mat_FechaReg,
+      Mat_Tipo,
+      Mat_Estado,
+      Row_Estado,
+      fn_devolverIdioma('material_leccion',Mat_IdMaterial,'$Idi_IdIdioma',Idi_IdIdioma) Idi_IdIdioma
+      FROM material_leccion
               WHERE Lec_IdLeccion = {$leccion} AND Mat_Estado = 1 AND Row_Estado = 1";
       return $this->getArray($sql);
     }
