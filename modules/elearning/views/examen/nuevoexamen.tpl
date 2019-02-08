@@ -10,7 +10,7 @@
     </div>
   </div>
 </div>
-        <h3>{$lenguaje["elearning_nuevo_examen"]}</h3>
+        <h3>{$lenguaje["elearning_nuevo_examenT"]}</h3> 
         <hr class="cursos-hr">
     </div>
    <div style="width: 100%; margin: 0px auto">
@@ -28,7 +28,7 @@
         
         {if isset($idLeccion) && $idLeccion > 0}
             <div class="form-group">
-                <label class="col-lg-3 control-label" >{$lenguaje["elearning_examen_modulo"]}</label>
+                <label class="col-lg-3 control-label">{$lenguaje["elearning_examen_modulo"]}</label>
                 <div class="col-lg-9">
                     <p>
                       <select class="form-control" id="selectmodulo" name="selectmodulo" >
@@ -45,7 +45,7 @@
             <div id="completar">
             {if isset($lecciones) && count($lecciones)}
                 <div class="form-group">
-                    <label class="col-xs-3 control-label" >{$lenguaje["elearning_nuevo_examen_leccion"]}</label>
+                    <label class="col-xs-3 control-label">{$lenguaje["elearning_nuevo_examen_leccion"]}</label>
                     <div class="col-xs-9">
                         <select class="form-control" id="selectleccion" name="selectleccion" >
                             {foreach item=ll from=$lecciones}
@@ -55,13 +55,13 @@
                     </div>
                 </div>  
                 <div class="form-group">
-                    <label class="col-xs-3 control-label" >{$lenguaje["elearning_nuevo_porcentaje"]}</label>
+                    <label class="col-xs-3 control-label">{$lenguaje["elearning_nuevo_porcentaje"]}</label>
                     <div class="col-xs-9">
                         <input data-toggle="tooltip" data-placement="bottom" title="{$lenguaje["elearning_nuevo_examen_porcentaje2"]}{$porcentaje}" class="form-control" id ="porcentaje" type="number" name="porcentaje" value="{$examen.Exa_Porcentaje|default:'0'}" placeholder="Porcentaje" max="{$porcentaje}" min="0" value="0"/>
                     </div>
                 </div>   
                 <div class="form-group">
-                    <label class="col-xs-3 control-label" >{$lenguaje["elearning_nuevo_examen_puntajeMax"]}</label>
+                    <label class="col-xs-3 control-label">{$lenguaje["elearning_nuevo_examen_puntajeMax"]}</label>
                     <div class="col-xs-9">
                         <p class="  margin-t-10"> <input type="radio" value="20" class="radioalt " name="puntaje" checked="checked" />  20</p>
                         <p class=" margin-t-10"> <input type="radio" value="100" class="radioalt " name="puntaje"/>
@@ -69,7 +69,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-xs-3 control-label" >{$lenguaje["elearning_nuevo_examen_NumeroI"]}</label>
+                    <label class="col-xs-3 control-label">{$lenguaje["elearning_nuevo_examen_NumeroI"]}</label>
                     <div class="col-xs-9">
                         <select class="form-control" id="intentos" name="intentos">          
                             <option value="1">1</option>
@@ -87,7 +87,7 @@
             </div>
         {else}
             <div class="form-group">
-                <label class="col-lg-3 control-label" >{$lenguaje["elearning_nuevo_examen_modulo"]}</label>
+                <label class="col-lg-3 control-label">{$lenguaje["elearning_nuevo_examen_modulo"]}</label>
                 <div class="col-lg-9">
                     <p>
                       <select class="form-control" id="selectmodulo" name="selectmodulo">
