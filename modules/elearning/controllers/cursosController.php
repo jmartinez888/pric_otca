@@ -357,7 +357,7 @@ class cursosController extends elearningController {
         $indice_leccion = $clave + 1;
         $final = count($lecciones) == $indice_leccion ? true : false;
 
-        $tareas = $Tmodel->getTrabajoXLeccion($OLeccion["Lec_IdLeccion"]);
+        $tareas = $Tmodel->getTrabajoXLeccion($OLeccion["Lec_IdLeccion"], Cookie::lenguaje());
       } else {
         $this->redireccionar("elearning/");
       }
