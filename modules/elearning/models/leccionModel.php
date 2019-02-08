@@ -189,8 +189,16 @@ class leccionModel extends Model {
       return $this->getArray($sql);
     }
 
-    public function getReferencias($leccion){
-      $sql = "SELECT * FROM referencia_leccion
+    public function getReferencias($leccion, $Idi_IdIdioma="es"){
+      $sql = "SELECT Ref_IdReferencia,
+      Lec_IdLeccion,
+      fn_TraducirContenido('referencia_leccion','Ref_Titulo',Ref_IdReferencia,'$Idi_IdIdioma',Ref_Titulo) Ref_Titulo,
+      fn_TraducirContenido('referencia_leccion','Ref_Descripcion',Ref_IdReferencia,'$Idi_IdIdioma',Ref_Descripcion) Ref_Descripcion,
+      Ref_FechaReg,
+      Ref_Estado,
+      Row_Estado,
+      fn_devolverIdioma('referencia_leccion',Ref_IdReferencia,'$Idi_IdIdioma',Idi_IdIdioma) Idi_IdIdioma
+      FROM referencia_leccion
               WHERE Lec_IdLeccion = {$leccion} AND Ref_Estado = 1 AND Row_Estado = 1";
       return $this->getArray($sql);
     }
