@@ -350,10 +350,7 @@ class indexModel extends Model {
     public function getArchivos_x_idcomentario($iCom_IdComentario, $Idi_IdIdioma="es") {
         try {
             $post = $this->_db->query(
-                    "SELECT fco.Fim_IdForo, 
-                            fn_TraducirContenido('file_comentario', 'Fim_NombreFile', fco.Fim_IdForo, '$Idi_IdIdioma', fco.Fim_NombreFile) Fim_NombreFile,
-                            fn_devolverIdioma('file_comentario', fco.Fim_IdForo, '$Idi_IdIdioma', fco.Idi_IdIdioma) Idi_IdIdioma,
-                            fco.Fim_TipoFile, fco.Fim_SizeFile, fco.Com_IdComentario, fco.Rec_IdRecurso FROM file_comentario fco 
+                    "SELECT * FROM file_comentario 
                             WHERE Com_IdComentario = $iCom_IdComentario");
             return $post->fetchAll();
         } catch (PDOException $exception) {
