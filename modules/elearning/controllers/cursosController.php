@@ -324,7 +324,7 @@ class cursosController extends elearningController {
 
     $obj_curso = $Cmodel::find($curso);
 
-    $lecciones = $Lmodel->getLecciones($modulo, Session::get("id_usuario"));
+    $lecciones = $Lmodel->getLecciones($modulo, Session::get("id_usuario"), Cookie::lenguaje());
     // $examenes= $Emodel->getExamensModulo($modulo);
 
     // $datos_modulo = $Mmodel->getModuloDatos($OLeccion["Moc_IdModuloCurso"]);
