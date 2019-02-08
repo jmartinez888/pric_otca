@@ -215,9 +215,12 @@ class examenModel extends Model {
         }
     }
 
-    public function getModulos($id){
+    public function getModulos($id, $Idi_IdIdioma = "es"){
         try{
-            $sql = " SELECT Moc_IdModuloCurso, Moc_Titulo FROM modulo_curso WHERE Cur_IdCurso=$id AND Moc_Estado=1 AND Row_Estado=1 ";
+            $sql = " SELECT Moc_IdModuloCurso, 
+            fn_TraducirContenido('modulo_curso','Moc_Titulo', Moc_IdModuloCurso,'$Idi_IdIdioma', Moc_Titulo) Moc_Titulo,
+            fn_devolverIdioma('modulo_curso', Moc_IdModuloCurso,'$Idi_IdIdioma',Idi_IdIdioma) Idi_IdIdioma
+            FROM modulo_curso WHERE Cur_IdCurso=$id AND Moc_Estado=1 AND Row_Estado=1 ";
             $result = $this->_db->prepare($sql);
             $result->execute();
             return $result->fetchAll(PDO::FETCH_ASSOC);
