@@ -477,10 +477,21 @@ class examenModel extends Model {
         }
     }
 
-    public function getPreguntas($examen)
+    public function getPreguntas($examen, Idi_IdIdioma = "es")
     {
         try{
-            $sql = "  SELECT * FROM pregunta p WHERE p.Exa_IdExamen=$examen AND p.Pre_Estado=1 AND p.Row_Estado=1 order by rand()";
+            $sql = "  SELECT p.Pre_IdPregunta,
+            p.Exa_IdExamen,
+            fn_TraducirContenido('pregunta','Pre_Descripcion', p.Pre_IdPregunta,'$Idi_IdIdioma', p.Pre_Descripcion) Pre_Descripcion,
+            fn_TraducirContenido('pregunta','Pre_Descripcion2', p.Pre_IdPregunta,'$Idi_IdIdioma', p.Pre_Descripcion2) Pre_Descripcion2,
+            p.Pre_FechaReg,
+            p.Pre_Valor,
+            p.Pre_Tipo,
+            p.Pre_Puntos,
+            p.Pre_Estado,
+            p.Row_Estado,
+            fn_devolverIdioma('pregunta', p.Pre_IdPregunta,'$Idi_IdIdioma', p.Idi_IdIdioma) Idi_IdIdioma
+            FROM pregunta p WHERE p.Exa_IdExamen=$examen AND p.Pre_Estado=1 AND p.Row_Estado=1 order by rand()";
             $result = $this->_db->query($sql);
             $preguntas = $result->fetchAll(PDO::FETCH_ASSOC);    
             
