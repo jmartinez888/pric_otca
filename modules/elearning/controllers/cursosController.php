@@ -740,7 +740,7 @@ class cursosController extends elearningController {
       $model->RegistrarProgreso($leccion, Session::get("id_usuario"));
     }
     // lecciones
-    $lecciones = $model->getLecciones($objeto["Moc_IdModuloCurso"], Session::get("id_usuario"));
+    $lecciones = $model->getLecciones($objeto["Moc_IdModuloCurso"], Session::get("id_usuario"), Cookie::lenguaje());
 
     $clave = array_search($objeto["Lec_IdLeccion"], array_column($lecciones, "Lec_IdLeccion"));
 
