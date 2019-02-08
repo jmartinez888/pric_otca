@@ -10,7 +10,7 @@
     </div>
   </div>
 </div>
-        <h3>Nuevo Examen</h3>
+        <h3>{$lemguaje["elearning_nuevo_examen"]}</h3>
         <hr class="cursos-hr">
     </div>
    <div style="width: 100%; margin: 0px auto">
@@ -20,7 +20,7 @@
         <input type="hidden" name="hidden_curso" id="hidden_curso" value="{$idcurso}">
        
         <div class="form-group">
-            <label class="col-lg-3 control-label">Título: </label>
+            <label class="col-lg-3 control-label">{$lemguaje["elearning_examen_titulo"]}</label>
             <div class="col-lg-9">
                 <p><input class="form-control" id ="titulo" type="text" name="titulo" value="{$datos.nombre|default:""}" placeholder="Título"/></p>
             </div>
@@ -28,12 +28,12 @@
         
         {if isset($idLeccion) && $idLeccion > 0}
             <div class="form-group">
-                <label class="col-lg-3 control-label" >Módulo: </label>
+                <label class="col-lg-3 control-label" >{$lemguaje["elearning_examen_modulo"]}</label>
                 <div class="col-lg-9">
                     <p>
                       <select class="form-control" id="selectmodulo" name="selectmodulo" >
                         {if isset($modulos) && count($modulos)}
-                        <option value="0">Seleccione módulo</option>
+                        <option value="0">{$lemguaje["elearning_seleccione_modulo"]}</option>
                         {foreach item=ll from=$modulos}
                             <option {if $leccion.Moc_IdModuloCurso == $ll.Moc_IdModuloCurso} selected="selected" {/if} value="{$ll.Moc_IdModuloCurso}">{$ll.Moc_Titulo}</option>
                         {/foreach}
@@ -45,7 +45,7 @@
             <div id="completar">
             {if isset($lecciones) && count($lecciones)}
                 <div class="form-group">
-                    <label class="col-xs-3 control-label" >Lección: </label>
+                    <label class="col-xs-3 control-label" >{$lemguaje["elearning_nuevo_examen_leccion"]}</label>
                     <div class="col-xs-9">
                         <select class="form-control" id="selectleccion" name="selectleccion" >
                             {foreach item=ll from=$lecciones}
@@ -55,13 +55,13 @@
                     </div>
                 </div>  
                 <div class="form-group">
-                    <label class="col-xs-3 control-label" >Porcentaje Global: </label>
+                    <label class="col-xs-3 control-label" >{$lemguaje["elearning_nuevo_porcentaje"]}</label>
                     <div class="col-xs-9">
-                        <input data-toggle="tooltip" data-placement="bottom" title="El valor debe ser inferior o igual a {$porcentaje}" class="form-control" id ="porcentaje" type="number" name="porcentaje" value="{$examen.Exa_Porcentaje|default:'0'}" placeholder="Porcentaje" max="{$porcentaje}" min="0" value="0"/>
+                        <input data-toggle="tooltip" data-placement="bottom" title="{$lemguaje["elearning_nuevo_examen_porcentaje2"]}{$porcentaje}" class="form-control" id ="porcentaje" type="number" name="porcentaje" value="{$examen.Exa_Porcentaje|default:'0'}" placeholder="Porcentaje" max="{$porcentaje}" min="0" value="0"/>
                     </div>
                 </div>   
                 <div class="form-group">
-                    <label class="col-xs-3 control-label" >Puntaje Máximo: </label>
+                    <label class="col-xs-3 control-label" >{$lemguaje["elearning_nuevo_examen_puntajeMax"]}</label>
                     <div class="col-xs-9">
                         <p class="  margin-t-10"> <input type="radio" value="20" class="radioalt " name="puntaje" checked="checked" />  20</p>
                         <p class=" margin-t-10"> <input type="radio" value="100" class="radioalt " name="puntaje"/>
@@ -69,7 +69,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-xs-3 control-label" >Número Máximo de Intentos: </label>
+                    <label class="col-xs-3 control-label" >{$lemguaje["elearning_nuevo_examen_NumeroI"]}</label>
                     <div class="col-xs-9">
                         <select class="form-control" id="intentos" name="intentos">          
                             <option value="1">1</option>
@@ -77,22 +77,22 @@
                             <option value="3">3</option>
                             <option value="5">5</option>
                             <option value="10">10</option>
-                            <option value="0">Ilimitado</option>
+                            <option value="0">{$lemguaje["elearning_nuevo_examen_ilimitado"]}</option>
                         </select>
                     </div>
                 </div>
             {else}
-                <center>No hay lecciones disponibles<center>
+                <center>{$lemguaje["elearning_nuevo_examen_LeccionesNo"]}<center>
             {/if}
             </div>
         {else}
             <div class="form-group">
-                <label class="col-lg-3 control-label" >Módulo: </label>
+                <label class="col-lg-3 control-label" >{$lemguaje["elearning_nuevo_examen_modulo"]}</label>
                 <div class="col-lg-9">
                     <p>
                       <select class="form-control" id="selectmodulo" name="selectmodulo">
                         {if isset($modulos) && count($modulos)}
-                        <option value="0">Seleccione módulo</option>
+                        <option value="0">{$lemguaje["elearning_nuevo_examen_seleccionM"]}</option>
                         {foreach item=ll from=$modulos}
                             <option value="{$ll.Moc_IdModuloCurso}">{$ll.Moc_Titulo}</option>
                         {/foreach}
@@ -108,7 +108,7 @@
 
         <div class="form-group">
             <div class="col-lg-offset-2 col-lg-10">
-             <button class="btn btn-success pull-right margin-top-10" id="guardar" name="guardar">Preparar preguntas</button>
+             <button class="btn btn-success pull-right margin-top-10" id="guardar" name="guardar">{$lemguaje["elearning_nuevo_examen_Bguardar"]}</button>
             </div>
         </div>
     </form>
