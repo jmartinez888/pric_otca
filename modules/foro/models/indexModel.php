@@ -187,7 +187,7 @@ class indexModel extends Model {
         }
     }
 
-    public function getForo_x_idforo($iFor_IdForo, $Id_IdIdioma="es") {
+    public function getForo_x_idforo($iFor_IdForo, $Idi_IdIdioma="es") {
         try {
             $sql= "SELECT f.For_IdForo,
                           fn_TraducirContenido('foro', 'For_Titulo', f.For_IdForo, '$Idi_IdIdioma', f.For_Titulo) For_Titulo,
@@ -650,7 +650,7 @@ class indexModel extends Model {
         }
     }
 
-    public function getArchivos_x_idforo($iFor_IdForo, $Idi_Idioma="es") {
+    public function getArchivos_x_idforo($iFor_IdForo, $Idi_IdIdioma="es") {
         try {
             $post = $this->_db->query(
                     "SELECT ffo.Fif_IdFileForo, 
