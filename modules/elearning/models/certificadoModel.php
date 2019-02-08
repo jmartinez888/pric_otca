@@ -136,27 +136,7 @@ class certificadoModel extends Model {
 public function getPlantillaCertificado($idCurso, $Idi_IdIdioma="es")
     {
         try{
-            $sql = " SELECT p.Plc_IdPlantillaCertificado,
-            fn_TraducirContenido('plantilla_certificado','Plc_UrlImg',p.Plc_IdPlantillaCertificado,'$Idi_IdIdioma',p.Plc_UrlImg) Plc_UrlImg,
-            p.Plc_StyleNombre,
-            p.Plc_UbicacionXNombre,
-            p.Plc_UbicacionYNombre,
-            p.Plc_StyleCurso,
-            p.Plc_UbicacionXCurso,
-            p.Plc_UbicacionYCurso,
-            p.Plc_StyleHora,
-            p.Plc_UbicacionXHora,
-            p.Plc_UbicacionYHora,
-            p.Plc_StyleFecha,
-            p.Plc_UbicacionXFecha,
-            p.Plc_UbicacionYFecha,
-            p.Plc_StyleCodigo,
-            p.Plc_UbicacionXCodigo,
-            p.Plc_UbicacionYCodigo,
-            p.Plc_Seleccionado,
-            p.Cur_IdCurso,
-            fn_devolverIdioma('plantilla_certificado',p.Plc_IdPlantillaCertificado,'$Idi_IdIdioma',c.Idi_IdIdioma) Idi_IdIdioma
-            FROM plantilla_certificado p WHERE p.Cur_IdCurso= $idCurso and p.Plc_Seleccionado=1";
+            $sql = " SELECT * FROM plantilla_certificado WHERE Cur_IdCurso= $idCurso and Plc_Seleccionado=1";
             $result = $this->_db->query($sql);
             return $result->fetch(PDO::FETCH_ASSOC);
         } catch (PDOException $exception) {

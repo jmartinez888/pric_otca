@@ -310,17 +310,15 @@ class cursosController extends elearningController {
     }
     
     if (!$Mmodel->validarCursoModulo($curso, $modulo)) {
-      echo "string";exit;
       $this->redireccionar("elearning/cursos");
     }
     if (!$Mmodel->validarModuloUsuario($modulo, Session::get("id_usuario"))) {
-      echo "string";exit;
       $this->redireccionar("elearning/cursos");
     }
 
     if ($leccion) {
       if(!$Lmodel->validarLeccion($leccion, $modulo, Session::get("id_usuario"))){ 
-      echo "string";exit;
+
         $this->redireccionar("elearning/cursos"); }
     }
 
