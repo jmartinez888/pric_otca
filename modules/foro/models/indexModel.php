@@ -60,7 +60,7 @@ class indexModel extends Model {
             $sql="SELECT f.For_IdForo,
                          fn_TraducirContenido('foro', 'For_Titulo', f.For_IdForo, '$Idi_IdIdioma', f.For_Titulo) For_Titulo,
                          fn_TraducirContenido('foro', 'For_Resumen', f.For_IdForo, '$Idi_IdIdioma', f.For_Resumen) For_Resumen, f.Row_Estado,
-                         fn_devolverIdioma('foro', f.For_IdForo, '$Idi_IdIdioma', f.Idi_IdIdioma) Idi_IdIdioma
+                         fn_devolverIdioma('foro', f.For_IdForo, '$Idi_IdIdioma', f.Idi_IdIdioma) Idi_IdIdioma,
                          f.For_Funcion,f.For_FechaCreacion,f.For_FechaCierre, 
                          f.For_Estado,f.For_Update,
                  (SELECT COUNT(*) FROM comentarios c WHERE c.For_IdForo =f.For_IdForo AND c.Com_Estado=1 AND c.Row_Estado=1) AS For_NComentarios ,
