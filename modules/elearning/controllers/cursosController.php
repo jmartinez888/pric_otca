@@ -348,7 +348,7 @@ class cursosController extends elearningController {
 
     if ($leccion) {
       // echo $modulo; echo $leccion;
-      $OLeccion = $Lmodel->getLeccion($leccion, $modulo, Session::get("id_usuario"));
+      $OLeccion = $Lmodel->getLeccion($leccion, $modulo, Session::get("id_usuario"), Cookie::lenguaje());
       // print_r($OLeccion);exit;
       if (isset($OLeccion) && count($OLeccion)) {
         $clave = array_search($OLeccion["Lec_IdLeccion"], array_column($lecciones, "Lec_IdLeccion"));
