@@ -195,8 +195,8 @@ class indexModel extends Model {
                           fn_TraducirContenido('foro', 'For_Descripcion', f.For_IdForo, '$Idi_IdIdioma', f.For_Descripcion) For_Descripcion, 
                           fn_TraducirContenido('foro', 'For_PalabrasClaves', f.For_IdForo, '$Idi_IdIdioma', f.For_PalabrasClaves) For_PalabrasClaves, f.Row_Estado,
                           fn_devolverIdioma('foro', f.For_IdForo, '$Idi_IdIdioma', f.Idi_IdIdioma) Idi_IdIdioma,
-                          f.For_FechaCreacion, f.For_FechaCierre, f.For_Update, f.For_Funcion, f.For_Tipo, f.For_Estado, f.For_IdPadre, f.Lit_IdLineaTematica, f.Usu_IdUsuario, f.Ent_Id_Entidad,
-                          f.Idi_IdIdioma, f.Rec_IdRecurso, 
+                          f.For_FechaCreacion, f.For_FechaCierre, f.For_Update, f.For_Funcion, f.For_Tipo, f.For_Estado, f.For_IdPadre, f.Lit_IdLineaTematica, 
+                          f.Usu_IdUsuario, f.Ent_Id_Entidad, f.Rec_IdRecurso, 
                    (SELECT COUNT(Com_IdComentario) FROM comentarios c WHERE c.For_IdForo=f.For_IdForo) as For_TComentarios, 
                    (SELECT COUNT(*) FROM usuario_foro uf WHERE uf.For_IdForo=f.For_IdForo AND uf.Row_Estado=1) as For_TParticipantes 
                    FROM foro f where f.For_IdForo={$iFor_IdForo}";
