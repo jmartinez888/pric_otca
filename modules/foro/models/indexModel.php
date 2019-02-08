@@ -253,7 +253,7 @@ class indexModel extends Model {
     public function getLineaTematica($Lit_IdLineaTematica, $Idi_IdIdioma="es") {
         try {
             $post = $this->_db->query(
-                    "SELECT Lit_Nombre
+                    "SELECT Lit_Nombre, Lit_IdLineaTematica
                         FROM linea_tematica
                         WHERE Lit_IdLineaTematica = {$Lit_IdLineaTematica}");
             return $post->fetch();
