@@ -34,7 +34,7 @@ class examenModel extends Model {
             $sql = " SELECT e.Exa_IdExamen,
             e.Cur_IdCurso,
             e.Moc_IdModulo,
-            e.fn_TraducirContenido('examen','Exa_Titulo',e.Cur_IdCurso,'$Idi_IdIdioma',e.Exa_Titulo) Exa_Titulo,
+            fn_TraducirContenido('examen','Exa_Titulo',e.Cur_IdCurso,'$Idi_IdIdioma',e.Exa_Titulo) Exa_Titulo,
             e.Exa_Intentos,
             e.Exa_Restrictivo,
             e.Exa_Peso,
@@ -47,7 +47,7 @@ class examenModel extends Model {
             e.Exa_Estado,
             e.Row_Estado,
             fn_devolverIdioma('examen',e.Cur_IdCurso,'$Idi_IdIdioma',e.Idi_IdIdioma) Idi_IdIdioma 
-            FROM examen e WHERE Lec_IdLeccion = $Lec_IdLeccion AND Exa_Estado = 1 AND Row_Estado = 1 ";
+            FROM examen e WHERE e.Lec_IdLeccion = $Lec_IdLeccion AND e.Exa_Estado = 1 AND e.Row_Estado = 1 ";
             $result = $this->_db->prepare($sql);
             $result->execute();
             return $result->fetch(PDO::FETCH_ASSOC);
