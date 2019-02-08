@@ -809,8 +809,7 @@ class indexModel extends Model {
         try {
             $post = $this->_db->query(
                     "SELECT lt.Lit_IdLineaTematica,
-                            fn_TraducirContenido('linea_tematica', 'Lit_Nombre', lt.Lit_IdLineaTematica, '$Idi_IdIdioma', lt.Lit_Nombre) Lit_Nombre, lt.Row_Estado,
-                            fn_devolverIdioma('linea_tematica', lt.Lit_IdLineaTematica, '$Idi_IdIdioma', lt.Idi_IdIdioma) Idi_IdIdioma,
+                            lt.Lit_Nombre,
 (SELECT COUNT(For_IdForo)
 FROM foro f
 WHERE f.For_Funcion = 'forum' AND Lit_IdLineaTematica =lt.Lit_IdLineaTematica AND f.For_Estado!=0 AND f.Row_Estado=1
