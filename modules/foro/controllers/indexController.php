@@ -42,6 +42,7 @@ class indexController extends foroController {
 	}
 	public function searchForo($filtro = "") {
 		$this->_view->setTemplate(LAYOUT_FRONTEND);
+		$lenguaje = $this->_view->getLenguaje("foro_index_index");
 		$filtro = $this->filtrarTexto($filtro);
 		$this->_view->assign('titulo', "Búsqueda en Foros");
 		$this->_view->setJs(array('index'));
