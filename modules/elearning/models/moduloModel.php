@@ -66,9 +66,9 @@ class moduloModel extends Model {
       $sql = "SELECT 
       M.Moc_IdModuloCurso,
       M.Cur_IdCurso,
-      fn_TraducirContenido('modulo_curso','Moc_Titulo',M.Moc_IdModuloCurso,,'$Idi_IdIdioma',M.Moc_Titulo) Moc_Titulo,
-      fn_TraducirContenido('modulo_curso','Moc_Descripcion',M.Moc_IdModuloCurso,,'$Idi_IdIdioma',M.Moc_Descripcion) Moc_Descripcion,
-      fn_TraducirContenido('modulo_curso','Moc_TiempoDedicacion',M.Moc_IdModuloCurso,,'$Idi_IdIdioma',M.Moc_TiempoDedicacion) Moc_TiempoDedicacion,
+      fn_TraducirContenido('modulo_curso','Moc_Titulo',M.Moc_IdModuloCurso,'$Idi_IdIdioma',M.Moc_Titulo) Moc_Titulo,
+      fn_TraducirContenido('modulo_curso','Moc_Descripcion',M.Moc_IdModuloCurso,'$Idi_IdIdioma',M.Moc_Descripcion) Moc_Descripcion,
+      fn_TraducirContenido('modulo_curso','Moc_TiempoDedicacion',M.Moc_IdModuloCurso,'$Idi_IdIdioma',M.Moc_TiempoDedicacion) Moc_TiempoDedicacion,
       M.Moc_Porcentaje,
       M.Moc_FechaReg,
       M.Moc_Estado,
