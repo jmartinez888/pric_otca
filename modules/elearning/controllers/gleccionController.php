@@ -1,5 +1,6 @@
 <?php
 
+use App\Curso;
 use App\Leccion;
 use App\Formulario;
 use App\LeccionSession;
@@ -280,7 +281,7 @@ class gleccionController extends elearningController {
                 $data['idcurso'] = $curso['Cur_IdCurso'];
                 $data['other_tags'] = [$lang->get('str_pizarras')];
 
-                $data['titulo'] = $lang->get('str_encuestas').' - '.str_limit($curso['Cur_Titulo'], 20);
+                $data['titulo'] = $lang->get('str_pizarras').' - '.str_limit($curso['Cur_Titulo'], 20);
 
                 $this->_view->assign($data);
                 $this->_view->render('pizarras');
@@ -302,19 +303,34 @@ class gleccionController extends elearningController {
         $this->getLibrary("ServiceResult");
         $this->service = new ServiceResult();
         $this->examen = $this->loadModel("examen");
-    }
+		}
+		public function store_pizarra ($curso_id) {
+			$this->_acl->autenticado();
+			if (is_numeric($curso_id) && $curso_id != 0 && Curso::existeCurso($curso_id)) {
+
+				$titulo = $this->getTexto('titulo');
+				$desc = $this->getTexto('descripcion');
+				$tiempo = $this->getTexto('tiempo');
+				$modulo = $this->getTexto('modulo');
+				if ($modulo != 0) {
+						$Mmodel = $this->loadModel("_gestionLeccion");
+						$leccion_id = $Mmodel->insertLeccion($modulo, Leccion::TIPO_DIRIGIDA, $titulo, $desc, $tiempo);
+						$this->redireccionar('elearning/gleccion/pizarras/'.$curso_id);
+				}
+			}
+		}
     public function store_encuesta ($curso_id) {
     $this->validarUrlIdioma();
         $this->_acl->autenticado();
-        // dd($_POST);
-        if (is_numeric($curso_id) && $curso_id != 0) {
+        if (is_numeric($curso_id) && $curso_id != 0 && Curso::existeCurso($curso_id)) {
+					
             $titulo = $this->getTexto('titulo');
             $desc = $this->getTexto('descripcion');
             $tiempo = $this->getTexto('tiempo');
             $modulo = $this->getTexto('modulo');
             if ($modulo != 0) {
                 $Mmodel = $this->loadModel("_gestionLeccion");
-                $leccion_id = $Mmodel->insertLeccion($modulo, 10, $titulo, $desc, $tiempo);
+                $leccion_id = $Mmodel->insertLeccion($modulo, Leccion::TIPO_ENCUESTA, $titulo, $desc, $tiempo);
 
                     //registrar un formulario y su relación
                 $frm = new Formulario();
@@ -338,8 +354,19 @@ class gleccionController extends elearningController {
             }
         }
     }
-    public function agregar_encuesta ($curso_id) {
-    $this->validarUrlIdioma();
+
+    public function agregar_pizarra ($curso_id) {
+      $this->agregar_encuesta($curso_id, 'pizarras');
+    }
+    /**
+     * [agregar_encuesta registrar encuestas y lecciones 
+     *  $modo|encuestas, registra solo encuestas
+     *  $modo|pizarras, solo pizarras
+     * ]
+     *
+     * @return  [type]  [return description]
+     */
+    public function agregar_encuesta ($curso_id, $modo = 'encuestas') {
         $this->_acl->autenticado();
         // dd($this->_acl->getPermisos());
         if ($this->_acl->tienePermisos('crear_encuestas_leccion')) {
@@ -351,11 +378,21 @@ class gleccionController extends elearningController {
                 $mod_curso = $this->loadModel("_gestionCurso");
                 $curso = $mod_curso->getCursoById($curso_id);
                 $mod_modulo = $this->loadModel("_gestionModulo");
-                $modulos = $mod_modulo->getModulos($curso_id);
+								$modulos = $mod_modulo->getModulos($curso_id);
+								$data['modo'] = $modo;
                 $data['curso'] = $curso;
                 $data['modulos'] = $modulos;
-                $data['idcurso'] = $curso['Cur_IdCurso'];
-                $data['other_tags'] = ['Agregar encuestas'];
+								$data['idcurso'] = $curso['Cur_IdCurso'];
+								if ($modo == 'encuestas'){
+									$data['other_tags'] = [$lang->get('elearning_cursos_agregar_encuesta')];
+									$data['titulo'] = $lang->get('elearning_cursos_agregar_encuesta').' - '.$curso['Cur_Titulo'];
+									$data['target_url_store'] = BASE_URL.'elearning/gleccion/store_encuesta/'.$curso['Cur_IdCurso'];
+								}
+								if ($modo == 'pizarras') {
+                	$data['other_tags'] = [$lang->get('elearning_cursos_agregar_pizarra')];
+									$data['titulo'] = $lang->get('elearning_cursos_agregar_pizarra').' - '.$curso['Cur_Titulo'];
+									$data['target_url_store'] = BASE_URL.'elearning/gleccion/store_pizarra/'.$curso['Cur_IdCurso'];
+								}
                 $this->_view->assign($data);
                 $this->_view->render('agregar_encuesta');
             }
@@ -387,7 +424,78 @@ class gleccionController extends elearningController {
             $res['msg'] = 'No posee permisos';
         }
         $this->_view->responseJson($res);
-    }
+		}
+		
+		public function datatable_lecciones ($curso_id, $modo = 'default') {
+			$this->_acl->autenticado();	
+			if ($modo != 'default') {
+				$objCurso = Curso::find($curso_id);
+				if ($objCurso) {
+					DB::enableQueryLog();
+					$datatable_response = [
+						'draw' 						=> $this->getInt('draw'),
+						'recordsTotal' 		=> 0,
+						'recordsFiltered' => 0,
+						'data' 						=> [],
+						'query'	 					=> []
+					];
+					// $mod_curso = $this->loadModel("_gestionCurso");
+					// $curso = $mod_curso->getCursoById($curso_id);
+					$mod_modulo = $this->loadModel("_gestionModulo");
+					// $mod_leccion = $this->loadModel("_gestionLeccion");
+					$modulos = $mod_modulo->getModulos($curso_id);
+					$mod_ids = [];
+					foreach ($modulos as $key => $value) {
+							$mod_ids[] = $value['Moc_IdModuloCurso'];
+					}
+					$query = Leccion::getByModulos($mod_ids)
+						->join('modulo_curso', 'modulo_curso.Moc_IdModuloCurso', 'leccion.Moc_IdModuloCurso');
+
+					if ($modo == 'pizarras')
+						$query->getByTipo(Leccion::TIPO_DIRIGIDA);
+					if ($modo == 'encuestas')
+						$query->getByTipo(Leccion::TIPO_ENCUESTA);
+					
+					$datatable_response['recordsTotal'] = $datatable_response['recordsFiltered'] = $query->count();
+					
+					if ($this->has('filter')) {
+						$query->where(function($query) {
+							if (isset($_GET['filter']['query']) && $_GET['filter']['query'] != '') 
+									$query->orWhere(DB::raw("CONCAT(usuario.Usu_Nombre, ' ', usuario.Usu_Apellidos)"), 'like', '%'.$_GET['filter']['filter_alumno'].'%');		
+						});
+					}
+
+					
+					if ($this->has(['order', 'columns'])) {
+						foreach ($_GET['order'] as $key => $value) {
+							$nc = $_GET['columns'][$value['column']]['data'];
+							switch ($nc) {
+								case 'nombre_completo': $nc = 'nombre_completo'; break;
+								case 'inicio': 	$nc = 'Lea_Inicio'	;	break;
+								case 'fin': 	$nc = 'Lea_Fin'	;	break;
+							}
+							// $query->orderBy($nc, $value['dir']);
+						}
+					}
+
+					// if ($this->filledGet('export')) 
+					$rows = $query->offset($this->getInt('start'))
+						->limit($this->getInt('length'))
+						->get()->map(function($item) {
+							return [
+								'leccion_id' => $item->Lec_IdLeccion,
+								'leccion_titulo' => $item->Lec_Titulo,
+								'leccion_descripcion' => $item->Lec_Descripcion,
+								'modulo_titulo' => $item->Moc_Titulo,
+							];
+						});
+					$datatable_response['data'] = $rows;
+					$datatable_response['query'] = DB::getQueryLog();
+					$this->_view->responseJson($datatable_response);
+				}
+			}
+		}
+
     public function encuestas ($curso_id) {
         $this->_acl->autenticado();
         if ($this->_acl->tienePermisos('crear_encuestas_leccion')) {
@@ -399,15 +507,16 @@ class gleccionController extends elearningController {
                 $curso = $mod_curso->getCursoById($curso_id);
                 $mod_modulo = $this->loadModel("_gestionModulo");
                 $mod_leccion = $this->loadModel("_gestionLeccion");
-                $modulos = $mod_modulo->getModulos($curso_id);
-                $mod_ids = [];
-                foreach ($modulos as $key => $value) {
-                    $mod_ids[] = $value['Moc_IdModuloCurso'];
-                }
-                $encuestas = Leccion::getByModulos($mod_ids)->getEncuestas()->get();
+								$modulos = $mod_modulo->getModulos($curso_id);
+                // $mod_ids = [];
+                // foreach ($modulos as $key => $value) {
+                //     $mod_ids[] = $value['Moc_IdModuloCurso'];
+                // }
+                // $encuestas = Leccion::getByModulos($mod_ids)->getEncuestas()->get();
                 // dd($encuestas);
-                $data['encuestas'] = $encuestas;
+                // $data['encuestas'] = $encuestas;
                 $data['active'] = 'encuestas';
+                $data['modulos'] = $modulos;
                 $data['curso'] = $curso;
                 $data['idcurso'] = $curso['Cur_IdCurso'];
                 $data['other_tags'] = [$lang->get('str_encuestas')];

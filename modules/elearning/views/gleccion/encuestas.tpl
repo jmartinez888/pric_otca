@@ -27,7 +27,7 @@
         </div>
     </div>
     <div class="col-sm-12 pb-4">
-      <a href="{$_layoutParams.root}elearning/gleccion/_view_finalizar_registro/{$idcurso}" class="btn btn-danger margin-t-10 " id="btn_nuevo" ><i class="glyphicon glyphicon-triangle-left"></i> Regresar</a>
+      <a href="{$_layoutParams.root}elearning/gleccion/_view_finalizar_registro/{$idcurso}" class="btn btn-danger margin-t-10 " id="btn_nuevo" ><i class="glyphicon glyphicon-triangle-left"></i> {$lang->get('str_regresar')}</a>
     </div>
 
 		<div class="col-sm-12">
@@ -38,57 +38,62 @@
             <strong>{$lang->get('str_encuestas')}</strong>
           </h3>
         </div>
-        <div class="panel-body" style=" margin: 15px 25px">
-          <div class="col-lg-12" id="formulario_encuestas_vue">
-          	<a href="{$_layoutParams.root}elearning/gleccion/agregar_encuesta/{$curso['Cur_IdCurso']}" class="btn btn-success margin-t-10 " id="" ><i class="glyphicon glyphicon-triangle-plus"></i> Agregar encuesta</a>
-            <div class="table-responsive" style="width: 100%">
-              <table class="table" id="tblMisCursos">
-                <thead>
-                  <tr>
-                    <th>{$lang->get('str_encuesta')}</th>
-                    <th>{$lang->get('str_descripcion')}</th>
-                    <th>{$lang->get('str_modulo')}</th>
-                    <th>{$lang->get('str_operacion')}</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {foreach $encuestas as $item}
-                    <tr>
-                      <td>{$item->Lec_Titulo}</td>
-                      <td>{$item->Lec_Descripcion}</td>
-                      <td>{$item->modulo->Moc_Titulo}</td>
-                      <td>
-                        <a href="{$_layoutParams.root}elearning/gleccion/encuesta/{$item->Lec_IdLeccion}" class="btn btn-default  btn-sm" data-toggle="tooltip" data-placement="bottom" title="{$lang->get('str_ver_respuestas')}"><i class="glyphicon glyphicon-pencil"></i></a>
-                        <button data-id="{$item->Lec_IdLeccion}" @click="onClick_deleteEncuesta({$item->Lec_IdLeccion})" class="btn btn-default  btn-sm" data-toggle="tooltip" data-placement="bottom" title="{$lang->get('str_eliminar')}"><i class="glyphicon glyphicon-trash"></i></button>
-                      </td>
-                    </tr>
-                  {/foreach}
-                </tbody>
-              </table>
+        <div class="panel-body" id="formulario_encuestas_vue">
+          
+          <div class="col-lg-12">
+            <form class="form">
+              <div class="form-group">
+                <a href="{$_layoutParams.root}elearning/gleccion/agregar_encuesta/{$curso['Cur_IdCurso']}" class="btn btn-success" id="" ><i class="glyphicon glyphicon-triangle-plus"></i> {$lang->get('elearning_cursos_agregar_encuesta')}</a>
+              </div>
+            </form>
+          </div>
+          <div class="col-lg-12">
+              <form class="form-inline" role="form" @submit.prevent="onSubmit_filtrarEncuestas">
+                <div class="form-group">
+                  <input type="text" v-model="filter.txt_encuesta" class="form-control" id="" placeholder="{$lang->get('str_encuesta')}">
+                </div>
+                 
+                <div class="form-group">
+                  <label for="sel_modulos">{$lang->get('str_modulos')}</label>
+                  <select id="sel_modulos"  class="form-control" v-model="filter.sel_modulo">
+                    <option value="-1">{$lang->get('str_todas')}</option>
+                    {foreach $modulos as $item}
+                    <option value="{$item.Moc_IdModuloCurso}">{$item.Moc_Titulo}</option>
+                    {/foreach}
+                  </select>
+                </div>
+                <button type="submit" class="btn btn-primary">{$lang->get('str_buscar')}</button>
+              </form>
             </div>
+          <div class="col-lg-12">
+            <table class="table wi-100" id="tbl_encuestas" ref="tbl_encuestas">
+              <thead>
+                <tr>
+                  <th>{$lang->get('str_encuesta')}</th>
+                  <th>{$lang->get('str_descripcion')}</th>
+                  <th>{$lang->get('str_modulo')}</th>
+                  <th>{$lang->get('str_operacion')}</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
           </div>
         </div>
       </div>
 		</div>
-
 </div>
-
-
-
-
-
-
-
-
 {/block}
 {block 'template' append}
-	{if $formulario != null}
-  	{include 'input_tags.tpl'}
-	{/if}}
-
+<template id="tpl_btn_encuestas">
+    <a href="{$_layoutParams.root}elearning/gleccion/encuesta/{literal}{{leccion_id}}{/literal}" class="btn btn-default btn-acciones  btn-sm" data-toggle="tooltip" data-placement="bottom" title="{$lang->get('str_editar')}"><i class="glyphicon glyphicon-pencil"></i></a>
+    <button data-id="{literal}{{leccion_id}}{/literal}" class="btn btn-acciones btn-default  btn-sm btn_eliminar" data-toggle="tooltip" data-placement="bottom" title="{$lang->get('str_eliminar')}"><i class="glyphicon glyphicon-trash"></i></button>
+</template>
 {/block}
 {block 'js' append}
-
+<script type="text/javascript">
+var CURSO_ID = {$idcurso};
+var MODO_LECCION = 'encuestas';
+</script>
 <script src="{BASE_URL}modules/elearning/views/gestion/js/core/util.js" type="text/javascript"></script>
 <script src="{BASE_URL}public/js/axios/dist/axios.min.js" type="text/javascript"></script>
 <script src="{BASE_URL}public/js/vuejs/vue.min.js" type="text/javascript"></script>

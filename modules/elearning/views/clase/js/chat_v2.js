@@ -191,10 +191,11 @@ $(document).ready(() => {
         
         },
         onSocket_CHAT: function (msg) {
+            console.log(msg)
             this.AddMensaje(USUARIO.id == msg.usuario ? this.MSG.PROPIO : this.MSG.OTRO, msg.id, moment(msg.hora), msg.msg, {
               usuario_nombres: msg.data_usuario.usuario_nombres,
               usuario_apellidos: msg.data_usuario.usuario_apellidos,
-              usuario_img_url: base_url('files/usuarios/img/' + msg.data_usuario.usuario_img, true)
+              usuario_img_url: base_url('files/usuarios/img/' + msg.data_usuario.usuario_image_url, true)
             });
           
           this.objNotification.pause()

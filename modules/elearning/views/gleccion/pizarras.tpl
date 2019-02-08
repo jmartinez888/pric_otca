@@ -40,7 +40,7 @@
         </div>
         <div class="panel-body" style=" margin: 15px 25px">
           <div class="col-lg-12" id="formulario_encuestas_vue">
-          	<a href="{$_layoutParams.root}elearning/gleccion/agregar_encuesta/{$curso['Cur_IdCurso']}" class="btn btn-success margin-t-10 " id="" ><i class="glyphicon glyphicon-triangle-plus"></i> {$lang->get('elearning_cursos_agregar_pizarra')}</a>
+          	<a href="{$_layoutParams.root}elearning/gleccion/agregar_pizarra/{$curso['Cur_IdCurso']}" class="btn btn-success margin-t-10 " id="" ><i class="glyphicon glyphicon-triangle-plus"></i> {$lang->get('elearning_cursos_agregar_pizarra')}</a>
             <div class="table-responsive" style="width: 100%">
               <table class="table" id="tblMisCursos">
                 <thead>
@@ -59,7 +59,7 @@
                       <td>{$item->modulo->Moc_Titulo}</td>
                       <td>
                         <a href="{$_layoutParams.root}elearning/gleccion/_view_leccion/{$curso['Cur_IdCurso']}/{$item->Moc_IdModuloCurso}/{$item->Lec_IdLeccion}" class="btn btn-default  btn-sm" data-toggle="tooltip" data-placement="bottom" title="{$lang->get('str_ver_respuestas')}"><i class="glyphicon glyphicon-pencil"></i></a>
-                        <a href="{$_layoutParams.root}elearning/gleccion/asistencia/{$item->Lec_IdLeccion}" class="btn btn-default  btn-sm" data-toggle="tooltip" data-placement="bottom" title="{$lang->get('str_matriculados')}"><i class="glyphicon glyphicon-user"></i></a>
+                        <a href="{$_layoutParams.root}elearning/gleccion/asistencia/{$item->Lec_IdLeccion}" class="btn btn-default  btn-sm" data-toggle="tooltip" data-placement="bottom" title="{$lang->get('str_asistencia')}"><i class="glyphicon glyphicon-user"></i></a>
                         <button data-id="{$item->Lec_IdLeccion}" @click="onClick_deleteEncuesta({$item->Lec_IdLeccion})" class="btn btn-default  btn-sm" data-toggle="tooltip" data-placement="bottom" title="{$lang->get('str_eliminar')}"><i class="glyphicon glyphicon-trash"></i></button>
                       </td>
                     </tr>
