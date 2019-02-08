@@ -250,7 +250,7 @@ class indexModel extends Model {
         }
     }
 
-    public function getLineaTematica($Lit_IdLineaTematica, $Idi_IdIdioma="es") {
+    public function getLineaTematica($Lit_IdLineaTematica) {
         try {
             $post = $this->_db->query(
                     "SELECT Lit_Nombre, Lit_IdLineaTematica
