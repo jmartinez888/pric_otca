@@ -73,7 +73,7 @@ class moduloModel extends Model {
       M.Moc_FechaReg,
       M.Moc_Estado,
       M.Row_Estado,
-      fn_devolverIdioma('modulo_curso',m.Moc_IdModuloCurso,,'$Idi_IdIdioma',M.Idi_IdIdioma) Idi_IdIdioma 
+      fn_devolverIdioma('modulo_curso',m.Moc_IdModuloCurso,'$Idi_IdIdioma',M.Idi_IdIdioma) Idi_IdIdioma 
       FROM modulo_curso M
         INNER JOIN curso C ON C.Cur_IdCurso = M.Cur_IdCurso
         WHERE M.Cur_IdCurso = '{$curso}' AND M.Moc_IdModuloCurso = '{$modulo}'
