@@ -11,10 +11,10 @@ class indexModel extends Model {
             // $post = $this->_db->query(
             //         "SELECT f.*,(SELECT COUNT(Com_IdComentario) FROM comentarios c WHERE c.For_IdForo=f.For_IdForo) as For_TComentarios  FROM foro f WHERE f.For_Funcion LIKE '%$iFor_Funcion%' AND Row_Estado=1 ORDER BY f.For_FechaCreacion DESC");
             $post = $this->_db->query(
-                    "SELECT  fn_TraducirContenido('foro', 'For_Titulo', f.For_IdForo, '$Idi_IdIdiama', f.For_Titulo) For_Titulo,
+                    "SELECT  fn_TraducirContenido('foro', 'For_Titulo', f.For_IdForo, '$Idi_IdIdioma', f.For_Titulo) For_Titulo,
                              fn_TraducirContenido('foro', 'For_Resumen', f.For_IdForo, '$Idi_IdIdioma', f.For_Resumen) For_Resumen, 
-                             fn_TraducirContenido('foro', 'For_Descripcion', f.For_IdForo, '$Idi_IdIdiama', f.For_Descripcion) For_Descripcion, 
-                             fn_TraducirContenido('foro', 'For_PalabrasClaves', f.For_IdForo, '$Idi_IdIdiama', f.For_PalabrasClaves) For_PalabrasClaves, f.Row_Estado,
+                             fn_TraducirContenido('foro', 'For_Descripcion', f.For_IdForo, '$Idi_IdIdioma', f.For_Descripcion) For_Descripcion, 
+                             fn_TraducirContenido('foro', 'For_PalabrasClaves', f.For_IdForo, '$Idi_IdIdioma', f.For_PalabrasClaves) For_PalabrasClaves, f.Row_Estado,
                              fn_devolverIdioma('foro', f.For_IdForo, '$Idi_IdIdioma', f.Idi_IdIdioma) Idi_IdIdioma,
                              f.For_FechaCreacion, f.For_FechaCierre, f.For_Update, f.For_Funcion, f.For_Tipo, f.For_Estado, f.For_IdPadre, f.Lit_IdLineaTematica, f.Usu_IdUsuario, f.Ent_Id_Entidad,
                              f.Idi_IdIdioma, f.Rec_IdRecurso, f.Row_Estado,
@@ -33,7 +33,7 @@ class indexModel extends Model {
         try {
             $post = $this->_db->query(
                     "SELECT f.For_IdForo, 
-                            fn_TraducirContenido('foro', 'For_Titulo', f.For_IdForo, '$Idi_IdIdiama', f.For_Titulo) For_Titulo, 
+                            fn_TraducirContenido('foro', 'For_Titulo', f.For_IdForo, '$Idi_IdIdioma', f.For_Titulo) For_Titulo, 
                             fn_TraducirContenido('foro', 'For_Resumen', f.For_IdForo, '$Idi_IdIdioma', f.For_Resumen) For_Resumen, f.Row_Estado,
                             fn_devolverIdioma('foro', f.For_IdForo, '$Idi_IdIdioma', f.Idi_IdIdioma) Idi_IdIdioma
                             f.For_Funcion,f.For_FechaCreacion,f.For_FechaCierre,f.For_Update,
@@ -190,10 +190,10 @@ class indexModel extends Model {
     public function getForo_x_idforo($iFor_IdForo, $Id_IdIdioma="es") {
         try {
             $sql= "SELECT f.For_IdForo,
-                          fn_TraducirContenido('foro', 'For_Titulo', f.For_IdForo, '$Idi_IdIdiama', f.For_Titulo) For_Titulo,
+                          fn_TraducirContenido('foro', 'For_Titulo', f.For_IdForo, '$Idi_IdIdioma', f.For_Titulo) For_Titulo,
                           fn_TraducirContenido('foro', 'For_Resumen', f.For_IdForo, '$Idi_IdIdioma', f.For_Resumen) For_Resumen, 
-                          fn_TraducirContenido('foro', 'For_Descripcion', f.For_IdForo, '$Idi_IdIdiama', f.For_Descripcion) For_Descripcion, 
-                          fn_TraducirContenido('foro', 'For_PalabrasClaves', f.For_IdForo, '$Idi_IdIdiama', f.For_PalabrasClaves) For_PalabrasClaves, f.Row_Estado,
+                          fn_TraducirContenido('foro', 'For_Descripcion', f.For_IdForo, '$Idi_IdIdioma', f.For_Descripcion) For_Descripcion, 
+                          fn_TraducirContenido('foro', 'For_PalabrasClaves', f.For_IdForo, '$Idi_IdIdioma', f.For_PalabrasClaves) For_PalabrasClaves, f.Row_Estado,
                           fn_devolverIdioma('foro', f.For_IdForo, '$Idi_IdIdioma', f.Idi_IdIdioma) Idi_IdIdioma,
                           f.For_FechaCreacion, f.For_FechaCierre, f.For_Update, f.For_Funcion, f.For_Tipo, f.For_Estado, f.For_IdPadre, f.Lit_IdLineaTematica, f.Usu_IdUsuario, f.Ent_Id_Entidad,
                           f.Idi_IdIdioma, f.Rec_IdRecurso, 
@@ -295,10 +295,10 @@ class indexModel extends Model {
         try {
             $post = $this->_db->query(
                     "SELECT f.For_IdForo,
-                            fn_TraducirContenido('foro', 'For_Titulo', f.For_IdForo, '$Idi_IdIdiama', f.For_Titulo) For_Titulo,
+                            fn_TraducirContenido('foro', 'For_Titulo', f.For_IdForo, '$Idi_IdIdioma', f.For_Titulo) For_Titulo,
                             fn_TraducirContenido('foro', 'For_Resumen', f.For_IdForo, '$Idi_IdIdioma', f.For_Resumen) For_Resumen, 
-                            fn_TraducirContenido('foro', 'For_Descripcion', f.For_IdForo, '$Idi_IdIdiama', f.For_Descripcion) For_Descripcion, 
-                            fn_TraducirContenido('foro', 'For_PalabrasClaves', f.For_IdForo, '$Idi_IdIdiama', f.For_PalabrasClaves) For_PalabrasClaves, f.Row_Estado,
+                            fn_TraducirContenido('foro', 'For_Descripcion', f.For_IdForo, '$Idi_IdIdioma', f.For_Descripcion) For_Descripcion, 
+                            fn_TraducirContenido('foro', 'For_PalabrasClaves', f.For_IdForo, '$Idi_IdIdioma', f.For_PalabrasClaves) For_PalabrasClaves, f.Row_Estado,
                             fn_devolverIdioma('foro', f.For_IdForo, '$Idi_IdIdioma',f.Idi_IdIdioma) Idi_IdIdioma,
                             f.For_FechaCreacion, f.For_FechaCierre, f.For_Update, f.For_Funcion, f.For_Tipo, f.For_Estado, f.For_IdPadre, f.Lit_IdLineaTematica, f.Usu_IdUsuario, f.Ent_Id_Entidad,
                             f.Idi_IdIdioma, f.Rec_IdRecurso,
