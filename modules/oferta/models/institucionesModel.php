@@ -355,7 +355,7 @@ public function __construct()
         try{
             $sql = "SELECT u.Ubi_IdUbigeo, p.Pai_IdPais, 
             fn_TraducirContenido('pais','Pai_Nombre',p.Pai_IdPais,'$Idi_IdIdioma', p.Pai_Nombre)Nombre,
-            fn_devolverIdioma('pais',p.Pai_IdPais,'$Idi_IdIdioma',u.Idi_IdIdioma)Idi_IdIdioma, 
+            fn_devolverIdioma('pais',p.Pai_IdPais,'$Idi_IdIdioma',p.Idi_IdIdioma)Idi_IdIdioma, 
             
             COUNT(i.Ins_Nombre) AS Conteo from ubigeo u INNER JOIN institucion i on u.Ubi_IdUbigeo=i.Ubi_IdUbigeo INNER JOIN pais p on p.Pai_IdPais=u.Pai_IdPais GROUP BY p.Pai_Nombre";
             $result = $this->_db->prepare($sql);
