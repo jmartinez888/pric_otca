@@ -346,7 +346,7 @@ class indexModel extends Model {
         }
     }
 
-    public function getComentarios_x_idcomentario($iCom_IdComentario) {
+    public function getComentarios_x_idcomentario($iCom_IdComentario, $Idi_IdIdioma) {
         try {
             $post = $this->_db->query(
                     "SELECT c.Com_IdComentario,
