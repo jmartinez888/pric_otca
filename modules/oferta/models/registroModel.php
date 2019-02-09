@@ -45,7 +45,7 @@ public function __construct()
 	    
 	    fn_TraducirContenido('institucion','Ins_Nombre',i.Ins_IdInstitucion,'$Idi_IdIdioma',i.Ins_Nombre)Ins_Nombre,
             i.Row_Estado,
-            fn_devolverIdioma('institucion',i.Ins_IdInstitucion,'$Idi_IdIdioma',i.Idi_IdIdioma)Idi_IdIdioma,
+            fn_devolverIdioma('institucion',i.Ins_IdInstitucion,'$Idi_IdIdioma',i.Idi_IdIdioma)Idi_IdIdioma
 	    
 	    from institucion i ";
             $result = $this->_db->prepare($sql);
