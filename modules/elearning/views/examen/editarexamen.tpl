@@ -10,7 +10,7 @@
           </div>
         </div>
       </div>
-        <h3>Editar Examen</h3>
+        <h3>{$lenguaje["elearning_label_editexam"]}</h3>
         <hr class="cursos-hr">
     </div>
     <div class=" col-xs-12">
@@ -21,17 +21,17 @@
             <input type="hidden" name="hidden_curso" id="hidden_curso" value="{$idcurso}">
            
             <div class="form-group">
-                <label class="col-xs-3 control-label">Título: </label>
+                <label class="col-xs-3 control-label">{$lenguaje["elearning_editexam_titulo"]}</label>
                 <div class="col-xs-9 ">
                     <input class="form-control" id ="titulo" type="text" name="titulo" value="{$examen.Exa_Titulo|default:""}" placeholder="Título"/>
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-xs-3 control-label" >Módulo: </label>
+                <label class="col-xs-3 control-label" >{$lenguaje["elearning_editexam_modulo"]}</label>
                 <div class="col-xs-9">
                     <select class="form-control" id="selectmodulo" name="selectmodulo">
                         {if isset($modulos) && count($modulos)}
-                        <option value="0">Seleccione módulo</option>
+                        <option value="0">{$lenguaje["elearning_editexam_selmodulo"]}</option>
                         {foreach item=ll from=$modulos}
                             <option value="{$ll.Moc_IdModuloCurso}" {if $ll.Moc_IdModuloCurso == $examen.Moc_IdModulo} selected="selected" {/if}>{$ll.Moc_Titulo}</option>
                         {/foreach}
@@ -43,7 +43,7 @@
             <div id="completar">
                 {if isset($lecciones) && count($lecciones)}
                 <div class="form-group">
-                    <label class="col-xs-3 control-label" >Lección: </label>
+                    <label class="col-xs-3 control-label" >{$lenguaje["elearning_editexam_lecc"]}</label>
                     <div class="col-xs-9">
                         <select class="form-control" id="selectleccion" name="selectleccion">
                             {foreach item=ll from=$lecciones}
@@ -53,13 +53,13 @@
                     </div>
                 </div>  
                 <div class="form-group">
-                    <label class="col-xs-3 control-label" >Porcentaje Global: </label>
+                    <label class="col-xs-3 control-label" >{$lenguaje["elearning_editexam_PorcG"]}</label>
                     <div class="col-xs-9">
-                        <input data-toggle="tooltip" data-placement="bottom" title="El valor debe ser inferior o igual a {$porcentaje}" class="form-control" id ="porcentaje" type="number" name="porcentaje" value="{$examen.Exa_Porcentaje|default:'0'}" placeholder="Porcentaje" max="{$porcentaje}" min="0" value="0"/>
+                        <input data-toggle="tooltip" data-placement="bottom" title="{$lenguaje["elearning_editexam_label"]} {$porcentaje}" class="form-control" id ="porcentaje" type="number" name="porcentaje" value="{$examen.Exa_Porcentaje|default:'0'}" placeholder="Porcentaje" max="{$porcentaje}" min="0" value="0"/>
                     </div>
                 </div>   
                 <div class="form-group">
-                    <label class="col-xs-3 control-label" >Puntaje Máximo: </label>
+                    <label class="col-xs-3 control-label" >{$lenguaje["elearning_editexam_puntaje"]} </label>
                     <div class="col-xs-2 col-lg-1 ">
                         <p class="  margin-t-10" > 
                             <input type="radio" value="20" class="radioalt " name="puntaje" {if $examen.Exa_Peso == 20 } checked="checked" {/if} {if isset($examenAlumno) && $examenAlumno.Exa_IdExamen > 0 } disabled="" {/if}  /> 20</p>
@@ -72,19 +72,19 @@
                             <em> 
                                 {if isset($examenAlumno) && $examenAlumno.Exa_IdExamen > 0 } 
                                     <h5>
-                                        No se puede modificar el peso del examen porque existen exaamenes resueltos por alumnos. 
-                                    </h5>  
+                                        {$lenguaje["elearning_editexam_label2"]} 
+                                    </h5> 
                                 {else}
                                     <h5>
-                                        Si modifica el puntaje máximo afectara los puntos en cada pregunta del examen. 
-                                    </h5> 
+                                        {$lenguaje["elearning_editexam_label3"]}  
+                                    </h5>
                                 {/if}  
                             </em>
                         </blockquote> 
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-xs-3 control-label" >Número Máximo de Intentos: </label>
+                    <label class="col-xs-3 control-label" >{$lenguaje["elearning_editexam_intentos"]} </label>
                     <div class="col-xs-9">
                         <select class="form-control" id="intentos" name="intentos">                            
                             <option {if $examen.Exa_Intentos == 1} selected="selected" {/if} value="1">1</option>
@@ -97,15 +97,15 @@
                     </div>
                 </div>
                 {else}
-                <center>No hay lecciones disponibles<center>
+                <center>{$lenguaje["elearning_editexam_lecc1"]} <center>
                 {/if}
             </div>
             <div class="form-group">
                 <div class="col-xs-3 col-md-2 pull-right">
-                    <button class="btn btn-info pull-right " id="prepararPregunta" name="prepararPregunta"> Preparar preguntas </button>
+                    <button class="btn btn-info pull-right " id="prepararPregunta" name="prepararPregunta"> {$lenguaje["elearning_editexam_B2"]} </button>
                 </div>
                 <div class="col-xs-3 pull-right">
-                    <button class="btn btn-success pull-right " id="guardarEditar" name="guardarEditar"> Guardar </button>
+                    <button class="btn btn-success pull-right " id="guardarEditar" name="guardarEditar"> {$lenguaje["elearning_editexam_BG"]} </button>
                 </div>
             </div>
         </form>
