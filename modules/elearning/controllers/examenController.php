@@ -1299,7 +1299,7 @@ class examenController extends elearningController {
         Session::set("learn_param_curso", $idcurso);
 
 
-        $alternativas =$this->examen->getAlternativas($id);
+        $alternativas =$this->examen->getAlternativas($id, Cookie::lenguaje());
 
         $preguntaedit =$this->examen->getValorPregunta($id);
 
