@@ -49,8 +49,8 @@ class gmoduloController extends elearningController {
     $Mmodel = $this->loadModel("_gestionModulo");
     $Tmodel = $this->loadModel("trabajo");
     $lang = $this->_view->getLenguaje('elearning_cursos', false, true);
-    $curso = $Cmodel->getCursoById($id);
-    $modulos = $Mmodel->getModulos($id);
+    $curso = $Cmodel->getCursoById($id, Cookie::lenguaje());
+    $modulos = $Mmodel->getModulos($id, Cookie::lenguaje());
 
     for ($i = 0; $i < count($modulos); $i++) {
       $modulos[$i]["TAREAS"] = $Tmodel->getTrabajoXModulo($modulos[$i]["Moc_IdModuloCurso"]);
