@@ -119,7 +119,7 @@ public function __construct()
         try{
             $sql = "SELECT DISTINCT 
             
-            fn_TraducirContenido('oferta','Ofe_Tipo',o.Ofe_IdOferta,'$Idi_IdIdioma', o.Ofe_Tipo)Ofe_Tipo, 
+            fn_TraducirContenido('oferta','Ofe_Tipo',o.Ofe_IdOferta,'$Idi_IdIdioma', o.Ofe_Tipo)Tipo, 
             o.row_estado,
             fn_devolverIdioma('oferta',o.Ofe_IdOferta,'$Idi_IdIdioma',o.Idi_IdIdioma)Idi_IdIdioma,
             COUNT(o.Ofe_IdOferta) AS CantidadRegistros 
