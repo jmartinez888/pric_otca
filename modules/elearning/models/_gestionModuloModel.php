@@ -10,8 +10,18 @@ class _gestionModuloModel extends Model {
     $this->execQuery($sql);
   }
 
-  public function getModulos($curso){
-    $sql = "SELECT * FROM modulo_curso WHERE Cur_IdCurso = {$curso} AND Row_Estado = 1";
+  public function getModulos($curso, $Idi_IdIdioma = "es"){
+    $sql = "SELECT Moc_IdModuloCurso,
+    Cur_IdCurso,
+    fn_TraducirContenido('modulo_curso','Moc_Titulo',Moc_IdModuloCurso,'$Idi_IdIdioma',Moc_Titulo) Moc_Titulo,
+    fn_TraducirContenido('modulo_curso','Moc_Descripcion',Moc_IdModuloCurso,'$Idi_IdIdioma',Moc_Descripcion) Moc_Descripcion,
+    fn_TraducirContenido('modulo_curso','Moc_TiempoDedicacion',Moc_IdModuloCurso,'$Idi_IdIdioma',Moc_TiempoDedicacion) Moc_TiempoDedicacion,
+    Moc_Porcentaje,
+    Moc_FechaReg,
+    Moc_Estado,
+    Row_Estado,
+    fn_devolverIdioma('modulo_curso',Moc_IdModuloCurso,'$Idi_IdIdioma',Idi_IdIdioma) Idi_IdIdioma
+    FROM modulo_curso WHERE Cur_IdCurso = {$curso} AND Row_Estado = 1";
     return $this->getArray($sql);
   }
 

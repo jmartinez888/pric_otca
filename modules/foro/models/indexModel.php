@@ -306,7 +306,7 @@ class indexModel extends Model {
         }
     }
 
-    public function getComentarios_x_idforo($iFor_IdForo, $iPagina = 1, $iRegistrosXPagina = CANT_REG_PAG) {
+    public function getComentarios_x_idforo($iFor_IdForo, $iPagina = 1, $iRegistrosXPagina = CANT_REG_PAG, $Idi_IdIdioma="es") {
         try {
             // $registroInicio = 0;
             // if ($iPagina > 0) {
@@ -316,7 +316,12 @@ class indexModel extends Model {
             //         "SELECT c.Com_IdComentario,c.Com_Descripcion,c.Com_Fecha,c.Com_Estado,c.For_IdForo,c.Idi_IdIdioma,c.Row_Estado,u.Usu_Nombre,u.Usu_Apellidos, u.Usu_IdUsuario FROM comentarios c INNER JOIN usuario u ON u.Usu_IdUsuario=c.Usu_IdUsuario WHERE c.For_IdForo={$iFor_IdForo} AND c.Row_Estado = 1 and Com_IdPadre IS NULL ORDER BY c.Com_Fecha DESC
             //         LIMIT registroInicio, iRegistrosXPagina");
             $post = $this->_db->query(
-                    "SELECT c.Com_IdComentario,c.Com_Descripcion,c.Com_Fecha,c.Com_Estado,c.For_IdForo,c.Idi_IdIdioma,c.Row_Estado,u.Usu_Nombre,u.Usu_Apellidos, u.Usu_IdUsuario FROM comentarios c INNER JOIN usuario u ON u.Usu_IdUsuario=c.Usu_IdUsuario WHERE c.For_IdForo={$iFor_IdForo} AND c.Row_Estado = 1 and Com_IdPadre IS NULL ORDER BY c.Com_Fecha DESC");
+                    "SELECT c.Com_IdComentario,
+                            fn_TraducirContenido('comentarios', 'Com_Descripcion', c.Com_IdComentario, '$Idi_IdIdioma', c.Com_Descripcion) Com_Descripcion, c.Row_Estado,
+                            fn_devolverIdioma('comentarios', c.Com_IdComentario, '$Idi_IdIdioma', c.Idi_IdIdioma) Idi_IdIdioma,
+                            c.Com_Fecha,c.Com_Estado,c.For_IdForo,c.Idi_IdIdioma,
+                            u.Usu_Nombre,u.Usu_Apellidos, u.Usu_IdUsuario 
+                   FROM comentarios c INNER JOIN usuario u ON u.Usu_IdUsuario=c.Usu_IdUsuario WHERE c.For_IdForo={$iFor_IdForo} AND c.Row_Estado = 1 and Com_IdPadre IS NULL ORDER BY c.Com_Fecha DESC");
             return $post->fetchAll();
         } catch (PDOException $exception) {
             $this->registrarBitacora("foro(indexModel)", "getComentarios_x_idforo", "Error Model", $exception);
@@ -325,10 +330,15 @@ class indexModel extends Model {
     }
 
 
-    public function getComentario_x_idforo($iFor_IdForo, $iCom_IdComentario) {
+    public function getComentario_x_idforo($iFor_IdForo, $iCom_IdComentario, $Idi_IdIdioma="es") {
         try {
             $post = $this->_db->query(
-                    "SELECT c.Com_IdComentario,c.Com_IdPadre,c.Com_Descripcion,c.Com_Fecha,c.Com_Estado,c.For_IdForo,c.Idi_IdIdioma,c.Row_Estado,u.Usu_Nombre,u.Usu_Apellidos, u.Usu_IdUsuario FROM comentarios c INNER JOIN usuario u ON u.Usu_IdUsuario=c.Usu_IdUsuario WHERE c.For_IdForo={$iFor_IdForo} AND c.Row_Estado = 1 AND c.Com_IdComentario = {$iCom_IdComentario}");
+                    "SELECT c.Com_IdComentario,c.Com_IdPadre,
+                            fn_TraducirContenido('comentarios', 'Com_Descripcion', c.Com_IdComentario, '$Idi_IdIdioma', c.Com_Descripcion) Com_Descripcion, c.Row_Estado,
+                            fn_devolverIdioma('comentarios', c.Com_IdComentario, '$Idi_IdIdioma', c.Idi_IdIdioma) Idi_IdIdioma,
+                            c.Com_Fecha,c.Com_Estado,c.For_IdForo,c.Idi_IdIdioma,
+                            u.Usu_Nombre,u.Usu_Apellidos, u.Usu_IdUsuario 
+                    FROM comentarios c INNER JOIN usuario u ON u.Usu_IdUsuario=c.Usu_IdUsuario WHERE c.For_IdForo={$iFor_IdForo} AND c.Row_Estado = 1 AND c.Com_IdComentario = {$iCom_IdComentario}");
             return $post->fetch();
         } catch (PDOException $exception) {
             $this->registrarBitacora("foro(indexModel)", "getComentario_x_idforo", "Error Model", $exception);
@@ -339,7 +349,12 @@ class indexModel extends Model {
     public function getComentarios_x_idcomentario($iCom_IdComentario) {
         try {
             $post = $this->_db->query(
-                    "SELECT c.Com_IdComentario,c.Com_Descripcion,c.Com_Fecha,c.Com_Estado,c.For_IdForo,c.Idi_IdIdioma,c.Row_Estado,u.Usu_IdUsuario, u.Usu_Nombre,u.Usu_Apellidos FROM comentarios c INNER JOIN usuario u ON u.Usu_IdUsuario=c.Usu_IdUsuario WHERE c.Com_IdPadre={$iCom_IdComentario} AND c.Row_Estado = 1 ORDER BY c.Com_Fecha DESC");
+                    "SELECT c.Com_IdComentario,
+                            fn_TraducirContenido('comentarios', 'Com_Descripcion', c.Com_IdComentario, '$Idi_IdIdioma', c.Com_Descripcion) Com_Descripcion, c.Row_Estado,
+                            fn_devolverIdioma('comentarios', c.Com_IdComentario, '$Idi_IdIdioma', c.Idi_IdIdioma) Idi_IdIdioma,
+                            c.Com_Fecha,c.Com_Estado,c.For_IdForo,c.Idi_IdIdioma,u.Usu_IdUsuario, 
+                            u.Usu_Nombre,u.Usu_Apellidos 
+                    FROM comentarios c INNER JOIN usuario u ON u.Usu_IdUsuario=c.Usu_IdUsuario WHERE c.Com_IdPadre={$iCom_IdComentario} AND c.Row_Estado = 1 ORDER BY c.Com_Fecha DESC");
             return $post->fetchAll();
         } catch (PDOException $exception) {
             $this->registrarBitacora("foro(indexModel)", "getComentarios_x_idcomentario", "Error Model", $exception);
