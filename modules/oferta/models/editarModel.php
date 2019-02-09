@@ -4,10 +4,12 @@ public function __construct()
     {
         parent::__construct();
     }
-    public function getPaises($idioma)
+    public function getPaises($idioma, , $Idi_IdIdioma = "es")
     {
         try{
-            $sql = "SELECT fn_TraducirContenido('pais','Pai_Nombre',p.Pai_IdPais,'$idioma', p.Pai_Nombre) Nombre,p.Pai_IdPais from pais p ";
+            $sql = "SELECT fn_TraducirContenido('pais','Pai_Nombre',p.Pai_IdPais,'$Idi_IdIdioma', p.Pai_Nombre) Pai_Nombre,
+            fn_devolverIdioma('pais',p.Pai_IdPais,'$Idi_IdIdioma',p.$Idi_IdIdioma)Idi_IdIdioma,
+            p.Pai_IdPais from pais p ";
             $result = $this->_db->prepare($sql);
             $result->execute();
             $lista= $result->fetchAll(PDO::FETCH_ASSOC);
