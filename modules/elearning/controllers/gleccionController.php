@@ -612,7 +612,7 @@ class gleccionController extends elearningController {
         $Mmodel = $this->loadModel("_gestionModulo");  
         $_arquitectura = $this->loadModel('index','arquitectura');
 
-        $curso = $Cmodel->getCursoXId($id_curso);
+        $curso = $Cmodel->getCursoXId($id_curso, Cookie::lenguaje());
         $tipo = $Lmodel->getTipoLecccion( $curso["Moa_IdModalidad"]==2? " ": "" );
         $lecciones = $Lmodel->getLecciones($id_modulo, Cookie::lenguaje());
         $modulo = $Mmodel->getModuloId($id_modulo);
