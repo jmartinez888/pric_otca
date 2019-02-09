@@ -57,7 +57,11 @@ public function __construct()
     public function getIns()
     {
         try{
-            $sql = "SELECT i.Ins_IdInstitucion AS Id, i.Ins_Nombre AS Nombre from institucion i ";
+            $sql = "SELECT i.Ins_IdInstitucion AS Id,
+            fn_TraducirContenido('institucion','Ins_Nombre',i.Ins_IdInstitucion,'$Idi_IdIdioma',i.Ins_Nombre)Ins_Nombre,
+            i.Row_Estado,
+            fn_devolverIdioma('institucion','Ins_Nombre','$Idi_IdIdioma',i.Idi_IdIoma)Idi_IdIdioma,
+            from institucion i ";
             $result = $this->_db->prepare($sql);
             $result->execute();
             return $result->fetchAll(PDO::FETCH_ASSOC);
