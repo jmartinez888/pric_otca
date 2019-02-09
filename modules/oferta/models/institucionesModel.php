@@ -178,8 +178,7 @@ public function __construct()
             u.Ubi_Sede, 
             
             COUNT(i.Ins_Nombre) AS CantidadRegistros 
-            
-            
+                        
             FROM institucion i INNER JOIN ubigeo u ON i.Ubi_IdUbigeo=u.Ubi_IdUbigeo 
             INNER JOIN pais p ON p.Pai_IdPais=u.Pai_IdPais
             WHERE i.Ins_Nombre LIKE '%". $dato."%' AND p.Pai_Nombre LIKE '%".$pais."%' GROUP BY p.Pai_Nombre, u.Ubi_Sede, i.Ins_IdInstitucion ";
@@ -260,10 +259,9 @@ public function __construct()
             i.Ins_img, 
             i.Ins_WebSite, 
             i.Ins_latX, 
-            i.Ins_lng,
+            i.Ins_lngY,
             fn_devolverIdioma('institucion','Ins_IdInstitucion','$Idi_IdIdioma',i.Idi_IdIdioma)Idi_IdIdioma, 
-            
-            u.Ubi_Sede,
+            u.Ubi_Sede
             FROM institucion i 
             INNER JOIN ubigeo u ON i.Ubi_IdUbigeo=u.Ubi_IdUbigeo 
             INNER JOIN pais p ON p.Pai_IdPais=u.Pai_IdPais
@@ -355,7 +353,7 @@ public function __construct()
     public function getPaises($Idi_IdIdioma="es")
     {
         try{
-            $sql = "SELECT u.Ubi_IdUbigeo, p.Pai_IdPais 
+            $sql = "SELECT u.Ubi_IdUbigeo, p.Pai_IdPais, 
             fn_TraducirContenido('pais','Pai_Nombre',p.Pai_IdPais,'$Idi_IdIdioma', p.Pai_Nombre) Pai_Nombre,
             fn_devolverIdioma('ubigeo',u.Ubi_IdUbigeo,'$Idi_IdIdioma',u.Idi_IdIdioma)Idi_IdIdioma, 
             
