@@ -130,8 +130,33 @@ class _gestionCursoModel extends Model {
   }
 
 
-  public function getCursoById($id) {
-      $res = $this->getArray("SELECT * FROM curso WHERE Cur_IdCurso = $id");
+  public function getCursoById($id, $Idi_IdIdioma) {
+      $res = $this->getArray("SELECT c.Cur_IdCurso,
+      c.Usu_IdUsuario,
+      c.Moa_IdModalidad,       
+      fn_TraducirContenido('curso','Cur_UrlBanner',c.Cur_IdCurso,'$Idi_IdIdioma',c.Cur_UrlBanner) Cur_UrlBanner,       
+      fn_TraducirContenido('curso','Cur_UrlImgPresentacion',c.Cur_IdCurso,'$Idi_IdIdioma',c.Cur_UrlImgPresentacion) Cur_UrlImgPresentacion, 
+      fn_TraducirContenido('curso','Cur_UrlVideoPresentacion',c.Cur_IdCurso,'$Idi_IdIdioma',c.Cur_UrlVideoPresentacion) Cur_UrlVideoPresentacion,
+      fn_TraducirContenido('curso','Cur_Titulo',c.Cur_IdCurso,'$Idi_IdIdioma',c.Cur_Titulo) Cur_Titulo,
+      fn_TraducirContenido('curso','Cur_Descripcion',c.Cur_IdCurso,'$Idi_IdIdioma',c.Cur_Descripcion) Cur_Descripcion,
+      fn_TraducirContenido('curso','Cur_PublicoObjetivo',c.Cur_IdCurso,'$Idi_IdIdioma',c.Cur_PublicoObjetivo) Cur_PublicoObjetivo,
+      fn_TraducirContenido('curso','Cur_ObjetivoGeneral',c.Cur_IdCurso,'$Idi_IdIdioma',c.Cur_ObjetivoGeneral) Cur_ObjetivoGeneral,
+      fn_TraducirContenido('curso','Cur_Metodologia',c.Cur_IdCurso,'$Idi_IdIdioma',c.Cur_Metodologia) Cur_Metodologia,
+      fn_TraducirContenido('curso','Cur_ReqHardware',c.Cur_IdCurso,'$Idi_IdIdioma',c.Cur_ReqHardware) Cur_ReqHardware,
+      fn_TraducirContenido('curso','Cur_ReqSoftware',c.Cur_IdCurso,'$Idi_IdIdioma',c.Cur_ReqSoftware) Cur_ReqSoftware,
+      fn_TraducirContenido('curso','Cur_Contacto',c.Cur_IdCurso,'$Idi_IdIdioma',c.Cur_Contacto) Cur_Contacto,
+      c.Cur_Duracion,
+      c.Cur_Vacantes,
+      c.Cur_FechaDesde,
+      c.Cur_FechaHasta,
+      c.Cur_Certificacion,
+      c.Cur_FechaReg,
+      c.Cur_FechaRegFinal,
+      c.Cur_EstadoRegistro,
+      c.Cur_Estado,
+      c.Row_Estado,
+      fn_devolverIdioma('curso',c.Cur_IdCurso,'$Idi_IdIdioma',c.Idi_IdIdioma) Idi_IdIdioma
+      FROM curso c WHERE c.Cur_IdCurso = $id");
       return count($res) > 0 ? $res[0] : null;
   }
 
