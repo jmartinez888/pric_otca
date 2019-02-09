@@ -517,11 +517,17 @@ class adminModel extends Model
         }
     }
 
-    public function getRolForo()
+    public function getRolForo($Idi_IdIdioma)
     {
         try {
             $post = $this->_db->query(
-                "SELECT r.* FROM rol r INNER JOIN modulo m ON m.Mod_IdModulo=r.Mod_IdModulo WHERE m.Mod_Codigo='foro' ORDER BY r.Rol_Nombre"
+                "SELECT r.Rol_IdRol,
+                        fn_TraducirContenido('rol','Rol_Nombre', r.Rol_IdRol, '$Idi_IdIdioma', r.Rol_Nombre) Rol_Nombre,
+                        fn_TraducirContenido('rol','Rol_Ckey', r.Rol_IdRol, '$Idi_IdIdioma', r.Rol_Ckey) Rol_Ckey, r.Row_Estado,
+                        fn_devolverIdioma('rol', r.Rol_IdRol, '$Idi_IdIdioma', r.Idi_IdIdioma) Idi_IdIdioma,
+                        r.Mod_IdModulo,
+                        r.Rol_Estado
+                FROM rol r INNER JOIN modulo m ON m.Mod_IdModulo=r.Mod_IdModulo WHERE m.Mod_Codigo='foro' ORDER BY r.Rol_Nombre"
             );
 
             return $post->fetchAll();
@@ -544,11 +550,18 @@ class adminModel extends Model
         }
     }
 
-    public function getPermisosMember($iFor_IdForo, $iUsu_IdUsuario, $iRol_IdRol)
+    public function getPermisosMember($iFor_IdForo, $iUsu_IdUsuario, $iRol_IdRol, $Idi_IdIdioma="es")
     {
         try {
             $post = $this->_db->query(
-                "SELECT $iFor_IdForo as For_IdForo,ur.Usu_IdUsuario,p.*,pr.Per_Valor,
+                "SELECT $iFor_IdForo as For_IdForo,ur.Usu_IdUsuario,
+                        r.Rol_IdRol,
+                        fn_TraducirContenido('rol','Rol_Nombre', r.Rol_IdRol, '$Idi_IdIdioma', r.Rol_Nombre) Rol_Nombre,
+                        fn_TraducirContenido('rol','Rol_Ckey', r.Rol_IdRol, '$Idi_IdIdioma', r.Rol_Ckey) Rol_Ckey, r.Row_Estado,
+                        fn_devolverIdioma('rol', r.Rol_IdRol, '$Idi_IdIdioma', r.Idi_IdIdioma) Idi_IdIdioma,
+                        r.Mod_IdModulo,
+                        r.Rol_Estado,
+                        pr.Per_Valor,
                     (SELECT ufp.Ufp_Estado FROM usuario_foro_permiso ufp WHERE ufp.Per_IdPermiso=p.Per_IdPermiso AND ufp.Usu_IdUsuario=$iUsu_IdUsuario AND ufp.For_IdForo=$iFor_IdForo) AS Ufp_Estado
                     FROM permisos p
                     INNER JOIN permisos_rol pr ON pr.Per_IdPermiso=p.Per_IdPermiso
@@ -668,11 +681,16 @@ class adminModel extends Model
         }
     }
 
-    public function listarActividadForo($iFor_IdForo)
+    public function listarActividadForo($iFor_IdForo, $Idi_IdIdioma="es")
     {
         try {
             $post = $this->_db->query(
-                "SELECT af.Acf_IdActividadForo AS id, af.Acf_Titulo AS title, af.Act_Resumen AS resumen, af.Act_FechaInicio AS 'start', af.Act_FechaFin AS 'end', af.For_IdForo, af.Act_Estado,af.Idi_IdIdioma FROM actividad_foro af WHERE For_IdForo=$iFor_IdForo AND Row_Estado=1"
+                "SELECT af.Acf_IdActividadForo AS id, 
+                        fn_TraducirContenido('actividad_foro', 'Acf_Titulo', af.Acf_IdActividadForo, '$Idi_IdIdioma', af.Acf_Titulo) Acf_Titulo, 
+                        fn_TraducirContenido('actividad_foro', 'Act_Resumen', af.Acf_IdActividadForo, '$Idi_IdIdioma', af.Act_Resumen) Acf_Titulo, acf.Row_Estado,
+                        fn_devolverIdioma('actividad_foro', af.Acf_IdActividadForo, '$Idi_IdIdioma', af.Idi_IdIdioma) Idi_IdIdioma,
+                        af.Act_FechaInicio AS 'start', af.Act_FechaFin AS 'end', af.For_IdForo, af.Act_Estado,af.Idi_IdIdioma 
+                FROM actividad_foro af WHERE For_IdForo=$iFor_IdForo AND Row_Estado=1"
             );
             return $post->fetchAll();
         } catch (PDOException $exception) {
