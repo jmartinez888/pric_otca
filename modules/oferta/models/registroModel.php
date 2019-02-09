@@ -9,7 +9,7 @@ public function __construct()
         try{
             $sql = "SELECT p.Pai_IdPais, 
 	    fn_TraducirContenido('pais','Pai_Nombre',p.Pai_IdPais,'$Idi_IdIdioma', p.Pai_Nombre) Pai_Nombre,
-            fn_devolverIdioma('pais',p.Pai_IdPais,'$Idi_IdIdioma',p.$Idi_IdIdioma)Idi_IdIdioma                
+            fn_devolverIdioma('pais',p.Pai_IdPais,'$Idi_IdIdioma',p.Idi_IdIdioma)Idi_IdIdioma                
 	    from pais p ";
             $result = $this->_db->prepare($sql);
             $result->execute();
@@ -45,7 +45,7 @@ public function __construct()
 	    
 	    fn_TraducirContenido('institucion','Ins_Nombre',i.Ins_IdInstitucion,'$Idi_IdIdioma',i.Ins_Nombre)Ins_Nombre,
             i.Row_Estado,
-            fn_devolverIdioma('institucion','Ins_Nombre','$Idi_IdIdioma',i.Idi_IdIoma)Idi_IdIdioma,
+            fn_devolverIdioma('institucion','Ins_Nombre','$Idi_IdIdioma',i.Idi_IdIdioma)Idi_IdIdioma,
 	    
 	    from institucion i ";
             $result = $this->_db->prepare($sql);
