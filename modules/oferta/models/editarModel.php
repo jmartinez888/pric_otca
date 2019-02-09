@@ -169,7 +169,7 @@ public function __construct()
             i.Ins_img, 
             i.Ins_WebSite, 
             i.Ins_latX, 
-            i.Ins_lng,
+            i.Ins_lngY,
             fn_devolverIdioma('institucion',i.Ins_IdInstitucion,'$Idi_IdIdioma',i.Idi_IdIdioma)Idi_IdIdioma,
             
             FROM institucion i 
