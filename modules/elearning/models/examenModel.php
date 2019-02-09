@@ -497,14 +497,25 @@ class examenModel extends Model {
         }
     }
 
-    public function getPreguntasCondicion($pagina,$registrosXPagina,$condicion = "")
+    public function getPreguntasCondicion($pagina,$registrosXPagina,$condicion = "", $Idi_IdIdioma = "es")
     {
         try{
             $registroInicio = 0;
             if ($pagina > 0) {
                 $registroInicio = ($pagina - 1) * $registrosXPagina;                
             }
-            $sql = " SELECT * FROM pregunta p $condicion 
+            $sql = " SELECT p.Pre_IdPregunta,
+            p.Exa_IdExamen,
+            fn_TraducirContenido('pregunta','Pre_Descripcion', p.Pre_IdPregunta,'$Idi_IdIdioma', p.Pre_Descripcion) Pre_Descripcion,
+            fn_TraducirContenido('pregunta','Pre_Descripcion2', p.Pre_IdPregunta,'$Idi_IdIdioma', p.Pre_Descripcion2) Pre_Descripcion2,
+            p.Pre_FechaReg,
+            p.Pre_Valor,
+            p.Pre_Tipo,
+            p.Pre_Puntos,
+            p.Pre_Estado,
+            p.Row_Estado,
+            fn_devolverIdioma('pregunta', p.Pre_IdPregunta,'$Idi_IdIdioma', p.Idi_IdIdioma) Idi_IdIdioma
+            FROM pregunta p $condicion 
                 LIMIT $registroInicio, $registrosXPagina ";
             $result = $this->_db->query($sql);
             return $result->fetchAll(PDO::FETCH_ASSOC);
