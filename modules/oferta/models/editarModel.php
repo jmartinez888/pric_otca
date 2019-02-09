@@ -150,7 +150,20 @@ public function __construct()
     public function getInstitucionPorId($id=false)
     {
         try{
-            $listaInstituciones = $this->_db->query("SELECT p.Pai_IdPais, p.Pai_Nombre, u.Ubi_Sede,i.* FROM institucion i 
+            $listaInstituciones = $this->_db->query("SELECT p.Pai_IdPais, 
+            
+            fn_TraducirContenido('pais','Pai_Nombre',p.Pai_IdPais,'$Idi_IdIdioma', p.Pai_Nombre) Pai_Nombre,
+            fn_devolverIdioma('pais',p.Pai_IdPais,'$Idi_IdIdioma',p.$Idi_IdIdioma)Idi_IdIdioma, 
+            u.Ubi_Sede,
+            i.Ins_IdInstitucion, i.Ubi_IdUbigeo, i.Ins_IdPadre, 
+            fn_TraducirContenido('institucion','Ins_Nombre',i.Ins_IdInstitucion,'$Idi_IdIdioma',i.Ins_Nombre)Ins_Nombre,
+            fn_TraducirContenido('institucion','Ins_Descripcion',i.Ins_IdInstitucion,'$Idi_IdIdioma',i.Ins_Descripcion)Ins_Descripcion,
+            i.Row_Estado,
+            fn_devolverIdioma('institucion','Ins_Nombre','$Idi_IdIdioma',i.Idi_IdIoma)Idi_IdIdioma, 
+            fn_devolverIdioma('institucion','Ins_Descripcion','$Idi_IdIdioma',i.Idi_IdIoma)Idi_IdIdioma, 
+                                
+            i.Ins_CorreoPagina, i.Ins_Representante,
+            i.Ins_Telefono, i.Ins_Direccion, i.Ins_Tipo, i.Ins_img, i.Ins_WebSite, i.Ins_latX, i.Ins_lng FROM institucion i 
             INNER JOIN ubigeo u ON i.Ubi_IdUbigeo=u.Ubi_IdUbigeo 
             INNER JOIN pais p ON p.Pai_IdPais=u.Pai_IdPais
             WHERE i.Ins_IdInstitucion = ".$id);
