@@ -20,7 +20,7 @@ class examenModel extends Model {
       $sql = "SELECT Exa_IdExamen,
       Cur_IdCurso,
       Moc_IdModulo,
-      fn_TraducirContenido('examen','Exa_Titulo', Cur_IdCurso,'$Idi_IdIdioma', Exa_Titulo) Exa_Titulo,
+      fn_TraducirContenido('examen','Exa_Titulo', Exa_IdExamen,'$Idi_IdIdioma', Exa_Titulo) Exa_Titulo,
       Exa_Intentos,
       Exa_Restrictivo,
       Exa_Peso,
@@ -32,7 +32,7 @@ class examenModel extends Model {
       Lec_IdLeccion,
       Exa_Estado,
       Row_Estado,
-      fn_devolverIdioma('examen', Cur_IdCurso,'$Idi_IdIdioma', Idi_IdIdioma) Idi_IdIdioma 
+      fn_devolverIdioma('examen', Exa_IdExamen,'$Idi_IdIdioma', Idi_IdIdioma) Idi_IdIdioma 
       FROM examen WHERE Exa_IdExamen = {$examen}";
       $examen = $this->getArray($sql);
       return $examen[0];
@@ -62,7 +62,7 @@ class examenModel extends Model {
             e.Lec_IdLeccion,
             e.Exa_Estado,
             e.Row_Estado,
-            fn_devolverIdioma('examen',e.Cur_IdCurso,'$Idi_IdIdioma',e.Idi_IdIdioma) Idi_IdIdioma 
+            fn_devolverIdioma('examen',e.Exa_IdExamen,'$Idi_IdIdioma',e.Idi_IdIdioma) Idi_IdIdioma 
             FROM examen e WHERE e.Lec_IdLeccion = $Lec_IdLeccion AND e.Exa_Estado = 1 AND e.Row_Estado = 1 ";
             $result = $this->_db->prepare($sql);
             $result->execute();
@@ -79,7 +79,7 @@ class examenModel extends Model {
             $sql = " SELECT Exa_IdExamen,
             Cur_IdCurso,
             Moc_IdModulo,
-            fn_TraducirContenido('examen','Exa_Titulo', Cur_IdCurso,'$Idi_IdIdioma', Exa_Titulo) Exa_Titulo,
+            fn_TraducirContenido('examen','Exa_Titulo', Exa_IdExamen,'$Idi_IdIdioma', Exa_Titulo) Exa_Titulo,
             Exa_Intentos,
             Exa_Restrictivo,
             Exa_Peso,
@@ -91,7 +91,7 @@ class examenModel extends Model {
             Lec_IdLeccion,
             Exa_Estado,
             Row_Estado,
-            fn_devolverIdioma('examen', Cur_IdCurso,'$Idi_IdIdioma', Idi_IdIdioma) Idi_IdIdioma 
+            fn_devolverIdioma('examen', Exa_IdExamen,'$Idi_IdIdioma', Idi_IdIdioma) Idi_IdIdioma 
             FROM examen WHERE Exa_IdExamen=$id ";
             $result = $this->_db->prepare($sql);
             $result->execute();
