@@ -263,7 +263,7 @@ class gleccionController extends elearningController {
             $lang = $this->_view->getLenguaje(['elearning_cursos', 'elearning_formulario_responder'], false, true);
             if (is_numeric($curso_id) && $curso_id != 0) {
 							$mod_curso = $this->loadModel("_gestionCurso");
-							$curso = $mod_curso->getCursoById($curso_id);
+							$curso = $mod_curso->getCursoById($curso_id, Cookie::lenguaje());
 							// dd($curso);
 							if ($curso) {
 								$mod_modulo = $this->loadModel("_gestionModulo");
@@ -379,7 +379,7 @@ class gleccionController extends elearningController {
             $lang = $this->_view->getLenguaje(['elearning_cursos', 'elearning_formulario_responder'], false, true);
             if (is_numeric($curso_id) && $curso_id != 0) {
                 $mod_curso = $this->loadModel("_gestionCurso");
-                $curso = $mod_curso->getCursoById($curso_id);
+                $curso = $mod_curso->getCursoById($curso_id, Cookie::lenguaje());
                 $mod_modulo = $this->loadModel("_gestionModulo");
 								$modulos = $mod_modulo->getModulos($curso_id);
 								$data['modo'] = $modo;
@@ -510,7 +510,7 @@ class gleccionController extends elearningController {
             $lang = $this->_view->getLenguaje(['elearning_cursos', 'elearning_formulario_responder'], false, true);
             if (is_numeric($curso_id) && $curso_id != 0) {
                 $mod_curso = $this->loadModel("_gestionCurso");
-                $curso = $mod_curso->getCursoById($curso_id);
+                $curso = $mod_curso->getCursoById($curso_id, Cookie::lenguaje());
                 $mod_modulo = $this->loadModel("_gestionModulo");
                 $mod_leccion = $this->loadModel("_gestionLeccion");
 								$modulos = $mod_modulo->getModulos($curso_id);
@@ -564,7 +564,7 @@ class gleccionController extends elearningController {
 
                     $mod_curso = $this->loadModel("_gestionCurso");
 
-                    $curso = $mod_curso->getCursoById($modulo['Cur_IdCurso']);
+                    $curso = $mod_curso->getCursoById($modulo['Cur_IdCurso'], Cookie::lenguaje());
                     $data['titulo'] = $lang->get('str_encuesta').' - '.str_limit($curso['Cur_Titulo'], 20);
                     // $data['active'] = 'examen';
 
