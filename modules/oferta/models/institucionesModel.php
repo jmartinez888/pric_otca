@@ -101,7 +101,7 @@ public function __construct()
             
             fn_TraducirContenido('tematica','Tem_Nombre',t.Tem_IdTematica,'$Idi_IdIdioma', t.Tem_Nombre)Tem_Nombre, 
             o.row_estado,
-            fn_devolverIdioma('oferta',o.Ofe_IdOferta,'$Idi_IdIdioma',p.Idi_IdIdioma)Idi_IdIdioma,
+            fn_devolverIdioma('oferta',o.Ofe_IdOferta,'$Idi_IdIdioma',o.Idi_IdIdioma)Idi_IdIdioma,
             COUNT(o.Ofe_IdOferta) AS CantidadRegistros 
             FROM oferta o
             INNER JOIN tematica t ON t.Tem_IdTematica=o.Tem_IdTematica $condicion
@@ -121,7 +121,7 @@ public function __construct()
             
             fn_TraducirContenido('oferta','Ofe_Tipo',o.Ofe_IdOferta,'$Idi_IdIdioma', o.Ofe_Tipo)Ofe_Tipo, 
             o.row_estado,
-            fn_devolverIdioma('oferta',o.Ofe_IdOferta,'$Idi_IdIdioma',p.Idi_IdIdioma)Idi_IdIdioma,
+            fn_devolverIdioma('oferta',o.Ofe_IdOferta,'$Idi_IdIdioma',o.Idi_IdIdioma)Idi_IdIdioma,
             COUNT(o.Ofe_IdOferta) AS CantidadRegistros 
             
             FROM oferta o $condicion
@@ -174,7 +174,7 @@ public function __construct()
             
             fn_TraducirContenido('pais','Pai_Nombre',p.Pai_IdPais,'$Idi_IdIdioma', p.Pai_Nombre) Pai_Nombre,
             i.row_estado,
-            fn_devolverIdioma('Institucion',i.Ins_IdInstitucion,'$Idi_IdIdioma',p.Idi_IdIdioma)Idi_IdIdioma,
+            fn_devolverIdioma('Institucion',i.Ins_IdInstitucion,'$Idi_IdIdioma',i.Idi_IdIdioma)Idi_IdIdioma,
             u.Ubi_Sede, 
             
             COUNT(i.Ins_Nombre) AS CantidadRegistros 
@@ -357,7 +357,7 @@ public function __construct()
         try{
             $sql = "SELECT u.Ubi_IdUbigeo, p.Pai_IdPais 
             fn_TraducirContenido('pais','Pai_Nombre',p.Pai_IdPais,'$Idi_IdIdioma', p.Pai_Nombre) Pai_Nombre,
-            fn_devolverIdioma('ubigeo',u.Ubi_IdUbigeo,'$Idi_IdIdioma',p.Idi_IdIdioma)Idi_IdIdioma, 
+            fn_devolverIdioma('ubigeo',u.Ubi_IdUbigeo,'$Idi_IdIdioma',u.Idi_IdIdioma)Idi_IdIdioma, 
             
             COUNT(i.Ins_Nombre) AS Conteo from ubigeo u INNER JOIN institucion i on u.Ubi_IdUbigeo=i.Ubi_IdUbigeo INNER JOIN pais p on p.Pai_IdPais=u.Pai_IdPais GROUP BY p.Pai_Nombre";
             $result = $this->_db->prepare($sql);
