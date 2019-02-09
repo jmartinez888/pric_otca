@@ -905,7 +905,7 @@ class examenController extends elearningController {
         $model = $this->loadModel("_gestionLeccion");
         $leccion = $model->getLeccionId($Examen["Lec_IdLeccion"]);
         $modulo = $Mmodel->getModuloId($Examen["Moc_IdModulo"]);
-        $this->_view->assign("curso", $Mmodel->getCursoId($id));
+        $this->_view->assign("curso", $Mmodel->getCursoId($id), Cookie::lenguaje());
         $this->_view->assign("modulo", $modulo);
         $this->_view->assign("leccion", $leccion);
         $this->_view->assign('idLeccion', $Examen["Lec_IdLeccion"]);
