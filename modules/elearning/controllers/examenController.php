@@ -1345,7 +1345,7 @@ class examenController extends elearningController {
         $puntos_maximo=$peso['Exa_Peso']-$puntos_pregunta['puntos_pregunta'];
 
 
-        $titulo =  $this->examen->getTituloCurso($idcurso);
+        $titulo =  $this->examen->getTituloCurso($idcurso, Cookie::lenguaje());
         $this->_view->assign('titulo', $titulo["Cur_Titulo"]);
         $this->_view->assign('puntos_maximo', $puntos_maximo );
         $this->_view->assign('examen', $preguntaedit['Exa_IdExamen'] );
