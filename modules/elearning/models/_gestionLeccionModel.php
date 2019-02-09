@@ -13,11 +13,12 @@ class _gestionLeccionModel extends Model {
     return $this->execQuery($sql, true);
   }
 
-  public function getTipoLecccion($lms = ""){
+  public function getTipoLecccion($lms = "", $Idi_IdIdioma = "es"){
     $sql = "SELECT
               C.Con_Valor as Id,
-              C.Con_Descripcion as Titulo,
-              (SELECT Con_Descripcion FROM constante WHERE Con_Codigo = 4000 AND Con_Valor = C.Con_Valor) as Descripcion
+              fn_TraducirContenido('constante','Con_Descripcion',C.Con_IdConstante,'$Idi_IdIdioma',C.Con_Descripcion) Con_Descripcion as Titulo,
+              (SELECT Con_Descripcion FROM constante WHERE Con_Codigo = 4000 AND Con_Valor = C.Con_Valor) as Descripcion,
+              fn_devolverIdioma('constante',C.Con_IdConstante,'$Idi_IdIdioma',C.Idi_IdIdioma) Idi_IdIdioma
             FROM constante C
             WHERE C.Con_Codigo = 2000 AND C.Con_Codigo <> C.Con_Valor";
     if($lms == ""){
