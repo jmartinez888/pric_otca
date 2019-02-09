@@ -535,7 +535,7 @@ class examenController extends elearningController {
 
         $Cmodel = $this->loadModel("_gestionCurso");
 
-        $curso = $Cmodel->getCursoById($idcurso);
+        $curso = $Cmodel->getCursoById($idcurso, Cookie::lenguaje());
         $data['titulo'] = $lang->get('str_examen').' - '.str_limit($curso['Cur_Titulo'], 20);
         $data['active'] = 'respuestas';
         $this->_view->assign($data);
