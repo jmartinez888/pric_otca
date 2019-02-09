@@ -170,7 +170,7 @@ public function __construct()
             i.Ins_WebSite, 
             i.Ins_latX, 
             i.Ins_lngY,
-            fn_devolverIdioma('institucion',i.Ins_IdInstitucion,'$Idi_IdIdioma',i.Idi_IdIdioma)Idi_IdIdioma,
+            fn_devolverIdioma('institucion',i.Ins_IdInstitucion,'$Idi_IdIdioma',i.Idi_IdIdioma)Idi_IdIdioma
             
             FROM institucion i 
             INNER JOIN ubigeo u ON i.Ubi_IdUbigeo=u.Ubi_IdUbigeo 
@@ -218,7 +218,7 @@ public function __construct()
             $listaInstituciones = $this->_db->query("SELECT t.Tem_IdTematica AS Id,
             
             fn_TraducirContenido('tematica','Tem_Nombre',t.Tem_IdTematica,'$Idi_IdIdioma', t.Tem_Nombre)Tem_Nombre,
-            fn_devolverIdioma('tematica',t.Tem_IdTematica,'$Idi_IdIdioma',t.Idi_IdIdioma)Idi_IdIdioma,
+            fn_devolverIdioma('tematica',t.Tem_IdTematica,'$Idi_IdIdioma',t.Idi_IdIdioma)Idi_IdIdioma
             FROM tematica t");
             
             return $listaInstituciones->fetchAll(PDO::FETCH_ASSOC);
@@ -409,10 +409,9 @@ public function __construct()
             fn_TraducirContenido('tematica','Tem_Nombre',t.Tem_IdTematica,'$Idi_IdIdioma', t.Tem_Nombre)Tem_Nombre,
             i.row_estado,
             fn_devolverIdioma('institucion',i.Ins_IdInstitucion,'$Idi_IdIdioma',i.Idi_IdIdioma)Idi_IdIdioma,
-            
+                       
             o.Contacto AS Contacto 
-            
-            
+                       
             FROM institucion i 
             INNER JOIN oferta o ON i.Ins_IdInstitucion= o.Ins_IdInstitucion 
             INNER JOIN tematica t ON t.Tem_IdTematica=o.Tem_IdTematica
