@@ -288,10 +288,10 @@ class cursosController extends elearningController {
   }
 
   public function modulo($curso = "", $modulo = "", $leccion = false, $idexamen = false) {
-
+    // http://local.github/es/elearning/cursos/modulo/39/60/235
     $this->_acl->autenticado();
     $this->validarUrlIdioma();
-
+    
     $Mmodel = $this->loadModel("modulo");
     $Lmodel = $this->loadModel("leccion");
     $Cmodel = $this->loadModel("curso");
@@ -299,6 +299,7 @@ class cursosController extends elearningController {
     // $curs = $Cmodel->getCursoID($curso)[0];
     // print_r($curs);exit;
     $obj_curso = null;
+    
     if (strlen($curso) == 0 || strlen($modulo) == 0 || $this->filtrarInt($curso) == 0 || $this->filtrarInt($modulo) == 0 ) {
       $this->redireccionar("elearning/");
     }
@@ -315,38 +316,39 @@ class cursosController extends elearningController {
     if (!$Mmodel->validarModuloUsuario($modulo, Session::get("id_usuario"))) {
       $this->redireccionar("elearning/cursos");
     }
-
+    
     if ($leccion) {
-      if(!$Lmodel->validarLeccion($leccion, $modulo, Session::get("id_usuario"))){ 
-
-        $this->redireccionar("elearning/cursos"); }
+      // if(!$Lmodel->validarLeccion($leccion, $modulo, Session::get("id_usuario"))){ 
+      //   $this->redireccionar("elearning/cursos"); 
+      // }
     }
-
+    
     $obj_curso = $Cmodel::find($curso);
-
     $lecciones = $Lmodel->getLecciones($modulo, Session::get("id_usuario"), Cookie::lenguaje());
     // $examenes= $Emodel->getExamensModulo($modulo);
-
+    
     // $datos_modulo = $Mmodel->getModuloDatos($OLeccion["Moc_IdModuloCurso"]);
-
+    
     $datos_modulo = $Mmodel->getModuloDatos($modulo);
-
+    
     // if($OLeccion==null){
-    //   $this->redireccionar("elearning/cursos");
-    // }
-
-    $lang = $this->_view->getLenguaje(['elearning_cursos'], false, true);
-
-    $Tmodel = $this->loadModel("trabajo");
-    $TTmodel = $this->loadModel("tarea");
-
-    // if($tareas != null && count($tareas)>0){
-    //   for($i=0; $i<count($tareas);$i++){
-    //     $tareas[$i]["Archivos"] = $Tmodel->getArchivos($tareas[$i]["Tra_IdTrabajo"]);
-    //   }
-    // }
-
+      //   $this->redireccionar("elearning/cursos");
+      // }
+      
+      $lang = $this->_view->getLenguaje(['elearning_cursos'], false, true);
+      
+      $Tmodel = $this->loadModel("trabajo");
+      $TTmodel = $this->loadModel("tarea");
+      
+      // if($tareas != null && count($tareas)>0){
+        //   for($i=0; $i<count($tareas);$i++){
+          //     $tareas[$i]["Archivos"] = $Tmodel->getArchivos($tareas[$i]["Tra_IdTrabajo"]);
+          //   }
+          // }
+          
+    
     if ($leccion) {
+      
       // echo $modulo; echo $leccion;
       $OLeccion = $Lmodel->getLeccion($leccion, $modulo, Session::get("id_usuario"), Cookie::lenguaje());
       // print_r($OLeccion);exit;
@@ -364,6 +366,7 @@ class cursosController extends elearningController {
     }
 
     if (isset($OLeccion) && isset($OLeccion["Lec_Tipo"])) {
+      
       if ($OLeccion["Lec_Tipo"] == 1 || $OLeccion["Lec_Tipo"] == 6) {
         //$Lmodel->RegistrarProgreso($OLeccion["Lec_IdLeccion"], Session::get("id_usuario"));
         $html = $Lmodel->getContenido($OLeccion["Lec_IdLeccion"], Cookie::lenguaje());
@@ -579,13 +582,14 @@ class cursosController extends elearningController {
           $this->_view->assign("examen", $examen);
         }
       } else if ($OLeccion["Lec_Tipo"] == 4) {
-
         $this->redireccionar("elearning/clase/clase/" . $curso . "/" . $modulo . "/" . $OLeccion["Lec_IdLeccion"]);
+        
         exit;
       } else if ($OLeccion["Lec_Tipo"] == 5) {
         $this->redireccionar("elearning/clase/examen/" . $curso . "/" . $modulo . "/" . $OLeccion["Lec_IdLeccion"]);
         exit;
-      } else if ($OLeccion['Lec_Tipo'] == 10) {
+      } else if ($OLeccion['Lec_Tipo'] == Leccion::TIPO_ENCUESTA) {
+        
         $temp_leccion = Leccion::find($OLeccion['Lec_IdLeccion']);
         $data['formulario'] = $frm = $temp_leccion->leccion_formulario->formulario;
         $data['respuesta'] = $frm->getRespuestaByUsuario(Session::get('id_usuario'));
@@ -596,7 +600,7 @@ class cursosController extends elearningController {
         // $formulario = $
       }
     } 
-
+    
     // print_r($Mmodel->getModulosCursoLMS($curso, Session::get("id_usuario"))[$datos_modulo['INDEX']-1]);
     $obj_modulo = $Mmodel->getModulo($modulo);
     $this->_view->setTemplate(LAYOUT_FRONTEND);
@@ -611,11 +615,11 @@ class cursosController extends elearningController {
       $this->_view->assign("materiales", $Lmodel->getMateriales($OLeccion["Lec_IdLeccion"], Cookie::lenguaje()));
       $this->_view->assign("tareas", $tareas);
     }
-
+    
     if ($curso != 0) {
       $this->_view->assign("titulo", $lang->get('str_modulo') . ': ' . $obj_modulo['Moc_Titulo']);
     } 
-
+    
     $this->_view->assign("curso", $curso);
     $this->_view->assign("curso_datos", $Cmodel->getCursoID($curso)[0]);
     $this->_view->setCss(array('modulo', 'jp-modulo'));

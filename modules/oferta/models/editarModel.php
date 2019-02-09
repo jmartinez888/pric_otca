@@ -54,7 +54,7 @@ public function __construct()
             return $exception->getTraceAsString();
         }
     }
-    public function getIns()
+    public function getIns($Idi_IdIdioma="es")
     {
         try{
             $sql = "SELECT i.Ins_IdInstitucion AS Id,
@@ -147,13 +147,12 @@ public function __construct()
             return $exception->getTraceAsString();
         }
     }
-    public function getInstitucionPorId($id=false)
+    public function getInstitucionPorId($id=false, $Idi_IdIdioma="es")
     {
         try{
             $listaInstituciones = $this->_db->query("SELECT p.Pai_IdPais, 
             
             fn_TraducirContenido('pais','Pai_Nombre',p.Pai_IdPais,'$Idi_IdIdioma', p.Pai_Nombre) Pai_Nombre,
-            fn_devolverIdioma('pais',p.Pai_IdPais,'$Idi_IdIdioma',p.$Idi_IdIdioma)Idi_IdIdioma, 
             u.Ubi_Sede,
             i.Ins_IdInstitucion, 
             i.Ubi_IdUbigeo, 
@@ -212,20 +211,34 @@ public function __construct()
             return $exception->getTraceAsString();
         }
     }
-    public function getTematicas()
+    public function getTematicas($Idi_IdIdioma="es")
     {
         try{
-            $listaInstituciones = $this->_db->query("SELECT t.Tem_IdTematica AS Id,t.Tem_Nombre as Nombre FROM tematica t");
+            $listaInstituciones = $this->_db->query("SELECT t.Tem_IdTematica AS Id,
+            
+            fn_TraducirContenido('tematica','Tem_Nombre',t.Tem_IdTematica,'$Idi_IdIdioma', t.Tem_Nombre)Tem_Nombre,
+            fn_devolverIdioma('tematica',t.Tem_IdTematica,'$Idi_IdIdioma',p.$Idi_IdIdioma)Idi_IdIdioma,
+            FROM tematica t");
+            
             return $listaInstituciones->fetchAll(PDO::FETCH_ASSOC);
 
         } catch (PDOException $exception) {
             return $exception->getTraceAsString();
         }
     }
-    public function getOfertasPorId($id=false)
+    public function getOfertasPorId($id=false, $Idi_IdIdioma="es")
     {
         try{
-            $listaInstituciones = $this->_db->query("SELECT i.Ins_IdInstitucion, o.Ofe_IdOferta, o.Ofe_Tipo AS Tipo, o.Ofe_Nombre AS Nombre, o.Ofe_Descripcion AS Descripcion, t.Tem_Nombre AS Tematica,o.Contacto AS Contacto FROM institucion i 
+            $listaInstituciones = $this->_db->query("SELECT i.Ins_IdInstitucion, o.Ofe_IdOferta, t.Tem_IdTematica,
+            
+            fn_TraducirContenido('oferta','Ofe_Tipo',o.Ofe_IdOferta,'$Idi_IdIdioma',o.Ofe_Tipo)Ofe_Tipo,                        
+            fn_TraducirContenido('oferta','Ofe_Nombre',o.Ofe_IdOferta,'$Idi_IdIdioma',o.Ofe_Nombre)Ofe_Nombre,
+            fn_TraducirContenido('oferta','Ofe_Descripcion',o.Ofe_IdOferta,'$Idi_IdIdioma',o.Ofe_Descripcion)Ofe_Descripcion, 
+            fn_TraducirContenido('tematica','Tem_Nombre',t.Tem_IdTematica,'$Idi_IdIdioma', t.Tem_Nombre)Tem_Nombre,
+            i.row_estado
+            fn_devolverIdioma('institucion',i.Ins_IdInstitucion,'$Idi_IdIdioma',p.$Idi_IdIdioma)Idi_IdIdioma,
+            o.Contacto AS Contacto 
+            FROM institucion i 
             INNER JOIN oferta o ON i.Ins_IdInstitucion= o.Ins_IdInstitucion 
             INNER JOIN tematica t ON t.Tem_IdTematica=o.Tem_IdTematica
             WHERE i.Ins_IdInstitucion = ".$id." AND o.TipoRecurso='Oferta' ");

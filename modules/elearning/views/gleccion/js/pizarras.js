@@ -1,24 +1,25 @@
+
 new Vue({
-	el: '#formulario_encuestas_vue',
+	el: '#formulario_pizarras_vue',
 	data: function () {
 		return {
 			...JSON.parse(getContentMeta('data-parse')),
-			dt_tbl_encuestas: null,
+			dt_tbl_pizarras: null,
 			filter: {
-				txt_encuesta: '',
+				txt_query: '',
 				sel_modulo: -1
 			}
 		}
 	},
 	watch: {
-		'filter.txt_encuesta': function (nv, ov) {
+		'filter.txt_query': function (nv, ov) {
 			if (nv.trim() == '')
-				this.dt_tbl_encuestas.draw();
+				this.dt_tbl_pizarras.draw();
 		}
 	},
 	methods: {
 		onSubmit_filtrarEncuestas: function () {
-			this.dt_tbl_encuestas.draw();
+			this.dt_tbl_pizarras.draw();
 		},
 		onClick_deleteEncuesta: function (encuesta_id) {
 			console.log(event)
@@ -42,13 +43,13 @@ new Vue({
 		}
 	},
 	mounted: function () {
-		this.dt_tbl_encuestas = $(this.$refs.tbl_encuestas).DataTable({
+		this.dt_tbl_pizarras = $(this.$refs.tbl_pizarras).DataTable({
 			language: datatables_lenguaje,
 			ajax: {
 				url: base_url('elearning/gleccion/datatable_lecciones/' + this.curso_id + '/' + this.leccion_mode),
 				data: d => {
 					d.filter = {
-						query: this.filter.txt_encuesta,
+						query: this.filter.txt_query,
 						modulo_id: this.filter.sel_modulo
 					}
 					
@@ -62,7 +63,7 @@ new Vue({
 				{data: 'leccion_descripcion'},
 				{data: 'modulo_titulo'},
 				{data: 'leccion_id', render: (d, t, r) => {
-					return Mustache.render(document.getElementById('tpl_btn_encuestas').innerHTML, {
+					return Mustache.render(document.getElementById('tpl_btn_pizarras').innerHTML, {
 						leccion_id: d,
 					})
 				}}
@@ -71,8 +72,8 @@ new Vue({
 				// {orderable: false,  targets: [3, 4]}
 			]
 		})
-		.on('click', '.btn_eliminar', this.onClick_deleteEncuesta)
-		.on('draw', (x, datatable) => {
+		// .on('click', '.btn-marcar-asistencia', this.onClick_marcarAsistencia)
+		.on('draw', () => {
 			$('.btn-acciones[data-toggle="tooltip"]').tooltip();
 		});
 	}

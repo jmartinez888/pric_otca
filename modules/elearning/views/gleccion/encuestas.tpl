@@ -1,5 +1,8 @@
 {extends 'template.tpl'}
 
+{block 'meta'}
+<meta name="data-parse" content='{json_encode($data_vue)}'>
+{/block}
 
 {block 'css' append}
 <style type="text/css">
@@ -91,8 +94,8 @@
 {/block}
 {block 'js' append}
 <script type="text/javascript">
-var CURSO_ID = {$idcurso};
-var MODO_LECCION = 'encuestas';
+// var CURSO_ID = {$idcurso};
+// var MODO_LECCION = 'encuestas';
 </script>
 <script src="{BASE_URL}modules/elearning/views/gestion/js/core/util.js" type="text/javascript"></script>
 <script src="{BASE_URL}public/js/axios/dist/axios.min.js" type="text/javascript"></script>

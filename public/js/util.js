@@ -5,6 +5,9 @@ function parseData(data) {
     }
     return f;
 }
+function getContentMeta (name, return_object = false) {
+    return return_object ? document.head.querySelector(`meta[name="${name}"]`) : document.head.querySelector(`meta[name="${name}"]`).content
+}
 var msg = {
     count: 0,
     success: function (text, stringify = false, redirect = '') {

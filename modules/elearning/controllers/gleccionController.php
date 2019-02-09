@@ -280,7 +280,10 @@ class gleccionController extends elearningController {
                 $data['curso'] = $curso;
                 $data['idcurso'] = $curso['Cur_IdCurso'];
                 $data['other_tags'] = [$lang->get('str_pizarras')];
-
+								$data['data_vue'] = [
+									'curso_id' 			=> $curso['Cur_IdCurso'],
+									'leccion_mode' 	=> 'pizarras',
+								];
                 $data['titulo'] = $lang->get('str_pizarras').' - '.str_limit($curso['Cur_Titulo'], 20);
 
                 $this->_view->assign($data);
@@ -461,7 +464,10 @@ class gleccionController extends elearningController {
 					if ($this->has('filter')) {
 						$query->where(function($query) {
 							if (isset($_GET['filter']['query']) && $_GET['filter']['query'] != '') 
-									$query->orWhere(DB::raw("CONCAT(usuario.Usu_Nombre, ' ', usuario.Usu_Apellidos)"), 'like', '%'.$_GET['filter']['filter_alumno'].'%');		
+								$query->orWhere(DB::raw("CONCAT(Lec_Titulo, ' ', Moc_Titulo)"), 'like', '%'.$_GET['filter']['query'].'%');		
+
+							if (isset($_GET['filter']['modulo_id']) && $_GET['filter']['modulo_id'] != -1)
+								$query->where('leccion.Moc_IdModuloCurso', $_GET['filter']['modulo_id']);
 						});
 					}
 
@@ -485,7 +491,7 @@ class gleccionController extends elearningController {
 							return [
 								'leccion_id' => $item->Lec_IdLeccion,
 								'leccion_titulo' => $item->Lec_Titulo,
-								'leccion_descripcion' => $item->Lec_Descripcion,
+								'leccion_descripcion' => str_limit($item->Lec_Descripcion, 100),
 								'modulo_titulo' => $item->Moc_Titulo,
 							];
 						});
@@ -520,7 +526,10 @@ class gleccionController extends elearningController {
                 $data['curso'] = $curso;
                 $data['idcurso'] = $curso['Cur_IdCurso'];
                 $data['other_tags'] = [$lang->get('str_encuestas')];
-
+								$data['data_vue'] = [
+									'curso_id' 			=> $curso['Cur_IdCurso'],
+									'leccion_mode' 	=> 'encuestas',
+								];
                 $data['titulo'] = $lang->get('str_encuestas').' - '.str_limit($curso['Cur_Titulo'], 20);
 
                 $this->_view->assign($data);
@@ -811,20 +820,21 @@ class gleccionController extends elearningController {
         $this->_view->assign("referencias", $referencias);
         $this->_view->assign("material", $material);
         $this->_view->assign("trabajo", $trabajo); //RODRIGO 20180605
-        $this->_view->assign("tipo_trabajo", $tipo_trabajo); //RODRIGO 20180605
+				$this->_view->assign("tipo_trabajo", $tipo_trabajo); //RODRIGO 20180605
+				
         switch ($leccion["Lec_Tipo"]) {
-            case 1:
+            case Leccion::TIPO_HTML:
                 $contenido = $model->getContenidoLeccion($leccion["Lec_IdLeccion"]);
                 $this->_view->assign("contenido", $contenido);
                 $this->_view->assign("Lec_Tipo",$leccion["Lec_Tipo"]);
                 $view = "ajax/_view_1";
                 break;
-            case 2:
+            case Leccion::TIPO_VIDEO:
                 $contenido = $model->getDetalleLeccion2($leccion["Lec_IdLeccion"]);
                 $this->_view->assign("contenido", $contenido);
                 $view = "ajax/_view_2";
                 break;
-            case 3:
+            case Leccion::TIPO_EXAMEN:
                 // $ExaModel = $this->loadModel("examen");
                 // $examen = $ExaModel->getExamenxLeccion($leccion["Lec_IdLeccion"]);
                 $condicion = " WHERE e.Lec_IdLeccion = ".$leccion["Lec_IdLeccion"]." ";
@@ -863,7 +873,7 @@ class gleccionController extends elearningController {
                 $view = "ajax/_view_3";
 
                 break;
-            case 4:
+            case Leccion::TIPO_DIRIGIDA:
                 $piz = $this->loadModel("pizarra");
                 $pizarras = $piz->getPizarrasLeccion($leccion["Lec_IdLeccion"]);
                 $this->_view->assign("pizarras", $pizarras);
@@ -877,7 +887,7 @@ class gleccionController extends elearningController {
                 break;
 
 
-        }
+				}
         $this->_view->render($view);
     }
 
