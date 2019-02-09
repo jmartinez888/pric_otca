@@ -687,7 +687,7 @@ class adminModel extends Model
             $post = $this->_db->query(
                 "SELECT af.Acf_IdActividadForo AS id, 
                         fn_TraducirContenido('actividad_foro', 'Acf_Titulo', af.Acf_IdActividadForo, '$Idi_IdIdioma', af.Acf_Titulo) Acf_Titulo, 
-                        fn_TraducirContenido('actividad_foro', 'Act_Resumen', af.Acf_IdActividadForo, '$Idi_IdIdioma', af.Act_Resumen) Acf_Titulo, acf.Row_Estado,
+                        fn_TraducirContenido('actividad_foro', 'Act_Resumen', af.Acf_IdActividadForo, '$Idi_IdIdioma', af.Act_Resumen) Acf_Titulo, af.Row_Estado,
                         fn_devolverIdioma('actividad_foro', af.Acf_IdActividadForo, '$Idi_IdIdioma', af.Idi_IdIdioma) Idi_IdIdioma,
                         af.Act_FechaInicio AS 'start', af.Act_FechaFin AS 'end', af.For_IdForo, af.Act_Estado,af.Idi_IdIdioma 
                 FROM actividad_foro af WHERE For_IdForo=$iFor_IdForo AND Row_Estado=1"
