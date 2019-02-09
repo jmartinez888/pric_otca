@@ -235,7 +235,7 @@ public function __construct()
             fn_TraducirContenido('oferta','Ofe_Nombre',o.Ofe_IdOferta,'$Idi_IdIdioma',o.Ofe_Nombre)Ofe_Nombre,
             fn_TraducirContenido('oferta','Ofe_Descripcion',o.Ofe_IdOferta,'$Idi_IdIdioma',o.Ofe_Descripcion)Ofe_Descripcion, 
             fn_TraducirContenido('tematica','Tem_Nombre',t.Tem_IdTematica,'$Idi_IdIdioma', t.Tem_Nombre)Tem_Nombre,
-            i.row_estado
+            i.row_estado,
             fn_devolverIdioma('institucion',i.Ins_IdInstitucion,'$Idi_IdIdioma',p.$Idi_IdIdioma)Idi_IdIdioma,
             o.Contacto AS Contacto 
             FROM institucion i 
@@ -254,7 +254,7 @@ public function __construct()
             $listaInstituciones = $this->_db->query("SELECT i.Ins_IdInstitucion, o.Ofe_IdOferta, o.Ofe_Tipo AS Tipo, 
                 fn_TraducirContenido('oferta','Ofe_Nombre',o.Ofe_IdOferta,'$idioma', o.Ofe_Nombre) Ofe_Nombre, 
                 fn_TraducirContenido('oferta', 'Ofe_Descripcion',o.Ofe_IdOferta,'$idioma', o.Ofe_Descripcion) Ofe_Descripcion, t.Tem_Nombre AS Tematica,o.Contacto AS Contacto,
-                fn_devolverIdioma('oferta',o.Ofe_IdOferta,'$idioma','$idioma') Idioma
+                fn_devolverIdioma('oferta',o.Ofe_IdOferta,'$idioma','$idioma')Idioma
                 FROM institucion i 
             INNER JOIN oferta o ON i.Ins_IdInstitucion= o.Ins_IdInstitucion 
             INNER JOIN tematica t ON t.Tem_IdTematica=o.Tem_IdTematica
@@ -383,7 +383,7 @@ public function __construct()
             fn_TraducirContenido('oferta','Ofe_Nombre',o.Ofe_IdOferta,'$Idi_IdIdioma',o.Ofe_Nombre)Ofe_Nombre,
             fn_TraducirContenido('oferta','Ofe_Descripcion',o.Ofe_IdOferta,'$Idi_IdIdioma',o.Ofe_Descripcion)Ofe_Descripcion, 
             fn_TraducirContenido('tematica','Tem_Nombre',t.Tem_IdTematica,'$Idi_IdIdioma', t.Tem_Nombre)Tem_Nombre,
-            i.row_estado
+            i.row_estado,
             fn_devolverIdioma('institucion',i.Ins_IdInstitucion,'$Idi_IdIdioma',p.$Idi_IdIdioma)Idi_IdIdioma,
             
             o.Contacto 
@@ -406,7 +406,7 @@ public function __construct()
             fn_TraducirContenido('oferta','Ofe_Nombre',o.Ofe_IdOferta,'$Idi_IdIdioma',o.Ofe_Nombre)Ofe_Nombre,
             fn_TraducirContenido('oferta','Ofe_Descripcion',o.Ofe_IdOferta,'$Idi_IdIdioma',o.Ofe_Descripcion)Ofe_Descripcion, 
             fn_TraducirContenido('tematica','Tem_Nombre',t.Tem_IdTematica,'$Idi_IdIdioma', t.Tem_Nombre)Tem_Nombre,
-            i.row_estado
+            i.row_estado,
             fn_devolverIdioma('institucion',i.Ins_IdInstitucion,'$Idi_IdIdioma',p.$Idi_IdIdioma)Idi_IdIdioma,
             
             o.Contacto AS Contacto 
@@ -425,7 +425,13 @@ public function __construct()
     public function getDifPorId($id=false, $Idi_IdIdioma="es")
     {
         try{
-            $listaInstituciones = $this->_db->query("SELECT d.Dif_IdDifusion, d.Dif_Nombre AS Nombre,d.Dif_Descripcion AS Descripcion, d.Dif_Link AS Enlace 
+            $listaInstituciones = $this->_db->query("SELECT d.Dif_IdDifusion, 
+            
+            fn_TraducirContenido('difusion','Dif_Nombre',d.Dif_IdDifusion,'$Idi_IdIdioma',d.Dif_Nombre)Dif_Nombre,
+            fn_TraducirContenido('difusion','Dif_Descripcion',D.Dif_IdDifusion,'$Idi_IdIdioma',d.Dif_Descripcion)Dif_Descripcion, 
+            fn_devolverIdioma('difusion',d.Dif_IdDifusion,'$Idi_IdIdioma',p.$Idi_IdIdioma)Idi_IdIdioma,
+                                  
+            d.Dif_Link AS Enlace 
             FROM difusion d WHERE d.Ins_IdInstitucion = ".$id);
             return $listaInstituciones->fetchAll();
 
@@ -454,10 +460,21 @@ public function __construct()
             return $exception->getTraceAsString();
         }
     }
-    public function getInvPorIdInv($id=false)
+    public function getInvPorIdInv($id=false, $Idi_IdIdioma="es")
     {
         try{
-            $listaInstituciones = $this->_db->query("SELECT o.Ofe_Tipo AS Tipo, o.Ofe_Nombre AS Nombre, o.Ofe_Descripcion AS Descripcion, t.Tem_Nombre AS Tematica,o.Contacto AS Contacto FROM institucion i 
+            $listaInstituciones = $this->_db->query("SELECT o.Ofe_IdOferta,i.Ins_IdInstitucion,t.Tem_IdTematica,
+            
+            fn_TraducirContenido('oferta','Ofe_Tipo',o.Ofe_IdOferta,'$Idi_IdIdioma',o.Ofe_Tipo)Ofe_Tipo,                        
+            fn_TraducirContenido('oferta','Ofe_Nombre',o.Ofe_IdOferta,'$Idi_IdIdioma',o.Ofe_Nombre)Ofe_Nombre,
+            fn_TraducirContenido('oferta','Ofe_Descripcion',o.Ofe_IdOferta,'$Idi_IdIdioma',o.Ofe_Descripcion)Ofe_Descripcion, 
+            fn_TraducirContenido('tematica','Tem_Nombre',t.Tem_IdTematica,'$Idi_IdIdioma', t.Tem_Nombre)Tem_Nombre,
+            i.row_estado,
+            fn_devolverIdioma('institucion',i.Ins_IdInstitucion,'$Idi_IdIdioma',p.$Idi_IdIdioma)Idi_IdIdioma,
+            
+            o.Contacto AS Contacto 
+            
+            FROM institucion i 
             INNER JOIN oferta o ON i.Ins_IdInstitucion= o.Ins_IdInstitucion 
             INNER JOIN tematica t ON t.Tem_IdTematica=o.Tem_IdTematica
             WHERE o.Ofe_IdOferta = ".$id." AND o.TipoRecurso= 'Investigacion' ");
@@ -486,10 +503,17 @@ public function __construct()
             return $exception->getTraceAsString();
         }
     }
-    public function getDifPorIdDif($id=false)
+    public function getDifPorIdDif($id=false, $Idi_IdIdioma="es")
     {
         try{
-            $listaInstituciones = $this->_db->query("SELECT d.Dif_IdDifusion, d.Dif_Nombre AS Nombre,d.Dif_Descripcion AS Descripcion, d.Dif_Link AS Enlace FROM difusion d WHERE d.Dif_IdDifusion = ".$id);
+            $listaInstituciones = $this->_db->query("SELECT d.Dif_IdDifusion, 
+            
+            fn_TraducirContenido('difusion','Dif_Nombre',d.Dif_IdDifusion,'$Idi_IdIdioma',d.Dif_Nombre)Dif_Nombre,
+            fn_TraducirContenido('difusion','Dif_Descripcion',D.Dif_IdDifusion,'$Idi_IdIdioma',d.Dif_Descripcion)Dif_Descripcion, 
+            fn_devolverIdioma('difusion',d.Dif_IdDifusion,'$Idi_IdIdioma',p.$Idi_IdIdioma)Idi_IdIdioma,
+            
+            d.Dif_Link AS Enlace 
+            FROM difusion d WHERE d.Dif_IdDifusion = ".$id);
             return $listaInstituciones->fetch();
 
         } catch (PDOException $exception) {
