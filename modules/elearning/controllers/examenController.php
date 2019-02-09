@@ -493,7 +493,7 @@ class examenController extends elearningController {
         }
 
         $titulo = $this->examen->getTituloCurso($id, Cookie::lenguaje());
-        $examen = $this->examen->getExamen($idExamen);
+        $examen = $this->examen->getExamen($idExamen, Cookie::lenguaje());
         $examenAlumno = $this->examen->getExamenAlumnos($idExamen);
         $Exa_Porcentaje = $this->examen->getExamenesPorcentaje($id);
         $Tra_Porcentaje = $this->examen->getTrabajosPorcentaje($id);
