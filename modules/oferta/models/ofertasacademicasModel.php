@@ -37,7 +37,7 @@ public function __construct()
             i.row_estado,
             fn_devolverIdioma('institucion',i.Ins_IdInstitucion,'$Idi_IdIdioma',i.Idi_IdIdioma)Idi_IdIdioma,
                             
-            u.Ubi_Sede, ,COUNT(i.Ins_Nombre) AS CantidadRegistros 
+            u.Ubi_Sede, COUNT(i.Ins_Nombre) AS CantidadRegistros 
             FROM institucion i INNER JOIN ubigeo u ON i.Ubi_IdUbigeo=u.Ubi_IdUbigeo 
             INNER JOIN pais p ON p.Pai_IdPais=u.Pai_IdPais
             WHERE i.Ins_Nombre LIKE '%". $dato."%' AND p.Pai_Nombre LIKE '%".$pais."%' GROUP BY p.Pai_Nombre, u.Ubi_Sede, i.Ins_IdInstitucion ";
