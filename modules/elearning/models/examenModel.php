@@ -16,8 +16,24 @@ class examenModel extends Model {
     //   return null;
     // }
 
-    public function getExamenID($examen){
-      $sql = "SELECT * FROM examen WHERE Exa_IdExamen = {$examen}";
+    public function getExamenID($examen, $Idi_IdIdioma="es"){
+      $sql = "SELECT Exa_IdExamen,
+      Cur_IdCurso,
+      Moc_IdModulo,
+      fn_TraducirContenido('examen','Exa_Titulo', Cur_IdCurso,'$Idi_IdIdioma', Exa_Titulo) Exa_Titulo,
+      Exa_Intentos,
+      Exa_Restrictivo,
+      Exa_Peso,
+      Exa_NroPreguntas,
+      Exa_FechaDesde,
+      Exa_FechaHasta,
+      Exa_Porcentaje,
+      Exa_FechaReg,
+      Lec_IdLeccion,
+      Exa_Estado,
+      Row_Estado,
+      fn_devolverIdioma('examen', Cur_IdCurso,'$Idi_IdIdioma', Idi_IdIdioma) Idi_IdIdioma 
+      FROM examen WHERE Exa_IdExamen = {$examen}";
       $examen = $this->getArray($sql);
       return $examen[0];
     }

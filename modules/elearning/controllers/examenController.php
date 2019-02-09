@@ -900,7 +900,7 @@ class examenController extends elearningController {
         $this->_view->setJs(array(array(BASE_URL . 'modules/elearning/views/gestion/js/core/util.js'), array(BASE_URL . 'modules/elearning/views/gestion/js/core/controller.js'),  "index"));
 
         // url
-        $Examen = $this->examen->getExamenID($idExamen);
+        $Examen = $this->examen->getExamenID($idExamen, Cookie::lenguaje());
         $Mmodel = $this->loadModel("_gestionModulo");
         $model = $this->loadModel("_gestionLeccion");
         $leccion = $model->getLeccionId($Examen["Lec_IdLeccion"]);
