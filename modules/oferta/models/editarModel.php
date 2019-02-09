@@ -7,9 +7,10 @@ public function __construct()
     public function getPaises($idioma, , $Idi_IdIdioma = "es")
     {
         try{
-            $sql = "SELECT fn_TraducirContenido('pais','Pai_Nombre',p.Pai_IdPais,'$Idi_IdIdioma', p.Pai_Nombre) Pai_Nombre,
-            fn_devolverIdioma('pais',p.Pai_IdPais,'$Idi_IdIdioma',p.$Idi_IdIdioma)Idi_IdIdioma,
-            p.Pai_IdPais from pais p ";
+            $sql = "SELECT p.Pai_IdPais,
+            fn_TraducirContenido('pais','Pai_Nombre',p.Pai_IdPais,'$Idi_IdIdioma', p.Pai_Nombre) Pai_Nombre,
+            fn_devolverIdioma('pais',p.Pai_IdPais,'$Idi_IdIdioma',p.$Idi_IdIdioma)Idi_IdIdioma
+             from pais p ";
             $result = $this->_db->prepare($sql);
             $result->execute();
             $lista= $result->fetchAll(PDO::FETCH_ASSOC);
@@ -163,8 +164,8 @@ public function __construct()
             i.Ins_CorreoPagina, 
             i.Ins_Representante,
             i.Ins_Telefono, 
-            i.Ins_Direccion, 
-            i.Ins_Tipo, 
+            i.Ins_Direccion,
+            fn_TraducirContenido('institucion','Ins_Tipo',i.Ins_IdInstitucion,'$Idi_IdIdioma',i.Ins_Tipo)Ins_Tipo,             
             i.Ins_img, 
             i.Ins_WebSite, 
             i.Ins_latX, 
