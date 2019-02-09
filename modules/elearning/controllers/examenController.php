@@ -417,6 +417,7 @@ class examenController extends elearningController {
         // $this->_view->setCss(array("verificar"));
         // $id = $this->getTexto("id");
         $this->_view->setTemplate(LAYOUT_FRONTEND);
+         $lang = $this->_view->getLenguaje('elearning_cursos', false, true);
         $this->_view->setJs(array(array(BASE_URL . 'modules/elearning/views/gestion/js/core/util.js'), "index"));
 
         if(strlen($id)==0){ $id = Session::get("learn_param_curso"); }
@@ -479,7 +480,7 @@ class examenController extends elearningController {
         Session::set("learn_param_curso", $id);
         // $lecciones=$this->examen->getLecciones($id);
 
-        $modulos = $this->examen->getModulos($id);
+        $modulos = $this->examen->getModulos($id, Cookie::lenguaje());
 
         if ($this->botonPress("prepararPregunta")) {
             $this->redireccionar('elearning/examen/preguntas/'.$id.'/'.$idExamen);
@@ -491,8 +492,8 @@ class examenController extends elearningController {
             }
         }
 
-        $titulo = $this->examen->getTituloCurso($id);
-        $examen = $this->examen->getExamen($idExamen);
+        $titulo = $this->examen->getTituloCurso($id, Cookie::lenguaje());
+        $examen = $this->examen->getExamen($idExamen, Cookie::lenguaje());
         $examenAlumno = $this->examen->getExamenAlumnos($idExamen);
         $Exa_Porcentaje = $this->examen->getExamenesPorcentaje($id);
         $Tra_Porcentaje = $this->examen->getTrabajosPorcentaje($id);
@@ -505,7 +506,7 @@ class examenController extends elearningController {
         $this->_view->assign('examen', $examen);
         $this->_view->assign('examenAlumno', $examenAlumno);
         $this->_view->assign('porcentaje', $Porcentaje);
-        $this->_view->assign('lecciones', $this->examen->getLecciones($examen['Moc_IdModulo']));
+        $this->_view->assign('lecciones', $this->examen->getLecciones($examen['Moc_IdModulo']), Cookie::lenguaje());
         $this->_view->assign('idcurso', $id);
         $this->_view->renderizar('editarexamen', 'elearning');
     }
@@ -899,12 +900,12 @@ class examenController extends elearningController {
         $this->_view->setJs(array(array(BASE_URL . 'modules/elearning/views/gestion/js/core/util.js'), array(BASE_URL . 'modules/elearning/views/gestion/js/core/controller.js'),  "index"));
 
         // url
-        $Examen = $this->examen->getExamenID($idExamen);
+        $Examen = $this->examen->getExamenID($idExamen, Cookie::lenguaje());
         $Mmodel = $this->loadModel("_gestionModulo");
         $model = $this->loadModel("_gestionLeccion");
         $leccion = $model->getLeccionId($Examen["Lec_IdLeccion"]);
         $modulo = $Mmodel->getModuloId($Examen["Moc_IdModulo"]);
-        $this->_view->assign("curso", $Mmodel->getCursoId($id));
+        $this->_view->assign("curso", $Mmodel->getCursoId($id), Cookie::lenguaje());
         $this->_view->assign("modulo", $modulo);
         $this->_view->assign("leccion", $leccion);
         $this->_view->assign('idLeccion', $Examen["Lec_IdLeccion"]);

@@ -4,10 +4,12 @@ public function __construct()
     {
         parent::__construct();
     }
-    public function getPaises($idioma)
+    public function getPaises($idioma, , $Idi_IdIdioma = "es")
     {
         try{
-            $sql = "SELECT fn_TraducirContenido('pais','Pai_Nombre',p.Pai_IdPais,'$idioma', p.Pai_Nombre) Nombre,p.Pai_IdPais from pais p ";
+            $sql = "SELECT fn_TraducirContenido('pais','Pai_Nombre',p.Pai_IdPais,'$Idi_IdIdioma', p.Pai_Nombre) Pai_Nombre,
+            fn_devolverIdioma('pais',p.Pai_IdPais,'$Idi_IdIdioma',p.$Idi_IdIdioma)Idi_IdIdioma,
+            p.Pai_IdPais from pais p ";
             $result = $this->_db->prepare($sql);
             $result->execute();
             $lista= $result->fetchAll(PDO::FETCH_ASSOC);
@@ -55,7 +57,11 @@ public function __construct()
     public function getIns()
     {
         try{
-            $sql = "SELECT i.Ins_IdInstitucion AS Id, i.Ins_Nombre AS Nombre from institucion i ";
+            $sql = "SELECT i.Ins_IdInstitucion AS Id,
+            fn_TraducirContenido('institucion','Ins_Nombre',i.Ins_IdInstitucion,'$Idi_IdIdioma',i.Ins_Nombre)Ins_Nombre,
+            i.Row_Estado,
+            fn_devolverIdioma('institucion','Ins_Nombre','$Idi_IdIdioma',i.Idi_IdIoma)Idi_IdIdioma,
+            from institucion i ";
             $result = $this->_db->prepare($sql);
             $result->execute();
             return $result->fetchAll(PDO::FETCH_ASSOC);
@@ -144,7 +150,29 @@ public function __construct()
     public function getInstitucionPorId($id=false)
     {
         try{
-            $listaInstituciones = $this->_db->query("SELECT p.Pai_IdPais, p.Pai_Nombre, u.Ubi_Sede,i.* FROM institucion i 
+            $listaInstituciones = $this->_db->query("SELECT p.Pai_IdPais, 
+            
+            fn_TraducirContenido('pais','Pai_Nombre',p.Pai_IdPais,'$Idi_IdIdioma', p.Pai_Nombre) Pai_Nombre,
+            fn_devolverIdioma('pais',p.Pai_IdPais,'$Idi_IdIdioma',p.$Idi_IdIdioma)Idi_IdIdioma, 
+            u.Ubi_Sede,
+            i.Ins_IdInstitucion, 
+            i.Ubi_IdUbigeo, 
+            i.Ins_IdPadre, 
+            fn_TraducirContenido('institucion','Ins_Nombre',i.Ins_IdInstitucion,'$Idi_IdIdioma',i.Ins_Nombre)Ins_Nombre,
+            fn_TraducirContenido('institucion','Ins_Descripcion',i.Ins_IdInstitucion,'$Idi_IdIdioma',i.Ins_Descripcion)Ins_Descripcion,
+            i.Row_Estado,
+            i.Ins_CorreoPagina, 
+            i.Ins_Representante,
+            i.Ins_Telefono, 
+            i.Ins_Direccion, 
+            i.Ins_Tipo, 
+            i.Ins_img, 
+            i.Ins_WebSite, 
+            i.Ins_latX, 
+            i.Ins_lng,
+            fn_devolverIdioma('institucion','Ins_IdInstitucion','$Idi_IdIdioma',i.Idi_IdIoma)Idi_IdIdioma,
+            
+            FROM institucion i 
             INNER JOIN ubigeo u ON i.Ubi_IdUbigeo=u.Ubi_IdUbigeo 
             INNER JOIN pais p ON p.Pai_IdPais=u.Pai_IdPais
             WHERE i.Ins_IdInstitucion = ".$id);
@@ -187,7 +215,12 @@ public function __construct()
     public function getTematicas()
     {
         try{
-            $listaInstituciones = $this->_db->query("SELECT t.Tem_IdTematica AS Id,t.Tem_Nombre as Nombre FROM tematica t");
+            $listaInstituciones = $this->_db->query("SELECT t.Tem_IdTematica AS Id,
+            
+            fn_TraducirContenido('tematica','Tem_Nombre',t.Tem_IdTematica,'$Idi_IdIdioma', t.Tem_Nombre)Tem_Nombre,
+            fn_devolverIdioma('tematica',t.Tem_IdTematica,'$Idi_IdIdioma',p.$Idi_IdIdioma)Idi_IdIdioma,
+            FROM tematica t");
+            
             return $listaInstituciones->fetchAll(PDO::FETCH_ASSOC);
 
         } catch (PDOException $exception) {

@@ -123,7 +123,7 @@ class leccionModel extends Model {
                 Row_Estado,
                 fn_devolverIdioma('leccion',Lec_IdLeccion,'$Idi_IdIdioma',Idi_IdIdioma) Idi_IdIdioma
 
-               FROM leccion WHERE Moc_IdModuloCurso = {$modulo}
+               FROM leccion WHERE Moc_IdModuloCurso = $modulo 
               AND Lec_Estado = 1 AND Row_Estado = 1
               ORDER BY Lec_IdLeccion ASC";
       $lecciones = $this->getArray($sql);
@@ -189,14 +189,31 @@ class leccionModel extends Model {
       return $this->getArray($sql);
     }
 
-    public function getReferencias($leccion){
-      $sql = "SELECT * FROM referencia_leccion
+    public function getReferencias($leccion, $Idi_IdIdioma="es"){
+      $sql = "SELECT Ref_IdReferencia,
+      Lec_IdLeccion,
+      fn_TraducirContenido('referencia_leccion','Ref_Titulo',Ref_IdReferencia,'$Idi_IdIdioma',Ref_Titulo) Ref_Titulo,
+      fn_TraducirContenido('referencia_leccion','Ref_Descripcion',Ref_IdReferencia,'$Idi_IdIdioma',Ref_Descripcion) Ref_Descripcion,
+      Ref_FechaReg,
+      Ref_Estado,
+      Row_Estado,
+      fn_devolverIdioma('referencia_leccion',Ref_IdReferencia,'$Idi_IdIdioma',Idi_IdIdioma) Idi_IdIdioma
+      FROM referencia_leccion
               WHERE Lec_IdLeccion = {$leccion} AND Ref_Estado = 1 AND Row_Estado = 1";
       return $this->getArray($sql);
     }
 
-    public function getMateriales($leccion){
-      $sql = "SELECT * FROM material_leccion
+    public function getMateriales($leccion, $Idi_IdIdioma="es"){
+      $sql = "SELECT Mat_IdMaterial,
+      Lec_IdLeccion,
+      fn_TraducirContenido('material_leccion','Mat_Descripcion',Mat_IdMaterial,'$Idi_IdIdioma',Mat_Descripcion) Mat_Descripcion,
+      Mat_Enlace,
+      Mat_FechaReg,
+      Mat_Tipo,
+      Mat_Estado,
+      Row_Estado,
+      fn_devolverIdioma('material_leccion',Mat_IdMaterial,'$Idi_IdIdioma',Idi_IdIdioma) Idi_IdIdioma
+      FROM material_leccion
               WHERE Lec_IdLeccion = {$leccion} AND Mat_Estado = 1 AND Row_Estado = 1";
       return $this->getArray($sql);
     }

@@ -16,8 +16,24 @@ class examenModel extends Model {
     //   return null;
     // }
 
-    public function getExamenID($examen){
-      $sql = "SELECT * FROM examen WHERE Exa_IdExamen = {$examen}";
+    public function getExamenID($examen, $Idi_IdIdioma="es"){
+      $sql = "SELECT Exa_IdExamen,
+      Cur_IdCurso,
+      Moc_IdModulo,
+      fn_TraducirContenido('examen','Exa_Titulo', Exa_IdExamen,'$Idi_IdIdioma', Exa_Titulo) Exa_Titulo,
+      Exa_Intentos,
+      Exa_Restrictivo,
+      Exa_Peso,
+      Exa_NroPreguntas,
+      Exa_FechaDesde,
+      Exa_FechaHasta,
+      Exa_Porcentaje,
+      Exa_FechaReg,
+      Lec_IdLeccion,
+      Exa_Estado,
+      Row_Estado,
+      fn_devolverIdioma('examen', Exa_IdExamen,'$Idi_IdIdioma', Idi_IdIdioma) Idi_IdIdioma 
+      FROM examen WHERE Exa_IdExamen = {$examen}";
       $examen = $this->getArray($sql);
       return $examen[0];
     }
@@ -28,10 +44,26 @@ class examenModel extends Model {
       return $this->getArray($sql);
     }
 
-    public function getExamenxLeccion($Lec_IdLeccion)
+    public function getExamenxLeccion($Lec_IdLeccion, $Idi_IdIdioma="es")
     {
         try{
-            $sql = " SELECT * FROM examen WHERE Lec_IdLeccion = $Lec_IdLeccion AND Exa_Estado = 1 AND Row_Estado = 1 ";
+            $sql = " SELECT e.Exa_IdExamen,
+            e.Cur_IdCurso,
+            e.Moc_IdModulo,
+            fn_TraducirContenido('examen','Exa_Titulo',e.Exa_IdExamen,'$Idi_IdIdioma',e.Exa_Titulo) Exa_Titulo,
+            e.Exa_Intentos,
+            e.Exa_Restrictivo,
+            e.Exa_Peso,
+            e.Exa_NroPreguntas,
+            e.Exa_FechaDesde,
+            e.Exa_FechaHasta,
+            e.Exa_Porcentaje,
+            e.Exa_FechaReg,
+            e.Lec_IdLeccion,
+            e.Exa_Estado,
+            e.Row_Estado,
+            fn_devolverIdioma('examen',e.Exa_IdExamen,'$Idi_IdIdioma',e.Idi_IdIdioma) Idi_IdIdioma 
+            FROM examen e WHERE e.Lec_IdLeccion = $Lec_IdLeccion AND e.Exa_Estado = 1 AND e.Row_Estado = 1 ";
             $result = $this->_db->prepare($sql);
             $result->execute();
             return $result->fetch(PDO::FETCH_ASSOC);
@@ -41,10 +73,26 @@ class examenModel extends Model {
         }
     }
 
-    public function getExamen($id)
+    public function getExamen($id, $Idi_IdIdioma="es")
     {
         try{
-            $sql = " SELECT * FROM examen WHERE Exa_IdExamen=$id ";
+            $sql = " SELECT Exa_IdExamen,
+            Cur_IdCurso,
+            Moc_IdModulo,
+            fn_TraducirContenido('examen','Exa_Titulo', Exa_IdExamen,'$Idi_IdIdioma', Exa_Titulo) Exa_Titulo,
+            Exa_Intentos,
+            Exa_Restrictivo,
+            Exa_Peso,
+            Exa_NroPreguntas,
+            Exa_FechaDesde,
+            Exa_FechaHasta,
+            Exa_Porcentaje,
+            Exa_FechaReg,
+            Lec_IdLeccion,
+            Exa_Estado,
+            Row_Estado,
+            fn_devolverIdioma('examen', Exa_IdExamen,'$Idi_IdIdioma', Idi_IdIdioma) Idi_IdIdioma 
+            FROM examen WHERE Exa_IdExamen=$id ";
             $result = $this->_db->prepare($sql);
             $result->execute();
             return $result->fetch(PDO::FETCH_ASSOC);
@@ -66,10 +114,12 @@ class examenModel extends Model {
         }
     }
 
-    public function getTituloCurso($id)
+    public function getTituloCurso($id, $Idi_IdIdioma = "es")
     {
         try{
-            $sql = " SELECT Cur_Titulo FROM curso WHERE Cur_IdCurso=$id ";
+            $sql = " SELECT fn_TraducirContenido('curso','Cur_Titulo', Cur_IdCurso,'$Idi_IdIdioma', Cur_Titulo) Cur_Titulo,
+            fn_devolverIdioma('curso', Cur_IdCurso,'$Idi_IdIdioma', Idi_IdIdioma) Idi_IdIdioma
+            FROM curso WHERE Cur_IdCurso=$id ";
             $result = $this->_db->prepare($sql);
             $result->execute();
             return $result->fetch(PDO::FETCH_ASSOC);
@@ -199,9 +249,12 @@ class examenModel extends Model {
         }
     }
 
-    public function getModulos($id){
+    public function getModulos($id, $Idi_IdIdioma = "es"){
         try{
-            $sql = " SELECT Moc_IdModuloCurso, Moc_Titulo FROM modulo_curso WHERE Cur_IdCurso=$id AND Moc_Estado=1 AND Row_Estado=1 ";
+            $sql = " SELECT Moc_IdModuloCurso, 
+            fn_TraducirContenido('modulo_curso','Moc_Titulo', Moc_IdModuloCurso,'$Idi_IdIdioma', Moc_Titulo) Moc_Titulo,
+            fn_devolverIdioma('modulo_curso', Moc_IdModuloCurso,'$Idi_IdIdioma',Idi_IdIdioma) Idi_IdIdioma
+            FROM modulo_curso WHERE Cur_IdCurso=$id AND Moc_Estado=1 AND Row_Estado=1 ";
             $result = $this->_db->prepare($sql);
             $result->execute();
             return $result->fetchAll(PDO::FETCH_ASSOC);
@@ -461,10 +514,21 @@ class examenModel extends Model {
         }
     }
 
-    public function getPreguntas($examen)
+    public function getPreguntas($examen, $Idi_IdIdioma = "es")
     {
         try{
-            $sql = "  SELECT * FROM pregunta p WHERE p.Exa_IdExamen=$examen AND p.Pre_Estado=1 AND p.Row_Estado=1 order by rand()";
+            $sql = "  SELECT p.Pre_IdPregunta,
+            p.Exa_IdExamen,
+            fn_TraducirContenido('pregunta','Pre_Descripcion', p.Pre_IdPregunta,'$Idi_IdIdioma', p.Pre_Descripcion) Pre_Descripcion,
+            fn_TraducirContenido('pregunta','Pre_Descripcion2', p.Pre_IdPregunta,'$Idi_IdIdioma', p.Pre_Descripcion2) Pre_Descripcion2,
+            p.Pre_FechaReg,
+            p.Pre_Valor,
+            p.Pre_Tipo,
+            p.Pre_Puntos,
+            p.Pre_Estado,
+            p.Row_Estado,
+            fn_devolverIdioma('pregunta', p.Pre_IdPregunta,'$Idi_IdIdioma', p.Idi_IdIdioma) Idi_IdIdioma
+            FROM pregunta p WHERE p.Exa_IdExamen=$examen AND p.Pre_Estado=1 AND p.Row_Estado=1 order by rand()";
             $result = $this->_db->query($sql);
             $preguntas = $result->fetchAll(PDO::FETCH_ASSOC);    
             

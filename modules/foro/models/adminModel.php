@@ -65,11 +65,15 @@ class adminModel extends Model
         }
     }
 
-    public function getLineaTematicas() {
+    public function getLineaTematicas($Idi_IdIdioma = "es") {
         try{
             $idiomas = $this->_db->query(
-                    "SELECT * FROM linea_tematica 
-                        WHERE Row_Estado = 1"
+                    "SELECT lt.Lit_IdLinea,
+                    fn_TraducirContenido('linea_tematica','Lit_Nombre', lt.Lit_IdLinea,'$Idi_IdIdioma',lt.Lit_Nombre) Lit_Nombre, lt.Row_Estado,
+                    fn_devolverIdioma('linea_tematica', lt.Lit_IdLinea, '$Id_IdIdioma', lt.Idi_IdIdioma) Idi_IdIdioma,
+                            lt.Lit_Estado, lt.Lit_Descripcion Tematica 
+                     FROM linea_tematica lt 
+                     WHERE lt.Row_Estado = 1"
             );
             return $idiomas->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $exception) {
