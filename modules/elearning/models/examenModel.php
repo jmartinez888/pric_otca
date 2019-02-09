@@ -744,10 +744,21 @@ class examenModel extends Model {
     }
 
 
-    public function getAlternativas($pregunta = "")
+    public function getAlternativas($pregunta = "", $Idi_IdIdioma = "es")
     {
         try{
-            $sql = " SELECT * FROM alternativa WHERE Pre_IdPregunta = $pregunta ";
+            $sql = " SELECT Alt_IdAlternativa,
+            Pre_IdPregunta,
+            fn_TraducirContenido('alternativa','Alt_Etiqueta',Alt_IdAlternativa,'$Idi_IdIdioma',Alt_Etiqueta) Alt_Etiqueta,
+            Alt_Valor,
+            Alt_FechaReg,
+            Alt_Relacion,
+            Alt_Check,
+            Alt_Puntos,
+            Alt_Estado,
+            Row_Estado,
+            fn_devolverIdioma('alternativa',Alt_IdAlternativa,'$Idi_IdIdioma',Idi_IdIdioma) Idi_IdIdioma
+            FROM alternativa WHERE Pre_IdPregunta = $pregunta ";
             $result = $this->_db->prepare($sql);
             $result->execute();
             return $result->fetchAll(PDO::FETCH_ASSOC);
