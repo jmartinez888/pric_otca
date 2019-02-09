@@ -82,10 +82,12 @@ class examenModel extends Model {
         }
     }
 
-    public function getTituloCurso($id)
+    public function getTituloCurso($id, $Idi_IdIdioma = "es")
     {
         try{
-            $sql = " SELECT Cur_Titulo FROM curso WHERE Cur_IdCurso=$id ";
+            $sql = " SELECT fn_TraducirContenido('curso','Cur_Titulo', Cur_IdCurso,'$Idi_IdIdioma', Cur_Titulo) Cur_Titulo,
+            fn_devolverIdioma('curso', Cur_IdCurso,'$Idi_IdIdioma', Idi_IdIdioma) Idi_IdIdioma
+            FROM curso WHERE Cur_IdCurso=$id ";
             $result = $this->_db->prepare($sql);
             $result->execute();
             return $result->fetch(PDO::FETCH_ASSOC);
