@@ -52,6 +52,7 @@ class examenController extends elearningController {
         // $this->_view->setCss(array("verificar"));
     $this->validarUrlIdioma();
         $this->_view->setTemplate(LAYOUT_FRONTEND);
+        $lang = $this->_view->getLenguaje('elearning_cursos', false, true);
         // $this->_view->setJs(array(array(BASE_URL . 'modules/elearning/views/gestion/js/core/util.js'),array(BASE_URL . 'modules/elearning/views/gestion/js/framework/lodash.js'),array(BASE_URL . 'modules/elearning/views/gestion/js/core/controller.js'),array(BASE_URL . 'modules/elearning/views/gestion/js/index.js'),array(BASE_URL . 'modules/elearning/views/gestion/js/core/view.js'), "index"));
         $this->_view->setJs(array( "index"));
 
