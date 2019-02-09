@@ -11,16 +11,12 @@
         {if isset($leccion) && count($leccion)}
         <div class="col-xs-12 col-md-12 col-sm-12 col-lg-12 titulo-modulo">
            <h4><strong> {$lang->get('str_modulo')} {$mod_datos.INDEX}: {$modulo["Moc_Titulo"]}</strong></h4>
-            {* <div class="col-sm-6 col-lg-2" style="margin-top: 5px !important"> *}
               <div class="container-btn-curso">
                 <a class="btn btn-sm btn-success btn-group pull-right" href="{BASE_URL}elearning/cursos/curso/{$curso}">
-                  {* <button class="course-students-amount btn-regresar btn btn-group"> *}
-                    <span class="glyphicon glyphicon-hand-left" aria-hidden="true"></span>
+                  <span class="glyphicon glyphicon-hand-left" aria-hidden="true"></span>
                     {$lang->get('elearning_cursos_volver_curso')}
-                  {* </button> *}
                 </a>
               </div>
-            {* </div> *}
         </div>
 
         <div class="section-paginador col-sm-12 col-md-12 col-lg-12 col-xs-12 mb-4" >

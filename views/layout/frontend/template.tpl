@@ -7,6 +7,8 @@
         <meta name="google-signin-client_id" content="684672950066-oqa176688bh3tpbftvohouguabu3dpi6.apps.googleusercontent.com">
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
         <meta name="robots" content="noindex">
+        {block 'meta'}
+        {/block}
         <link rel="stylesheet" href="{$_layoutParams.ruta_css}font-awesome.css">
         <link href="{$_layoutParams.ruta_css}bootstrap.min.css" rel="stylesheet" type="text/css">
         <link href="{$_layoutParams.ruta_css}bootstrapValidator.css" rel="stylesheet" type="text/css">

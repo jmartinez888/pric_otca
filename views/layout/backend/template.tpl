@@ -8,6 +8,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <meta charset="UTF-8">
         <title>{$titulo|default:"PHP MVC INTRANET"}</title>
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+        {block 'meta'}
+        {/block}
         <link href="{$_layoutParams.ruta_css}bootstrapValidator.css" rel="stylesheet" type="text/css">
         <link href="{$_layoutParams.ruta_css}datepicker.css" rel="stylesheet" type="text/css">
         <link href="{$_layoutParams.ruta_css}bootstrap-select.min.css" rel="stylesheet" type="text/css">
