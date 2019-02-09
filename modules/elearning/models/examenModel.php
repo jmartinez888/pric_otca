@@ -50,7 +50,7 @@ class examenModel extends Model {
             $sql = " SELECT e.Exa_IdExamen,
             e.Cur_IdCurso,
             e.Moc_IdModulo,
-            fn_TraducirContenido('examen','Exa_Titulo',e.Cur_IdCurso,'$Idi_IdIdioma',e.Exa_Titulo) Exa_Titulo,
+            fn_TraducirContenido('examen','Exa_Titulo',e.Exa_IdExamen,'$Idi_IdIdioma',e.Exa_Titulo) Exa_Titulo,
             e.Exa_Intentos,
             e.Exa_Restrictivo,
             e.Exa_Peso,
