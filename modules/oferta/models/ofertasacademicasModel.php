@@ -28,12 +28,16 @@ public function __construct()
             return $exception->getTraceAsString();
         }
     }
-    public function getInstitucionesBusquedaRowCount($dato,$pais)
+    public function getInstitucionesBusquedaRowCount($dato,$pais, $Idi_IdIdioma = "es")
     {
         try{
-            $sql = " SELECT fn_TraducirContenido('pais','Pai_Nombre',Pai_IdPais,'$Idi_IdIdioma',p.Pai_Nombre) Pai_Nombre,
-                            fn_devolverIdioma('pais',p.Pai_IdPais,'$Idi_IdIdioma',p.$Idi_IdIdioma)Idi_IdIdioma,
-            u.Ubi_Sede, i.Ins_IdInstitucion,COUNT(i.Ins_Nombre) AS CantidadRegistros 
+            $sql = " SELECT i.Ins_IdInstitucion, p.Pai_IdPais,
+            
+            fn_TraducirContenido('pais','Pai_Nombre',Pai_IdPais,'$Idi_IdIdioma',p.Pai_Nombre) Pai_Nombre,
+            i.row_estado,
+            fn_devolverIdioma('institucion',i.Ins_IdInstitucion,'$Idi_IdIdioma',p.$Idi_IdIdioma)Idi_IdIdioma,
+                            
+            u.Ubi_Sede, ,COUNT(i.Ins_Nombre) AS CantidadRegistros 
             FROM institucion i INNER JOIN ubigeo u ON i.Ubi_IdUbigeo=u.Ubi_IdUbigeo 
             INNER JOIN pais p ON p.Pai_IdPais=u.Pai_IdPais
             WHERE i.Ins_Nombre LIKE '%". $dato."%' AND p.Pai_Nombre LIKE '%".$pais."%' GROUP BY p.Pai_Nombre, u.Ubi_Sede, i.Ins_IdInstitucion ";
@@ -71,11 +75,13 @@ public function __construct()
             return $exception->getTraceAsString();
         }
     }
-    public function getPaises()
+    public function getPaises($Idi_IdIdioma = "es")
     {
         try{
-            $sql = "SELECT  fn_TraducirContenido('pais','Pai_Nombre',Pai_IdPais,'$Idi_IdIdioma',p.Pai_Nombre) Pai_Nombre,
-                            fn_devolverIdioma('pais',p.Pai_IdPais,'$Idi_IdIdioma',p.$Idi_IdIdioma)Idi_IdIdioma,
+            $sql = "SELECT  u.Ubi.IdUbigeo, p.Pai.Id_Pais,
+            
+            fn_TraducirContenido('pais','Pai_Nombre',Pai_IdPais,'$Idi_IdIdioma',p.Pai_Nombre) Pai_Nombre,
+            fn_devolverIdioma('ubigeo',u.Ubi_IdUbigeo,'$Idi_IdIdioma',p.$Idi_IdIdioma)Idi_IdIdioma,
             COUNT(i.Ins_Nombre) AS Conteo from ubigeo u INNER JOIN institucion i on u.Ubi_IdUbigeo=i.Ubi_IdUbigeo INNER JOIN pais p on p.Pai_IdPais=u.Pai_IdPais GROUP BY p.Pai_Nombre";
             $result = $this->_db->prepare($sql);
             $result->execute();
