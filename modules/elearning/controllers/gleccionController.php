@@ -615,7 +615,7 @@ class gleccionController extends elearningController {
         $curso = $Cmodel->getCursoXId($id_curso, Cookie::lenguaje());
         $tipo = $Lmodel->getTipoLecccion( $curso["Moa_IdModalidad"]==2? " ": "" );
         $lecciones = $Lmodel->getLecciones($id_modulo, Cookie::lenguaje());
-        $modulo = $Mmodel->getModuloId($id_modulo);
+        $modulo = $Mmodel->getModuloId($id_modulo, Cookie::lenguaje());
 
         Session::set("learn_url_tmp", "gleccion/_view_lecciones_modulo");
         $this->_view->assign('idiomas',$_arquitectura->getIdiomas());
