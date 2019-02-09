@@ -82,7 +82,7 @@ public function __construct()
     {
         try{
             $sql = " SELECT i.Ins_IdInstitucion, 
-            fn_TraducirContenido('institucion','Ins_Tipo',i.Ins_IdInstitucion,'$idioma',i.Ins_Tipo) Ins_Tipo,
+            fn_TraducirContenido('institucion','Ins_Tipo',i.Ins_IdInstitucion,'$Idi_IdIdioma',i.Ins_Tipo) Ins_Tipo,
             i.row_estado,
             fn_devolverIdioma('institucion','Ins_IdInstitucion','$Idi_IdIdioma',i.Idi_IdIoma)Idi_IdIdioma,
             COUNT(i.Ins_IdInstitucion) AS CantidadRegistros         
@@ -114,7 +114,7 @@ public function __construct()
             return $exception->getTraceAsString();
         }
     }
-    public function getResumenOfertas($condicion='',$condicion2='',$idioma=false)
+    public function getResumenOfertas($condicion='',$condicion2='',$Idi_IdIdioma="es")
     {
         try{
             $sql = "SELECT DISTINCT 
