@@ -417,7 +417,7 @@ class examenController extends elearningController {
         // $this->_view->setCss(array("verificar"));
         // $id = $this->getTexto("id");
         $this->_view->setTemplate(LAYOUT_FRONTEND);
-         $lang = $this->_view->getLenguaje('elearning_cursos', false, true);
+        $lang = $this->_view->getLenguaje('elearning_cursos', false, true);
         $this->_view->setJs(array(array(BASE_URL . 'modules/elearning/views/gestion/js/core/util.js'), "index"));
 
         if(strlen($id)==0){ $id = Session::get("learn_param_curso"); }
@@ -472,6 +472,7 @@ class examenController extends elearningController {
         // $this->_view->setCss(array("verificar"));
         // $id = $this->getTexto("id");
         $this->_view->setTemplate(LAYOUT_FRONTEND);
+        $lang = $this->_view->getLenguaje('elearning_cursos', false, true);
         $this->_view->setJs(array(array(BASE_URL . 'modules/elearning/views/gestion/js/core/util.js'), "index"));
 
         if(strlen($id)==0){ $id = Session::get("learn_param_curso"); }
