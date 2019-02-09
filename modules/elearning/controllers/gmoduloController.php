@@ -25,7 +25,7 @@ class gmoduloController extends elearningController {
     $Mmodel = $this->loadModel("_gestionModulo");
     $lang = $this->_view->getLenguaje('elearning_gcurso', false, true);
     $curso = $Cmodel->getCursoById($idcurso);
-    $modulos = $Mmodel->getModulos($idcurso);
+    $modulos = $Mmodel->getModulos($idcurso, Cookie::lenguaje());
 
     Session::set("learn_param_curso", $idcurso);
     Session::set("learn_url_tmp", "gmodulo/_view_modulos_curso");
