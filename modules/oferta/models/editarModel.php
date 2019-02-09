@@ -215,7 +215,12 @@ public function __construct()
     public function getTematicas()
     {
         try{
-            $listaInstituciones = $this->_db->query("SELECT t.Tem_IdTematica AS Id,t.Tem_Nombre as Nombre FROM tematica t");
+            $listaInstituciones = $this->_db->query("SELECT t.Tem_IdTematica AS Id,
+            
+            fn_TraducirContenido('tematica','Tem_Nombre',t.Tem_IdTematica,'$Idi_IdIdioma', t.Tem_Nombre)Tem_Nombre,
+            fn_devolverIdioma('tematica',t.Tem_IdTematica,'$Idi_IdIdioma',p.$Idi_IdIdioma)Idi_IdIdioma,
+            FROM tematica t");
+            
             return $listaInstituciones->fetchAll(PDO::FETCH_ASSOC);
 
         } catch (PDOException $exception) {
