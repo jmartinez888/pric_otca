@@ -26,9 +26,23 @@ class _gestionLeccionModel extends Model {
     return $this->getArray($sql);
   }
 
-  public function getLecciones($modulo){
-    $sql = "SELECT L.*,
-              C.Con_Descripcion as Tipo
+  public function getLecciones($modulo, $Idi_IdIdioma = "es"){
+    $sql = "SELECT L.Lec_IdLeccion,
+    L.Moc_IdModuloCurso,
+    fn_TraducirContenido('leccion','Lec_Titulo',L.Lec_IdLeccion,'$Idi_IdIdioma',L.Lec_Titulo) Lec_Titulo,
+    fn_TraducirContenido('leccion','Lec_Descripcion',L.Lec_IdLeccion,'$Idi_IdIdioma',L.Lec_Descripcion) Lec_Descripcion,
+    fn_TraducirContenido('leccion','Lec_TiempoDedicacion',L.Lec_IdLeccion,'$Idi_IdIdioma',L.Lec_TiempoDedicacion) Lec_TiempoDedicacion,
+    fn_TraducirContenido('leccion','Lec_Tipo',L.Lec_IdLeccion,'$Idi_IdIdioma',L.Lec_Tipo) Lec_Tipo,
+    Lec_FechaDesde,
+    Lec_FechaHasta,
+    Lec_FechaReg,
+    Lec_LMSEstado,
+    Lec_LMSPizarra,
+    Lec_Estado,
+    Row_Estado,
+    Lec_Hash,
+    C.Con_Descripcion as Tipo,
+    fn_devolverIdioma('modulo_curso',L.Lec_IdLeccion,'$Idi_IdIdioma',L.Idi_IdIdioma) Idi_IdIdioma  
             FROM leccion L
             INNER JOIN constante C ON C.Con_Valor = L.Lec_Tipo AND C.Con_Codigo = 2000
             WHERE L.Moc_IdModuloCurso = {$modulo}
