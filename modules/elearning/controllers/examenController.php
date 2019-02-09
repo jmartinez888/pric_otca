@@ -932,7 +932,7 @@ class examenController extends elearningController {
         $paginador = new Paginador();
 
         $arrayRowCount = $this->examen->getPreguntasRowCount($condicion);
-        $this->_view->assign('preguntas',  $this->examen->getPreguntasCondicion($pagina,CANT_REG_PAG, $condicion));
+        $this->_view->assign('preguntas',  $this->examen->getPreguntasCondicion($pagina,CANT_REG_PAG, $condicion, Cookie::lenguaje()));
 
         $paginador->paginar( $arrayRowCount['CantidadRegistros'],"listarpreguntas", "", $pagina, CANT_REG_PAG, true);
 
