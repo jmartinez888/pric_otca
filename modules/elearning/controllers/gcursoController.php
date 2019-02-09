@@ -120,7 +120,7 @@ class gcursoController extends elearningController {
     if(!is_numeric($idcurso) && strlen($idcurso)==0){ $idcurso = Session::get("learn_param_curso"); }
     if(strlen($idcurso)==0){ exit; }
     
-    $datos = $this->curso->getCursoById($idcurso);
+    $datos = $this->curso->getCursoById($idcurso, Cookie::lenguaje());
     $parametros = $this->curso->getParametros($idcurso);
     // print_r($datos); 
     Session::set("learn_param_curso", $idcurso);

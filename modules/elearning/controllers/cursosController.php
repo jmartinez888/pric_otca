@@ -318,9 +318,9 @@ class cursosController extends elearningController {
     }
     
     if ($leccion) {
-      // if(!$Lmodel->validarLeccion($leccion, $modulo, Session::get("id_usuario"))){ 
-      //   $this->redireccionar("elearning/cursos"); 
-      // }
+      if(!$Lmodel->validarLeccion($leccion, $modulo, Session::get("id_usuario"))){ 
+        $this->redireccionar("elearning/cursos"); 
+      }
     }
     
     $obj_curso = $Cmodel::find($curso);
