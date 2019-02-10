@@ -932,7 +932,8 @@ class cursosController extends elearningController {
     $dompdf->set_option('isHtml5ParserEnabled', true);
     $dompdf->loadHtml("$a.$cuerpo");
     $dompdf->render();
-    $dompdf->stream("'" . APP_NAME . '-OTCA_Descargas.pdf');
+      
+    $dompdf->stream(substr($certificado[0]['Usu_Nombre']) . substr($certificado[0]['Usu_Apellidos']) . '-' .$certificado[0]['Cer_Codigo'] . '.pdf');
     // }
 
     // $this->_view->assign("modulo", $modulo);
