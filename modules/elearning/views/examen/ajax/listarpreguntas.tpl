@@ -4,11 +4,11 @@
         <table class="table" style="  margin: 20px auto">
             <tr>
                 <th style=" text-align: center">Nº</th>
-                <th style=" text-align: center">Preguntas</th>
-                <th style=" text-align: center">Tipo</th>
-                <th style=" text-align: center">Puntos Totales</th>
-                <th style=" text-align: center">Estado</th>
-                <th style=" text-align: center">Opciones</th>
+                <th style=" text-align: center">{$lenguaje["elearning_preguntas_titulo"]}</th>
+                <th style=" text-align: center">{$lenguaje["elearning_preguntas_tipo"]}</th>
+                <th style=" text-align: center">{$lenguaje["elearning_preguntas_puntosT"]}</th>
+                <th style=" text-align: center">{$lenguaje["elearning_preguntas_estado"]}</th>
+                <th style=" text-align: center">{$lenguaje["elearning_preguntas_opciones"]}</th>
             </tr>
             {foreach item=rl from=$preguntas}
                 <tr {if $rl.Row_Estado==0}
