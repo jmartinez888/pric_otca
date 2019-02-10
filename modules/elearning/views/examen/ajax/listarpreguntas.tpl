@@ -20,7 +20,7 @@
                 {/if} >
                 <td style=" text-align: center">{$numeropagina++}</td>
                 <td style=" text-align: center">{$rl.Pre_Descripcion}</td>
-                <td style=" text-align: center">{if $rl.Pre_Tipo==1}Respuesta Única{/if}{if $rl.Pre_Tipo==2}Respuesta Múltiple{/if}{if $rl.Pre_Tipo==3}Rellenar blancos{/if}{if $rl.Pre_Tipo==4}Respuestas Relacionadas{/if}{if $rl.Pre_Tipo==5}Respuesta Abierta{/if}{if $rl.Pre_Tipo==6}Respuesta con Zonas de Imagen{/if}{if $rl.Pre_Tipo==7}Combinación Exacta{/if}</td>
+                <td style=" text-align: center">{if $rl.Pre_Tipo==1}{$lenguaje["elearning_preguntas_respU"]}{/if}{if $rl.Pre_Tipo==2}{$lenguaje["elearning_preguntas_respM"]}{/if}{if $rl.Pre_Tipo==3}{$lenguaje["elearning_preguntas_relleB"]}{/if}{if $rl.Pre_Tipo==4}{$lenguaje["elearning_preguntas_relleR"]}{/if}{if $rl.Pre_Tipo==5}{$lenguaje["elearning_preguntas_resA"]}{/if}{if $rl.Pre_Tipo==6}{$lenguaje["elearning_preguntas_imagenes"]}{/if}{if $rl.Pre_Tipo==7}{$lenguaje["elearning_preguntas_combinacione"]}{/if}</td>
                 <td style=" text-align: center">{$rl.Pre_Puntos}</td>
                 <td style=" text-align: center">
                     {if $rl.Pre_Estado==0}
@@ -34,7 +34,7 @@
                     <td style=" text-align: center">
                         <a data-toggle="tooltip" data-placement="bottom" class="btn btn-default btn-sm glyphicon glyphicon-refresh estado-pregunta" title="{$lenguaje.tabla_opcion_cambiar_est}" id_pregunta="{$rl.Pre_IdPregunta}" Pre_Puntos = "{$rl.Pre_Puntos}" estado="{$rl.Pre_Estado}"> </a>
                         
-                        <a data-toggle="tooltip" data-placement="bottom" class="btn btn-default btn-sm glyphicon glyphicon-edit" title="Editar" href="{$_layoutParams.root}elearning/examen/{if $rl.Pre_Tipo==1}editarRespuestaUnica{/if}{if $rl.Pre_Tipo==2}editarRespuestaMultiple{/if}{if $rl.Pre_Tipo==3}editarRespuestaBlanco{/if}{if $rl.Pre_Tipo==4}editarRespuestaRelacionar{/if}{if $rl.Pre_Tipo==5}editarRespuestaAbierta{/if}{if $rl.Pre_Tipo==6}editarRespuestaZonasImagen{/if}{if $rl.Pre_Tipo==7}editarRespuestaCombinacionExacta{/if}/{$rl.Pre_IdPregunta}/{$idcurso}"></a>
+                        <a data-toggle="tooltip" data-placement="bottom" class="btn btn-default btn-sm glyphicon glyphicon-edit" title="{$lenguaje["elearning_preguntas_editarrespuesta"]}" href="{$_layoutParams.root}elearning/examen/{if $rl.Pre_Tipo==1}editarRespuestaUnica{/if}{if $rl.Pre_Tipo==2}editarRespuestaMultiple{/if}{if $rl.Pre_Tipo==3}editarRespuestaBlanco{/if}{if $rl.Pre_Tipo==4}editarRespuestaRelacionar{/if}{if $rl.Pre_Tipo==5}editarRespuestaAbierta{/if}{if $rl.Pre_Tipo==6}editarRespuestaZonasImagen{/if}{if $rl.Pre_Tipo==7}editarRespuestaCombinacionExacta{/if}/{$rl.Pre_IdPregunta}/{$idcurso}"></a>
 
                         <a   
                         {if $rl.Row_Estado==0}
