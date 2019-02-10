@@ -59,7 +59,7 @@ class cursoModel extends Model {
                  c.Cur_EstadoRegistro,
                  c.Cur_Estado,
                  c.Row_Estado,
-                  (CASE WHEN AVG(vc.Val_Valor) > 0 THEN AVG(vc.Val_Valor) ELSE 0 END) AS Valoracion,
+                  (CASE WHEN AVG(vc.Val_Valor) > 0 THEN ROUND(AVG(vc.Val_Valor)) ELSE 0 END) AS Valoracion,
                  fn_devolverIdioma('curso',c.Cur_IdCurso,'$Idi_IdIdioma',c.Idi_IdIdioma) Idi_IdIdioma 
           FROM curso c 
           LEFT JOIN valoracion_curso vc ON vc.Cur_IdCurso = c.Cur_IdCurso 
