@@ -933,7 +933,7 @@ class cursosController extends elearningController {
     $dompdf->loadHtml("$a.$cuerpo");
     $dompdf->render();
       
-    $dompdf->stream(substr($certificado[0]['Usu_Nombre']) . substr($certificado[0]['Usu_Apellidos']) . '-' .$certificado[0]['Cer_Codigo'] . '.pdf');
+    $dompdf->stream(substr($certificado[0]['Usu_Nombre'],0,1) . substr($certificado[0]['Usu_Apellidos'],0,1) . '-' . $certificado[0]['Cer_Codigo'] . '.pdf');
     // }
 
     // $this->_view->assign("modulo", $modulo);
