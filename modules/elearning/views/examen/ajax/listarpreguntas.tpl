@@ -52,17 +52,17 @@
             {/foreach}
             <tr>
                 <th style=" text-align: center" colspan="3"></th>
-                <th style=" text-align: center">Total {$puntos_total}</th>
+                <th style=" text-align: center">{$lenguaje["elearnin_preguntas_total"]} {$puntos_total}</th>
                 <th style=" text-align: center" colspan="2" ></th>
             </tr>
         </table>
     </div>
     {$paginacionpreguntas|default:""}
 {else}
-    No hay registros
+    {$lenguaje["learnin_preguntas_noregstros"]}
 {/if}
 {if isset($_mensaje_json)}
-<script type="text/javascript">
+<script type="text/javascript">e
     mensaje({$_mensaje_json});
 </script>
 {/if}
