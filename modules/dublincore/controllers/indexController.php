@@ -188,8 +188,8 @@ class indexController extends dublincoreController{
 
     public function metadata()
     {
-      $this->_view->getLenguaje("bdrecursos_metadata");
       $this->_view->getLenguaje("bd_documentos");
+      $this->_view->getLenguaje("bdrecursos_metadata");
     $condicion = "";
         $registros  = $this->getSql('registros');
         if($registros)
