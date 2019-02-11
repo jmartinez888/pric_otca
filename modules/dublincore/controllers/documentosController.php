@@ -753,8 +753,8 @@ class documentosController extends Controller{
     public function metadata($Dub_IdDublinCore)
     {
     	// $this->_acl->autenticado();
-    $this->validarUrlIdioma();
     $this->_view->getLenguaje("bdrecursos_metadata");
+    $this->validarUrlIdioma();
     $this->_view->setTemplate(LAYOUT_FRONTEND);
         $this->_view->setCss(array("jp-index"));
 		$idioma = Cookie::lenguaje();
