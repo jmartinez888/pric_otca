@@ -20,7 +20,6 @@ class documentosController extends Controller{
     	// $this->_acl->autenticado();
         $this->validarUrlIdioma();
         $this->_view->getLenguaje("bd_documentos");
-        $this->_view->getLenguaje("bdrecursos_registros");
 
         //Para modal Adjuntar archivo
         $this->_view->getLenguaje("bdrecursos_index");
