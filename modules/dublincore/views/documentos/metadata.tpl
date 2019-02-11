@@ -77,8 +77,7 @@
                         <table class="table table-user-information">
                             <tbody>
                                 <tr>
-                                    <td style="border:none;">{$lenguaje["label_nombre_bdrecursos"]}</td>
-                                    <td style="border:none;">{$recurso.Rec_Nombre}</td>
+                                    <td colspan="2">{$recurso.Rec_Nombre}</td>
                                 </tr>
                                 <tr>
                                     <td>{$lenguaje["label_tipo_bdrecursos"]}</td>
@@ -95,6 +94,10 @@
                                 <tr>
                                     <td>{$lenguaje["label_origen_bdrecursos"]}</td>
                                     <td>{$recurso.Rec_Origen}</td>
+                                </tr>
+                                <tr>
+                                    <td>{$lenguaje["registros_bdrecursos"]}</td>
+                                    <td>{$recurso.Rec_CantidadRegistros}</td>
                                 </tr>
                                 <tr>
                                     <td>{$lenguaje["herramienta_utilizada_bdrecursos"]}</td>
