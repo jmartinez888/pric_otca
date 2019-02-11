@@ -24,6 +24,7 @@ class indexController extends dublincoreController{
     public function index($idRecurso = false, $nombreRecurso = false, $cantidaRegistros = false)
     {
         $this->validarUrlIdioma();
+        $this->_view->getLenguaje("bd_documentos");
         //$this->_acl->acceso('usuario');
         $paginador = new Paginador();
         $this->_view->setJs(array('index'));
@@ -56,6 +57,7 @@ class indexController extends dublincoreController{
 
     public function buscarporpalabras()
     {
+        $this->_view->getLenguaje("bd_documentos");
         $pagina = $this->getInt('pagina');
         $palabra = $this->getSql('nombre');
         $registros  = $this->getInt('registros');
@@ -93,6 +95,7 @@ class indexController extends dublincoreController{
 
     public function buscarportipodocumento()
     {
+        $this->_view->getLenguaje("bd_documentos");
         $pagina = $this->getInt('pagina');
         $palabra = $this->getSql('nombre');
         $variables_tipo = $this->getSql('variables');
@@ -134,6 +137,7 @@ class indexController extends dublincoreController{
 
     public function buscarporpais()
     {
+        $this->_view->getLenguaje("bd_documentos");
         $pagina = $this->getInt('pagina');
         $palabra = $this->getSql('nombre');
         $variables = $this->getSql('variables');
@@ -184,6 +188,8 @@ class indexController extends dublincoreController{
 
     public function metadata()
     {
+      $this->_view->getLenguaje("bdrecursos_metadata");
+      $this->_view->getLenguaje("bd_documentos");
     $condicion = "";
         $registros  = $this->getSql('registros');
         if($registros)
