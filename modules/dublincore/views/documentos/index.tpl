@@ -48,12 +48,12 @@
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 p-rt-lt-0" style="background-image: url({BASE_URL}modules/dublincore/views/documentos/img/encabezado-repositorio.jpg); background-repeat: no-repeat;">
     <div class="col-md-5 col-lg-5" style="color: #333; font-weight: bold; font-size: 18px;">
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-          <center><h1> class={$lenguaje["titulo2"]}</h1></center>
+          <center><h1>{$lenguaje["titulo2"]} </h1></center>
           <div class="col-lg-12 p-rt-lt-0">
             <hr class="cursos-hr2">
           </div>
           <div class="col-lg-12 p-rt-lt-0">
-            <p class="descripcion-documentos" style="text-align: justify;">El Repositorio de Documentos es la base de datos en línea del PRIC en donde se reúnen y depositan los diferentes recursos de información y datos provenientes de las instituciones que participan en la iniciativa.</p>
+            <p class="descripcion-documentos" style="text-align: justify;">{$lenguaje["texto_repositorio"]}</p>
           </div>
           <input id="metodo" name="metodo" type="hidden" value="buscarporpalabras"/>
           <input id="query" name="query" type="hidden"/>
