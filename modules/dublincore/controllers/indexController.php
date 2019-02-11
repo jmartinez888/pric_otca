@@ -24,11 +24,11 @@ class indexController extends dublincoreController{
     public function index($idRecurso = false, $nombreRecurso = false, $cantidaRegistros = false)
     {
         $this->validarUrlIdioma();
-        $this->_view->getLenguaje("bd_documentos");
         //$this->_acl->acceso('usuario');
         $paginador = new Paginador();
         $this->_view->setJs(array('index'));
         $this->_view->setCss(array('listadocumentos'));
+
 
         $pagina = $this->getInt('pagina');
         $registros  = $this->getInt('registros');
@@ -184,8 +184,7 @@ class indexController extends dublincoreController{
 
     public function metadata()
     {
-        $this->_view->getLenguaje("bd_documentos");
-        $condicion = "";
+    $condicion = "";
         $registros  = $this->getSql('registros');
         if($registros)
         {
