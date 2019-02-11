@@ -64,12 +64,12 @@
 <div class="container-fluid">
 <!-- <div class="row">
     <div class="col-md-12 col-lg-12">
-    <center><h2 class="titulo2">Repositorio de Documentos</h2></center>
+    <center><h2>{$lenguaje["titulo2"]}</h2></center>
     <div class="col-lg-12 p-rt-lt-0">
       <hr class="cursos-hr">
     </div>
     <div class="col-lg-12 p-rt-lt-0">
-      <h4 class="descripcion-documentos" style="text-align: justify;">El Repositorio de Documentos es la base de datos en línea del PRIC en donde se reúnen y depositan los diferentes recursos de información y datos provenientes de las instituciones que participan en la iniciativa.</h4>
+      <h4 class="descripcion-documentos" style="text-align: justify;">{$lenguaje["texto_repositorio"]}</h4>
     </div>
     <input id="metodo" name="metodo" type="hidden" value="buscarporpalabras"/>
     <input id="query" name="query" type="hidden"/>
