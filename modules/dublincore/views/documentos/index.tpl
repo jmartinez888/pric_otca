@@ -88,8 +88,8 @@
                   <div class="row">
                     <div class="col-md-12 col-lg-12" style="padding-top: 10px;">
                       <div class="pull-right">
-                        <center><a id="activar_avanzado" onclick="mostrar_seccion()" style="cursor: pointer;"><button class="btn btn-success pull-right">Activar Búsqueda Avanzada</button></a></center>
-                        <center><a id="desactivar_avanzado" onclick="quitar_seccion()" style="cursor: pointer; display: none;"><button class="btn btn-success pull-right">Desactivar Búsqueda Avanzada</button></a></center>
+                        <center><a id="activar_avanzado" onclick="mostrar_seccion()" style="cursor: pointer;"><button class="btn btn-success pull-right"></button>{$lenguaje["activar_busqueda_avanzada"]}</a></center>
+                        <center><a id="desactivar_avanzado" onclick="quitar_seccion()" style="cursor: pointer; display: none;"><button class="btn btn-success pull-right">{$lenguaje["desactivar_busqueda_avanzada"]}</button></a></center>
                       </div>
                           <!-- <center>
                             <a class="text-muted" id="busquedaAvanzada" style=""><button class="btn btn-success pull-right">Búsqueda Avanzada</button></a>
