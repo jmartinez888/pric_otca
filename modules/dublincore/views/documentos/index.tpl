@@ -64,12 +64,12 @@
 <div class="container-fluid">
 <!-- <div class="row">
     <div class="col-md-12 col-lg-12">
-    <center><h2 class = "Repositorio de Documentos"></h2></center>
+    <center><h2 class="titulo2">{$lenguaje["titulo_documento"]}</h2></center>
     <div class="col-lg-12 p-rt-lt-0">
       <hr class="cursos-hr">
     </div>
     <div class="col-lg-12 p-rt-lt-0">
-      <h4 class="descripcion-documentos" style="text-align: justify;">{$lenguaje["texto_repositorio"]}</h4>
+      <h4 class="descripcion-documentos">{$lenguaje["texto_repositorio"]}</h4>
     </div>
     <input id="metodo" name="metodo" type="hidden" value="buscarporpalabras"/>
     <input id="query" name="query" type="hidden"/>
