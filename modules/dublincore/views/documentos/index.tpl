@@ -48,12 +48,12 @@
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 p-rt-lt-0" style="background-image: url({BASE_URL}modules/dublincore/views/documentos/img/encabezado-repositorio.jpg); background-repeat: no-repeat;">
     <div class="col-md-5 col-lg-5" style="color: #333; font-weight: bold; font-size: 18px;">
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-          <center><h1 class="titulo2">{$lenguaje["titulo_documento"]}</h1></center>
+          <center><h1 class="titulo2">{$lenguaje["label_h1_titulo_documentos"]}</h1></center>
           <div class="col-lg-12 p-rt-lt-0">
             <hr class="cursos-hr2">
           </div>
           <div class="col-lg-12 p-rt-lt-0">
-            <p class="descripcion-documentos">{$lenguaje["texto_repositorio"]}</p>
+            <p class="descripcion-documentos">{$lenguaje["label_h2_descripcion_documentos"]}</p>
           </div>
           <input id="metodo" name="metodo" type="hidden" value="buscarporpalabras"/>
           <input id="query" name="query" type="hidden"/>
@@ -64,12 +64,12 @@
 <div class="container-fluid">
 <!-- <div class="row">
     <div class="col-md-12 col-lg-12">
-    <center><h2 class="titulo2">{$lenguaje["titulo_documento"]}</h2></center>
+    <center><h2 class="titulo2">{$lenguaje["label_h1_titulo_documentos"]}</h2></center>
     <div class="col-lg-12 p-rt-lt-0">
       <hr class="cursos-hr">
     </div>
     <div class="col-lg-12 p-rt-lt-0">
-      <h4 class="descripcion-documentos">{$lenguaje["texto_repositorio"]}</h4>
+      <h4 class="descripcion-documentos">{$lenguaje["label_h2_descripcion_documentos"]}</h4>
     </div>
     <input id="metodo" name="metodo" type="hidden" value="buscarporpalabras"/>
     <input id="query" name="query" type="hidden"/>
