@@ -77,7 +77,8 @@
                         <table class="table table-user-information">
                             <tbody>
                                 <tr>
-                                    <td colspan="2">{$recurso.Rec_Nombre}</td>
+                                    <td style="border:none;">{$lenguaje["label_nombre_bdrecursos"]}</td>
+                                    <td style="border:none;">{$recurso.Rec_Nombre}</td>
                                 </tr>
                                 <tr>
                                     <td>{$lenguaje["label_tipo_bdrecursos"]}</td>
@@ -94,10 +95,6 @@
                                 <tr>
                                     <td>{$lenguaje["label_origen_bdrecursos"]}</td>
                                     <td>{$recurso.Rec_Origen}</td>
-                                </tr>
-                                <tr>
-                                    <td>{$lenguaje["registros_bdrecursos"]}</td>
-                                    <td>{$recurso.Rec_CantidadRegistros}</td>
                                 </tr>
                                 <tr>
                                     <td>{$lenguaje["herramienta_utilizada_bdrecursos"]}</td>
@@ -211,7 +208,7 @@
                                             <td class="col-md-3">
                                                 <b>{$lenguaje["linkdescarga_metadata_documentos"]}</b>
                                                 <td >:
-                                                    <td class="col-md-9"><a href="{$_layoutParams.root_clear}dublincore/documentos/descargar/{$datos.Arf_PosicionFisica}/{$datos.Dub_IdDublinCore}" target="_blank"><span class="ha" style="cursor:pointer" title="{$lenguaje["icono_descargar_documentos"]} {$datos.Taf_Descripcion}"> <button type="button" id="btnBuscar" class="btn btn-success">$lang->get('icono_descargar_documentos')}.</button> </span></a>
+                                                    <td class="col-md-9"><a href="{$_layoutParams.root_clear}dublincore/documentos/descargar/{$datos.Arf_PosicionFisica}/{$datos.Dub_IdDublinCore}" target="_blank"><span class="ha" style="cursor:pointer" title="{$lenguaje["icono_descargar_documentos"]} {$datos.Taf_Descripcion}"> <button type="button" id="btnBuscar" class="btn btn-success">{$lenguaje["icono_descargar_documentos"])}.</button> </span></a>
                                 </tbody>
                             </table>
                         </td>
