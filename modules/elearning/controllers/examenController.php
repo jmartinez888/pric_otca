@@ -873,7 +873,7 @@ class examenController extends elearningController {
     public function actualizarlecciones(){
         $idModulo = $this->getInt('id');
         $idCurso = $this->getInt('idCurso');
-
+        $lang = $this->_view->getLenguaje('elearning_cursos', false, true);
         $Exa_Porcentaje = $this->examen->getExamenesPorcentaje($idCurso);
         $Tra_Porcentaje = $this->examen->getTrabajosPorcentaje($idCurso);
         $Porcentaje = 100 - $Exa_Porcentaje['Exa_PorcentajeTotal'] - $Tra_Porcentaje['Tra_PorcentajeTotal'];
