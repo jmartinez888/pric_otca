@@ -48,7 +48,7 @@
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 p-rt-lt-0" style="background-image: url({BASE_URL}modules/dublincore/views/documentos/img/encabezado-repositorio.jpg); background-repeat: no-repeat;">
     <div class="col-md-5 col-lg-5" style="color: #333; font-weight: bold; font-size: 18px;">
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-          <center><h1 class="titulo2">{$lenguaje["titulo2"]}</h1></center>
+          <center><h1 class="titulo2">{$lenguaje["titulo_documento"]}</h1></center>
           <div class="col-lg-12 p-rt-lt-0">
             <hr class="cursos-hr2">
           </div>
