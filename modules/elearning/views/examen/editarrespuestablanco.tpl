@@ -10,7 +10,7 @@
           </div>
         </div>
       </div>
-        <h3>Editar pregunta: Rellenar blancos</h3>
+        <h3>{$lenguaje["elearning_preguntas_rellenarblancotitulo"]}</h3>
         <hr class="cursos-hr">
     </div>
     <div class="col col-xs-12">
@@ -21,38 +21,38 @@
             <input type="hidden" name="idexamen" id="idexamen" value="{$examen}">
           <input type="hidden" value="{$puntos_maximo}" id="maximo"/>
             <div class="col-xs-12">
-              <label class="col col-xs-9 ">Pregunta:</label>
-              <label class="col col-xs-3 text-right" id="puntoslabel">Total de Puntos: {$preguntaedit.Pre_Puntos}</label>
-              <textarea rows="5" placeholder="Pregunta" class="form-control" name="in_pregunta" id="in_pregunta">{$preguntaedit.Pre_Descripcion}</textarea>
+              <label class="col col-xs-9 ">{$lenguaje["elearning_preguntas_rellenarblancopregunta"]}:</label>
+              <label class="col col-xs-3 text-right" id="puntoslabel">{$lenguaje["elearning_preguntas_rellenarblancototalpuntos"]} {$preguntaedit.Pre_Puntos}</label>
+              <textarea rows="5" placeholder="{$lenguaje["elearning_preguntas_rellenarblancopregunta"]}" class="form-control" name="in_pregunta" id="in_pregunta">{$preguntaedit.Pre_Descripcion}</textarea>
             </div>
            <!--  <div class="col-lg-12" style="margin-top: 15px;">
-              <label class="col-lg-1">Puntos:</label>
+              <label class="col-lg-1">{$lenguaje["elearning_preguntas_rellenarblancopuntos"]}</label>
               <div class="col-lg-3"> -->
               <input class="form-control" name="puntos" id="puntos" type="hidden" value="{$preguntaedit.Pre_Puntos}"/>
 <!--               </div>
             </div> -->
             <div class="col-xs-12" style="margin-top: 15px;">
-              <label class="">(Escriba el texto debajo, y use estos separadores |...| para definir uno o más espacios en blanco): </label>
-              <textarea rows="5" placeholder="Conservemos el |medio ambiente| para que el |mundo| este sano." class="form-control" name="in_pregunta4" id="in_pregunta4">{$preguntaedit.Pre_Descripcion2}</textarea>
+              <label class="">{$lenguaje["elearning_preguntas_rellenarblancotexto1"]}</label>
+              <textarea rows="5" placeholder="{$lenguaje["elearning_preguntas_rellenarblancotexto2"]}" class="form-control" name="in_pregunta4" id="in_pregunta4">{$preguntaedit.Pre_Descripcion2}</textarea>
             </div>
 
             <div class="col-xs-12" style="margin-top: 15px">
-            <b>Respuestas en blanco: </b> ¡El puntaje máximo disponible es {$puntos_maximo}!.
+            <b>{$lenguaje["elearning_preguntas_respuestablanco"]} </b> {$lenguaje["elearning_preguntas_respuestapuntmax"]} {$puntos_maximo}!.
 
               <div class="col col-xs-12" style="margin-top: 15px" id="alt">
                 <div class='table-responsive'>
                   <table id='tabla' class='table' style='margin: 20px auto'>
                     <tr>
                       <th class="col-xs-1" style='text-align: center'>Nº</th>
-                      <th class="col-xs-9" style='text-align: center'>Respuesta</th>
-                      <th class="col-xs-2" style='text-align: center'>Puntos <button type="button" data-toggle="tooltip" data-placement="bottom" title="Asignar puntos automaticamente" class="btn btn-xs btn-warning margin-top-10" name="btn_asignar_puntos" id="btn_asignar_puntos">Asignar</button></th>
+                      <th class="col-xs-9" style='text-align: center'>{$lenguaje["elearning_preguntas_respuestatitulo"]}</th>
+                      <th class="col-xs-2" style='text-align: center'>{$lenguaje["elearning_preguntas_respuestapuntos"]} <button type="button" data-toggle="tooltip" data-placement="bottom" title="{$lenguaje["elearning_preguntas_respuestaasignarpuntos"]}" class="btn btn-xs btn-warning margin-top-10" name="btn_asignar_puntos" id="btn_asignar_puntos">{$lenguaje["elearning_preguntas_respuestabtnasignar"]}</button></th>
                     </tr>
                     {$i=1}
                     {foreach item=ra from=$alternativas}
                     <tr style='text-align: center'>
                       <td >{$i}</td>
                       <td>{$ra.Alt_Etiqueta}</td>
-                      <td><input data-toggle="tooltip" data-placement="bottom" title="El valor debe ser inferior o igual a {if $preguntaedit.Pre_Estado == 0}{$puntos_maximo-$preguntaedit.Pre_Puntos+$ra.Alt_Puntos}{else}{$puntos_maximo+$ra.Alt_Puntos}{/if}" placeholder="Puntos" class="form-control puntos_blanco" name="puntos{$i}" id="puntos{$i}" type='number' min='0' max="{if $preguntaedit.Pre_Estado == 0}{$puntos_maximo}{else}{$puntos_maximo+$ra.Alt_Puntos}{/if}" value="{$ra.Alt_Puntos}"/></td>
+                      <td><input data-toggle="tooltip" data-placement="bottom" title="{$lenguaje["elearning_preguntas_valor"]} {if $preguntaedit.Pre_Estado == 0}{$puntos_maximo-$preguntaedit.Pre_Puntos+$ra.Alt_Puntos}{else}{$puntos_maximo+$ra.Alt_Puntos}{/if}" placeholder="{$lenguaje["elearning_preguntas_placeholder"]}" class="form-control puntos_blanco" name="puntos{$i}" id="puntos{$i}" type='number' min='0' max="{if $preguntaedit.Pre_Estado == 0}{$puntos_maximo}{else}{$puntos_maximo+$ra.Alt_Puntos}{/if}" value="{$ra.Alt_Puntos}"/></td>
                     </tr>
                     {$i=$i+1}
                     {/foreach}
@@ -62,8 +62,8 @@
               </div>
             </div>            
             <div class="col-sm-10">
-              <a data-toggle="tooltip" data-placement="bottom" title="Cancelar registro" href="{$_layoutParams.root}elearning/examen/preguntas/{$idcurso}/{$examen}" class="btn btn-danger">Cancelar</a>
-               <button data-toggle="tooltip" data-placement="bottom" title="Guardar cambios" class="btn btn-success " disabled="true" name="btn_registrar_pregunta" id="btn_registrar_pregunta">Guardar</button>
+              <a data-toggle="tooltip" data-placement="bottom" title="{$lenguaje["elearning_preguntas_cancelarR"]}" href="{$_layoutParams.root}elearning/examen/preguntas/{$idcurso}/{$examen}" class="btn btn-danger">{$lenguaje["elearning_preguntas_btncancelar"]}</a>
+               <button data-toggle="tooltip" data-placement="bottom" title="{$lenguaje["elearning_preguntas_btnguardar"]}" class="btn btn-success " disabled="true" name="btn_registrar_pregunta" id="btn_registrar_pregunta">{$lenguaje["elearning_preguntas_btnguardar2"]}</button>
             </div>
         </form>
         </div>
@@ -83,14 +83,14 @@
         // if("puntos"+i!=this.id)            
         // $("#puntos"+i).val(puntosEnteros);
         $("#puntos"+i).attr('max', puntosEnteros);
-        $("#puntos"+i).attr('data-original-title', "El valor debe ser inferior o igual a " + puntosEnteros);
+        $("#puntos"+i).attr('data-original-title', "{$lenguaje["elearning_preguntas_valor1"]}" + puntosEnteros);
     } 
     for (var j = 1; j < contblanco; j++) {
         if (puntosRestantes > 0) {
             var _max = parseInt($("#puntos"+j).attr('max')) + 1;
             // $("#puntos"+j).val(_max);
             $("#puntos"+j).attr('max', _max);
-            $("#puntos"+j).attr('data-original-title', "El valor debe ser inferior o igual a " + _max);
+            $("#puntos"+j).attr('data-original-title', "{$lenguaje["elearning_preguntas_valor2"]} " + _max);
         } 
         puntosRestantes--;            
     }
