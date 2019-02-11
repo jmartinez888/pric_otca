@@ -1,9 +1,9 @@
-<style> 
+<style>
 #raizaMenu{
-   padding-top: 10px;   
+   padding-top: 10px;
 }
 @media (min-width: 1200px){
-  #raizaMenu {  
+  #raizaMenu {
      margin-left: 8.33333333%;
   }
 }
@@ -30,8 +30,8 @@
    margin: 0px 3px;
    color: #03a506;
 }
-  
-</style> 
+
+</style>
 
 <!-- <div id="raizaMenu-jp" clas="col-xs-3 col-sm-3 col-md-2 col-lg-2">
   <ul clas="col-xs-3 col-sm-3 col-md-2 col-lg-2">
@@ -42,13 +42,13 @@
     <li>
       <a class='actual' >{$lenguaje["label_h2_titulo_documentos"]} </a>
     </li>
-  </ul>     
+  </ul>
 </div> -->
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 p-rt-lt-0" style="background-image: url({BASE_URL}modules/dublincore/views/documentos/img/encabezado-repositorio.jpg); background-repeat: no-repeat;">
     <div class="col-md-5 col-lg-5" style="color: #333; font-weight: bold; font-size: 18px;">
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-          <center><h1 class="titulo2">Repositorio de Documentos</h1></center>
+          <center><h1> class={$lenguaje["titulo2"]}</h1></center>
           <div class="col-lg-12 p-rt-lt-0">
             <hr class="cursos-hr2">
           </div>
@@ -73,10 +73,10 @@
     </div>
     <input id="metodo" name="metodo" type="hidden" value="buscarporpalabras"/>
     <input id="query" name="query" type="hidden"/>
-    </div>       
- </div> -->   
+    </div>
+ </div> -->
 
-<div class="row">    
+<div class="row">
 
 
   <div id="resultados" >
@@ -96,7 +96,7 @@
                           </center> -->
                       <div class="col-md-5 pull-right">
                           <div class="input-group">
-                              <input type ="text" class="form-control"  data-toggle="tooltip" data-original-title="{$lenguaje['title_cuadro_buscar']}" placeholder="{$lenguaje['titulo_resultados_documentos']}" name="palabra" id="palabra" onkeypress="tecla_enter_dublincore(event)" value="{$palabrabuscada|default:''}">                  
+                              <input type ="text" class="form-control"  data-toggle="tooltip" data-original-title="{$lenguaje['title_cuadro_buscar']}" placeholder="{$lenguaje['titulo_resultados_documentos']}" name="palabra" id="palabra" onkeypress="tecla_enter_dublincore(event)" value="{$palabrabuscada|default:''}">
                               <span class="input-group-btn">
                                 <button class="btn  btn-success btn-buscador" onclick="buscarPalabraDocumentos('palabra','filtrotemadocumento','filtrotipodocumento','filtroautordocumento','filtroformatodocumento','filtropaisdocumento')" type="button" id="btnEnviar"><i class="glyphicon glyphicon-search"></i></button>
                               </span>
@@ -120,8 +120,8 @@
 
               <div class="col-md-12 col-lg-12" id="seccion_filtros" style="display: none;">
                 <form class="col-md-12 col-lg-12 busqueda-avanzada" style="margin-top: 15px;">
-                    <div class="form-horizontal col-sm-offset-1 col-sm-10 col-md-offset-3 col-md-8" id="ba_div" style="padding-top: 30px; text-align: left;">  
-                        <!-- {if isset($temadocumento) && count($temadocumento)}                 
+                    <div class="form-horizontal col-sm-offset-1 col-sm-10 col-md-offset-3 col-md-8" id="ba_div" style="padding-top: 30px; text-align: left;">
+                        <!-- {if isset($temadocumento) && count($temadocumento)}
                         <div class="form-group">
                             <label class="col-xs-3 control-label">Temática : </label>
                             <div class="col-xs-9">
@@ -130,12 +130,12 @@
                                     {foreach item=dt from=$temadocumento}
                                         <option value="{$dt.Ted_Descripcion}">{$dt.Ted_Descripcion}</option>
                                     {/foreach}
-                                       
+
                                 </select>
                             </div>
                         </div>
                         {/if}  -->
-                        {if isset($temadocumento) && count($temadocumento)}                 
+                        {if isset($temadocumento) && count($temadocumento)}
                         <div class="form-group">
                             <label class="col-md-2 control-label-jp">Temática : </label>
                             <div class="col-md-7">
@@ -144,11 +144,11 @@
                                 <datalist id="temas">
                                     {foreach item=dat from=$temadocumento}
                                         <option value="{$dat.Ted_Descripcion}">{$dat.Ted_Descripcion}</option>
-                                    {/foreach}    
+                                    {/foreach}
                                 </datalist>
                             </div>
                         </div>
-                        {/if} 
+                        {/if}
                         {if isset($autores) && count($autores)}
                         <div class="form-group">
                             <label class="col-md-2 control-label-jp" >Autor : </label>
@@ -157,16 +157,16 @@
                                 <datalist id="autores">
                                     {foreach item=dat from=$autores}
                                         <option value="{$dat.Aut_Nombre}">{$dat.Aut_Nombre}</option>
-                                    {/foreach}    
+                                    {/foreach}
                                 </datalist>
                                 <!-- <select class="form-control selectpicker" name="filtroautordocumento" id="filtroautordocumento" data-live-search="true">
                                     <option value=""> -- Seleccione Autor --</option>
                                     {foreach item=da from=$autores}
                                         <option value="{$da.Aut_Nombre}">{$da.Aut_Nombre}</option>
-                                    {/foreach}   
+                                    {/foreach}
                                 </select> -->
                             </div>
-                        </div> 
+                        </div>
                         {/if}
                         {if isset($formatos) && count($formatos)}
                         <div class="form-group">
@@ -177,10 +177,10 @@
                                     <option value=""> -- Seleccione Formato --</option>
                                     {foreach item=df from=$formatos}
                                         <option value="{$df.Taf_Descripcion}">{$df.Taf_Descripcion}</option>
-                                    {/foreach}  
+                                    {/foreach}
                                 </select>
                             </div>
-                        </div>  
+                        </div>
                         {/if}
                           <button class="btn btn-primary col-md-offset-3" onclick="buscarPalabraDocumentos('palabra','filtrotemadocumento','filtrotipodocumento','filtroautordocumento','filtroformatodocumento','filtropaisdocumento')" type="button" id="btnEnviar">Realizar Búsqueda Avanzada</button>
                           <br><br>
@@ -200,7 +200,7 @@
                 {if isset($paises) && count($paises)}
                     {foreach item=datos from=$paises}
                         <div {if isset($filtroPais) && $datos.Pai_Nombre == $filtroPais}
-                         style="margin-top:17px;display:inline-block;vertical-align:top;text-align:center; background: #40bc4bad;" 
+                         style="margin-top:17px;display:inline-block;vertical-align:top;text-align:center; background: #40bc4bad;"
                          {else}
                           style="margin-top:17px;display:inline-block;vertical-align:top;text-align:center;"
                          {/if}
@@ -213,54 +213,54 @@
                     {/foreach}
                {else}
                     <p><strong>{$lenguaje["sin_resultados"]}</strong></p>
-               {/if}             
+               {/if}
               </div> -->
 
               <!-- <div class="col-md-6 col-md-offset-3 div-filtro text-center">
                 {if isset($filtroTema) OR isset($filtroTipo) OR isset($filtroAutor) OR isset($filtroFormato) OR isset($filtroPais) OR isset($filtroLetra) OR isset($filtrousuario)}
-                  <strong> Filtro:</strong> 
+                  <strong> Filtro:</strong>
                 {/if}
                 {if isset($filtrousuario)}
                 <input type="hidden" id= "filtrousuariodocumento" value="{$filtrousuario}">
                 <a class="badge badge-dark" href="{$_layoutParams.root_clear}dublincore/documentos/busqueda/{$palabrabuscada|default:'all'}/all/{$filtroTipo|default:'all'}/{$filtroAutor|default:'all'}/{$filtroFormato|default:'all'}/{$filtroPais|default:'all'}/all">
-                 Usuario: {$usuario}  <i class="fa fa-times"></i> 
+                 Usuario: {$usuario}  <i class="fa fa-times"></i>
                 </a>
                 {/if}
 
                 {if isset($filtroTema)}
                 <input type="hidden" id= "filtrotemadocumento" value="{$filtroTema}">
                 <a class="badge badge-dark" href="{$_layoutParams.root_clear}dublincore/documentos/busqueda/{$palabrabuscada|default:'all'}/all/{$filtroTipo|default:'all'}/{$filtroAutor|default:'all'}/{$filtroFormato|default:'all'}/{$filtroPais|default:'all'}/{$filtrousuario|default:'all'}">
-                 Tema: {$filtroTema}  <i class="fa fa-times"></i> 
+                 Tema: {$filtroTema}  <i class="fa fa-times"></i>
                 </a>
                 {/if}
                 {if isset($filtroTipo)}
                 <input type="hidden" id= "filtrotipodocumento" value="{$filtroTipo}">
                 <a class="badge badge-dark" href="{$_layoutParams.root_clear}dublincore/documentos/busqueda/{$palabrabuscada|default:'all'}/{$filtroTema|default:'all'}/all/{$filtroAutor|default:'all'}/{$filtroFormato|default:'all'}/{$filtroPais|default:'all'}/{$filtrousuario|default:'all'}">
-                 Tipo: {$filtroTipo} <i class="fa fa-times"></i>               
+                 Tipo: {$filtroTipo} <i class="fa fa-times"></i>
                 </a>
                 {/if}
                 {if isset($filtroAutor)}
                 <input type="hidden" id= "filtroautordocumento" value="{$filtroAutor}">
                 <a class="badge badge-dark" href="{$_layoutParams.root_clear}dublincore/documentos/busqueda/{$palabrabuscada|default:'all'}/{$filtroTema|default:'all'}/{$filtroTipo|default:'all'}/all/{$filtroFormato|default:'all'}/{$filtroPais|default:'all'}/{$filtrousuario|default:'all'}">
-                 Autor: {$filtroAutor} <i class="fa fa-times"></i>               
+                 Autor: {$filtroAutor} <i class="fa fa-times"></i>
                 </a>
                 {/if}
                 {if isset($filtroFormato)}
                 <input type="hidden" id= "filtroformatodocumento" value="{$filtroFormato}">
                 <a class="badge badge-dark" href="{$_layoutParams.root_clear}dublincore/documentos/busqueda/{$palabrabuscada|default:'all'}/{$filtroTema|default:'all'}/{$filtroTipo|default:'all'}/{$filtroAutor|default:'all'}/all/{$filtroPais|default:'all'}/{$filtrousuario|default:'all'}">
-                 Formato: {$filtroFormato} <i class="fa fa-times"></i>               
+                 Formato: {$filtroFormato} <i class="fa fa-times"></i>
                 </a>
                 {/if}
                 {if isset($filtroPais)}
                 <input type="hidden" id= "filtropaisdocumento" value="{$filtroPais}">
                 <a class="badge badge-dark " href="{$_layoutParams.root_clear}dublincore/documentos/busqueda/{$palabrabuscada|default:'all'}/{$filtroTema|default:'all'}/{$filtroTipo|default:'all'}/{$filtroAutor|default:'all'}/{$filtroFormato|default:'all'}/all/{$filtrousuario|default:'all'}">
-                 País: {$filtroPais} <i class="fa fa-times"></i>               
+                 País: {$filtroPais} <i class="fa fa-times"></i>
                 </a>
                 {/if}
                 {if isset($filtroLetra)}
                 <input type="hidden" id= "filtroletradocumento" value="{$filtroLetra}">
                 <a class="badge badge-dark " href="{$_layoutParams.root_clear}dublincore/documentos/busqueda/{$palabrabuscada|default:'all'}/{$filtroTema|default:'all'}/{$filtroTipo|default:'all'}/{$filtroAutor|default:'all'}/{$filtroFormato|default:'all'}/{$filtroPais|default:'all'}/{$filtrousuario|default:'all'}/all">
-                 País: {$filtroLetra} <i class="fa fa-times"></i>               
+                 País: {$filtroLetra} <i class="fa fa-times"></i>
                 </a>
                 {/if}
                 {if isset($filtroTema) OR isset($filtroTipo) OR isset($filtroAutor) OR isset($filtroFormato) OR isset($filtroPais) OR isset($filtroLetra)}
@@ -277,15 +277,15 @@
                     </div>
                     <div class="col-md-6">
                       {if isset($resultPalabra) }
-                        <b>Resultado de búsqueda</b> 
+                        <b>Resultado de búsqueda</b>
                       {$resultPalabra}{/if}
                     </div>
                     <div class="col-lg-12">
                       <hr class="cursos-hr">
                     </div>
-                  </div>        
+                  </div>
                </div>
-               {/if}    
+               {/if}
 
                 <div class="col-md-12 col-lg-12">
                 <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3 resumen-home">
@@ -294,11 +294,11 @@
                         <h4 class="panel-title">
                         <strong>{$lenguaje["menu_izquierdo1_documentos"]}
                           {if isset($temadocumento) && count($temadocumento)}
-                              <span class="badge badge-dark pull-right">{count($temadocumento)|default:0}</span> 
+                              <span class="badge badge-dark pull-right">{count($temadocumento)|default:0}</span>
                           {/if}
                         </strong>
                        </h4>
-                    </div>       
+                    </div>
                     <div id="accordionOne" class="panel-collapse col-md-12 p-rt-lt-0">
                       <ul id="tematicas" class="list-group scroll"   style="height: 400px;overflow-y: auto;">
                           {if isset($temadocumento) && count($temadocumento)}
@@ -310,7 +310,7 @@
                                 <div class="col-md-3 col-lg-3 p-rt-lt-0" style="position: absolute; top: 30%; right: 5%;">
                                   <span class="badge pull-right">{$datos.cantidad|default:0}</span>
                                 </div>
-                              </li>                            
+                              </li>
                             {/foreach}
                             {/if}
                       </ul>
@@ -322,12 +322,12 @@
                   <div class="">
                     <div class="cabecera-resumenes">
                         <h4 class="panel-title">
-                         <strong>{$lenguaje["menu_izquierdo2_documentos"]}</strong> 
+                         <strong>{$lenguaje["menu_izquierdo2_documentos"]}</strong>
                          {if isset($tipodocumento) && count($tipodocumento)}
                             <span class="badge badge-dark pull-right">{count($tipodocumento)|default:0}</span>
                           {/if}
                        </h4>
-                     </div>       
+                     </div>
                     <div id="accordionOne2" class="panel-collapse col-md-12 p-rt-lt-0" >
                       <ul id="tipodocumento" class="list-group scroll"   style="height: 400px;overflow-y: auto;">
                        {if isset($tipodocumento) && count($tipodocumento)}
@@ -339,9 +339,9 @@
                                 <div class="col-md-3 col-lg-3 p-rt-lt-0" style="position: absolute; top: 30%; right: 5%;">
                                   <span class="badge pull-right">{$datos.cantidad|default:0}</span>
                                 </div>
-                            </li>        
+                            </li>
                             {/foreach}
-                            {/if}             
+                            {/if}
                       </ul>
                     </div>
                   </div>
@@ -351,12 +351,12 @@
                   <div class="">
                     <div class="cabecera-resumenes">
                         <h4 class="panel-title">
-                         <strong>{$lenguaje["autores_metadata_documentos"]}</strong> 
+                         <strong>{$lenguaje["autores_metadata_documentos"]}</strong>
                          {if isset($autores) && count($autores)}
                             <span class="badge badge-dark pull-right">{count($autores)|default:0}</span>
                           {/if}
                        </h4>
-                     </div>       
+                     </div>
                     <div id="accordionAutor" class="panel-collapse col-md-12 p-rt-lt-0" >
                       <ul id="autor" class="list-group scroll"   style="height: 400px;overflow-y: auto;">
                          {if isset($autores) && count($autores)}
@@ -368,9 +368,9 @@
                               <div class="col-md-3 col-lg-3 p-rt-lt-0" style="position: absolute; top: 30%; right: 5%;">
                                 <span class="badge pull-right">{$a.cantidad|default:0}</span>
                               </div>
-                            </li>        
+                            </li>
                           {/foreach}
-                          {/if}             
+                          {/if}
                       </ul>
                     </div>
                   </div>
@@ -380,14 +380,14 @@
                   <div class="">
                     <div class="cabecera-resumenes">
                         <h4 class="panel-title">
-                          <strong>{$lenguaje["tabla_campo_tipo_documentos"]}</strong> 
+                          <strong>{$lenguaje["tabla_campo_tipo_documentos"]}</strong>
                           {if isset($formatos) && count($formatos)}
                             <span class="badge badge-dark pull-right">{count($formatos)|default:0}</span>
                           {/if}
                       </h4>
-                    </div>       
+                    </div>
                     <div id="accordionFormato" class="panel-collapse col-md-12 p-rt-lt-0" >
-                      <ul id="formato" class="list-group scroll"   style="height: 400px;overflow-y: auto;">              
+                      <ul id="formato" class="list-group scroll"   style="height: 400px;overflow-y: auto;">
                           {if isset($formatos) && count($formatos)}
                           {foreach item=t from = $formatos}
                           <li class="list-group-item-jp col-md-12 p-rt-lt-0 padding-li">
@@ -397,9 +397,9 @@
                             <div class="col-md-3 col-lg-3 p-rt-lt-0" style="position: absolute; top: 30%; right: 5%;">
                               <span class="badge pull-right">{$t.cantidad|default:0}</span>
                             </div>
-                          </li>        
+                          </li>
                           {/foreach}
-                          {/if}             
+                          {/if}
                       </ul>
                     </div>
                   </div>
@@ -417,7 +417,7 @@
                 <tr><th>#<th class="cabecera"><a href="#" class="small" ><span class="btn btn-xs btn-default glyphicon glyphicon-sort-by-alphabet pull-right"></span> {$lenguaje["tabla_campo_titulo"]}</a><th>{$lenguaje["tabla_campo_descripcion_documentos"]}<th>{$lenguaje["autores_metadata_documentos"]}<th>{$lenguaje["tabla_campo_tipo_documento_documentos"]}<th>{$lenguaje["fechadocumentos_metadata_documentos"]}<th>{$lenguaje["tabla_campo_tipo_documentos"]}<th>
                 {$lenguaje["tabla_campo_pais_documentos"]}
                 {if $_acl->permiso("editar_documentos")}
-                <th style=" text-align: center">Estado</th> 
+                <th style=" text-align: center">Estado</th>
                 {/if}
                 <th>{$lenguaje["tabla_campo_enlaces_documentos"]}
                 <tbody>
@@ -445,7 +445,7 @@
                           {/if}
 
                          <td> <a class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" href="{$_layoutParams.root_clear}dublincore/documentos/metadata/{$datos.Dub_IdDublinCore}" target="_blank" title="{$lenguaje["tabla_campo_detalle_documentos"]}"><i class="glyphicon glyphicon-list-alt" ></i></a>
-                        <a data-toggle="tooltip" data-placement="top" class="btn btn-default btn-sm" href="{$_layoutParams.root_clear}dublincore/documentos/descargar/{$datos.Arf_PosicionFisica}/{$datos.Dub_IdDublinCore}" target="_blank" title="{$lenguaje["icono_descargar_documentos"]}"><i class="glyphicon glyphicon-download-alt" ></i></a> 
+                        <a data-toggle="tooltip" data-placement="top" class="btn btn-default btn-sm" href="{$_layoutParams.root_clear}dublincore/documentos/descargar/{$datos.Arf_PosicionFisica}/{$datos.Dub_IdDublinCore}" target="_blank" title="{$lenguaje["icono_descargar_documentos"]}"><i class="glyphicon glyphicon-download-alt" ></i></a>
 
                         {if $_acl->permiso("editar_todos_los_documentos") || $_acl->Usu_IdUsuario() == $datos.Usu_IdUsuario}
                           {if $_acl->permiso("editar_documentos")}
@@ -461,10 +461,10 @@
                           {/if}
                         {/if}
 
-                  {/foreach}    
+                  {/foreach}
                 </tbody>
             </table>
-          {/if} 
+          {/if}
           {if !empty(count($documentos))}
             {$paginacion|default:""}
           {else}
@@ -475,12 +475,12 @@
                 <h4 >  <b >{$lenguaje["sin_resultados_documentos"]}...!!!</b></h4>
               </div>
             {/if}
-          {/if}    
+          {/if}
          </div>
         </div>
     </div>
 	  </div>
-     
+
   </div>
 </div>
 </div>
@@ -529,24 +529,24 @@
                                                                 <div class="form-group" >
                                                                     <input type="hidden" id="hd_idioma_defecto" name="hd_idioma_defecto" value="{$recurso.Idi_IdIdioma|default}">
                                                                     <label class="control-label col-lg-2">{$lenguaje["label_idioma_bdrecursos"]}</label>
-                                                                    {if  isset($idiomas) && count($idiomas)}                
+                                                                    {if  isset($idiomas) && count($idiomas)}
                                                                         <div class="col-lg-10 form-inline">
-                                                                            {foreach from=$idiomas item=idi}               
+                                                                            {foreach from=$idiomas item=idi}
                                                                                 <div class="radio">
                                                                                     <label>
-                                                                                        <input type="radio" name="rb_idioma" id="rb_idioma" class=" {if isset($recurso)}{$lenguaje["label_idioma-recurso_bdrecursos"]}{/if}" value="{$idi.Idi_IdIdioma}" 
-                                                                                               {if isset($recurso) && $recurso.Idi_IdIdioma==$idi.Idi_IdIdioma} 
-                                                                                                   checked="checked" 
-                                                                                               {elseif !isset($recurso) && isset($idioma) && $idioma==$idi.Idi_IdIdioma} 
+                                                                                        <input type="radio" name="rb_idioma" id="rb_idioma" class=" {if isset($recurso)}{$lenguaje["label_idioma-recurso_bdrecursos"]}{/if}" value="{$idi.Idi_IdIdioma}"
+                                                                                               {if isset($recurso) && $recurso.Idi_IdIdioma==$idi.Idi_IdIdioma}
                                                                                                    checked="checked"
-                                                                                                {/if} 
+                                                                                               {elseif !isset($recurso) && isset($idioma) && $idioma==$idi.Idi_IdIdioma}
+                                                                                                   checked="checked"
+                                                                                                {/if}
                                                                                                required>
                                                                                         {$idi.Idi_Idioma}
-                                                                                    </label>                       
-                                                                                </div>  
+                                                                                    </label>
+                                                                                </div>
                                                                             {/foreach}
-                                                                        </div>          
-                                                                    {else} 
+                                                                        </div>
+                                                                    {else}
                                                                         <div class="form-inline col-lg-9">
                                                                             <label class="control-label">{$lenguaje["label_idioma-inexistente_bdrecursos"]} </label>
                                                                         </div>
@@ -559,7 +559,7 @@
                                                                             <input type="text" class="form-control" id="tb_nombre_recurso"  name="tb_nombre_recurso"
                                                                                    placeholder="{$lenguaje["label_place_nombre_bdrecursos"]}" value="" required/>
                                                                         </div>
-                                                                    </div> 
+                                                                    </div>
                                                                     <div class="form-group">
                                                                         <label  class="col-lg-2 control-label" for="tb_fuente_recurso">{$lenguaje["label_fuente_bdrecursos"]}*</label>
                                                                         <div class="col-lg-10">
@@ -568,10 +568,10 @@
                                                                             <datalist id="dl_fuente">
                                                                                 {foreach item=datos from=$fuente}
                                                                                     <option value='{$datos.Rec_Fuente}'>
-                                                                                    {/foreach} 
+                                                                                    {/foreach}
                                                                             </datalist>
                                                                         </div>
-                                                                    </div> 
+                                                                    </div>
                                                                     <div class="form-group">
                                                                         <label  class="col-lg-2 control-label" for="tb_origen_recurso">{$lenguaje["label_origen_bdrecursos"]}*</label>
                                                                         <div class="col-lg-10">
@@ -586,7 +586,7 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-group">
-                                                                    <label class="col-lg-2 control-label" for="sl_estandar_recurso">Estandar*</label>    
+                                                                    <label class="col-lg-2 control-label" for="sl_estandar_recurso">Estandar*</label>
                                                                     <div class="col-lg-10">
                                                                         <input type="hidden" id="sl_estandar_recurso" name="sl_estandar_recurso" value="3">
                                                                         <select class="form-control" disabled="" required="">
@@ -601,12 +601,12 @@
                                                                     <div class="col-lg-offset-2 col-lg-10">
                                                                         <input type="hidden" id="hd_tipo_recurso" name="hd_tipo_recurso" value="1">
                                                                         <button type="button"  class="btn btn-success" id="bt_registrar" name="bt_registrar"><i class="glyphicon glyphicon-floppy-disk"> </i> {$lenguaje["boton_guardar_bdrecursos"]}</button>
-                                                                        
+
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </form>
-                                                    </div>           
+                                                    </div>
                                                 </div>
                                             </div>
 
@@ -632,7 +632,7 @@
                                             </div> -->
                                         </form>
                                         <form id="buscar-form" action="" style="display: none;">
-                                            
+
                                             <div id="lista_recursos_dublin">
                                             </div>
                                         </form>
@@ -651,4 +651,3 @@
     </div>
 </div>
 <!--  Modal end -->
-
