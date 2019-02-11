@@ -752,6 +752,7 @@ class documentosController extends Controller{
     public function metadata($Dub_IdDublinCore)
     {
     	// $this->_acl->autenticado();
+    $this->_view->getLenguaje("bd_documentos");
     $this->_view->getLenguaje("bdrecursos_metadata");
     $this->validarUrlIdioma();
     $this->_view->setTemplate(LAYOUT_FRONTEND);
