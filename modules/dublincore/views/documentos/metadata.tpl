@@ -1,9 +1,9 @@
-<style> 
+<style>
 #raizaMenu {
-   padding-top: 10px;   
+   padding-top: 10px;
 }
 @media (min-width: 1200px){
-  #raizaMenu {  
+  #raizaMenu {
      margin-left: 8.33333333%;
   }
 }
@@ -30,8 +30,8 @@
    margin: 0px 3px;
    color: #03a506;
 }
-  
-</style> 
+
+</style>
 
 <!-- <div id="raizaMenu" clas="col-xs-3 col-sm-3 col-md-2 col-lg-2">
   <ul clas="col-xs-3 col-sm-3 col-md-2 col-lg-2">
@@ -46,7 +46,7 @@
     <li>
       <a class='actual' >{$lenguaje["label_h2_metadata_titulo"]} </a>
     </li>
-  </ul>     
+  </ul>
 </div> -->
 
 
@@ -61,7 +61,7 @@
         <div class="col-lg-12 p-rt-lt-0">
             <hr class="cursos-hr">
         </div>
-    </div>    
+    </div>
     <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4" style="padding-left: 0px; margin-bottom: 15px;">
             <div class="" id="accordion">
                 <div class="">
@@ -72,12 +72,12 @@
                         <div class="col-lg-12 p-rt-lt-0">
                             <hr class="cursos-hr">
                         </div>
-                    </div>               
+                    </div>
                     <div class="panel-body">
                         <table class="table table-user-information">
-                            <tbody>                           
+                            <tbody>
                                 <tr>
-                                    <td style="border:none;">{$lenguaje["label_nombre_bdrecursos"]}:</td>
+                                    <td style="border:none;">{$lenguaje["label_nombre_bdrecursos"]}</td>
                                     <td style="border:none;">{$recurso.Rec_Nombre}</td>
                                 </tr>
                                 <tr>
@@ -87,7 +87,7 @@
                                 <tr>
                                     <td>{$lenguaje["label_estandar_bdrecursos"]}</td>
                                     <td>{$recurso.Esr_Nombre}</td>
-                                </tr>                                
+                                </tr>
                                 <tr>
                                     <td>{$lenguaje["label_fuente_bdrecursos"]}</td>
                                     <td>{$recurso.Rec_Fuente}</td>
@@ -95,7 +95,7 @@
                                 <tr>
                                     <td>{$lenguaje["label_origen_bdrecursos"]}</td>
                                     <td>{$recurso.Rec_Origen}</td>
-                                </tr>                                
+                                </tr>
                                 <tr>
                                     <td>{$lenguaje["herramienta_utilizada_bdrecursos"]}</td>
                                     <td>
@@ -124,10 +124,10 @@
                 </div>
             </div>
         </div>
-        
-        
+
+
         <div class="col-xs-12 col-sm-8 col-md-offset-0 col-md-9 col-lg-offset-0 col-lg-8" style="border-left: 1px solid #ddd; margin-bottom: 15px; padding-right: 0px;">
-        
+
         {foreach item=datos from=$detalle}
                     <div class="">
                         <h3 class="">
@@ -137,95 +137,95 @@
                             <hr class="cursos-hr">
                         </div>
                     </div>
-<div class="">     
+<div class="">
         <div class="panel-body">
-        <table class="">          
+        <table class="">
             <tbody>
                     <!-- <tr>
                         <td class="col-md-3" style="vertical-align:middle; text-align:center; background-color: rgb(249, 249, 249);"><b>{$lenguaje["detalle_metadata_documentos"]}</b></td>
                         <td class="col-md-9" style="padding:0;border: 0;">
  -->
                             <table class="table table-user-information" style="margin:0;border:0;">
-                                <tbody>                                       
-                                       <tr>                                        
+                                <tbody>
+                                       <tr>
                                             <td class="col-md-3" style="border: none;">
-                                                <b>{$lenguaje["tabla_campo_titulo"]}</b>       
+                                                <b>{$lenguaje["tabla_campo_titulo"]}</b>
                                                 <td style="border: none;">:
                                                     <td class="col-md-9" style="border: none;">{$datos.Dub_Titulo}
-                                        <tr>                                        
+                                        <tr>
                                             <td class="col-md-3">
                                                 <b>{$lenguaje["tabla_campo_descripcion_documentos"]}</b>
                                                 <td >:<td class="col-md-9 text-justify">{$datos.Dub_Descripcion}
-                                        <tr>                                        
+                                        <tr>
                                             <td class="col-md-3">
                                                 <b>{$lenguaje["autores_metadata_documentos"]}</b>
                                                 <td >:
                                                     <td class="col-md-9">{$datos.Aut_Nombre}
-                                        <tr>                                        
+                                        <tr>
                                             <td class="col-md-3">
-                                                <b>{$lenguaje["palabra_clave_documentos"]}</b> 
+                                                <b>{$lenguaje["palabra_clave_documentos"]}</b>
                                                 <td >:
                                                     <td class="col-md-9">{$datos.Dub_PalabraClave}
-                                        <tr>                                        
+                                        <tr>
                                             <td class="col-md-3">
-                                                <b>{$lenguaje["tema_metadata_documentos"]}</b>  
+                                                <b>{$lenguaje["tema_metadata_documentos"]}</b>
                                                 <td >:<td class="col-md-9">{$datos.Ted_Descripcion}
-                                        <tr>                                        
+                                        <tr>
                                             <td class="col-md-3">
-                                                <b>{$lenguaje["tipo_metadata_documentos"]}</b>  
+                                                <b>{$lenguaje["tipo_metadata_documentos"]}</b>
                                                 <td >:<td class="col-md-9">{$datos.Tid_Descripcion}
-                                        
-                                        <tr>                                        
+
+                                        <tr>
                                             <td class="col-md-3">
                                                 <b>{$lenguaje["fechadocumentos_metadata_documentos"]}</b>
                                                 <td >:
-                                                    <td class="col-md-9">{$datos.Dub_FechaDocumento|date_format:"%d/%m/%Y"}    
-                                        <tr>                                        
+                                                    <td class="col-md-9">{$datos.Dub_FechaDocumento|date_format:"%d/%m/%Y"}
+                                        <tr>
                                             <td class="col-md-3">
                                                 <b>Fecha Registro Dublincore</b>
                                                 <td >:
-                                                    <td class="col-md-9">{$datos.Arf_FechaRegistro|date_format:"%d/%m/%Y %H:%M:%S"}                                     
-                                        <tr>                                        
+                                                    <td class="col-md-9">{$datos.Arf_FechaRegistro|date_format:"%d/%m/%Y %H:%M:%S"}
+                                        <tr>
                                             <td class="col-md-3">
                                                 <b>{$lenguaje["tabla_campo_idiomas_documentos"]}</b>
-                                                <td >:<td class="col-md-9">{$datos.Dub_Idioma}          
-                                        <tr>                                        
+                                                <td >:<td class="col-md-9">{$datos.Dub_Idioma}
+                                        <tr>
                                             <td class="col-md-3">
                                                 <b>{$lenguaje["tabla_campo_paises_documentos"]}</b>
-                                                <td >:<td class="col-md-9">{$datos.Pai_Nombre}                                 
+                                                <td >:<td class="col-md-9">{$datos.Pai_Nombre}
                                         <tr>
                                             <td class="col-md-3">
                                                 <b>{$lenguaje["nombrearchivo_metadata_documentos"]}</b>
                                                 <td >:
                                                     <td class="col-md-9">
-                                                    {$datos.Arf_PosicionFisica}                                         
+                                                    {$datos.Arf_PosicionFisica}
                                         <tr>
                                             <td class="col-md-3">
                                                 <b>{$lenguaje["formato_metadata_documentos"]}</b>
                                                 <td >:
-                                                    <td class="col-md-9"><img src="{$_layoutParams.root_clear}public/img/documentos/{$datos.Taf_Descripcion}.png" pais="{$datos.Taf_Descripcion}"/> {$datos.Taf_Descripcion}                
+                                                    <td class="col-md-9"><img src="{$_layoutParams.root_clear}public/img/documentos/{$datos.Taf_Descripcion}.png" pais="{$datos.Taf_Descripcion}"/> {$datos.Taf_Descripcion}
                                         <tr>
                                             <td class="col-md-3">
                                                 <b>{$lenguaje["linkdescarga_metadata_documentos"]}</b>
                                                 <td >:
-                                                    <td class="col-md-9"><a href="{$_layoutParams.root_clear}dublincore/documentos/descargar/{$datos.Arf_PosicionFisica}/{$datos.Dub_IdDublinCore}" target="_blank"><span class="ha" style="cursor:pointer" title="{$lenguaje["icono_descargar_documentos"]} {$datos.Taf_Descripcion}"> <button type="button" id="btnBuscar" class="btn btn-success">{$lenguaje["icono_descargar_documentos"]}</button> </span></a> 
+                                                    <td class="col-md-9"><a href="{$_layoutParams.root_clear}dublincore/documentos/descargar/{$datos.Arf_PosicionFisica}/{$datos.Dub_IdDublinCore}" target="_blank"><span class="ha" style="cursor:pointer" title="{$lenguaje["icono_descargar_documentos"]} {$datos.Taf_Descripcion}"> <button type="button" id="btnBuscar" class="btn btn-success">$lang->get('icono_descargar_documentos')}.</button> </span></a>
                                 </tbody>
-                            </table>                              
+                            </table>
                         </td>
             </tbody>
-        </table>    
+        </table>
         </div>
 </div>
 {/foreach}
-        
-        
+
+
         </div>
-    
-    
-    
-    
-    
-              
- </div> 
- 
+
+
+
+
+
+
+ </div>
+
 </div>

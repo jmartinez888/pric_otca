@@ -90,9 +90,9 @@ class documentosController extends Controller{
         // }
 
 		$this->_view->getLenguaje("bd_documentos");
-        $this->_view->getLenguaje("bdrecursos_registros");
-        $this->_view->getLenguaje("bdrecursos_index");
-        $this->_view->getLenguaje("bdlegal");
+    $this->_view->getLenguaje("bdrecursos_registros");
+    $this->_view->getLenguaje("bdrecursos_index");
+    $this->_view->getLenguaje("bdlegal");
 		$this->_view->setCss(array('listadocumentos', "jp-index"));
         $this->_view->setJs(array('documentos'));
 		$pagina = $this->getInt('pagina');
@@ -238,7 +238,7 @@ class documentosController extends Controller{
     {
         //$this->_view->setTemplate(LAYOUT_FRONTEND);
 		$this->_view->getLenguaje("bd_documentos");
-        $this->_view->getLenguaje("bdrecursos_registros");
+    $this->_view->getLenguaje("bdrecursos_registros");
 		$this->_view->setCss(array('listadocumentos'));
 		$pagina = $this->getInt('pagina');
         $filas=$this->getInt('filas');
@@ -753,11 +753,9 @@ class documentosController extends Controller{
     public function metadata($Dub_IdDublinCore)
     {
     	// $this->_acl->autenticado();
-        $this->validarUrlIdioma();
-        $this->_view->getLenguaje("bd_documentos");
-		$this->_view->getLenguaje("bdrecursos_metadata");
-    $this->_view->getLenguaje("bdlegal");
-		$this->_view->setTemplate(LAYOUT_FRONTEND);
+    $this->_view->getLenguaje("bdrecursos_metadata");
+    $this->validarUrlIdioma();
+    $this->_view->setTemplate(LAYOUT_FRONTEND);
         $this->_view->setCss(array("jp-index"));
 		$idioma = Cookie::lenguaje();
 		$e = $this->loadModel('bdrecursos', true);
@@ -766,8 +764,7 @@ class documentosController extends Controller{
 		$condicion .= " where dub.Dub_Estado = 1 and dub.Dub_IdDublinCore = $Dub_IdDublinCore ";
 		$metadatadublin = $this->_documentos->getDocumentosTraducido($condicion,$idioma);
 		$metadatarecurso = $e->getRecursoCompletoXid($metadatadublin[0]['Rec_IdRecurso']);
-
-        $this->_view->assign('recurso', $metadatarecurso);
+    $this->_view->assign('recurso', $metadatarecurso);
 
         $this->_view->assign('detalle', $metadatadublin);
 
