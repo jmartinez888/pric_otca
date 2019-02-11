@@ -1,20 +1,20 @@
 <div class="container-fluid" >
     <div class="row">
         <div class="col-md-12">
-            <h3 class="titulo-view">Editor de DublinCore</h3>     
+            <h3 class="titulo-view">$lenguaje{["editor_de_dublincore"]}</h3>
         </div>
-        <div class="col-md-3">     
+        <div class="col-md-3">
             <div class="panel-group" id="accordion">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h4 class="panel-title">
                             <strong>{$lenguaje["label_recurso_bdrecursos"]}</strong>
                         </h4>
-                    </div>               
+                    </div>
                     <div class="panel-body">
                         <table class="table table-user-information">
-                            <tbody>                           
-                                <tr>                                   
+                            <tbody>
+                                <tr>
                                     <td colspan="2">{$recurso.Rec_Nombre}</td>
                                 </tr>
                                 <tr>
@@ -24,7 +24,7 @@
                                 <tr>
                                     <td>{$lenguaje["label_estandar_bdrecursos"]}</td>
                                     <td>{$recurso.Esr_Nombre}</td>
-                                </tr>                                
+                                </tr>
                                 <tr>
                                     <td>{$lenguaje["label_fuente_bdrecursos"]}</td>
                                     <td>{$recurso.Rec_Fuente}</td>
@@ -65,7 +65,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-9">  
+        <div class="col-md-9">
             {if  isset($datos) && count($datos)}
                 <form data-toggle="validator" class="form-horizontal" role="form" enctype="multipart/form-data" method="post" id="editardublin">
                     <input type="hidden" value="{$datos.Dub_IdDublinCore}" id="Dub_IdDublinCore" name="Dub_IdDublinCore" />
@@ -80,7 +80,7 @@
                                     <li role="presentation" class="{if $datos.Idi_IdIdioma == $idi.Idi_IdIdioma} active {/if}">
                                         <a class="idioma_s" id="idioma_{$idi.Idi_IdIdioma}" href="#">{$idi.Idi_Idioma}</a>
                                         <input type="hidden" id="hd_idioma_{$idi.Idi_IdIdioma}" value="{$idi.Idi_IdIdioma}" />
-                                    </li>    
+                                    </li>
                                 {/foreach}
                             </ul>
                         {/if}
@@ -96,44 +96,44 @@
                             </div>
                             <div class="panel-body">
                                 <div class="form-group">
-                                    <label for="titulo" class="col-md-4 control-label">{$ficha[0]['Fie_CampoFicha']} (*)</label>
+                                    <label for="$lenguaje{["tabla_campo_titulo"]}" class="col-md-4 control-label">{$ficha[0]['Fie_CampoFicha']} (*)</label>
                                     <div class="col-md-6">
                                         <input type="text" value="{$datos.Dub_Titulo|default:''}" class="form-control" id="Dub_Titulo" name="Dub_Titulo" placeholder="{$ficha[0]['Fie_CampoFicha']}" required>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="descripcion" class="col-md-4 control-label">{$ficha[1]['Fie_CampoFicha']} (*)</label>
-                                    <div class="col-md-6">          
+                                    <label for="$lenguaje{["tabla_campo_descripcion_documentos"]}" class="col-md-4 control-label">{$ficha[1]['Fie_CampoFicha']} (*)</label>
+                                    <div class="col-md-6">
                                         <textarea class="form-control" rows="3" id="Dub_Descripcion" name="Dub_Descripcion" placeholder="{$ficha[1]['Fie_CampoFicha']}" required>{$datos.Dub_Descripcion|default:''}</textarea>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="autor" class="col-md-4 control-label">{$ficha[15]['Fie_CampoFicha']} (*)</label>
+                                    <label for="$lenguaje{["autores_metadata_documentos"]}" class="col-md-4 control-label">{$ficha[15]['Fie_CampoFicha']} (*)</label>
                                     <div class="col-md-6">
                                         <input type="text" value="{$datos.Aut_Nombre|default:''}" list="autores" class="form-control" id="Aut_IdAutor" name="Aut_IdAutor" placeholder="{$ficha[15]['Fie_CampoFicha']}" required>
                                         <datalist id="autores">
                                             {foreach item=aut from=$autores}
                                                 <option value="{$aut.Aut_Nombre}"></option>
-                                            {/foreach}    
+                                            {/foreach}
                                         </datalist>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="editor" class="col-md-4 control-label">{$ficha[2]['Fie_CampoFicha']}</label>
+                                    <label for="$lenguaje{["editor_documentos"]}" class="col-md-4 control-label">{$ficha[2]['Fie_CampoFicha']}</label>
                                     <div class="col-md-6">
-                                        <input type="text" value="{$datos.Dub_Editor|default:''}" class="form-control" id="Dub_Editor" name="Dub_Editor" 
+                                        <input type="text" value="{$datos.Dub_Editor|default:''}" class="form-control" id="Dub_Editor" name="Dub_Editor"
                                                placeholder="{$ficha[2]['Fie_CampoFicha']}" >
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="colaborador" class="col-md-4 control-label">{$ficha[3]['Fie_CampoFicha']}</label>
+                                    <label for="$lenguaje{["colaborador_documentos"]}" class="col-md-4 control-label">{$ficha[3]['Fie_CampoFicha']}</label>
                                     <div class="col-md-6">
-                                        <input type="text" value="{$datos.Dub_Colaborador|default:''}" class="form-control" id="Dub_Colabrorador" name="Dub_Colabrorador" 
+                                        <input type="text" value="{$datos.Dub_Colaborador|default:''}" class="form-control" id="Dub_Colabrorador" name="Dub_Colabrorador"
                                                placeholder="{$ficha[3]['Fie_CampoFicha']}" >
                                     </div>
-                                </div>            
+                                </div>
                                 <div class="form-group">
-                                    <label for="fecha_documento" class="col-md-4 control-label">{$ficha[4]['Fie_CampoFicha']}</label>
+                                    <label for="$lenguaje{["fechadocumentos_metadata_documentos"]}" class="col-md-4 control-label">{$ficha[4]['Fie_CampoFicha']}</label>
                                     <div class="col-md-3">
 
                                         <input type="text" value="{$datos.Dub_FechaDocumento|default}" class="form-control" id="Dub_FechaDocumento" name="Dub_FechaDocumento"
@@ -141,7 +141,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="formato" class="col-md-4 control-label">{$ficha[5]['Fie_CampoFicha']}</label>
+                                    <label for="$lenguaje{["formato_metadata_documentos"]}" class="col-md-4 control-label">{$ficha[5]['Fie_CampoFicha']}</label>
                                     <div class="col-md-3">
                                         <select class="form-control" id="Dub_Formato" name="Dub_Formato">
                                             {foreach from=$formatos_archivos item=ps}
@@ -152,105 +152,105 @@
                                             {/foreach}
                                         </select>
                                     </div>
-                                </div> 
+                                </div>
                                 <div class="form-group">
-                                    <label for="identificador" class="col-md-4 control-label">{$ficha[6]['Fie_CampoFicha']}</label>
+                                    <label for="$lenguaje{["identificador_documentos"]}" class="col-md-4 control-label">{$ficha[6]['Fie_CampoFicha']}</label>
                                     <div class="col-md-6">
                                         <input type="text" value="{$datos.Dub_Identificador|default:''}" class="form-control" id="Dub_Identificador" name="Dub_Identificador"
                                                placeholder="{$ficha[6]['Fie_CampoFicha']}">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="fuente" class="col-md-4 control-label">{$ficha[7]['Fie_CampoFicha']}</label>
+                                    <label for="$lenguaje{["label_fuente_bdrecursos"]}" class="col-md-4 control-label">{$ficha[7]['Fie_CampoFicha']}</label>
                                     <div class="col-md-6">
                                         <input type="text" value="{$datos.Dub_Fuente|default:''}" class="form-control" id="Dub_Fuente" name="Dub_Fuente"
                                                placeholder="{$ficha[7]['Fie_CampoFicha']}">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="dublin_idioma" class="col-md-4 control-label">{$ficha[8]['Fie_CampoFicha']}</label>
+                                    <label for="$lenguaje{["tabla_campo_idiomas_documentos"]}" class="col-md-4 control-label">{$ficha[8]['Fie_CampoFicha']}</label>
                                     <div class="col-md-6">
-                                        <input type="text" value="{$datos.Dub_Idioma|default:''}" class="form-control" id="Dub_Idioma" name="Dub_Idioma" 
+                                        <input type="text" value="{$datos.Dub_Idioma|default:''}" class="form-control" id="Dub_Idioma" name="Dub_Idioma"
                                                placeholder="{$ficha[8]['Fie_CampoFicha']}">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="relación_dublin" class="col-md-4 control-label">{$ficha[9]['Fie_CampoFicha']}</label>
+                                    <label for="$lenguaje{["relacion_documentos"]}" class="col-md-4 control-label">{$ficha[9]['Fie_CampoFicha']}</label>
                                     <div class="col-md-6">
-                                        <input type="text" value="{$datos.Dub_Relacion|default:''}" class="form-control" id="Dub_Relacion" name="Dub_Relacion" 
-                                               placeholder="{$ficha[9]['Fie_CampoFicha']}">          
+                                        <input type="text" value="{$datos.Dub_Relacion|default:''}" class="form-control" id="Dub_Relacion" name="Dub_Relacion"
+                                               placeholder="{$ficha[9]['Fie_CampoFicha']}">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="cobertura_dublin" class="col-md-4 control-label">{$ficha[10]['Fie_CampoFicha']}</label>
+                                    <label for="$lenguaje{["cobertura_dublin"]}" class="col-md-4 control-label">{$ficha[10]['Fie_CampoFicha']}</label>
                                     <div class="col-md-6">
-                                        <input type="text" value="{$datos.Dub_Cobertura|default:''}" class="form-control" id="Dub_Cobertura" name="Dub_Cobertura" 
+                                        <input type="text" value="{$datos.Dub_Cobertura|default:''}" class="form-control" id="Dub_Cobertura" name="Dub_Cobertura"
                                                placeholder="{$ficha[10]['Fie_CampoFicha']}">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="derechos_dublin" class="col-md-4 control-label">{$ficha[11]['Fie_CampoFicha']}</label>
+                                    <label for="$lenguaje{["derechos_dublin"]}" class="col-md-4 control-label">{$ficha[11]['Fie_CampoFicha']}</label>
                                     <div class="col-md-6">
                                         <input type="text" value="{$datos.Dub_Derechos|default:''}" class="form-control" id="Dub_Derechos" name="Dub_Derechos"
                                                placeholder="{$ficha[11]['Fie_CampoFicha']}"/>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="palabras_claves" class="col-md-4 control-label">{$ficha[12]['Fie_CampoFicha']} (*)</label>
-                                    <div class="col-md-6">        
+                                    <label for="$lenguaje{["palabra_clave_documentos"]}" class="col-md-4 control-label">{$ficha[12]['Fie_CampoFicha']} (*)</label>
+                                    <div class="col-md-6">
                                         <input type="text" list="palabraclaves" value="{$datos.Dub_PalabraClave|default:''}" class="form-control" id="Dub_PalabraClave" name="Dub_PalabraClave" placeholder="{$ficha[12]['Fie_CampoFicha']}" required/>
                                         <datalist id="palabraclaves">
                                             {foreach item=pac from=$palabraclave}
                                                 <option value="{$pac.Dub_PalabraClave}"></option>
-                                            {/foreach}    
+                                            {/foreach}
                                         </datalist>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="tipo_dublin" class="col-md-4 control-label">{$ficha[14]['Fie_CampoFicha']} (*)</label>
+                                    <label for=$lenguaje{["tipo_metadata_documentos"]} class="col-md-4 control-label">{$ficha[14]['Fie_CampoFicha']} (*)</label>
                                     <div class="col-md-6">
                                         <input type="text" list="tiposdublin" value="{$datos.Tid_Descripcion|default:''}" class="form-control" id="Tid_IdTipoDublin" name="Tid_IdTipoDublin" placeholder="{$ficha[14]['Fie_CampoFicha']}" required/>
                                         <datalist id="tiposdublin">
                                             {foreach item=tid from=$tipodublin}
                                                 <option value="{$tid.Tid_Descripcion}">
-                                                {/foreach}    
+                                                {/foreach}
                                         </datalist>
                                     </div>
-                                </div>  
+                                </div>
                                 <div class="form-group">
-                                    <label for="tema_dublin" class="col-md-4 control-label">{$ficha[19]['Fie_CampoFicha']} (*)</label>
+                                    <label for="$lenguaje{{"tipo_metadata_documentos"]}" class="col-md-4 control-label">{$ficha[19]['Fie_CampoFicha']} (*)</label>
                                     <div class="col-md-6">
                                         <input type="text" list="temasdublin" value="{$datos.Ted_Descripcion|default:''}" class="form-control" id="Ted_IdTemaDublin" name="Ted_IdTemaDublin" placeholder="{$ficha[19]['Fie_CampoFicha']}" required/>
                                         <datalist id="temasdublin">
                                             {foreach item=ted from=$temadublin}
                                                 <option value="{$ted.Ted_Descripcion}">
-                                                {/foreach}    
-                                        </datalist>         
+                                                {/foreach}
+                                        </datalist>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputFile" class="col-md-4 control-label">{$ficha[18]['Fie_CampoFicha']}</label>
                                     <div class="col-md-5">
                                         <input type="file" id="Arf_IdArchivoFisico" name="Arf_IdArchivoFisico">
-                                    </div>                                  
+                                    </div>
                                     <div class="col-md-1">
                                         {if !empty($datos.Arf_PosicionFisica)}
                                         <a title="Archivo adjunto" target="_blank" href="{$_layoutParams.root_archivo_fisico}{$datos.Arf_PosicionFisica}">
                                             <img src="{$_layoutParams.root_clear}public/img/documentos/{$datos.Taf_Descripcion}.png"  alt="Doc Adjunto">
                                         </a>
                                         {/if}
-                                        
+
                                     </div>
-                                </div>      
+                                </div>
                                 <div class="form-group">
-                                    <label for="url" class="col-md-4 control-label">{$ficha[20]['Fie_CampoFicha']}</label>
+                                    <label for="$lenguaje{["url_archivo"]}" class="col-md-4 control-label">{$ficha[20]['Fie_CampoFicha']}</label>
                                     <div class="col-md-6">
                                         <input type="text" value="{$datos.Arf_URL|default:''}" class="form-control" id="Arf_URL" name="Arf_URL"
                                                placeholder="{$ficha[20]['Fie_CampoFicha']}">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="pais" class="col-md-4 control-label">{$ficha[13]['Fie_CampoFicha']}</label>
+                                    <label for="$lenguaje{["tabla_campo_paises_documentos"]}" class="col-md-4 control-label">{$ficha[13]['Fie_CampoFicha']}</label>
                                     <div class="col-md-6">
                                         <input type="text" value="{$paises|default:''}" class="form-control" id="Pai_IdPais" name="Pai_IdPais"
                                                placeholder="{$ficha[13]['Fie_CampoFicha']}">
@@ -258,15 +258,15 @@
                                 </div>
                                 <div class="form-group">
                                     <div class="col-md-offset-4 col-md-6">
-                                        <button type="submit" id="editarDublin" name="editarDublin" class="btn btn-primary">Actualizar</button>
+                                        <button type="submit" id="editarDublin" name="editarDublin" class="btn btn-primary">$lenguaje{["actualizar_bdrecursos"]}</button>
                                     </div>
-                                </div>    
-                            </div> 
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </form>
             {/if}
-        </div>  
+        </div>
     </div>
 </div>
 <!-- Modal -->
@@ -282,18 +282,13 @@
                 <p><center>{$mensaje}</center></p>
             </div>
             <div class="modal-footer">
-                {if !empty($For_IdForo)}                         
-                    <a href="{$_layoutParams.root_clear}foro/index/ficha/{$For_IdForo}" class="btn btn-default">Cerrar</a> 
-                    {else} 
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>     
+                {if !empty($For_IdForo)}
+                    <a href="{$_layoutParams.root_clear}foro/index/ficha/{$For_IdForo}" class="btn btn-default">Cerrar</a>
+                    {else}
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                     {/if}
             </div>
         </div>
 
     </div>
 </div>
-
-
-
-
-

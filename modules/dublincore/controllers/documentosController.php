@@ -20,7 +20,6 @@ class documentosController extends Controller{
     	// $this->_acl->autenticado();
         $this->validarUrlIdioma();
         $this->_view->getLenguaje("bd_documentos");
-        $this->_view->getLenguaje("bdrecursos_registros");
 
         //Para modal Adjuntar archivo
         $this->_view->getLenguaje("bdrecursos_index");
@@ -753,6 +752,7 @@ class documentosController extends Controller{
     public function metadata($Dub_IdDublinCore)
     {
     	// $this->_acl->autenticado();
+    $this->_view->getLenguaje("bd_documentos");
     $this->_view->getLenguaje("bdrecursos_metadata");
     $this->validarUrlIdioma();
     $this->_view->setTemplate(LAYOUT_FRONTEND);
