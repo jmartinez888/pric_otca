@@ -263,7 +263,7 @@ class gleccionController extends elearningController {
             $lang = $this->_view->getLenguaje(['elearning_cursos', 'elearning_formulario_responder'], false, true);
             if (is_numeric($curso_id) && $curso_id != 0) {
 							$mod_curso = $this->loadModel("_gestionCurso");
-							$curso = $mod_curso->getCursoById($curso_id);
+							$curso = $mod_curso->getCursoById($curso_id, Cookie::lenguaje());
 							// dd($curso);
 							if ($curso) {
 								$mod_modulo = $this->loadModel("_gestionModulo");
@@ -510,7 +510,7 @@ class gleccionController extends elearningController {
             $lang = $this->_view->getLenguaje(['elearning_cursos', 'elearning_formulario_responder'], false, true);
             if (is_numeric($curso_id) && $curso_id != 0) {
                 $mod_curso = $this->loadModel("_gestionCurso");
-                $curso = $mod_curso->getCursoById($curso_id);
+                $curso = $mod_curso->getCursoById($curso_id, Cookie::lenguaje());
                 $mod_modulo = $this->loadModel("_gestionModulo");
                 $mod_leccion = $this->loadModel("_gestionLeccion");
 								$modulos = $mod_modulo->getModulos($curso_id);
@@ -539,7 +539,75 @@ class gleccionController extends elearningController {
             $this->redireccionar('');
         }
 
-    }
+		}
+		public function datatable_encuesta_respuestas ($leccion_id) {
+			$this->_acl->autenticado();	
+			$datatable_response = [
+				'draw' 						=> $this->getInt('draw'),
+				'recordsTotal' 		=> 0,
+				'recordsFiltered' => 0,
+				'data' 						=> [],
+				'query'	 					=> []
+			];
+			DB::enableQueryLog();
+			if ($this->filtrarInts([$leccion_id]) && Leccion::existeLeccion($leccion_id)) {
+				$lecc_frm = LeccionFormulario::findByLeccion($leccion_id);
+				if ($lecc_frm) {
+					$formulario = $lecc_frm->formulario;
+					$query = $formulario->respuestas()
+						->select(
+							'formulario_usuario_respuestas.*',
+							DB::raw("CONCAT(usuario.Usu_Nombre, ' ', usuario.Usu_Apellidos) as Usu_NombreCompleto"),
+							'Usu_Usuario'
+							)
+						->joinUsuarios();
+				}
+				$datatable_response['recordsTotal'] = $datatable_response['recordsFiltered'] = $query->count();
+				
+				if ($this->has('filter')) {
+					$query->where(function($query) {
+						if (isset($_GET['filter']['query']) && $_GET['filter']['query'] != '') 
+							$query->orWhere(DB::raw("CONCAT(usuario.Usu_Nombre, ' ', usuario.Usu_Apellidos)"), 'like', '%'.$_GET['filter']['query'].'%');
+					});
+				}
+
+				
+				if ($this->has(['order', 'columns'])) {
+					foreach ($_GET['order'] as $key => $value) {
+						$nc = $_GET['columns'][$value['column']]['data'];
+						switch ($nc) {
+							case 'usuario_id': $nc = 'Usu_IdUsuario'; break;
+							case 'usuario_nombre': 	$nc = 'Usu_NombreCompleto'	;	break;
+							case 'usuario_cuenta': 	$nc = 'Usu_Usuario'	;	break;
+							case 'respuesta_fecha': 	$nc = 'Fur_CreatedAt'	;	break;
+							default: $nc = 'no_found_col'; break;
+						}
+						if ($nc != 'no_found_col')
+							$query->orderBy($nc, $value['dir']);
+					}
+				}
+
+				// if ($this->filledGet('export')) 
+				$rows = $query->offset($this->getInt('start'))
+					->limit($this->getInt('length'))
+					->get()->map(function($item) {
+						// print_r($item->toArray());
+						return [
+							'usuario_id' => $item->Usu_IdUsuario,
+							'usuario_nombre' => $item->Usu_NombreCompleto,
+							'usuario_cuenta' => $item->Usu_Usuario,
+							'respuesta_fecha' => $item->Fur_CreatedAt->format('Y-m-d H:i:s'),
+							'formulario_respuesta_id' => $item->Fur_IdFrmUsuRes,
+							'formulario_id' => $item->Frm_IdFormulario
+						];
+					});
+				$datatable_response['data'] = $rows;
+				$datatable_response['query'] = DB::getQueryLog();
+				
+			}
+			$this->_view->responseJson($datatable_response);
+		
+		}
     public function encuesta ($leccion_id) {
         $this->_acl->autenticado();
         // dd($this->_acl->getPermisos());
@@ -553,18 +621,16 @@ class gleccionController extends elearningController {
                 $mod_modulo = $this->loadModel("_gestionModulo");
                 $leccion = $mod_leccion->getLeccionId($leccion_id);
                 $modulo = $mod_modulo->getModuloId($leccion["Moc_IdModuloCurso"]);
-                // dd($modulo);
-
-
+                
                 if ($leccion) {
 
                     $data["modulo"] =  $modulo;
                     $data["leccion"] =  $leccion;
                     $data['idLeccion'] =  $leccion_id;
-
+										
                     $mod_curso = $this->loadModel("_gestionCurso");
 
-                    $curso = $mod_curso->getCursoById($modulo['Cur_IdCurso']);
+                    $curso = $mod_curso->getCursoById($modulo['Cur_IdCurso'], Cookie::lenguaje());
                     $data['titulo'] = $lang->get('str_encuesta').' - '.str_limit($curso['Cur_Titulo'], 20);
                     // $data['active'] = 'examen';
 
@@ -574,13 +640,14 @@ class gleccionController extends elearningController {
                     $lecc_frm = LeccionFormulario::findByLeccion($leccion_id);
                     // dd($lecc_frm->formulario);
                     $data['formulario'] = null;
-                    $data['respuestas'] = null;
-                    if ($lecc_frm)
-                        $formulario = $data['formulario'] = $lecc_frm->formulario;
-                        if (isset($formulario) && $formulario != null) {
-                            $data['respuestas'] = $formulario->respuestas;
-                        }
-
+                    // $data['respuestas'] = null;
+                    if ($lecc_frm) {
+											$formulario = $data['formulario'] = $lecc_frm->formulario;
+											// if (isset($formulario) && $formulario != null) {
+											// 		// $data['respuestas'] = $formulario->respuestas;
+											// }
+										}
+										
                     //buscar formulario
                 }
 

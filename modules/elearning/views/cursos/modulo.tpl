@@ -435,7 +435,7 @@
                                 {/if}
                             {/if}
                         {/if}
-                        {if $leccion['Lec_Tipo'] == 10}
+                        {if $leccion['Lec_Tipo'] == App\Leccion::TIPO_ENCUESTA}
                             <div class="col-xs-12" style="text-align: justify;">
                               {if isset($formulario) && $formulario != null}
                                 {if (!isset($respuesta) || $respuesta->Fur_Completado == 0)}

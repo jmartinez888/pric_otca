@@ -6,6 +6,7 @@ Vue.component('input-tags', {
 			edit: false,
 			tipo: 'texto',
 			setTime: null,
+			
 			values: {
 				tipo: 'texto',
 				pregunta: '',
@@ -144,17 +145,19 @@ Vue.component('input-tags', {
 			data.append('pregunta_id', this.element.id)
 
 			switch (opc) {
-				case 'fil':
+				case 'col':
 					data.append('tipo_opc', opc)
 					axios.post(_root_lang + 'elearning/formulario/store_opcion/' + this.element.id, data).then(res => {
 						if (res.data.success)
+							// this.values.preguntas.push(res.data.data)
 							this.values.options.push(res.data.data)
 					})
 					break;
-				case 'col':
+				case 'fil':
 					data.append('pregunta_padre', this.element.id)
 					axios.post(_root_lang + 'elearning/formulario/store_pregunta/' + this.element.formulario_id + (this.element.tipo == 'cuadricula' ? '/radio' : '/box'), data).then(res => {
 						if (res.data.success) {
+							// this.values.options.push(res.data.data)
 							this.values.preguntas.push(res.data.data)
 							// this.tags.push({name: 'b', id: res.data.data.id, edit: false, tag_name: 'texto', })
 						}
@@ -189,21 +192,74 @@ Vue.component('input-tags', {
 })
 new Vue({
 	el: '#formulario_respuestas_vue',
+	components: {
+		'btn-acciones': {
+			props: ['formularioRespuestaId'],
+			template: '#tpl_btn_frm_encuestas'
+		}
+	},
 	data: function () {
 		return {
-
+			...JSON.parse(getContentMeta('data-parse')),//leccion_id
+			dt_tbl_respuestas: null,
+			filter: {
+				txt_query: ''
+			}
+		}
+	},
+	watch: {
+		'filter.txt_query': function (nv) {
+			if (nv.trim() == '')
+				this.dt_tbl_respuestas.draw();
 		}
 	},
 	methods: {
-		onClick_deleteRespuesta: function (respuesta_id) {
-			console.log(event)
-			let target = event.target.parentNode.parentNode.parentNode
-			axios.post(_root_lang + 'elearning/formulario/delete_respuesta/' + respuesta_id).then(res => {
+		onSubmit_filtrarRespuestas: function () {
+			this.dt_tbl_respuestas.draw();
+		},
+		onClick_deleteRespuesta: function (e) {
+			axios.post(_root_lang + 'elearning/formulario/delete_respuesta/' + e.currentTarget.dataset.id).then(res => {
 				if (res.data.success) {
-					target.remove()
+					this.dt_tbl_respuestas.draw(false);
 				}
 			})
 		}
+	},
+	mounted: function () {
+		
+		this.dt_tbl_respuestas = $(this.$refs.tbl_frm_respuestas).DataTable({
+			language: datatables_lenguaje,
+			ajax: {
+				url: base_url('elearning/gleccion/datatable_encuesta_respuestas/' + this.leccion_id),
+				data: d => {
+					d.filter = {
+						query: this.filter.txt_query
+					}
+				}
+			},
+			dom: '<"table-responsive"t>p',
+			pageLength: 10,
+			serverSide: true,
+			columns: [
+				{data: 'usuario_id'},
+				{data: 'usuario_nombre'},
+				{data: 'usuario_cuenta'},
+				{data: 'respuesta_fecha'},
+				{data: 'formulario_respuesta_id', render: (d, t, r) => {
+					// return d;
+					return Mustache.render(document.getElementById('tpl_btn_frm_encuestas').innerHTML, {
+						formulario_respuesta_id: d,
+					})
+				}}
+			],
+			columnDefs: [
+				// {orderable: false,  targets: [3, 4]}
+			]
+		})
+		.on('click', '.btn-eliminar', this.onClick_deleteRespuesta)
+		.on('draw', (x, datatable) => {
+			$('.btn-acciones[data-toggle="tooltip"]').tooltip();
+		});
 	}
 })
 
@@ -309,6 +365,7 @@ new Vue({
 		}).catch( err => {
 
 		})
+
 		console.log(this)
 		// this.tags.push({name: 'x', id: this.count_tags++, edit: false})
 	}

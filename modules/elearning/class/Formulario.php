@@ -10,6 +10,8 @@ class Formulario extends Eloquent
   protected $primaryKey = 'Frm_IdFormulario';
   const CREATED_AT = 'Frm_CreatedAt';
   const UPDATED_AT = 'Frm_UpdatedAt';
+  public const TIPO_FORMULARIO  = 0;
+  public const TIPO_ENCUESTA    = 1;
 
   public static function getActivoByCursoId ($curso_id) {
     return self::where('Frm_Estado', 1)->where('Cur_IdCurso', $curso_id)->first();
@@ -20,7 +22,7 @@ class Formulario extends Eloquent
   }
 
   public function scopeTipoDefault ($query) {
-    return $query->where('Frm_Tipo', 0);
+    return $query->where('Frm_Tipo', self::TIPO_FORMULARIO);
   }
   public function preguntas () {
     return $this->hasMany('App\FormularioPreguntas', 'Frm_IdFormulario')->whereNull('Fpr_Parent')->orderBy('Fpr_Orden', 'asc');
@@ -42,6 +44,9 @@ class Formulario extends Eloquent
   }
   public static function getByCurso ($curso_id) {
     return self::where('Cur_IdCurso', $curso_id)->get();
+  }
+  public function isTipo ($tipo) {
+    return $this->Frm_Tipo == $tipo;
   }
   public function formatToArray ($exclude = []) {
     return [

@@ -138,7 +138,7 @@ function gestionIdiomas(Moc_IdModuloCurso, idIdiomaOriginal, idIdioma) {
                 idIdiomaOriginal: idIdiomaOriginal
             }, function (data) {
         $("#gestion_idiomas").html('');
-        $("#cargando").hide();
+        $("#cargando").hide(); 
         $("#gestion_idiomas").html(data);
 
         // cargarCKeditor();

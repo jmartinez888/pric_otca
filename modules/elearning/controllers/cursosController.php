@@ -4,6 +4,7 @@ use App\Formulario;
 use App\FormularioUsuarioRespuestas;
 use App\Leccion;
 use Dompdf\Dompdf;
+use Illuminate\Database\Capsule\Manager as DB;
 
 /**
  * Description of loginController
@@ -13,6 +14,78 @@ class cursosController extends elearningController {
 
   public function __construct($lang, $url) {
     parent::__construct($lang, $url);
+  }
+
+  public function datatable_respuestas_formulario ($curso_id) {
+    
+    $this->_acl->autenticado();	
+    $datatable_response = [
+      'draw' 						=> $this->getInt('draw'),
+      'recordsTotal' 		=> 0,
+      'recordsFiltered' => 0,
+      'data' 						=> [],
+      'query'	 					=> []
+    ];
+			// DB::enableQueryLog();
+			if ($this->filtrarInts([$curso_id])) {
+        $lang = $this->_view->getLenguaje(['elearning_cursos', 'elearning_formulario_responder'], false, true);
+        $mod_curso = $this->loadModel("curso");
+        $curso = $mod_curso::find($curso_id);
+        if ($curso) {
+          $formulario = $curso->getFormularioActivo();
+          $query = $formulario->respuestas()
+            ->select(
+              'formulario_usuario_respuestas.*',
+              DB::raw("CONCAT(usuario.Usu_Nombre, ' ', usuario.Usu_Apellidos) as Usu_NombreCompleto"),
+              'Usu_Usuario'
+              )
+            ->joinUsuarios();
+          
+          $datatable_response['recordsTotal'] = $datatable_response['recordsFiltered'] = $query->count();
+          
+          if ($this->has('filter')) {
+            $query->where(function($query) {
+              if (isset($_GET['filter']['query']) && $_GET['filter']['query'] != '') 
+                $query->orWhere(DB::raw("CONCAT(usuario.Usu_Nombre, ' ', usuario.Usu_Apellidos)"), 'like', '%'.$_GET['filter']['query'].'%');
+            });
+          }
+  
+          
+          if ($this->has(['order', 'columns'])) {
+            foreach ($_GET['order'] as $key => $value) {
+              $nc = $_GET['columns'][$value['column']]['data'];
+              switch ($nc) {
+                case 'usuario_nombre': 	$nc = 'Usu_NombreCompleto'	;	break;
+                case 'formulario_respuesta_fecha': 	$nc = 'Fur_CreatedAt'	;	break;
+                default: $nc = 'no_found_col'; break;
+              }
+              if ($nc != 'no_found_col')
+                $query->orderBy($nc, $value['dir']);
+            }
+          }
+  
+          // if ($this->filledGet('export')) 
+          $rows = $query->offset($this->getInt('start'))
+            ->limit($this->getInt('length'))
+            ->get()->map(function($item) {
+              // print_r($item->toArray());
+              return [
+                // 'usuario_id' => $item->Usu_IdUsuario,
+                'usuario_nombre' => $item->Usu_NombreCompleto,
+                // 'usuario_cuenta' => $item->Usu_Usuario,
+                'formulario_respuesta_fecha' => $item->Fur_CreatedAt->format('Y-m-d H:i:s'),
+                'formulario_respuesta_id' => $item->Fur_IdFrmUsuRes,
+                'formulario_id' => $item->Frm_IdFormulario
+              ];
+            });
+          $datatable_response['data'] = $rows;
+          // $datatable_response['query'] = DB::getQueryLog();
+        }
+				
+			}
+			$this->_view->responseJson($datatable_response);
+		
+		
   }
 
   public function respuestas_formulario($curso_id, $respuesta_id = 0) {
@@ -299,24 +372,16 @@ class cursosController extends elearningController {
     // $curs = $Cmodel->getCursoID($curso)[0];
     // print_r($curs);exit;
     $obj_curso = null;
-    
-    if (strlen($curso) == 0 || strlen($modulo) == 0 || $this->filtrarInt($curso) == 0 || $this->filtrarInt($modulo) == 0 ) {
-      $this->redireccionar("elearning/");
+    if (!$this->filtrarInts([$curso, $modulo])) {
+      $this->redireccionar("elearning/cursos");
     }
-    if (!Session::get("autenticado")) {
-      $this->redireccionar("elearning/");
-    }
-    if (!is_numeric($curso) || !is_numeric($modulo)) {
-      $this->redireccionar("elearning/");
-    }
-    
     if (!$Mmodel->validarCursoModulo($curso, $modulo)) {
       $this->redireccionar("elearning/cursos");
     }
     if (!$Mmodel->validarModuloUsuario($modulo, Session::get("id_usuario"))) {
       $this->redireccionar("elearning/cursos");
     }
-    
+    //valida solo la primera lección para dar acceso a las lecciones siguientes
     if ($leccion) {
       if(!$Lmodel->validarLeccion($leccion, $modulo, Session::get("id_usuario"))){ 
         $this->redireccionar("elearning/cursos"); 
@@ -367,15 +432,15 @@ class cursosController extends elearningController {
 
     if (isset($OLeccion) && isset($OLeccion["Lec_Tipo"])) {
       
-      if ($OLeccion["Lec_Tipo"] == 1 || $OLeccion["Lec_Tipo"] == 6) {
+      if ($OLeccion["Lec_Tipo"] == Leccion::TIPO_HTML || $OLeccion["Lec_Tipo"] == 6) {
         //$Lmodel->RegistrarProgreso($OLeccion["Lec_IdLeccion"], Session::get("id_usuario"));
         $html = $Lmodel->getContenido($OLeccion["Lec_IdLeccion"], Cookie::lenguaje());
         $this->_view->assign("cont_html", $html);
-      } else if ($OLeccion["Lec_Tipo"] == 2) {
+      } else if ($OLeccion["Lec_Tipo"] == Leccion::TIPO_VIDEO) {
         //$Lmodel->RegistrarProgreso($OLeccion["Lec_IdLeccion"], Session::get("id_usuario"));
         $html = $Lmodel->getContenido($OLeccion["Lec_IdLeccion"], Cookie::lenguaje());
         $this->_view->assign("html", $html[0]);
-      } else if ($OLeccion["Lec_Tipo"] == 3) {
+      } else if ($OLeccion["Lec_Tipo"] == Leccion::TIPO_EXAMEN) {
         $examen = $Emodel->getExamenxLeccion($OLeccion["Lec_IdLeccion"], Cookie::lenguaje());
 
         if ($idexamen && $idexamen == $examen["Exa_IdExamen"]) {
@@ -581,11 +646,11 @@ class cursosController extends elearningController {
           $this->_view->assign("restantes", $examen['Exa_Intentos'] - $intentos['intentos']);
           $this->_view->assign("examen", $examen);
         }
-      } else if ($OLeccion["Lec_Tipo"] == 4) {
+      } else if ($OLeccion["Lec_Tipo"] == Leccion::TIPO_DIRIGIDA) {
         $this->redireccionar("elearning/clase/clase/" . $curso . "/" . $modulo . "/" . $OLeccion["Lec_IdLeccion"]);
         
         exit;
-      } else if ($OLeccion["Lec_Tipo"] == 5) {
+      } else if ($OLeccion["Lec_Tipo"] == Leccion::TIPO_EXAMEN_DIRIGIDO) {
         $this->redireccionar("elearning/clase/examen/" . $curso . "/" . $modulo . "/" . $OLeccion["Lec_IdLeccion"]);
         exit;
       } else if ($OLeccion['Lec_Tipo'] == Leccion::TIPO_ENCUESTA) {
@@ -594,6 +659,8 @@ class cursosController extends elearningController {
         $data['formulario'] = $frm = $temp_leccion->leccion_formulario->formulario;
         $data['respuesta'] = $frm->getRespuestaByUsuario(Session::get('id_usuario'));
         $data['curso'] = $data['obj_curso'] = $obj_curso;
+        $data['formulario_modo_registro']  = md5(Formulario::TIPO_ENCUESTA);
+
         $data['redireccion'] = 'elearning/cursos/modulo/' . $curso . '/' . $modulo . '/' . $OLeccion['Lec_IdLeccion'];
         // dd($data['formulario']->preguntas);
         $this->_view->assign($data);

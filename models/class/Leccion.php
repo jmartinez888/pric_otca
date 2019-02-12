@@ -19,7 +19,7 @@ class Leccion extends Eloquent
   public  const TIPO_VIDEO            = 2;
   public  const TIPO_EXAMEN           = 3;
   public  const TIPO_DIRIGIDA         = 4;
-  public  const TIPO_PIZARRA         = 4;
+  public  const TIPO_PIZARRA          = 4;
   public  const TIPO_EXAMEN_DIRIGIDO  = 5;
   public  const TIPO_ENCUESTA         = 10;
 
@@ -41,6 +41,9 @@ class Leccion extends Eloquent
   	return $this->hasMany('App\LeccionSession', 'Lec_IdLeccion');
   }
 
+  public static function existeLeccion ($leccion_id) {
+    return self::where('Lec_IdLeccion', $leccion_id)->count() > 0;
+  }
   public function getSessionActiva () {
     return $this->sessiones()->where('Les_Concluido', 0)
       ->where('Les_Tipo', LeccionSession::TIPO_ONLINE)

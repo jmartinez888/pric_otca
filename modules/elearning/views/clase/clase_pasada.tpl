@@ -103,3 +103,7 @@
   </div>
 </div>
 {/block}
+
+{block 'js'}
+<script src="{BASE_URL}modules/elearning/views/clase/js/menu-interactive.js"></script>
+{/block}

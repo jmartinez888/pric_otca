@@ -19,7 +19,9 @@ class FormularioPreguntas extends Eloquent
   public function hijos () {
     return $this->hasMany('App\FormularioPreguntas', 'Fpr_Parent');
   }
-
+  public function existeDetalleRespuestaByResUsu ($respuesta_usuario_id) {
+    return $this->respuestas()->where('Fur_IdFrmUsuRes', $respuesta_usuario_id)->count() > 0;
+  }
   public function detalleRespuestaByResUsu ($respuesta_usuario_id) {
     $target = $this->respuestas()->where('Fur_IdFrmUsuRes', $respuesta_usuario_id)->first();
     switch ($this->Fpr_Tipo) {
@@ -53,7 +55,7 @@ class FormularioPreguntas extends Eloquent
                 public function __construct($values)
                 {
                   $this->values = $values;
-                    $this->path = BASE_URL.$values['ruta'];
+                  $this->path = BASE_URL.$values['ruta'];
                 }
                 public function format () {
 

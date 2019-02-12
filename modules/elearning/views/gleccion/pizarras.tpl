@@ -53,7 +53,7 @@
           <div class="col-sm-12">
             <form class="form-inline" role="form" @submit.prevent="onSubmit_filtrarEncuestas">
               <div class="form-group">
-                <input type="text" v-model="filter.txt_encuesta" class="form-control" id="" placeholder="{$lang->get('str_encuesta')}">
+                <input type="text" v-model="filter.txt_encuesta" class="form-control" id="" placeholder="{$lang->get('str_pizarra')}">
               </div>
                 
               <div class="form-group">
@@ -74,7 +74,7 @@
             <table class="table wi-100" id="tbl_pizarras" ref="tbl_pizarras">
               <thead>
                 <tr>
-                  <th>{$lang->get('str_encuesta')}</th>
+                  <th>{$lang->get('str_pizarra')}</th>
                   <th>{$lang->get('str_descripcion')}</th>
                   <th>{$lang->get('str_modulo')}</th>
                   <th width="150">{$lang->get('str_operacion')}</th>
