@@ -81,7 +81,7 @@ class formularioController extends elearningController {
 
 	}
 	public function store_respuesta ($curso_id) {
-
+		
 		$mod_usuario = $this->loadModel('usuario', 'usuarios');
 		$usuario = $mod_usuario::find(Session::get('id_usuario'));
 		$roles = $usuario->getUsuariosRoles();
@@ -93,17 +93,18 @@ class formularioController extends elearningController {
 			}
 		}
 
-		if (is_numeric($curso_id) && $curso_id != 0) {
+		if (is_numeric($curso_id) && $curso_id != 0 && $this->has(['formulario_id', 'formulario_modo_registro'])) {
 			$mod_curso = $this->loadModel('curso');
 			$curso = $mod_curso::find($curso_id);
 			if ($curso) {
 				$formulario_id = $this->getInt('formulario_id');
-				if ($formulario_id != 0)
-					$frm = Formulario::find($formulario_id);
-				else
-					$frm = $curso->getFormularioActivo();
-
-				if ($frm) {
+				// if ($formulario_id != 0)
+				$frm = Formulario::find($formulario_id);
+				// else
+				// 	$frm = $curso->getFormularioActivo();
+				 
+				if ($frm && md5($frm->Frm_Tipo) == $this->getTexto('formulario_modo_registro')) {
+					// dd($_POST, $_GET, $frm->isTipo(Formulario::TIPO_ENCUESTA));
 					$respuesta = $frm->getRespuestaByUsuario(Session::get('id_usuario'));
 					if ($respuesta == null) {
 					  $preguntas = $frm->preguntasTodas;
@@ -236,6 +237,7 @@ class formularioController extends elearningController {
 			$this->_view->setTemplate(LAYOUT_FRONTEND);
 			if ($curso ) {
 				$data['titulo'] = $curso->Cur_Titulo.' - '.$data['titulo'];
+				$data['formulario_modo_registro'] = md5(Formulario::TIPO_FORMULARIO);
 				$frm = $curso->getFormularioActivo();
 				$data['obj_curso'] = $data['curso'] = $curso;
 				if ($frm) {
@@ -256,22 +258,25 @@ class formularioController extends elearningController {
 		if (is_numeric($pregunta_id) && $this->getInt('pregunta_id') == $pregunta_id) {
 			DB::transaction(function () use (&$res, $pregunta_id) {
 				$pre = FormularioPreguntas::find($pregunta_id);
-
-				$respuestas = FormularioUsuarioRespuestasDetalles::getByPregunta($pregunta_id);
-				if ($respuestas->count() > 0) {
-					foreach ($respuestas as $key => $value) {
+				if ($pre) {
+					$respuestas = FormularioUsuarioRespuestasDetalles::getByPregunta($pregunta_id);
+					if ($respuestas->count() > 0) {
+						foreach ($respuestas as $key => $value) {
+							$value->delete();
+						}
+					}
+					$opciones = FormularioPreguntasOpciones::getByPregunta($pregunta_id);
+					if ($opciones->count() > 0) {
+						foreach ($opciones as $key => $value) {
+							$value->delete();
+						}
+					}
+					foreach ($pre->hijos as $key => $value) {
 						$value->delete();
 					}
+					if ($pre->delete())
+						$res['success'] = true;
 				}
-
-				$opciones = FormularioPreguntasOpciones::getByPregunta($pregunta_id);
-				if ($opciones->count() > 0) {
-					foreach ($opciones as $key => $value) {
-						$value->delete();
-					}
-				}
-				if ($pre->delete())
-					$res['success'] = true;
 			});
 		}
 		$this->_view->responseJson($res);
@@ -459,6 +464,7 @@ class formularioController extends elearningController {
 					$new = new Formulario();
 					$new->Frm_Titulo = 'Titulo';
 					$new->Frm_Descripcion = '';
+					$new->Frm_Estado = 1;
 					$new->Cur_IdCurso = $curso_id;
 					$new->Frm_Mensaje = 'Gracias por contestar esta encuesta';
 					if ($new->save()) {

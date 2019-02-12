@@ -449,7 +449,7 @@
         </div>
     </ul>
 
-    {if (isset($curso)) && $curso['Moa_IdModalidad'] == 3}
+    {if (isset($curso)) && $curso['Moa_IdModalidad'] == App\Curso::MODALIDAD_PRESENCIAL}
     <ul id="item-formularios">
         <div class="side-menu2 {if $active == 'formulario'}active{/if}">
           <li class="side-menu side-menu-center-mid" style="position: relative">

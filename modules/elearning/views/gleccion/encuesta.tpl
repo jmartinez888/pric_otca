@@ -1,5 +1,8 @@
 {extends 'template.tpl'}
 
+{block 'meta'}
+<meta name="data-parse" content='{json_encode(['leccion_id' => $idLeccion])}'>
+{/block}
 
 {block 'css' append}
 <style type="text/css">
@@ -81,36 +84,30 @@
 			        <strong>Lecciones del Módulo</strong>
 			      </h3>
 			    </div> -->
-			    <div class="panel-body" >
-
-	          <div class="col-lg-12" id="formulario_respuestas_vue">
-	            <div class="table-responsive" style="width: 100%">
-	              <table class="table" id="tblMisCursos">
-	                <thead>
-	                  <tr>
-	                    <th>Id</th>
-	                    <th>{$lang->get('str_alumnos')}</th>
-	                    <th>{$lang->get('str_usuarios')}</th>
-	                    <th>{$lang->get('str_fecha')}</th>
-	                    <th>{$lang->get('str_operacion')}</th>
-	                  </tr>
-	                </thead>
-	                <tbody>
-	                  {foreach $respuestas as $res}
-	                    <tr>
-	                      <td>{$res->usuario->Usu_IdUsuario}</td>
-	                      <td>{$res->usuario->Usu_Nombre} {$res->usuario->Usu_Apellidos}</td>
-	                      <td>{$res->usuario->Usu_Usuario}</td>
-	                      <td>{$res->Fur_CreatedAt}</td>
-	                      <td>
-	                        <a href="{$_layoutParams.root}elearning/formulario/respuesta/{$res->Fur_IdFrmUsuRes}" class="btn btn-default  btn-sm" data-toggle="tooltip" data-placement="bottom" title="{$lang->get('str_ver_respuestas')}"><i class="glyphicon glyphicon-file"></i></a>
-	                        <button data-id="{$res->Fur_IdFrmUsuRes}" @click="onClick_deleteRespuesta({$res->Fur_IdFrmUsuRes})" class="btn btn-default  btn-sm" data-toggle="tooltip" data-placement="bottom" title="{$lang->get('str_ver_respuestas')}"><i class="glyphicon glyphicon-trash"></i></button>
-	                      </td>
-	                    </tr>
-	                  {/foreach}
-	                </tbody>
-	              </table>
-	            </div>
+			    <div class="panel-body" id="formulario_respuestas_vue">
+						<div class="col-lg-12">
+							<form class="form-inline" role="form" @submit.prevent="onSubmit_filtrarRespuestas">
+								<div class="form-group">
+									<input type="text" v-model="filter.txt_query" class="form-control" id="" placeholder="{$lang->get('str_alumno')}">
+								</div>
+								<button type="submit" class="btn btn-primary">{$lang->get('str_buscar')}</button>
+							</form>
+						</div>
+	          <div class="col-lg-12" >
+	            
+							<table class="table wi-100" id="tbl_frm_respuestas" ref="tbl_frm_respuestas">
+								<thead>
+									<tr>
+										<th>Id</th>
+										<th>{$lang->get('str_alumnos')}</th>
+										<th>{$lang->get('str_usuarios')}</th>
+										<th>{$lang->get('str_fecha')}</th>
+										<th>{$lang->get('str_operacion')}</th>
+									</tr>
+								</thead>
+								<tbody></tbody>
+							</table>
+	            
 	          </div>
 
 			    </div>
@@ -118,7 +115,7 @@
 			</div>
 		</div>
 	{else}
-		<h3>No posee encuesta</h3>
+		<h3>{$lang->get('elearning_cursos_no_posee_encuesta')}</h3>
 	{/if}
 </div>
 
@@ -134,7 +131,10 @@
 	{if $formulario != null}
   	{include 'input_tags.tpl'}
 	{/if}}
-
+<template id="tpl_btn_frm_encuestas">
+	<a href="{$_layoutParams.root}elearning/formulario/respuesta/{literal}{{formulario_respuesta_id}}{/literal}" class="btn btn-default btn-acciones btn-sm" data-toggle="tooltip" data-placement="bottom" title="{$lang->get('str_ver_respuestas')}"><i class="glyphicon glyphicon-file"></i></a>
+	<button data-id="{literal}{{formulario_respuesta_id}}{/literal}" class="btn btn-default btn-acciones btn-eliminar  btn-sm" data-toggle="tooltip" data-placement="bottom" title="{$lang->get('str_eliminar')}"><i class="glyphicon glyphicon-trash" data-id="{literal}{{formulario_respuesta_id}}{/literal}"></i></button>
+</template>
 {/block}
 {block 'js' append}
 {if ($formulario != null)}

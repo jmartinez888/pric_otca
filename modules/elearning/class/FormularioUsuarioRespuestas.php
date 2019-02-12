@@ -15,6 +15,10 @@ class FormularioUsuarioRespuestas extends Eloquent
   	return $this->belongsTo('App\Usuario', 'Usu_IdUsuario');
   }
 
+  public function scopeJoinUsuarios ($query) {
+    return $query->join('usuario', 'usuario.Usu_IdUsuario', 'formulario_usuario_respuestas.Usu_IdUsuario');
+  }
+
   public function detalles () {
   	return $this->hasMany('App\FormularioUsuarioRespuestasDetalles', 'Fur_IdFrmUsuRes');
   }

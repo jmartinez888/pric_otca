@@ -80,7 +80,8 @@ class gcursoController extends elearningController {
     // Session::set("learn_url_tmp", "gcurso/_view_mis_cursos");
     // $this->_view->getLenguaje("learn");
     $lang = $this->_view->getLenguaje(['elearning_gcurso', 'elearning_cursos'], false, true);
-
+    
+    $this->_view->assign('titulo', $lang->get('str_mis_cursos'));
     $this->_view->assign('menu', 'docente');
     $this->_view->assign('cursos', $cursos);
     $this->_view->assign('busqueda', $busqueda);
@@ -150,7 +151,7 @@ class gcursoController extends elearningController {
       $condicion1 .= " WHERE c.Cur_IdCurso = $Cur_IdCurso ";            
       // $datos = $this->_arquitectura->getPaginaTraducida($condicion1,$Idi_IdIdioma);
       // echo $condicion1;
-      $datos = $this->curso->getCursoById($Cur_IdCurso);
+      $datos = $this->curso->getCursoById($Cur_IdCurso, Cookie::lenguaje());
       $parametros = $this->curso->getParametros($Cur_IdCurso);
       // print_r($datos); echo $datos["Idi_IdIdioma"];
       // echo $Idi_IdIdioma;

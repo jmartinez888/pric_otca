@@ -18,6 +18,7 @@ class leccionModel extends Model {
                 ON L.Moc_IdModuloCurso = X.Moc_IdModuloCurso AND L.Lec_IdLeccion < X.Lec_IdLeccion AND L.Lec_Estado = 1 AND L.Row_Estado = 1";
       }
       $previo = $this->getArray($sql);
+      
       // print_r($previo);exit;
       if($leccion==""){
         return count($previo) > 0;
@@ -25,6 +26,7 @@ class leccionModel extends Model {
 
       if($previo!=null && count($previo)>0){
         $lecPrev = $this->getProgresoLeccion($previo[0]["Lec_IdLeccion"], $usuario);
+        // dd($previo, $lecPrev);
         if($lecPrev["Completo"]==1){
           return true;
         }else{
