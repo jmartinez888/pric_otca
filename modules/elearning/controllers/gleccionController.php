@@ -379,7 +379,7 @@ class gleccionController extends elearningController {
             $lang = $this->_view->getLenguaje(['elearning_cursos', 'elearning_formulario_responder'], false, true);
             if (is_numeric($curso_id) && $curso_id != 0) {
                 $mod_curso = $this->loadModel("_gestionCurso");
-                $curso = $mod_curso->getCursoById($curso_id);
+                $curso = $mod_curso->getCursoById($curso_id, Cookie::lenguaje());
                 $mod_modulo = $this->loadModel("_gestionModulo");
 								$modulos = $mod_modulo->getModulos($curso_id);
 								$data['modo'] = $modo;
@@ -679,10 +679,10 @@ class gleccionController extends elearningController {
         $Mmodel = $this->loadModel("_gestionModulo");  
         $_arquitectura = $this->loadModel('index','arquitectura');
 
-        $curso = $Cmodel->getCursoXId($id_curso);
-        $tipo = $Lmodel->getTipoLecccion( $curso["Moa_IdModalidad"]==2? " ": "" );
-        $lecciones = $Lmodel->getLecciones($id_modulo);
-        $modulo = $Mmodel->getModuloId($id_modulo);
+        $curso = $Cmodel->getCursoXId($id_curso, Cookie::lenguaje());
+        $tipo = $Lmodel->getTipoLecccion( $curso["Moa_IdModalidad"]==2? " ": "", Cookie::lenguaje() );
+        $lecciones = $Lmodel->getLecciones($id_modulo, Cookie::lenguaje());
+        $modulo = $Mmodel->getModuloId($id_modulo, Cookie::lenguaje());
 
         Session::set("learn_url_tmp", "gleccion/_view_lecciones_modulo");
         $this->_view->assign('idiomas',$_arquitectura->getIdiomas());

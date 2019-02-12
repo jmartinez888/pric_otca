@@ -3,16 +3,16 @@
 class documentosController extends Controller{
 
     private $_documentos;
-    
+
     public function __construct($lang, $url) {
         parent::__construct($lang, $url);
         $this->_documentos = $this->loadModel('documentos');
     }
-    
+
     public function index($pagina = false)
-    {        
+    {
         //Modal Registrar Recurso
-        // if ($this->botonPress("bt_registrar")) 
+        // if ($this->botonPress("bt_registrar"))
         // {
         //     $this->registrarRecurso();
         // }
@@ -20,7 +20,6 @@ class documentosController extends Controller{
     	// $this->_acl->autenticado();
         $this->validarUrlIdioma();
         $this->_view->getLenguaje("bd_documentos");
-        $this->_view->getLenguaje("bdrecursos_registros");
 
         //Para modal Adjuntar archivo
         $this->_view->getLenguaje("bdrecursos_index");
@@ -41,9 +40,9 @@ class documentosController extends Controller{
 		$orderBy = " ORDER BY dub.Dub_Titulo ASC LIMIT 0," . CANT_REG_PAG;
 
         //Filtro Para usuarios logueados
-        $this->_view->setTemplate(LAYOUT_FRONTEND); 
+        $this->_view->setTemplate(LAYOUT_FRONTEND);
         if (!Session::get('autenticado')) {
-                       
+
         } else {
             $condicion = " WHERE (Dub_Estado = 0 OR Dub_Estado = 1 OR Dub_Estado = 2) ";
             // $condicion .= " AND Usu_IdUsuario = " . Session::get('id_usuario');
@@ -51,7 +50,7 @@ class documentosController extends Controller{
             // $this->_view->assign('usuario',Session::get('usuario'));
             // $this->_view->assign('documentos', $this->_documentos->getDocumentosPaises($condicion, $idioma, $orderBy));
         }
-		
+
 		$rowCount = $this->_documentos->getDocumentosRowCount($condicion);
 		// print_r($rowCount);
         $totalRegistros = $rowCount["CantidadRegistros"];
@@ -59,45 +58,45 @@ class documentosController extends Controller{
 
 
 
-		$this->_view->assign('paises', $this->_documentos->getCantDocumentosPaises($condicion,$idioma));		
+		$this->_view->assign('paises', $this->_documentos->getCantDocumentosPaises($condicion,$idioma));
 
-		$this->_view->assign('totaldocumentos', $this->_documentos->getTotalDocumentos($condicion,$idioma));		
-        $this->_view->assign('temadocumento', $this->_documentos->getCantidadTemasDocumentos($condicion,$idioma));		        		
+		$this->_view->assign('totaldocumentos', $this->_documentos->getTotalDocumentos($condicion,$idioma));
+        $this->_view->assign('temadocumento', $this->_documentos->getCantidadTemasDocumentos($condicion,$idioma));
 		$this->_view->assign('tipodocumento', $this->_documentos->getCantidadTiposDocumentos($condicion,$idioma));
-        $this->_view->assign('autores', $this->_documentos->getCantidadAutoresDocumentos($condicion,$idioma)); 
+        $this->_view->assign('autores', $this->_documentos->getCantidadAutoresDocumentos($condicion,$idioma));
         $this->_view->assign('formatos', $this->_documentos->getCantidadFormatosDocumentos($condicion,$idioma));
 
         // $this->_view->assign('inicio',1);
         $this->_view->assign('documentos',array());
         $this->_view->assign('resumen',1);
 
-		$this->_view->assign('numeropagina',$this->getInt('pagina'));        
-		$this->_view->assign('paginacion', $paginador->getView('paginacion_ajax_s_filas'));		
-		$this->_view->assign('numeropagina', $paginador->getNumeroPagina());        
-		$this->_view->assign('titulo', 'Base de Datos de Documentos');        
+		$this->_view->assign('numeropagina',$this->getInt('pagina'));
+		$this->_view->assign('paginacion', $paginador->getView('paginacion_ajax_s_filas'));
+		$this->_view->assign('numeropagina', $paginador->getNumeroPagina());
+		$this->_view->assign('titulo', 'Base de Datos de Documentos');
 		$this->_view->renderizar('index','documentos');
     }
-    
+
     public function busqueda($palabra = '', $temadocumento = '', $tipodocumento = '',  $autordocumento = '',  $formatodocumento = '', $pais = '', $usuariodocumento = false, $letra = '')
     {
     	// echo $palabra."/".$temadocumento."/".$tipodocumento."/".$pais;
     	// $this->_acl->autenticado();
         // $this->_view->setTemplate(LAYOUT_FRONTEND);
         //Modal Registrar Recurso
-        // if ($this->botonPress("bt_registrar")) 
+        // if ($this->botonPress("bt_registrar"))
         // {
         //     $this->registrarRecurso();
         // }
 
 		$this->_view->getLenguaje("bd_documentos");
-        $this->_view->getLenguaje("bdrecursos_registros");
-        $this->_view->getLenguaje("bdrecursos_index");
-
+    $this->_view->getLenguaje("bdrecursos_registros");
+    $this->_view->getLenguaje("bdrecursos_index");
+    $this->_view->getLenguaje("bdlegal");
 		$this->_view->setCss(array('listadocumentos', "jp-index"));
         $this->_view->setJs(array('documentos'));
 		$pagina = $this->getInt('pagina');
-        //$palabra = $this->getSql('palabra'); 
-		$idioma = Cookie::lenguaje();      
+        //$palabra = $this->getSql('palabra');
+		$idioma = Cookie::lenguaje();
         // $registro = 25;
         if ($pagina > 0) {
         	$inicioRegistro = ($pagina - 1) * CANT_REG_PAG;
@@ -120,17 +119,17 @@ class documentosController extends Controller{
         $formatodocumento = $this->filtrarTexto($formatodocumento);
 		$pais = $this->filtrarTexto($pais);
         $letra = $this->filtrarTexto($letra);
-	          
+
         if($palabra == 'all')
         {
         	$palabra = '';
         }
 
-        $trozosPalabra = explode(" ",$palabra); 
-        $numero = count($trozosPalabra); 
+        $trozosPalabra = explode(" ",$palabra);
+        $numero = count($trozosPalabra);
         if($numero==1){
         	$condicionPalabra .= " and (fn_TraducirContenido('dublincore','Dub_Titulo',dub.Dub_IdDublinCore,'$idioma',dub.Dub_Titulo) LIKE '%$palabra%' OR fn_TraducirContenido('dublincore','Dub_PalabraClave',dub.Dub_IdDublinCore,'$idioma',dub.Dub_PalabraClave) LIKE '%$palabra%' OR fn_TraducirContenido('dublincore','Dub_Descripcion',dub.Dub_IdDublinCore,'$idioma',dub.Dub_Descripcion) LIKE '%$palabra%' OR Aut_Nombre LIKE '%$palabra%') ";
-        } 
+        }
         if($numero>1){
             $condicionPalabra = " AND (MATCH(Dub_Titulo, Dub_Descripcion, Dub_PalabraClave) AGAINST ('%".$palabra."%' IN BOOLEAN MODE) OR MATCH(Aut_Nombre) AGAINST ('%".$palabra."%' IN BOOLEAN MODE)) ";
         }
@@ -164,7 +163,7 @@ class documentosController extends Controller{
 
         //Filtro Para usuarios logueados
         $condicionUsuario = " ";
-        $condicionEstado = " WHERE Dub_Estado = 1 "; 
+        $condicionEstado = " WHERE Dub_Estado = 1 ";
             $this->_view->setTemplate(LAYOUT_FRONTEND);
         if (!Session::get('autenticado')) {
 
@@ -174,7 +173,7 @@ class documentosController extends Controller{
                 $condicionUsuario = " AND Usu_IdUsuario = " . Session::get('id_usuario');
                 $this->_view->assign('filtrousuario',1);
                 $this->_view->assign('usuario',Session::get('usuario'));
-            }            
+            }
             // if ($usuariodocumento == "all") {
             //     $condicionEstado = " WHERE (Dub_Estado = 0 OR Dub_Estado = 1 OR Dub_Estado = 2 ) ";
             // }
@@ -189,9 +188,9 @@ class documentosController extends Controller{
         if ($palabra != 'all' && $palabra != '') {
         	$this->_view->assign('palabrabuscada', $palabra);
             $this->_view->assign('resultPalabra', ' del texto <b>"' . $palabra . '"</b>');
-        } 
+        }
         if ($temadocumento != 'all' && $temadocumento != '') {
-        	$this->_view->assign('filtroTema', $temadocumento);	
+        	$this->_view->assign('filtroTema', $temadocumento);
         }
 	    if ($tipodocumento != 'all' && $tipodocumento != '') {
 	    	$this->_view->assign('filtroTipo', $tipodocumento);
@@ -208,12 +207,12 @@ class documentosController extends Controller{
         if ($letra != 'all' && $letra != '') {
             $this->_view->assign('filtroLetra', $letra);
         }
-	    
-	    
+
+
         $paginador = new Paginador();
         $this->_view->setJs(array('documentos'));
         //$this->_view->assign('documentos', $paginador->paginar($this->_documentos->getDocumentosTraducido($condicion, $idioma ),"paginar","", $pagina,$registro));
-		//$this->_view->assign('totaldocumentos', $this->_documentos->getTotalDocumentos($condicion,$idioma));		
+		//$this->_view->assign('totaldocumentos', $this->_documentos->getTotalDocumentos($condicion,$idioma));
 
         $rowCount = $this->_documentos->getDocumentosRowCount($condicion);
         $totalRegistros = $rowCount["CantidadRegistros"];
@@ -221,16 +220,16 @@ class documentosController extends Controller{
 
         $this->_view->assign('documentos', $this->_documentos->getDocumentosPaises($condicion,$idioma, $orderBy));
 
-		$this->_view->assign('paises', $this->_documentos->getCantDocumentosPaises($condicion,$idioma));		
-		$this->_view->assign('totaldocumentos', $this->_documentos->getTotalDocumentos($condicion,$idioma));		
-        $this->_view->assign('temadocumento', $this->_documentos->getCantidadTemasDocumentos($condicion,$idioma));		        		
-		$this->_view->assign('tipodocumento', $this->_documentos->getCantidadTiposDocumentos($condicion,$idioma));   
-		$this->_view->assign('autores', $this->_documentos->getCantidadAutoresDocumentos($condicion,$idioma)); 
+		$this->_view->assign('paises', $this->_documentos->getCantDocumentosPaises($condicion,$idioma));
+		$this->_view->assign('totaldocumentos', $this->_documentos->getTotalDocumentos($condicion,$idioma));
+        $this->_view->assign('temadocumento', $this->_documentos->getCantidadTemasDocumentos($condicion,$idioma));
+		$this->_view->assign('tipodocumento', $this->_documentos->getCantidadTiposDocumentos($condicion,$idioma));
+		$this->_view->assign('autores', $this->_documentos->getCantidadAutoresDocumentos($condicion,$idioma));
         $this->_view->assign('formatos', $this->_documentos->getCantidadFormatosDocumentos($condicion,$idioma));
 
-        $this->_view->assign('titulo', 'Buscador - Base de Datos de Documentos');   	
-        $this->_view->assign('paginacion', $paginador->getView('paginacion_ajax_s_filas'));		
-		$this->_view->assign('numeropagina', $paginador->getNumeroPagina());        
+        $this->_view->assign('titulo', 'Buscador - Base de Datos de Documentos');
+        $this->_view->assign('paginacion', $paginador->getView('paginacion_ajax_s_filas'));
+		$this->_view->assign('numeropagina', $paginador->getNumeroPagina());
 		$this->_view->renderizar('busqueda','documentos');
     }
 
@@ -238,26 +237,26 @@ class documentosController extends Controller{
     {
         //$this->_view->setTemplate(LAYOUT_FRONTEND);
 		$this->_view->getLenguaje("bd_documentos");
-        $this->_view->getLenguaje("bdrecursos_registros");
+    $this->_view->getLenguaje("bdrecursos_registros");
 		$this->_view->setCss(array('listadocumentos'));
 		$pagina = $this->getInt('pagina');
-        $filas=$this->getInt('filas');  
+        $filas=$this->getInt('filas');
 
         if (!$filas) {
          	$filas = CANT_REG_PAG;
-        } 
+        }
 		// echo $filas;
-        // $palabra = $this->getSql('palabra'); 
-        $temadocumento = $this->getSql('tema'); 
-        $tipodocumento = $this->getSql('tipo'); 
+        // $palabra = $this->getSql('palabra');
+        $temadocumento = $this->getSql('tema');
+        $tipodocumento = $this->getSql('tipo');
         $autordocumento = $this->getSql('autor');
-        $formatodocumento = $this->getSql('formato'); 
-        $letra = $this->getSql('letra'); 
-        $usuariodocumento = $this->getSql('usuario'); 
-        $pais = $this->getSql('pais'); 
-		
-		$idioma = Cookie::lenguaje();      
-        
+        $formatodocumento = $this->getSql('formato');
+        $letra = $this->getSql('letra');
+        $usuariodocumento = $this->getSql('usuario');
+        $pais = $this->getSql('pais');
+
+		$idioma = Cookie::lenguaje();
+
         if ($pagina > 0) {
         	$inicioRegistro = ($pagina - 1) * $filas;
         } else {
@@ -272,17 +271,17 @@ class documentosController extends Controller{
         $condicionFormato = "";
 		$condicionPais = "";
         $condicionLetra = "";
-	          
+
         if($palabra == 'all')
         {
         	$palabra = '';
         }
 
-        $trozosPalabra = explode(" ",$palabra); 
-        $numero = count($trozosPalabra); 
+        $trozosPalabra = explode(" ",$palabra);
+        $numero = count($trozosPalabra);
         if($numero==1){
         	$condicionPalabra .= " and (fn_TraducirContenido('dublincore','Dub_Titulo',dub.Dub_IdDublinCore,'$idioma',dub.Dub_Titulo) LIKE '%$palabra%' OR fn_TraducirContenido('dublincore','Dub_PalabraClave',dub.Dub_IdDublinCore,'$idioma',dub.Dub_PalabraClave) LIKE '%$palabra%' OR fn_TraducirContenido('dublincore','Dub_Descripcion',dub.Dub_IdDublinCore,'$idioma',dub.Dub_Descripcion) LIKE '%$palabra%' OR Aut_Nombre LIKE '%$palabra%') ";
-        } 
+        }
         if($numero>1){
             $condicionPalabra = " AND (MATCH(Dub_Titulo, Dub_Descripcion, Dub_PalabraClave) AGAINST ('%".$palabra."%' IN BOOLEAN MODE) OR MATCH(Aut_Nombre) AGAINST ('%".$palabra."%' IN BOOLEAN MODE)) ";
         }
@@ -316,17 +315,17 @@ class documentosController extends Controller{
 
         //Filtro Para usuarios logueados
         $condicionUsuario = " ";
-        $condicionEstado = " WHERE Dub_Estado = 1 "; 
+        $condicionEstado = " WHERE Dub_Estado = 1 ";
             $this->_view->setTemplate(LAYOUT_FRONTEND);
         if (!Session::get('autenticado')) {
-            
+
         } else {
             $condicionEstado = " WHERE (Dub_Estado = 0 OR Dub_Estado = 1 OR Dub_Estado = 2 ) ";
             if ($usuariodocumento && $usuariodocumento != "all") {
                 $condicionUsuario = " AND Usu_IdUsuario = " . Session::get('id_usuario');
                 $this->_view->assign('filtrousuario',1);
                 $this->_view->assign('usuario',Session::get('usuario'));
-            }              
+            }
             // if ($usuariodocumento == "all") {
             //     $condicionEstado = " WHERE (Dub_Estado = 0 OR Dub_Estado = 1 OR Dub_Estado = 2 ) ";
             // }
@@ -342,9 +341,9 @@ class documentosController extends Controller{
         if ($palabra != 'all' && $palabra != '') {
         	$this->_view->assign('palabrabuscada', $palabra);
             $this->_view->assign('resultPalabra', ' del texto <b>"' . $palabra . '"</b>');
-        } 
+        }
         if ($temadocumento != 'all' && $temadocumento != '') {
-        	$this->_view->assign('filtroTema', $temadocumento);	
+        	$this->_view->assign('filtroTema', $temadocumento);
         }
 	    if ($tipodocumento != 'all' && $tipodocumento != '') {
 	    	$this->_view->assign('filtroTipo', $tipodocumento);
@@ -361,34 +360,34 @@ class documentosController extends Controller{
         if ($letra != 'all' && $letra != '') {
             $this->_view->assign('filtroLetra', $letra);
         }
-	    
+
 	    $paginador = new Paginador();
         $this->_view->setJs(array('documentos'));
-     
+
         $rowCount = $this->_documentos->getDocumentosRowCount($condicion);
         $totalRegistros = $rowCount["CantidadRegistros"];
         $paginador->paginar( $totalRegistros,"resultados", "$palabra", $pagina, $filas, true);
 
         $this->_view->assign('documentos', $this->_documentos->getDocumentosPaises($condicion,$idioma, $orderBy));
 
-		$this->_view->assign('paises', $this->_documentos->getCantDocumentosPaises($condicion,$idioma));		
-		$this->_view->assign('totaldocumentos', $this->_documentos->getTotalDocumentos($condicion,$idioma));		
-        $this->_view->assign('temadocumento', $this->_documentos->getCantidadTemasDocumentos($condicion,$idioma));		        		
+		$this->_view->assign('paises', $this->_documentos->getCantDocumentosPaises($condicion,$idioma));
+		$this->_view->assign('totaldocumentos', $this->_documentos->getTotalDocumentos($condicion,$idioma));
+        $this->_view->assign('temadocumento', $this->_documentos->getCantidadTemasDocumentos($condicion,$idioma));
 		$this->_view->assign('tipodocumento', $this->_documentos->getCantidadTiposDocumentos($condicion,$idioma));
-		$this->_view->assign('autores', $this->_documentos->getCantidadAutoresDocumentos($condicion,$idioma)); 
-        $this->_view->assign('formatos', $this->_documentos->getCantidadFormatosDocumentos($condicion,$idioma)); 
+		$this->_view->assign('autores', $this->_documentos->getCantidadAutoresDocumentos($condicion,$idioma));
+        $this->_view->assign('formatos', $this->_documentos->getCantidadFormatosDocumentos($condicion,$idioma));
 
-        $this->_view->assign('titulo', 'Buscador - Base de Datos de Documentos');   	
-        $this->_view->assign('paginacion', $paginador->getView('paginacion_ajax_s_filas'));		
-		$this->_view->assign('numeropagina', $paginador->getNumeroPagina());        
+        $this->_view->assign('titulo', 'Buscador - Base de Datos de Documentos');
+        $this->_view->assign('paginacion', $paginador->getView('paginacion_ajax_s_filas'));
+		$this->_view->assign('numeropagina', $paginador->getNumeroPagina());
 		$this->_view->renderizar('ajax/resultados', false, true);
     }
-   
+
     //Metodo para registrar Recurso
     public function registrarRecurso(){
         // echo "aca";
         if ($this->getTexto("tb_nombre_recurso") && $this->getTexto("tb_fuente_recurso") &&
-            $this->getTexto("tb_origen_recurso") && $this->getTexto("sl_estandar_recurso")) 
+            $this->getTexto("tb_origen_recurso") && $this->getTexto("sl_estandar_recurso"))
         {
 
             $this->_registros = $this->loadModel('registros','estandar');
@@ -398,23 +397,23 @@ class documentosController extends Controller{
             $estandar_recurso = $this->_registros->getEstandar_recurso("WHERE Esr_IdEstandarRecurso=".$id_estandar."");
             $tipoEstandarRecurso = $estandar_recurso[0]['Esr_Tipo'];
 
-            $recursos = $this->_bdrecursos->getRecursosIndex();        
-            
+            $recursos = $this->_bdrecursos->getRecursosIndex();
+
             $a=0;
             // print_r($recursos);
-            for ($i=0; $i < count($recursos); $i++) 
-            {                               
+            for ($i=0; $i < count($recursos); $i++)
+            {
                 if(strtolower($this->getTexto('tb_nombre_recurso')) == strtolower($recursos[$i]['Rec_Nombre']))
                 {
                     $this->_view->assign('_error', 'El nombre <b style="font-size: 1.15em;">' . $this->getTexto('tb_nombre_recurso') . '</b> no pudo ser registrado, nombre existente');
                     $a=1;
-                }            
+                }
             }
 
             if($a==0)
-            {   
-                $nombre_tabla = ''; 
-                
+            {
+                $nombre_tabla = '';
+
                 if($tipoEstandarRecurso == 2)
                 {
                     //Para crear la tabla data (x cada recurso)
@@ -423,7 +422,7 @@ class documentosController extends Controller{
 
                     $nombre_tabla = 'data_'.$fichaEstandar[0]['Fie_NombreTabla'];
 
-                    $tabla_data_x_recurso = $this->_bdrecursos->getTablaData($nombre_tabla); 
+                    $tabla_data_x_recurso = $this->_bdrecursos->getTablaData($nombre_tabla);
 
                     if(!empty($tabla_data_x_recurso))
                     {
@@ -431,39 +430,39 @@ class documentosController extends Controller{
 
                         $i = $this->filtrarInt($i[0]);
 
-                        $ii = $i+1; 
+                        $ii = $i+1;
                         $nombre_tabla = 'data_'.$fichaEstandar[0]['Fie_NombreTabla'].'_'.$ii;
                     }
                     else
                     {
-                        $nombre_tabla = 'data_'.$fichaEstandar[0]['Fie_NombreTabla'].'_1'; 
+                        $nombre_tabla = 'data_'.$fichaEstandar[0]['Fie_NombreTabla'].'_1';
                     }
-                } 
-                // echo "'".$this->getTexto("tb_nombre_recurso")."','". 
-                // $this->getTexto("tb_fuente_recurso") ."','". $this->getTexto("hd_tipo_recurso")."','". 
+                }
+                // echo "'".$this->getTexto("tb_nombre_recurso")."','".
+                // $this->getTexto("tb_fuente_recurso") ."','". $this->getTexto("hd_tipo_recurso")."','".
                 // $this->getTexto("sl_estandar_recurso")."','".$this->getTexto("tb_origen_recurso")."','".$nombre_tabla."','".'es'."'"; exit;
 
-                $idrecurrso = $this->_bdrecursos->insertarRecurso($this->getTexto("tb_nombre_recurso"), 
-                $this->getTexto("tb_fuente_recurso"), $this->getTexto("hd_tipo_recurso"), 0, 
+                $idrecurrso = $this->_bdrecursos->insertarRecurso($this->getTexto("tb_nombre_recurso"),
+                $this->getTexto("tb_fuente_recurso"), $this->getTexto("hd_tipo_recurso"), 0,
                 $this->getTexto("sl_estandar_recurso"), $this->getTexto("tb_origen_recurso"), $nombre_tabla, 'es');
 
                 // print_r($idrecurrso);exit;
-                if ($idrecurrso[0] > 0) 
+                if ($idrecurrso[0] > 0)
                 {
 
                     // $this->_view->assign('id_recurso', $idrecurrso[0]);
                     $this->adjuntarArchivo($idrecurrso[0]);
                     // $this->_view->renderizar('ajax/gestion_idiomas', false, true);
                     // $this->redireccionar("bdrecursos/registrar/index/" . $idrecurrso[0]);
-                } 
-                else 
+                }
+                else
                 {
                     $this->_view->assign('_error', 'No se pudo registrar el recurso: ' . $idrecurrso);
                     $this->_view->renderizar('ajax/adjuntarArchivo', false, true);
-                }                    
-            }                
-        } 
-        else 
+                }
+            }
+        }
+        else
         {
             $this->_view->assign('_error', 'Debe Ingresar los Campos Obligatorios (*)');
         }
@@ -472,7 +471,7 @@ class documentosController extends Controller{
     //Metodo para adjuntar archivo
     public function adjuntarArchivo($recurso = false) {
         // $this->_acl->acceso('registro_individual');
-        // $this->validarUrlIdioma();        
+        // $this->validarUrlIdioma();
         $this->_dublincore = $this->loadModel('registrar');
         //$this->_view->setTemplate(LAYOUT_FRONTEND);
         $this->_view->getLenguaje("bdrecursos_metadata");
@@ -490,7 +489,7 @@ class documentosController extends Controller{
         // echo $idestandar[0][0];
         $this->_view->assign('recurso', $metadatarecurso);
         $this->_view->assign('ficha', $this->_dublincore->getFichaLegislacion($idestandar[0][0], $idioma));
-        
+
         $this->_view->assign('idiomas', $this->_dublincore->getIdiomas());
         $this->_view->assign('autores', $this->_dublincore->getAutores());
         $this->_view->assign('idioma', $idioma);
@@ -614,8 +613,8 @@ class documentosController extends Controller{
         }
         echo "final";
         $this->_view->renderizar('ajax/adjuntarArchivo', false, true);
-    } 
-    
+    }
+
 
 
 
@@ -626,27 +625,27 @@ class documentosController extends Controller{
         //$this->_view->setTemplate(LAYOUT_FRONTEND);
 		$this->_view->getLenguaje("bd_documentos");
 		$this->_view->setCss(array('listadocumentos'));
-		$palabra = $this->getSql('palabra'); 
-        $temadocumento = $palabra; 
-        $tipodocumento = $palabra; 
+		$palabra = $this->getSql('palabra');
+        $temadocumento = $palabra;
+        $tipodocumento = $palabra;
 		//echo $palabra;
-		$idioma = Cookie::lenguaje();      
-        
+		$idioma = Cookie::lenguaje();
+
         $condicion = "";
         $condicionPalabra = "";
 		$condicionTema = "";
 		$condicionTipo = "";
-	          
-        $condicionPalabra .= " WHERE Dub_Estado = 1 and (fn_TraducirContenido('dublincore','Dub_Titulo',dub.Dub_IdDublinCore,'$idioma',dub.Dub_Titulo) LIKE '%$palabra%' 
-        	OR fn_TraducirContenido('dublincore','Dub_PalabraClave',dub.Dub_IdDublinCore,'$idioma',dub.Dub_PalabraClave) LIKE '%$palabra%' 
-        	OR fn_TraducirContenido('dublincore','Dub_Descripcion',dub.Dub_IdDublinCore,'$idioma',dub.Dub_Descripcion) LIKE '%$palabra%' 
+
+        $condicionPalabra .= " WHERE Dub_Estado = 1 and (fn_TraducirContenido('dublincore','Dub_Titulo',dub.Dub_IdDublinCore,'$idioma',dub.Dub_Titulo) LIKE '%$palabra%'
+        	OR fn_TraducirContenido('dublincore','Dub_PalabraClave',dub.Dub_IdDublinCore,'$idioma',dub.Dub_PalabraClave) LIKE '%$palabra%'
+        	OR fn_TraducirContenido('dublincore','Dub_Descripcion',dub.Dub_IdDublinCore,'$idioma',dub.Dub_Descripcion) LIKE '%$palabra%'
         	OR Aut_Nombre LIKE '%$palabra%') ";
         $condicionTema .= " OR  fn_TraducirContenido('tema_dublin','Ted_Descripcion',ted.Ted_IdTemaDublin,'$idioma',ted.Ted_Descripcion) = '$temadocumento'";
         $condicionTipo .= " OR  fn_TraducirContenido('tipo_dublin','Tid_Descripcion',tid.Tid_IdTipoDublin,'$idioma',tid.Tid_Descripcion) = '$tipodocumento'";
 		$condicion = $condicionPalabra.$condicionTema.$condicionTipo;
-	    
+
         $this->_view->assign('documentos',$this->_documentos->getDocumentosPaises($condicion,$idioma));
-		     
+
 		$this->_view->renderizar('ajax/embed_dublincore', false, true);
     }
 
@@ -664,26 +663,26 @@ class documentosController extends Controller{
         {
             $condicion .= " WHERE Dub_Estado = 1 and  fn_TraducirContenido('tema_dublin','Ted_Descripcion',ted.Ted_IdTemaDublin,'$idioma',ted.Ted_Descripcion) = '$palabra'";
         }
-        
+
 		$paginador = new Paginador();
-        
+
 		$this->_view->setJs(array('documentos'));
-        
+
 		$this->_view->assign('documentos', $paginador->paginar($this->_documentos->getDocumentosTraducido($condicion,$idioma),"paginar","", $pagina,$registro));
-		
-		$this->_view->assign('totaldocumentos', $this->_documentos->getTotalDocumentos($condicion,$idioma));	
-		
+
+		$this->_view->assign('totaldocumentos', $this->_documentos->getTotalDocumentos($condicion,$idioma));
+
 		$this->_view->assign('palabrabuscada', '');
-        
+
 		$this->_view->assign('paises', $this->_documentos->getCantidadDocumentosPaises());
-        
+
 		$this->_view->assign('numeropagina', $paginador->getNumeroPagina());
-        
+
 		$this->_view->assign('paginacion', $paginador->getView('paginacion_ajax'));
-        
+
 		$this->_view->renderizar('ajax/resultados', false, true);
     }
-	
+
 	public function buscarportipodocumento()
     {
         $this->_view->setTemplate(LAYOUT_FRONTEND);
@@ -697,26 +696,26 @@ class documentosController extends Controller{
         {
             $condicion .= " WHERE Dub_Estado = 1 and  fn_TraducirContenido('tipo_dublin','Tid_Descripcion',tid.Tid_IdTipoDublin,'$idioma',tid.Tid_Descripcion) = '$palabra'";
         }
-        
+
 		$paginador = new Paginador();
-        
+
 		$this->_view->setJs(array('documentos'));
-        
+
 		$this->_view->assign('documentos', $paginador->paginar($this->_documentos->getDocumentosTraducido($condicion,$idioma),"paginar","", $pagina,$registro));
-		
-		$this->_view->assign('totaldocumentos', $this->_documentos->getTotalDocumentos($condicion,$idioma));	
-		
+
+		$this->_view->assign('totaldocumentos', $this->_documentos->getTotalDocumentos($condicion,$idioma));
+
 		$this->_view->assign('palabrabuscada', '');
-        
+
 		$this->_view->assign('paises', $this->_documentos->getCantidadDocumentosPaises());
-        
+
 		$this->_view->assign('numeropagina', $paginador->getNumeroPagina());
-        
+
 		$this->_view->assign('paginacion', $paginador->getView('paginacion_ajax'));
-        
+
 		$this->_view->renderizar('ajax/resultados', false, true);
-    }	
-    
+    }
+
     public function buscarporpais()
     {
         $this->_view->setTemplate(LAYOUT_FRONTEND);
@@ -737,44 +736,45 @@ class documentosController extends Controller{
             $condicion .= " WHERE Dub_Estado = 1 ";
             $condicionPais .= " WHERE d.Pai_Nombre = '$palabra' ";
         }
-   
+
         $paginador = new Paginador();
-        
-		$this->_view->setJs(array('documentos'));        
+
+		$this->_view->setJs(array('documentos'));
 		$this->_view->assign('documentos', $paginador->paginar($this->_documentos->getDocumentosPaises($condicion,$idioma),"paginar","", $pagina,$registro));
-		$this->_view->assign('totaldocumentos', $this->_documentos->getCantDocumentosPaises($condicion,$idioma,$condicionPais));		
-		$this->_view->assign('paises', $this->_documentos->getCantidadDocumentosPaises());        
-		$this->_view->assign('palabrabuscada', '');		
-        $this->_view->assign('paginacion', $paginador->getView('paginacion_ajax'));		
-		$this->_view->assign('numeropagina', $paginador->getNumeroPagina());        
+		$this->_view->assign('totaldocumentos', $this->_documentos->getCantDocumentosPaises($condicion,$idioma,$condicionPais));
+		$this->_view->assign('paises', $this->_documentos->getCantidadDocumentosPaises());
+		$this->_view->assign('palabrabuscada', '');
+        $this->_view->assign('paginacion', $paginador->getView('paginacion_ajax'));
+		$this->_view->assign('numeropagina', $paginador->getNumeroPagina());
 		$this->_view->renderizar('ajax/resultados', false, true);
     }
     */
     public function metadata($Dub_IdDublinCore)
     {
     	// $this->_acl->autenticado();
-        $this->validarUrlIdioma();
-        $this->_view->getLenguaje("bd_documentos");
-		$this->_view->getLenguaje("bdrecursos_metadata");
-		$this->_view->setTemplate(LAYOUT_FRONTEND);
+    $this->_view->getLenguaje("bd_documentos");
+    $this->_view->getLenguaje("bdrecursos_metadata");
+    $this->_view->getLenguaje("bdrecursos_index");
+    $this->_view->getLenguaje("bdlegal");
+    $this->validarUrlIdioma();
+    $this->_view->setTemplate(LAYOUT_FRONTEND);
         $this->_view->setCss(array("jp-index"));
 		$idioma = Cookie::lenguaje();
-		$e = $this->loadModel('bdrecursos', true);        
+		$e = $this->loadModel('bdrecursos', true);
         $condicion = "";
 		$Dub_IdDublinCore = $this->filtrarInt($Dub_IdDublinCore);
 		$condicion .= " where dub.Dub_Estado = 1 and dub.Dub_IdDublinCore = $Dub_IdDublinCore ";
 		$metadatadublin = $this->_documentos->getDocumentosTraducido($condicion,$idioma);
 		$metadatarecurso = $e->getRecursoCompletoXid($metadatadublin[0]['Rec_IdRecurso']);
-		
-        $this->_view->assign('recurso', $metadatarecurso);
-        
+    $this->_view->assign('recurso', $metadatarecurso);
+
         $this->_view->assign('detalle', $metadatadublin);
-		
+
 		$this->_view->assign('titulo', 'Documento - '.$metadatadublin[0]['Dub_Titulo'] );
-        
+
 		$this->_view->renderizar('metadata', 'documentos');
     }
-	
+
 	public function editar($registros)
     {
         $this->validarUrlIdioma();
@@ -784,13 +784,13 @@ class documentosController extends Controller{
         $condicion = "";
 		$registross = $this->filtrarInt($registros);
 		$condicion .= " where Dub_Estado = 1 and dub.Dub_IdDublinCore = $registross ";
-        
+
 		if($this->getInt('actualizar')==1){
 			$this->_documentos->actualizarDublinCore($this->getSql('Dub_Titulo'),$this->getSql('Dub_Descripcion'),$this->getSql('Dub_FechaDocumento'),$this->getSql('Dub_PalabraClave'),$this->filtrarInt($registros));
 			$this->_view->assign('_error', 'Datos Actualizados Correctamente');
 		}
-		
-		
+
+
         $this->_view->assign('detalle', $this->_documentos->getDocumentos($condicion));
 		$this->_view->assign('titulo', 'Base de Datos de Documentos');
         $this->_view->renderizar('editar', 'documentos');
@@ -809,23 +809,23 @@ class documentosController extends Controller{
         $this->_view->getLenguaje("bdrecursos_registros");
 
         $pagina = $this->getInt('pagina');
-        $filas=$this->getInt('filas');  
+        $filas=$this->getInt('filas');
 
         if (!$filas) {
             $filas = CANT_REG_PAG;
-        } 
+        }
         // echo $filas;
-        // $palabra = $this->getSql('palabra'); 
-        $temadocumento = $this->getSql('tema'); 
-        $tipodocumento = $this->getSql('tipo'); 
+        // $palabra = $this->getSql('palabra');
+        $temadocumento = $this->getSql('tema');
+        $tipodocumento = $this->getSql('tipo');
         $autordocumento = $this->getSql('autor');
-        $formatodocumento = $this->getSql('formato'); 
-        $letra = $this->getSql('letra'); 
-        $usuariodocumento = $this->getSql('usuario'); 
-        $pais = $this->getSql('pais'); 
-        
-        $idioma = Cookie::lenguaje();      
-        
+        $formatodocumento = $this->getSql('formato');
+        $letra = $this->getSql('letra');
+        $usuariodocumento = $this->getSql('usuario');
+        $pais = $this->getSql('pais');
+
+        $idioma = Cookie::lenguaje();
+
         if ($pagina > 0) {
             $inicioRegistro = ($pagina - 1) * $filas;
         } else {
@@ -840,17 +840,17 @@ class documentosController extends Controller{
         $condicionFormato = "";
         $condicionPais = "";
         $condicionLetra = "";
-              
+
         if($palabra == 'all')
         {
             $palabra = '';
         }
 
-        $trozosPalabra = explode(" ",$palabra); 
-        $numero = count($trozosPalabra); 
+        $trozosPalabra = explode(" ",$palabra);
+        $numero = count($trozosPalabra);
         if($numero==1){
             $condicionPalabra .= " and (fn_TraducirContenido('dublincore','Dub_Titulo',dub.Dub_IdDublinCore,'$idioma',dub.Dub_Titulo) LIKE '%$palabra%' OR fn_TraducirContenido('dublincore','Dub_PalabraClave',dub.Dub_IdDublinCore,'$idioma',dub.Dub_PalabraClave) LIKE '%$palabra%' OR fn_TraducirContenido('dublincore','Dub_Descripcion',dub.Dub_IdDublinCore,'$idioma',dub.Dub_Descripcion) LIKE '%$palabra%' OR Aut_Nombre LIKE '%$palabra%') ";
-        } 
+        }
         if($numero>1){
             $condicionPalabra = " AND (MATCH(Dub_Titulo, Dub_Descripcion, Dub_PalabraClave) AGAINST ('%".$palabra."%' IN BOOLEAN MODE) OR MATCH(Aut_Nombre) AGAINST ('%".$palabra."%' IN BOOLEAN MODE)) ";
         }
@@ -884,10 +884,10 @@ class documentosController extends Controller{
 
         //Filtro Para usuarios logueados
         $condicionUsuario = " ";
-        $condicionEstado = " WHERE Dub_Estado = 1 "; 
+        $condicionEstado = " WHERE Dub_Estado = 1 ";
         $this->_view->setTemplate(LAYOUT_FRONTEND);
         if (!Session::get('autenticado')) {
-            
+
         } else {
             $condicionEstado = " WHERE (Dub_Estado = 0 OR Dub_Estado = 1 OR Dub_Estado = 2 ) ";
             if ($usuariodocumento && $usuariodocumento != "all") {
@@ -895,7 +895,7 @@ class documentosController extends Controller{
                 $condicionUsuario = " AND Usu_IdUsuario = " . Session::get('id_usuario');
                 $this->_view->assign('filtrousuario',1);
                 $this->_view->assign('usuario',Session::get('usuario'));
-            }            
+            }
             // if ($usuariodocumento == "all") {
             //     $condicionEstado = " WHERE (Dub_Estado = 0 OR Dub_Estado = 1 OR Dub_Estado = 2 ) ";
             // }
@@ -911,9 +911,9 @@ class documentosController extends Controller{
         if ($palabra != 'all' && $palabra != '') {
             $this->_view->assign('palabrabuscada', $palabra);
             $this->_view->assign('resultPalabra', ' del texto <b>"' . $palabra . '"</b>');
-        } 
+        }
         if ($temadocumento != 'all' && $temadocumento != '') {
-            $this->_view->assign('filtroTema', $temadocumento); 
+            $this->_view->assign('filtroTema', $temadocumento);
         }
         if ($tipodocumento != 'all' && $tipodocumento != '') {
             $this->_view->assign('filtroTipo', $tipodocumento);
@@ -930,7 +930,7 @@ class documentosController extends Controller{
         if ($letra != 'all' && $letra != '') {
             $this->_view->assign('filtroLetra', $letra);
         }
-        
+
 
         $paginador = new Paginador();
 
@@ -942,29 +942,29 @@ class documentosController extends Controller{
         // $bddublin = $this->loadModel('documentos', 'dublincore');
         // $condicion = " where  Rec_IdRecurso = " . $id_recurso . " and (fn_TraducirContenido('dublincore','Dub_Titulo',dub.Dub_IdDublinCore,'$idioma',dub.Dub_Titulo) LIKE '%$palabra%' OR fn_TraducirContenido('dublincore','Dub_PalabraClave',dub.Dub_IdDublinCore,'$idioma',dub.Dub_PalabraClave) LIKE '%$palabra%' OR fn_TraducirContenido('dublincore','Dub_Descripcion',dub.Dub_IdDublinCore,'$idioma',dub.Dub_Descripcion) LIKE '%$palabra%' OR Aut_Nombre LIKE '%$palabra%')";
 
-        
+
         $paginador = new Paginador();
         $this->_view->setJs(array('documentos'));
-     
+
         $rowCount = $this->_documentos->getDocumentosRowCount($condicion);
         $totalRegistros = $rowCount["CantidadRegistros"];
         $paginador->paginar( $totalRegistros,"resultados", "$palabra", $pagina, $filas, true);
 
         $this->_view->assign('documentos', $this->_documentos->getDocumentosPaises($condicion,$idioma, $orderBy));
 
-        $this->_view->assign('paises', $this->_documentos->getCantDocumentosPaises($condicion,$idioma));        
-        $this->_view->assign('totaldocumentos', $this->_documentos->getTotalDocumentos($condicion,$idioma));        
-        $this->_view->assign('temadocumento', $this->_documentos->getCantidadTemasDocumentos($condicion,$idioma));                      
+        $this->_view->assign('paises', $this->_documentos->getCantDocumentosPaises($condicion,$idioma));
+        $this->_view->assign('totaldocumentos', $this->_documentos->getTotalDocumentos($condicion,$idioma));
+        $this->_view->assign('temadocumento', $this->_documentos->getCantidadTemasDocumentos($condicion,$idioma));
         $this->_view->assign('tipodocumento', $this->_documentos->getCantidadTiposDocumentos($condicion,$idioma));
-        $this->_view->assign('autores', $this->_documentos->getCantidadAutoresDocumentos($condicion,$idioma)); 
-        $this->_view->assign('formatos', $this->_documentos->getCantidadFormatosDocumentos($condicion,$idioma)); 
+        $this->_view->assign('autores', $this->_documentos->getCantidadAutoresDocumentos($condicion,$idioma));
+        $this->_view->assign('formatos', $this->_documentos->getCantidadFormatosDocumentos($condicion,$idioma));
 
-        $this->_view->assign('titulo', 'Buscador - Base de Datos de Documentos');       
-        $this->_view->assign('paginacion', $paginador->getView('paginacion_ajax_s_filas'));     
-        $this->_view->assign('numeropagina', $paginador->getNumeroPagina());        
+        $this->_view->assign('titulo', 'Buscador - Base de Datos de Documentos');
+        $this->_view->assign('paginacion', $paginador->getView('paginacion_ajax_s_filas'));
+        $this->_view->assign('numeropagina', $paginador->getNumeroPagina());
         $this->_view->renderizar('ajax/resultados', false, true);
     }
-    
+
     public function descargar($archivo='',$idArchivo)
 	{
 		// $this->_acl->autenticado();
@@ -974,19 +974,19 @@ class documentosController extends Controller{
             $registro = $this->_documentos->registrarDescarga($this->filtrarTexto($_SERVER['REMOTE_ADDR']),  $this->filtrarInt($idArchivo));
 
             if (is_array($registro)) {
-                if ($registro  [0] > 0) {  
+                if ($registro  [0] > 0) {
                     if (file_exists($fichero)) {
                         header('Content-Description: File Transfer');
                         header('Content-Type: application/octet-stream');
                         header('Content-Disposition: attachment; filename="'.basename($fichero).'"');
                         readfile($fichero);
                         exit;
-                    }           
+                    }
                 }
-            } else {                
+            } else {
                 $this->_view->assign('_error', $registro );
             }
-        }     
-        $this->redireccionar("error");   
-    }	
+        }
+        $this->redireccionar("error");
+    }
 }

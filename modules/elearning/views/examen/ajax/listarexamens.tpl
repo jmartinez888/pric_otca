@@ -18,11 +18,11 @@
             <table class="table" style="  margin: 20px auto">
                 <tr>
                     <th style=" text-align: center">Nº</th>
-                    <th style=" text-align: center">Título</th>
-                    <th style=" text-align: center">Intentos</th>
-                    <th style=" text-align: center">Porcentaje</th>
-                    <th style=" text-align: center">Estado</th>
-                    <th style=" text-align: center">Opciones</th>
+                    <th style=" text-align: center">{$lenguaje["examen_titulo"]}</th>
+                    <th style=" text-align: center">{$lenguaje["examen_intentos"]}</th>
+                    <th style=" text-align: center">{$lenguaje["examen_procentaje"]}</th>
+                    <th style=" text-align: center">{$lenguaje["examen_estado"]}</th>
+                    <th style=" text-align: center">{$lenguaje["examen_opciones"]}</th>
                 </tr>
                 {foreach item=rl from=$examens}
                     <tr {if $rl.Row_Estado==0}

@@ -22,7 +22,7 @@
         <div class="form-group">
             <label class="col-lg-3 control-label">{$lenguaje["elearning_examen_titulo"]}</label>
             <div class="col-lg-9">
-                <p><input class="form-control" id ="titulo" type="text" name="titulo" value="{$datos.nombre|default:""}" placeholder="Título"/></p>
+                <p><input class="form-control" id ="titulo" type="text" name="titulo" value="{$datos.nombre|default:""}" placeholder={$lenguaje["elearning_examen_titulo"]}></p>
             </div>
         </div>
         

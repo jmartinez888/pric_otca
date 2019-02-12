@@ -52,6 +52,7 @@ class examenController extends elearningController {
         // $this->_view->setCss(array("verificar"));
     $this->validarUrlIdioma();
         $this->_view->setTemplate(LAYOUT_FRONTEND);
+        $lang = $this->_view->getLenguaje('elearning_cursos', false, true);
         // $this->_view->setJs(array(array(BASE_URL . 'modules/elearning/views/gestion/js/core/util.js'),array(BASE_URL . 'modules/elearning/views/gestion/js/framework/lodash.js'),array(BASE_URL . 'modules/elearning/views/gestion/js/core/controller.js'),array(BASE_URL . 'modules/elearning/views/gestion/js/index.js'),array(BASE_URL . 'modules/elearning/views/gestion/js/core/view.js'), "index"));
         $this->_view->setJs(array( "index"));
 
@@ -95,7 +96,7 @@ class examenController extends elearningController {
 
         $Cmodel = $this->loadModel("_gestionCurso");
 
-        $curso = $Cmodel->getCursoById($idcurso);
+        $curso = $Cmodel->getCursoById($idcurso, Cookie::lenguaje());
         $data['titulo'] = $lang->get('str_examen').' - '.str_limit($curso['Cur_Titulo'], 20);
         $data['active'] = 'examen';
         $this->_view->assign($data);
@@ -417,7 +418,7 @@ class examenController extends elearningController {
         // $this->_view->setCss(array("verificar"));
         // $id = $this->getTexto("id");
         $this->_view->setTemplate(LAYOUT_FRONTEND);
-         $lang = $this->_view->getLenguaje('elearning_cursos', false, true);
+        $lang = $this->_view->getLenguaje('elearning_cursos', false, true);
         $this->_view->setJs(array(array(BASE_URL . 'modules/elearning/views/gestion/js/core/util.js'), "index"));
 
         if(strlen($id)==0){ $id = Session::get("learn_param_curso"); }
@@ -472,6 +473,7 @@ class examenController extends elearningController {
         // $this->_view->setCss(array("verificar"));
         // $id = $this->getTexto("id");
         $this->_view->setTemplate(LAYOUT_FRONTEND);
+        $lang = $this->_view->getLenguaje('elearning_cursos', false, true);
         $this->_view->setJs(array(array(BASE_URL . 'modules/elearning/views/gestion/js/core/util.js'), "index"));
 
         if(strlen($id)==0){ $id = Session::get("learn_param_curso"); }
@@ -535,7 +537,7 @@ class examenController extends elearningController {
 
         $Cmodel = $this->loadModel("_gestionCurso");
 
-        $curso = $Cmodel->getCursoById($idcurso);
+        $curso = $Cmodel->getCursoById($idcurso, Cookie::lenguaje());
         $data['titulo'] = $lang->get('str_examen').' - '.str_limit($curso['Cur_Titulo'], 20);
         $data['active'] = 'respuestas';
         $this->_view->assign($data);
@@ -871,7 +873,7 @@ class examenController extends elearningController {
     public function actualizarlecciones(){
         $idModulo = $this->getInt('id');
         $idCurso = $this->getInt('idCurso');
-
+        $lang = $this->_view->getLenguaje('elearning_cursos', false, true);
         $Exa_Porcentaje = $this->examen->getExamenesPorcentaje($idCurso);
         $Tra_Porcentaje = $this->examen->getTrabajosPorcentaje($idCurso);
         $Porcentaje = 100 - $Exa_Porcentaje['Exa_PorcentajeTotal'] - $Tra_Porcentaje['Tra_PorcentajeTotal'];
@@ -897,6 +899,7 @@ class examenController extends elearningController {
 
         // $idExamen = $this->getTexto("id");
         $this->_view->setTemplate(LAYOUT_FRONTEND);
+        $lang = $this->_view->getLenguaje('elearning_cursos', false, true);
         $this->_view->setJs(array(array(BASE_URL . 'modules/elearning/views/gestion/js/core/util.js'), array(BASE_URL . 'modules/elearning/views/gestion/js/core/controller.js'),  "index"));
 
         // url
@@ -932,7 +935,7 @@ class examenController extends elearningController {
         $paginador = new Paginador();
 
         $arrayRowCount = $this->examen->getPreguntasRowCount($condicion);
-        $this->_view->assign('preguntas',  $this->examen->getPreguntasCondicion($pagina,CANT_REG_PAG, $condicion));
+        $this->_view->assign('preguntas',  $this->examen->getPreguntasCondicion($pagina,CANT_REG_PAG, $condicion, Cookie::lenguaje()));
 
         $paginador->paginar( $arrayRowCount['CantidadRegistros'],"listarpreguntas", "", $pagina, CANT_REG_PAG, true);
 
@@ -1235,6 +1238,7 @@ class examenController extends elearningController {
     public function registrarRespuestaUnica($idExamen, $id){
         // $this->_view->setCss(array("verificar"));
         $this->_view->setTemplate(LAYOUT_FRONTEND);
+        $lang = $this->_view->getLenguaje('elearning_cursos', false, true);
         $this->_view->setJs(array(array(BASE_URL . 'modules/elearning/views/gestion/js/core/util.js'), "index"));
 
         if(strlen($id)==0){ $id = Session::get("learn_param_curso"); }
@@ -1291,6 +1295,7 @@ class examenController extends elearningController {
     public function editarRespuestaUnica($id, $idcurso){
         // $this->_view->setCss(array("verificar"));
         $this->_view->setTemplate(LAYOUT_FRONTEND);
+        $lang = $this->_view->getLenguaje('elearning_cursos', false, true);
         $this->_view->setJs(array(array(BASE_URL . 'modules/elearning/views/gestion/js/core/util.js'), "index"));
 
         if(strlen($idcurso)==0){ $idcurso = Session::get("learn_param_curso"); }
@@ -1360,6 +1365,7 @@ class examenController extends elearningController {
     public function registrarRespuestaMultiple($idExamen, $id){
         // $this->_view->setCss(array("verificar"));
         $this->_view->setTemplate(LAYOUT_FRONTEND);
+        $lang = $this->_view->getLenguaje('elearning_cursos', false, true);
         $this->_view->setJs(array(array(BASE_URL . 'modules/elearning/views/gestion/js/core/util.js'), "index"));
         if(strlen($id)==0){ $id = Session::get("learn_param_curso"); }
         if(strlen($id)==0){ exit; }
@@ -1411,6 +1417,7 @@ class examenController extends elearningController {
     public function editarRespuestaMultiple($idPregunta, $idcurso){
         // $this->_view->setCss(array("verificar"));
         $this->_view->setTemplate(LAYOUT_FRONTEND);
+        $lang = $this->_view->getLenguaje('elearning_cursos', false, true);
         $this->_view->setJs(array(array(BASE_URL . 'modules/elearning/views/gestion/js/core/util.js'), "index"));
 
         $alternativas =$this->examen->getAlternativas($idPregunta);
@@ -1475,6 +1482,7 @@ class examenController extends elearningController {
 
     public function registrarRespuestaBlanco($idExamen, $id){
         $this->_view->setTemplate(LAYOUT_FRONTEND);
+        $lang = $this->_view->getLenguaje('elearning_cursos', false, true);
         $this->_view->setJs(array(array(BASE_URL . 'modules/elearning/views/gestion/js/core/util.js'), "index"));
         if(strlen($id)==0){ $id = Session::get("learn_param_curso"); }
         if(strlen($id)==0){ exit; }
@@ -1520,6 +1528,7 @@ class examenController extends elearningController {
 
     public function editarRespuestaBlanco($id, $idcurso){
         $this->_view->setTemplate(LAYOUT_FRONTEND);
+        $lang = $this->_view->getLenguaje('elearning_cursos', false, true);
         $this->_view->setJs(array(array(BASE_URL . 'modules/elearning/views/gestion/js/core/util.js'), "index"));
 
         $alternativas =$this->examen->getAlternativas($id);
@@ -1572,6 +1581,7 @@ class examenController extends elearningController {
     public function registrarRespuestaRelacionar($idExamen, $id){
         // $this->_view->setCss(array("verificar"));
         $this->_view->setTemplate(LAYOUT_FRONTEND);
+        $lang = $this->_view->getLenguaje('elearning_cursos', false, true);
         $this->_view->setJs(array(array(BASE_URL . 'modules/elearning/views/gestion/js/core/util.js'), "index"));
         if(strlen($id)==0){ $id = Session::get("learn_param_curso"); }
         if(strlen($id)==0){ exit; }
@@ -1621,6 +1631,7 @@ class examenController extends elearningController {
     public function editarRespuestaRelacionar($id, $idcurso){
         // $this->_view->setCss(array("verificar"));
         $this->_view->setTemplate(LAYOUT_FRONTEND);
+        $lang = $this->_view->getLenguaje('elearning_cursos', false, true);
         $this->_view->setJs(array(array(BASE_URL . 'modules/elearning/views/gestion/js/core/util.js'), "index"));
         $alternativas =$this->examen->getAlternativas($id);
         $preguntaedit =$this->examen->getValorPregunta($id);
@@ -1669,6 +1680,7 @@ class examenController extends elearningController {
     public function registrarRespuestaAbierta($idExamen, $id){
         // $this->_view->setCss(array("verificar"));
         $this->_view->setTemplate(LAYOUT_FRONTEND);
+        $lang = $this->_view->getLenguaje('elearning_cursos', false, true);
         $this->_view->setJs(array(array(BASE_URL . 'modules/elearning/views/gestion/js/core/util.js'), "index"));
 
         if(strlen($id)==0){ $id = Session::get("learn_param_curso"); }
@@ -1703,6 +1715,7 @@ class examenController extends elearningController {
     public function editarRespuestaAbierta($id, $idcurso){
         // $this->_view->setCss(array("verificar"));
         $this->_view->setTemplate(LAYOUT_FRONTEND);
+        $lang = $this->_view->getLenguaje('elearning_cursos', false, true);
         $this->_view->setJs(array(array(BASE_URL . 'modules/elearning/views/gestion/js/core/util.js'), "index"));
 
         $preguntaedit =$this->examen->getValorPregunta($id);
@@ -1733,6 +1746,7 @@ class examenController extends elearningController {
     public function registrarRespuestaZonasImagen($idExamen, $id){
         // $this->_view->setCss(array("verificar"));
         $this->_view->setTemplate(LAYOUT_FRONTEND);
+        $lang = $this->_view->getLenguaje('elearning_cursos', false, true);
         $this->_view->setJs(array(array(BASE_URL . 'modules/elearning/views/gestion/js/core/util.js'), "index"));
 
         if(strlen($id)==0){ $id = Session::get("learn_param_curso"); }
@@ -1758,6 +1772,7 @@ class examenController extends elearningController {
     public function registrarRespuestaCombinacionExacta($idExamen, $id){
         // $this->_view->setCss(array("verificar"));
         $this->_view->setTemplate(LAYOUT_FRONTEND);
+        $lang = $this->_view->getLenguaje('elearning_cursos', false, true);
         $this->_view->setJs(array(array(BASE_URL . 'modules/elearning/views/gestion/js/core/util.js'), "index"));
 
         if(strlen($id)==0){ $id = Session::get("learn_param_curso"); }
@@ -1806,6 +1821,7 @@ class examenController extends elearningController {
     public function editarRespuestaCombinacionExacta($id, $idcurso){
         // $this->_view->setCss(array("verificar"));
         $this->_view->setTemplate(LAYOUT_FRONTEND);
+        $lang = $this->_view->getLenguaje('elearning_cursos', false, true);
         $this->_view->setJs(array(array(BASE_URL . 'modules/elearning/views/gestion/js/core/util.js'), "index"));
 
         $alternativas =$this->examen->getAlternativas($id);
@@ -1858,6 +1874,7 @@ class examenController extends elearningController {
     public function comenzarexamen($idexamen){
         // $this->_view->setCss(array("miscertificados"));
         $this->_view->setTemplate(LAYOUT_FRONTEND);
+        $lang = $this->_view->getLenguaje('elearning_cursos', false, true);
         $this->_view->setJs(array(array(BASE_URL . 'modules/elearning/views/gestion/js/core/util.js'), "index"));
 
         if ($this->botonPress("comenzar")) {

@@ -7,9 +7,10 @@ public function __construct()
     public function getPaises($idioma, , $Idi_IdIdioma = "es")
     {
         try{
-            $sql = "SELECT fn_TraducirContenido('pais','Pai_Nombre',p.Pai_IdPais,'$Idi_IdIdioma', p.Pai_Nombre) Pai_Nombre,
-            fn_devolverIdioma('pais',p.Pai_IdPais,'$Idi_IdIdioma',p.$Idi_IdIdioma)Idi_IdIdioma,
-            p.Pai_IdPais from pais p ";
+            $sql = "SELECT p.Pai_IdPais,
+            fn_TraducirContenido('pais','Pai_Nombre',p.Pai_IdPais,'$Idi_IdIdioma', p.Pai_Nombre) Pai_Nombre,
+            fn_devolverIdioma('pais',p.Pai_IdPais,'$Idi_IdIdioma',p.Idi_IdIdioma)Idi_IdIdioma
+             from pais p ";
             $result = $this->_db->prepare($sql);
             $result->execute();
             $lista= $result->fetchAll(PDO::FETCH_ASSOC);
@@ -60,7 +61,7 @@ public function __construct()
             $sql = "SELECT i.Ins_IdInstitucion AS Id,
             fn_TraducirContenido('institucion','Ins_Nombre',i.Ins_IdInstitucion,'$Idi_IdIdioma',i.Ins_Nombre)Ins_Nombre,
             i.Row_Estado,
-            fn_devolverIdioma('institucion','Ins_Nombre','$Idi_IdIdioma',i.Idi_IdIoma)Idi_IdIdioma,
+            fn_devolverIdioma('institucion',i.Ins_IdInstitucion,'$Idi_IdIdioma',i.Idi_IdIdioma)Idi_IdIdioma,
             from institucion i ";
             $result = $this->_db->prepare($sql);
             $result->execute();
@@ -163,13 +164,13 @@ public function __construct()
             i.Ins_CorreoPagina, 
             i.Ins_Representante,
             i.Ins_Telefono, 
-            i.Ins_Direccion, 
-            i.Ins_Tipo, 
+            i.Ins_Direccion,
+            fn_TraducirContenido('institucion','Ins_Tipo',i.Ins_IdInstitucion,'$Idi_IdIdioma',i.Ins_Tipo)Ins_Tipo,             
             i.Ins_img, 
             i.Ins_WebSite, 
             i.Ins_latX, 
-            i.Ins_lng,
-            fn_devolverIdioma('institucion','Ins_IdInstitucion','$Idi_IdIdioma',i.Idi_IdIoma)Idi_IdIdioma,
+            i.Ins_lngY,
+            fn_devolverIdioma('institucion',i.Ins_IdInstitucion,'$Idi_IdIdioma',i.Idi_IdIdioma)Idi_IdIdioma
             
             FROM institucion i 
             INNER JOIN ubigeo u ON i.Ubi_IdUbigeo=u.Ubi_IdUbigeo 
@@ -217,7 +218,7 @@ public function __construct()
             $listaInstituciones = $this->_db->query("SELECT t.Tem_IdTematica AS Id,
             
             fn_TraducirContenido('tematica','Tem_Nombre',t.Tem_IdTematica,'$Idi_IdIdioma', t.Tem_Nombre)Tem_Nombre,
-            fn_devolverIdioma('tematica',t.Tem_IdTematica,'$Idi_IdIdioma',p.$Idi_IdIdioma)Idi_IdIdioma,
+            fn_devolverIdioma('tematica',t.Tem_IdTematica,'$Idi_IdIdioma',t.Idi_IdIdioma)Idi_IdIdioma
             FROM tematica t");
             
             return $listaInstituciones->fetchAll(PDO::FETCH_ASSOC);
@@ -236,7 +237,7 @@ public function __construct()
             fn_TraducirContenido('oferta','Ofe_Descripcion',o.Ofe_IdOferta,'$Idi_IdIdioma',o.Ofe_Descripcion)Ofe_Descripcion, 
             fn_TraducirContenido('tematica','Tem_Nombre',t.Tem_IdTematica,'$Idi_IdIdioma', t.Tem_Nombre)Tem_Nombre,
             i.row_estado,
-            fn_devolverIdioma('institucion',i.Ins_IdInstitucion,'$Idi_IdIdioma',p.$Idi_IdIdioma)Idi_IdIdioma,
+            fn_devolverIdioma('institucion',i.Ins_IdInstitucion,'$Idi_IdIdioma',i.Idi_IdIdioma)Idi_IdIdioma,
             o.Contacto AS Contacto 
             FROM institucion i 
             INNER JOIN oferta o ON i.Ins_IdInstitucion= o.Ins_IdInstitucion 
@@ -384,7 +385,7 @@ public function __construct()
             fn_TraducirContenido('oferta','Ofe_Descripcion',o.Ofe_IdOferta,'$Idi_IdIdioma',o.Ofe_Descripcion)Ofe_Descripcion, 
             fn_TraducirContenido('tematica','Tem_Nombre',t.Tem_IdTematica,'$Idi_IdIdioma', t.Tem_Nombre)Tem_Nombre,
             i.row_estado,
-            fn_devolverIdioma('institucion',i.Ins_IdInstitucion,'$Idi_IdIdioma',p.$Idi_IdIdioma)Idi_IdIdioma,
+            fn_devolverIdioma('institucion',i.Ins_IdInstitucion,'$Idi_IdIdioma',i.Idi_IdIdioma)Idi_IdIdioma,
             
             o.Contacto 
             FROM institucion i 
@@ -407,11 +408,10 @@ public function __construct()
             fn_TraducirContenido('oferta','Ofe_Descripcion',o.Ofe_IdOferta,'$Idi_IdIdioma',o.Ofe_Descripcion)Ofe_Descripcion, 
             fn_TraducirContenido('tematica','Tem_Nombre',t.Tem_IdTematica,'$Idi_IdIdioma', t.Tem_Nombre)Tem_Nombre,
             i.row_estado,
-            fn_devolverIdioma('institucion',i.Ins_IdInstitucion,'$Idi_IdIdioma',p.$Idi_IdIdioma)Idi_IdIdioma,
-            
+            fn_devolverIdioma('institucion',i.Ins_IdInstitucion,'$Idi_IdIdioma',i.Idi_IdIdioma)Idi_IdIdioma,
+                       
             o.Contacto AS Contacto 
-            
-            
+                       
             FROM institucion i 
             INNER JOIN oferta o ON i.Ins_IdInstitucion= o.Ins_IdInstitucion 
             INNER JOIN tematica t ON t.Tem_IdTematica=o.Tem_IdTematica
@@ -429,7 +429,7 @@ public function __construct()
             
             fn_TraducirContenido('difusion','Dif_Nombre',d.Dif_IdDifusion,'$Idi_IdIdioma',d.Dif_Nombre)Dif_Nombre,
             fn_TraducirContenido('difusion','Dif_Descripcion',D.Dif_IdDifusion,'$Idi_IdIdioma',d.Dif_Descripcion)Dif_Descripcion, 
-            fn_devolverIdioma('difusion',d.Dif_IdDifusion,'$Idi_IdIdioma',p.$Idi_IdIdioma)Idi_IdIdioma,
+            fn_devolverIdioma('difusion',d.Dif_IdDifusion,'$Idi_IdIdioma',d.Idi_IdIdioma)Idi_IdIdioma,
                                   
             d.Dif_Link AS Enlace 
             FROM difusion d WHERE d.Ins_IdInstitucion = ".$id);
@@ -470,7 +470,7 @@ public function __construct()
             fn_TraducirContenido('oferta','Ofe_Descripcion',o.Ofe_IdOferta,'$Idi_IdIdioma',o.Ofe_Descripcion)Ofe_Descripcion, 
             fn_TraducirContenido('tematica','Tem_Nombre',t.Tem_IdTematica,'$Idi_IdIdioma', t.Tem_Nombre)Tem_Nombre,
             i.row_estado,
-            fn_devolverIdioma('institucion',i.Ins_IdInstitucion,'$Idi_IdIdioma',p.$Idi_IdIdioma)Idi_IdIdioma,
+            fn_devolverIdioma('institucion',i.Ins_IdInstitucion,'$Idi_IdIdioma',i.Idi_IdIdioma)Idi_IdIdioma,
             
             o.Contacto AS Contacto 
             
@@ -510,7 +510,7 @@ public function __construct()
             
             fn_TraducirContenido('difusion','Dif_Nombre',d.Dif_IdDifusion,'$Idi_IdIdioma',d.Dif_Nombre)Dif_Nombre,
             fn_TraducirContenido('difusion','Dif_Descripcion',D.Dif_IdDifusion,'$Idi_IdIdioma',d.Dif_Descripcion)Dif_Descripcion, 
-            fn_devolverIdioma('difusion',d.Dif_IdDifusion,'$Idi_IdIdioma',p.$Idi_IdIdioma)Idi_IdIdioma,
+            fn_devolverIdioma('difusion',d.Dif_IdDifusion,'$Idi_IdIdioma',d.Idi_IdIdioma)Idi_IdIdioma,
             
             d.Dif_Link AS Enlace 
             FROM difusion d WHERE d.Dif_IdDifusion = ".$id);

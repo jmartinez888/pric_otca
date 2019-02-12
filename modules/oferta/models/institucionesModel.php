@@ -78,10 +78,13 @@ public function __construct()
         }
     }
 
-    public function getResumenInstituciones($condicion = '',$idioma='')
+    public function getResumenInstituciones($condicion = '',$Idi_IdIdioma="es")
     {
         try{
-            $sql = " SELECT i.Ins_IdInstitucion, fn_TraducirContenido('institucion','Ins_Tipo',i.Ins_IdInstitucion,'$idioma',i.Ins_Tipo) Ins_Tipo, 
+            $sql = " SELECT i.Ins_IdInstitucion, 
+            fn_TraducirContenido('institucion','Ins_Tipo',i.Ins_IdInstitucion,'$Idi_IdIdioma',i.Ins_Tipo) Ins_Tipo,
+            i.row_estado,
+            fn_devolverIdioma('institucion','Ins_IdInstitucion','$Idi_IdIdioma',i.Idi_IdIdioma)Idi_IdIdioma,
             COUNT(i.Ins_IdInstitucion) AS CantidadRegistros         
             FROM institucion i $condicion GROUP BY i.Ins_Tipo";
             $result = $this->_db->prepare($sql);
@@ -91,10 +94,16 @@ public function __construct()
             return $exception->getTraceAsString();
         }
     }
-    public function getResumenProyectos($condicion='',$condicion2='',$idioma='')
+    public function getResumenProyectos($condicion='',$condicion2='',$Idi_IdIdioma="es")
     {
         try{
-            $sql = "SELECT fn_TraducirContenido('tematica','Tem_Nombre',t.Tem_IdTematica,'$idioma', t.Tem_Nombre ) Tem_Nombre, COUNT(o.Ofe_IdOferta) AS CantidadRegistros FROM oferta o
+            $sql = "SELECT o.Ofe_IdOferta, t.Tem_IdTematica,
+            
+            fn_TraducirContenido('tematica','Tem_Nombre',t.Tem_IdTematica,'$Idi_IdIdioma', t.Tem_Nombre)Tem_Nombre, 
+            o.row_estado,
+            fn_devolverIdioma('oferta',o.Ofe_IdOferta,'$Idi_IdIdioma',o.Idi_IdIdioma)Idi_IdIdioma,
+            COUNT(o.Ofe_IdOferta) AS CantidadRegistros 
+            FROM oferta o
             INNER JOIN tematica t ON t.Tem_IdTematica=o.Tem_IdTematica $condicion
             WHERE o.TipoRecurso='Investigacion' $condicion2
             GROUP BY t.Tem_Nombre";
@@ -105,10 +114,17 @@ public function __construct()
             return $exception->getTraceAsString();
         }
     }
-    public function getResumenOfertas($condicion='',$condicion2='',$idioma=false)
+    public function getResumenOfertas($condicion='',$condicion2='',$Idi_IdIdioma="es")
     {
         try{
-            $sql = "SELECT DISTINCT fn_TraducirContenido('oferta','Ofe_Tipo',o.Ofe_IdOferta,'$idioma', o.Ofe_Tipo) Tipo, COUNT(o.Ofe_IdOferta) AS CantidadRegistros FROM oferta o $condicion
+            $sql = "SELECT DISTINCT 
+            
+            fn_TraducirContenido('oferta','Ofe_Tipo',o.Ofe_IdOferta,'$Idi_IdIdioma', o.Ofe_Tipo)Tipo, 
+            o.row_estado,
+            fn_devolverIdioma('oferta',o.Ofe_IdOferta,'$Idi_IdIdioma',o.Idi_IdIdioma)Idi_IdIdioma,
+            COUNT(o.Ofe_IdOferta) AS CantidadRegistros 
+            
+            FROM oferta o $condicion
             WHERE o.TipoRecurso='Oferta' $condicion2
             GROUP BY o.Ofe_Tipo";
             $result = $this->_db->prepare($sql);
@@ -151,10 +167,18 @@ public function __construct()
             return $exception->getTraceAsString();
         }
     }
-    public function getInstitucionesBusquedaRowCount($dato,$pais)
+    public function getInstitucionesBusquedaRowCount($dato,$pais,$Idi_IdIdioma="es")
     {
         try{
-            $sql = " SELECT p.Pai_Nombre, u.Ubi_Sede, i.Ins_IdInstitucion,COUNT(i.Ins_Nombre) AS CantidadRegistros 
+            $sql = " SELECT i.Ins_IdInstitucion, p.Pai_IdPais,
+            
+            fn_TraducirContenido('pais','Pai_Nombre',p.Pai_IdPais,'$Idi_IdIdioma', p.Pai_Nombre) Pai_Nombre,
+            i.row_estado,
+            fn_devolverIdioma('Institucion',i.Ins_IdInstitucion,'$Idi_IdIdioma',i.Idi_IdIdioma)Idi_IdIdioma,
+            u.Ubi_Sede, 
+            
+            COUNT(i.Ins_Nombre) AS CantidadRegistros 
+                        
             FROM institucion i INNER JOIN ubigeo u ON i.Ubi_IdUbigeo=u.Ubi_IdUbigeo 
             INNER JOIN pais p ON p.Pai_IdPais=u.Pai_IdPais
             WHERE i.Ins_Nombre LIKE '%". $dato."%' AND p.Pai_Nombre LIKE '%".$pais."%' GROUP BY p.Pai_Nombre, u.Ubi_Sede, i.Ins_IdInstitucion ";
@@ -219,7 +243,26 @@ public function __construct()
     {
         try{
             
-            $listaInstituciones = $this->_db->query("SELECT p.Pai_Nombre, u.Ubi_Sede,i.* FROM institucion i 
+            $listaInstituciones = $this->_db->query("SELECT p.Pai_IdPais,i.Ins_IdInstitucion,
+            
+            fn_TraducirContenido('pais','Pai_Nombre',p.Pai_IdPais,'$Idi_IdIdioma', p.Pai_Nombre) Pai_Nombre,            
+            i.Ubi_IdUbigeo, 
+            i.Ins_IdPadre, 
+            fn_TraducirContenido('institucion','Ins_Nombre',i.Ins_IdInstitucion,'$Idi_IdIdioma',i.Ins_Nombre)Ins_Nombre,
+            fn_TraducirContenido('institucion','Ins_Descripcion',i.Ins_IdInstitucion,'$Idi_IdIdioma',i.Ins_Descripcion)Ins_Descripcion,
+            i.Row_Estado,
+            i.Ins_CorreoPagina, 
+            i.Ins_Representante,
+            i.Ins_Telefono, 
+            i.Ins_Direccion,
+            fn_TraducirContenido('institucion','Ins_Tipo',i.Ins_IdInstitucion,'$Idi_IdIdioma',i.Ins_Tipo)Ins_Tipo,             
+            i.Ins_img, 
+            i.Ins_WebSite, 
+            i.Ins_latX, 
+            i.Ins_lngY,
+            fn_devolverIdioma('institucion','Ins_IdInstitucion','$Idi_IdIdioma',i.Idi_IdIdioma)Idi_IdIdioma, 
+            u.Ubi_Sede
+            FROM institucion i 
             INNER JOIN ubigeo u ON i.Ubi_IdUbigeo=u.Ubi_IdUbigeo 
             INNER JOIN pais p ON p.Pai_IdPais=u.Pai_IdPais
             WHERE i.Ins_IdInstitucion = ".$id);
@@ -307,10 +350,14 @@ public function __construct()
         }
     }
 
-    public function getPaises($idioma)
+    public function getPaises($Idi_IdIdioma="es")
     {
         try{
-            $sql = "SELECT fn_TraducirContenido('pais','Pai_Nombre',p.Pai_IdPais,'$idioma', p.Pai_Nombre) Nombre, COUNT(i.Ins_Nombre) AS Conteo from ubigeo u INNER JOIN institucion i on u.Ubi_IdUbigeo=i.Ubi_IdUbigeo INNER JOIN pais p on p.Pai_IdPais=u.Pai_IdPais GROUP BY p.Pai_Nombre";
+            $sql = "SELECT u.Ubi_IdUbigeo, p.Pai_IdPais, 
+            fn_TraducirContenido('pais','Pai_Nombre',p.Pai_IdPais,'$Idi_IdIdioma', p.Pai_Nombre)Nombre,
+            fn_devolverIdioma('pais',p.Pai_IdPais,'$Idi_IdIdioma',p.Idi_IdIdioma)Idi_IdIdioma, 
+            
+            COUNT(i.Ins_Nombre) AS Conteo from ubigeo u INNER JOIN institucion i on u.Ubi_IdUbigeo=i.Ubi_IdUbigeo INNER JOIN pais p on p.Pai_IdPais=u.Pai_IdPais GROUP BY p.Pai_Nombre";
             $result = $this->_db->prepare($sql);
             $result->execute();
             return $result->fetchAll(PDO::FETCH_ASSOC);
