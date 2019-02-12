@@ -756,6 +756,7 @@ class documentosController extends Controller{
     $this->_view->getLenguaje("bdrecursos_metadata");
     $this->_view->getLenguaje("bdrecursos_index");
     $this->_view->getLenguaje("bdlegal");
+    $this->_view->getLenguaje("index_buscador");
     $this->validarUrlIdioma();
     $this->_view->setTemplate(LAYOUT_FRONTEND);
         $this->_view->setCss(array("jp-index"));
