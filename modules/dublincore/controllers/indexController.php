@@ -190,6 +190,7 @@ class indexController extends dublincoreController{
     {
       $this->_view->getLenguaje("bd_documentos");
       $this->_view->getLenguaje("bdrecursos_metadata");
+      $this->_view->getLenguaje("bdlegal");
     $condicion = "";
         $registros  = $this->getSql('registros');
         if($registros)
