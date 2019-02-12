@@ -168,7 +168,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="dublin_idioma" class="col-md-4 control-label">{$ficha[8]['Fie_CampoFicha']}(*)</label>
+                                    <label for="dublin_idioma" class="col-md-4 control-label">>{$ficha[8]['Fie_CampoFicha']}</label>
                                     <div class="col-md-6">
                                         <input type="text" value="{$datos.Dub_Idioma|default:''}" class="form-control" id="Dub_Idioma" name="Dub_Idioma"
                                                placeholder="{$ficha[8]['Fie_CampoFicha']}">
