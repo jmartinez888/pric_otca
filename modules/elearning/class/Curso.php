@@ -8,7 +8,9 @@ class Curso extends Eloquent {
   protected $table = 'curso';
   protected $primaryKey = 'Cur_IdCurso';
   public $timestamps = false;
-
+  public const MODALIDAD_MOOC       = 1;
+  public const MODALIDAD_LMS        = 2;
+  public const MODALIDAD_PRESENCIAL = 3;
   /**
    * [existeAlumno valida solo el array que se le pase]
    *

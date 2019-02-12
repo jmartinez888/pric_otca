@@ -1,5 +1,12 @@
 <form role="form" action="{$_layoutParams.root}elearning/formulario/store_respuesta/{$obj_curso['Cur_IdCurso']}" method="post" enctype="multipart/form-data" id="frm_enviar_respuesta">
-
+  {if isset($formulario_modo_registro)}
+    <input type="hidden" name="formulario_modo_registro" value="{$formulario_modo_registro}">
+  {else}
+    <input type="hidden" name="formulario_modo_registro" value="none">
+  {/if}
+  
+  
+  
                   <div class="form-group">
                     <h1>{$formulario->Frm_Titulo}</h1>
                     <p>{$formulario->Frm_Descripcion}</p>
@@ -72,28 +79,28 @@
                             <thead>
                               <tr>
                                 <th>&nbsp;</th>
-                                {foreach $pre->hijos as $col}
-                                  <th>{$col->Fpr_Pregunta}</th>
+                                {foreach $pre->opciones as $col}
+                                  <th>{$col->Fpo_Opcion}</th>
                                 {/foreach}
                               </tr>
                             </thead>
                             <tbody>
-                              {foreach $pre->opciones as $fil}
-                                {if $fil->Fpo_Tipo == 'fil'}
+                              {foreach $pre->hijos as $fil}
+                                {* {if $fil->Fpo_Tipo == 'fil'} *}
                                   <tr>
-                                    <td>{$fil->Fpo_Opcion}</td>
-                                    {foreach $pre->hijos as $col}
+                                    <td>{$fil->Fpr_Pregunta}</td>
+                                    {foreach $pre->opciones as $col}
                                       <td>
                                         <div class="radio">
                                           <label>
-                                            <input form="frm_enviar_respuesta" type="radio" name="frm_pre_{$col->Fpr_IdForPreguntas}" id="input" value="{$fil->Fpo_IdForPrOpc}" required="">
+                                            <input form="frm_enviar_respuesta" type="radio" name="frm_pre_{$fil->Fpr_IdForPreguntas}" value="{$col->Fpo_IdForPrOpc}">
                                           </label>
                                         </div>
                                       </td>
 
                                     {/foreach}
                                   </tr>
-                                {/if}
+                                {* {/if} *}
                               {/foreach}
                             </tbody>
                           </table>

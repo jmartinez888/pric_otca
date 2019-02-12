@@ -149,17 +149,18 @@
           <form role="form">
             <div class="form-group">
               <label class="control-label">{literal}{{values.pregunta == '' ? '{/literal}{$lang->get('str_pregunta')}{literal}' : values.pregunta}}{/literal}</label>
-              <table class="table table-bordered table-hover">
+              <table class="table table-sm table-bordered table-hover">
                 <thead>
                   <tr>
                     <th>&nbsp;</th>
-                    <th v-for="columnas in values.preguntas">{literal}{{ columnas.pregunta }}{/literal}</th>
+                    <th v-for="columnas in values.options">{literal}{{ columnas.opcion }}{/literal}</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="filas in values.options" v-if="filas.tipo == 'fil'">
-                    <td>{literal}{{ filas.opcion }}{/literal}</td>
-                    <td v-for="columnas in values.preguntas"><div class="radio">
+                  {* <tr v-for="filas in values.preguntas" v-if="filas.tipo == 'fil'"> *}
+                  <tr v-for="filas in values.preguntas">
+                    <td><span>{literal}{{ filas.pregunta }}{/literal}</span></td>
+                    <td v-for="columnas in values.options"><div class="radio">
                       <label>
                         <input type="radio" value="">
                       </label>
@@ -178,9 +179,10 @@
             <div class="form-group">
               <div class="col-sm-6">
                 <ol class="container_select">
-                  <li v-for="(opc, index) in values.options" v-if="opc.tipo == 'fil'">
+                  {* <li v-for="(opc, index) in values.preguntas" v-if="opc.tipo == 'fil'"> *}
+                  <li v-for="(opc, index) in values.preguntas">
                     <div class="input-group">
-                      <input type="text"  class="form-control"  v-model="values.options[index].opcion" placeholder="Opción">
+                      <input type="text"  class="form-control"  v-model="values.preguntas[index].pregunta" placeholder="Opción">
                       <div class="input-group-addon">
                         <button type="button" @click="onClick_removeOption(index, opc.id, 'fil')">X</button>
                       </div>
@@ -188,16 +190,16 @@
                   </li>
                   <li>
                     <div class="input-group" style="padding: 10px 5px">
-                      <span style="" @click="onClick_agregarOptionColFil('fil')">{$lang->get('elearning_formulario_responder_add_fil')}</span>
+                      <span  @click="onClick_agregarOptionColFil('fil')">{$lang->get('elearning_formulario_responder_add_fil')}</span>
                     </div>
                   </li>
                 </ol>
               </div>
               <div class="col-sm-6">
                 <ol class="container_select">
-                  <li v-for="(opc, index) in values.preguntas">
+                  <li v-for="(opc, index) in values.options">
                     <div class="input-group">
-                      <input type="text"  class="form-control"  v-model="values.preguntas[index].pregunta" placeholder="Opción">
+                      <input type="text"  class="form-control"  v-model="values.options[index].opcion" placeholder="Opción">
                       <div class="input-group-addon">
                         <button type="button" @click="onClick_removeOption(index, opc.id, 'col')">X</button>
                       </div>
