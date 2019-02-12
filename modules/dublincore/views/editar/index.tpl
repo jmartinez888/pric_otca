@@ -141,7 +141,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="{$lenguaje{["formato_metadata_documentos"]}" class="col-md-4 control-label">{$ficha[5]['Fie_CampoFicha']}</label>
+                                    <label for="formato" class="col-md-4 control-label">{$ficha[5]['Fie_CampoFicha']}</label>
                                     <div class="col-md-3">
                                         <select class="form-control" id="Dub_Formato" name="Dub_Formato">
                                             {foreach from=$formatos_archivos item=ps}
