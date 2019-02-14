@@ -76,21 +76,23 @@ Vue.component('input-tags', {
 	},
 	methods: {
 		onClick_removeOption(i, opcion_id, tipo = 'none') {
+			console.log('remove');
 			let data = new FormData();
-			if (tipo == 'none' || tipo == 'fil') {
+			if (tipo == 'none' || tipo == 'col') {
 				data.append('opcion_id', opcion_id)
 				axios.post(_root_lang + 'elearning/formulario/delete_opcion/' + opcion_id, data).then(res => {
 					if (res.data.success) {
 						this.values.options.splice(i, 1);
+						//this.$el.parentElement.remove()
 					}
 				})
 			}
-			if (tipo == 'col') {
+			if (tipo == 'fil') {
 				data.append('pregunta_id', opcion_id)
 				axios.post(_root_lang + 'elearning/formulario/delete_pregunta/' + opcion_id, data).then(res => {
 					if (res.data.success) {
-						// this.values.options.splice(i, 1);
-						this.$el.parentElement.remove()
+						this.values.preguntas.splice(i, 1);
+						//
 					}
 				})
 			}

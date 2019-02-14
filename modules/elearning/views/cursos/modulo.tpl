@@ -502,4 +502,7 @@
 {block 'js' append}
 <script type="text/javascript" src="{BASE_URL}modules/elearning/views/gestion/js/core/util.js"></script>
 <script src="{BASE_URL}modules/elearning/views/clase/js/menu-interactive.js"></script>
+{if $leccion['Lec_Tipo'] == App\Leccion::TIPO_ENCUESTA}
+<script type="text/javascript" src="{$_layoutParams.rutas.js}responder.js"></script>
+{/if}
 {/block}

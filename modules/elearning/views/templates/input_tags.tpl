@@ -230,13 +230,13 @@
                 <thead>
                   <tr>
                     <th>&nbsp;</th>
-                    <th v-for="columnas in values.preguntas">{literal}{{ columnas.pregunta }}{/literal}</th>
+                    <th v-for="columnas in values.options">{literal}{{ columnas.opcion }}{/literal}</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="filas in values.options" v-if="filas.tipo == 'fil'">
+                  <tr v-for="filas in values.preguntas">
                     <td>{literal}{{ filas.opcion }}{/literal}</td>
-                    <td v-for="columnas in values.preguntas"><div class="checkbox">
+                    <td v-for="columnas in values.options"><div class="checkbox">
                       <label>
                         <input type="checkbox" value="">
                       </label>
@@ -255,9 +255,9 @@
             <div class="form-group">
               <div class="col-sm-6">
                 <ol class="container_select">
-                  <li v-for="(opc, index) in values.options" v-if="opc.tipo == 'fil'">
+                  <li v-for="(opc, index) in values.preguntas">
                     <div class="input-group">
-                      <input type="text"  class="form-control"  v-model="values.options[index].opcion" placeholder="Opción">
+                      <input type="text"  class="form-control"  v-model="values.preguntas[index].pregunta" placeholder="Opción">
                       <div class="input-group-addon">
                         <button type="button" @click="onClick_removeOption(index, opc.id, 'fil')">X</button>
                       </div>
@@ -272,9 +272,9 @@
               </div>
               <div class="col-sm-6">
                 <ol class="container_select">
-                  <li v-for="(opc, index) in values.preguntas">
+                  <li v-for="(opc, index) in values.options">
                     <div class="input-group">
-                      <input type="text"  class="form-control"  v-model="values.preguntas[index].pregunta" placeholder="Opción">
+                      <input type="text"  class="form-control"  v-model="values.options[index].opcion" placeholder="Opción">
                       <div class="input-group-addon">
                         <button type="button" @click="onClick_removeOption(index, opc.id, 'col')">X</button>
                       </div>

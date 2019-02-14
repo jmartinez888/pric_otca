@@ -323,17 +323,22 @@ class gleccionController extends elearningController {
 			}
 		}
     public function store_encuesta ($curso_id) {
-    $this->validarUrlIdioma();
+        //$this->validarUrlIdioma();
         $this->_acl->autenticado();
         if (is_numeric($curso_id) && $curso_id != 0 && Curso::existeCurso($curso_id)) {
-					
             $titulo = $this->getTexto('titulo');
             $desc = $this->getTexto('descripcion');
             $tiempo = $this->getTexto('tiempo');
             $modulo = $this->getTexto('modulo');
-            if ($modulo != 0) {
+            
+            if ($modulo != 0 || $modulo == Formulario::hashEncuestaLibre()) {
+                $lang = $this->_view->getLenguaje(['elearning_cursos', 'elearning_formulario_responder'], false, true);
                 $Mmodel = $this->loadModel("_gestionLeccion");
-                $leccion_id = $Mmodel->insertLeccion($modulo, Leccion::TIPO_ENCUESTA, $titulo, $desc, $tiempo);
+                if (Formulario::hashEncuestaLibre() == $modulo)
+                    $leccion_id = $Mmodel->insertLeccion(null , Leccion::TIPO_ENCUESTA, $titulo, $desc, $tiempo);
+                else 
+                    $leccion_id = $Mmodel->insertLeccion($modulo , Leccion::TIPO_ENCUESTA, $titulo, $desc, $tiempo);
+
 
                     //registrar un formulario y su relación
                 $frm = new Formulario();
@@ -343,7 +348,7 @@ class gleccionController extends elearningController {
                 $frm->Frm_Titulo = $titulo;
                 $frm->Frm_Estado = 1;
                 $frm->Frm_Tipo = 1;
-                $frm->Frm_Mensaje = 'Gracias por contestar esta encuesta';
+                $frm->Frm_Mensaje = $lang->get('elearning_cursos_gracias_por_contestar_encuesta');
                 if ($frm->save()) {
                     $lf = new LeccionFormulario();
                     $lf->Lec_IdLeccion = $leccion_id;
@@ -354,7 +359,7 @@ class gleccionController extends elearningController {
                     }
                 }
 
-            }
+            } else echo 'asd';
         }
     }
 

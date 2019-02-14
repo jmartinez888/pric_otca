@@ -60,6 +60,7 @@
                   <label for="sel_modulos">{$lang->get('str_modulos')}</label>
                   <select id="sel_modulos"  class="form-control" v-model="filter.sel_modulo">
                     <option value="-1">{$lang->get('str_todas')}</option>
+                    <option value="{App\Formulario::hashEncuestaLibre()}">{$lang->get('str_encuesta_libre')}</option>
                     {foreach $modulos as $item}
                     <option value="{$item.Moc_IdModuloCurso}">{$item.Moc_Titulo}</option>
                     {/foreach}
