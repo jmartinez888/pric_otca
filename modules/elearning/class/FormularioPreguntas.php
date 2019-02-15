@@ -20,10 +20,13 @@ class FormularioPreguntas extends Eloquent
     return $this->hasMany('App\FormularioPreguntas', 'Fpr_Parent');
   }
   public function existeDetalleRespuestaByResUsu ($respuesta_usuario_id) {
-    return $this->respuestas()->where('Fur_IdFrmUsuRes', $respuesta_usuario_id)->count() > 0;
+    return true;
+    // return $this->respuestas()->where('Fur_IdFrmUsuRes', $respuesta_usuario_id)->count() > 0;
   }
   public function detalleRespuestaByResUsu ($respuesta_usuario_id) {
+    //filtrar solo las respuestas de un usuario
     $target = $this->respuestas()->where('Fur_IdFrmUsuRes', $respuesta_usuario_id)->first();
+    // dd($target);
     switch ($this->Fpr_Tipo) {
       case 'box':
         // dd($target);
@@ -33,9 +36,6 @@ class FormularioPreguntas extends Eloquent
           $temp[] = FormularioPreguntasOpciones::find($value);
         }
         return $temp;
-        break;
-      case 'casilla':
-        dd($target);
         break;
       case 'upload':
         $html = '';
@@ -77,7 +77,11 @@ THTML;
     }
     return $target;
   }
-
+  /**
+   * [respuestas retorna detalles de respuesta de la pregunta X de  todos los usuarios ]
+   *
+   * @return  [type]  [return description]
+   */
   public function respuestas () {
     return $this->hasMany('App\FormularioUsuarioRespuestasDetalles', 'Fpr_IdForPreguntas');
   }

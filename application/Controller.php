@@ -428,8 +428,8 @@ abstract class Controller
 
     protected function validarUrlIdioma($norender=false)
     {
-          if($this->_lenguaje)
-          {
+        if($this->_lenguaje)
+        {
             Cookie::setLenguaje($this->_lenguaje);
         }else if(!$norender)
         {

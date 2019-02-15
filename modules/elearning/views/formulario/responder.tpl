@@ -56,17 +56,17 @@
 {include file='modules/elearning/views/gestion/menu/tag_url.tpl'}
 {if $obj_curso == null}
   <div class="col-lg-12">
-    <h3>No existe curso</h3>
+    <h3>{$lang->get('elearning_cursos_no_existe_curso')}</h3>
     {* <form action="{$_layoutParams.root}elearning/formulario/store" method="post" accept-charset="utf-8">
       <input type="hidden" name="mode" value="unique">
       <input type="hidden" name="curso_id" value="{$curso['Cur_IdCurso']}">
-      <button type="submit" class="btn btn-success">Crear formulario</button>
+      <button type="submit" class="btn btn-success">{$lang->get('elearning_cursos_crear_formulario')}</button>
     </form> *}
   </div>
 {else}
   {if ($formulario == null)}
     <div class="col-lg-12">
-      <h3>No posee formulario</h3>
+      <h3>{$lang->get('elearning_cursos_no_posee_formulario')}</h3>
     </div>
   {else}
     {if (!isset($respuesta) || $respuesta->Fur_Completado == 0)}
@@ -85,7 +85,7 @@
       </div>
     {else}
       <div class="col-lg-12">
-        <h3>Formulario ya fue respondido</h3>
+        <h3>{$lang->get('elearning_cursos_formulario_fue_respondido')}</h3>
       </div>
     {/if}
   {/if}
@@ -97,7 +97,5 @@
 <!-- <script >
 $("#hidden_curso").val("{Session::get('learn_param_curso')}");
 </script> -->
-{if ($formulario != null)}
 
-{/if}
 {/block}

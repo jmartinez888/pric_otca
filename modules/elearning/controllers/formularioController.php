@@ -63,6 +63,7 @@ class formularioController extends elearningController {
 						$data['titulo'] = $curso['Cur_Titulo'].' - '.$data['titulo'];
 						$data['curso'] = $curso;
 						$data['respuesta'] = $respuesta;
+						// dd($frm->preguntas);
 						$data['formulario'] = $frm;
 
 					}
@@ -110,31 +111,48 @@ class formularioController extends elearningController {
 					  $preguntas = $frm->preguntasTodas;
 					  $success_insert = true;
 					  $pre_respuestas = [];
-					  // dd($preguntas);
+					  // dd($preguntas->toArray());
 					  // dd($_POST);
 					  foreach ($_POST as $key => $value) {
 					  	if (substr($key, 0, 8) == 'frm_pre_') {
-						  	$t = explode('_', $key);
+								$t = explode('_', $key);
+								
 						  	$pregunta = $preguntas->where('Fpr_IdForPreguntas', end($t))->first();
 						  	// print_r($t);
 						  	if ($pregunta) {
 						  		$pres = new FormularioUsuarioRespuestasDetalles();
-						  		$pres->Fpr_IdForPreguntas = $pregunta->Fpr_IdForPreguntas;
-						  		if (is_array($value)) {
-						  			$pres->Fre_Respuesta = implode('-', $value);
-						  			if ($pregunta->Fpr_Tipo == 'casilla') {
-						  				$pres->Fpo_IdForPrOpc = $value;
-						  			}
-						  		} else {
-						  			$pres->Fre_Respuesta = $value;
-						  			switch ($pregunta->Fpr_Tipo) {
-						  				case 'cuadricula':
-						  				case 'radio':
-						  				case 'select':
-						  					$pres->Fpo_IdForPrOpc = $value;
-						  					break;
-						  			}
-						  		}
+									$pres->Fpr_IdForPreguntas = $pregunta->Fpr_IdForPreguntas;
+									switch ($pregunta->Fpr_Tipo) {
+										// case 'cuadricula':
+										case 'radio':
+										case 'select':
+											$pres->Fpo_IdForPrOpc = $value;
+											$pres->Fre_Respuesta = $value;
+											break;
+										case 'box':
+											// dd($pregunta);
+											if (is_array($value)) {
+												$pres->Fre_Respuesta = implode('-', $value);			
+											} else
+												$pres->Fre_Respuesta = $value;
+											// $pres->Fpo_IdForPrOpc = $value;
+											break;
+									}
+						  		// if (is_array($value)) {
+						  		// 	$pres->Fre_Respuesta = implode('-', $value);
+						  		// 	if ($pregunta->Fpr_Tipo == 'casilla') {
+						  		// 		$pres->Fpo_IdForPrOpc = $value;
+						  		// 	}
+						  		// } else {
+						  		// 	$pres->Fre_Respuesta = $value;
+						  		// 	switch ($pregunta->Fpr_Tipo) {
+						  		// 		case 'cuadricula':
+						  		// 		case 'radio':
+						  		// 		case 'select':
+						  		// 			$pres->Fpo_IdForPrOpc = $value;
+						  		// 			break;
+						  		// 	}
+						  		// }
 						  		$pre_respuestas[] = $pres;
 						  	} else {
 						  		echo 'error en preguntas';

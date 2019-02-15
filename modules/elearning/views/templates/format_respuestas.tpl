@@ -36,10 +36,10 @@
                           <input form="frm_enviar_respuesta" type="text" name="frm_pre_{$pre->Fpr_IdForPreguntas}"  class="form-control" {if ($pre->Fpr_Obligatorio == 1)}required="required"{/if}>
                         {/if}
                         {if ($pre->Fpr_Tipo == 'parrafo')}
-                          <textarea name="frm_pre_{$pre->Fpr_IdForPreguntas}" class="form-control" rows="3"></textarea>
+                          <textarea name="frm_pre_{$pre->Fpr_IdForPreguntas}" class="form-control" rows="3" {if ($pre->Fpr_Obligatorio == 1)}required="required"{/if}></textarea>
                         {/if}
                         {if ($pre->Fpr_Tipo == 'select')}
-                          <select form="frm_enviar_respuesta" name="frm_pre_{$pre->Fpr_IdForPreguntas}"  class="form-control" >
+                          <select form="frm_enviar_respuesta" name="frm_pre_{$pre->Fpr_IdForPreguntas}"  class="form-control" {if ($pre->Fpr_Obligatorio == 1)}required="required"{/if}>
                             {foreach $pre->opciones as $opc}
                               <option value="{$opc->Fpo_IdForPrOpc}">{$opc->Fpo_Opcion}</option>
                             {/foreach}
@@ -49,7 +49,7 @@
                           {foreach $pre->opciones as $opc}
                             <div class="radio">
                               <label>
-                                <input form="frm_enviar_respuesta" type="radio" name="frm_pre_{$pre->Fpr_IdForPreguntas}"  value="{$opc->Fpo_IdForPrOpc}" >
+                                <input form="frm_enviar_respuesta" type="radio" name="frm_pre_{$pre->Fpr_IdForPreguntas}"  value="{$opc->Fpo_IdForPrOpc}" {if ($pre->Fpr_Obligatorio == 1)}required="required"{/if}>
                                 {$opc->Fpo_Opcion}
                               </label>
                             </div>
@@ -59,20 +59,20 @@
                           {foreach $pre->opciones as $opc}
                             <div class="checkbox">
                               <label>
-                                <input form="frm_enviar_respuesta" type="checkbox" name="frm_pre_{$pre->Fpr_IdForPreguntas}[]" value="{$opc->Fpo_IdForPrOpc}">
+                                <input form="frm_enviar_respuesta" type="checkbox" name="frm_pre_{$pre->Fpr_IdForPreguntas}[]" value="{$opc->Fpo_IdForPrOpc}" >
                                 {$opc->Fpo_Opcion}
                               </label>
                             </div>
                           {/foreach}
                         {/if}
                         {if ($pre->Fpr_Tipo == 'upload')}
-                          <input form="frm_enviar_respuesta" type="file" name="file_pre_{$pre->Fpr_IdForPreguntas}"  class="form-control" >
+                          <input form="frm_enviar_respuesta" type="file" name="file_pre_{$pre->Fpr_IdForPreguntas}"  class="form-control" {if ($pre->Fpr_Obligatorio == 1)}required="required"{/if} >
                         {/if}
                         {if ($pre->Fpr_Tipo == 'fecha')}
-                          <input form="frm_enviar_respuesta" type="date" name="frm_pre_{$pre->Fpr_IdForPreguntas}"  class="form-control"   >
+                          <input form="frm_enviar_respuesta" type="date" name="frm_pre_{$pre->Fpr_IdForPreguntas}"  class="form-control"  {if ($pre->Fpr_Obligatorio == 1)}required="required"{/if} >
                         {/if}
                         {if ($pre->Fpr_Tipo == 'hora')}
-                          <input form="frm_enviar_respuesta" type="time" name="frm_pre_{$pre->Fpr_IdForPreguntas}"  class="form-control"   >
+                          <input form="frm_enviar_respuesta" type="time" name="frm_pre_{$pre->Fpr_IdForPreguntas}"  class="form-control" {if ($pre->Fpr_Obligatorio == 1)}required="required"{/if}>
                         {/if}
                         {if ($pre->Fpr_Tipo == 'cuadricula')}
                           <table class="table table-bordered table-hover">
@@ -93,7 +93,7 @@
                                       <td>
                                         <div class="radio">
                                           <label>
-                                            <input form="frm_enviar_respuesta" type="radio" name="frm_pre_{$fil->Fpr_IdForPreguntas}" value="{$col->Fpo_IdForPrOpc}">
+                                            <input form="frm_enviar_respuesta" type="radio" name="frm_pre_{$fil->Fpr_IdForPreguntas}" value="{$col->Fpo_IdForPrOpc}" {if ($pre->Fpr_Obligatorio == 1)}required="required"{/if}>
                                           </label>
                                         </div>
                                       </td>
@@ -110,28 +110,28 @@
                             <thead>
                               <tr>
                                 <th>&nbsp;</th>
-                                {foreach $pre->hijos as $col}
-                                  <th>{$col->Fpr_Pregunta}</th>
+                                {foreach $pre->opciones as $col}
+                                  <th>{$col->Fpo_Opcion}</th>
                                 {/foreach}
                               </tr>
                             </thead>
                             <tbody>
-                              {foreach $pre->opciones as $fil}
-                                {if $fil->Fpo_Tipo == 'fil'}
+                              {foreach $pre->hijos as $fil}
+                                {* {if $fil->Fpo_Tipo == 'fil'} *}
                                   <tr>
-                                    <td>{$fil->Fpo_Opcion}</td>
-                                    {foreach $pre->hijos as $col}
+                                    <td>{$fil->Fpr_Pregunta}</td>
+                                    {foreach $pre->opciones as $col}
                                       <td>
                                         <div class="checkbox">
                                           <label>
-                                            <input form="frm_enviar_respuesta" type="checkbox" name="frm_pre_{$col->Fpr_IdForPreguntas}[]" id="input" value="{$fil->Fpo_IdForPrOpc}" >
+                                            <input form="frm_enviar_respuesta" type="checkbox" name="frm_pre_{$fil->Fpr_IdForPreguntas}[]" value="{$col->Fpo_IdForPrOpc}">
                                           </label>
                                         </div>
                                       </td>
 
                                     {/foreach}
                                   </tr>
-                                {/if}
+                                {* {/if} *}
                               {/foreach}
                             </tbody>
                           </table>
@@ -139,5 +139,5 @@
                       {/if}
                     </div>
                   {/foreach}
-                  <button form="frm_enviar_respuesta" type="submit" class="btn btn-success">Enviar respuestas</button>
+                  <button form="frm_enviar_respuesta" type="submit" class="btn btn-success">{$lang->get('elearning_cursos_enviar_encuestas')}</button>
                 </form>

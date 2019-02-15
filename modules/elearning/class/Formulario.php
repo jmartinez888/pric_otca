@@ -12,6 +12,8 @@ class Formulario extends Eloquent
   const UPDATED_AT = 'Frm_UpdatedAt';
   public const TIPO_FORMULARIO  = 0;
   public const TIPO_ENCUESTA    = 1;
+  public const TIPO_ENCUESTA_LIBRE    = 2;
+  
 
   public static function getActivoByCursoId ($curso_id) {
     return self::where('Frm_Estado', 1)->where('Cur_IdCurso', $curso_id)->first();
@@ -20,7 +22,9 @@ class Formulario extends Eloquent
   public function scopeActivos ($query) {
     return $query->where('Frm_Estado', 1);
   }
-
+  public static function hashEncuestaLibre () {
+    return md5(self::TIPO_ENCUESTA_LIBRE);
+  }
   public function scopeTipoDefault ($query) {
     return $query->where('Frm_Tipo', self::TIPO_FORMULARIO);
   }
