@@ -68,7 +68,7 @@ new Vue({
 				}}
 			],
 			columnDefs: [
-				// {orderable: false,  targets: [3, 4]}
+				{orderable: false,  targets: [3]}
 			]
 		})
 		.on('click', '.btn_eliminar', this.onClick_deleteEncuesta)

@@ -1,11 +1,13 @@
 <?php
+use App\Usuario;
 use App\Formulario;
+use App\LeccionFormulario;
 use App\FormularioPreguntas;
 use App\FormularioPreguntasOpciones;
 use App\FormularioUsuarioRespuestas;
 use App\FormularioUsuarioRespuestasDetalles;
-use App\Usuario;
 use Illuminate\Database\Capsule\Manager as DB;
+
 class formularioController extends elearningController {
 	public function delete_respuesta ($respuesta_id) {
 		$res = ['success' => false];
@@ -82,7 +84,7 @@ class formularioController extends elearningController {
 
 	}
 	public function store_respuesta ($curso_id) {
-		
+		// dd($_POST);
 		$mod_usuario = $this->loadModel('usuario', 'usuarios');
 		$usuario = $mod_usuario::find(Session::get('id_usuario'));
 		$roles = $usuario->getUsuariosRoles();
@@ -101,6 +103,7 @@ class formularioController extends elearningController {
 				$formulario_id = $this->getInt('formulario_id');
 				// if ($formulario_id != 0)
 				$frm = Formulario::find($formulario_id);
+				// dd($frm);
 				// else
 				// 	$frm = $curso->getFormularioActivo();
 				 
@@ -130,12 +133,15 @@ class formularioController extends elearningController {
 											$pres->Fre_Respuesta = $value;
 											break;
 										case 'box':
-											// dd($pregunta);
-											if (is_array($value)) {
-												$pres->Fre_Respuesta = implode('-', $value);			
-											} else
+											if (is_array($value))
+												$pres->Fre_Respuesta = implode('-', $value);
+											else 
 												$pres->Fre_Respuesta = $value;
+											
 											// $pres->Fpo_IdForPrOpc = $value;
+											break;
+										default:
+											$pres->Fre_Respuesta = $value;
 											break;
 									}
 						  		// if (is_array($value)) {
@@ -219,7 +225,10 @@ class formularioController extends elearningController {
 			}
 		}
 	}
-	public function responder ($curso_id) {
+	public function responder_encuesta ($leccion_id_hash) {
+		$this->responder($leccion_id_hash, true);
+	}
+	public function responder ($curso_id, $use_hash = false) {
 		$this->_acl->autenticado();
 
 
@@ -247,24 +256,34 @@ class formularioController extends elearningController {
 
 		}
 		if (is_numeric($curso_id) && $curso_id != 0) {
-			$mod_curso = $this->loadModel('curso');
-
-			$curso = $mod_curso::find($curso_id);
-			// dd($curso);
-			// $data['obj_curso'] = $curso;
 			$this->_view->setTemplate(LAYOUT_FRONTEND);
-			if ($curso ) {
-				$data['titulo'] = $curso->Cur_Titulo.' - '.$data['titulo'];
-				$data['formulario_modo_registro'] = md5(Formulario::TIPO_FORMULARIO);
-				$frm = $curso->getFormularioActivo();
-				$data['obj_curso'] = $data['curso'] = $curso;
-				if ($frm) {
-					$data['respuesta'] = $frm->getRespuestaByUsuario(Session::get('id_usuario'));
-					$data['formulario'] = $frm;
-
+			$mod_curso = $this->loadModel('curso');
+			if ($use_hash) {
+				$frm = LeccionFormulario::findByLeccion($curso_id)->formulario;
+				$curso = $mod_curso::find($frm->Cur_IdCurso);
+				$data['formulario_modo_registro'] = md5(Formulario::TIPO_ENCUESTA_LIBRE);
+				
+			} else {
+				
+				
+				$curso = $mod_curso::find($curso_id);
+				// dd($curso);
+				// $data['obj_curso'] = $curso;
+				
+				if ($curso ) {
+					$data['formulario_modo_registro'] = md5(Formulario::TIPO_FORMULARIO);
+					$frm = $curso->getFormularioActivo();
+					//$data['obj_curso'] = $data['curso'] = $curso;
+					
+	
 				}
-
 			}
+			if ($frm) {
+				$data['respuesta'] = $frm->getRespuestaByUsuario(Session::get('id_usuario'));
+				$data['formulario'] = $frm;
+			}
+			$data['obj_curso'] = $data['curso'] = $curso;
+			$data['titulo'] = $curso->Cur_Titulo.' - '.$data['titulo'];
 			$this->_view->assign($data);
 			$this->_view->render('responder');
 			exit;

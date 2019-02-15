@@ -276,6 +276,7 @@ class gleccionController extends elearningController {
 								$pizarras = Leccion::getByModulos($mod_ids)->getPizarras()->get();
 								
 								$data['pizarras'] = $pizarras;
+								$data['modulos'] = $modulos;
                 $data['active'] = 'pizarras';
                 $data['curso'] = $curso;
                 $data['idcurso'] = $curso['Cur_IdCurso'];
@@ -315,6 +316,7 @@ class gleccionController extends elearningController {
 				$desc = $this->getTexto('descripcion');
 				$tiempo = $this->getTexto('tiempo');
 				$modulo = $this->getTexto('modulo');
+				// dd($modulo);
 				if ($modulo != 0) {
 						$Mmodel = $this->loadModel("_gestionLeccion");
 						$leccion_id = $Mmodel->insertLeccion($modulo, Leccion::TIPO_DIRIGIDA, $titulo, $desc, $tiempo);
@@ -335,7 +337,7 @@ class gleccionController extends elearningController {
                 $lang = $this->_view->getLenguaje(['elearning_cursos', 'elearning_formulario_responder'], false, true);
                 $Mmodel = $this->loadModel("_gestionLeccion");
                 if (Formulario::hashEncuestaLibre() == $modulo)
-                    $leccion_id = $Mmodel->insertLeccion(null , Leccion::TIPO_ENCUESTA, $titulo, $desc, $tiempo);
+                    $leccion_id = $Mmodel->insertLeccion(null , Leccion::TIPO_ENCUESTA_LIBRE, $titulo, $desc, $tiempo);
                 else 
                     $leccion_id = $Mmodel->insertLeccion($modulo , Leccion::TIPO_ENCUESTA, $titulo, $desc, $tiempo);
 
@@ -439,6 +441,7 @@ class gleccionController extends elearningController {
 			if ($modo != 'default') {
 				$objCurso = Curso::find($curso_id);
 				if ($objCurso) {
+					$lang = $this->_view->getLenguaje(false, false, true);
 					DB::enableQueryLog();
 					$datatable_response = [
 						'draw' 						=> $this->getInt('draw'),
@@ -456,23 +459,33 @@ class gleccionController extends elearningController {
 					foreach ($modulos as $key => $value) {
 							$mod_ids[] = $value['Moc_IdModuloCurso'];
 					}
-					$query = Leccion::getByModulos($mod_ids)
-						->join('modulo_curso', 'modulo_curso.Moc_IdModuloCurso', 'leccion.Moc_IdModuloCurso');
+					
 
-					if ($modo == 'pizarras')
-						$query->getByTipo(Leccion::TIPO_DIRIGIDA);
-					if ($modo == 'encuestas')
-						$query->getByTipo(Leccion::TIPO_ENCUESTA);
+					
+
+					if ($modo == 'pizarras') {
+						$query = Leccion::getByModulos($mod_ids)->select()->addSelect('modulo_curso.Moc_Titulo as Moc_Titulo_Format')
+							->join('modulo_curso', 'modulo_curso.Moc_IdModuloCurso', 'leccion.Moc_IdModuloCurso');
+						$query->where('leccion.Lec_Tipo', Leccion::TIPO_DIRIGIDA);
+					}
+					if ($modo == 'encuestas') {
+						$query = LeccionFormulario::getByCurso($curso_id)->select('leccion.*', 'modulo_curso.*',
+							DB::raw("IFNULL(modulo_curso.Moc_Titulo, '".$lang->get('str_encuesta_libre')."') as Moc_Titulo_Format")
+						);
+						$query->whereIn('leccion.Lec_Tipo', [Leccion::TIPO_ENCUESTA, Leccion::TIPO_ENCUESTA_LIBRE]);
+					}
 					
 					$datatable_response['recordsTotal'] = $datatable_response['recordsFiltered'] = $query->count();
 					
 					if ($this->has('filter')) {
-						$query->where(function($query) {
+						$query->where(function($query) use($lang){
 							if (isset($_GET['filter']['query']) && $_GET['filter']['query'] != '') 
-								$query->orWhere(DB::raw("CONCAT(Lec_Titulo, ' ', Moc_Titulo)"), 'like', '%'.$_GET['filter']['query'].'%');		
-
+								$query->orWhere(DB::raw("CONCAT(Lec_Titulo, ' ', IFNULL(modulo_curso.Moc_Titulo, '".$lang->get('str_encuesta_libre')."'))"), 'like', '%'.$_GET['filter']['query'].'%');
 							if (isset($_GET['filter']['modulo_id']) && $_GET['filter']['modulo_id'] != -1)
-								$query->where('leccion.Moc_IdModuloCurso', $_GET['filter']['modulo_id']);
+								if ($_GET['filter']['modulo_id'] == Formulario::hashEncuestaLibre())
+									$query->where('formulario.Frm_Tipo', Formulario::TIPO_ENCUESTA_LIBRE);
+								else
+									$query->where('leccion.Moc_IdModuloCurso', $_GET['filter']['modulo_id']);
 						});
 					}
 
@@ -480,12 +493,31 @@ class gleccionController extends elearningController {
 					if ($this->has(['order', 'columns'])) {
 						foreach ($_GET['order'] as $key => $value) {
 							$nc = $_GET['columns'][$value['column']]['data'];
-							switch ($nc) {
-								case 'nombre_completo': $nc = 'nombre_completo'; break;
-								case 'inicio': 	$nc = 'Lea_Inicio'	;	break;
-								case 'fin': 	$nc = 'Lea_Fin'	;	break;
+							// dd($nc);
+							if ($modo == 'encuestas') {
+								switch ($nc) {
+									case 'leccion_titulo': $nc = 'formulario.Frm_Titulo'; break;
+									case 'leccion_descripcion': $nc = 'formulario.Frm_Descripcion'; break;
+									case 'modulo_titulo': $nc = 'Moc_Titulo_Format'; break;
+
+									// case 'inicio': 	$nc = 'leccion.Lec_FechaDesde'	;	break;
+									// case 'fin': 	$nc = 'leccion.Lec_FechaHasta'	;	break;
+									default: $nc = 'none';
+								}
 							}
-							// $query->orderBy($nc, $value['dir']);
+							if ($modo == 'pizarras') {
+								switch ($nc) {
+									case 'leccion_titulo': $nc = 'leccion.Lec_Titulo'; break;
+									case 'leccion_descripcion': $nc = 'leccion.Lec_Descripcion'; break;
+									case 'modulo_titulo': $nc = 'modulo_curso.Moc_Titulo'; break;
+
+									// case 'inicio': 	$nc = 'leccion.Lec_FechaDesde'	;	break;
+									// case 'fin': 	$nc = 'leccion.Lec_FechaHasta'	;	break;
+									default: $nc = 'none';
+								}
+							}
+							if ($nc != 'none' && $_GET['columns'][$value['column']]['data'])
+								$query->orderBy($nc, $value['dir']);
 						}
 					}
 
@@ -497,7 +529,8 @@ class gleccionController extends elearningController {
 								'leccion_id' => $item->Lec_IdLeccion,
 								'leccion_titulo' => $item->Lec_Titulo,
 								'leccion_descripcion' => str_limit($item->Lec_Descripcion, 100),
-								'modulo_titulo' => $item->Moc_Titulo,
+								'modulo_titulo' => $item->Moc_Titulo_Format,
+								'modulo_id' => $item->Moc_IdModuloCurso,
 							];
 						});
 					$datatable_response['data'] = $rows;
@@ -624,25 +657,37 @@ class gleccionController extends elearningController {
             if (is_numeric($leccion_id) && $leccion_id != 0) {
                 $mod_leccion = $this->loadModel("_gestionLeccion");
                 $mod_modulo = $this->loadModel("_gestionModulo");
-                $leccion = $mod_leccion->getLeccionId($leccion_id);
-                $modulo = $mod_modulo->getModuloId($leccion["Moc_IdModuloCurso"]);
-                
-                if ($leccion) {
+								$leccion = $mod_leccion->getLeccionId($leccion_id);
+								// dd($leccion);
+								
+								
 
-                    $data["modulo"] =  $modulo;
+                if ($leccion) {
+										
+                    $data["modulo"] =  $modulo ?? null;
                     $data["leccion"] =  $leccion;
                     $data['idLeccion'] =  $leccion_id;
 										
-                    $mod_curso = $this->loadModel("_gestionCurso");
+										$mod_curso = $this->loadModel("_gestionCurso");
 
-                    $curso = $mod_curso->getCursoById($modulo['Cur_IdCurso'], Cookie::lenguaje());
+										$lecc_frm = LeccionFormulario::findByLeccion($leccion_id);
+
+										if ($leccion['Lec_Tipo'] == Leccion::TIPO_ENCUESTA) {
+
+											$modulo = $mod_modulo->getModuloId($leccion["Moc_IdModuloCurso"]);
+											$curso = $mod_curso->getCursoById($modulo['Cur_IdCurso'], Cookie::lenguaje());
+										}
+										if ($leccion['Lec_Tipo'] == Leccion::TIPO_ENCUESTA_LIBRE) {
+											$curso = $mod_curso->getCursoById($lecc_frm->formulario->Cur_IdCurso, Cookie::lenguaje());
+										}
+                    
                     $data['titulo'] = $lang->get('str_encuesta').' - '.str_limit($curso['Cur_Titulo'], 20);
                     // $data['active'] = 'examen';
 
                     $data['idcurso'] = $curso['Cur_IdCurso'];
                     $data['curso'] = $curso;
 
-                    $lecc_frm = LeccionFormulario::findByLeccion($leccion_id);
+                    
                     // dd($lecc_frm->formulario);
                     $data['formulario'] = null;
                     // $data['respuestas'] = null;

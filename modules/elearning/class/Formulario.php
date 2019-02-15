@@ -10,9 +10,9 @@ class Formulario extends Eloquent
   protected $primaryKey = 'Frm_IdFormulario';
   const CREATED_AT = 'Frm_CreatedAt';
   const UPDATED_AT = 'Frm_UpdatedAt';
-  public const TIPO_FORMULARIO  = 0;
-  public const TIPO_ENCUESTA    = 1;
-  public const TIPO_ENCUESTA_LIBRE    = 2;
+  public const TIPO_FORMULARIO      = 0;
+  public const TIPO_ENCUESTA        = 1;
+  public const TIPO_ENCUESTA_LIBRE  = 2;
   
 
   public static function getActivoByCursoId ($curso_id) {
