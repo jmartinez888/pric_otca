@@ -336,7 +336,7 @@ class gleccionController extends elearningController {
             if ($modulo != 0 || $modulo == Formulario::hashEncuestaLibre()) {
                 $lang = $this->_view->getLenguaje(['elearning_cursos', 'elearning_formulario_responder'], false, true);
                 $Mmodel = $this->loadModel("_gestionLeccion");
-		    dd(Formulario::hashEncuestaLibre(),$modulo);
+		    //dd(Formulario::hashEncuestaLibre(),$modulo);
                 if (Formulario::hashEncuestaLibre() == $modulo)
                     $leccion_id = $Mmodel->insertLeccion(null , Leccion::TIPO_ENCUESTA_LIBRE, $titulo, $desc, $tiempo);
                 else 
