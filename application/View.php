@@ -363,13 +363,14 @@ class View extends Smarty
         // }
         try
         {
+            $temp = [];
             $lenguaje = Session::get("fileLenguaje");
-
-            if ($lang)
-                $temp = $this->LoadLenguaje($archivo, $lang);
-            else
-                $temp = $this->LoadLenguaje($archivo);
-            if ($temp == null) $temp = [];
+            if ($archivo) {
+                if ($lang)
+                    $temp = $this->LoadLenguaje($archivo, $lang);
+                else
+                    $temp = $this->LoadLenguaje($archivo);
+            }
             $lenguaje = array_merge($lenguaje, $temp);
             // foreach ($archivo as $dato)
             // {

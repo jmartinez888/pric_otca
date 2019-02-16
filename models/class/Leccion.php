@@ -22,7 +22,7 @@ class Leccion extends Eloquent
   public  const TIPO_PIZARRA          = 4;
   public  const TIPO_EXAMEN_DIRIGIDO  = 5;
   public  const TIPO_ENCUESTA         = 10;
-  public  const TIPO_ENCUESTA_LIBRE         = 11;
+  public  const TIPO_ENCUESTA_LIBRE   = 11;
 
   protected $guarded = ['docente_id'];
 

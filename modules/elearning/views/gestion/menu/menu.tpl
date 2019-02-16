@@ -431,22 +431,22 @@
 <div class="col-xs-12 col-sm-12 col-md-3 col-lg-2" >
   <div class="sidebar-left">
     <ul id="item-lista-curso">
-        <div {if $active == 'mis_cursos'} class="side-menu2 active" {else} class="side-menu2 " {/if} >
+        <a href="{$_layoutParams.root}elearning/gestion/_inicio" class="side-menu2 {if isset($active) && $active == 'mis_cursos'}active{/if}">
           <li class="side-menu side-menu-center-mid" style="position: relative">
             <i class="glyphicon glyphicon-book"></i>
             &nbsp;
-            <span> Mis Cursos </span>
+            <span> {$lang->get('str_mis_cursos')} </span>
           </li>
-        </div>
+        </a>
     </ul>
     <ul id="item-ficha-curso">
-        <div class="side-menu2 {if $active == 'ficha_curso'}active{/if}">
+        <a href="{$_layoutParams.root}elearning/gcurso/_view_finalizar_registro/{$curso['Cur_IdCurso']}" class="side-menu2 {if isset($active) && $active == 'ficha_curso'}active{/if}">
           <li class="side-menu side-menu-center-mid" style="position: relative">
             <i class="fa fa-file-text-o"></i>
             &nbsp;
-            <span> Ficha Curso </span>
+            <span> {$lang->get('str_ficha_curso')} </span>
           </li>
-        </div>
+        </a>
     </ul>
 
     {if (isset($curso)) && $curso['Moa_IdModalidad'] == App\Curso::MODALIDAD_PRESENCIAL}
@@ -461,13 +461,13 @@
     </ul>
     {/if}
     <ul id="item-modulos-curso">
-        <div class="side-menu2 {if $active == 'modulos'}active{/if}">
+        <a href="{$_layoutParams.root}elearning/gmodulo/_view_modulos_curso/{$curso['Cur_IdCurso']}" class="side-menu2 {if isset($active) && $active == 'modulos'}active{/if}">
           <li class="side-menu side-menu-center-mid" style="position: relative">
             <i class="fa fa-book"></i>
             &nbsp;
-            <span> Modulos </span>
+            <span> {$lang->get('str_modulos')} </span>
           </li>
-        </div>
+        </a>
     </ul>
     <ul id="item-tareas-curso">
         <div class="side-menu2 {if $active == 'tareas'}active{/if}">

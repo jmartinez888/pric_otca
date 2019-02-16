@@ -32,15 +32,15 @@
         </div>
     </div>
     <div class="col-sm-12 pb-4">
-      <a href="{$_layoutParams.root}elearning/gleccion/_view_lecciones_modulo/{$idcurso}/{$modulo.Moc_IdModuloCurso}" class="btn btn-danger margin-t-10 " id="btn_nuevo" ><i class="glyphicon glyphicon-triangle-left"></i> Regresar</a>
+      <a href="{$_layoutParams.root}elearning/gleccion/encuestas/{$idcurso}" class="btn btn-danger margin-t-10 " id="btn_nuevo" ><i class="glyphicon glyphicon-triangle-left"></i> {$lang->get('str_regresar')}</a>
     </div>
 
 	{if $formulario != null}
 
     <div class="col-xs-12">
 		  <ul class="nav nav-tabs" role="tablist">
-		    <li role="presentation" class="active" id="item_modulo"><a data-toggle="tab" href="#item" aria-controls="item">ENCUESTA</a></li>
-		    <li role="presentation" id="item_lecciones" ><a data-toggle="tab" href="#respuestas" aria-controls="respuestas">RESPUESTAS</a></li>
+		    <li role="presentation" class="active" id="item_modulo"><a data-toggle="tab" href="#item" aria-controls="item">{strtoupper($lang->get('str_encuesta'))}</a></li>
+		    <li role="presentation" id="item_lecciones" ><a data-toggle="tab" href="#respuestas" aria-controls="respuestas">{strtoupper($lang->get('str_respuestas'))}</a></li>
 		  </ul>
 		</div>
 

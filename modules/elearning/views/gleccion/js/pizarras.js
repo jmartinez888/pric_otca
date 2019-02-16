@@ -65,6 +65,7 @@ new Vue({
 				{data: 'leccion_id', render: (d, t, r) => {
 					return Mustache.render(document.getElementById('tpl_btn_pizarras').innerHTML, {
 						leccion_id: d,
+						modulo_id: r.modulo_id
 					})
 				}}
 			],
