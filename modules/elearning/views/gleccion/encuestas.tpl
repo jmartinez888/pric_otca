@@ -89,8 +89,13 @@
 {/block}
 {block 'template' append}
 <template id="tpl_btn_encuestas">
+    {literal}{{#is_libre}}{/literal}
+    <button data-id="{literal}{{leccion_id}}{/literal}" data-clipboard-text="{$_layoutParams.root}elearning/encuesta/responder/{literal}{{leccion_id}}{/literal}" class="btn btn-acciones btn-default  btn-sm btn_copiar" data-toggle="tooltip" data-placement="bottom" title="{$lang->get('str_copiar_enlace')}"><i class="glyphicon glyphicon-link"></i></button>
+    {literal}{{/is_libre}}{/literal}
     <a href="{$_layoutParams.root}elearning/gleccion/encuesta/{literal}{{leccion_id}}{/literal}" class="btn btn-default btn-acciones  btn-sm" data-toggle="tooltip" data-placement="bottom" title="{$lang->get('str_editar')}"><i class="glyphicon glyphicon-pencil"></i></a>
+
     <button data-id="{literal}{{leccion_id}}{/literal}" class="btn btn-acciones btn-default  btn-sm btn_eliminar" data-toggle="tooltip" data-placement="bottom" title="{$lang->get('str_eliminar')}"><i class="glyphicon glyphicon-trash"></i></button>
+    
 </template>
 {/block}
 {block 'js' append}
@@ -101,6 +106,7 @@
 <script src="{BASE_URL}modules/elearning/views/gestion/js/core/util.js" type="text/javascript"></script>
 <script src="{BASE_URL}public/js/axios/dist/axios.min.js" type="text/javascript"></script>
 <script src="{BASE_URL}public/js/vuejs/vue.min.js" type="text/javascript"></script>
+<script src="{BASE_URL}public/vendors/clipboard/clipboard.min.js" type="text/javascript"></script>
 <script src="{BASE_URL}public/js/moment/moment.js" type="text/javascript"></script>
 <script>moment.locale('{Cookie::lenguaje()}')</script>
 <script src="{BASE_URL}public/js/mustache/mustache.min.js" type="text/javascript"></script>

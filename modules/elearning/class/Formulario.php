@@ -31,6 +31,7 @@ class Formulario extends Eloquent
   public function preguntas () {
     return $this->hasMany('App\FormularioPreguntas', 'Frm_IdFormulario')->whereNull('Fpr_Parent')->orderBy('Fpr_Orden', 'asc');
   }
+  
   public function preguntasTodas () {
     return $this->hasMany('App\FormularioPreguntas', 'Frm_IdFormulario');
   }
