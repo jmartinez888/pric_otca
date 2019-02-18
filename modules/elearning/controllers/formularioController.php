@@ -228,7 +228,7 @@ class formularioController extends elearningController {
 	public function responder_encuesta ($leccion_id_hash) {
 		$this->responder($leccion_id_hash, true);
 	}
-	public function responder ($curso_id, $use_hash = false) {
+	public function responder ($curso_id, $is_encuesta_libre = false) {
 		$this->_acl->autenticado();
 
 
@@ -258,11 +258,13 @@ class formularioController extends elearningController {
 		if (is_numeric($curso_id) && $curso_id != 0) {
 			$this->_view->setTemplate(LAYOUT_FRONTEND);
 			$mod_curso = $this->loadModel('curso');
-			if ($use_hash) {
+			if ($is_encuesta_libre) {
 				$frm = LeccionFormulario::findByLeccion($curso_id)->formulario;
 				$curso = $mod_curso::find($frm->Cur_IdCurso);
 				$data['formulario_modo_registro'] = md5(Formulario::TIPO_ENCUESTA_LIBRE);
-				
+				if ($frm->Frm_Tipo != Formulario::TIPO_ENCUESTA_LIBRE)
+					$this->redireccionar('');
+
 			} else {
 				
 				

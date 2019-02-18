@@ -336,9 +336,12 @@ class gleccionController extends elearningController {
             if ($modulo != 0 || $modulo == Formulario::hashEncuestaLibre()) {
                 $lang = $this->_view->getLenguaje(['elearning_cursos', 'elearning_formulario_responder'], false, true);
                 $Mmodel = $this->loadModel("_gestionLeccion");
-		    //dd(Formulario::hashEncuestaLibre(),$modulo);
-                if (Formulario::hashEncuestaLibre() == $modulo)
+            //dd(Formulario::hashEncuestaLibre(),$modulo);
+                $tipo_formulario = Formulario::TIPO_ENCUESTA;
+                if (Formulario::hashEncuestaLibre() == $modulo) {
                     $leccion_id = $Mmodel->insertLeccion(null , Leccion::TIPO_ENCUESTA_LIBRE, $titulo, $desc, $tiempo);
+                    $tipo_formulario = Formulario::TIPO_ENCUESTA_LIBRE;
+                }
                 else 
                     $leccion_id = $Mmodel->insertLeccion($modulo , Leccion::TIPO_ENCUESTA, $titulo, $desc, $tiempo);
 
@@ -350,19 +353,20 @@ class gleccionController extends elearningController {
                 $frm->Cur_IdCurso = $curso_id;
                 $frm->Frm_Titulo = $titulo;
                 $frm->Frm_Estado = 1;
-                $frm->Frm_Tipo = 1;
+                $frm->Frm_Tipo = $tipo_formulario;
                 $frm->Frm_Mensaje = $lang->get('elearning_cursos_gracias_por_contestar_encuesta');
                 if ($frm->save()) {
                     $lf = new LeccionFormulario();
                     $lf->Lec_IdLeccion = $leccion_id;
                     $lf->Frm_IdFormulario = $frm->Frm_IdFormulario;
                     if ($lf->save()) {
+
                         $this->redireccionar('elearning/gleccion/encuestas/'.$curso_id);
 
                     }
                 }
 
-            } else echo 'asd';
+            }
         }
     }
 
