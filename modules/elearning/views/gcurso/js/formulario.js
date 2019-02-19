@@ -192,6 +192,81 @@ Vue.component('input-tags', {
 
 	}
 })
+Vue.component('input-tags-resume', {
+	props: ['data-pregunta', 'data-resumen'],
+	template: '#tag-resumen',
+	data: function () {
+		return {
+			objPregunta: null,
+		}
+	},
+	created: function () {
+		this.objPregunta = JSON.parse(this.dataPregunta);
+		// console.log(this.objPregunta)
+		console.log(this.dataResumen);
+		console.log(JSON.parse(this.dataResumen))
+		this.dataResumen = JSON.parse(this.dataResumen)
+	},
+	mounted: function () {
+		if (this.objPregunta.tipo == 'select' || this.objPregunta.tipo == 'radio') {
+			var chart = am4core.create(this.$refs.chartSelect, am4charts.PieChart);
+			chart.logo.scale = 0;
+			chart.tooltip.disabled = true
+			chart.data = this.dataResumen;
+
+			var series = chart.series.push(new am4charts.PieSeries());
+			series.dataFields.value = "total_respuestas";
+			series.dataFields.category = "opcion";
+			series.labels.template.disabled = true;
+			series.ticks.template.disabled = true;
+			series.slices.template.tooltipText = "";
+
+			// this creates initial animation
+			// series.hiddenState.properties.opacity = 1;
+			// series.hiddenState.properties.endAngle = -90;
+			// series.hiddenState.properties.startAngle = -90;
+
+			chart.legend = new am4charts.Legend();
+			chart.legend.position = 'right'
+		}
+
+		if (this.objPregunta.tipo == 'box') {
+			var chart = am4core.create(this.$refs.chartBox, am4charts.XYChart);
+			chart.logo.scale = 0;
+
+			chart.colors.saturation = 0.4;
+
+			chart.data = this.dataResumen;
+
+
+			var categoryAxis = chart.yAxes.push(new am4charts.CategoryAxis());
+			categoryAxis.renderer.grid.template.location = 0;
+			categoryAxis.dataFields.category = "opcion";
+			categoryAxis.renderer.minGridDistance = 1;
+
+			var valueAxis = chart.xAxes.push(new am4charts.ValueAxis());
+			valueAxis.renderer.maxLabelPosition = 0.98;
+
+			var series = chart.series.push(new am4charts.ColumnSeries());
+			series.dataFields.categoryY = "opcion";
+			series.dataFields.valueX = "total_respuestas";
+			series.tooltipText = "{valueX.value}";
+			series.sequencedInterpolation = true;
+			series.defaultState.transitionDuration = 1000;
+			series.sequencedInterpolationDelay = 100;
+			series.columns.template.strokeOpacity = 0;
+
+			chart.cursor = new am4charts.XYCursor();
+			chart.cursor.behavior = "panY";
+
+
+			// as by default columns of the same series are of the same color, we add adapter which takes colors from chart.colors color set
+			series.columns.template.adapter.add("fill", function (fill, target) {
+				return chart.colors.getIndex(target.dataItem.index);
+			});
+		}
+	}
+})
 new Vue({
 	el: '#formulario_respuestas_vue',
 	components: {
@@ -371,4 +446,9 @@ new Vue({
 		console.log(this)
 		// this.tags.push({name: 'x', id: this.count_tags++, edit: false})
 	}
+})
+
+new Vue({
+	el: '#formulario_reportes_vue',
+
 })
