@@ -39,13 +39,14 @@
 
     <div class="col-xs-12">
 		  <ul class="nav nav-tabs" role="tablist">
-		    <li role="presentation" class="active" id="item_modulo"><a data-toggle="tab" href="#item" aria-controls="item">{strtoupper($lang->get('str_encuesta'))}</a></li>
+		    <li role="presentation" class="" id="item_modulo"><a data-toggle="tab" href="#item" aria-controls="item">{strtoupper($lang->get('str_encuesta'))}</a></li>
 		    <li role="presentation" id="item_lecciones" ><a data-toggle="tab" href="#respuestas" aria-controls="respuestas">{strtoupper($lang->get('str_respuestas'))}</a></li>
+		    <li role="presentation" class="active" id="item_reporte" ><a data-toggle="tab" href="#reportes" aria-controls="respuestas">{strtoupper($lang->get('str_reportes'))}</a></li>
 		  </ul>
 		</div>
 
 		<div class="tab-content">
-			<div class="col-xs-12 div_lecciones tab-pane active" id="item" role="tabpanel">
+			<div class="col-xs-12 div_lecciones tab-pane " id="item" role="tabpanel">
 			  <div class="panel panel-default" style="border-top: 0; border-top-left-radius: 0; border-top-right-radius: 0;">
 			    <!-- <div class="panel-heading">
 			      <h3 class="panel-title">
@@ -113,6 +114,22 @@
 			    </div>
 			  </div>
 			</div>
+			<div class="col-xs-12 div_lecciones tab-pane active" id="reportes" role="tabpanel">
+				<div class="panel panel-default" style="border-top: 0; border-top-left-radius: 0; border-top-right-radius: 0;">
+					<div class="panel-body" id="formulario_reportes_vue">
+						<div class="col-lg-12">
+								<form role="form" >
+									{foreach $formulario->preguntas as $pre}
+										<input-tags-resume 
+										data-pregunta='{json_encode($pre->formatToArray())}'
+										data-resumen='{json_encode($pre->resumenRespuesta())}'
+										></input-tags-resume>
+									{/foreach}
+								</form>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	{else}
 		<h3>{$lang->get('elearning_cursos_no_posee_encuesta')}</h3>
@@ -131,6 +148,34 @@
 	{if $formulario != null}
   	{include 'input_tags.tpl'}
 	{/if}}
+<template id="tag-resumen">
+		<div class="form-group">
+				<label class="control-label">{literal}{{objPregunta.pregunta}}{/literal}</label>
+				<span style="display: block;">3 {strtolower($lang->get('str_respuestas'))}</span>
+				<div class="container-resumen">
+					<div class="display-resumen" v-if="objPregunta.tipo == 'texto' || objPregunta.tipo == 'parrafo' || objPregunta.tipo == 'fecha' || objPregunta.tipo == 'hora'">
+						<table class="table table-condensed table-hover">
+							<tbody>
+								<tr v-for="textos in dataResumen">
+									<td>{literal}{{textos.respuesta}}{/literal}</td>
+								</tr>
+							</tbody>
+						</table>
+						
+					</div>
+					<div class="display-resumen" v-if="objPregunta.tipo == 'select' || objPregunta.tipo == 'radio'">
+						<div class="chart-select" ref="chartSelect"></div>
+					</div>
+					<div class="display-resumen" v-if="objPregunta.tipo == 'box'">
+						<div ref="chartBox"></div>
+					</div>
+				</div>
+				<hr>
+		</div>
+		
+	
+	</div>
+</template>
 <template id="tpl_btn_frm_encuestas">
 	<a href="{$_layoutParams.root}elearning/formulario/respuesta/{literal}{{formulario_respuesta_id}}{/literal}" class="btn btn-default btn-acciones btn-sm" data-toggle="tooltip" data-placement="bottom" title="{$lang->get('str_ver_respuestas')}"><i class="glyphicon glyphicon-file"></i></a>
 	<button data-id="{literal}{{formulario_respuesta_id}}{/literal}" class="btn btn-default btn-acciones btn-eliminar  btn-sm" data-toggle="tooltip" data-placement="bottom" title="{$lang->get('str_eliminar')}"><i class="glyphicon glyphicon-trash" data-id="{literal}{{formulario_respuesta_id}}{/literal}"></i></button>
@@ -141,6 +186,9 @@
 <script type="text/javascript">
   var data_frm = {json_encode($formulario->formatToArray())};
 </script>
+
+<script src="{BASE_URL}public/vendors/amcharts/core.js" type="text/javascript"></script>
+<script src="{BASE_URL}public/vendors/amcharts/charts.js" type="text/javascript"></script>
 <script src="{BASE_URL}public/js/axios/dist/axios.min.js" type="text/javascript"></script>
 <script src="{BASE_URL}public/js/vuejs/vue.min.js" type="text/javascript"></script>
 <script src="{BASE_URL}public/js/moment/moment.js" type="text/javascript"></script>

@@ -67,6 +67,7 @@
               
                 <table class="table table-bordered table-hover">
                   <tbody>
+                    
                       {foreach $pre->hijos as $fil}
                       <tr>
                         <td><strong>{$fil->Fpr_Pregunta}</strong></td>

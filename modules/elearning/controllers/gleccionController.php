@@ -664,9 +664,6 @@ class gleccionController extends elearningController {
                 $mod_modulo = $this->loadModel("_gestionModulo");
 								$leccion = $mod_leccion->getLeccionId($leccion_id);
 								// dd($leccion);
-								
-								
-
                 if ($leccion) {
 										
                     $data["modulo"] =  $modulo ?? null;
