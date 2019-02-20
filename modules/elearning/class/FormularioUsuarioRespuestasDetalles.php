@@ -32,7 +32,10 @@ class FormularioUsuarioRespuestasDetalles extends Eloquent
   	return self::where('Fpr_IdForPreguntas', $pregunta_id)->get();
   }
   public function scopeByPregunta ($query, $pregunta_id) {
-  	return $query->where('formulario_usuario_respuestas_detalles.Fpr_IdForPreguntas', $pregunta_id);
+    if (is_array($pregunta_id)) 
+      return $query->whereIn('formulario_usuario_respuestas_detalles.Fpr_IdForPreguntas', $pregunta_id);
+    else
+  	  return $query->where('formulario_usuario_respuestas_detalles.Fpr_IdForPreguntas', $pregunta_id);
   }
 
   public function formatToArray ($exclude = []) {

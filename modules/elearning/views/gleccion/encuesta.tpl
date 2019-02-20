@@ -151,7 +151,7 @@
 <template id="tag-resumen">
 		<div class="form-group">
 				<label class="control-label">{literal}{{objPregunta.pregunta}}{/literal}</label>
-				<span style="display: block;">3 {strtolower($lang->get('str_respuestas'))}</span>
+				<span style="display: block;">{$formulario->respuestas()->count()} {strtolower($lang->get('str_respuestas'))}</span>
 				<div class="container-resumen">
 					<div class="display-resumen" v-if="objPregunta.tipo == 'texto' || objPregunta.tipo == 'parrafo' || objPregunta.tipo == 'fecha' || objPregunta.tipo == 'hora'">
 						<table class="table table-condensed table-hover">
@@ -163,11 +163,17 @@
 						</table>
 						
 					</div>
-					<div class="display-resumen" v-if="objPregunta.tipo == 'select' || objPregunta.tipo == 'radio'">
+					<div class="display-resumen fn-select fn-radio" v-if="objPregunta.tipo == 'select' || objPregunta.tipo == 'radio'">
 						<div class="chart-select" ref="chartSelect"></div>
 					</div>
-					<div class="display-resumen" v-if="objPregunta.tipo == 'box'">
+					<div class="display-resumen fn-box" v-if="objPregunta.tipo == 'box'">
 						<div ref="chartBox"></div>
+					</div>
+					<div class="display-resumen" v-if="objPregunta.tipo == 'cuadricula'" >
+							<div ref="chartCuadrilla" style="height: 500px"></div>
+					</div>
+					<div class="display-resumen" v-if="objPregunta.tipo == 'casilla'" >
+							<div ref="chartCuadrilla" style="height: 500px"></div>
 					</div>
 				</div>
 				<hr>
