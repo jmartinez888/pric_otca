@@ -72,6 +72,9 @@ class indexModel extends Model {
                     GROUP BY cur_so.Cur_IdCurso 
                     LIMIT $registroInicio, $registrosXPagina " ;
 
+            var_dump($sql);
+            exit;
+
             $result = $this->_db->prepare($sql);
             $result->execute();
             return $result->fetchAll(PDO::FETCH_ASSOC);
