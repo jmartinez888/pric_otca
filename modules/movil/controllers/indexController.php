@@ -26,6 +26,7 @@ class  indexController extends movilController {
         $_mis_cursos=0) { 
         $condicion = " WHERE cr.Cur_Estado = 1 AND cr.Row_Estado = 1";
         $busqueda = str_replace('_',' ',$busqueda); 
+        var_dump($busqueda);
         if($busqueda != "" && $busqueda != "xxx"){
             $condicion .= " AND cr.Cur_Titulo LIKE '%" . $busqueda . "%' AND cr.Cur_Descripcion LIKE '%" . $busqueda . "%' ";
         } 
