@@ -71,10 +71,7 @@ class indexModel extends Model {
                     LEFT JOIN valoracion_curso vc ON cur_so.Cur_IdCurso = vc.Cur_IdCurso 
                     GROUP BY cur_so.Cur_IdCurso 
                     LIMIT $registroInicio, $registrosXPagina " ;
-
-            var_dump($sql);
-            exit;
-
+                    
             $result = $this->_db->prepare($sql);
             $result->execute();
             return $result->fetchAll(PDO::FETCH_ASSOC);
