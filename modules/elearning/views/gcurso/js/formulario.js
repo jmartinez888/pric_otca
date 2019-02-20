@@ -200,6 +200,17 @@ Vue.component('input-tags-resume', {
 			objPregunta: null,
 		}
 	},
+	methods: {
+		createSeries: function (chart, field, name, stacked) {
+			var series = chart.series.push(new am4charts.ColumnSeries());
+			series.dataFields.valueY = field;
+			series.dataFields.categoryX = "pregunta";
+			series.name = name;
+			series.columns.template.tooltipText = "{name}: [bold]{valueY}[/]";
+			// series.stacked = stacked;
+			series.columns.template.width = am4core.percent(95);
+		}
+	},
 	created: function () {
 		this.objPregunta = JSON.parse(this.dataPregunta);
 		// console.log(this.objPregunta)
@@ -233,7 +244,7 @@ Vue.component('input-tags-resume', {
 		if (this.objPregunta.tipo == 'box') {
 			var chart = am4core.create(this.$refs.chartBox, am4charts.XYChart);
 			chart.logo.scale = 0;
-
+			
 			chart.colors.saturation = 0.4;
 
 			chart.data = this.dataResumen;
@@ -265,6 +276,39 @@ Vue.component('input-tags-resume', {
 				return chart.colors.getIndex(target.dataItem.index);
 			});
 		}
+
+		if (this.objPregunta.tipo == 'cuadricula' || this.objPregunta.tipo == 'casilla') {
+			var chart = am4core.create(this.$refs.chartCuadrilla, am4charts.XYChart);
+			chart.logo.scale = 0;
+			console.log(chart)
+			// Add data
+			chart.data = this.dataResumen.data;
+
+			// Create axes
+			var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
+			categoryAxis.dataFields.category = "pregunta";
+			// categoryAxis.title.text = "Local country offices";
+			categoryAxis.renderer.grid.template.location = 0;
+			categoryAxis.renderer.minGridDistance = 20;
+			categoryAxis.renderer.cellStartLocation = 0.1;
+			categoryAxis.renderer.cellEndLocation = 0.9;
+
+			var  valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+			valueAxis.min = 0;
+			// valueAxis.title.text = "Expenditure (M)";
+			this.dataResumen.opciones.forEach(v => {
+				this.createSeries(chart, v.opcion_id, v.opcion, false);
+			})
+			// this.createSeries(chart, "namerica", "MEDIO", true);
+			// this.createSeries(chart, "asia", "ALTO", false);
+			// this.createSeries(chart, "lamerica", "Latin America", true);
+			// this.createSeries(chart, "meast", "Middle East", true);
+			// this.createSeries(chart, "africa", "Africa", true);
+
+			// Add legend
+			chart.legend = new am4charts.Legend();
+		}
+		
 	}
 })
 new Vue({

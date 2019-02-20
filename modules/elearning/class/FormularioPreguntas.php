@@ -80,6 +80,83 @@ class FormularioPreguntas extends Eloquent
         }
         $res = $temp_res;
         break;
+      case 'cuadricula':
+        $pre_res = [
+          'data' => [],
+          'opciones' => []
+        ];
+        $opciones = $this->opciones;
+        foreach ($opciones as $key => $value) {
+          $pre_res['opciones'][] = [
+            'opcion' => $value->Fpo_Opcion,
+            'opcion_id' => $value->Fpo_IdForPrOpc
+          ];
+        }
+        foreach ($this->hijos as $key => $value) {
+          $res_predata = [];
+          foreach ($opciones as $kopc => $valopc) {  
+            $td = FormularioUsuarioRespuestasDetalles::byPregunta($value->Fpr_IdForPreguntas)
+            ->select(DB::raw('COUNT(*) as total_respuestas'))
+            ->where('formulario_usuario_respuestas_detalles.Fpo_IdForPrOpc', $valopc->Fpo_IdForPrOpc)
+            ->first();
+
+            $res_predata[$valopc->Fpo_IdForPrOpc] = $td->total_respuestas;
+          }
+          $pre_res['data'][] = ['pregunta' => $value->Fpr_Pregunta] + $res_predata;
+        }
+        $res = $pre_res;
+        break;
+      case 'casilla':
+        $pre_res = [
+          'data' => [],
+          'opciones' => []
+        ];
+        $opciones = $this->opciones;
+        foreach ($opciones as $key => $value) {
+          $pre_res['opciones'][] = [
+            'opcion' => $value->Fpo_Opcion,
+            'opcion_id' => $value->Fpo_IdForPrOpc
+          ];
+        }
+        foreach ($this->hijos as $keyH => $valueH) {
+          $temp_res = [];
+          $res_predata = [];
+          $opc_ids = FormularioUsuarioRespuestasDetalles::byPregunta($valueH->Fpr_IdForPreguntas)
+          ->select('Fre_Respuesta')->get();
+          foreach ($opc_ids as $key => $value) {
+            $respuesta = explode('-', $value->Fre_Respuesta);
+            foreach ($respuesta as $keyR => $valueR) {
+              if (count($temp_res) == 0) {
+                $temp_res[] = [
+                  'opcion_id' => $valueR,
+                  'total_respuestas' => 1
+                ];
+              } else {
+                $existe = false;
+                foreach ($temp_res as $k => $v) {
+                  if ($v['opcion_id'] == $valueR) {
+                    $temp_res[$k]['total_respuestas'] += 1;
+                    $existe = true;
+                    break;
+                  }  
+                }
+                if (!$existe) {
+                  $temp_res[] = [
+                    'opcion_id' => $valueR,
+                    'total_respuestas' => 1
+                  ];
+                }
+              }
+            }
+            
+          }
+          foreach ($temp_res as $trk => $trv) {
+            $res_predata[$trv['opcion_id']] = $trv['total_respuestas'];
+          }
+          $pre_res['data'][] = ['pregunta' => $valueH->Fpr_Pregunta] + $res_predata;
+        }
+        $res = $pre_res;
+        break;
     }
     return $res;
   }
