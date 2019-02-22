@@ -55,6 +55,9 @@
 					  <div class="form-group">
 					    <label for="modulo">{$lang->get('str_modulo')}</label>
 					    <select name="modulo" id="modulo" class="form-control" required="required">
+								{if $modo == 'encuestas'}
+								<option value="{App\Formulario::hashEncuestaLibre()}">{$lang->get('str_encuesta_libre')}</option>
+								{/if}
 					    	{foreach $modulos as $mod}
 					    		<option value="{$mod.Moc_IdModuloCurso}">{$mod.Moc_Titulo}</option>
 					    	{/foreach}

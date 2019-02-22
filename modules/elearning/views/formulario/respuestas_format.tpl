@@ -64,8 +64,10 @@
                 <p>{$pre->detalleRespuestaByResUsu($respuesta->Fur_IdFrmUsuRes)->Fre_Respuesta}</p>
               {/if}
               {if ($pre->Fpr_Tipo == 'cuadricula')}
+              
                 <table class="table table-bordered table-hover">
                   <tbody>
+                    
                       {foreach $pre->hijos as $fil}
                       <tr>
                         <td><strong>{$fil->Fpr_Pregunta}</strong></td>

@@ -135,6 +135,7 @@ class gcursoController extends elearningController {
     $this->_view->assign('titulo', $lang->get('elearning_gcurso_ficha_curso').' - '.str_limit($datos['Cur_Titulo'], 20));
     // $this->_view->assign('active', 'ficha_curso');
     $this->_view->assign('idcurso', $idcurso);
+    $this->_view->assign('active', 'ficha_curso');
     $this->_view->assign('parametros', $parametros);
     $this->_view->assign('IdiomaOriginal',$datos["Idi_IdIdioma"]);
     $this->_view->render('ajax/_view_finalizar_registro');

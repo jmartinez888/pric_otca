@@ -55,7 +55,7 @@
 
   {if ($formulario == null)}
     <div class="col-lg-12">
-      <h3>No posee formulario</h3>
+      <h3>{$lang->get('elearning_cursos_no_posee_formulario')}</h3>
     </div>
   {else}
 

@@ -22,12 +22,12 @@ class  indexController extends movilController {
         $contenido_leccion = $this->_model->getContenido($Lec_IdLeccion);
         $this->retornar($contenido_leccion,"contenido_leccion");                  
     }  
-    public function getCursos($_tipo_curso=0,$Usu_IdUsuario=0,$busqueda="",
-        $_mis_cursos=0) { 
+    public function getCursos($_tipo_curso=-1,$Usu_IdUsuario=-1,$busqueda="",
+        $_mis_cursos=-1) { 
         $condicion = " WHERE cr.Cur_Estado = 1 AND cr.Row_Estado = 1";
-        $busqueda = str_replace('_',' ',$busqueda); 
+        $busqueda = str_replace('_',' ',$busqueda);        
         if($busqueda != "" && $busqueda != "xxx"){
-            $condicion .= " AND cr.Cur_Titulo LIKE '%" . $busqueda . "%' AND cr.Cur_Descripcion LIKE '%" . $busqueda . "%' ";
+            $condicion .= " AND (cr.Cur_Titulo LIKE '%" . $busqueda . "%' OR cr.Cur_Descripcion LIKE '%" . $busqueda . "%') ";
         } 
         if ($_mis_cursos == 1) {
             $condicion .= " AND mt.Usu_IdUsuario = " . $Usu_IdUsuario;
@@ -36,6 +36,9 @@ class  indexController extends movilController {
               $condicion .= " AND cr.Moa_IdModalidad =  $_tipo_curso";
         }
         $condicion .= " GROUP BY cr.Cur_IdCurso ";
+        if($Usu_IdUsuario<=0){
+            $Usu_IdUsuario=false;
+        }
         $cursos = $this->_model->getCursosPaginado(0,CANT_REG_PAG,$condicion,$Usu_IdUsuario);           
         $this->retornar($cursos,"cursos");                       
     }       

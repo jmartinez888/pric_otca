@@ -15,15 +15,162 @@ class FormularioPreguntas extends Eloquent
   public function opciones () {
     return $this->hasMany('App\FormularioPreguntasOpciones', 'Fpr_IdForPreguntas');
   }
+  public function resumenRespuesta () {
+    $res = [];
+    switch ($this->Fpr_Tipo) {
+      case 'texto':
+      case 'fecha':
+      case 'hora':
+      case 'parrafo':
+        $query = FormularioUsuarioRespuestasDetalles::byPregunta($this->Fpr_IdForPreguntas)
+          ->groupBy('Fre_Respuesta');
+        $res = $query->get()->map(function($item) {
+          return [
+            'respuesta' => $item->Fre_Respuesta
+          ];
+        });   
+        break;
+      case 'select':
+      case 'radio':
+      $query = FormularioUsuarioRespuestasDetalles::byPregunta($this->Fpr_IdForPreguntas)
+          ->select(
+            'formulario_usuario_respuestas_detalles.Fpr_IdForPreguntas as pregunta',
+            'formulario_preguntas_opciones.Fpo_Opcion as opcion',
+            DB::raw('COUNT(formulario_usuario_respuestas_detalles.Fpr_IdForPreguntas) as total_respuestas')
+            )
+          ->join('formulario_preguntas_opciones', 'formulario_preguntas_opciones.Fpo_IdForPrOpc', 'formulario_usuario_respuestas_detalles.Fpo_IdForPrOpc')
+          ->groupBy('formulario_usuario_respuestas_detalles.Fpo_IdForPrOpc');
+        $res = $query->get()->toArray();   
+        break;
+      case 'box':
+        $temp_res = [];
+        $opc_ids = FormularioUsuarioRespuestasDetalles::byPregunta($this->Fpr_IdForPreguntas)
+          ->select('Fre_Respuesta')->get();
+          // print_r($opc_ids);
+          $inicia = 1;
+        foreach ($opc_ids as $key => $value) {
+          $respuesta = explode('-', $value->Fre_Respuesta);
+          foreach ($respuesta as $keyR => $valueR) {
+            $inicia++;
+            if (count($temp_res) == 0) {
+              $temp_res[] = [
+                'opcion' => FormularioPreguntasOpciones::find($valueR)->Fpo_Opcion,
+                'opcion_id' => $valueR,
+                'total_respuestas' => 1
+              ];
+            } else {
+              $existe = false;
+              foreach ($temp_res as $k => $v) {
+                if ($v['opcion_id'] == $valueR) {
+                  $temp_res[$k]['total_respuestas'] += 1;
+                  $existe = true;
+                  break;
+                }  
+              }
+              if (!$existe) {
+                $temp_res[] = [
+                  'opcion' => FormularioPreguntasOpciones::find($valueR)->Fpo_Opcion,
+                  'opcion_id' => $valueR,
+                  'total_respuestas' => 1
+                ];
+              }
+            }
+          }
+          
+        }
+        $res = $temp_res;
+        break;
+      case 'cuadricula':
+        $pre_res = [
+          'data' => [],
+          'opciones' => []
+        ];
+        $opciones = $this->opciones;
+        foreach ($opciones as $key => $value) {
+          $pre_res['opciones'][] = [
+            'opcion' => $value->Fpo_Opcion,
+            'opcion_id' => $value->Fpo_IdForPrOpc
+          ];
+        }
+        foreach ($this->hijos as $key => $value) {
+          $res_predata = [];
+          foreach ($opciones as $kopc => $valopc) {  
+            $td = FormularioUsuarioRespuestasDetalles::byPregunta($value->Fpr_IdForPreguntas)
+            ->select(DB::raw('COUNT(*) as total_respuestas'))
+            ->where('formulario_usuario_respuestas_detalles.Fpo_IdForPrOpc', $valopc->Fpo_IdForPrOpc)
+            ->first();
 
+            $res_predata[$valopc->Fpo_IdForPrOpc] = $td->total_respuestas;
+          }
+          $pre_res['data'][] = ['pregunta' => $value->Fpr_Pregunta] + $res_predata;
+        }
+        $res = $pre_res;
+        break;
+      case 'casilla':
+        $pre_res = [
+          'data' => [],
+          'opciones' => []
+        ];
+        $opciones = $this->opciones;
+        foreach ($opciones as $key => $value) {
+          $pre_res['opciones'][] = [
+            'opcion' => $value->Fpo_Opcion,
+            'opcion_id' => $value->Fpo_IdForPrOpc
+          ];
+        }
+        foreach ($this->hijos as $keyH => $valueH) {
+          $temp_res = [];
+          $res_predata = [];
+          $opc_ids = FormularioUsuarioRespuestasDetalles::byPregunta($valueH->Fpr_IdForPreguntas)
+          ->select('Fre_Respuesta')->get();
+          foreach ($opc_ids as $key => $value) {
+            $respuesta = explode('-', $value->Fre_Respuesta);
+            foreach ($respuesta as $keyR => $valueR) {
+              if (count($temp_res) == 0) {
+                $temp_res[] = [
+                  'opcion_id' => $valueR,
+                  'total_respuestas' => 1
+                ];
+              } else {
+                $existe = false;
+                foreach ($temp_res as $k => $v) {
+                  if ($v['opcion_id'] == $valueR) {
+                    $temp_res[$k]['total_respuestas'] += 1;
+                    $existe = true;
+                    break;
+                  }  
+                }
+                if (!$existe) {
+                  $temp_res[] = [
+                    'opcion_id' => $valueR,
+                    'total_respuestas' => 1
+                  ];
+                }
+              }
+            }
+            
+          }
+          foreach ($temp_res as $trk => $trv) {
+            $res_predata[$trv['opcion_id']] = $trv['total_respuestas'];
+          }
+          $pre_res['data'][] = ['pregunta' => $valueH->Fpr_Pregunta] + $res_predata;
+        }
+        $res = $pre_res;
+        break;
+    }
+    return $res;
+  }
   public function hijos () {
     return $this->hasMany('App\FormularioPreguntas', 'Fpr_Parent');
   }
   public function existeDetalleRespuestaByResUsu ($respuesta_usuario_id) {
-    return $this->respuestas()->where('Fur_IdFrmUsuRes', $respuesta_usuario_id)->count() > 0;
+    return true;
+    // return $this->respuestas()->where('Fur_IdFrmUsuRes', $respuesta_usuario_id)->count() > 0;
   }
   public function detalleRespuestaByResUsu ($respuesta_usuario_id) {
+    //filtrar solo las respuestas de un usuario
     $target = $this->respuestas()->where('Fur_IdFrmUsuRes', $respuesta_usuario_id)->first();
+    // dd($target);
     switch ($this->Fpr_Tipo) {
       case 'box':
         // dd($target);
@@ -33,9 +180,6 @@ class FormularioPreguntas extends Eloquent
           $temp[] = FormularioPreguntasOpciones::find($value);
         }
         return $temp;
-        break;
-      case 'casilla':
-        dd($target);
         break;
       case 'upload':
         $html = '';
@@ -77,7 +221,11 @@ THTML;
     }
     return $target;
   }
-
+  /**
+   * [respuestas retorna detalles de respuesta de la pregunta X de  todos los usuarios ]
+   *
+   * @return  [type]  [return description]
+   */
   public function respuestas () {
     return $this->hasMany('App\FormularioUsuarioRespuestasDetalles', 'Fpr_IdForPreguntas');
   }

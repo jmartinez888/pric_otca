@@ -306,6 +306,17 @@ abstract class Controller
         }
     }
 
+    
+    protected function filtrarInts($int, $diferente = 0)
+    {
+        foreach ($int as $key => $value) {
+            if (!(is_numeric($value) && is_int(+$value)) || (+$value == $diferente)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     protected function filtrarTexto($texto)
     {
         if(isset($texto) && !empty($texto))
@@ -417,8 +428,8 @@ abstract class Controller
 
     protected function validarUrlIdioma($norender=false)
     {
-          if($this->_lenguaje)
-          {
+        if($this->_lenguaje)
+        {
             Cookie::setLenguaje($this->_lenguaje);
         }else if(!$norender)
         {

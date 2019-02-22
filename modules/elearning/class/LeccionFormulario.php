@@ -20,7 +20,13 @@ class LeccionFormulario extends Eloquent
     //relación de uno a uno 
   	return $this->belongsTo('App\Leccion', 'Lec_IdLeccion');
   }
-
+  public function scopeGetByCurso ($query, $curso_id) {
+    return $query->select('leccion_formulario.*')
+      ->join('leccion', 'leccion.Lec_IdLeccion', 'leccion_formulario.Lec_IdLeccion')
+      ->join('formulario', 'formulario.Frm_IdFormulario', 'leccion_formulario.Frm_IdFormulario')
+      ->leftJoin('modulo_curso', 'modulo_curso.Moc_IdModuloCurso', 'leccion.Moc_IdModuloCurso')
+      ->where('formulario.Cur_IdCurso', $curso_id);
+  }
   /**
    * [findByLeccion buscar formulario por su la lección a la que está ligada, ]
    *

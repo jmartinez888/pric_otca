@@ -64,16 +64,19 @@ new Vue({
 				{data: 'leccion_id', render: (d, t, r) => {
 					return Mustache.render(document.getElementById('tpl_btn_encuestas').innerHTML, {
 						leccion_id: d,
+						is_libre: r.modulo_id == null,
+						hash_encuesta: r.hash_encuesta
 					})
 				}}
 			],
 			columnDefs: [
-				// {orderable: false,  targets: [3, 4]}
+				{orderable: false, className: 'text-right', targets: [3]},
 			]
 		})
 		.on('click', '.btn_eliminar', this.onClick_deleteEncuesta)
 		.on('draw', (x, datatable) => {
 			$('.btn-acciones[data-toggle="tooltip"]').tooltip();
+			new ClipboardJS('.btn_copiar');
 		});
 	}
 
