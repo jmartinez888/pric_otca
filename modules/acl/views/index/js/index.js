@@ -84,7 +84,8 @@ $(document).on('ready', function () {
             // mensaje(JSON.parse(data));
         });
     });
-
+    
+    // Eliminar Permisos
     $("body").on('click', '.confirmar-eliminar-permiso', function() {
         
         if (_post && _post.readyState != 4) {

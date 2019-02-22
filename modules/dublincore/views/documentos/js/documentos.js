@@ -251,7 +251,6 @@ $(document).on('ready', function() {
 		//document.getElementById('metodo').value  = 'buscarportemadocumento';
 		buscarTemaDocumentos($("#palabra").val(),$(li).find("span.temadocumento").text(),"filtrotipodocumento","filtroautordocumento",'filtroformatodocumento',"filtropaisdocumento","filtrousuariodocumento");
         //paginacion();
-
 	}
 	
 	$("body").on('click','#tipodocumento li' ,function() {
@@ -267,7 +266,6 @@ $(document).on('ready', function() {
 		document.getElementById('metodo').value  = 'buscarportipodocumento';
         paginacion();*/
 		buscarTipoDocumentos($("#palabra").val(),"filtrotemadocumento",$(li).find("span.palabraclave").text(),"filtroautordocumento",'filtroformatodocumento',"filtropaisdocumento","filtrousuariodocumento");		
-
 	}	
 	
 	$("body").on('click','#autor li' ,function() {
@@ -283,14 +281,12 @@ $(document).on('ready', function() {
 		document.getElementById('metodo').value  = 'buscarportipodocumento';
         paginacion();*/
 		buscarAutorDocumentos($("#palabra").val(),"filtrotemadocumento","filtrotipodocumento",$(li).find("span.autordocumento").text(),'filtroformatodocumento',"filtropaisdocumento","filtrousuariodocumento");		
-
 	}
 	
     $("body").on('click','#formato li' ,function() {
         actulizarporformato(this);
     });
-    $('#formato li').click(function() 
-    { 
+    $('#formato li').click(function() { 
         actulizarporformato(this);
     });
     var  actulizarporformato= function(li){
@@ -299,9 +295,7 @@ $(document).on('ready', function() {
         document.getElementById('metodo').value  = 'buscarportipodocumento';
         paginacion();*/
         buscarFormatoDocumentos($("#palabra").val(),"filtrotemadocumento","filtrotipodocumento","filtroautordocumento",$(li).find("span.formatodocumento").text(),"filtropaisdocumento","filtrousuariodocumento");      
-
     }
-
 	
 	$("body").on('click',".pais",function() {
         actulizarporpais(this);
@@ -322,9 +316,9 @@ $(document).on('ready', function() {
 		buscarLetraDocumentos($("#palabra").val(),"filtrotemadocumento","filtrotipodocumento","filtroautordocumento",'filtroformatodocumento',"filtropaisdocumento","filtrousuariodocumento",$(li).attr("letra"));        		
 	}    
     
-   
-		
+    
 });
+
 function tecla_enter_dublincore(evento)
 {    
     var iAscii;

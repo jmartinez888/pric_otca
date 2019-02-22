@@ -383,11 +383,18 @@
                               <a data-toggle="tooltip" data-placement="top" class="btn btn-success btn-sm glyphicon glyphicon-refresh ce_dublin" id_dublin="{$datos.Dub_IdDublinCore}" estado_dublin="{if $datos.Dub_Estado==0}1{/if}{if $datos.Dub_Estado==1}2{/if}{if $datos.Dub_Estado==2}0{/if}"  title="{$lenguaje['cambiar_estado_bdrecursos']}" style="margin: 3px;"> </a>
                           {/if}
                           {if $_acl->permiso("eliminar_documentos")}
-                               <a data-toggle="modal" data-target="#confirm-delete" href="#" type="button" title="{$lenguaje['label_eliminar_bdrecursos']}" data-id='{$datos.Dub_IdDublinCore}' data-nombre="{$datos.Dub_Titulo}" class="btn btn-danger btn-sm glyphicon glyphicon-trash" style="margin: 3px;">
-                              </a>
+                              <a   
+                                {if $rl.Row_Estado==0}
+                                    data-toggle="tooltip" 
+                                    class="btn btn-default btn-sm  glyphicon glyphicon-ok confirmar-habilitar-permiso" title="{$lenguaje.label_habilitar}" 
+                                {else}
+                                    data-book-id="{$rl.Per_Nombre}"
+                                    data-toggle="modal"  data-target="#confirm-delete"
+                                    class="btn btn-default btn-sm  glyphicon glyphicon-trash confirmar-eliminar-permiso" title="{$lenguaje.label_eliminar}"
+                                {/if} 
+                                id_permiso="{$rl.Per_IdPermiso}" data-placement="bottom" > </a>
                           {/if}
                         {/if}
-
                   {/foreach}    
                 </tbody>
             </table>
