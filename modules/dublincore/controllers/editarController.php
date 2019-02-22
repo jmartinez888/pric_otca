@@ -19,9 +19,11 @@ class editarController extends Controller {
         $this->_view->getLenguaje("index_inicio");
         $this->_view->getLenguaje("bdrecursos_metadata");
         $this->_view->getLenguaje("bdrecursos_index");
+        $this->_view->getLenguaje("bd_documentos");
+        $this->_view->getLenguaje("bdlegal");
         $this->_view->setJs(array('dublincore'));
 
-        if ($this->botonPress("editarDublin")) 
+        if ($this->botonPress("editarDublin"))
         {
             $this->editarDublin($this->filtrarInt($registros),$For_IdForo);
         }
@@ -36,14 +38,14 @@ class editarController extends Controller {
         $valor_paises = "";
         $i = 1;
 
-        foreach ($paises as $pais) 
+        foreach ($paises as $pais)
         {
-            if ($i == 1) 
+            if ($i == 1)
             {
                 $valor_paises = $pais[0];
                 $i++;
-            } 
-            else 
+            }
+            else
             {
                 $valor_paises = $valor_paises . ', ' . $pais[0];
             }
@@ -71,7 +73,7 @@ class editarController extends Controller {
     private function editarDublin($registros = false, $For_IdForo=false) {
 
         if ($this->_editar->verificarIdiomaDublin($this->getInt('Dub_IdDublinCore'), $this->getSql('idiomaSelect'))) {
-            
+
 
             $paises = explode(",", $this->getSql('Pai_IdPais'));
             $this->_editar->eliminaDocumentosRelacionados($this->filtrarInt($registros));
@@ -91,8 +93,8 @@ class editarController extends Controller {
             } else {
                 $url_archivo = '';
             }
-            // echo $nombre_archivo;                
-            // print_r($archivo_fisico); 
+            // echo $nombre_archivo;
+            // print_r($archivo_fisico);
             if (empty($archivo_fisico) || !empty($nombre_archivo) && $archivo_fisico['Arf_IdArchivoFisico'] == $this->getInt('Arf_IdArchivoFisico')) {
                 // echo "hola";exit;
                 if (!empty($nombre_archivo)) {//Verifica si esta subiendo una nueva version del archivo para que lo reemplace
@@ -138,7 +140,7 @@ class editarController extends Controller {
                         $this->getSql('Dub_Titulo'), $this->getSql('Dub_Descripcion'), $this->getSql('Dub_Editor'), $this->getSql('Dub_Colabrorador'), $this->getSql('Dub_FechaDocumento'), $formato[1], $this->getSql('Dub_Identificador'), $this->getSql('Dub_Fuente'), $this->getSql('Dub_Idioma'), $this->getSql('Dub_Relacion'), $this->getSql('Dub_Cobertura'), $this->getSql('Dub_Derechos'), $this->getSql('Dub_PalabraClave'), $tipo_dublin[0], $this->getInt('Arf_IdArchivoFisico'), $tema_dublin[0], $this->filtrarInt($registros)
                 );
 
-                if ($For_IdForo) {                 
+                if ($For_IdForo) {
                     $result_e = $this->_registrar->updateFileForo($For_IdForo, $archivo_fisico['Arf_PosicionFisica'], $archivo_fisico['Arf_TypeMime'], $archivo_fisico['Arf_TamanoArchivo'],$this->getSql('Dub_Titulo'));
                 }
                 $this->_view->assign('For_IdForo', $For_IdForo);
