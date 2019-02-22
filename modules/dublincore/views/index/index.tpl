@@ -9,7 +9,7 @@
             {/if}
         </div>
         <div class="cont-form-buscador">
-            {$lenguaje["Buscar"]} :<input type="text"  name="nombre" id="nombre">
+            {$lenguaje["boton_buscar"]} :<input type="text"  name="nombre" id="nombre">
             <button type="button" id="btnBuscar" class="boton"></button>
             <input id="variable" name="variable" type="hidden" />
             <input id="pais" name="pais" type="hidden" />
