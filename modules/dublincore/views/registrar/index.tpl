@@ -3,21 +3,21 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-            <h2 class="tit-pagina-principal" align="center">Registro de DublinCore</h2>
-        </div>  
+            <h2 class="tit-pagina-principal" align="center">{$lenguaje["registro_de_dublincore"]}</h2>
+        </div>
 
-        <div class="col-md-3">     
+        <div class="col-md-3">
             <div class="panel-group" id="accordion">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h4 class="panel-title">
                             <strong>{$lenguaje["label_recurso_bdrecursos"]}</strong>
                         </h4>
-                    </div>               
+                    </div>
                     <div class="panel-body">
                         <table class="table table-user-information">
-                            <tbody>                           
-                                <tr>                                  
+                            <tbody>
+                                <tr>
                                     <td colspan="2" >{$recurso.Rec_Nombre}</td>
                                 </tr>
                                 <tr>
@@ -27,7 +27,7 @@
                                 <tr>
                                     <td>{$lenguaje["label_estandar_bdrecursos"]}</td>
                                     <td>{$recurso.Esr_Nombre}</td>
-                                </tr>                                
+                                </tr>
                                 <tr>
                                     <td>{$lenguaje["label_fuente_bdrecursos"]}</td>
                                     <td>{$recurso.Rec_Fuente}</td>
@@ -69,12 +69,12 @@
             </div>
         </div>
 
-        <div class="col-md-9"> 
+        <div class="col-md-9">
             <div class="panel panel-default">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h4 class="panel-title">
-                            <strong>Formulario de Registro</strong>
+                            <strong>{$lenguaje["formulario_de_registro"]}</strong>
                         </h4>
                     </div>
                     <div class="panel-body" id="gestion_idiomas">
@@ -89,13 +89,13 @@
                             <div class="form-group">
                                 <label for="titulo" class="col-md-4 control-label">{$ficha[0]['Fie_CampoFicha']} (*)</label>
                                 <div class="col-md-6">
-                                    <input type="text" class="form-control" id="Dub_Titulo" name="Dub_Titulo" 
+                                    <input type="text" class="form-control" id="Dub_Titulo" name="Dub_Titulo"
                                            placeholder="{$ficha[0]['Fie_CampoFicha']}">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="descripcion" class="col-md-4 control-label">{$ficha[1]['Fie_CampoFicha']} (*)</label>
-                                <div class="col-md-6">          
+                                <div class="col-md-6">
                                     <textarea class="form-control" rows="3" id="Dub_Descripcion" name="Dub_Descripcion" placeholder="{$ficha[1]['Fie_CampoFicha']}"></textarea>
                                 </div>
                             </div>
@@ -106,7 +106,7 @@
                                     <datalist id="autores">
                                         {foreach item=datos from=$autores}
                                             <option value="{$datos.Aut_Nombre}">
-                                            {/foreach}    
+                                            {/foreach}
                                     </datalist>
 
 
@@ -116,17 +116,17 @@
                             <div class="form-group">
                                 <label for="editor" class="col-md-4 control-label">{$ficha[2]['Fie_CampoFicha']}</label>
                                 <div class="col-md-6">
-                                    <input type="text" class="form-control" id="Dub_Editor" name="Dub_Editor" 
+                                    <input type="text" class="form-control" id="Dub_Editor" name="Dub_Editor"
                                            placeholder="{$ficha[2]['Fie_CampoFicha']}" >
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="colaborador" class="col-md-4 control-label">{$ficha[3]['Fie_CampoFicha']}</label>
                                 <div class="col-md-6">
-                                    <input type="text" class="form-control" id="Dub_Colabrorador" name="Dub_Colabrorador" 
+                                    <input type="text" class="form-control" id="Dub_Colabrorador" name="Dub_Colabrorador"
                                            placeholder="{$ficha[3]['Fie_CampoFicha']}" >
                                 </div>
-                            </div>            
+                            </div>
                             <div class="form-group">
                                 <label for="fecha_documento" class="col-md-4 control-label">{$ficha[4]['Fie_CampoFicha']}</label>
                                 <div class="col-md-3">
@@ -136,13 +136,13 @@
                             </div>
                             <div class="form-group">
                                 <label for="formato" class="col-md-4 control-label">{$ficha[5]['Fie_CampoFicha']}</label>
-                                <div class="col-md-3">        
+                                <div class="col-md-3">
 
                                     <input type="text" list="formatos" class="form-control" id="Dub_Formato" name="Dub_Formato" placeholder="{$ficha[5]['Fie_CampoFicha']}"/>
                                     <datalist id="formatos">
                                         {foreach item=datos from=$formatos_archivos}
                                             <option value="{$datos.Taf_Descripcion}"></option>
-                                        {/foreach}    
+                                        {/foreach}
                                     </datalist>
 
                                 </div>
@@ -164,21 +164,21 @@
                             <div class="form-group">
                                 <label for="dublin_idioma" class="col-md-4 control-label">{$ficha[8]['Fie_CampoFicha']}</label>
                                 <div class="col-md-6">
-                                    <input type="text" class="form-control" id="Dub_Idioma" name="Dub_Idioma" 
+                                    <input type="text" class="form-control" id="Dub_Idioma" name="Dub_Idioma"
                                            placeholder="{$ficha[8]['Fie_CampoFicha']}">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="relación_dublin" class="col-md-4 control-label">{$ficha[9]['Fie_CampoFicha']}</label>
                                 <div class="col-md-6">
-                                    <input type="text" class="form-control" id="Dub_Relacion" name="Dub_Relacion" 
-                                           placeholder="{$ficha[9]['Fie_CampoFicha']}">          
+                                    <input type="text" class="form-control" id="Dub_Relacion" name="Dub_Relacion"
+                                           placeholder="{$ficha[9]['Fie_CampoFicha']}">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="cobertura_dublin" class="col-md-4 control-label">{$ficha[10]['Fie_CampoFicha']}</label>
                                 <div class="col-md-6">
-                                    <input type="text" class="form-control" id="Dub_Cobertura" name="Dub_Cobertura" 
+                                    <input type="text" class="form-control" id="Dub_Cobertura" name="Dub_Cobertura"
                                            placeholder="{$ficha[10]['Fie_CampoFicha']}">
                                 </div>
                             </div>
@@ -191,13 +191,13 @@
                             </div>
                             <div class="form-group">
                                 <label for="palabras_claves" class="col-md-4 control-label">{$ficha[12]['Fie_CampoFicha']} (*)</label>
-                                <div class="col-md-6">        
+                                <div class="col-md-6">
 
                                     <input type="text" list="palabraclaves" class="form-control" id="Dub_PalabraClave" name="Dub_PalabraClave" placeholder="{$ficha[12]['Fie_CampoFicha']}"/>
                                     <datalist id="palabraclaves">
                                         {foreach item=datos from=$palabraclave}
                                             <option value="{$datos.Dub_PalabraClave}">
-                                            {/foreach}    
+                                            {/foreach}
                                     </datalist>
 
                                 </div>
@@ -209,11 +209,11 @@
                                     <datalist id="tiposdublin">
                                         {foreach item=datos from=$tipodublin}
                                             <option value="{$datos.Tid_Descripcion}">
-                                            {/foreach}    
+                                            {/foreach}
                                     </datalist>
 
                                 </div>
-                            </div>  
+                            </div>
                             <div class="form-group">
                                 <label for="tema_dublin" class="col-md-4 control-label">{$ficha[19]['Fie_CampoFicha']} (*)</label>
                                 <div class="col-md-6">
@@ -222,8 +222,8 @@
                                     <datalist id="temasdublin">
                                         {foreach item=datos from=$temadublin}
                                             <option value="{$datos.Ted_Descripcion}">
-                                            {/foreach}    
-                                    </datalist>         
+                                            {/foreach}
+                                    </datalist>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -231,7 +231,7 @@
                                 <div class="col-md-6">
                                     <input type="file" id="Arf_IdArchivoFisico" name="Arf_IdArchivoFisico">
                                 </div>
-                            </div>      
+                            </div>
                             <div class="form-group">
                                 <label for="url" class="col-md-4 control-label">{$ficha[20]['Fie_CampoFicha']}</label>
                                 <div class="col-md-6">
@@ -253,7 +253,7 @@
                                 </div>
                             </div>
                         </form>
-                    </div> 
+                    </div>
                 </div>
             </div>
 
@@ -281,17 +281,14 @@
                     <p><center>{$mensaje}</center></p>
                 </div>
                 <div class="modal-footer">
-                    {if !empty($For_IdForo)}                         
-                    <a href="{$_layoutParams.root_clear}foro/index/ficha/{$For_IdForo}" class="btn btn-default">Cerrar</a> 
-                    {else} 
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>     
+                    {if !empty($For_IdForo)}
+                    <a href="{$_layoutParams.root_clear}foro/index/ficha/{$For_IdForo}" class="btn btn-default">Cerrar</a>
+                    {else}
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                     {/if}
-                                   
+
                 </div>
             </div>
 
         </div>
     </div>
-
-
-
