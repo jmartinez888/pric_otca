@@ -6,6 +6,7 @@ use App\Formulario;
 use App\LeccionSession;
 use App\LeccionAsistencia;
 use App\LeccionFormulario;
+use App\FormularioPreguntasOpciones;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Writer\Xls;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
@@ -443,111 +444,111 @@ class gleccionController extends elearningController {
             $res['msg'] = 'No posee permisos';
         }
         $this->_view->responseJson($res);
-		}
+	}
 		
-		public function datatable_lecciones ($curso_id, $modo = 'default') {
-			$this->_acl->autenticado();	
-			if ($modo != 'default') {
-				$objCurso = Curso::find($curso_id);
-				if ($objCurso) {
-					$lang = $this->_view->getLenguaje(false, false, true);
-					DB::enableQueryLog();
-					$datatable_response = [
-						'draw' 						=> $this->getInt('draw'),
-						'recordsTotal' 		=> 0,
-						'recordsFiltered' => 0,
-						'data' 						=> [],
-						'query'	 					=> []
-					];
-					// $mod_curso = $this->loadModel("_gestionCurso");
-					// $curso = $mod_curso->getCursoById($curso_id);
-					$mod_modulo = $this->loadModel("_gestionModulo");
-					// $mod_leccion = $this->loadModel("_gestionLeccion");
-					$modulos = $mod_modulo->getModulos($curso_id);
-					$mod_ids = [];
-					foreach ($modulos as $key => $value) {
-							$mod_ids[] = $value['Moc_IdModuloCurso'];
-					}
-					
+    public function datatable_lecciones ($curso_id, $modo = 'default') {
+        $this->_acl->autenticado();	
+        if ($modo != 'default') {
+            $objCurso = Curso::find($curso_id);
+            if ($objCurso) {
+                $lang = $this->_view->getLenguaje(false, false, true);
+                DB::enableQueryLog();
+                $datatable_response = [
+                    'draw' 						=> $this->getInt('draw'),
+                    'recordsTotal' 		=> 0,
+                    'recordsFiltered' => 0,
+                    'data' 						=> [],
+                    'query'	 					=> []
+                ];
+                // $mod_curso = $this->loadModel("_gestionCurso");
+                // $curso = $mod_curso->getCursoById($curso_id);
+                $mod_modulo = $this->loadModel("_gestionModulo");
+                // $mod_leccion = $this->loadModel("_gestionLeccion");
+                $modulos = $mod_modulo->getModulos($curso_id);
+                $mod_ids = [];
+                foreach ($modulos as $key => $value) {
+                        $mod_ids[] = $value['Moc_IdModuloCurso'];
+                }
+                
 
-					
+                
 
-					if ($modo == 'pizarras') {
-						$query = Leccion::getByModulos($mod_ids)->select()->addSelect('modulo_curso.Moc_Titulo as Moc_Titulo_Format')
-							->join('modulo_curso', 'modulo_curso.Moc_IdModuloCurso', 'leccion.Moc_IdModuloCurso');
-						$query->where('leccion.Lec_Tipo', Leccion::TIPO_DIRIGIDA);
-					}
-					if ($modo == 'encuestas') {
-						$query = LeccionFormulario::getByCurso($curso_id)->select('leccion.*', 'modulo_curso.*',
-							DB::raw("IFNULL(modulo_curso.Moc_Titulo, '".$lang->get('str_encuesta_libre')."') as Moc_Titulo_Format")
-						);
-						$query->whereIn('leccion.Lec_Tipo', [Leccion::TIPO_ENCUESTA, Leccion::TIPO_ENCUESTA_LIBRE]);
-					}
-					
-					$datatable_response['recordsTotal'] = $datatable_response['recordsFiltered'] = $query->count();
-					
-					if ($this->has('filter')) {
-						$query->where(function($query) use($lang){
-							if (isset($_GET['filter']['query']) && $_GET['filter']['query'] != '') 
-								$query->orWhere(DB::raw("CONCAT(Lec_Titulo, ' ', IFNULL(modulo_curso.Moc_Titulo, '".$lang->get('str_encuesta_libre')."'))"), 'like', '%'.$_GET['filter']['query'].'%');
-							if (isset($_GET['filter']['modulo_id']) && $_GET['filter']['modulo_id'] != -1)
-								if ($_GET['filter']['modulo_id'] == Formulario::hashEncuestaLibre())
-									$query->where('formulario.Frm_Tipo', Formulario::TIPO_ENCUESTA_LIBRE);
-								else
-									$query->where('leccion.Moc_IdModuloCurso', $_GET['filter']['modulo_id']);
-						});
-					}
+                if ($modo == 'pizarras') {
+                    $query = Leccion::getByModulos($mod_ids)->select()->addSelect('modulo_curso.Moc_Titulo as Moc_Titulo_Format')
+                        ->join('modulo_curso', 'modulo_curso.Moc_IdModuloCurso', 'leccion.Moc_IdModuloCurso');
+                    $query->where('leccion.Lec_Tipo', Leccion::TIPO_DIRIGIDA);
+                }
+                if ($modo == 'encuestas') {
+                    $query = LeccionFormulario::getByCurso($curso_id)->select('leccion.*', 'modulo_curso.*',
+                        DB::raw("IFNULL(modulo_curso.Moc_Titulo, '".$lang->get('str_encuesta_libre')."') as Moc_Titulo_Format")
+                    );
+                    $query->whereIn('leccion.Lec_Tipo', [Leccion::TIPO_ENCUESTA, Leccion::TIPO_ENCUESTA_LIBRE]);
+                }
+                
+                $datatable_response['recordsTotal'] = $datatable_response['recordsFiltered'] = $query->count();
+                
+                if ($this->has('filter')) {
+                    $query->where(function($query) use($lang){
+                        if (isset($_GET['filter']['query']) && $_GET['filter']['query'] != '') 
+                            $query->orWhere(DB::raw("CONCAT(Lec_Titulo, ' ', IFNULL(modulo_curso.Moc_Titulo, '".$lang->get('str_encuesta_libre')."'))"), 'like', '%'.$_GET['filter']['query'].'%');
+                        if (isset($_GET['filter']['modulo_id']) && $_GET['filter']['modulo_id'] != -1)
+                            if ($_GET['filter']['modulo_id'] == Formulario::hashEncuestaLibre())
+                                $query->where('formulario.Frm_Tipo', Formulario::TIPO_ENCUESTA_LIBRE);
+                            else
+                                $query->where('leccion.Moc_IdModuloCurso', $_GET['filter']['modulo_id']);
+                    });
+                }
 
-					
-					if ($this->has(['order', 'columns'])) {
-						foreach ($_GET['order'] as $key => $value) {
-							$nc = $_GET['columns'][$value['column']]['data'];
-							// dd($nc);
-							if ($modo == 'encuestas') {
-								switch ($nc) {
-									case 'leccion_titulo': $nc = 'formulario.Frm_Titulo'; break;
-									case 'leccion_descripcion': $nc = 'formulario.Frm_Descripcion'; break;
-									case 'modulo_titulo': $nc = 'Moc_Titulo_Format'; break;
+                
+                if ($this->has(['order', 'columns'])) {
+                    foreach ($_GET['order'] as $key => $value) {
+                        $nc = $_GET['columns'][$value['column']]['data'];
+                        // dd($nc);
+                        if ($modo == 'encuestas') {
+                            switch ($nc) {
+                                case 'leccion_titulo': $nc = 'formulario.Frm_Titulo'; break;
+                                case 'leccion_descripcion': $nc = 'formulario.Frm_Descripcion'; break;
+                                case 'modulo_titulo': $nc = 'Moc_Titulo_Format'; break;
 
-									// case 'inicio': 	$nc = 'leccion.Lec_FechaDesde'	;	break;
-									// case 'fin': 	$nc = 'leccion.Lec_FechaHasta'	;	break;
-									default: $nc = 'none';
-								}
-							}
-							if ($modo == 'pizarras') {
-								switch ($nc) {
-									case 'leccion_titulo': $nc = 'leccion.Lec_Titulo'; break;
-									case 'leccion_descripcion': $nc = 'leccion.Lec_Descripcion'; break;
-									case 'modulo_titulo': $nc = 'modulo_curso.Moc_Titulo'; break;
+                                // case 'inicio': 	$nc = 'leccion.Lec_FechaDesde'	;	break;
+                                // case 'fin': 	$nc = 'leccion.Lec_FechaHasta'	;	break;
+                                default: $nc = 'none';
+                            }
+                        }
+                        if ($modo == 'pizarras') {
+                            switch ($nc) {
+                                case 'leccion_titulo': $nc = 'leccion.Lec_Titulo'; break;
+                                case 'leccion_descripcion': $nc = 'leccion.Lec_Descripcion'; break;
+                                case 'modulo_titulo': $nc = 'modulo_curso.Moc_Titulo'; break;
 
-									// case 'inicio': 	$nc = 'leccion.Lec_FechaDesde'	;	break;
-									// case 'fin': 	$nc = 'leccion.Lec_FechaHasta'	;	break;
-									default: $nc = 'none';
-								}
-							}
-							if ($nc != 'none' && $_GET['columns'][$value['column']]['data'])
-								$query->orderBy($nc, $value['dir']);
-						}
-					}
+                                // case 'inicio': 	$nc = 'leccion.Lec_FechaDesde'	;	break;
+                                // case 'fin': 	$nc = 'leccion.Lec_FechaHasta'	;	break;
+                                default: $nc = 'none';
+                            }
+                        }
+                        if ($nc != 'none' && $_GET['columns'][$value['column']]['data'])
+                            $query->orderBy($nc, $value['dir']);
+                    }
+                }
 
-					// if ($this->filledGet('export')) 
-					$rows = $query->offset($this->getInt('start'))
-						->limit($this->getInt('length'))
-						->get()->map(function($item) {
-							return [
-								'leccion_id' => $item->Lec_IdLeccion,
-								'leccion_titulo' => $item->Lec_Titulo,
-								'leccion_descripcion' => str_limit($item->Lec_Descripcion, 100),
-								'modulo_titulo' => $item->Moc_Titulo_Format,
-								'modulo_id' => $item->Moc_IdModuloCurso,
-							];
-						});
-					$datatable_response['data'] = $rows;
-					$datatable_response['query'] = DB::getQueryLog();
-					$this->_view->responseJson($datatable_response);
-				}
-			}
-		}
+                // if ($this->filledGet('export')) 
+                $rows = $query->offset($this->getInt('start'))
+                    ->limit($this->getInt('length'))
+                    ->get()->map(function($item) {
+                        return [
+                            'leccion_id' => $item->Lec_IdLeccion,
+                            'leccion_titulo' => $item->Lec_Titulo,
+                            'leccion_descripcion' => str_limit($item->Lec_Descripcion, 100),
+                            'modulo_titulo' => $item->Moc_Titulo_Format,
+                            'modulo_id' => $item->Moc_IdModuloCurso,
+                        ];
+                    });
+                $datatable_response['data'] = $rows;
+                $datatable_response['query'] = DB::getQueryLog();
+                $this->_view->responseJson($datatable_response);
+            }
+        }
+    }
 
     public function encuestas ($curso_id) {
         $this->_acl->autenticado();
@@ -664,7 +665,7 @@ class gleccionController extends elearningController {
 					$formulario = $lecc_frm->formulario;
 					if ($formulario) {
 						$preguntas = $formulario->preguntas; 
-						$respuestas = $formulario->respuestas;
+                        $respuestas = $formulario->respuestas;
 						$titulo = $lang->get('elearning_cursos_resumen_encuesta').'-'.$lecc_frm->formulario->curso->Cur_Titulo;
 						if ($preguntas) {
 							// dd($preguntas->toArray());
@@ -683,38 +684,72 @@ class gleccionController extends elearningController {
 
 								// Add some data
 								
-								$columnas = 1;
 								$build_header = collect();
 								$spreadsheet->setActiveSheetIndex(0)->setCellValueByColumnAndRow(1, 1, 'USUARIO');
+								$columnas = 2;
 								foreach ($preguntas as $pre) {
-									$build_header->push([
-										'pregunta_id' => $pre->Fpr_IdForPreguntas,
-										'index' => ++$columnas
-									]);
+									
 									if ($pre->Fpr_Tipo == 'cuadricula' || $pre->Fpr_Tipo == 'casilla') {
-										foreach($pre->opciones as $opc)
-											$spreadsheet->setActiveSheetIndex(0)->setCellValueByColumnAndRow($columnas++, 1, $pre->Fpr_Pregunta);	
+										foreach($pre->hijos as $prehijo) {
+                                            $spreadsheet->setActiveSheetIndex(0)->setCellValueByColumnAndRow($columnas, 1, $pre->Fpr_Pregunta.'['.$prehijo->Fpr_Pregunta.']');	
+                                            $build_header->push([
+                                                'pregunta_id' => $prehijo->Fpr_IdForPreguntas,
+                                                'index' => $columnas
+                                            ]);
+                                            $columnas++;
+                                        }
 									} else {
-										$spreadsheet->setActiveSheetIndex(0)->setCellValueByColumnAndRow($columnas, 1, $pre->Fpr_Pregunta);
-									}
+                                        $spreadsheet->setActiveSheetIndex(0)->setCellValueByColumnAndRow($columnas, 1, $pre->Fpr_Pregunta);
+                                        $build_header->push([
+                                            'pregunta_id' => $pre->Fpr_IdForPreguntas,
+                                            'index' => $columnas
+                                            ]);
+                                        $columnas++;
+                                    }
+                                    
 									
 								}
 								$resp = [];
 								$row = 2;
 								foreach ($respuestas as $res) {
-									$detalles = $res->detalles;
-									$temp_header = clone $build_header;
+									$detalles = $res->detalles()->select('formulario_usuario_respuestas_detalles.*', 'formulario_preguntas.Fpr_Tipo')
+                                    ->join('formulario_preguntas', 'formulario_preguntas.Fpr_IdForPreguntas', 'formulario_usuario_respuestas_detalles.Fpr_IdForPreguntas')->get();
+                                    $temp_header = clone $build_header;
+                                    // dd($build_header, $detalles->toArray());
 									foreach ($detalles as $det) {
-										$spreadsheet->setActiveSheetIndex(0)->setCellValueByColumnAndRow(1, $row, 'EL USUARIo');
+										$spreadsheet->setActiveSheetIndex(0)->setCellValueByColumnAndRow(1, $row, $res->usuario->Usu_Nombre.' '.$res->usuario->Usu_Apellidos);
 										foreach ($temp_header as $kheader => $vheader) {
 											if ($vheader['pregunta_id'] == $det->Fpr_IdForPreguntas) {
-												$spreadsheet->setActiveSheetIndex(0)->setCellValueByColumnAndRow($vheader['index'], $row, $det->Fre_Respuesta);
+                                                $text_respu = '';
+                                                switch ($det->Fpr_Tipo) {
+                                                    case 'select':
+                                                    case 'radio':
+                                                        $text_respu = $det->opcion->Fpo_Opcion;
+                                                        break;
+                                                    case 'box':
+                                                        $opc_ids = explode('-', $det->Fre_Respuesta);
+                                                        $opciones = FormularioPreguntasOpciones::select('Fpo_Opcion')->whereIn('Fpo_IdForPrOpc', $opc_ids)->get();
+                                                        for ($i=0; $i < $opciones->count(); $i++) { 
+                                                            $text_respu .= $opciones[$i]->Fpo_Opcion;
+                                                            if ($i < $opciones->count() - 1){
+                                                                $text_respu .= ', ';
+                                                            }
+                                                        }
+                                                        break;
+                                                    case 'cuadricula':
+                                                        $text_respu = 'asd';
+                                                        break;
+                                                    default:
+                                                        $text_respu = $det->Fre_Respuesta;
+                                                        break;
+                                                }
+												$spreadsheet->setActiveSheetIndex(0)->setCellValueByColumnAndRow($vheader['index'], $row, $text_respu);
 												unset($temp_header[$kheader]);
 												break;
 											}
 										}
 									}
-									$spreadsheet->setActiveSheetIndex(0)->setCellValueByColumnAndRow($columnas, 1, $pre->Fpr_Pregunta);
+									// $spreadsheet->setActiveSheetIndex(0)->setCellValueByColumnAndRow($columnas, 1, $pre->Fpr_Pregunta);
 									$row++;
 									// $resp[] = $res->resumenRespuesta();
 								}
@@ -810,7 +845,7 @@ class gleccionController extends elearningController {
     public function _view_lecciones_modulo($id_curso = 0, $id_modulo = 0){
         // $curso = $this->getTexto("curso");
         // $modulo = $this->getTexto("modulo");
-    $this->validarUrlIdioma();
+        $this->validarUrlIdioma();
 
         $this->_view->setTemplate(LAYOUT_FRONTEND);
          $lang = $this->_view->getLenguaje(['elearning_cursos'], false, true);

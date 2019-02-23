@@ -122,13 +122,12 @@
 							<a href="{$_layoutParams.root}elearning/gleccion/encuesta_resumen_export/{$idLeccion}/excel" class="btn btn-success">{$lang->get('elearning_cursos_descargar_resumen')}</a>
 							<hr>	
 						</div>
-						
 						<div class="col-lg-12">
 								<form role="form" >
 									{foreach $formulario->preguntas as $pre}
 										<input-tags-resume 
 										data-pregunta='{json_encode($pre->formatToArray(['descripcion']))}'
-										v-bind:data-resumen='{json_encode($pre->resumenRespuesta())}'
+										v-bind:data-resumen='{json_encode($pre->resumenRespuesta())|escape:'html'}'
 										></input-tags-resume>
 									{/foreach}
 								</form>

@@ -27,7 +27,6 @@ class FormularioUsuarioRespuestasDetalles extends Eloquent
   	$t = self::where('Fpr_IdForPreguntas', $pregunta_id)->get();
   	return $t->count() >  0 ? true : false;
   }
-
   public static function getByPregunta ($pregunta_id) {
   	return self::where('Fpr_IdForPreguntas', $pregunta_id)->get();
   }

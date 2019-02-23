@@ -15,7 +15,7 @@ class FormularioPreguntasOpciones extends Eloquent
   public static function getByPregunta ($pregunta_id) {
     return self::where('Fpr_IdForPreguntas', $pregunta_id)->get();
   }
-
+  
   public function formatToArray ($exclude = []) {
     return [
       'id' => $this->Fpo_IdForPrOpc,
