@@ -79,6 +79,16 @@ class  indexController extends movilController {
         $modulos_curso = $this->_model->getModulos($Cur_IdCurso,$Usu_IdUsuario);
         $this->retornar($modulos_curso,"modulos_curso");                  
     }
+
+    public function getModuloLeccion($id_curso,$id_usuario,$lenguaje="es"){
+        $modelCurso= $this->loadModel('modulo','elearning');
+        $modulos_curso=$modelCurso->getModulosCursoLMS($id_curso, Session::get("id_usuario"), $lenguaje);
+
+        $this->retornar($modulos_curso,"modulos");   
+
+
+    }
+
     public function getProgresoCurso($Cur_IdCurso=0,$Usu_IdUsuario=0) {                
         $progreso = $this->_model->getProgresoCurso($Cur_IdCurso, $Usu_IdUsuario);            
         $this->retornar($progreso,"progreso");                       
