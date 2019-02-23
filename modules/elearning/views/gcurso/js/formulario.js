@@ -213,9 +213,9 @@ Vue.component('input-tags-resume', {
 	},
 	created: function () {
 		this.objPregunta = JSON.parse(this.dataPregunta);
-		// console.log(this.objPregunta)
-		console.log(this.dataResumen);
-		console.log(JSON.parse(this.dataResumen))
+		console.log(this.objPregunta)
+		// console.log(this.dataResumen);
+		// console.log(JSON.parse(this.dataResumen))
 		this.dataResumen = JSON.parse(this.dataResumen)
 	},
 	mounted: function () {

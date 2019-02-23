@@ -5,7 +5,8 @@
 		"dompdf/dompdf": "^0.8.2",
 		"phpclasses/basic-paginator": ">=1.2",
 		"phpclasses/php-paginator": ">=1.0.6",
-		"jenssegers/date": "3.4.0"
+		"jenssegers/date": "3.4.0",
+		"phpoffice/phpspreadsheet": "^1.6"
 	},
 	"autoload": {
 		"psr-4": {
