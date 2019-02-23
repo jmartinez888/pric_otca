@@ -691,7 +691,13 @@ class gleccionController extends elearningController {
 										'pregunta_id' => $pre->Fpr_IdForPreguntas,
 										'index' => ++$columnas
 									]);
-									$spreadsheet->setActiveSheetIndex(0)->setCellValueByColumnAndRow($columnas, 1, $pre->Fpr_Pregunta);
+									if ($pre->Fpr_Tipo == 'cuadricula' || $pre->Fpr_Tipo == 'casilla') {
+										foreach($pre->opciones as $opc)
+											$spreadsheet->setActiveSheetIndex(0)->setCellValueByColumnAndRow($columnas++, 1, $pre->Fpr_Pregunta);	
+									} else {
+										$spreadsheet->setActiveSheetIndex(0)->setCellValueByColumnAndRow($columnas, 1, $pre->Fpr_Pregunta);
+									}
+									
 								}
 								$resp = [];
 								$row = 2;

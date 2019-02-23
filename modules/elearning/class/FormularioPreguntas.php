@@ -26,7 +26,7 @@ class FormularioPreguntas extends Eloquent
           ->groupBy('Fre_Respuesta');
         $res = $query->get()->map(function($item) {
           return [
-            'respuesta' => $item->Fre_Respuesta
+            'respuesta' => htmlentities($item->Fre_Respuesta)
           ];
         })->toArray();   
         break;
