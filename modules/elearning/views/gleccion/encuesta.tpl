@@ -163,8 +163,7 @@
 						<table class="table table-condensed table-hover">
 							<tbody>
 								<tr v-for="textos in dataResumen">
-									<td v-html="textos.respuesta"></td>
-									
+									<td v-html="textos.respuesta"></td>	
 								</tr>
 							</tbody>
 						</table>
