@@ -128,7 +128,7 @@
 									{foreach $formulario->preguntas as $pre}
 										<input-tags-resume 
 										data-pregunta='{json_encode($pre->formatToArray(['descripcion']))}'
-										data-resumen='{json_encode($pre->resumenRespuesta())}'
+										v-bind:data-resumen='{json_encode($pre->resumenRespuesta())}'
 										></input-tags-resume>
 									{/foreach}
 								</form>
