@@ -41,7 +41,7 @@
                <!--  <a {if $puntos_maximo>0} href="{$_layoutParams.root}elearning/examen/registrarRespuestaCombinacionExacta/{$examen}/{$idcurso}" {else}
              data-toggle="modal"  data-target="#msj-invalido" data-placement="bottom" 
             {/if}><img src="https://campus.chamilo.org/main/img/icons/64/mcmac.png" alt="Combinación Exacta" data-toggle="tooltip" data-placement="top" title="Crear pregunta con Combinación Exacta"></a> -->
-             <a class="nueva_pregunta" _href = "{$_layoutParams.root}elearning/examen/registrarRespuestaCombinacionExacta/{$examen}/{$idcurso}"><img src="https://campus.chamilo.org/main/img/icons/64/mcmac.png" alt="Combinación Exacta" data-toggle="tooltip" data-placement="top" title="{$lenguaje["elearning_preguntas_respcombinacionexacta"]}"></a>
+             <a class="nueva_pregunta" _href = "{$_layoutParams.root}elearning/examen/registrarRespuestaCombinacionExacta/{$examen}/{$idcurso}"><img src="https://campus.chamilo.org/main/img/icons/64/mcmac.png" alt="Combinación Exacta" data-toggle="tooltip" data-placement="top" title="{$lenguaje["elearning_preguntas_combinacionexacta"]}"></a>
             <label class="text-bold">{$lenguaje["elearning_preguntas_combinacionexacta"]}</label>
             </div>
         </div>
