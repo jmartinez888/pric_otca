@@ -15,7 +15,8 @@ class FormularioPreguntas extends Eloquent
   public function opciones () {
     return $this->hasMany('App\FormularioPreguntasOpciones', 'Fpr_IdForPreguntas');
   }
-  public function resumenRespuesta () {
+
+  public function resumenRespuesta ($json_encode = false) {
     $res = [];
     switch ($this->Fpr_Tipo) {
       case 'texto':
@@ -158,7 +159,7 @@ class FormularioPreguntas extends Eloquent
         $res = $pre_res;
         break;
     }
-    return $res;
+    return $json_encode ? json_encode($res) : $res;
   }
   public function hijos () {
     return $this->hasMany('App\FormularioPreguntas', 'Fpr_Parent');
