@@ -1,10 +1,10 @@
 <?php
 class editarModel extends Model {
-public function __construct()
+    public function __construct()
     {
         parent::__construct();
     }
-    public function getPaises($idioma, , $Idi_IdIdioma = "es")
+    public function getPaises($Idi_IdIdioma = "es")
     {
         try{
             $sql = "SELECT p.Pai_IdPais,

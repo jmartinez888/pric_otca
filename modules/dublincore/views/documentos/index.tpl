@@ -137,7 +137,7 @@
                         {/if}  -->
                         {if isset($temadocumento) && count($temadocumento)}
                         <div class="form-group">
-                            <label class="col-md-2 control-label-jp">Temática : </label>
+                            <label class="col-md-2 control-label-jp">{$lenguaje["label_temática"]} : </label>
                             <div class="col-md-7">
                                 <!-- <input class="form-control"  list="tematicas"  id ="ba_tematica" type="text"  name="nombre" value="" placeholder="Temática" /> -->
                                 <input type="text" list="temas" class="form-control" id="filtrotemadocumento" name="filtrotemadocumento" placeholder="Temática"/>
@@ -151,7 +151,7 @@
                         {/if}
                         {if isset($autores) && count($autores)}
                         <div class="form-group">
-                            <label class="col-md-2 control-label-jp" >Autor : </label>
+                            <label class="col-md-2 control-label-jp" >{$lenguaje["label_autor"]} : </label>
                             <div class="col-md-7">
                                 <input type="text" list="autores" class="form-control" id="filtroautordocumento" name="filtroautordocumento" placeholder="Autor"/>
                                 <datalist id="autores">
@@ -170,11 +170,11 @@
                         {/if}
                         {if isset($formatos) && count($formatos)}
                         <div class="form-group">
-                            <label class="col-md-2 control-label-jp" >Formato : </label>
+                            <label class="col-md-2 control-label-jp" >{$lenguaje["label_formato"]} : </label>
                             <div class="col-md-7">
 
                                 <select class="form-control selectpicker" name="filtroformatodocumento" id="filtroformatodocumento" data-live-search="true">
-                                    <option value=""> -- Seleccione Formato --</option>
+                                    <option value=""> -- {$lenguaje["seleccione_formato"]} --</option>
                                     {foreach item=df from=$formatos}
                                         <option value="{$df.Taf_Descripcion}">{$df.Taf_Descripcion}</option>
                                     {/foreach}
@@ -182,7 +182,7 @@
                             </div>
                         </div>
                         {/if}
-                          <button class="btn btn-primary col-md-offset-3" onclick="buscarPalabraDocumentos('palabra','filtrotemadocumento','filtrotipodocumento','filtroautordocumento','filtroformatodocumento','filtropaisdocumento')" type="button" id="btnEnviar">Realizar Búsqueda Avanzada</button>
+                          <button class="btn btn-primary col-md-offset-3" onclick="buscarPalabraDocumentos('palabra','filtrotemadocumento','filtrotipodocumento','filtroautordocumento','filtroformatodocumento','filtropaisdocumento')" type="button" id="btnEnviar">{$lenguaje["boton_busqueda_avanzada"]}</button>
                           <br><br>
                     </div>
                 </form>
@@ -277,7 +277,7 @@
                     </div>
                     <div class="col-md-6">
                       {if isset($resultPalabra) }
-                        <b>Resultado de búsqueda</b>
+                        <b>{$lenguaje["resultado_busqueda"]}</b>
                       {$resultPalabra}{/if}
                     </div>
                     <div class="col-lg-12">
@@ -504,10 +504,10 @@
                             <div class="panel-heading">
                                 <div class="row">
                                     <div class="col-xs-6">
-                                        <a href="#" class="active" id="agregar-form-link">Agregar Recurso</a>
+                                        <a href="#" class="active" id="agregar-form-link">{$lenguaje["agregar_recurso"]}</a>
                                     </div>
                                     <div class="col-xs-6">
-                                        <a href="#" id="buscar-form-link">Buscar Recurso</a>
+                                        <a href="#" id="buscar-form-link">{$lenguaje["buscar_recurso"]}</a>
                                     </div>
                                 </div>
                                 <hr>
@@ -645,7 +645,7 @@
             </div>
 
             <div class="modal-footer">
-                <a href="#" class="btn btn-default" data-dismiss="modal">Cerrar</a>
+                <a href="#" class="btn btn-default" data-dismiss="modal">{$lenguaje["boton_cerrar"]}</a>
             </div>
         </div>
     </div>

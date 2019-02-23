@@ -15,9 +15,12 @@ class registrarController extends Controller {
         if ($For_IdForo) {
             $this->_view->setTemplate(LAYOUT_FRONTEND);
         }
-        
+
+        $this->_view->getLenguaje("index_inicio");
         $this->_view->getLenguaje("bdrecursos_metadata");
-         $this->_view->getLenguaje("bdrecursos_index");
+        $this->_view->getLenguaje("bdrecursos_index");
+        $this->_view->getLenguaje("bd_documentos");
+        $this->_view->getLenguaje("bdlegal");
         $this->_view->setJs(array('dublincore'));
         if (empty($this->getSql('Idi_IdIdioma'))) {
             $idioma = Cookie::lenguaje();
@@ -25,14 +28,14 @@ class registrarController extends Controller {
             $idioma = $this->getSql('Idi_IdIdioma');
         }
         $e = $this->loadModel('bdrecursos', true);
-        
+
         $_SESSION['recurso'] = $recurso;
         $metadatarecurso = $e->getRecursoCompletoXid($_SESSION['recurso']);
         $idestandar = $this->_dublincore->getEstandarRecurso($this->filtrarInt($recurso));
         // echo $idestandar[0][0];
         $this->_view->assign('recurso', $metadatarecurso);
         $this->_view->assign('ficha', $this->_dublincore->getFichaLegislacion($idestandar[0][0], $idioma));
-        
+
         $this->_view->assign('idiomas', $this->_dublincore->getIdiomas());
         $this->_view->assign('autores', $this->_dublincore->getAutores());
         $this->_view->assign('idioma', $idioma);
@@ -49,7 +52,7 @@ class registrarController extends Controller {
             $pais_encontrado = array();
             if (!empty($_FILES["Arf_IdArchivoFisico"]['name'])) {
                 $nombre_archivo = $_FILES["Arf_IdArchivoFisico"]['name'];
-                
+
                 $archivo_fisico = $this->_dublincore->getArchivoFisico($nombre_archivo);
             } else {
                 $nombre_archivo = '';
@@ -61,7 +64,7 @@ class registrarController extends Controller {
                 $url_archivo = '';
             }
 
-            
+
             // print_r($archivo_fisico);
             if (empty($archivo_fisico) or ! empty($url_archivo)) {
 
@@ -111,7 +114,7 @@ class registrarController extends Controller {
 
                 //Registro en foro
                 if ($For_IdForo) {
-                    $result_e = $this->_dublincore->insertarFileForo($nombre_archivo, $_FILES['Arf_IdArchivoFisico']['type'], $_FILES['Arf_IdArchivoFisico']['size'], $For_IdForo, $recurso,$dublin[0],$this->getSql('Dub_Titulo'),1);                   
+                    $result_e = $this->_dublincore->insertarFileForo($nombre_archivo, $_FILES['Arf_IdArchivoFisico']['type'], $_FILES['Arf_IdArchivoFisico']['size'], $For_IdForo, $recurso,$dublin[0],$this->getSql('Dub_Titulo'),1);
                 }
                 $this->_view->assign('For_IdForo', $For_IdForo);
 
