@@ -215,8 +215,8 @@ Vue.component('input-tags-resume', {
 		this.objPregunta = JSON.parse(this.dataPregunta);
 		console.log(this.objPregunta)
 		console.log(this.dataResumen);
-		console.log(JSON.parse(this.dataResumen))
-		this.dataResumen = JSON.parse(this.dataResumen)
+		// console.log(JSON.parse(this.dataResumen))
+		// this.dataResumen = JSON.parse(this.dataResumen)
 	},
 	mounted: function () {
 		if (this.objPregunta.tipo == 'select' || this.objPregunta.tipo == 'radio') {
