@@ -82,10 +82,9 @@ class  indexController extends movilController {
 
     public function getModuloLeccion($id_curso,$id_usuario,$lenguaje="es"){
         $modelCurso= $this->loadModel('modulo','elearning');
-        $modulos_curso=$modelCurso->getModulosCursoLMS($id_curso, Session::get("id_usuario"), $lenguaje);
+        $modulos_curso=$modelCurso->getModulosCursoLMS($id_curso, $id_usuario, $lenguaje);
 
         $this->retornar($modulos_curso,"modulos");   
-
 
     }
 
