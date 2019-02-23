@@ -14,6 +14,7 @@ application/Config.php
 /config/app.php
 /libs/vendor/dompdf/dompdf/lib/fonts/
 libs/vendor/dompdf/dompdf/lib/fonts/
+/libs/vendor
 
 /libs/nodejs_pric/node_modules/*
 .libs/nodejs_pric/node_modules/*

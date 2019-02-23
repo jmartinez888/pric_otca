@@ -10,4 +10,9 @@ class ModuloCurso extends Eloquent
   protected $primaryKey = 'Moc_IdModuloCurso';
   public $timestamps = false;
 
+  
+  public function curso () {
+  	return $this->belongsTo('App\Curso', 'Cur_IdCurso');
+  }
+
 }

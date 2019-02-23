@@ -118,10 +118,16 @@
 				<div class="panel panel-default" style="border-top: 0; border-top-left-radius: 0; border-top-right-radius: 0;">
 					<div class="panel-body" id="formulario_reportes_vue">
 						<div class="col-lg-12">
+							
+							<a href="{$_layoutParams.root}elearning/gleccion/encuesta_resumen_export/{$idLeccion}/excel" class="btn btn-success">{$lang->get('elearning_cursos_descargar_resumen')}</a>
+							<hr>	
+						</div>
+						
+						<div class="col-lg-12">
 								<form role="form" >
 									{foreach $formulario->preguntas as $pre}
 										<input-tags-resume 
-										data-pregunta='{json_encode($pre->formatToArray())}'
+										data-pregunta='{json_encode($pre->formatToArray(['descripcion']))}'
 										data-resumen='{json_encode($pre->resumenRespuesta())}'
 										></input-tags-resume>
 									{/foreach}
@@ -157,7 +163,8 @@
 						<table class="table table-condensed table-hover">
 							<tbody>
 								<tr v-for="textos in dataResumen">
-									<td>{literal}{{textos.respuesta}}{/literal}</td>
+									<td v-html="textos.respuesta"></td>
+									
 								</tr>
 							</tbody>
 						</table>

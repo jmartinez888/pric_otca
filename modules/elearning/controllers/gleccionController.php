@@ -6,6 +6,10 @@ use App\Formulario;
 use App\LeccionSession;
 use App\LeccionAsistencia;
 use App\LeccionFormulario;
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Writer\Xls;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Illuminate\Database\Capsule\Manager as DB;
 
 /**
@@ -650,6 +654,91 @@ class gleccionController extends elearningController {
 			}
 			$this->_view->responseJson($datatable_response);
 		
+		}
+		public function encuesta_resumen_export ($leccion_id, $modo = 'none') {
+			$this->_acl->autenticado();
+			if ($modo != 'none') {
+				$lang = $this->_view->getLenguaje(['elearning_cursos', 'elearning_formulario_responder'], false, true);
+				$lecc_frm = LeccionFormulario::findByLeccion($leccion_id);
+				if ($lecc_frm) {
+					$formulario = $lecc_frm->formulario;
+					if ($formulario) {
+						$preguntas = $formulario->preguntas; 
+						$respuestas = $formulario->respuestas;
+						$titulo = $lang->get('elearning_cursos_resumen_encuesta').'-'.$lecc_frm->formulario->curso->Cur_Titulo;
+						if ($preguntas) {
+							// dd($preguntas->toArray());
+							if ($modo == 'excel') {
+								
+								$spreadsheet = new Spreadsheet();
+								// $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
+								$spreadsheet->getProperties()
+										->setCreator('PRIC')
+										->setLastModifiedBy('PRIC')
+										->setTitle($titulo)
+										->setSubject($lang->get('str_resumen'))
+										->setDescription($lang->get('elearning_cursos_resumen_encuesta'));
+										// ->setKeywords('')
+										// ->setCategory('');
+
+								// Add some data
+								
+								$columnas = 1;
+								$build_header = collect();
+								$spreadsheet->setActiveSheetIndex(0)->setCellValueByColumnAndRow(1, 1, 'USUARIO');
+								foreach ($preguntas as $pre) {
+									$build_header->push([
+										'pregunta_id' => $pre->Fpr_IdForPreguntas,
+										'index' => ++$columnas
+									]);
+									$spreadsheet->setActiveSheetIndex(0)->setCellValueByColumnAndRow($columnas, 1, $pre->Fpr_Pregunta);
+								}
+								$resp = [];
+								$row = 2;
+								foreach ($respuestas as $res) {
+									$detalles = $res->detalles;
+									$temp_header = clone $build_header;
+									foreach ($detalles as $det) {
+										$spreadsheet->setActiveSheetIndex(0)->setCellValueByColumnAndRow(1, $row, 'EL USUARIo');
+										foreach ($temp_header as $kheader => $vheader) {
+											if ($vheader['pregunta_id'] == $det->Fpr_IdForPreguntas) {
+												$spreadsheet->setActiveSheetIndex(0)->setCellValueByColumnAndRow($vheader['index'], $row, $det->Fre_Respuesta);
+												unset($temp_header[$kheader]);
+												break;
+											}
+										}
+									}
+									$spreadsheet->setActiveSheetIndex(0)->setCellValueByColumnAndRow($columnas, 1, $pre->Fpr_Pregunta);
+									$row++;
+									// $resp[] = $res->resumenRespuesta();
+								}
+								// dd($respuestas[0]->detalles);
+								$spreadsheet->getActiveSheet()->setTitle($lang->get('str_resumen', 'none'));
+								$spreadsheet->setActiveSheetIndex(0);
+								ob_end_clean();
+								ob_start();
+								// header('Content-Type: application/vnd.ms-excel');
+								header('Content-Disposition: attachment;filename="'.$titulo.'.xls"');
+								header('Cache-Control: max-age=0');
+								
+								//header('Cache-Control: max-age=1');
+								
+								// If you're serving to IE over SSL, then the following may be needed
+								// header('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
+								// header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT'); // always modified
+								// header('Cache-Control: cache, must-revalidate'); // HTTP/1.1
+								// header('Pragma: public'); // HTTP/1.0
+								$writer = new Xls($spreadsheet);
+								$writer->save('php://output');
+								exit;
+								// $writer->save('hello world.xlsx');
+								// $writer = IOFactory::createWriter($spreadsheet, 'Xls');
+							}
+						}
+						
+					}
+				}
+			}
 		}
     public function encuesta ($leccion_id) {
         $this->_acl->autenticado();

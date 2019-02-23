@@ -28,7 +28,7 @@ class FormularioPreguntas extends Eloquent
           return [
             'respuesta' => $item->Fre_Respuesta
           ];
-        });   
+        })->toArray();   
         break;
       case 'select':
       case 'radio':
@@ -230,7 +230,8 @@ THTML;
     return $this->hasMany('App\FormularioUsuarioRespuestasDetalles', 'Fpr_IdForPreguntas');
   }
   public function formatToArray ($exclude = []) {
-    return [
+    
+    $pre =  [
       'id' => $this->Fpr_IdForPreguntas,
       'pregunta' => $this->Fpr_Pregunta,
       'descripcion' => $this->Fpr_Descripcion,
@@ -243,6 +244,12 @@ THTML;
       'update' => $this->Fpr_UpdatedAt,
       'parent' => $this->Fpr_Parent
     ];
+    foreach ($exclude as $key => $value) {
+      if (isset($pre[$value])) {
+        unset($pre[$value]);
+      }
+    }
+    return $pre;
   }
 }
 
