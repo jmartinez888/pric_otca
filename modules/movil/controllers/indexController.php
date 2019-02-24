@@ -92,7 +92,7 @@ class  indexController extends movilController {
         $Lmodel = $this->loadModel("leccion",'elearning');
         $OLeccion = $Lmodel->getLeccion($leccion, $modulo,$id_usuario,$lenguaje);
 
-        $this->retornar($modulos_curso,"leccion");   
+        $this->retornar($OLeccion,"leccion");   
     }
 
     public function getProgresoCurso($Cur_IdCurso=0,$Usu_IdUsuario=0) {                
