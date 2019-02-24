@@ -16,7 +16,7 @@ class FormularioUsuarioRespuestas extends Eloquent
   }
 
   public function scopeJoinUsuarios ($query) {
-    return $query->join('usuario', 'usuario.Usu_IdUsuario', 'formulario_usuario_respuestas.Usu_IdUsuario');
+    return $query->leftJoin('usuario', 'usuario.Usu_IdUsuario', 'formulario_usuario_respuestas.Usu_IdUsuario');
   }
 
   public function detalles () {

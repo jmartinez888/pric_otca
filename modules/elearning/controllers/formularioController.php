@@ -84,15 +84,17 @@ class formularioController extends elearningController {
 
 	}
 	public function store_respuesta ($curso_id) {
-		// dd($_POST);
+		// dd($_POST, $_FILES);
 		$mod_usuario = $this->loadModel('usuario', 'usuarios');
 		$usuario = $mod_usuario::find(Session::get('id_usuario'));
-		$roles = $usuario->getUsuariosRoles();
 		$success_pass = false;
-		foreach ($roles as $key => $value) {
-			if ($value['Rol_Ckey'] == 'alumno') {
-				$success_pass = true;
-				break;
+		if ($usuario) {
+			$roles = $usuario->getUsuariosRoles();
+			foreach ($roles as $key => $value) {
+				if ($value['Rol_Ckey'] == 'alumno') {
+					$success_pass = true;
+					break;
+				}
 			}
 		}
 
@@ -101,11 +103,8 @@ class formularioController extends elearningController {
 			$curso = $mod_curso::find($curso_id);
 			if ($curso) {
 				$formulario_id = $this->getInt('formulario_id');
-				// if ($formulario_id != 0)
 				$frm = Formulario::find($formulario_id);
-				// dd($frm);
-				// else
-				// 	$frm = $curso->getFormularioActivo();
+				
 				 
 				if ($frm && md5($frm->Frm_Tipo) == $this->getTexto('formulario_modo_registro')) {
 					// dd($_POST, $_GET, $frm->isTipo(Formulario::TIPO_ENCUESTA));
@@ -186,23 +185,31 @@ class formularioController extends elearningController {
 					  		}
 
 								$ext = pathinfo($value['name'], PATHINFO_EXTENSION);
+
+								$nameToAuxiliar = pathinfo($value['name'], PATHINFO_BASENAME);
+								
+								
 		            $namefinal = md5($value['name'].$pregunta->Fpr_IdForPreguntas).'.'.$ext;
 		            $destino_path = $path_pregunta.$namefinal;
 					  		if (move_uploaded_file($value['tmp_name'], $destino_path)) {
 					  			$pres = new FormularioUsuarioRespuestasDetalles();
 									$pres->Fpr_IdForPreguntas = $pregunta->Fpr_IdForPreguntas;
 									$pres->Fre_Respuesta = $namefinal;
+									
+									$pres->Fre_Auxiliar = $nameToAuxiliar.($usuario ? ' - '.$usuario->Usu_Nombre.' '.$usuario->Usu_Apellidos : '');
 									$pre_respuestas[] = $pres;
 					  		}
 
 					  	}
-					  	break;
+					  	// break;
 					  }
 
 					  if ($success_insert) {
 					  	DB::transaction(function () use ($usuario, $frm, $pre_respuestas) {
-						  	$new_respuesta = new FormularioUsuarioRespuestas();
-						  	$new_respuesta->Usu_IdUsuario = $usuario->Usu_IdUsuario;
+								$new_respuesta = new FormularioUsuarioRespuestas();
+								if ($usuario) {
+									$new_respuesta->Usu_IdUsuario = $usuario->Usu_IdUsuario;
+								}
 						  	$new_respuesta->Frm_IdFormulario = $frm->Frm_IdFormulario;
 						  	$new_respuesta->Fur_Completado = 1;
 						  	if ($new_respuesta->save()) {
@@ -229,26 +236,36 @@ class formularioController extends elearningController {
 		$this->responder($leccion_id_hash, true);
 	}
 	public function responder ($curso_id, $is_encuesta_libre = false) {
-		$this->_acl->autenticado();
-
+		if (!$is_encuesta_libre)
+			$this->_acl->autenticado();
 
 		$mod_usuario = $this->loadModel('usuario', 'usuarios');
-		$usuario = $mod_usuario::find(Session::get('id_usuario'));
 		$lang = $this->_view->getLenguaje(['elearning_formulario_responder','elearning_cursos'], false, true);
-		$roles = $usuario->getUsuariosRoles();
+
+		if (!$is_encuesta_libre) {
+			$usuario = $mod_usuario::find(Session::get('id_usuario'));
+			$roles = $usuario->getUsuariosRoles();
+		}
 		$success_pass = false;
+
+
+
 		$data['menu'] = '';
 		$data['formulario'] = null;
 		$data['obj_curso'] = null;
 		$data['respuesta'] = null;
 		$data['titulo'] = $lang->get('elearning_formulario_responder_titulo');
+		
 		// dd($roles);
-		foreach ($roles as $key => $value) {
-			if ($value['Rol_Ckey'] == 'alumno') {
-				$success_pass = true;
-				break;
+		if (!$is_encuesta_libre) {
+			foreach ($roles as $key => $value) {
+				if ($value['Rol_Ckey'] == 'alumno') {
+					$success_pass = true;
+					break;
+				}
 			}
 		}
+
 		if ($success_pass) {
 			//load formulario
 
@@ -266,8 +283,6 @@ class formularioController extends elearningController {
 					$this->redireccionar('');
 
 			} else {
-				
-				
 				$curso = $mod_curso::find($curso_id);
 				// dd($curso);
 				// $data['obj_curso'] = $curso;
@@ -281,7 +296,13 @@ class formularioController extends elearningController {
 				}
 			}
 			if ($frm) {
-				$data['respuesta'] = $frm->getRespuestaByUsuario(Session::get('id_usuario'));
+				$data['respuesta_sin_responder'] = true;
+				// if (!$is_encuesta_libre) {
+					$respuesta = $frm->getRespuestaByUsuario(Session::get('id_usuario') ? Session::get('id_usuario') : 0);
+					
+					if ($respuesta)
+						$data['respuesta_sin_responder'] = $respuesta->Fur_Completado == 0;
+				// }
 				$data['formulario'] = $frm;
 			}
 			$data['obj_curso'] = $data['curso'] = $curso;

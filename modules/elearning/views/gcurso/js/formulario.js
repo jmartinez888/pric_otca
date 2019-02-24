@@ -213,8 +213,8 @@ Vue.component('input-tags-resume', {
 	},
 	created: function () {
 		this.objPregunta = JSON.parse(this.dataPregunta);
-		// console.log(this.objPregunta)
-		// console.log(this.dataResumen);
+		console.log(this.objPregunta)
+		console.log(this.dataResumen);
 		// console.log(JSON.parse(this.dataResumen))
 		// this.dataResumen = JSON.parse(this.dataResumen)
 	},
@@ -362,9 +362,15 @@ new Vue({
 			pageLength: 10,
 			serverSide: true,
 			columns: [
-				{data: 'usuario_id'},
-				{data: 'usuario_nombre'},
-				{data: 'usuario_cuenta'},
+				{data: 'usuario_id', render: (d, t, r) => {
+					return d != null ? d : '#';
+				}},
+				{data: 'usuario_nombre', render: (d, t, r) => {
+					return d != null ? d : STR_ANONIMO;
+				}},
+				{data: 'usuario_cuenta', render: (d, t, r) => {
+					return d != null ? d : '- - -';
+				}},
 				{data: 'respuesta_fecha'},
 				{data: 'formulario_respuesta_id', render: (d, t, r) => {
 					// return d;

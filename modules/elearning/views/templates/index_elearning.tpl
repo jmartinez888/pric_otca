@@ -21,7 +21,8 @@
 {else}
 	<div >SIN MENU</div>
 {/if}
-<div class="col col-xs-12 col-sm-12 col-md-9 col-lg-10" style="padding-top: 20px">
+
+<div class="col col-xs-12 col-sm-12 {if isset($menu) && trim($menu) != ''}col-md-9 col-lg-10{/if}" style="padding-top: 20px">
 	<div class="col col-xs-12">
         <div id="learn_content_main">
         	{block 'subcontenido'}

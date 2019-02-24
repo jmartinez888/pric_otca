@@ -51,11 +51,20 @@
 
               {/if}
               {if ($pre->Fpr_Tipo == 'upload')}
+              <ul class="">
+                  {foreach $pre->detalleRespuestaByResUsu($respuesta->Fur_IdFrmUsuRes) as $opc}
+
+                    <li><a href="{$opc['path_url']}" target="_blank" title="{$opc['name_url']}">{$opc['name_url']}</a></li>
+
+                  {/foreach}
+              </ul>
+              {*
                 {if ($pre->detalleRespuestaByResUsu($respuesta->Fur_IdFrmUsuRes) != null)}
                   {$pre->detalleRespuestaByResUsu($respuesta->Fur_IdFrmUsuRes)->format()}
                 {else}
                   <p>{$lang->get('elearning_formulario_responder_fichero_no_encontrado')}</p>
                 {/if}
+              *}
               {/if}
               {if ($pre->Fpr_Tipo == 'fecha')}
                 <p>{$pre->detalleRespuestaByResUsu($respuesta->Fur_IdFrmUsuRes)->Fre_Respuesta}</p>

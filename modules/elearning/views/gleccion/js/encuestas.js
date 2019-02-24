@@ -65,6 +65,7 @@ new Vue({
 					return Mustache.render(document.getElementById('tpl_btn_encuestas').innerHTML, {
 						leccion_id: d,
 						is_libre: r.modulo_id == null,
+						modulo_id: r.modulo_id,
 						hash_encuesta: r.hash_encuesta
 					})
 				}}
