@@ -89,9 +89,8 @@
 {/block}
 {block 'template' append}
 <template id="tpl_btn_encuestas">
-    {literal}{{#is_libre}}{/literal}
-    <button data-id="{literal}{{leccion_id}}{/literal}" data-clipboard-text="{$_layoutParams.root}elearning/encuesta/responder/{literal}{{leccion_id}}{/literal}" class="btn btn-acciones btn-default  btn-sm btn_copiar" data-toggle="tooltip" data-placement="bottom" title="{$lang->get('str_copiar_enlace')}"><i class="glyphicon glyphicon-link"></i></button>
-    {literal}{{/is_libre}}{/literal}
+    <button data-id="{literal}{{leccion_id}}{/literal}" data-clipboard-text="{$_layoutParams.root}elearning{literal}{{#is_libre}}{/literal}/encuesta/responder/{literal}{{leccion_id}}{/literal}{literal}{{/is_libre}}{/literal}{literal}{{^is_libre}}{/literal}/cursos/modulo/{$idcurso}/{literal}{{modulo_id}}{/literal}/{literal}{{leccion_id}}{/literal}{literal}{{/is_libre}}{/literal}" class="btn btn-acciones btn-default  btn-sm btn_copiar" data-toggle="tooltip" data-placement="bottom" title="{$lang->get('str_copiar_enlace')}"><i class="glyphicon glyphicon-link"></i></button>
+    
     <a href="{$_layoutParams.root}elearning/gleccion/encuesta/{literal}{{leccion_id}}{/literal}" class="btn btn-default btn-acciones  btn-sm" data-toggle="tooltip" data-placement="bottom" title="{$lang->get('str_editar')}"><i class="glyphicon glyphicon-pencil"></i></a>
 
     <button data-id="{literal}{{leccion_id}}{/literal}" class="btn btn-acciones btn-default  btn-sm btn_eliminar" data-toggle="tooltip" data-placement="bottom" title="{$lang->get('str_eliminar')}"><i class="glyphicon glyphicon-trash"></i></button>

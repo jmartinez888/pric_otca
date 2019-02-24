@@ -41,7 +41,7 @@
                <!--  <a {if $puntos_maximo>0} href="{$_layoutParams.root}elearning/examen/registrarRespuestaCombinacionExacta/{$examen}/{$idcurso}" {else}
              data-toggle="modal"  data-target="#msj-invalido" data-placement="bottom" 
             {/if}><img src="https://campus.chamilo.org/main/img/icons/64/mcmac.png" alt="Combinación Exacta" data-toggle="tooltip" data-placement="top" title="Crear pregunta con Combinación Exacta"></a> -->
-             <a class="nueva_pregunta" _href = "{$_layoutParams.root}elearning/examen/registrarRespuestaCombinacionExacta/{$examen}/{$idcurso}"><img src="https://campus.chamilo.org/main/img/icons/64/mcmac.png" alt="Combinación Exacta" data-toggle="tooltip" data-placement="top" title="{$lenguaje["elearning_preguntas_respcombinacionexacta"]}"></a>
+             <a class="nueva_pregunta" _href = "{$_layoutParams.root}elearning/examen/registrarRespuestaCombinacionExacta/{$examen}/{$idcurso}"><img src="https://campus.chamilo.org/main/img/icons/64/mcmac.png" alt="Combinación Exacta" data-toggle="tooltip" data-placement="top" title="{$lenguaje["elearning_preguntas_combinacionexacta"]}"></a>
             <label class="text-bold">{$lenguaje["elearning_preguntas_combinacionexacta"]}</label>
             </div>
         </div>
@@ -55,7 +55,7 @@
                     <input class="form-control" placeholder="Buscar Pregunta" style="width: 300px; float: left; margin: 0px 10px;" name="palabrapregunta" id="palabrapregunta">
                     <button class="btn btn-success" style=" float: left" type="button" id="buscarpregunta"  ><i class="glyphicon glyphicon-search"></i></button>
                 </div>
-                <a href="{$_layoutParams.root}elearning/examen/editarexamen/{$idcurso}/{$examen}" class="btn btn-danger margin-t-10 col-xs-2" id="btn_nuevo" ><i class="glyphicon glyphicon-triangle-left"></i> Regresar</a>    
+                <a href="{$_layoutParams.root}elearning/examen/editarexamen/{$idcurso}/{$examen}" class="btn btn-danger margin-t-10 col-xs-2" id="btn_nuevo" ><i class="glyphicon glyphicon-triangle-left"></i>{$lenguaje["elearning_preguntas_btnregresar"]}</a>    
             </div>
             <div id="listarpreguntas">
                 <input type="hidden" name="puntos" id="puntos" value="{$puntos_maximo}">
@@ -114,7 +114,7 @@
                             {/foreach}
                             <tr>
                                 <th style=" text-align: center" colspan="3"></th>
-                                <th style=" text-align: center">Total {$puntos_total}</th>
+                                <th style=" text-align: center">{$lenguaje["elearning_preguntas_total"]} {$puntos_total}</th>
                                 <th style=" text-align: center" colspan="2" ></th>
                             </tr>
                         </table>
@@ -145,7 +145,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">{$lenguaje["elearning_preguntas_cancelar"]}</button>
-                <a style="cursor:pointer"  data-dismiss="modal" class="btn btn-danger danger eliminar_pregunta">Eliminar</a>
+                <a style="cursor:pointer"  data-dismiss="modal" class="btn btn-danger danger eliminar_pregunta">{$lenguaje["elearning_preguntas_btneliminar"]}</a>
             </div>
         </div>
     </div>

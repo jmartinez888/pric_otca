@@ -69,8 +69,7 @@
       <h3>{$lang->get('elearning_cursos_no_posee_formulario')}</h3>
     </div>
   {else}
-    {if (!isset($respuesta) || $respuesta->Fur_Completado == 0)}
-
+    {if $respuesta_sin_responder}
       <div class="col-lg-12 ">
         <div class="panel panel-default tab-content" role="" style="">
           <div class="panel-body form-horizontal tab-pane active" role="tabpanel"  id="formulario_editar">

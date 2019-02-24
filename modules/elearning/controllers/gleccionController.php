@@ -717,10 +717,12 @@ class gleccionController extends elearningController {
                                     $temp_header = clone $build_header;
                                     // dd($build_header, $detalles->toArray());
 									foreach ($detalles as $det) {
-										$spreadsheet->setActiveSheetIndex(0)->setCellValueByColumnAndRow(1, $row, $res->usuario->Usu_Nombre.' '.$res->usuario->Usu_Apellidos);
+                                        $usuario_temp = $res->usuario;
+										$spreadsheet->setActiveSheetIndex(0)->setCellValueByColumnAndRow(1, $row, $usuario_temp ? $usuario_temp->Usu_Nombre.' '.$usuario_temp->Usu_Apellidos : strtoupper($lang->get('str_anonimo')));
 										foreach ($temp_header as $kheader => $vheader) {
 											if ($vheader['pregunta_id'] == $det->Fpr_IdForPreguntas) {
                                                 $text_respu = '';
+                                                $asignar = true;
                                                 switch ($det->Fpr_Tipo) {
                                                     case 'select':
                                                     case 'radio':
@@ -736,14 +738,29 @@ class gleccionController extends elearningController {
                                                             }
                                                         }
                                                         break;
-                                                    case 'cuadricula':
-                                                        $text_respu = 'asd';
-                                                        break;
+                                                    case 'upload':
+                                                        // $text_respu = 'http://examle.com/uploads/cv/';
+                                                        $sheet = $spreadsheet->getActiveSheet();
+                                                        $cell = $sheet->getCellByColumnAndRow($vheader['index'], $row);
+                                                        // dd($cell);
+                                                        $cell->setValue($det->Fre_Auxiliar);
+                                                        $cell->getHyperlink()
+                                                        ->setUrl(BASE_URL.'files/elearning/formularios/'.$formulario->Frm_IdFormulario.'/'.$det->Fpr_IdForPreguntas.'/'.$det->Fre_Respuesta);
+                                                        // ->setTooltip('Click here to access file');
+                                                        $cell->getStyle()->applyFromArray([
+                                                            'font' => [
+                                                                'color' => ['rgb' => '0000FF'],
+                                                                'underline' => 'single'
+                                                            ]
+                                                        ]);
+                                                        $asignar = false;
+														break;												
                                                     default:
                                                         $text_respu = $det->Fre_Respuesta;
                                                         break;
                                                 }
-												$spreadsheet->setActiveSheetIndex(0)->setCellValueByColumnAndRow($vheader['index'], $row, $text_respu);
+                                                if ($asignar)
+												    $spreadsheet->setActiveSheetIndex(0)->setCellValueByColumnAndRow($vheader['index'], $row, $text_respu);
 												unset($temp_header[$kheader]);
 												break;
 											}

@@ -43,6 +43,16 @@ class FormularioPreguntas extends Eloquent
           ->groupBy('formulario_usuario_respuestas_detalles.Fpo_IdForPrOpc');
         $res = $query->get()->toArray();   
         break;
+      case 'upload':
+      $query = FormularioUsuarioRespuestasDetalles::byPregunta($this->Fpr_IdForPreguntas)
+      ->groupBy('Fre_Respuesta');
+      $res = $query->get()->map(function($item) {
+        return [
+          'auxiliar' => htmlentities($item->Fre_Auxiliar),
+          'name' => htmlentities($item->Fre_Respuesta)
+        ];
+      })->toArray(); 
+        break;
       case 'box':
         $temp_res = [];
         $opc_ids = FormularioUsuarioRespuestasDetalles::byPregunta($this->Fpr_IdForPreguntas)
@@ -188,33 +198,45 @@ class FormularioPreguntas extends Eloquent
 
           $pre_path = 'files'.DS.'elearning'.DS.'formularios'.DS.$target->respuesta->Frm_IdFormulario.DS.$target->Fpr_IdForPreguntas.DS.$target->Fre_Respuesta;
           $path = ROOT.$pre_path;
+          // print_r($target->Fre_Respuesta);
           if (file_exists($path)) {
             $finfo = finfo_open(FILEINFO_MIME_TYPE);
             $mime = finfo_file($finfo, $path);
             finfo_close($finfo);
             $formato = explode('/', $mime);
-            $params['ruta'] = $pre_path;
-            $params['pregunta'] = $target->pregunta->Fpr_Pregunta;
-            if ($formato[0] == 'image') {
-              return new class ($params) {
-                public function __construct($values)
-                {
-                  $this->values = $values;
-                  $this->path = BASE_URL.$values['ruta'];
-                }
-                public function format () {
-
-$html = <<<THTML
-    <img class="w-100" src="{$this->path}" alt="{$this->values['pregunta']}" title="{$this->values['pregunta']}"/>
-THTML;
-
-                  return $html;
-                }
-              };
-            }
-          } else {
-            return null;
           }
+          return [[
+            'path_url' => BASE_URL.$pre_path,
+            'name_url' => $target->Fre_Auxiliar,
+            'mime_type' => isset($formato) ? $formato[0] : 'none'
+          ]];
+//           if (file_exists($path)) {
+//             $finfo = finfo_open(FILEINFO_MIME_TYPE);
+//             $mime = finfo_file($finfo, $path);
+//             finfo_close($finfo);
+//             $formato = explode('/', $mime);
+//             $params['ruta'] = $pre_path;
+//             $params['pregunta'] = $target->pregunta->Fpr_Pregunta;
+//             if ($formato[0] == 'image') {
+//               return new class ($params) {
+//                 public function __construct($values)
+//                 {
+//                   $this->values = $values;
+//                   $this->path = BASE_URL.$values['ruta'];
+//                 }
+//                 public function format () {
+
+// $html = <<<THTML
+//     <img class="w-100" src="{$this->path}" alt="{$this->values['pregunta']}" title="{$this->values['pregunta']}"/>
+// THTML;
+
+//                   return $html;
+//                 }
+//               };
+//             }
+//           } else {
+//             return null;
+//           }
         }
 
 

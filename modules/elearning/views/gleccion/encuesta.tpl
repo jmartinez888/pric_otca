@@ -180,6 +180,17 @@
 					<div class="display-resumen" v-if="objPregunta.tipo == 'casilla'" >
 							<div ref="chartCuadrilla" style="height: 500px"></div>
 					</div>
+					<div class="display-resumen" v-if="objPregunta.tipo == 'upload'" >
+							<table class="table table-condensed table-hover">
+									<tbody>
+										<tr v-for="file in dataResumen">
+											<td>
+												<a :href="'{BASE_URL}files/elearning/formularios/' + objPregunta.formulario_id + '/' + objPregunta.id + '/' + file.name" target="_blank" :title="file.auxiliar" v-html="file.auxiliar"></a>
+											</td>	
+										</tr>
+									</tbody>
+								</table>
+					</div>
 				</div>
 				<hr>
 		</div>
@@ -195,6 +206,7 @@
 {block 'js' append}
 {if ($formulario != null)}
 <script type="text/javascript">
+	var STR_ANONIMO = "{$lang->get('str_anonimo')}";
   var data_frm = {json_encode($formulario->formatToArray())};
 </script>
 
