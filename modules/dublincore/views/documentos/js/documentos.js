@@ -1,4 +1,5 @@
 var _post = null;
+var _Dub_IdDublincore_ = 0;
 $(document).on('ready', function() {
     $('body').on('click', '.pagina', function() {
         paginacion($(this).attr("pagina"), $(this).attr("nombre"), $(this).attr("parametros"));
@@ -80,7 +81,6 @@ $(document).on('ready', function() {
         e.preventDefault();
     });
 
-
     $("body").on('click', "#bt_buscar_filter", function() {
         filtroRecurso();
     });
@@ -157,7 +157,7 @@ $(document).on('ready', function() {
         var Arf_IdArchivoFisico_ =  file.fileName;
         // console.log("File name: " + file.fileName);
 
-        alert(Rec_IdRecurso + archivoFisico);
+        // alert(Rec_IdRecurso }+ archivoFisico);
         _post = $.post(_root_ + 'dublincore/documentos/adjuntarArchivo/' + Rec_IdRecurso,
                 {  
                     Idi_IdIdioma: $('#Idi_IdIdioma').val(),
@@ -188,12 +188,71 @@ $(document).on('ready', function() {
             $("#adjuntarArchivo").html(data);
         });
     });   
-
-
     //Fin modal, para seleccionar recurso
 
-	$("body").on('click', ".ce_dublin", function() {
+    // Eliminar Dublin
+    $("body").on('click', '.confirmar-eliminar-dublin', function() {
         
+        if (_post && _post.readyState != 4) {
+            _post.abort();
+        }
+        _id_dublin = $(this).attr("id_dublin");
+        if (_id_dublin === undefined) {
+            _id_dublin = 0;
+        }
+        _Dub_IdDublincore_ = _id_dublin;
+        _Row_Estado_ = 0;
+    });
+    $('#confirm-delete').on('show.bs.modal', function(e) { 
+        var bookId = $(e.relatedTarget).data('book-id'); 
+         $(e.currentTarget).find("#texto_").html(bookId);
+    }); 
+    $("body").on('click', '.eliminar_dublin', function() {
+        $("#cargando").show();
+        // _Per_IdPermiso = _eliminar;
+        //var palabra = $('#'+palabra).val();     
+        // var palabrafiltro = $('#palabra').val();     
+        var tema = $('#filtrotemadocumento').val(); 
+        var tipo = $('#filtrotipodocumento').val();  
+        var autor = $('#filtroautordocumento').val();
+        var formato = $('#filtroformatodocumento').val();
+        var letra = $('#filtroletradocumento').val();
+        var usuario = $('#filtrousuariodocumento').val();
+        var pais = $('#filtropaisdocumento').val(); 
+        // alert(usuario);
+        // $(".abc").attr("letra");
+        // if(!palabrafiltro){palabrafiltro='all'}
+        if(!tema){tema='all'}
+        if(!tipo){tipo='all'}
+        if(!autor){autor='all'}
+        if(!pais){pais='all'}
+        if(!formato){formato='all'}
+        if(!letra){letra='all'}
+        if(!usuario){usuario='all'}
+        // tema = '&tema=' + tema; 
+        // tipo = '&tipo=' + tipo; 
+        // autor = '&autor=' + autor; 
+        // pais = '&pais=' + pais;
+
+        var _post_ = {'_Dub_IdDublincore': _Dub_IdDublincore_,
+                        '_Row_Estado': _Row_Estado_,
+                        'tema':tema,'tipo':tipo,'autor':autor,
+                        'formato':formato,'letra':letra,'usuario':usuario,'pais':pais,
+                        'pagina': $(".pagination .active span").html(),
+                        'palabra': $("#palabraDublin").val(),
+                        'filas':$("#s_filas_"+'resultados').val()
+                    };
+        
+        _post = $.post(_root_ + 'dublincore/documentos/_eliminarDublin',
+                _post_,
+        function(data) {
+            $("#resultados").html('');
+            $("#cargando").hide();
+            $("#resultados").html(data);
+        });
+    });
+
+	$("body").on('click', ".ce_dublin", function() {
         $("#cargando").show();
         if (_post && _post.readyState != 4) {
             _post.abort();
@@ -316,7 +375,7 @@ $(document).on('ready', function() {
 		buscarLetraDocumentos($("#palabra").val(),"filtrotemadocumento","filtrotipodocumento","filtroautordocumento",'filtroformatodocumento',"filtropaisdocumento","filtrousuariodocumento",$(li).attr("letra"));        		
 	}    
     
-    
+
 });
 
 function tecla_enter_dublincore(evento)

@@ -237,6 +237,7 @@ ORDER BY ted.Ted_Descripcion ASC ");
                 dub.Dub_Editor, dub.Dub_Colaborador, dub.Dub_FechaDocumento, dub.Dub_Formato, dub.Dub_Identificador, dub.Dub_Fuente, dub.Dub_Idioma,
                 dub.Dub_Relacion, dub.Dub_Cobertura, dub.Dub_Derechos, dub.Dub_Estado, dub.Tid_IdTipoDublin, dub.Arf_IdArchivoFisico, 
                 dub.Ted_IdTemaDublin, dub.Rec_IdRecurso, dub.Usu_IdUsuario,
+                dub.Row_Estado,
                 fn_devolverIdioma('dublincore',dub.Dub_IdDublinCore,'$Idi_IdIdioma',dub.Idi_IdIdioma) Idi_IdIdioma,
                 arf.Arf_PosicionFisica,ted.Ted_Descripcion,aut.*,tid.Tid_Descripcion ,taf.*    
                 FROM documentos_relacionados dor
