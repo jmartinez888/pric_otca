@@ -251,7 +251,7 @@ $(document).on('ready', function() {
             $("#resultados").html(data);
         });
     });
-    $("body").on('click', '.confirmar-habilitar-permiso', function() {
+    $("body").on('click', '.confirmar-habilitar-dublin', function() {
         $("#cargando").show();
         if (_post && _post.readyState != 4) {
             _post.abort();
