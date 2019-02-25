@@ -92,6 +92,32 @@ class  indexController extends movilController {
         $Lmodel = $this->loadModel("leccion",'elearning');
         $OLeccion = $Lmodel->getLeccion($leccion, $modulo,$id_usuario,$lenguaje);
 
+        if (isset($OLeccion) && isset($OLeccion["Lec_Tipo"])) {
+      
+      if ($OLeccion["Lec_Tipo"] == Leccion::TIPO_HTML || $OLeccion["Lec_Tipo"] == 6) {
+        //$Lmodel->RegistrarProgreso($OLeccion["Lec_IdLeccion"], Session::get("id_usuario"));
+        $html = $Lmodel->getContenido($OLeccion["Lec_IdLeccion"], $lenguaje);
+        //$this->_view->assign("cont_html", $html);
+        $OLeccion["Lec_Contenido"]=$html;
+      } else if ($OLeccion["Lec_Tipo"] == Leccion::TIPO_VIDEO) {
+        //$Lmodel->RegistrarProgreso($OLeccion["Lec_IdLeccion"], Session::get("id_usuario"));
+        $html = $Lmodel->getContenido($OLeccion["Lec_IdLeccion"], $lenguaje);
+        //$this->_view->assign("html", $html[0]);
+        $OLeccion["Lec_Contenido"]=$html;
+      } else if ($OLeccion["Lec_Tipo"] == Leccion::TIPO_EXAMEN) {
+       
+      } else if ($OLeccion["Lec_Tipo"] == Leccion::TIPO_DIRIGIDA) {
+        
+      } else if ($OLeccion["Lec_Tipo"] == Leccion::TIPO_EXAMEN_DIRIGIDO) {
+       
+      } else if ($OLeccion['Lec_Tipo'] == Leccion::TIPO_ENCUESTA) {
+        
+       
+    
+        // $formulario = $
+      }
+    } 
+
         $this->retornar($OLeccion,"leccion");   
     }
 
