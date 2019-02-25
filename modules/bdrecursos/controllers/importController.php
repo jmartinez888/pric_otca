@@ -2880,7 +2880,7 @@ class importController extends bdrecursosController
                     }
 
                     if ($_POST['Dub_Formato'] != '') {
-                        $Dub_Formato = $objCelda[$_POST['Dub_Formato']];
+                       $Dub_Formato = $objCelda[$_POST['Dub_Formato']];
                     }
                     if ($_POST['Dub_Identificador'] != '') {
                         $Dub_Identificador = $objCelda[$_POST['Dub_Identificador']];
@@ -2901,25 +2901,18 @@ class importController extends bdrecursosController
                     if ($_POST['Dub_Relacion'] != '') {
                         $Dub_Relacion = $objCelda[$_POST['Dub_Relacion']];
                     }
-
-
                     if ($_POST['Dub_Cobertura'] != '') {
                         $Dub_Cobertura = $objCelda[$_POST['Dub_Cobertura']];
                     }
                     if ($_POST['Dub_Derechos'] != '') {
                         $Dub_Derechos = $objCelda[$_POST['Dub_Derechos']];
                     }
-
-
                     if ($_POST['Dub_PalabraClave'] != '') {
                         $Dub_PalabraClave = $objCelda[$_POST['Dub_PalabraClave']];
                     }
-
-
                     if ($_POST['Aut_Profesion'] != '') {
                         $Aut_Profesion = $objCelda[$_POST['Aut_Profesion']];
                     }
-
                     if ($_POST['Aut_Email'] != '') {
                         $Aut_Email = $objCelda[$_POST['Aut_Email']];
                     }
