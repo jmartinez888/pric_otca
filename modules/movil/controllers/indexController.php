@@ -1,6 +1,4 @@
 <?php
-use App\Leccion;
-
 class  indexController extends movilController {
     private $_model;    
     public function __construct($lang, $url){
@@ -98,14 +96,14 @@ class  indexController extends movilController {
       
       if ($OLeccion["Lec_Tipo"] == Leccion::TIPO_HTML || $OLeccion["Lec_Tipo"] == 6) {
         //$Lmodel->RegistrarProgreso($OLeccion["Lec_IdLeccion"], Session::get("id_usuario"));
-        $html = $Lmodel->getContenido($OLeccion["Lec_IdLeccion"], $lenguaje);
-        //$this->_view->assign("cont_html", $html);
+        $html = $Lmodel->getContenido($OLeccion["Lec_IdLeccion"],$lenguaje);
         $OLeccion["Lec_Contenido"]=$html;
+        //$this->_view->assign("cont_html", $html);
       } else if ($OLeccion["Lec_Tipo"] == Leccion::TIPO_VIDEO) {
         //$Lmodel->RegistrarProgreso($OLeccion["Lec_IdLeccion"], Session::get("id_usuario"));
         $html = $Lmodel->getContenido($OLeccion["Lec_IdLeccion"], $lenguaje);
-        //$this->_view->assign("html", $html[0]);
         $OLeccion["Lec_Contenido"]=$html;
+        //$this->_view->assign("html", $html[0]);
       } else if ($OLeccion["Lec_Tipo"] == Leccion::TIPO_EXAMEN) {
        
       } else if ($OLeccion["Lec_Tipo"] == Leccion::TIPO_DIRIGIDA) {
@@ -114,11 +112,9 @@ class  indexController extends movilController {
        
       } else if ($OLeccion['Lec_Tipo'] == Leccion::TIPO_ENCUESTA) {
         
-       
-    
-        // $formulario = $
       }
     } 
+    
 
         $this->retornar($OLeccion,"leccion");   
     }
