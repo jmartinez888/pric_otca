@@ -22,7 +22,7 @@
             <label class="col-sm-10">{$lenguaje["elearning_ editarrespuestaunica_pregunta"]}</label>
             <label class="col-sm-2">{$lenguaje["elearning_ editarrespuestaunica_puntos"]}</label>
             <div class="col-sm-10">
-              <input placeholder="Pregunta" class="form-control" name="in_pregunta" id="in_pregunta" value="{$preguntaedit.Pre_Descripcion}"/>
+              <input placeholder="{$lenguaje["elearning_ editarrespuestaunica_placeholder0"]}" class="form-control" name="in_pregunta" id="in_pregunta" value="{$preguntaedit.Pre_Descripcion}"/>
               </div>
               <div class="col-sm-2">
               <input data-toggle="tooltip" data-placement="bottom" title="{$lenguaje["elearning_ editarrespuestaunica_text1"]} {if $preguntaedit.Pre_Estado == 0}{$puntos_maximo}{else}{$preguntaedit.Pre_Puntos+$puntos_maximo}{/if}" placeholder="{$lenguaje["elearning_ editarrespuestaunica_placeholder1"]}" class="form-control" name="puntos" id="puntos" type="number" min="0" max="{if $preguntaedit.Pre_Estado == 0}{$puntos_maximo}{else}{$preguntaedit.Pre_Puntos+$puntos_maximo}{/if}" value="{$preguntaedit.Pre_Puntos}"/>
