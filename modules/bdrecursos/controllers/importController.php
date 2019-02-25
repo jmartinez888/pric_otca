@@ -2509,8 +2509,6 @@ class importController extends bdrecursosController
     }
 
     public function dublincore() {
-
-
         $total_registrado = 0;
         $total_no_registrado = 0;
 
@@ -2539,8 +2537,6 @@ class importController extends bdrecursosController
         $datos = array();
         array_push($datos, $_SESSION['encabezado']);
         if (!empty($_SESSION['tipo_archivo'])) {
-
-
             new PHPExcel();
             $archivo = $_SESSION['archivo'];
             $hoja = $_SESSION['hoja'];
@@ -2550,7 +2546,6 @@ class importController extends bdrecursosController
 
             $objHoja = $objPHPExcel->setActiveSheetIndexByName($hoja)->toArray();
             array_shift($objHoja);
-
 
             foreach ($objHoja as $iIndice => $objCelda) {
 
@@ -2867,9 +2862,6 @@ class importController extends bdrecursosController
                 if ($_POST['Arf_URL'] != '') {
                     $Arf_URL = $objCelda[$_POST['Arf_URL']];
                 }
-
-
-
 
                 if ($Dub_Titulo != '' and ( $Arf_PosicionFisica != '' or $Arf_URL != '') and $Pai_Nombre != '' and $Aut_Nombre != '') {
 
