@@ -1,4 +1,3 @@
-{$item=1}
 <div class="container">
     <div class="row">
         <div class="col-md-12">
@@ -6,7 +5,7 @@
         <input id="metodo" name="metodo" type="hidden" value="buscarporpalabras"/>
         <input id="query" name="query" type="hidden"/>
         </div>    
-     </div>   
+    </div>   
     <div class="row">
       <div id="resultados">
         <div class="col-md-12">

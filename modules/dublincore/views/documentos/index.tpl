@@ -88,7 +88,7 @@
                   <div class="row">
                     <div class="col-md-12 col-lg-12" style="padding-top: 10px;">
                       <div class="pull-right">
-                        <center><a id="activar_avanzado" onclick="mostrar_seccion()" style="cursor: pointer;"><button class="btn btn-success pull-right"></button>{$lenguaje["activar_busqavanzada_documentos"]}</a></center>
+                        <a id="activar_avanzado" class="btn btn-success pull-right" onclick="mostrar_seccion()" style="cursor: pointer;">{$lenguaje["activar_busqavanzada_documentos"]}</a>
                         <center><a id="desactivar_avanzado" onclick="quitar_seccion()" style="cursor: pointer; display: none;"><button class="btn btn-success pull-right">{$lenguaje["desactivar_busqavanzada_documentos"]}</button></a></center>
                       </div>
                           <!-- <center>
