@@ -1,4 +1,5 @@
 <?php
+use App\Leccion;
 class  indexController extends movilController {
     private $_model;    
     public function __construct($lang, $url){
