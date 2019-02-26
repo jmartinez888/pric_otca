@@ -7,7 +7,7 @@
       <div class="panel-heading cabecera-titulo">
         <h3 class="panel-title">
           <i class="glyphicon glyphicon-list-alt"></i>&nbsp;&nbsp;
-          <strong>{$lang->get('str_titulo')}</strong>
+          <strong>{$lang->get('str_titulo1')}</strong>
         </h3>
       </div>
       <div class="panel-body" >
@@ -20,7 +20,7 @@
                       <th>{$lang->get('str_tablealumnos_alumnos')}</th>
                       <th>{$lang->get('str_tablealumnos_usuario')}</th>
                       <th>{$lang->get('str_tablealumnos_matricula')}</th>
-                      <th>{$lang->get('str_tablealumnos_procentaje')}</th>
+                      <th>{$lang->get('str_tablealumnos_procentaje')}(%)</th>
                       <th>{$lang->get('str_tablealumnos_modulo')}</th>
                       <th>{$lang->get('str_tablealumnos_leccion')}</th>
                   </tr>
