@@ -1,3 +1,5 @@
+{extends 'template.tpl'}
+{block 'contenido'}
 {include file='modules/elearning/views/gestion/menu/menu.tpl'}
 <div class="col-xs-12 col-sm-12 col-md-9 col-lg-10" style="margin-top: 20px">
 {include file='modules/elearning/views/gestion/menu/tag_url.tpl'}
@@ -176,3 +178,4 @@
         </div>
     </div>
 </div>
+{/block}

@@ -34,14 +34,18 @@
             <div class="panel-item-pizarra">
               <div class="panel item-pizarra">
                 <input class="hidden_IdPizarra" value="{$p.Piz_IdPizarra}" hidden="hidden"/>
+                {if trim($p.Piz_ImgFondo) == ''}
+                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAQAAADa613fAAAAaElEQVR42u3PQREAAAwCoNm/9CL496ABuREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREWkezG8AZQ6nfncAAAAASUVORK5CYII=" />
+                {else}
                 <img src="{BASE_URL}files/elearning/_pizarra/{$p.Piz_ImgFondo}" />
+                {/if}
                 <button class="btn btn-default btn-quitar-pizarra"><span class="glyphicon glyphicon-trash"></span></button>
                 <strong class="number_pizarra">{$i + 1}</strong>
               </div>
             </div>
           {/foreach}
         {else}
-          <div>No se ha creado ninguna pizarra para esta lección</div>
+          <div>{$lang->get('elearning_cursos_no_se_encontro_pizarra_en_leccion')}</div>
         {/if}
       </div>
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -66,18 +70,11 @@
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="margin-top: 0px;">&times;</button>
       </div>
       <div class="panel-body" style="padding: 10px !important; text-align: center">
-        <!--label>Título</label>
-        <input class="form-control" value="" id="tmp_titulo_pizarra" /-->
-        <label id="lb_help">Haga click en un punto y deslice el mouse para dibujar la imagen</label>
-        <input hidden="hidden" value="" id="tmp_img_url" />
-        <input hidden="hidden" value="" id="tmp_piz_x" />
-        <input hidden="hidden" value="" id="tmp_piz_y" />
-        <input hidden="hidden" value="" id="tmp_piz_width" />
-        <input hidden="hidden" value="" id="tmp_piz_height" />
         <center>
           <div class="contenido-pizarra">
             {* <img src="" alt="" id="tmp_fondo_pizarra"> *}
-            <canvas height="400px" width="650px" id="micanvas" class="no-seleccionable"></canvas>
+            {*<canvas height="400px"  id="micanvas" class="no-seleccionable"></canvas>*}
+            <canvas width="650px" id="micanvas" class="no-seleccionable"></canvas>
           </div>
         </center>
         <button class="btn btn-success" id="btn-guardar-pizarra">Guardar Pizarra</button>

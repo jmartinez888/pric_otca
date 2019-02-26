@@ -1,0 +1,162 @@
+TERMINADO, FALTA
+
+IDIOMAS
+	-Revisar el importar idiomas 
+ACTUAL
+	TERMINADO:-Revisar encuesta,c rear datatables para las encuestas y pizarras
+	-Validar casillas y checkbox con javascript solo aceptar uno o más csillas
+	-Revisar todos los estados de la pizarra online(enespera, psado, actual, terminado)
+NOTAS
+	-AGREGAR A BASE DE DATOS REMOTA
+		-contantes
+			-agregar valos para tipo encuesta libre
+				-2000,11, Encuesta libre
+	-CURSO
+		-http://local.github/es/elearning/cursos/curso/40
+			-Descuadre en gestión curso, este es un curso presencial
+	-ENCUESTAS, PIZARRA
+		-Qué tomar en cuenta al eliminar las lecciones (tienen datos anidados)
+	-En algunas páginas no se muestra el idioma en el url
+		-http://local.github/elearning/gestion/anuncios/39
+	-http://local.github/es/elearning/gleccion/_view_lecciones_modulo/39/60
+		DENTRO DE MODULO
+		-Agregar datatable a lecciones
+		-Al ingresar al "editar" de una encuesta(10) y examen dirigido(5), este no tienen contenido que mostrar
+		-AL cambiar de idioma en contenido de los tabs(modulo, lecciones) no se oculta
+		-Los datos del módulo por cada idioma no están cargando
+	-Leccion Tipo 6 qué es?
+	-http://local.github/es/elearning/gmodulo/_view_modulos_curso/39
+		-MODULOS
+		-Cambiar el ícono de habilitar módulo, estos están al revez
+		-Agregar Datatables
+	http://local.github/es/elearning/cursos/modulo/39/60/235
+		-El contenido que el alumno vee lo está viendo el docente
+			-Se puede decir que es una vista previa de lo que verá el alumno, cosa que el docente tiene un preview de lo que será su curso o cómo va quedando el cruso
+	LECCION
+		-leccionModel->validarLeccion para el progreso toma en cuenta la lección anterior en función al ID del registro, sugrencia: aplicar una columna de orden para las lecciones esto ayudará a encontrar el item previo para su validación,
+			-Solo está validando la primera lección para dar pase a los módulos
+				-¿Es necesario restringir el acceso si no se completan las lecciones?
+	ENCUESTAS
+		TERMINADO: -Ocultar campos que no son respondidos porque se registro una nueva preguta cuando ya respondió las anteriores
+		TERMINADO: -Cambio en el registro de los radio buttom de "cuadricula" las columnas eran las preguntas y las filas las opciones, estos deben ser a la inversa
+		TERMINADO:-Agregado variable para diferenciar entre una Encuesta y un Formulario,ñ
+	ENCUESTAS|FORMULARIO
+		-Agregar traducciones a los campos
+			-Registro principal
+			-Registro de preguntas y opciones
+		-Datatables en respuestas
+--------------------------------------------------------------------------------------------------------
+ADICONALES
+	-aSISTENCIA: Marcar asistencia de todos
+		-Quitar asistencia marcada
+	-Se desconecta el docente desl socket, asumo que es el canvas el que provoca esta acción
+	-Marcar assitencia desde la pizarra, 
+		-Puede usarse la sessión activa para veriricar la asistestencia y marcrcar/descarmar
+	-Cambiar los href del menu del curso de javascript a solo html
+	
+
+
+
+
+
+---------------------------------------------------------------------------
+LANGUAJE
+	elearning_gcurso
+		elearning_gcurso_ficha_curso: Ficha curso
+	elearning_cursos
+		elearning_cursos_tamanho_letra: Tamaño letra
+		elearning_cursos_crear_formulario: Crear formulario
+		elearning_cursos_ir_a_asistencia: Ir a asistencia
+		elearning_cursos_detalles_asistencia_alumno: Detalles asistencia alumnos
+		elearning_cursos_ingrese_nombre_alumno: Ingrese nombre alumno
+		elearning_cursos_asistencia_detalles: Asistencia detalles
+		elearning_cursos_agregar_encuesta: Agregar encuesta
+		elearning_cursos_no_posee_encuesta: No posee encuetas
+		elearning_cursos_no_existe_curso: No existe curso
+		elearning_cursos_no_posee_formulario: No posee formulario
+		elearning_cursos_enviar_encuestas: No posee formulario
+		elearning_cursos_formulario_fue_respondido: Formulario ya fue respondido
+		elearning_cursos_gracias_por_contestar_encuesta: Gracias por contestar esta encuesta
+		elearning_cursos_descargar_resumen: Descargar resumen
+		elearning_cursos_resumen_encuesta: Resumen encuesta
+		elearning_cursos_resumen_encuesta: Resumen encuesta
+		elearning_cursos_no_se_encontro_pizarra_en_leccion: No se ha creado ninguna pizarra para esta lección
+	string_lang
+		str_texto: Texto
+		str_ingresar_texto: Ingresar texto,
+		str_sessiones: Sessiones,
+		str_detalles: Detalles
+		str_session: Sessión
+		str_todas: Todas,
+		str_asistencias: Asistencias
+		str_asistencia: Asistencia
+		str_confirmadas: Confirmadas
+		str_sin_confirmar: Sin confirmar
+		str_total: Total
+		str_regresar: Regresar
+		str_registrar: Registrar
+		str_descripcion: Descripción
+		str_tipo: Tipo
+		str_resumen: Resumen
+		str_tiempo: Tiempo
+		str_modulo: Modulo
+		str_modulos: MOdulos
+		str_alumno: Alumno
+		str_mis_cursos: Mis Cursos
+		str_encuesta_libre: Encuesta libre
+		str_mis_cursos: Mis Cursos
+		str_ficha_curso: Ficha Curso
+		str_copiar_enlace: Copiar enlace
+		str_reportes: Reportes
+		str_respuestas: Respuestas
+		str_anonimo: Anonimo
+		str_anuncios: Anuncios
+
+
+OBSERVACIONES
+	-clase_falta o alguno de ellos, reparar la vista de uno de ellos
+	PIZARRA ONLINE
+	ASISTENCIA ALUMNOS
+		TERMINADO: -Mostrar detalles de asistencia, actividades por session,
+		TERMINADO: -Agregar columna para sessiones
+		TERMINADO: -Filtro y buscador
+		TERMINADO: -Agregar enlace a detalles de asistencia
+		TERMINADO-Resumen:
+			TERMINADO-Confirmada, sin confirmar y total, todo en una línea
+
+	GESTION DE PIZARRA
+		-Agregar resolución fija a pizarra y al momento de visualizar en docente adaptarlo, lo mismo que sucede con docente al alumno actualmente	
+	CHAT
+		TERMINADO: -El texto a ser demciado grande no se adaptar y se dforma
+		TERMINADO:-No se puede seleccionar el texto del chat
+		TERMINADO: -mostrar imagen de usuario files/usuario(s)/img
+		TERMINADO:-OPCIONAL
+			TERMINADO: -orientaci´pon vertical de los items de pizarra cuando la pantalla tiene una proporción
+PIZARRA
+	-Objetos de la pziarra deben crearse desde la ubicación del mouse
+	-Agregar finalziar sessión
+	-Botones Finalizar  sessión y ver asistencia(_targert_blank) junto a las opciones del canvas
+	-Modal para 
+	-Implementar finaliación de asistencias
+	-Poner pizarra online al costado de en línea
+	-Pizarra online SESSION:NUMERO_DE_PIZARRA sobre la pizarra, y tento en línea alineado a la izquiera
+	-agregar botón de "en linea" para acceder desde ficha de curso
+PIZARRA ALUMNOS
+	TERMINADO: -Quitar el tab de usuarios
+	TERMINADO: -Ver "tutor" enb la lista de conectados
+	-Mostrar que la pizarra y el chat está "cargando" su contenido
+			-sae muestra una línea, quitar ese detalles visual
+
+
+	HANDGOUT
+		-Usar como Iframe la videoconferencia del handgout
+
+
+ENCUESTAS
+	TERMINADO:-Verificar las opciones de Encuestas(Obligatorio, etc)
+	TERMINADO:-Crear leccion abierta(no usar módulo padre)
+	TERMINADO:-Obtener link de leccion abierta(no usa hash)
+	TERMINADO-Obtener controlador nuevo
+	TERMINADO-Gestión de encuestas: agregar item, Reporte resumen para excel poder usar gráficos, y excel
+
+	FALTAOPCIONA: Multidioma
