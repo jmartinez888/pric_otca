@@ -423,7 +423,7 @@ class examenModel extends Model {
             $result->bindParam(5, $iExa_Peso, PDO::PARAM_INT); 
             $result->bindParam(6, $iExa_Intentos, PDO::PARAM_INT); 
             $result->bindParam(7, $iLec_IdLeccion, PDO::PARAM_INT);
-            // $result->bindParam(8, $iIdi_IdIdioma, PDO::PARAM_STR);                    
+                                
             $result->execute();
             return $result->fetch();
         } catch (PDOException $exception) {
