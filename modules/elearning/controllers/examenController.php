@@ -460,6 +460,8 @@ class examenController extends elearningController {
 
         // echo "string".$id;
         // print_r($this->examen->getTituloCurso($id));
+        $_aclm = $this->loadModel("index", "acl");
+        $this->_view->assign('idiomas',$_aclm->getIdiomas());
         $titulo = $this->examen->getTituloCurso($id);
 
         // $this->_view->assign('lecciones',$lecciones);
