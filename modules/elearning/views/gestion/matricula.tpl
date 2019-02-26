@@ -7,7 +7,7 @@
       <div class="panel-heading cabecera-titulo">
         <h3 class="panel-title">
           <i class="glyphicon glyphicon-list-alt"></i>&nbsp;&nbsp;
-          <strong>ALUMNOS INSCRITOS</strong>
+          <strong>{$lang->get('str_titulo')}</strong>
         </h3>
       </div>
       <div class="panel-body" >
