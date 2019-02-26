@@ -131,16 +131,16 @@ class gestionController extends elearningController {
     if ($this->botonPress("bt_guardar")) {
             $this->registrarAnuncio($id);
     }
-    // print_r($curso);
     $this->_view->setTemplate(LAYOUT_FRONTEND);
-    $this->_view->assign("curso", $curso[0]);
+    $this->_view->assign("curso", $curso);
     $this->_view->assign("anuncios", $anuncios);
     $this->_view->assign("tipo", $tipo);
     $this->_view->assign("id", $id);
     $this->_view->assign("idcurso", $id);
     $this->_view->assign('numeropagina', $paginador->getNumeroPagina());
     $this->_view->assign('paginacionanuncios', $paginador->getView('paginacion_ajax_s_filas'));
-    $this->_view->renderizar("anuncios");
+    $this->_view->render("anuncios");
+    exit;
   }
 
   public function registrarAnuncio($id)

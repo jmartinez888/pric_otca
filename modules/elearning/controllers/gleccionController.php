@@ -1044,7 +1044,7 @@ class gleccionController extends elearningController {
         // $curso = $this->getTexto("curso");
         // $modulo = $this->getTexto("modulo");
         // $leccion = $this->getTexto("leccion");
-    $this->validarUrlIdioma();
+        $this->validarUrlIdioma();
         $this->_view->setTemplate(LAYOUT_FRONTEND);
         if(strlen($curso)==0){ $curso = Session::get("learn_param_curso"); }
         if(strlen($modulo)==0){ $modulo = Session::get("learn_param_modulo"); }

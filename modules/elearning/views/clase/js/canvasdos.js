@@ -1,4 +1,13 @@
 var canvasdocente = null
+const MODE_OBJECT = {
+	NONE: 0,
+	NORMAL: 1,
+	LAPIZ: 2,
+	RECT: 3,
+	CIRCULO: 4,
+	TEXTO: 5,
+	IMAGE: 6
+}
 var mivue = new Vue({
 	el: '#modulo-contenedor',
 	data: function () {
@@ -16,6 +25,14 @@ var mivue = new Vue({
 				width: 0,
 				height: 0
 			},
+
+			CURRENT_CREATE: {
+				MODE: 0,
+				IS_DOWN: false,
+				INITIALIZED: false,
+				POINTER: {x: 0, y: 0},
+				OBJECT: null
+			},			
 			canvas_leccion: [],
 			show_tools: true,
 			obj_canvas: null,
@@ -115,6 +132,7 @@ var mivue = new Vue({
 					console.log('new')
 					//cuando current_pizarra == 0
 					canvasdocente.clear()
+					console.log(document.getElementById('pizarrabg_' + pizarra))
 					canvasdocente.setBackgroundImage(document.getElementById('pizarrabg_' + pizarra).src, x => {
 						canvasdocente.renderAll.bind(canvasdocente)
 						this.canvas_leccion.push({
@@ -125,7 +143,9 @@ var mivue = new Vue({
 						this.objSocket.emit('send_all_data_canvas', {json: canvasdocente.toJSON(['objecto_id']), canvas: {width: this.CANVAS.width, height: this.CANVAS.height}})
 						// this.objSocket.emit('send_all_data_canvas', canvasdocente.toJSON(['objecto_id']))
 					}, {
-					    backgroundImageStretch: false
+							backgroundImageStretch: false,
+							scaleX: this.CANVAS.width/650,
+							scaleY: this.CANVAS.height/365,
 					});
 
 
@@ -252,7 +272,6 @@ var mivue = new Vue({
 			}
 		},
 		addEventosObjeto (obj) {
-
 			obj.on('selected', (e) => {
 				console.log('selected')
 				console.log(e)
@@ -289,19 +308,34 @@ var mivue = new Vue({
 				})
 			})
 		},
+		emitObject: function (obj, dataUrl) {
+			this.objSocket.emit('create_object', {
+				data: obj.toObject(),
+				dataUrl: dataUrl ? obj.toDataURL('png') : '',
+				id: obj.objeto_id,
+				event: 'create'
+			})
+
+		},
 		addObjectCanvas: function (obj, emitData = true, addCanvas = true, dataUrl = false, selected = false) {
 			this.addEventosObjeto(obj)
 			if (emitData) {
-				this.objSocket.emit('create_object', {
-					data: obj.toObject(),
-					dataUrl: dataUrl ? obj.toDataURL('png') : '',
-					id: obj.objeto_id,
-					event: 'create'
-				})
+				this.emitObject(obj, dataUrl)
+				// this.objSocket.emit('create_object', {
+				// 	data: obj.toObject(),
+				// 	dataUrl: dataUrl ? obj.toDataURL('png') : '',
+				// 	id: obj.objeto_id,
+				// 	event: 'create'
+				// })
 
 			}
 			if (addCanvas)
 				canvasdocente.add(obj)
+		},
+		setAllObjectsSelectable: function (opc) {
+			canvasdocente.getObjects().forEach(v => {
+				v.set('selectable', opc)
+			})
 		},
 		onClick_createObject: function (opc) {
 
@@ -310,8 +344,10 @@ var mivue = new Vue({
 			canvasdocente.renderAll()
 			switch (opc) {
 				case 'normal':
+					this.CURRENT_CREATE.INITIALIZED = false
 						canvasdocente.isDrawingMode = this.lapizOn = false
 						this.current_type = 'none'
+						this.setAllObjectsSelectable(true)
 
 					break;
 				case 'lapiz':
@@ -322,28 +358,43 @@ var mivue = new Vue({
 
 					break;
 				case 'rect':
-					this.addObjectCanvas(new fabric.Rect({
-						fill: 'transparent',
-						backgroundColor: 'transparent',
-						width: 200,
-						height: 100,
-						stroke: 'black',
-						objeto_id: this.count_id++
-					}))
+					canvasdocente.isDrawingMode = this.lapizOn = false
+					this.CURRENT_CREATE.MODE = MODE_OBJECT.RECT
+					if (!this.CURRENT_CREATE.INITIALIZED)
+						this.CURRENT_CREATE.INITIALIZED = true
+					this.setAllObjectsSelectable(false)
+					// this.addObjectCanvas(new fabric.Rect({
+					// 	fill: 'transparent',
+					// 	backgroundColor: 'transparent',
+					// 	width: 200,
+					// 	height: 100,
+					// 	stroke: 'black',
+					// 	objeto_id: this.count_id++
+					// }))
 					break;
 				case 'circulo':
-					this.addObjectCanvas(new fabric.Circle({
-						fill: 'transparent',
-						backgroundColor: 'transparent',
-						stroke: 2,
-						radius: 50,
-						objeto_id: this.count_id++
-					}))
+					canvasdocente.isDrawingMode = this.lapizOn = false
+					this.CURRENT_CREATE.MODE = MODE_OBJECT.CIRCULO
+					if (!this.CURRENT_CREATE.INITIALIZED)
+						this.CURRENT_CREATE.INITIALIZED = true
+					this.setAllObjectsSelectable(false)
+					// this.addObjectCanvas(new fabric.Circle({
+					// 	fill: 'transparent',
+					// 	backgroundColor: 'transparent',
+					// 	stroke: 2,
+					// 	radius: 50,
+					// 	objeto_id: this.count_id++
+					// }))
 					break;
 				case 'texto':
-					this.addObjectCanvas(new fabric.Text(this.opcelements.text, {
-						objeto_id: this.count_id++
-					}))
+				canvasdocente.isDrawingMode = this.lapizOn = false
+				this.CURRENT_CREATE.MODE = MODE_OBJECT.TEXTO
+					if (!this.CURRENT_CREATE.INITIALIZED)
+						this.CURRENT_CREATE.INITIALIZED = true
+					this.setAllObjectsSelectable(false)
+					// this.addObjectCanvas(new fabric.Text(this.opcelements.text, {
+					// 	objeto_id: this.count_id++
+					// }))
 				case 'image':
 
 					break;
@@ -420,7 +471,86 @@ var mivue = new Vue({
 		canvasdocente = new fabric.Canvas('micanvas', {
 			backgroundColor: 'white'
 		})
-		canvasdocente.on('mouse:down', function(options) {
+		console.log(this.CANVAS.width)
+		// canvasdocente.setZoom(this.CANVAS.width/1280)
+		canvasdocente.on('mouse:down', (options) => {
+			console.log('mouse:down')
+			console.log(options.pointer)
+			if (this.CURRENT_CREATE.INITIALIZED) {
+				this.CURRENT_CREATE.IS_DOWN = true;
+				canvasdocente.discardActiveObject()
+				switch (this.CURRENT_CREATE.MODE) {
+					case MODE_OBJECT.RECT:
+						this.CURRENT_CREATE.OBJECT = new fabric.Rect({
+							fill: 'transparent',
+							backgroundColor: 'transparent',
+							stroke: '#000000',
+							// width: 120,
+							// height: 120,
+							objeto_id: this.count_id++,
+							left: options.pointer.x,
+							top: options.pointer.y,
+						})
+						break;
+					case MODE_OBJECT.CIRCULO:
+						this.CURRENT_CREATE.OBJECT = new fabric.Circle({
+							fill: 'transparent',
+							left: options.pointer.x,
+							top: options.pointer.y,
+							originX: 'left',
+							originY: 'top',
+							backgroundColor: 'transparent',
+							stroke: '#000000',
+							radius: 0,
+							strokeWidth:1,
+							angle: 0,
+							objeto_id: this.count_id++
+						})
+						break;
+					case MODE_OBJECT.TEXTO:
+						this.CURRENT_CREATE.OBJECT = new fabric.Text(this.opcelements.text, {
+							left: options.pointer.x,
+							top: options.pointer.y,
+							originX: 'center',
+							originY: 'center',
+							objeto_id: this.count_id++
+						})
+						break;
+				}
+				this.CURRENT_CREATE.POINTER = options.pointer
+				this.addObjectCanvas(this.CURRENT_CREATE.OBJECT, false)
+				// canvasdocente.add(this.CURRENT_CREATE.OBJECT)
+				// canvasdocente.setActiveObject(this.CURRENT_CREATE.OBJECT)
+			}
+		});
+
+		canvasdocente.on('mouse:up', (options) => {
+			if (this.CURRENT_CREATE.INITIALIZED) {
+				console.log(this.CURRENT_CREATE.POINTER)
+				console.log(options.pointer)
+				console.log(this.CURRENT_CREATE.OBJECT)
+				this.CURRENT_CREATE.IS_DOWN = false;
+				// canvasdocente.discardActiveObject()
+				this.CURRENT_CREATE.OBJECT.setCoords()
+				// canvasdocente.setActiveObject(this.CURRENT_CREATE.OBJECT)
+				canvasdocente.discardActiveObject()
+				if (this.CURRENT_CREATE.MODE == MODE_OBJECT.TEXTO) {
+					canvasdocente.setActiveObject(this.CURRENT_CREATE.OBJECT)
+					this.CURRENT_CREATE.INITIALIZED = false
+					this.CURRENT_CREATE.MODE = MODE_OBJECT.NONE
+					this.setAllObjectsSelectable(true)
+				} else {
+					this.setAllObjectsSelectable(false)
+				}
+				this.emitObject(this.CURRENT_CREATE.OBJECT)
+				canvasdocente.renderAll()
+				
+				// this.CURRENT_CREATE.INITIALIZED = false
+			}
+			
+
+			console.log('mouse:up')
+			console.log(options.pointer)
 		});
 		canvasdocente.on('object:modified', function(options) {
 				console.log('object:modified')
@@ -437,7 +567,41 @@ var mivue = new Vue({
 		});
 
 		canvasdocente.on('mouse:move', (e) => {
-		  this.objSocket.emit('pos_cursor', e.pointer)
+			console.log('mouse:move')
+			this.objSocket.emit('pos_cursor', e.pointer)
+			
+			if (this.CURRENT_CREATE.INITIALIZED && this.CURRENT_CREATE.IS_DOWN) {
+				switch (this.CURRENT_CREATE.MODE) {
+					case MODE_OBJECT.CIRCULO:
+						var r = Math.max(Math.abs(this.CURRENT_CREATE.POINTER.y - e.pointer.y), Math.abs(this.CURRENT_CREATE.POINTER.x - e.pointer.x))/2
+						// if (r > this.CURRENT_CREATE.OBJECT.strokeWidth) {
+						// 	r -= this.CURRENT_CREATE.OBJECT.strokeWidth/2
+						// }
+						this.CURRENT_CREATE.OBJECT.set({radius: r})
+						
+						break;
+					case MODE_OBJECT.RECT:
+						this.CURRENT_CREATE.OBJECT.set({width: Math.abs(this.CURRENT_CREATE.POINTER.x - e.pointer.x)});
+						this.CURRENT_CREATE.OBJECT.set({height: Math.abs(this.CURRENT_CREATE.POINTER.y - e.pointer.y)});
+						break;
+					// case MODE_OBJECT.TEXTO:
+					// 	this.CURRENT_CREATE.OBJECT.set({width: Math.abs(this.CURRENT_CREATE.POINTER.x - e.pointer.x)});
+					// 	this.CURRENT_CREATE.OBJECT.set({height: Math.abs(this.CURRENT_CREATE.POINTER.y - e.pointer.y)});
+					// 	break;
+				}
+				if (this.CURRENT_CREATE.POINTER.x > e.pointer.x) {
+					this.CURRENT_CREATE.OBJECT.set({originX: 'right'})
+				} else {
+					this.CURRENT_CREATE.OBJECT.set({originX: 'left'})
+				}
+
+				if (this.CURRENT_CREATE.POINTER.y > e.pointer.y) {
+					this.CURRENT_CREATE.OBJECT.set({originY: 'bottom'})
+				} else {
+					this.CURRENT_CREATE.OBJECT.set({originY: 'top'})
+				}
+				canvasdocente.renderAll()
+			}
 		});
 
 		this.objSocket.init(() => {

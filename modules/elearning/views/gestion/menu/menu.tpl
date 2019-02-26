@@ -420,8 +420,8 @@
   }
 </style>
 
-<!-- {include file='modules/elearning/views/cursos/menu/descripcion.tpl'} -->
-{if isset($curso) && count($curso)}
+{* {include file='modules/elearning/views/cursos/menu/descripcion.tpl'} *}
+{if isset($curso)}
 <input hidden="hidden" id="hidden_curso" name="hidden_curso" value="{$curso.Cur_IdCurso}"/>
 {else}
   {if isset($idcurso)}
@@ -508,13 +508,14 @@
       </a>
     </ul>
     <ul id="item-anuncios-curso">
-      <div class="side-menu2 {if $active == 'anuncios'}active{/if}">
+      <a href="{$_layoutParams.root}elearning/gestion/anuncios/{$curso['Cur_IdCurso']}" class="side-menu2 {if isset($active) && $active == 'anuncios'}active{/if}">
         <li class="side-menu side-menu-center-mid" style="position: relative">
           <i class="fa fa-send-o"></i>
           &nbsp;
           <span> {$lang->get('str_anuncios')} </span>
         </li>
-      </div>
+      </a>
+    
     </ul>
     <ul id="item-certificado-curso">
       <div class="side-menu2 {if $active == 'certificado'}active{/if}">
@@ -593,13 +594,13 @@
         location.href = Link;
       });
 
-      $("#item-anuncios-curso").click(function(){
-        // location.href = "{$_layoutParams.root}elearning/examen/examens/"+$("#hidden_curso").val();
-        // CargarPagina("examen/examens", { id: $("#hidden_curso").val() }, false, $(this));
-        // var Curso =  $("#hidden_curso").val();
-        var Link = _root_ + _modulo + "/gestion/anuncios/" + idcurso;
-        location.href = Link;
-      });
+      // $("#item-anuncios-curso").click(function(){
+      //   // location.href = "{$_layoutParams.root}elearning/examen/examens/"+$("#hidden_curso").val();
+      //   // CargarPagina("examen/examens", { id: $("#hidden_curso").val() }, false, $(this));
+      //   // var Curso =  $("#hidden_curso").val();
+      //   var Link = _root_ + _modulo + "/gestion/anuncios/" + idcurso;
+      //   location.href = Link;
+      // });
 
       $("#item-certificado-curso").click(function(){
         // location.href = "{$_layoutParams.root}elearning/examen/examens/"+$("#hidden_curso").val();
