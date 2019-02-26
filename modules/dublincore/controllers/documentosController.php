@@ -965,7 +965,174 @@ class documentosController extends Controller{
         $this->_view->assign('numeropagina', $paginador->getNumeroPagina());
         $this->_view->renderizar('ajax/resultados', false, true);
     }
+    public function _eliminarDublin()
+    {
+        $valor_estado = $this->getInt('_Row_Estado');
+        $id_dublin = $this->getInt('_Dub_IdDublincore');
+        // echo "string"; echo $id_dublin;
+        // $pagina = $this->getInt('pagina');
+        $palabra = $this->getSql('palabra');
+        // $id_recurso = $this->getInt('id_recurso');
 
+        $this->_view->getLenguaje("bd_documentos");
+        $this->_view->getLenguaje("bdrecursos_registros");
+
+        $pagina = $this->getInt('pagina');
+        $filas=$this->getInt('filas');
+
+        if (!$filas) {
+            $filas = CANT_REG_PAG;
+        }
+        // echo $filas;
+        // $palabra = $this->getSql('palabra');
+        $temadocumento = $this->getSql('tema');
+        $tipodocumento = $this->getSql('tipo');
+        $autordocumento = $this->getSql('autor');
+        $formatodocumento = $this->getSql('formato');
+        $letra = $this->getSql('letra');
+        $usuariodocumento = $this->getSql('usuario');
+        $pais = $this->getSql('pais');
+
+        $idioma = Cookie::lenguaje();
+
+        if ($pagina > 0) {
+            $inicioRegistro = ($pagina - 1) * $filas;
+        } else {
+            $inicioRegistro = 0;
+        }
+
+        $condicion = "";
+        $condicionPalabra = "";
+        $condicionTema = "";
+        $condicionTipo = "";
+        $condicionAutor = "";
+        $condicionFormato = "";
+        $condicionPais = "";
+        $condicionLetra = "";
+
+        if($palabra == 'all')
+        {
+            $palabra = '';
+        }
+
+        $trozosPalabra = explode(" ",$palabra);
+        $numero = count($trozosPalabra);
+        if($numero==1){
+            $condicionPalabra .= " and (fn_TraducirContenido('dublincore','Dub_Titulo',dub.Dub_IdDublinCore,'$idioma',dub.Dub_Titulo) LIKE '%$palabra%' OR fn_TraducirContenido('dublincore','Dub_PalabraClave',dub.Dub_IdDublinCore,'$idioma',dub.Dub_PalabraClave) LIKE '%$palabra%' OR fn_TraducirContenido('dublincore','Dub_Descripcion',dub.Dub_IdDublinCore,'$idioma',dub.Dub_Descripcion) LIKE '%$palabra%' OR Aut_Nombre LIKE '%$palabra%') ";
+        }
+        if($numero>1){
+            $condicionPalabra = " AND (MATCH(Dub_Titulo, Dub_Descripcion, Dub_PalabraClave) AGAINST ('%".$palabra."%' IN BOOLEAN MODE) OR MATCH(Aut_Nombre) AGAINST ('%".$palabra."%' IN BOOLEAN MODE)) ";
+        }
+
+        if($temadocumento != 'all' && $temadocumento != '')
+        {
+            $condicionTema .= " AND  fn_TraducirContenido('tema_dublin','Ted_Descripcion',ted.Ted_IdTemaDublin,'$idioma',ted.Ted_Descripcion) = '$temadocumento'";
+        }
+        if($tipodocumento != 'all' && $tipodocumento != '')
+        {
+            $condicionTipo .= " AND   fn_TraducirContenido('tipo_dublin','Tid_Descripcion',tid.Tid_IdTipoDublin,'$idioma',tid.Tid_Descripcion) = '$tipodocumento'";
+        }
+        if($autordocumento != 'all' && $autordocumento != '')
+        {
+            $condicionAutor .= " AND aut.Aut_Nombre = '$autordocumento' " ;
+
+        }
+        if($formatodocumento != 'all' && $formatodocumento != '')
+        {
+            $condicionFormato .= " AND taf.Taf_Descripcion = '$formatodocumento' " ;
+
+        }
+        if($pais != 'all' && $pais != '')
+        {
+            $condicionPais .= " AND pai.Pai_Nombre = '$pais' " ;
+        }
+        if($letra != 'all' && $letra != '')
+        {
+            $condicionLetra .= " AND dub.Dub_Titulo LIKE '$letra%' " ;
+        }
+
+        //Filtro Para usuarios logueados
+        $condicionUsuario = " ";
+        $condicionEstado = " WHERE Dub_Estado = 1 ";
+        $this->_view->setTemplate(LAYOUT_FRONTEND);
+        if (!Session::get('autenticado')) {
+
+        } else {
+            $condicionEstado = " WHERE (Dub_Estado = 0 OR Dub_Estado = 1 OR Dub_Estado = 2 ) ";
+            if ($usuariodocumento && $usuariodocumento != "all") {
+                // $condicionEstado = " WHERE (Dub_Estado = 0 OR Dub_Estado = 1 )";
+                $condicionUsuario = " AND Usu_IdUsuario = " . Session::get('id_usuario');
+                $this->_view->assign('filtrousuario',1);
+                $this->_view->assign('usuario',Session::get('usuario'));
+            }
+            // if ($usuariodocumento == "all") {
+            //     $condicionEstado = " WHERE (Dub_Estado = 0 OR Dub_Estado = 1 OR Dub_Estado = 2 ) ";
+            // }
+        }
+
+
+        //Union de todas las condiciones
+        $condicion .= $condicionEstado.$condicionPalabra.$condicionTema.$condicionTipo.$condicionAutor.$condicionFormato.$condicionPais.$condicionLetra.$condicionUsuario;
+
+        // $condicionPaginar = $condicion . " LIMIT " . $inicioRegistro . "," . CANT_REG_PAG;
+        $orderBy = " ORDER BY dub.Dub_Titulo ASC LIMIT " . $inicioRegistro . "," . $filas;
+
+        if ($palabra != 'all' && $palabra != '') {
+            $this->_view->assign('palabrabuscada', $palabra);
+            $this->_view->assign('resultPalabra', ' del texto <b>"' . $palabra . '"</b>');
+        }
+        if ($temadocumento != 'all' && $temadocumento != '') {
+            $this->_view->assign('filtroTema', $temadocumento);
+        }
+        if ($tipodocumento != 'all' && $tipodocumento != '') {
+            $this->_view->assign('filtroTipo', $tipodocumento);
+        }
+        if ($autordocumento != 'all' && $autordocumento != '') {
+            $this->_view->assign('filtroAutor', $autordocumento);
+        }
+        if ($formatodocumento != 'all' && $formatodocumento != '') {
+            $this->_view->assign('filtroFormato', $formatodocumento);
+        }
+        if ($pais != 'all' && $pais != '') {
+            $this->_view->assign('filtroPais', $pais);
+        }
+        if ($letra != 'all' && $letra != '') {
+            $this->_view->assign('filtroLetra', $letra);
+        }
+
+
+        $paginador = new Paginador();
+
+        $idioma = Cookie::lenguaje();
+
+        $bddublin_index = $this->loadModel('dublin', 'dublincore');
+        $bddublin_index->_RowEstadoDublinCore($id_dublin, $valor_estado);
+
+        // $bddublin = $this->loadModel('documentos', 'dublincore');
+        // $condicion = " where  Rec_IdRecurso = " . $id_recurso . " and (fn_TraducirContenido('dublincore','Dub_Titulo',dub.Dub_IdDublinCore,'$idioma',dub.Dub_Titulo) LIKE '%$palabra%' OR fn_TraducirContenido('dublincore','Dub_PalabraClave',dub.Dub_IdDublinCore,'$idioma',dub.Dub_PalabraClave) LIKE '%$palabra%' OR fn_TraducirContenido('dublincore','Dub_Descripcion',dub.Dub_IdDublinCore,'$idioma',dub.Dub_Descripcion) LIKE '%$palabra%' OR Aut_Nombre LIKE '%$palabra%')";
+
+
+        $paginador = new Paginador();
+        $this->_view->setJs(array('documentos'));
+
+        $rowCount = $this->_documentos->getDocumentosRowCount($condicion);
+        $totalRegistros = $rowCount["CantidadRegistros"];
+        $paginador->paginar( $totalRegistros,"resultados", "$palabra", $pagina, $filas, true);
+
+        $this->_view->assign('documentos', $this->_documentos->getDocumentosPaises($condicion,$idioma, $orderBy));
+
+        $this->_view->assign('paises', $this->_documentos->getCantDocumentosPaises($condicion,$idioma));
+        $this->_view->assign('totaldocumentos', $this->_documentos->getTotalDocumentos($condicion,$idioma));
+        $this->_view->assign('temadocumento', $this->_documentos->getCantidadTemasDocumentos($condicion,$idioma));
+        $this->_view->assign('tipodocumento', $this->_documentos->getCantidadTiposDocumentos($condicion,$idioma));
+        $this->_view->assign('autores', $this->_documentos->getCantidadAutoresDocumentos($condicion,$idioma));
+        $this->_view->assign('formatos', $this->_documentos->getCantidadFormatosDocumentos($condicion,$idioma));
+
+        $this->_view->assign('titulo', 'Buscador - Base de Datos de Documentos');
+        $this->_view->assign('paginacion', $paginador->getView('paginacion_ajax_s_filas'));
+        $this->_view->assign('numeropagina', $paginador->getNumeroPagina());
+        $this->_view->renderizar('ajax/resultados', false, true);
+    }
     public function descargar($archivo='',$idArchivo)
 	{
 		// $this->_acl->autenticado();

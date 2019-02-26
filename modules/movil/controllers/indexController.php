@@ -1,4 +1,5 @@
 <?php
+use App\Leccion;
 class  indexController extends movilController {
     private $_model;    
     public function __construct($lang, $url){
@@ -86,6 +87,37 @@ class  indexController extends movilController {
 
         $this->retornar($modulos_curso,"modulos");   
 
+    }
+
+    public function getLeccion($modulo,$leccion,$id_usuario,$lenguaje){
+        $Lmodel = $this->loadModel("leccion",'elearning');
+        $OLeccion = $Lmodel->getLeccion($leccion, $modulo,$id_usuario,$lenguaje);
+
+        if (isset($OLeccion) && isset($OLeccion["Lec_Tipo"])) {
+      
+      if ($OLeccion["Lec_Tipo"] == Leccion::TIPO_HTML || $OLeccion["Lec_Tipo"] == 6) {
+        //$Lmodel->RegistrarProgreso($OLeccion["Lec_IdLeccion"], Session::get("id_usuario"));
+        $html = $Lmodel->getContenido($OLeccion["Lec_IdLeccion"],$lenguaje);
+        $OLeccion["Lec_Contenido"]=$html;
+        //$this->_view->assign("cont_html", $html);
+      } else if ($OLeccion["Lec_Tipo"] == Leccion::TIPO_VIDEO) {
+        //$Lmodel->RegistrarProgreso($OLeccion["Lec_IdLeccion"], Session::get("id_usuario"));
+        $html = $Lmodel->getContenido($OLeccion["Lec_IdLeccion"], $lenguaje);
+        $OLeccion["Lec_Contenido"]=$html;
+        //$this->_view->assign("html", $html[0]);
+      } else if ($OLeccion["Lec_Tipo"] == Leccion::TIPO_EXAMEN) {
+       
+      } else if ($OLeccion["Lec_Tipo"] == Leccion::TIPO_DIRIGIDA) {
+        
+      } else if ($OLeccion["Lec_Tipo"] == Leccion::TIPO_EXAMEN_DIRIGIDO) {
+       
+      } else if ($OLeccion['Lec_Tipo'] == Leccion::TIPO_ENCUESTA) {
+        
+      }
+    } 
+    
+
+        $this->retornar($OLeccion,"leccion");   
     }
 
     public function getProgresoCurso($Cur_IdCurso=0,$Usu_IdUsuario=0) {                

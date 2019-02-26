@@ -2509,8 +2509,6 @@ class importController extends bdrecursosController
     }
 
     public function dublincore() {
-
-
         $total_registrado = 0;
         $total_no_registrado = 0;
 
@@ -2539,8 +2537,6 @@ class importController extends bdrecursosController
         $datos = array();
         array_push($datos, $_SESSION['encabezado']);
         if (!empty($_SESSION['tipo_archivo'])) {
-
-
             new PHPExcel();
             $archivo = $_SESSION['archivo'];
             $hoja = $_SESSION['hoja'];
@@ -2550,7 +2546,6 @@ class importController extends bdrecursosController
 
             $objHoja = $objPHPExcel->setActiveSheetIndexByName($hoja)->toArray();
             array_shift($objHoja);
-
 
             foreach ($objHoja as $iIndice => $objCelda) {
 
@@ -2868,9 +2863,6 @@ class importController extends bdrecursosController
                     $Arf_URL = $objCelda[$_POST['Arf_URL']];
                 }
 
-
-
-
                 if ($Dub_Titulo != '' and ( $Arf_PosicionFisica != '' or $Arf_URL != '') and $Pai_Nombre != '' and $Aut_Nombre != '') {
 
                     if ($_POST['Dub_Descripcion'] != '') {
@@ -2888,7 +2880,7 @@ class importController extends bdrecursosController
                     }
 
                     if ($_POST['Dub_Formato'] != '') {
-                        $Dub_Formato = $objCelda[$_POST['Dub_Formato']];
+                       $Dub_Formato = $objCelda[$_POST['Dub_Formato']];
                     }
                     if ($_POST['Dub_Identificador'] != '') {
                         $Dub_Identificador = $objCelda[$_POST['Dub_Identificador']];
@@ -2909,25 +2901,18 @@ class importController extends bdrecursosController
                     if ($_POST['Dub_Relacion'] != '') {
                         $Dub_Relacion = $objCelda[$_POST['Dub_Relacion']];
                     }
-
-
                     if ($_POST['Dub_Cobertura'] != '') {
                         $Dub_Cobertura = $objCelda[$_POST['Dub_Cobertura']];
                     }
                     if ($_POST['Dub_Derechos'] != '') {
                         $Dub_Derechos = $objCelda[$_POST['Dub_Derechos']];
                     }
-
-
                     if ($_POST['Dub_PalabraClave'] != '') {
                         $Dub_PalabraClave = $objCelda[$_POST['Dub_PalabraClave']];
                     }
-
-
                     if ($_POST['Aut_Profesion'] != '') {
                         $Aut_Profesion = $objCelda[$_POST['Aut_Profesion']];
                     }
-
                     if ($_POST['Aut_Email'] != '') {
                         $Aut_Email = $objCelda[$_POST['Aut_Email']];
                     }

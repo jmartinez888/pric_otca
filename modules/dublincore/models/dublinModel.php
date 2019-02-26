@@ -129,6 +129,19 @@ class dublinModel extends Model {
         }
     }
 
+    public function _RowEstadoDublinCore($Dub_IdDublinCore, $Row_Estado) {
+        try {
+            $consulta = $this->_db->query(
+                    "UPDATE dublincore d SET d.Row_Estado = $Row_Estado 
+                WHERE d.Dub_IdDublinCore = $Dub_IdDublinCore"
+            );
+            return $consulta->rowCount(PDO::FETCH_ASSOC);
+        } catch (PDOException $exception) {
+            $this->registrarBitacora("dublincore(dublinModel)", "_RowEstadoDublinCore", "Error Model", $exception);
+            return $exception->getTraceAsString();
+        }
+    }
+
     public function eliminarDublinCore($id_dublin) {
         try {
             $consulta = $this->_db->query(

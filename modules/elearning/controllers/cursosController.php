@@ -373,18 +373,18 @@ class cursosController extends elearningController {
     
     $obj_curso = null;
     if (!$this->filtrarInts([$curso, $modulo])) {
-      $this->redireccionar("elearning/cursos");
+      $this->redireccionar("elearning/cursos/curso/".$curso);
     }
     if (!$Mmodel->validarCursoModulo($curso, $modulo)) {
-      $this->redireccionar("elearning/cursos");
+      $this->redireccionar("elearning/cursos/curso/".$curso);
     }
     if (!$Mmodel->validarModuloUsuario($modulo, Session::get("id_usuario"))) {
-      $this->redireccionar("elearning/cursos");
+      $this->redireccionar("elearning/cursos/curso/".$curso);
     }
     //valida solo la primera lección para dar acceso a las lecciones siguientes
     if ($leccion) {
       if(!$Lmodel->validarLeccion($leccion, $modulo, Session::get("id_usuario"))){ 
-        $this->redireccionar("elearning/cursos"); 
+       $this->redireccionar("elearning/cursos/modulo/".$curso."/".$modulo."/");
       }
     }
     
@@ -426,7 +426,7 @@ class cursosController extends elearningController {
 
         $tareas = $Tmodel->getTrabajoXLeccion($OLeccion["Lec_IdLeccion"], Cookie::lenguaje());
       } else {
-        $this->redireccionar("elearning/");
+        $this->redireccionar("elearning/cursos/modulo/".$curso."/".$modulo."/");
       }
     }
 
