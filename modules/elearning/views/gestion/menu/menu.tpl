@@ -435,7 +435,7 @@
           <li class="side-menu side-menu-center-mid" style="position: relative">
             <i class="glyphicon glyphicon-book"></i>
             &nbsp;
-            <span> {$lang->get('str_mis_cursos')} </span>
+            <span> {$lang->get('str_mis_cursos1')} </span>
           </li>
         </a>
     </ul>
@@ -455,7 +455,7 @@
           <li class="side-menu side-menu-center-mid" style="position: relative">
             <i class="fa fa-file-text-o"></i>
             &nbsp;
-            <span> Formulario </span>
+            <span> {$lang->get('str_formulario')} </span>
           </li>
         </div>
     </ul>
@@ -465,7 +465,7 @@
           <li class="side-menu side-menu-center-mid" style="position: relative">
             <i class="fa fa-book"></i>
             &nbsp;
-            <span> {$lang->get('str_modulos')} </span>
+            <span> {$lang->get('str_modulos1')} </span>
           </li>
         </a>
     </ul>
@@ -474,7 +474,7 @@
           <li class="side-menu side-menu-center-mid" style="position: relative">
             <i class="fa fa-pencil-square"></i>
             &nbsp;
-            <span> Tareas Asignadas </span>
+            <span> {$lang->get('str_tareas_asignadas')} </span>
           </li>
         </div>
     </ul>
@@ -485,7 +485,7 @@
         <li class="side-menu side-menu-center-mid" style="position: relative">
           <i class="fa fa-edit"></i>
           &nbsp;
-          <span> Examen </span>
+          <span> {$lang->get('str_examen')} </span>
         </li>
       </div>
     </ul>
@@ -494,7 +494,7 @@
         <li class="side-menu side-menu-center-mid" style="position: relative">
           <i class="fa fa-edit"></i>
           &nbsp;
-          <span> Encuestas </span>
+          <span> {$lang->get('str_encuestas1')} </span>
         </li>
       </a>
     </ul>
@@ -503,7 +503,7 @@
         <li class="side-menu side-menu-center-mid" style="position: relative">
           <i class="fa fa-book"></i>
           &nbsp;
-          <span> Pizarras </span>
+          <span> {$lang->get('str_pizarras')} </span>
         </li>
       </a>
     </ul>
@@ -512,7 +512,7 @@
         <li class="side-menu side-menu-center-mid" style="position: relative">
           <i class="fa fa-send-o"></i>
           &nbsp;
-          <span> Anuncios </span>
+          <span> {$lang->get('str_anuncios')} </span>
         </li>
       </div>
     </ul>
@@ -521,7 +521,7 @@
         <li class="side-menu side-menu-center-mid" style="position: relative">
           <i class="glyphicon glyphicon-education"></i>
           &nbsp;
-          <span> Certificado </span>
+          <span> {$lang->get('str_certificado')} </span>
         </li>
       </div>
     </ul>
@@ -531,7 +531,7 @@
         <li class="side-menu side-menu-center-mid" style="position: relative">
           <i class="fa fa-users"></i>
           &nbsp;
-          <span> Alumnos </span>
+          <span> {$lang->get('str_alumnos1')} </span>
         </li>
       </div>
     </ul>
@@ -541,7 +541,7 @@
         <li class="side-menu side-menu-center-mid" style="position: relative">
           <i class="fa fa-calendar"></i>
           &nbsp;
-          <span> Calendario </span>
+          <span> {$lang->get('str_calendario')} </span>
         </li>
       </div>
     </ul> -->
