@@ -19,7 +19,7 @@
             <input type="hidden" name="idcurso" id="idcurso" value="{$idcurso}">
             <input type="hidden" name="hidden_curso" id="hidden_curso" value="{$idcurso}">
 
-            <!-- <div class="form-group" >
+            <div class="form-group" >
                 <label class="col-lg-3 control-label">{$lenguaje.label_idioma} : </label>
                 {if  isset($idiomas) && count($idiomas)}              
                     <div class="form-inline col-lg-9">
@@ -31,7 +31,7 @@
                                 <input disabled="true" type="radio"  value="{$idi.Idi_IdIdioma}" 
                                     {if $datos.Idi_IdIdioma==$idi.Idi_IdIdioma} checked="checked" {/if} required>
                                 {$idi.Idi_Idioma}
-                            </label>                                        
+                            </label>   
                         </div>   
                         {else}
                         <div class="radio">
@@ -45,7 +45,7 @@
                     {/foreach}
                     </div>              
                 {/if}
-            </div> -->
+            </div>
            
             <div class="form-group">
                 <label class="col-lg-3 control-label">{$lenguaje["elearning_examen_titulo"]} :</label>

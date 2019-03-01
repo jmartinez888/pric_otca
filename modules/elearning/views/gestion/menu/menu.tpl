@@ -422,9 +422,11 @@
 
 {* {include file='modules/elearning/views/cursos/menu/descripcion.tpl'} *}
 {if isset($curso)}
+{$Cur_IdCurso = $curso.Cur_IdCurso}
 <input hidden="hidden" id="hidden_curso" name="hidden_curso" value="{$curso.Cur_IdCurso}"/>
 {else}
   {if isset($idcurso)}
+    {$Cur_IdCurso = $idcurso}
     <input hidden="hidden" id="hidden_curso" name="hidden_curso" value="{$idcurso}"/>
   {/if}
 {/if}
@@ -440,7 +442,7 @@
         </a>
     </ul>
     <ul id="item-ficha-curso">
-        <a href="{$_layoutParams.root}elearning/gcurso/_view_finalizar_registro/{$curso['Cur_IdCurso']}" class="side-menu2 {if isset($active) && $active == 'ficha_curso'}active{/if}">
+        <a href="{$_layoutParams.root}elearning/gcurso/_view_finalizar_registro/{$Cur_IdCurso}" class="side-menu2 {if isset($active) && $active == 'ficha_curso'}active{/if}">
           <li class="side-menu side-menu-center-mid" style="position: relative">
             <i class="fa fa-file-text-o"></i>
             &nbsp;
@@ -461,7 +463,7 @@
     </ul>
     {/if}
     <ul id="item-modulos-curso">
-        <a href="{$_layoutParams.root}elearning/gmodulo/_view_modulos_curso/{$curso['Cur_IdCurso']}" class="side-menu2 {if isset($active) && $active == 'modulos'}active{/if}">
+        <a href="{$_layoutParams.root}elearning/gmodulo/_view_modulos_curso/{$Cur_IdCurso}" class="side-menu2 {if isset($active) && $active == 'modulos'}active{/if}">
           <li class="side-menu side-menu-center-mid" style="position: relative">
             <i class="fa fa-book"></i>
             &nbsp;
@@ -490,7 +492,7 @@
       </div>
     </ul>
     <ul>
-      <a href="{$_layoutParams.root}elearning/gleccion/encuestas/{$curso['Cur_IdCurso']}" class="side-menu2 {if isset($active) && $active == 'encuestas'}active{/if}">
+      <a href="{$_layoutParams.root}elearning/gleccion/encuestas/{$Cur_IdCurso}" class="side-menu2 {if isset($active) && $active == 'encuestas'}active{/if}">
         <li class="side-menu side-menu-center-mid" style="position: relative">
           <i class="fa fa-edit"></i>
           &nbsp;
@@ -499,7 +501,7 @@
       </a>
     </ul>
     <ul>
-      <a href="{$_layoutParams.root}elearning/gleccion/pizarras/{$curso['Cur_IdCurso']}" class="side-menu2 {if isset($active) && $active == 'pizarras'}active{/if}">
+      <a href="{$_layoutParams.root}elearning/gleccion/pizarras/{$Cur_IdCurso}" class="side-menu2 {if isset($active) && $active == 'pizarras'}active{/if}">
         <li class="side-menu side-menu-center-mid" style="position: relative">
           <i class="fa fa-book"></i>
           &nbsp;
@@ -508,7 +510,7 @@
       </a>
     </ul>
     <ul id="item-anuncios-curso">
-      <a href="{$_layoutParams.root}elearning/gestion/anuncios/{$curso['Cur_IdCurso']}" class="side-menu2 {if isset($active) && $active == 'anuncios'}active{/if}">
+      <a href="{$_layoutParams.root}elearning/gestion/anuncios/{$Cur_IdCurso}" class="side-menu2 {if isset($active) && $active == 'anuncios'}active{/if}">
         <li class="side-menu side-menu-center-mid" style="position: relative">
           <i class="fa fa-send-o"></i>
           &nbsp;
