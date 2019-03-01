@@ -186,7 +186,7 @@ class Paginador {
         $archivo="libs_paginador";
         $lang=  Cookie::lenguaje();
       
-        $lenguaje_dir = ROOT . 'lenguaje' . DS . $lang . DS . $archivo . "_lang.php";
+        $lenguaje_dir = ROOT . LANG_PATH . DS . $lang . DS . $archivo . "_lang.php";
         if (is_readable($lenguaje_dir)) {
             include $lenguaje_dir;
 

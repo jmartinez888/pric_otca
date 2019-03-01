@@ -27,29 +27,31 @@ class claseController extends elearningController {
 		$this->_acl->autenticado();
 		$data['titulo'] = '';
 		if ($curso == "" || !is_numeric($curso)
-			|| $modulo == "" || !is_numeric($modulo)
-			|| $leccion == "" || !is_numeric($leccion)) {
+		|| $modulo == "" || !is_numeric($modulo)
+		|| $leccion == "" || !is_numeric($leccion)) {
 			$this->redireccionar("elearning/");
 		}
 		// $this->_acl->tienePermisos()
-
+		
 		$Cmodel = $this->loadModel("curso");
 		$Mmodel = $this->loadModel("modulo");
 		$Lmodel = $this->loadModel("leccion");
 		$chmodel = $this->loadModel("chat");
 		$Pmodel = $this->loadModel("pizarra");
 		$Gmodel = $this->loadModel("_gestionCurso");
-
+		
 		if (!$Mmodel->validarCursoModulo($curso, $modulo)) {$this->redireccionar("elearning/cursos");}
 		if (!$Mmodel->validarModuloUsuario($modulo, Session::get("id_usuario"))) {$this->redireccionar("elearning/cursos");};
-
-    	if(!$Lmodel->validarLeccion($leccion, $modulo, Session::get("id_usuario"))){ $this->redireccionar("elearning/cursos"); }
+		
+		//QUITAR POR UN MOMENTO
+    if(!$Lmodel->validarLeccion($leccion, $modulo, Session::get("id_usuario"))){ $this->redireccionar("elearning/cursos"); }
+		// dd('d');
 		
 		$OLeccion = $Lmodel->getLeccion($leccion, $modulo, Session::get("id_usuario"));
 
 		$obj_leccion = Leccion::find($leccion);
 
-		if ($OLeccion["Lec_Tipo"] != 4) {
+		if ($OLeccion["Lec_Tipo"] != Leccion::TIPO_DIRIGIDA) {
 			$this->redireccionar("elearning/cursos/modulo/" . $curso . "/" . $modulo . "/" . $OLeccion["Lec_IdLeccion"]);
 			exit;
 		}

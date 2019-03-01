@@ -420,11 +420,13 @@
   }
 </style>
 
-<!-- {include file='modules/elearning/views/cursos/menu/descripcion.tpl'} -->
-{if isset($curso) && count($curso)}
+{* {include file='modules/elearning/views/cursos/menu/descripcion.tpl'} *}
+{if isset($curso)}
+{$Cur_IdCurso = $curso.Cur_IdCurso}
 <input hidden="hidden" id="hidden_curso" name="hidden_curso" value="{$curso.Cur_IdCurso}"/>
 {else}
   {if isset($idcurso)}
+    {$Cur_IdCurso = $idcurso}
     <input hidden="hidden" id="hidden_curso" name="hidden_curso" value="{$idcurso}"/>
   {/if}
 {/if}
@@ -435,12 +437,12 @@
           <li class="side-menu side-menu-center-mid" style="position: relative">
             <i class="glyphicon glyphicon-book"></i>
             &nbsp;
-            <span> {$lang->get('str_mis_cursos')} </span>
+            <span> {$lang->get('str_mis_cursos1')} </span>
           </li>
         </a>
     </ul>
     <ul id="item-ficha-curso">
-        <a href="{$_layoutParams.root}elearning/gcurso/_view_finalizar_registro/{$curso['Cur_IdCurso']}" class="side-menu2 {if isset($active) && $active == 'ficha_curso'}active{/if}">
+        <a href="{$_layoutParams.root}elearning/gcurso/_view_finalizar_registro/{$Cur_IdCurso}" class="side-menu2 {if isset($active) && $active == 'ficha_curso'}active{/if}">
           <li class="side-menu side-menu-center-mid" style="position: relative">
             <i class="fa fa-file-text-o"></i>
             &nbsp;
@@ -455,17 +457,17 @@
           <li class="side-menu side-menu-center-mid" style="position: relative">
             <i class="fa fa-file-text-o"></i>
             &nbsp;
-            <span> Formulario </span>
+            <span> {$lang->get('str_formulario')} </span>
           </li>
         </div>
     </ul>
     {/if}
     <ul id="item-modulos-curso">
-        <a href="{$_layoutParams.root}elearning/gmodulo/_view_modulos_curso/{$curso['Cur_IdCurso']}" class="side-menu2 {if isset($active) && $active == 'modulos'}active{/if}">
+        <a href="{$_layoutParams.root}elearning/gmodulo/_view_modulos_curso/{$Cur_IdCurso}" class="side-menu2 {if isset($active) && $active == 'modulos'}active{/if}">
           <li class="side-menu side-menu-center-mid" style="position: relative">
             <i class="fa fa-book"></i>
             &nbsp;
-            <span> {$lang->get('str_modulos')} </span>
+            <span> {$lang->get('str_modulos1')} </span>
           </li>
         </a>
     </ul>
@@ -474,7 +476,7 @@
           <li class="side-menu side-menu-center-mid" style="position: relative">
             <i class="fa fa-pencil-square"></i>
             &nbsp;
-            <span> Tareas Asignadas </span>
+            <span> {$lang->get('str_tareas_asignadas')} </span>
           </li>
         </div>
     </ul>
@@ -485,43 +487,44 @@
         <li class="side-menu side-menu-center-mid" style="position: relative">
           <i class="fa fa-edit"></i>
           &nbsp;
-          <span> Examen </span>
+          <span> {$lang->get('str_examen')} </span>
         </li>
       </div>
     </ul>
     <ul>
-      <a href="{$_layoutParams.root}elearning/gleccion/encuestas/{$curso['Cur_IdCurso']}" class="side-menu2 {if isset($active) && $active == 'encuestas'}active{/if}">
+      <a href="{$_layoutParams.root}elearning/gleccion/encuestas/{$Cur_IdCurso}" class="side-menu2 {if isset($active) && $active == 'encuestas'}active{/if}">
         <li class="side-menu side-menu-center-mid" style="position: relative">
           <i class="fa fa-edit"></i>
           &nbsp;
-          <span> Encuestas </span>
+          <span> {$lang->get('str_encuestas1')} </span>
         </li>
       </a>
     </ul>
     <ul>
-      <a href="{$_layoutParams.root}elearning/gleccion/pizarras/{$curso['Cur_IdCurso']}" class="side-menu2 {if isset($active) && $active == 'pizarras'}active{/if}">
+      <a href="{$_layoutParams.root}elearning/gleccion/pizarras/{$Cur_IdCurso}" class="side-menu2 {if isset($active) && $active == 'pizarras'}active{/if}">
         <li class="side-menu side-menu-center-mid" style="position: relative">
           <i class="fa fa-book"></i>
           &nbsp;
-          <span> Pizarras </span>
+          <span> {$lang->get('str_pizarras')} </span>
         </li>
       </a>
     </ul>
     <ul id="item-anuncios-curso">
-      <div class="side-menu2 {if $active == 'anuncios'}active{/if}">
+      <a href="{$_layoutParams.root}elearning/gestion/anuncios/{$Cur_IdCurso}" class="side-menu2 {if isset($active) && $active == 'anuncios'}active{/if}">
         <li class="side-menu side-menu-center-mid" style="position: relative">
           <i class="fa fa-send-o"></i>
           &nbsp;
-          <span> Anuncios </span>
+          <span> {$lang->get('str_anuncios')} </span>
         </li>
-      </div>
+      </a>
+    
     </ul>
     <ul id="item-certificado-curso">
       <div class="side-menu2 {if $active == 'certificado'}active{/if}">
         <li class="side-menu side-menu-center-mid" style="position: relative">
           <i class="glyphicon glyphicon-education"></i>
           &nbsp;
-          <span> Certificado </span>
+          <span> {$lang->get('str_certificado')} </span>
         </li>
       </div>
     </ul>
@@ -531,7 +534,7 @@
         <li class="side-menu side-menu-center-mid" style="position: relative">
           <i class="fa fa-users"></i>
           &nbsp;
-          <span> Alumnos </span>
+          <span> {$lang->get('str_alumnos1')} </span>
         </li>
       </div>
     </ul>
@@ -541,7 +544,7 @@
         <li class="side-menu side-menu-center-mid" style="position: relative">
           <i class="fa fa-calendar"></i>
           &nbsp;
-          <span> Calendario </span>
+          <span> {$lang->get('str_calendario')} </span>
         </li>
       </div>
     </ul> -->
@@ -593,13 +596,13 @@
         location.href = Link;
       });
 
-      $("#item-anuncios-curso").click(function(){
-        // location.href = "{$_layoutParams.root}elearning/examen/examens/"+$("#hidden_curso").val();
-        // CargarPagina("examen/examens", { id: $("#hidden_curso").val() }, false, $(this));
-        // var Curso =  $("#hidden_curso").val();
-        var Link = _root_ + _modulo + "/gestion/anuncios/" + idcurso;
-        location.href = Link;
-      });
+      // $("#item-anuncios-curso").click(function(){
+      //   // location.href = "{$_layoutParams.root}elearning/examen/examens/"+$("#hidden_curso").val();
+      //   // CargarPagina("examen/examens", { id: $("#hidden_curso").val() }, false, $(this));
+      //   // var Curso =  $("#hidden_curso").val();
+      //   var Link = _root_ + _modulo + "/gestion/anuncios/" + idcurso;
+      //   location.href = Link;
+      // });
 
       $("#item-certificado-curso").click(function(){
         // location.href = "{$_layoutParams.root}elearning/examen/examens/"+$("#hidden_curso").val();

@@ -7,7 +7,7 @@
       <div class="panel-heading cabecera-titulo">
         <h3 class="panel-title">
           <i class="glyphicon glyphicon-list-alt"></i>&nbsp;&nbsp;
-          <strong>ALUMNOS INSCRITOS</strong>
+          <strong>{$lang->get('str_titulo1')}</strong>
         </h3>
       </div>
       <div class="panel-body" >
@@ -17,12 +17,12 @@
               <table class="table" id="tblMisCursos">
                   <tr>
                       <th>Id</th>
-                      <th>Alumnos</th>
-                      <th>Usuario</th>
-                      <th>Matrícula</th>
-                      <th>Porcentaje(%)</th>
-                      <th>Módulo</th>
-                      <th>Lección</th>
+                      <th>{$lang->get('str_tablealumnos_alumnos')}</th>
+                      <th>{$lang->get('str_tablealumnos_usuario')}</th>
+                      <th>{$lang->get('str_tablealumnos_matricula')}</th>
+                      <th>{$lang->get('str_tablealumnos_procentaje')}(%)</th>
+                      <th>{$lang->get('str_tablealumnos_modulo')}</th>
+                      <th>{$lang->get('str_tablealumnos_leccion')}</th>
                   </tr>
                   {foreach from=$matriculados item=c}
                     <tr>
@@ -52,7 +52,7 @@
               </table>
           </div>
           {else}
-              No tienes cursos
+              {$lang->get('str_no_cursos')}
           {/if}
         </div>
       </div>
@@ -62,12 +62,12 @@
       <div class="panel-heading cabecera-titulo">
         <h3 class="panel-title">
           <i class="glyphicon glyphicon-list-alt"></i>&nbsp;&nbsp;
-          <strong>CURSO MOOC</strong>
+          <strong>{$lang->get('str_cursomooc')}</strong>
         </h3>
       </div>
       <div class="panel-body" style=" margin: 15px 25px">
         <div class="col-lg-12">
-          Este es un curso MOOC, no requiere de validación de inscripción
+          {$lang->get('str_registromooc')}
         </div>
       </div>
     </div>

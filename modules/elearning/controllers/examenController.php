@@ -50,7 +50,7 @@ class examenController extends elearningController {
     public function examens($idcurso=false, $idLeccion = false){
         // $codigo = $this->getTexto("certificado");
         // $this->_view->setCss(array("verificar"));
-    $this->validarUrlIdioma();
+        $this->validarUrlIdioma();
         $this->_view->setTemplate(LAYOUT_FRONTEND);
         $lang = $this->_view->getLenguaje('elearning_cursos', false, true);
         // $this->_view->setJs(array(array(BASE_URL . 'modules/elearning/views/gestion/js/core/util.js'),array(BASE_URL . 'modules/elearning/views/gestion/js/framework/lodash.js'),array(BASE_URL . 'modules/elearning/views/gestion/js/core/controller.js'),array(BASE_URL . 'modules/elearning/views/gestion/js/index.js'),array(BASE_URL . 'modules/elearning/views/gestion/js/core/view.js'), "index"));
@@ -451,7 +451,7 @@ class examenController extends elearningController {
 
         if ($this->botonPress("guardar")) {
 
-            $examen = $this->examen->insertExamen($id,$this->getSql("selectmodulo"), $this->getSql("titulo"), $this->getSql("porcentaje"), $this->getSql("puntaje"),  $this->getSql("intentos"), $this->getInt("selectleccion"));
+            $examen = $this->examen->insertExamen($id,$this->getSql("idiomaRadio"), $this->getSql("selectmodulo"), $this->getSql("titulo"), $this->getSql("porcentaje"), $this->getSql("puntaje"),  $this->getSql("intentos"), $this->getInt("selectleccion"));
 
             if($examen){
                 $this->redireccionar('elearning/examen/preguntas/'.$id.'/'.$examen[0]);
@@ -460,6 +460,8 @@ class examenController extends elearningController {
 
         // echo "string".$id;
         // print_r($this->examen->getTituloCurso($id));
+        $_aclm = $this->loadModel("index", "acl");
+        $this->_view->assign('idiomas',$_aclm->getIdiomas());
         $titulo = $this->examen->getTituloCurso($id);
 
         // $this->_view->assign('lecciones',$lecciones);

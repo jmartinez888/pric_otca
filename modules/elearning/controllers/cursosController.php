@@ -370,7 +370,7 @@ class cursosController extends elearningController {
     $Cmodel = $this->loadModel("curso");
     $Emodel = $this->loadModel("examen");
     // $curs = $Cmodel->getCursoID($curso)[0];
-    // print_r($curs);exit;
+    
     $obj_curso = null;
     if (!$this->filtrarInts([$curso, $modulo])) {
       $this->redireccionar("elearning/cursos/curso/".$curso);
