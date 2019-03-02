@@ -119,6 +119,7 @@ class  indexController extends movilController {
       $OLeccion["referencias"]=$Lmodel->getReferencias($OLeccion["Lec_IdLeccion"], $lenguaje);
       $OLeccion["materiales"]=$Lmodel->getMateriales($OLeccion["Lec_IdLeccion"], $lenguaje);
 
+    var_dump($OLeccion);
         $this->retornar($OLeccion,"leccion");   
     }
 
