@@ -84,7 +84,7 @@
                                          <p style="text-align: justify;">{$foro.For_Resumen|truncate:120:"..."}</p>
                                     </div>
                                     {/if}
-                                <div class="detalles-act-reciente">{$foro.Usu_Usuario} &nbsp;&nbsp;-&nbsp;&nbsp; hace {timediff date=$foro.tiempo  lang=Cookie::lenguaje()}&nbsp;&nbsp;-&nbsp;&nbsp; {$foro.votos} voto(s) &nbsp;&nbsp;-&nbsp;&nbsp; {$foro.For_TParticipantes|default:0} {$lenguaje.str_miembros} &nbsp;&nbsp;-&nbsp;&nbsp;{$foro.For_TComentarios|default:0} {$lenguaje.str_comentarios}
+                                <div class="detalles-act-reciente">{$foro.Usu_Usuario} &nbsp;&nbsp;-&nbsp;&nbsp; hace {timediff date=$foro.tiempo  lang=Cookie::lenguaje()}&nbsp;&nbsp;-&nbsp;&nbsp; {$foro.votos} {$lenguaje.str_votos} &nbsp;&nbsp;-&nbsp;&nbsp; {$foro.For_TParticipantes|default:0} {$lenguaje.str_miembros} &nbsp;&nbsp;-&nbsp;&nbsp;{$foro.For_TComentarios|default:0} {$lenguaje.str_comentarios}
                                 </div>
                         </div>
                         {/foreach}
