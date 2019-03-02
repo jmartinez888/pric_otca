@@ -183,7 +183,7 @@ class indexController extends foroController {
 		$lenguaje = $this->_view->getLenguaje("foro_index_index");
 		$this->_view->setTemplate(LAYOUT_FRONTEND);
 		$this->_view->assign('titulo', $lenguaje["str_agenda"]);
-		$this->_view->setJs(array('agenda', array(BASE_URL . 'public/js/fullcalendar/moment.min.js'), array(BASE_URL . 'public/js/fullcalendar/fullcalendar.min.js'), array(BASE_URL . 'public/js/fullcalendar/locale/es.js')));
+		$this->_view->setJs(array('agenda', array(BASE_URL . 'public/js/fullcalendar/moment.min.js'), array(BASE_URL . 'public/js/fullcalendar/fullcalendar.min.js'), array(BASE_URL . 'public/js/fullcalendar/locale/en-ca.js')));
 		$this->_view->setCss(array('agenda', 'jp-agenda', array(BASE_URL . "public/css/fullcalendar/fullcalendar.min.css")));
 		$this->_view->assign('titulo', "Agenda");
 		$this->_view->assign('agenda', json_encode($this->utf8_converter_array($this->_model->getAgenda())));
