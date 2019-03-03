@@ -76,7 +76,7 @@
             <table class="table" id="tblMisCursos">
                 <tr>
                     <th>{$lenguaje.str_mis_cursos1}</th>
-                    {if $_acl->permiso("editar_curso")} <th>Operaciones</th> {/if}
+                    {if $_acl->permiso("editar_curso")} <th>{$lenguaje.str_operacion}</th> {/if}
                 </tr>
                 {foreach from=$cursos item=c}
                     <tr >
@@ -112,7 +112,7 @@
                                             {/if}
                                         {/if}
                                     {/for}
-                                    <i class="fa fa-users icon-alumnos"> {$c.Matriculados} {if $c.Matriculados == 1} Alumno {else} Alumnos {/if} </i>
+                                    <i class="fa fa-users icon-alumnos"> {$c.Matriculados} {if $c.Matriculados == 1} {$lenguaje.str_alumno} {else} {$lenguaje.str_alumnos} {/if} </i>
                                 </div>
                               </div>
                           </div>
