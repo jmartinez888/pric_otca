@@ -18,11 +18,11 @@
                         <table class="table" style="  margin: 20px auto">
                             <tr>
                                 <th style=" text-align: center">Nº</th>
-                                <th style=" text-align: center">Código</th>
-                                <th style=" text-align: center">Curso</th>
-                                <th style=" text-align: center">Fecha</th>
+                                <th style=" text-align: center">{$lenguaje.str_codigo}</th>
+                                <th style=" text-align: center">{$lenguaje.str_curso}</th>
+                                <th style=" text-align: center">{$lenguaje.str_fecha}</th>
                                     {if $_acl->permiso("editar_rol")}
-                                    <th style=" text-align: center">Opciones</th>
+                                    <th style=" text-align: center">{$lenguaje.str_opciones}</th>
                                     {/if}
                             </tr>
                             {foreach item=rl from=$certificados}
