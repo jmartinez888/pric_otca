@@ -1041,9 +1041,6 @@ class gleccionController extends elearningController {
 
     public function _view_leccion($curso = 0, $modulo = 0, $leccion = 0){
 
-        // $curso = $this->getTexto("curso");
-        // $modulo = $this->getTexto("modulo");
-        // $leccion = $this->getTexto("leccion");
         $this->validarUrlIdioma();
         $this->_view->setTemplate(LAYOUT_FRONTEND);
         if(strlen($curso)==0){ $curso = Session::get("learn_param_curso"); }
@@ -1061,6 +1058,7 @@ class gleccionController extends elearningController {
         $Mmodel = $this->loadModel("_gestionModulo");
         $model = $this->loadModel("_gestionLeccion");
         $examen = $this->loadModel("examen");
+        $_arquitectura = $this->loadModel('index','arquitectura');
 
         $Exa_Porcentaje = $examen->getExamenesPorcentaje($curso);
         $Tra_Porcentaje = $examen->getTrabajosPorcentaje($curso);
@@ -1076,6 +1074,8 @@ class gleccionController extends elearningController {
         $tipo_trabajo = $Tmodel->getConstanteTrabajo(); //RODRIGO 20180605
 
         $data['titulo'] = $leccion['Tipo'].' - '.$leccion['Lec_Titulo'];
+
+        $this->_view->assign('idiomas',$_arquitectura->getIdiomas());
         $this->_view->assign($data);
         $view = "";
         $this->_view->assign('porcentaje', $Porcentaje);
@@ -1086,7 +1086,7 @@ class gleccionController extends elearningController {
         $this->_view->assign("referencias", $referencias);
         $this->_view->assign("material", $material);
         $this->_view->assign("trabajo", $trabajo); //RODRIGO 20180605
-				$this->_view->assign("tipo_trabajo", $tipo_trabajo); //RODRIGO 20180605
+		$this->_view->assign("tipo_trabajo", $tipo_trabajo); //RODRIGO 20180605
 				
         switch ($leccion["Lec_Tipo"]) {
             case Leccion::TIPO_HTML:
