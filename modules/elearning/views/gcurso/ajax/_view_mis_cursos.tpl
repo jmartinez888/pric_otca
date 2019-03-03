@@ -112,7 +112,7 @@
                                             {/if}
                                         {/if}
                                     {/for}
-                                    <i class="fa fa-users icon-alumnos"> {$c.Matriculados} {if $c.Matriculados == 1} Alumno {else} Alumnos {/if} </i>
+                                    <i class="fa fa-users icon-alumnos"> {$c.Matriculados} {if $c.Matriculados == 1} {$lenguaje.str_alumno} {else} {$lenguaje.str_alumnos} {/if} </i>
                                 </div>
                               </div>
                           </div>
