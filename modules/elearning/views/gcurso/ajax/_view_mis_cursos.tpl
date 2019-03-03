@@ -67,7 +67,7 @@
           {/if}
         </div>
         <form id="form-buscar" action="gcurso/_view_mis_cursos" type="post">
-          <div class="col-sm-offset-3 col-sm-4"><input name="busqueda" class="form-control" placeholder={$lenguaje.str_buscar1}/></div>
+          <div class="col-sm-offset-3 col-sm-4"><input name="busqueda" class="form-control" placeholder="{$lenguaje.str_buscar1}"/></div>
           <div class="col col-sm-1"><button id="btn_buscar" class="btn btn-success"><i class="glyphicon glyphicon-search"></i></button></div>
         </form>
         <div class="col-lg-12"></br></div>
