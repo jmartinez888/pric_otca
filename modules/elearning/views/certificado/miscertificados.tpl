@@ -1,7 +1,7 @@
 {include file='modules/elearning/views/cursos/menu/lateral.tpl'}
 <div class="col-lg-10">
 <div class="col-lg-12">
-        <h3>Mis Certificados</h3>
+        <h3>elearning_cursos_mis_certificados</h3>
         <hr class="cursos-hr">
     </div>
     <div class="col-lg-12">
