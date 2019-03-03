@@ -49,7 +49,6 @@ class certificadoController extends elearningController {
     public function miscertificados(){
     $this->validarUrlIdioma();
         // $codigo = $this->getTexto("certificado");
-        $lang = $this->_view->getLenguaje('elearning_certificado_miscertificados', false, true);
         $this->_view->setCss(array("verificar"));
         $this->_view->setTemplate(LAYOUT_FRONTEND);
         $this->_view->getLenguaje(['elearning_cursos']);
@@ -185,7 +184,7 @@ class certificadoController extends elearningController {
     #metodo Otros reeditador por @vicercavi, ahora se llama verificar
     public function verificar($codigo = false) {
     $this->validarUrlIdioma();
-
+    $lang = $this->_view->getLenguaje('elearning_certificado_verificar', false, true);
         $this->_view->setTemplate(LAYOUT_FRONTEND);
         $this->_view->getLenguaje(['elearning_cursos']);
         $this->_view->setJs(array("verificar"));
