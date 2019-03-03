@@ -296,9 +296,6 @@ class examenModel extends Model {
     public function getPuntosPregunta($id)
     {
         try{
-//             $sql = " SELECT (SELECT SUM(Pre_Puntos) FROM pregunta WHERE Exa_IdExamen=$id AND Pre_Estado=1 AND Row_Estado=1 AND Pre_Tipo!=2 AND Pre_Tipo!=3) +
-// (SELECT SUM(Alt_Puntos) FROM alternativa a INNER JOIN pregunta p ON a.Pre_IdPregunta=p.Pre_IdPregunta
-//  WHERE Exa_IdExamen=$id AND Pre_Estado=1 AND p.Row_Estado=1) AS puntos_pregunta ";
              $sql = " SELECT SUM(Pre_Puntos) AS puntos_pregunta FROM pregunta WHERE Exa_IdExamen=$id AND Pre_Estado=1 AND Row_Estado=1 ";
             $result = $this->_db->prepare($sql);
             $result->execute();
@@ -415,17 +412,19 @@ class examenModel extends Model {
     }
 
 
-    public function insertExamen($iCur_IdCurso,$iMoc_IdModulo, $iExa_Titulo, $iExa_Porcentaje, $iExa_Peso, $iExa_Intentos,$iLec_IdLeccion){
+    public function insertExamen($iCur_IdCurso, $iIdi_IdIdioma, $iMoc_IdModulo, $iExa_Titulo, $iExa_Porcentaje, $iExa_Peso, $iExa_Intentos, $iLec_IdLeccion){
         try {             
-            $sql = "call s_i_examen(?,?,?,?,?,?,?)";
+            $sql = "call s_i_examen(?,?,?,?,?,?,?,?)";
             $result = $this->_db->prepare($sql);
             $result->bindParam(1, $iCur_IdCurso, PDO::PARAM_INT);
             $result->bindParam(2, $iMoc_IdModulo, PDO::PARAM_INT);
             $result->bindParam(3, $iExa_Titulo, PDO::PARAM_STR);
             $result->bindParam(4, $iExa_Porcentaje, PDO::PARAM_INT); 
             $result->bindParam(5, $iExa_Peso, PDO::PARAM_INT); 
-            $result->bindParam(6, $iExa_Intentos, PDO::PARAM_INT); 
-            $result->bindParam(7, $iLec_IdLeccion, PDO::PARAM_INT);                    
+            $result->bindParam(6, $iExa_Intentos, PDO::PARAM_INT);
+            $result->bindParam(7, $iLec_IdLeccion, PDO::PARAM_INT);
+            $result->bindParam(8, $iIdi_IdIdioma, PDO::PARAM_STR);
+                                
             $result->execute();
             return $result->fetch();
         } catch (PDOException $exception) {

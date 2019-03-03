@@ -437,8 +437,6 @@ class cursoModel extends Model {
                  fn_TraducirContenido('curso','Cur_Titulo',cr.Cur_IdCurso,'$Idi_IdIdioma',cr.Cur_Titulo) Cur_Titulo,
                  fn_TraducirContenido('curso','Cur_Descripcion',cr.Cur_IdCurso,'$Idi_IdIdioma',cr.Cur_Descripcion) Cur_Descripcion,
 
-
-
                     cr.Usu_IdUsuario, cr.Cur_Vacantes, cr.Cur_FechaDesde, cr.Moa_IdModalidad, CONCAT(u.Usu_Nombre,' ',u.Usu_Apellidos) AS Docente, 
 
                     fn_TraducirContenido('curso','Con_Descripcion',cr.Cur_IdCurso,'$Idi_IdIdioma',cc.Con_Descripcion) Modalidad, 

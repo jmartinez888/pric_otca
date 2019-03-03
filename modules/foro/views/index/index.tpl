@@ -56,7 +56,7 @@
                                 {/if}
                                 
                                 <div class="row col-md-12 col-xs-12 col-sm-12 col-lg-12 margin-t-5">
-                                {$tematica.Lit_Members|default:0} Miembro(s) &nbsp;&nbsp;-&nbsp;&nbsp; {$tematica.Lit_Comentarios|default:0} {$lenguaje.str_comentarios}
+                                {$tematica.Lit_Members|default:0} {$lenguaje.str_miembros} &nbsp;&nbsp;-&nbsp;&nbsp; {$tematica.Lit_Comentarios|default:0} {$lenguaje.str_comentarios}
                                 </div>
                             </div>
                         </div>
@@ -84,7 +84,7 @@
                                          <p style="text-align: justify;">{$foro.For_Resumen|truncate:120:"..."}</p>
                                     </div>
                                     {/if}
-                                <div class="detalles-act-reciente">{$foro.Usu_Usuario} &nbsp;&nbsp;-&nbsp;&nbsp; hace {timediff date=$foro.tiempo  lang=Cookie::lenguaje()}&nbsp;&nbsp;-&nbsp;&nbsp; {$foro.votos} voto(s) &nbsp;&nbsp;-&nbsp;&nbsp; {$foro.For_TParticipantes|default:0} miembro(s) &nbsp;&nbsp;-&nbsp;&nbsp;{$foro.For_TComentarios|default:0} comentario(s)
+                                <div class="detalles-act-reciente">{$foro.Usu_Usuario} &nbsp;&nbsp;-&nbsp;&nbsp; hace {timediff date=$foro.tiempo  lang=Cookie::lenguaje()}&nbsp;&nbsp;-&nbsp;&nbsp; {$foro.votos} {$lenguaje.str_votos} &nbsp;&nbsp;-&nbsp;&nbsp; {$foro.For_TParticipantes|default:0} {$lenguaje.str_miembros} &nbsp;&nbsp;-&nbsp;&nbsp;{$foro.For_TComentarios|default:0} {$lenguaje.str_comentarios}
                                 </div>
                         </div>
                         {/foreach}
