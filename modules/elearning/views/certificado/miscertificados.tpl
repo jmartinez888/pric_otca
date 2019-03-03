@@ -1,14 +1,14 @@
 {include file='modules/elearning/views/cursos/menu/lateral.tpl'}
 <div class="col-lg-10">
 <div class="col-lg-12">
-        <h3>Mis Certificados</h3>
+        <h3>elearning_cursos_mis_certificados</h3>
         <hr class="cursos-hr">
     </div>
     <div class="col-lg-12">
         <div class="panel-body">
             <div class="row" style="text-align:right">
                 <div style="display:inline-block;padding-right:2em">
-                    <input class="form-control" placeholder="Buscar Certificado" style="width: 150px; float: left; margin: 0px 10px;" name="palabracertificado" id="palabracertificado">
+                    <input class="form-control" placeholder="{$lenguaje.str_buscar_certificado}" style="width: 150px; float: left; margin: 0px 10px;" name="palabracertificado" id="palabracertificado">
                     <button class="btn btn-success" style=" float: left" type="button" id="buscarcertificado"  ><i class="glyphicon glyphicon-search"></i></button>
                 </div>
             </div>
@@ -18,11 +18,11 @@
                         <table class="table" style="  margin: 20px auto">
                             <tr>
                                 <th style=" text-align: center">Nº</th>
-                                <th style=" text-align: center">Código</th>
-                                <th style=" text-align: center">Curso</th>
-                                <th style=" text-align: center">Fecha</th>
+                                <th style=" text-align: center">{$lenguaje.str_codigo}</th>
+                                <th style=" text-align: center">{$lenguaje.str_curso}</th>
+                                <th style=" text-align: center">{$lenguaje.str_fecha}</th>
                                     {if $_acl->permiso("editar_rol")}
-                                    <th style=" text-align: center">Opciones</th>
+                                    <th style=" text-align: center">{$lenguaje.str_opciones}</th>
                                     {/if}
                             </tr>
                             {foreach item=rl from=$certificados}
