@@ -62,7 +62,7 @@
         <div class="col-sm-4">
           {if $_acl->permiso("registrar_curso")}
           <button class="btn btn-success" style=" float: left" type="button" id="btn_nuevo_curso">
-            <i class="glyphicon glyphicon-book"></i> Registrar Curso
+            <i class="glyphicon glyphicon-book"></i> {$lenguaje.str_registrar_curso}
           </button>
           {/if}
         </div>
