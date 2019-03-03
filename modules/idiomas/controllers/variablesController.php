@@ -65,7 +65,7 @@ class variablesController extends idiomasController {
 		// dd($_POST);
 
 		$res = ['success' => false, 'msg' => ''];
-		$lenguaje = $this->_view->loadLenguaje(['request']);
+		$lenguaje = $this->_view->loadLenguaje(['request'], false, true);
 		if ($this->has(['nombre', 'file_id', 'idiomas'])) {
 			DB::transaction(function () use($lenguaje, &$res) {
 				try {
@@ -85,10 +85,10 @@ class variablesController extends idiomasController {
 			    	}
 			    }
 			    $res['success'] = true;
-			    $res['msg'] = $lenguaje['str_elemento_no_registrado'];
+			    $res['msg'] = $lenguaje->get('str_elemento_no_registrado');
 			    IdiomaFilesVarsBody::generate_files();
 				} catch (Exception $e) {
-					$res['msg'] = str_replace('%elemento%', $prename, $lenguaje['str_elemento_ya_registrado']);
+					$res['msg'] = str_replace('%elemento%', $prename, $lenguaje->get('str_elemento_ya_registrado'));
 				}
 			});
 		} else {

@@ -12,8 +12,9 @@ class Leccion extends Eloquent
   protected $primaryKey = 'Lec_IdLeccion';
   public $timestamps = false;
 
-  public const ESTADO_NOINICIADO  = 0;
-  public const ESTADO_INICIADO    = 1;
+  public const ESTADO_NOINICIADO      = 0;
+  public const ESTADO_INICIADO        = 1;
+  public const ESTADO_FINALIZADO      = 2;
 
   public  const TIPO_HTML             = 1;
   public  const TIPO_VIDEO            = 2;
@@ -53,14 +54,20 @@ class Leccion extends Eloquent
   /**
    * [getSessionEnEspera description]
    *
-   * @param   [$fecha]   [type DateTime]
+   * @param   [$fecha]   [Strin 'YYYY-MM-DD']
    * @return  [type]    [return description]
    */
   public function getSessionEnEspera ($fecha) {
-    return $this->sessiones()->where('Les_Concluido', 0)
-      ->where('Les_Tipo', LeccionSession::TIPO_ESPERA)
+    return $this->sessiones()->where('Les_Tipo', LeccionSession::TIPO_ESPERA)
       ->where('Les_Concluido', LeccionSession::NO_CONCLUIDO)
       ->where(DB::raw('DATE(Les_DateInicio)'), $fecha)
+      ->orderBy('Les_DateInicio', 'asc')->first();
+  }
+
+  public function getMinSessionEnEspera () {
+    return $this->sessiones()->where('Les_Tipo', LeccionSession::TIPO_ESPERA)
+      ->where('Les_Concluido', LeccionSession::NO_CONCLUIDO)
+      // ->where(DB::raw('DATE(Les_DateInicio)'), $fecha)
       ->orderBy('Les_DateInicio', 'asc')->first();
   }
 
@@ -72,7 +79,7 @@ class Leccion extends Eloquent
     $ls->Les_Tipo = LeccionSession::TIPO_ESPERA;
     //do {
       $date = new \DateTime();
-      $thash = self::hashLeccion($this->Lec_IdLeccion, $this->getDocente(), $date->format('Y-m-d'));
+      $thash = self::hashLeccion($this->Lec_IdLeccion, $this->getDocente(), $date->format('Y-m-d H:i:s'));
     //} while(LeccionSession::existeHash($thash));
     $ls->Les_Hash = $thash;
     return $ls->save() ? $ls : null;
@@ -90,6 +97,7 @@ class Leccion extends Eloquent
   	return $query->whereIn('leccion.Moc_IdModuloCurso', $modulos_id);
   }
 
+  
   
   public function scopegetEncuestas ($query) {
   	return $query->where('Lec_Tipo', self::TIPO_ENCUESTA);

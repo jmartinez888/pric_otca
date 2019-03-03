@@ -122,7 +122,7 @@
             </h3>
           </div>
           <div class="panel-body" style="margin: 0px">
-
+            <form action="" id="frm-finalizar-leccion" @submit.prevent="btnOnClick_finalizarLeccion"></form>
 
             <div class="row no-seleccionable-nousar" style="padding-bottom: 10px" id="leccion-contenido">
 
@@ -285,21 +285,24 @@
                         <div class="tool-option tool-option-texto" v-if="showIn('all')">
                           <label class="label_options_object" for="">{$lang->get('str_texto')}</label>
                           <div class="">
-                            <input type="text" v-model="opcelements.text" class="form-controlxx" placeholder="{$lang->get('str_ingresar_texto')}">
+                            <input type="text" v-model="opcelements.text" class="form-controlxx" placeholder="{$lang->get('str_ingresar_texto')}" :disabled="!showIn(['text'])">
                           </div>
                         </div>
 
                         <div class="tool-option tool-option-texto" v-if="showIn('all')">
                           <div class="">
-                            <a href="{BASE_URL}elearning/clase/finalizar/{$curso}/{$modulo.Moc_IdModuloCurso}/{$leccion.Lec_IdLeccion}">{$lang->get('elearning_cursos_finalizar_leccion')}</a>
+                            <button type="button" @click.prevent="btnOnClick_finalizarLeccionOnline" >{$lang->get('elearning_cursos_finalizar_session')}</button>
                           </div>
                         </div>
 
+                        
+                        {*
                         <div class="tool-option tool-option-texto" v-if="showIn('all')">
                           <div class="">
                             <a target="_blank" href="{BASE_URL}elearning/gleccion/asistencia/{$leccion.Lec_IdLeccion}">{$lang->get('elearning_cursos_ir_a_asistencia')}</a>
                           </div>
                         </div>
+                        *}
 
 
 
@@ -323,7 +326,6 @@
           </div>
         </div>
       </div>
-
       <div class="col-lg-6">
         <div class="panel panel-default margin-top-10">
           <div class="panel-heading">
@@ -333,6 +335,7 @@
             </h3>
           </div>
           <div class="panel-body" style="margin: 0px">
+            
             {if $usuario==$ocurso.Usu_IdUsuario}
             <div id="placeholder-div2"></div>
 
@@ -349,6 +352,23 @@
           </div>
         </div>
       </div>
+      {if $is_docente}
+      <div class="col-lg-6">
+        <div class="panel panel-default margin-top-10">
+          <div class="panel-heading">
+            <h3 class="panel-title">
+              <i class="glyphicon glyphicon-list-alt"></i>&nbsp;&nbsp;
+              <strong>{$lang->get('str_acciones')}</strong>
+            </h3>
+          </div>
+          <div class="panel-body" style="margin: 0px">
+            
+            <button type="submit" form="frm-finalizar-leccion" class="btn btn-success">{$lang->get('elearning_cursos_finalizar_leccion')}</button>
+            <a target="_blank" class="btn btn-success" href="{BASE_URL}elearning/gleccion/asistencia/{$leccion.Lec_IdLeccion}">{$lang->get('elearning_cursos_ir_a_asistencia')}</a>
+          </div>
+        </div>
+      </div>
+      {/if}
 
 
 
@@ -377,6 +397,7 @@
   var HASH_LECCION = '{$hash_leccion}';
   var HASH_SESSION = '{$hash_session_activa}';
   
+  var INGRESAR_TEXTO = "{$lang->get('str_ingresar_texto')}";
   var PIZARRAS = {json_encode($pizarra)}
     DOCENTE_ID = {$docente_id};
     USUARIO = {
@@ -404,6 +425,7 @@
 <script type="text/javascript" src="{BASE_URL}public/vendors/fabric/fabric.beautified.js"></script>
 {* <script type="text/javascript" src="{BASE_URL}modules/elearning/views/gestion/js/core/util.js"></script> *}
 <script src="{BASE_URL}modules/elearning/views/clase/js/menu-interactive.js"></script>
+
 {if $is_docente}
 <script src="{BASE_URL}modules/elearning/views/clase/js/canvasdos.js"></script>
 <script src="{BASE_URL}modules/elearning/views/clase/js/mixin_chats.js"></script>

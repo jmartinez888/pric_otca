@@ -44,7 +44,7 @@ class claseController extends elearningController {
 		if (!$Mmodel->validarModuloUsuario($modulo, Session::get("id_usuario"))) {$this->redireccionar("elearning/cursos");};
 		
 		//QUITAR POR UN MOMENTO
-    if(!$Lmodel->validarLeccion($leccion, $modulo, Session::get("id_usuario"))){ $this->redireccionar("elearning/cursos"); }
+    // if(!$Lmodel->validarLeccion($leccion, $modulo, Session::get("id_usuario"))){ $this->redireccionar("elearning/cursos"); }
 		// dd('d');
 		
 		$OLeccion = $Lmodel->getLeccion($leccion, $modulo, Session::get("id_usuario"));
@@ -118,28 +118,42 @@ class claseController extends elearningController {
 
 
 		if (!$obj_leccion->getSessionOnline()) {
-			if ($DT_ACTUAL < $DT_DESDE) {
-				$this->_view->render("clase_falta");
-			} else {
-				if ($DT_ACTUAL > $DT_HASTA) {
-					$this->_view->render("clase_pasada");
-				} else {
-					// exit;
-					//EN ESPERA
-
-					$session_espera = $obj_leccion->getSessionEnEspera($DT_ACTUAL);
-					// dd($session_espera);
+			if ($obj_leccion->Lec_LMSEstado == Leccion::ESTADO_INICIADO) {
+				$session_espera = $obj_leccion->getMinSessionEnEspera();
+				// dd($session_espera);
+				if ($session_espera == null) {
+					$session_espera = $obj_leccion->generarSessionDeEspera(new DateTime(), Session::get('id_usuario'));
 					
-					if ($session_espera == null) {
-						$session_espera = $obj_leccion->generarSessionDeEspera(new DateTime(), Session::get('id_usuario'));
-						
-					}
-					$this->_view->assign('hash_session_activa', $session_espera->Les_Hash . '-' . $session_espera->Les_IdLeccSess);
-					$this->_view->assign("alumnos_json", json_encode($alumnos_format));
-					$this->_view->render("clase_espera");
 				}
+				// dd($session_espera);
+				$this->_view->assign('hash_session_activa', $session_espera->Les_Hash . '-' . $session_espera->Les_IdLeccSess);
+				$this->_view->assign("alumnos_json", json_encode($alumnos_format));
+				$this->_view->render("clase_espera");
+				exit;
+			} else {
+				if ($DT_ACTUAL < $DT_DESDE) {
+					$this->_view->render("clase_falta");
+				} else {
+					if ($DT_ACTUAL > $DT_HASTA) {
+						$this->_view->render("clase_pasada");
+					} else {
+						// exit;
+						//EN ESPERA
+	
+						$session_espera = $obj_leccion->getSessionEnEspera($DT_ACTUAL);
+						// dd($session_espera);
+						
+						if ($session_espera == null) {
+							$session_espera = $obj_leccion->generarSessionDeEspera(new DateTime(), Session::get('id_usuario'));
+							
+						}
+						$this->_view->assign('hash_session_activa', $session_espera->Les_Hash . '-' . $session_espera->Les_IdLeccSess);
+						$this->_view->assign("alumnos_json", json_encode($alumnos_format));
+						$this->_view->render("clase_espera");
+					}
+				}
+				exit;
 			}
-			exit;
 		} else {
 			$session_activa = $obj_leccion->getSessionActiva();
 			$this->_view->assign('hash_session_activa', $session_activa->Les_Hash . '-' . $session_activa->Les_IdLeccSess);
@@ -305,16 +319,13 @@ class claseController extends elearningController {
 
 	public function iniciar($curso, $modulo, $leccion) {
 		$res = ['success' => false];
-		if ($this->has(['docente_id', 'leccion_session_espera_id'])) {
+		if ($this->has(['docente_id', 'leccion_session_espera_id', 'leccion_session_espera_id_b'])) {
 			$this->_acl->autenticado();
 			$objLecc = Leccion::find($leccion);
 			if ($objLecc) {
 				$docente_id = $this->getInt('docente_id');
 				if ($docente_id == Session::get("id_usuario") && $docente_id == $objLecc->getDocente()) {
 					if ($this->_acl->tienePermisos('iniciar_leccion_dirigida')) {
-						// $model = $this->loadModel("leccion");
-
-						//AGREGAR SESSION CLASE
 						DB::transaction(function () use ($leccion, $docente_id, &$res, $objLecc) {
 							// $model->EstadoLeccionLMS($leccion, Leccion::ESTADO_INICIADO);//no cachea el transaction :c
 							$objLecc->Lec_LMSEstado = Leccion::ESTADO_INICIADO;
@@ -323,7 +334,8 @@ class claseController extends elearningController {
 
 							$ls = new LeccionSession();
 							//verifgicar si exsite una session en espera
-							$espera_session = LeccionSession::getSessionByHash($this->getTexto('leccion_session_espera_id'));
+							$espera_session = LeccionSession::getSessionByHashAndID($this->getTexto('leccion_session_espera_id'), $this->getInt('leccion_session_espera_id_b'));
+							// print_r($espera_session);
 							if ($espera_session) {
 								$espera_session->concluir(DB::raw('NOW()'));
 								$ls->Les_Padre = $espera_session->Les_IdLeccSess;
@@ -355,6 +367,72 @@ class claseController extends elearningController {
 		$model = $this->loadModel("leccion");
 		$model->EstadoLeccionLMS($leccion, 2);
 		$this->redireccionar("elearning/clase/clase/" . $curso . "/" . $modulo . "/" . $leccion);
+	}
+	
+	public function finalizar_online ($leccion_id) {	
+		$res = ['success' => false];
+		if ($this->has(['docente_id', 'leccion_session_espera_id', 'leccion_session_espera_id_b'])) {
+			$this->_acl->autenticado();
+			$leccion = Leccion::find($leccion_id);
+			if ($leccion) {
+				$docente_id = $this->getInt('docente_id');
+				if ($docente_id == Session::get("id_usuario") && $docente_id == $leccion->getDocente()) {
+					if ($this->_acl->tienePermisos('iniciar_leccion_dirigida')) {
+						DB::beginTransaction();
+						$session = $leccion->getSessionActiva();
+						$pre_session = LeccionSession::getSessionByHashAndID($this->getTexto('leccion_session_espera_id'), $this->getInt('leccion_session_espera_id_b'));
+						if ($session->Les_IdLeccSess == $pre_session->Les_IdLeccSess) {
+							$session->Les_Concluido = LeccionSession::CONCLUIDO;
+							$session->Les_DateFin = new DateTime("now");
+							//CONSULTAR O GENERAR SESSION DE ESPERA
+							$minsession = $leccion->getMinSessionEnEspera();
+							if ($minsession == null)
+								$minsession = $leccion->generarSessionDeEspera(new DateTime(), Session::get('id_usuario'));
+					
+							if ($session->save() && $minsession != null) {
+								$res['success'] = true;
+								DB::commit();
+							} else {
+								DB::rollBack();
+							}
+						}
+					}
+				}
+			}
+			
+		}
+		$this->_view->responseJson($res);
+	
+	}
+
+	public function finalizar_leccion ($leccion_id) {
+		$res = ['success' => false];
+		if ($this->has(['docente_id', 'leccion_session_espera_id', 'leccion_session_espera_id_b'])) {
+			$this->_acl->autenticado();
+			$leccion = Leccion::find($leccion_id);
+			if ($leccion) {
+				$docente_id = $this->getInt('docente_id');
+				if ($docente_id == Session::get("id_usuario") && $docente_id == $leccion->getDocente()) {
+					if ($this->_acl->tienePermisos('iniciar_leccion_dirigida')) {
+						DB::beginTransaction();
+						$leccion->Lec_LMSEstado = Leccion::ESTADO_FINALIZADO;
+						$session = $leccion->getSessionActiva();
+						$pre_session = LeccionSession::getSessionByHashAndID($this->getTexto('leccion_session_espera_id'), $this->getInt('leccion_session_espera_id_b'));
+						if ($session->Les_IdLeccSess == $pre_session->Les_IdLeccSess) {
+							$session->Les_Concluido = LeccionSession::CONCLUIDO;
+							$session->Les_DateFin = new DateTime("now");
+							if ($session->save() && $leccion->save()) {
+								$res['success'] = true;
+								DB::commit();
+							} else {
+								DB::rollBack();
+							}
+						}
+					}
+				}
+			}
+		}
+		$this->_view->responseJson($res);
 	}
 
 	public function download($file) {

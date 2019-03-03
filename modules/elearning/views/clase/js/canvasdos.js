@@ -19,6 +19,7 @@ var mivue = new Vue({
 			LECCION: {
 				ID: 0,
 				SESSION_ID: 0,
+				DOCENTE_ID: 0,
 				SESSION_HASH: ''
 			},
 			CANVAS: {
@@ -85,6 +86,32 @@ var mivue = new Vue({
 		},
 	},
 	methods: {
+		btnOnClick_finalizarLeccionOnline: function () {
+			console.log('asd')
+			// this.objSocket.emit('CLOSE_ONLINE','')
+			// {BASE_URL}elearning/clase/finalizar/{$curso}/{$modulo.Moc_IdModuloCurso}/{$leccion.Lec_IdLeccion}
+			axios.post(base_url('elearning/clase/finalizar_online/' + this.LECCION.ID), parseData({
+				docente_id: this.LECCION.DOCENTE_ID,
+				leccion_session_espera_id: this.LECCION.SESSION_HASH,
+				leccion_session_espera_id_b: this.LECCION.SESSION_ID,
+			})).then(res => {
+				if (res.data.success) {
+					this.objSocket.emit('CLOSE_ONLINE','')
+				}
+			})
+		},
+		btnOnClick_finalizarLeccion: function () {
+
+			axios.post(base_url('elearning/clase/finalizar_leccion/' + this.LECCION.ID), parseData({
+				docente_id: this.LECCION.DOCENTE_ID,
+				leccion_session_espera_id: this.LECCION.SESSION_HASH,
+				leccion_session_espera_id_b: this.LECCION.SESSION_ID,
+			})).then(res => {
+				if (res.data.success) {
+					this.objSocket.emit('CLOSE_LECCION','')
+				}
+			})
+		},
 		formatItemPizarra: function (id) {
 			return `
 			<div class="panel item-pizarra">
@@ -278,7 +305,7 @@ var mivue = new Vue({
 				console.log(obj)
 				this.current_element = obj.objeto_id
 				this.current_type = obj.type
-
+				this.opcelements.text = obj.text
 				this.opcelements.stroke = obj.stroke
 				this.opcelements.strokeWidth = obj.strokeWidth
 				this.opcelements.fill = obj.fill
@@ -345,6 +372,8 @@ var mivue = new Vue({
 			switch (opc) {
 				case 'normal':
 					this.CURRENT_CREATE.INITIALIZED = false
+					this.CURRENT_CREATE.OBJECT = null
+					this.CURRENT_CREATE.MODE = MODE_OBJECT.NORMAL
 						canvasdocente.isDrawingMode = this.lapizOn = false
 						this.current_type = 'none'
 						this.setAllObjectsSelectable(true)
@@ -355,7 +384,9 @@ var mivue = new Vue({
 						this.opcelements.fill = canvasdocente.freeDrawingBrush.color
 						this.opcelements.strokeWidth = canvasdocente.freeDrawingBrush.width
 						this.current_type = 'lapiz'
-
+						this.CURRENT_CREATE.INITIALIZED = false
+						this.CURRENT_CREATE.OBJECT = null
+						this.CURRENT_CREATE.MODE = MODE_OBJECT.NONE
 					break;
 				case 'rect':
 					canvasdocente.isDrawingMode = this.lapizOn = false
@@ -363,14 +394,6 @@ var mivue = new Vue({
 					if (!this.CURRENT_CREATE.INITIALIZED)
 						this.CURRENT_CREATE.INITIALIZED = true
 					this.setAllObjectsSelectable(false)
-					// this.addObjectCanvas(new fabric.Rect({
-					// 	fill: 'transparent',
-					// 	backgroundColor: 'transparent',
-					// 	width: 200,
-					// 	height: 100,
-					// 	stroke: 'black',
-					// 	objeto_id: this.count_id++
-					// }))
 					break;
 				case 'circulo':
 					canvasdocente.isDrawingMode = this.lapizOn = false
@@ -392,6 +415,7 @@ var mivue = new Vue({
 					if (!this.CURRENT_CREATE.INITIALIZED)
 						this.CURRENT_CREATE.INITIALIZED = true
 					this.setAllObjectsSelectable(false)
+					// this.addEventosObjeto.opcelements.text = 'Ingresar texto'
 					// this.addObjectCanvas(new fabric.Text(this.opcelements.text, {
 					// 	objeto_id: this.count_id++
 					// }))
@@ -431,6 +455,7 @@ var mivue = new Vue({
 		console.log('creta!')
 		let hs = HASH_SESSION.split('-');
 		this.LECCION.ID = LMS_LECCION
+		this.LECCION.DOCENTE_ID = DOCENTE_ID
 		this.LECCION.SESSION_ID = hs[1]
 		this.PIZARRAS = PIZARRAS;
 		this.LECCION.SESSION_HASH = hs[0]
@@ -508,7 +533,8 @@ var mivue = new Vue({
 						})
 						break;
 					case MODE_OBJECT.TEXTO:
-						this.CURRENT_CREATE.OBJECT = new fabric.Text(this.opcelements.text, {
+						this.opcelements.text = INGRESAR_TEXTO
+						this.CURRENT_CREATE.OBJECT = new fabric.Text(INGRESAR_TEXTO, {
 							left: options.pointer.x,
 							top: options.pointer.y,
 							originX: 'center',
@@ -606,6 +632,9 @@ var mivue = new Vue({
 
 		this.objSocket.init(() => {
 			this.objSocket.on('SESSION_CANVAS_SUCCESS', msg => {
+				this.objSocket.on('CLOSE_ONLINE_AL', () => {
+					window.location.reload()
+				})
 				console.log('SESSION_CANVAS_SUCCESS')
 				this.objSocket.on('conexion_alumno', res => {
 					//docente recive la conexión de un alumno y envia los datos del canvas

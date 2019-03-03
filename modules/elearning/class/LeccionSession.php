@@ -28,6 +28,16 @@ class LeccionSession extends Eloquent
   public function scopeSelectParaAsistencia ($query) {
     return $query->select('Les_IdLeccSess', 'Lec_IdLeccion', 'Les_Tipo');
   }
+
+  public static function getSessionByHashAndID ($hash, $leccion_id, $solo_concluidas = false) {
+    $build = self::where('Les_Hash', $hash)->where('Les_IdLeccSess', $leccion_id);
+    if ($solo_concluidas) {
+      $build->where('Les_Concluido', self::CONCLUIDO);
+    }
+    return $build->first();
+      
+  }
+
   public static function getSessionByHash ($hash, $solo_concluidas = false) {
     $build = self::where('Les_Hash', $hash);
     if ($solo_concluidas) {
