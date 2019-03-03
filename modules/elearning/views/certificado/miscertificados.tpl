@@ -8,7 +8,7 @@
         <div class="panel-body">
             <div class="row" style="text-align:right">
                 <div style="display:inline-block;padding-right:2em">
-                    <input class="form-control" placeholder="Buscar Certificado" style="width: 150px; float: left; margin: 0px 10px;" name="palabracertificado" id="palabracertificado">
+                    <input class="form-control" placeholder="{$lenguaje.str_buscar_certificado}" style="width: 150px; float: left; margin: 0px 10px;" name="palabracertificado" id="palabracertificado">
                     <button class="btn btn-success" style=" float: left" type="button" id="buscarcertificado"  ><i class="glyphicon glyphicon-search"></i></button>
                 </div>
             </div>
