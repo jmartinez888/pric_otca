@@ -1,15 +1,3 @@
-// Vue.component('message-chat', {
-//   template: '#msg_chat_v2',
-//   props: ['tipo', 'usuario', 'fecha_format', 'mensaje', 'fecha_now'],
-//   data: function () {
-//     return {
-//       msg: {
-//         propio: 1,
-//         otro: 0
-//       }
-//     }
-//   }
-// })
 $(document).ready(() => {
   
   var chat_container = document.getElementById('chat-container')
@@ -306,7 +294,9 @@ $(document).ready(() => {
               let frmData = new FormData()
               let hs = HASH_SESSION.split('-');
               frmData.append('docente_id', USUARIO.id)
+              frmData.append('docente_id', USUARIO.id)
               frmData.append('leccion_session_espera_id', hs[0])
+              frmData.append('leccion_session_espera_id_b', hs[1])
               axios.post(bice.target.dataset.url, frmData).then(response => {
                 if (response.data.success) {
                   this.socketChat.emit('INICIAR_CLASE', {success: true})

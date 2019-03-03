@@ -88,16 +88,19 @@
   </div>
   <div class="row contenido-leccion">
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 " >
-
       <div class="panel panel-leccion panel-default">
-      {*  <div class="panel-heading cabecera-titulo">
-        <h3 class="panel-title">
-          <strong>Lección Dirigida: {$leccion.Lec_Titulo}</strong>
-        </h3>
-        </div> *}
         <div class="panel-body contenedor-clase">
-          {$lang->get('elearning_cursos_la_clase_se_desarrollo')}
+          <h2>
+            {$lang->get('elearning_cursos_la_clase_se_desarrollo')}
+          </h2>
         </div>
+      </div>
+    </div>
+  </div>
+  <div class="row descripcion-leccion">
+    <div class="panel-footer" style="background-color: transparent;">
+      <div class="row" style="padding-left:0px; padding-right: 0px;">
+        {include file='modules/elearning/views/cursos/menu/info_leccion.tpl'}
       </div>
     </div>
   </div>

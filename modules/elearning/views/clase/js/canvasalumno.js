@@ -267,6 +267,9 @@ new Vue({
 					}
 
 				})
+				this.objSocket.on('CLOSE_ONLINE_AL', () => {
+					window.location.reload()
+				})
 				this.objSocket.emit('CONFIRMACARGACANVAS', 'confirmado')
 			})
 			this.objSocket.emit('INIT_CANVAS', 'Iniciando desde alumno');
