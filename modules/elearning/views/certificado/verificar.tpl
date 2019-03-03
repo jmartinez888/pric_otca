@@ -20,7 +20,7 @@
             <h4>{$lenguaje.str_codigo_verificacion}</h4>
             <hr class="cursos-hr">
             <p>
-                El Código de verificación de un certificado generado por la Plataforma Elearning del PRIC aparece en la parte inferior céntrica del documento. Haga click en las imágenes a continuación para ver ejemplos:
+                {$lenguaje.str_descripcion_verificacion}
             </p>
             <div class="row">
                 <div class="col-md-5 col-md-offset-3">  
