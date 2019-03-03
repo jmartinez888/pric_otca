@@ -87,8 +87,8 @@ class documentosController extends Controller{
         // {
         //     $this->registrarRecurso();
         // }
-
-		$this->_view->getLenguaje("bd_documentos");
+   $this->validarUrlIdioma();
+   $this->_view->getLenguaje("bd_documentos");
     $this->_view->getLenguaje("bdrecursos_registros");
     $this->_view->getLenguaje("bdrecursos_index");
     $this->_view->getLenguaje("bdlegal");
