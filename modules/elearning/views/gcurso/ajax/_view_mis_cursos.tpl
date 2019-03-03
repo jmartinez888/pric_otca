@@ -75,7 +75,7 @@
         <div class="table-responsive" style="width: 100%">
             <table class="table" id="tblMisCursos">
                 <tr>
-                    <th>Mis Cursos</th>
+                    <th>Mis Cursos {$lenguaje.str_mis_cursos1}</th>
                     {if $_acl->permiso("editar_curso")} <th>Operaciones</th> {/if}
                 </tr>
                 {foreach from=$cursos item=c}
