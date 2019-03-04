@@ -502,7 +502,7 @@ var mivue = new Vue({
 		// this.$refs.opciones_canvas.classList.remove('hidden')
 
 		// this.$refs.panel_pizarra_final.classList.remove('hidden')
-		this.$refs.micanvas.width = this.CANVAS.width = this.$refs.panel_pizarra_final.offsetWidth - 4
+		this.$refs.micanvas.width = this.CANVAS.width = this.$refs.panel_pizarra_final.offsetWidth - 1
 		
 
 		let altura = (this.$refs.micanvas.width/this.razoncambio);
@@ -521,7 +521,7 @@ var mivue = new Vue({
 		this.$refs.refContainerChatPizarra.style.height = (altura + this.altura_opciones) + 'px'
 		this.$refs.panel_pizarra_final.style.height = (altura + this.altura_opciones) + 'px'
 		// this.$refs.panel_pizarra_final.offsetWidth
-		this.$refs.micanvas.height = this.CANVAS.height = altura - 2
+		this.$refs.micanvas.height = this.CANVAS.height = altura - 1
 
 		canvasdocente = new fabric.Canvas('micanvas', {
 			backgroundColor: 'white'

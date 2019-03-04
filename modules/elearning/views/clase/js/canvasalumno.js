@@ -1,6 +1,6 @@
 var theimage = null;
 var canvasalumno = null;
-const ALTURA_TITULO_PIZARRA = 56;
+const ALTURA_TITULO_PIZARRA = 0;
 new Vue({
 	el: '#modulo-contenedor',
 	data: function () {
@@ -89,7 +89,7 @@ new Vue({
 		this.showLinksVideo = document.getElementById('show_links_video')
 		this.spanCurrentPizarra = document.getElementById('nro_pízarra');
 		this.$refs.panel_pizarra_final.classList.remove('hidden')
-		this.$refs.micanvas.width = this.CANVAS.width = this.$refs.panel_pizarra_final.offsetWidth - 4
+		this.$refs.micanvas.width = this.CANVAS.width = this.$refs.panel_pizarra_final.offsetWidth - 1
 
 		let altura = (this.$refs.micanvas.width/this.razoncambio);
 
@@ -106,7 +106,7 @@ new Vue({
 		this.$refs.refContainerChatPizarra.style.height = altura + 'px'
 		this.$refs.panel_pizarra_final.style.height = altura + ALTURA_TITULO_PIZARRA + 'px'
 		// this.$refs.panel_pizarra_final.offsetWidth
-		this.$refs.micanvas.height = altura - 2
+		this.$refs.micanvas.height = altura - 1
 
 		canvasalumno = new fabric.Canvas('micanvas')
 		canvasalumno.selection = false

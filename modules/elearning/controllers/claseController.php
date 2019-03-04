@@ -44,8 +44,13 @@ class claseController extends elearningController {
 		if (!$Mmodel->validarCursoModulo($curso, $modulo)) {$this->redireccionar("elearning/cursos");}
 		if (!$Mmodel->validarModuloUsuario($modulo, Session::get("id_usuario"))) {$this->redireccionar("elearning/cursos");};
 		
+		$is_docente = $Gmodel->validarDocenteCurso($curso, Session::get('id_usuario'));
 		//QUITAR POR UN MOMENTO
-    // if(!$Lmodel->validarLeccion($leccion, $modulo, Session::get("id_usuario"))){ $this->redireccionar("elearning/cursos"); }
+		if (!$is_docente) {
+			if(!$Lmodel->validarLeccion($leccion, $modulo, Session::get("id_usuario"))){ 
+				$this->redireccionar("elearning/cursos"); 
+			}
+		}
 		// dd('d');
 		
 		$OLeccion = $Lmodel->getLeccion($leccion, $modulo, Session::get("id_usuario"));
@@ -70,7 +75,7 @@ class claseController extends elearningController {
 		$docente_id = $obj_leccion->getDocente();
 		$data['hash_leccion'] = Leccion::hashLeccion($OLeccion['Lec_IdLeccion'], $docente_id);
 		$data['docente_id'] = $docente_id;
-		$data['is_docente'] = $Gmodel->validarDocenteCurso($curso, Session::get('id_usuario'));
+		$data['is_docente'] = $is_docente;
 		$data['hash_session_activa'] = 'none';
 		$alumnos_format = [];
 
@@ -149,6 +154,7 @@ class claseController extends elearningController {
 							
 						}
 						$this->_view->assign('hash_session_activa', $session_espera->Les_Hash . '-' . $session_espera->Les_IdLeccSess);
+						$this->_view->assign('session_id', $session_espera->Les_IdLeccSess);
 						$this->_view->assign("alumnos_json", json_encode($alumnos_format));
 						$this->_view->render("clase_espera");
 					}
@@ -158,6 +164,7 @@ class claseController extends elearningController {
 		} else {
 			$session_activa = $obj_leccion->getSessionActiva();
 			$this->_view->assign('hash_session_activa', $session_activa->Les_Hash . '-' . $session_activa->Les_IdLeccSess);
+			$this->_view->assign('session_id', $session_activa->Les_IdLeccSess);
 		}
 		// var_dump($data);
 		// exit;

@@ -13,11 +13,15 @@
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 titulo-modulo">
       <h4><strong> {$lang->get('str_modulo')} {$modulo.Index}: {$modulo["Moc_Titulo"]}</strong></h4>
       <div class="container-btn-curso">
+        {if $is_docente}
+        <a class="btn btn-sm btn-default btn-group" href="{BASE_URL}elearning/gestion/matriculados/{$curso}">
+          <span class="glyphicon glyphicon-book" aria-hidden="true"></span>
+          {$lang->get('elearning_cursos_gestion_curso')}
+        </a>
+        {/if}
         <a class="btn btn-sm btn-success btn-group pull-right" href="{BASE_URL}elearning/cursos/curso/{$curso}">
-          {* <button class="btn-regresar btn btn-group"> *}
             <span class="glyphicon glyphicon-hand-left" aria-hidden="true"></span>
             {$lang->get('elearning_cursos_volver_curso')}
-          {* </button> *}
         </a>
       </div>
     </div>
@@ -51,12 +55,6 @@
           </button>
         </form>
         {else}
-          {* <a href="{BASE_URL}elearning/cursos/curso/{$curso}">
-            <button class="btn-regresar btn btn-group">
-              <span class="glyphicon glyphicon-hand-left" aria-hidden="true"></span>
-              Ir a curso
-            </button>
-          </a> *}
           <form method="post" class="container-btn-next" action="{BASE_URL}elearning/cursos/_next_leccion/">
             <input value="{$curso}" name="curso" hidden="hidden"/>
             <input value="{$leccion.Lec_IdLeccion}" name="leccion" hidden="hidden"/>
@@ -67,14 +65,6 @@
           </form>
         {/if}
     </div>
-    {* <div class="col-lg-2" style="margin-top: 5px !important">
-      <a href="{BASE_URL}elearning/cursos/curso/{$curso}">
-      <button class="btn-regresar btn btn-group">
-        <span class="glyphicon glyphicon-hand-left" aria-hidden="true"></span>
-        Volver a curso
-      </button>
-    </a>
-    </div> *}
   </div>
   <div class="row contenido-lecciones">
 

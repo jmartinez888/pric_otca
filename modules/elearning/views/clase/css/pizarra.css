@@ -170,14 +170,14 @@ left: 0px;*/
 #panel-pizarra-final {
   position: relative;
   display: inline-block;
-  margin: 4px 0px 4px 0px;
+  /* margin: 4px 0px 4px 0px; */
   /* border-top: 1px solid #ddd;
   border-bottom: 1px solid #ddd;
   border-left: 0px solid #ddd;
   border-right: 0px solid #ddd; */
-
   /*height: 400px;
 width: 700px;*/
+  background: #e0e0de;
 }
 
 .img-pizarra-mini {
@@ -397,8 +397,8 @@ width: 700px;*/
   margin-bottom: 4px;
 }
 .canvas-ssss {
-  border: 1px solid #ddd;
-  margin-bottom: 4px;
+  /* border: 1px solid #ddd; */
+  /* margin-bottom: 4px; */
 }
 
 #herramientas-canvas_v2 .toolscanvas.tool-option .span-fake-helper{
@@ -430,4 +430,13 @@ width: 700px;*/
 #herramientas-canvas_v2 div.toolscanvas.tool-option > div > input {
   height: 20px;
   width: 100%;
+}
+.canvas-header {
+  background-color:#386c77;
+  height:3em;
+  color:#fff;
+  border-radius: 8px 8px 0px 0px;
+}
+.canvas-header .title-header{
+ line-height:1.7em; 
 }
