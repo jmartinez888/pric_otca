@@ -135,182 +135,133 @@
                 <div id="loader_circle">
                     <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
                 </div>
-                <div class="col-sm-3 hidden-custom container-chat-pizarra" id="ref-container-chat-pizarra" ref="refContainerChatPizarra">
-
-
-
-                  <div role="tabpanel" class="mt-4">
-                    {if ($is_docente)}
-                    <ul class="nav nav-tabs" role="tablist" ref="navsPanel">
-                      <li role="presentation" class="active">
-                        <a href="#chat-panel" aria-controls="chat-panel" role="tab" data-toggle="tab"><span>{$lang->get('str_usuario')}</span></a>
-                      </li>
-                      <li role="presentation">
-                        <a href="#pizarra-panel" aria-controls="pizarra-panel" role="tab" data-toggle="tab"><span>{$lang->get('str_pizarras')}</span></a>
-                      </li>
-                    </ul>
-                    {/if}
-                    <div class="tab-content">
-                      <div role="tabpanel" class="tab-pane active hidden" id="chat-panel" ref="chatPanel">
-                        <div id="chat-derecha-leccion">
-                          {include 'chat_derecha.tpl'}
+                <div class="col-sm-12">
+                  <div class="canvas-header hidden-custom">
+                    <h3 class="text-center m-0 p-0 title-header">{strtoupper($lang->get('str_pizarra'))}-{$session_id}: <span id="nro_pízarra"></span></h3>
+                  </div>
+                  <div class="col-sm-3 p-0 hidden-custom container-chat-pizarra" id="ref-container-chat-pizarra" ref="refContainerChatPizarra">
+  
+                    <div role="tabpanel" class="">
+                      {if ($is_docente)}
+                      <ul class="nav nav-tabs" role="tablist" ref="navsPanel">
+                        <li role="presentation" class="active">
+                          <a href="#chat-panel" aria-controls="chat-panel" role="tab" data-toggle="tab"><span>{$lang->get('str_usuario')}</span></a>
+                        </li>
+                        <li role="presentation">
+                          <a href="#pizarra-panel" aria-controls="pizarra-panel" role="tab" data-toggle="tab"><span>{$lang->get('str_pizarras')}</span></a>
+                        </li>
+                      </ul>
+                      {/if}
+                      <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane active hidden" id="chat-panel" ref="chatPanel">
+                          <div id="chat-derecha-leccion">
+                            {include 'chat_derecha.tpl'}
+                          </div>
+                        </div>
+                        {if ($is_docente)}
+                        <div role="tabpanel" class="tab-pane hidden" id="pizarra-panel" ref="pizarraPanel">
+                         {if $usuario==$ocurso.Usu_IdUsuario}
+                            <div class="col-sm-12" style="display:grid; margin-bottom: 8px">
+  
+                              <button @click="onClick_agregarPizarra" type="button" class="btn btn-success pull-right" id="btn-agregar-pizarra">{$lang->get('elearning_cursos_agregar_pizarra')}</button>
+                            </div>
+                            {include file='modules/elearning/views/clase/menu/pizarra.tpl'}
+                            {/if}
+                          {if isset($pizarra) && count($pizarra) > 0 && $usuario==$ocurso.Usu_IdUsuario }
+                          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12  contenedor-mini-pizarras">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="tmp_mini_pizarras">
+                              <div v-for="(piz, index) in PIZARRAS" class="panel-item-pizarra" @click="onClick_seleccionPizarra(piz.Piz_IdPizarra, index + 1)">
+                                <div class="panel item-pizarra">
+                                  
+                                  <img v-if="piz.Piz_ImgFondo == ''" :id="'pizarrabg_' + piz.Piz_IdPizarra" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAQAAADa613fAAAAaElEQVR42u3PQREAAAwCoNm/9CL496ABuREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREWkezG8AZQ6nfncAAAAASUVORK5CYII=" />
+                                  
+                                  <img v-else :id="'pizarrabg_' + piz.Piz_IdPizarra" :src="base_url('files/elearning/_pizarra/' + piz.Piz_ImgFondo, true)" />
+                                  
+  
+                                  <strong class="number_pizarra">{literal}{{index + 1}}{/literal}</strong>
+                                </div>
+                              </div>
+                              {* {/foreach} *}
+                            </div>
+                          </div>
+  
+                           
+                          {/if}
+                        </div>
+                        {/if}
+                      </div>
+                    </div>
+  
+  
+  
+  
+                  </div>
+                  <div class="col-sm-9 p-0 hidden-custom container-canvas-pizarra">
+                      
+  
+                    <div id="panel-pizarra-final" class="w-100" ref="panel_pizarra_final">
+                      <div class="canvas-ssss">
+                        <canvas height="0px" width="0px" ref="micanvas" id="micanvas" class="no-seleccionable-nousarx"></canvas>
+                      </div>
+                      {if $is_docente}
+                      <div id="herramientas-canvas_v2" class="no-seleccionable-nousar">
+                        <div>
+  
+                          <button :class="{ hidden: !show_tools, active: CURRENT_CREATE.MODE == MODE_OBJECT.NORMAL }" class="toolscanvas" @click="onClick_createObject('normal')"><i class="glyphicon glyphicon-screenshot"></i></button>
+                          <button :class="{ hidden: !show_tools, active: CURRENT_CREATE.MODE == MODE_OBJECT.LAPIZ }" class="toolscanvas" @click="onClick_createObject('lapiz')"><span class="glyphicon glyphicon-pencil"></span></button>
+                          <button :class="{ hidden: !show_tools, active: CURRENT_CREATE.MODE == MODE_OBJECT.RECT }" type="button" class="toolscanvas" @click="onClick_createObject('rect')"><i class="glyphicon glyphicon-unchecked"></i></button>
+                          <button :class="{ hidden: !show_tools, active: CURRENT_CREATE.MODE == MODE_OBJECT.CIRCULO }" type="button" class="toolscanvas" @click="onClick_createObject('circulo')"><i class="glyphicon glyphicon-record"></i></button>
+                          <button :class="{ hidden: !show_tools, active: CURRENT_CREATE.MODE == MODE_OBJECT.TEXTO }" class="toolscanvas" @click="onClick_createObject('texto')"><i class="glyphicon glyphicon-text-color"></i></button>
+                          <button :class="{ hidden: !show_tools, active: CURRENT_CREATE.MODE == MODE_OBJECT.IMAGE }" class="toolscanvas" @click="onClick_createObject('image')">
+                            <input @change="onChange_loadImage" ref="fileimg" id="fileimg" type="file" name="" value="" placeholder="" class="hidden">
+                            <label class="toolscanvas" style="font-weight: 100; margin-bottom: inherit;" for="fileimg" />
+                            <i class="glyphicon glyphicon-picture"></i>
+                          </button>
+                          <button :class="{ hidden: !show_tools }" type="button" class="toolscanvas" @click="onClick_eliminarObjecto"><i class="glyphicon glyphicon-erase"></i></button>
+                          <button :class="{ hidden: !show_tools }" type="button" class="toolscanvas" @click="onClick_eliminarLimpiar"><i class="glyphicon glyphicon-trash"></i></button>
+                          <button type="button" class="toolscanvas tool-option" @click="btnOnClick_ToolsOption('borde')">
+                              <span>{$lang->get('str_color_borde')} </span>
+                              <span ref="opcelementsStrokeSFH" class="span-fake-helper">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                          </button>
+                          <input ref="opcelementsStroke" type="color" id="tools-color" class="hidden" v-model="opcelements.stroke">
+                          <button type="button" class="toolscanvas tool-option" @click="btnOnClick_ToolsOption('fill')">
+                              <span v-if="showIn(['lapiz'])">{$lang->get('str_color')} </span>
+                              <span v-else>{$lang->get('str_color_relleno')} </span>
+                              <span ref="opcelementsFillSFH" class="span-fake-helper">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                          </button>
+                          <input ref="opcelementsFill" type="color" id="tools-color" class="hidden" v-model="opcelements.fill">
+                          <div class="toolscanvas tool-option tool-option-border-ancho" v-if="showIn('all')">
+                            <label class="label_options_object " for="">{$lang->get('elearning_cursos_ancho_borde')}</label>
+                            <div class="">
+                              
+                              
+                              <input v-if="showIn('all')" type="number" min="0" step="0.1" class=" form-controlxx"  v-model="opcelements.strokeWidth">
+                            </div>
+                          </div>
+                          <div class="toolscanvas tool-option tool-option-fuente-size" v-if="showIn('all')">
+                            <label class="label_options_object " for="">{$lang->get('elearning_cursos_tamanho_letra')}</label>
+                            <div class="">
+                              <input type="number" step="1" min="1" v-model="opcelements.fontSize" class=" form-controlxx" id="" placeholder="00">
+                            </div>
+                          </div>
+                          <div class="toolscanvas tool-option tool-option-texto" v-if="showIn('all')">
+                            <label class="label_options_object" for="">{$lang->get('str_texto')}</label>
+                            <div class="">
+                              <input type="text" v-model="opcelements.text" class="form-controlxx " placeholder="{$lang->get('str_ingresar_texto')}">
+                            </div>
+                          </div>
+                              <button type="button" class="toolscanvas tool-option" @click.prevent="btnOnClick_finalizarLeccionOnline" >{$lang->get('elearning_cursos_finalizar_session')}</button>
+                            
+  
+  
+      
                         </div>
                       </div>
-                      {if ($is_docente)}
-                      <div role="tabpanel" class="tab-pane hidden" id="pizarra-panel" ref="pizarraPanel">
-                       {if $usuario==$ocurso.Usu_IdUsuario}
-                          <div class="col-sm-12" style="display:grid; margin-bottom: 8px">
-
-                            <button @click="onClick_agregarPizarra" type="button" class="btn btn-success pull-right" id="btn-agregar-pizarra">{$lang->get('elearning_cursos_agregar_pizarra')}</button>
-                          </div>
-                          {include file='modules/elearning/views/clase/menu/pizarra.tpl'}
-                          {/if}
-                        {if isset($pizarra) && count($pizarra) > 0 && $usuario==$ocurso.Usu_IdUsuario }
-                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12  contenedor-mini-pizarras">
-                          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="tmp_mini_pizarras">
-                            <div v-for="(piz, index) in PIZARRAS" class="panel-item-pizarra" @click="onClick_seleccionPizarra(piz.Piz_IdPizarra, index + 1)">
-                              <div class="panel item-pizarra">
-                                
-                                <img v-if="piz.Piz_ImgFondo == ''" :id="'pizarrabg_' + piz.Piz_IdPizarra" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAQAAADa613fAAAAaElEQVR42u3PQREAAAwCoNm/9CL496ABuREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREWkezG8AZQ6nfncAAAAASUVORK5CYII=" />
-                                
-                                <img v-else :id="'pizarrabg_' + piz.Piz_IdPizarra" :src="base_url('files/elearning/_pizarra/' + piz.Piz_ImgFondo, true)" />
-                                
-
-                                <strong class="number_pizarra">{literal}{{index + 1}}{/literal}</strong>
-                              </div>
-                            </div>
-                            {* {/foreach} *}
-                          </div>
-                        </div>
-
-                         
-                        {/if}
+                      <div id="opciones_canvas" ref="opciones_canvas" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 ">
+                          
                       </div>
                       {/if}
                     </div>
-                  </div>
-
-
-
-
-                </div>
-                <div class="col-sm-9 hidden-custom container-canvas-pizarra">
-                    
-
-                  <div id="panel-pizarra-final" class="w-100" ref="panel_pizarra_final">
-                    <div class="canvas-header">
-                      <h3 class="text-center">{strtoupper($lang->get('str_pizarra'))} <span id="nro_pízarra"></span></h3>
-                    </div>
-                    <div class="canvas-ssss">
-                      <canvas height="0px" width="0px" ref="micanvas" id="micanvas" class="no-seleccionable-nousarx"></canvas>
-                    </div>
-                    {if $is_docente}
-                    <div id="herramientas-canvas_v2" class="no-seleccionable-nousar">
-                      <div>
-
-                        <button :class="{ hidden: !show_tools, active: CURRENT_CREATE.MODE == MODE_OBJECT.NORMAL }" class="toolscanvas" @click="onClick_createObject('normal')"><i class="glyphicon glyphicon-screenshot"></i></button>
-                        <button :class="{ hidden: !show_tools, active: CURRENT_CREATE.MODE == MODE_OBJECT.LAPIZ }" class="toolscanvas" @click="onClick_createObject('lapiz')"><span class="glyphicon glyphicon-pencil"></span></button>
-                        <button :class="{ hidden: !show_tools, active: CURRENT_CREATE.MODE == MODE_OBJECT.RECT }" type="button" class="toolscanvas" @click="onClick_createObject('rect')"><i class="glyphicon glyphicon-unchecked"></i></button>
-                        <button :class="{ hidden: !show_tools, active: CURRENT_CREATE.MODE == MODE_OBJECT.CIRCULO }" type="button" class="toolscanvas" @click="onClick_createObject('circulo')"><i class="glyphicon glyphicon-record"></i></button>
-                        <button :class="{ hidden: !show_tools, active: CURRENT_CREATE.MODE == MODE_OBJECT.TEXTO }" class="toolscanvas" @click="onClick_createObject('texto')"><i class="glyphicon glyphicon-text-color"></i></button>
-                        <button :class="{ hidden: !show_tools, active: CURRENT_CREATE.MODE == MODE_OBJECT.IMAGE }" class="toolscanvas" @click="onClick_createObject('image')">
-                          <input @change="onChange_loadImage" ref="fileimg" id="fileimg" type="file" name="" value="" placeholder="" class="hidden">
-                          <label class="toolscanvas" style="font-weight: 100; margin-bottom: inherit;" for="fileimg" />
-                          <i class="glyphicon glyphicon-picture"></i>
-                        </button>
-                        <button :class="{ hidden: !show_tools }" type="button" class="toolscanvas" @click="onClick_eliminarObjecto"><i class="glyphicon glyphicon-erase"></i></button>
-                        <button :class="{ hidden: !show_tools }" type="button" class="toolscanvas" @click="onClick_eliminarLimpiar"><i class="glyphicon glyphicon-trash"></i></button>
-                        {* <button id="btn_show_tool" :class="{ hidden: show_tools }" @mouseenter="onMouseenter_showTools" type="button" class=""><i class="glyphicon glyphicon-triangle-right"></i></button> *}
-                        <button type="button" class="toolscanvas tool-option" @click="btnOnClick_ToolsOption('borde')">
-                            <span>Borde </span>
-                            <span ref="opcelementsStrokeSFH" class="span-fake-helper">&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                        </button>
-                        <input ref="opcelementsStroke" type="color" id="tools-color" class="hidden" v-model="opcelements.stroke">
-                        <button type="button" class="toolscanvas tool-option" @click="btnOnClick_ToolsOption('fill')">
-                            <span v-if="showIn(['lapiz'])">Color </span>
-                            <span v-else>Relleno </span>
-                            <span ref="opcelementsFillSFH" class="span-fake-helper">&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                        </button>
-                        <input ref="opcelementsFill" type="color" id="tools-color" class="hidden" v-model="opcelements.fill">
-                        {* <div class="tool-option tool-option-border-ancho" v-if="showIn(['text', 'rect', 'circle'])"> *}
-                        <div class="toolscanvas tool-option tool-option-border-ancho" v-if="showIn('all')">
-                          <label class="label_options_object " for="">Ancho borde</label>
-                          <div class="">
-                            {* <input v-if="showIn(['rect', 'circle'])" type="number" min="0" step="0.1" class=" form-controlxx" style="" v-model="opcelements.strokeWidth">
-                            <input v-if="showIn(['text'])" type="number" min="0" step="0.1" class=" form-controlxx" style="" v-model="opcelements.strokeWidth"> *}
-                            <input v-if="showIn('all')" type="number" min="0" step="0.1" class=" form-controlxx" style="" v-model="opcelements.strokeWidth">
-                          </div>
-                        </div>
-                        {* <div class="tool-option tool-option-fuente-size" v-if="showIn(['text'])"> *}
-                        <div class="toolscanvas tool-option tool-option-fuente-size" v-if="showIn('all')">
-                          <label class="label_options_object " for="">{$lang->get('elearning_cursos_tamanho_letra')}</label>
-                          <div class="">
-                            <input type="number" step="1" min="1" v-model="opcelements.fontSize" class=" form-controlxx" id="" placeholder="00">
-                          </div>
-                        </div>
-
-
-                        
-                        {* <div class="tool-option tool-option-texto" v-if="showIn(['text'])"> *}
-                        <div class="toolscanvas tool-option tool-option-texto" v-if="showIn('all')">
-                          <label class="label_options_object" for="">{$lang->get('str_texto')}</label>
-                          <div class="">
-                            {*<input type="text" v-model="opcelements.text" class="form-controlxx " placeholder="{$lang->get('str_ingresar_texto')}" :disabled="!showIn(['text'])">*}
-                            <input type="text" v-model="opcelements.text" class="form-controlxx " placeholder="{$lang->get('str_ingresar_texto')}">
-                          </div>
-                        </div>
-                            <button type="button" class="toolscanvas tool-option" @click.prevent="btnOnClick_finalizarLeccionOnline" >{$lang->get('elearning_cursos_finalizar_session')}</button>
-                          
-
-
-    
-                      </div>
-                    </div>
-                    <div id="opciones_canvas" ref="opciones_canvas" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 ">
-                        
-                        {* <div class="tool-option tool-option-ancho" v-if="showIn(['lapiz'])"> *}
-                        {* ANCHO DE CAJA *}
-                        {* <div class="tool-option tool-option-ancho" v-if="showIn('all')">
-                          <label class="label_options_object " for="">Ancho</label>
-                          <div class="">
-                            <input type="number" min="1" step="1" class=" form-controlxx" style="" v-model="opcelements.strokeWidth">
-                          </div>
-                        </div> *}
-
-                        {* <div class="tool-option tool-option-angulo" v-if="showIn(['rect', 'circle'])"> *}
-                        {* NO HY AFUNCTION *}
-                        {* <div class="tool-option tool-option-angulo" v-if="showIn('all')">
-                          <label class="label_options_object " for="">Ángulo</label>
-                          <div class="">
-                            <input type="number" class=" form-controlxx" style="" v-model="opcelements.angle">
-                          </div>
-                        </div> *}
-
-                      
-
-
-                        
-                        {*
-                        <div class="tool-option tool-option-texto" v-if="showIn('all')">
-                          <div class="">
-                            <a target="_blank" href="{BASE_URL}elearning/gleccion/asistencia/{$leccion.Lec_IdLeccion}">{$lang->get('elearning_cursos_ir_a_asistencia')}</a>
-                          </div>
-                        </div>
-                        *}
-
-
-
-
-                        {* <div class="clearfix"></div> *}
-                        {* <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-
-                          <button type="submit" v-if="current_type != 'none'" class="btn btn-primary btm-sm">Actualizar</button>
-                        </div> *}
-
-                      {* </form> *}
-
-                    </div>
-                    {/if}
                   </div>
                 </div>
               </div>
@@ -319,6 +270,8 @@
 
           </div>
         </div>
+      
+      
       </div>
       <div class="col-lg-6">
         <div class="panel panel-default margin-top-10">

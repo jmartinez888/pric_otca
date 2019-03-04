@@ -13,11 +13,16 @@
     <div class="col-xs-12 col-md-12 col-sm-12 col-lg-12 titulo-modulo">
       <h4><strong> {$lang->get('str_modulo')} {$modulo.Index}: {$modulo["Moc_Titulo"]}</strong></h4>
       <div class="container-btn-curso">
+        {if $is_docente}
+        <a class="btn btn-sm btn-default btn-group" href="{BASE_URL}elearning/gestion/matriculados/{$curso}">
+          <span class="glyphicon glyphicon-book" aria-hidden="true"></span>
+          {$lang->get('elearning_cursos_gestion_curso')}
+        </a>
+        {/if}
         <a class="btn btn-sm btn-success btn-group pull-right" href="{BASE_URL}elearning/cursos/curso/{$curso}">
-          {* <button class=" btn-regresar btn btn-group"> *}
             <span class="glyphicon glyphicon-hand-left" aria-hidden="true"></span>
             {$lang->get('elearning_cursos_volver_curso')}
-          {* </button> *}
+          
         </a>
       </div>
     </div>
@@ -120,19 +125,6 @@
           <div id="chat-base-espera" class="hidden-custom">
             {include 'chat.tpl'}
           </div>
-          {* {if $ocurso.Usu_IdUsuario == $usuario}
-            Esta clase esta programada para el dia de hoy!
-            <br/>
-            <br/>
-            <a href="{BASE_URL}elearning/clase/iniciar/{$curso}/{$modulo.Moc_IdModuloCurso}/{$leccion.Lec_IdLeccion}">
-              <button class="btn btn-success" id="btnIniciarClase">
-                <span class="glyphicon glyphicon-play-circle" aria-hidden="true"></span>
-                Iniciar clase
-              </button>
-            </a>
-          {else}
-            <div id="divMensaje">El docente aun no inició la clase</div>
-          {/if} *}
         </div>
       </div>
 
