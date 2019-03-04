@@ -135,15 +135,15 @@
                 <div id="loader_circle">
                     <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
                 </div>
-                <div class="col-sm-12">
+                <div class="col-sm-12 p-4">
                   <div class="canvas-header hidden-custom">
                     <h3 class="text-center m-0 p-0 title-header">{strtoupper($lang->get('str_pizarra'))}-{$session_id}: <span id="nro_pízarra"></span></h3>
                   </div>
-                  <div class="col-sm-3 p-0 hidden-custom container-chat-pizarra" id="ref-container-chat-pizarra" ref="refContainerChatPizarra">
+                  <div class="col-sm-3  p-0 hidden-custom container-chat-pizarra" id="ref-container-chat-pizarra" ref="refContainerChatPizarra">
   
                     <div role="tabpanel" class="">
                       {if ($is_docente)}
-                      <ul class="nav nav-tabs" role="tablist" ref="navsPanel">
+                      <ul class="nav nav-tabs mt-4" role="tablist" ref="navsPanel" id="navs-panel">
                         <li role="presentation" class="active">
                           <a href="#chat-panel" aria-controls="chat-panel" role="tab" data-toggle="tab"><span>{$lang->get('str_usuario')}</span></a>
                         </li>
@@ -199,8 +199,8 @@
                   <div class="col-sm-9 p-0 hidden-custom container-canvas-pizarra">
                       
   
-                    <div id="panel-pizarra-final" class="w-100" ref="panel_pizarra_final">
-                      <div class="canvas-ssss">
+                    <div id="panel-pizarra-final" class="w-100 mt-4" ref="panel_pizarra_final">
+                      <div class="canvas-ssss" style="padding: 0px 1px 1px 1px;background: #386c77" ref="panel_pizarra_final_b">
                         <canvas height="0px" width="0px" ref="micanvas" id="micanvas" class="no-seleccionable-nousarx"></canvas>
                       </div>
                       {if $is_docente}

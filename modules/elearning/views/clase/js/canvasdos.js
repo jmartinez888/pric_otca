@@ -502,7 +502,7 @@ var mivue = new Vue({
 		// this.$refs.opciones_canvas.classList.remove('hidden')
 
 		// this.$refs.panel_pizarra_final.classList.remove('hidden')
-		this.$refs.micanvas.width = this.CANVAS.width = this.$refs.panel_pizarra_final.offsetWidth - 1
+		this.$refs.micanvas.width = this.CANVAS.width = this.$refs.panel_pizarra_final.offsetWidth - 2
 		
 
 		let altura = (this.$refs.micanvas.width/this.razoncambio);

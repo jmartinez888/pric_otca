@@ -89,7 +89,9 @@ new Vue({
 		this.showLinksVideo = document.getElementById('show_links_video')
 		this.spanCurrentPizarra = document.getElementById('nro_pízarra');
 		this.$refs.panel_pizarra_final.classList.remove('hidden')
-		this.$refs.micanvas.width = this.CANVAS.width = this.$refs.panel_pizarra_final.offsetWidth - 1
+		this.$refs.micanvas.width = this.CANVAS.width = this.$refs.panel_pizarra_final.offsetWidth - 2;
+		console.log(this.$refs.panel_pizarra_final.offsetWidth)
+		console.log(this.CANVAS.width)
 
 		let altura = (this.$refs.micanvas.width/this.razoncambio);
 
@@ -100,13 +102,13 @@ new Vue({
 		// this.$refs.pizarraPanel.style.height = (altura - this.$refs.navsPanel.offsetHeight) + 'px'
 		// let tabCH = this.$refs.navsPanel.offsetHeight + 75
 		// let tabBMT = this.$refs.navsPanel.offsetHeight + 30
-		$('#chat-msn-body')[0].style.height = (altura - 75 + ALTURA_TITULO_PIZARRA) + 'px'
-		$('#chat-msn-body-usuarios')[0].style.height = (altura - 30 + ALTURA_TITULO_PIZARRA) + 'px'
+		$('#chat-msn-body')[0].style.height = (altura - 74 + ALTURA_TITULO_PIZARRA) + 'px'
+		$('#chat-msn-body-usuarios')[0].style.height = (altura - 29 + ALTURA_TITULO_PIZARRA) + 'px'
 
 		this.$refs.refContainerChatPizarra.style.height = altura + 'px'
 		this.$refs.panel_pizarra_final.style.height = altura + ALTURA_TITULO_PIZARRA + 'px'
 		// this.$refs.panel_pizarra_final.offsetWidth
-		this.$refs.micanvas.height = altura - 1
+		this.$refs.micanvas.height = altura - 0
 
 		canvasalumno = new fabric.Canvas('micanvas')
 		canvasalumno.selection = false
