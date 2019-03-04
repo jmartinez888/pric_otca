@@ -62,12 +62,12 @@
         <div class="col-sm-4">
           {if $_acl->permiso("registrar_curso")}
           <button class="btn btn-success" style=" float: left" type="button" id="btn_nuevo_curso">
-            <i class="glyphicon glyphicon-book"></i> Registrar Curso
+            <i class="glyphicon glyphicon-book"></i> {$lenguaje.str_registrar_curso}
           </button>
           {/if}
         </div>
         <form id="form-buscar" action="gcurso/_view_mis_cursos" type="post">
-          <div class="col-sm-offset-3 col-sm-4"><input name="busqueda" class="form-control" placeholder="Busqueda"/></div>
+          <div class="col-sm-offset-3 col-sm-4"><input name="busqueda" class="form-control" placeholder="{$lenguaje.str_buscar}"/></div>
           <div class="col col-sm-1"><button id="btn_buscar" class="btn btn-success"><i class="glyphicon glyphicon-search"></i></button></div>
         </form>
         <div class="col-lg-12"></br></div>
@@ -75,8 +75,8 @@
         <div class="table-responsive" style="width: 100%">
             <table class="table" id="tblMisCursos">
                 <tr>
-                    <th>Mis Cursos</th>
-                    {if $_acl->permiso("editar_curso")} <th>Operaciones</th> {/if}
+                    <th>{$lenguaje.str_mis_cursos1}</th>
+                    {if $_acl->permiso("editar_curso")} <th>{$lenguaje.str_operacion}</th> {/if}
                 </tr>
                 {foreach from=$cursos item=c}
                     <tr >
@@ -112,7 +112,7 @@
                                             {/if}
                                         {/if}
                                     {/for}
-                                    <i class="fa fa-users icon-alumnos"> {$c.Matriculados} {if $c.Matriculados == 1} Alumno {else} Alumnos {/if} </i>
+                                    <i class="fa fa-users icon-alumnos"> {$c.Matriculados} {if $c.Matriculados == 1} {$lenguaje.str_alumno} {else} {$lenguaje.str_alumnos} {/if} </i>
                                 </div>
                               </div>
                           </div>
