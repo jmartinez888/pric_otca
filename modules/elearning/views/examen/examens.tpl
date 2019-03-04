@@ -14,7 +14,9 @@
                 {if isset($idLeccion) && $idLeccion > 0}
                     {include file='modules/elearning/views/gestion/menu/tag_url.tpl'}
                 {else}
-                    {$titulo}
+                    <h3 style="text-transform: uppercase; margin: 0; font-weight: bold;">
+                        {$titulo}
+                    </h3>
                 {/if}
                 </div>
             </div>
