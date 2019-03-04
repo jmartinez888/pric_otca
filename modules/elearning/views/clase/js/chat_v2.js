@@ -7,11 +7,12 @@ $(document).ready(() => {
       mixins: [typeof MIXIN_CHAT == 'object' ? MIXIN_CHAT : {}],
       data: function () {
         return {
+          spanTotalUsuarios: null,
           regexpURL: new RegExp(/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/),
           baseCurrentUsuario: null,
           objNotification: null,
           LANGS: {
-            marcar_asistencia: 'Marcar asistencia',
+            marcar_asistencia: 'Marcar asistenconia',
             asistencia_marcada: 'Asistencia marcada'
           },
           USUARIOS_CONECTADOS: [],
@@ -38,6 +39,10 @@ $(document).ready(() => {
       watch: {
         'USUARIOS_CONECTADOS': function (nv, ov) {
           this.updateUsuarioConectado();
+          if (this.spanTotalUsuarios != null && this.spanTotalUsuarios != undefined) {
+
+            this.spanTotalUsuarios.innerText = this.USUARIOS_CONECTADOS.length
+          }
         }
       },
       methods: {
@@ -230,7 +235,8 @@ $(document).ready(() => {
         Mustache.parse(this.TPL.msg_otro);
         Mustache.parse(this.TPL.msg_propio);
         Mustache.parse(this.TPL.status_conectado);
-
+        this.spanTotalUsuarios = document.getElementById('totales_conectados');
+        
         if (typeof PRELANG == 'object') {
           this.LANGS = PRELANG
         }
@@ -304,6 +310,22 @@ $(document).ready(() => {
                 }
               })
             })
+
+            $('#btnIniciarFinalizarLeccion').unbind('click');
+            $('#btnIniciarFinalizarLeccion').on('click', bice => {
+              let hs = HASH_SESSION.split('-');
+              axios.post(bice.target.dataset.url, parseData({
+                docente_id: USUARIO.id,
+                leccion_session_espera_id: hs[0],
+                leccion_session_espera_id_b: hs[1],
+                modo_fin: 100
+              })).then(response => {
+                if (response.data.success) {
+                  this.socketChat.emit('CLOSE_LECCION', {success: true})
+                  // location.reload()
+                }
+              })
+            })
           }
 
           this.socketChat.on('SESSION_SUCCESS', msg => {
@@ -317,6 +339,10 @@ $(document).ready(() => {
             // let usuario = this.USUARIOS_CONECTADOS.find((row) => {
             //   return row.usuario_id == usuario_id
             // })
+            document.querySelectorAll('.hidden-custom').forEach(function(div) {
+              div.classList.remove('hidden-custom')
+            })
+            document.getElementById('loader_circle').classList.add('hidden')
             axios.post(base_url('elearning/clase/obtener_mensaje_leccion_session'), parseData({
               leccion_id: this.LECCION.ID,
               hash_leccion_session: this.LECCION.SESSION_HASH
@@ -331,14 +357,18 @@ $(document).ready(() => {
                 });
               }
             })
+
             // if (!firstConnection) {
               this.socketChat.on('CHAT_E', this.onSocket_CHAT)
               this.socketChat.on('NEW_CONNECTION', this.onSocket_NEW_CONNECTION)
+              
     
               this.socketChat.on('LEAVE_CONNECTION', this.onSocket_LEAVE_CONNECTION)
     
               this.socketChat.on('TOTALES_LECCION', this.onSocket_TOTALES_LECCION)
-              
+              this.socketChat.on('CLOSE_ONLINE_AL', () => {
+                window.location.reload()
+              })
               this.socketChat.emit('CONFIRMACARGA', 'confirmado')
               firstConnection = true;
             // }

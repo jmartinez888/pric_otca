@@ -72,18 +72,16 @@
       <div class="panel-body" style="padding: 10px !important; text-align: center">
         <center>
           <div class="contenido-pizarra">
-            {* <img src="" alt="" id="tmp_fondo_pizarra"> *}
-            {*<canvas height="400px"  id="micanvas" class="no-seleccionable"></canvas>*}
             <canvas width="650px" id="micanvas" class="no-seleccionable"></canvas>
           </div>
         </center>
-        <button class="btn btn-success" id="btn-guardar-pizarra">Guardar Pizarra</button>
-        <button class="btn btn-success" id="btn-limpiar-pizarra">Limpiar Pizarra</button>
-        <button class="btn btn-success" id="btn-quitar-imagen">Quitar Imagen</button>
+        <button class="btn btn-success" id="btn-cargar-img-pizarra">{$lang->get('elearning_cursos_cargar_imagen')}</button>
+        <button class="btn btn-success" id="btn-quitar-imagen">{$lang->get('elearning_cursos_quitar_imagen')}</button>
+        <button class="btn btn-success" id="btn-limpiar-pizarra">{$lang->get('elearning_cursos_limpiar_imagen')}</button>
+        <button class="btn btn-success" id="btn-guardar-pizarra">{$lang->get('elearning_cursos_guardar_imagen')}</button>
         <label id="click_img" class="hidden" for="file_img"></label>
         <input id="file_img" type="file" class="hidden">
-        <button class="btn btn-success" id="btn-cargar-img-pizarra">Cargar Imagen</button>
-        <button class="btn btn-info" id="btn-cancelar-nueva-pizarra">Cancelar</button>
+        <button class="btn btn-info" id="btn-cancelar-nueva-pizarra">{$lang->get('str_cancelar')}</button>
       </div>
     </div>
   </div>

@@ -46,9 +46,9 @@ class Leccion extends Eloquent
   public static function existeLeccion ($leccion_id) {
     return self::where('Lec_IdLeccion', $leccion_id)->count() > 0;
   }
-  public function getSessionActiva () {
+  public function getSessionActiva ($use_online = true) {
     return $this->sessiones()->where('Les_Concluido', 0)
-      ->where('Les_Tipo', LeccionSession::TIPO_ONLINE)
+      ->where('Les_Tipo', $use_online ? LeccionSession::TIPO_ONLINE : LeccionSession::TIPO_ESPERA)
       ->orderBy('Les_DateInicio', 'asc')->first();
   }
   /**

@@ -90,9 +90,13 @@
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 " >
       <div class="panel panel-leccion panel-default">
         <div class="panel-body contenedor-clase">
-          <h2>
-            {$lang->get('elearning_cursos_la_clase_se_desarrollo')}
-          </h2>
+          
+            <div class="col-xs-12">
+              <p style="text-align: center;"><span class="fa fa-check-circle" style="font-size: 13em;color: #00c0ef;"></span></p>
+              <div class="alert alert-info" role="alert" style="text-align: center;">
+                  <h3>La clase se desarrolló</h3>
+              </div>
+            </div>
         </div>
       </div>
     </div>

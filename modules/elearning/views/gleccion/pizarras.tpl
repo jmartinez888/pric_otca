@@ -77,7 +77,7 @@
                   <th>{$lang->get('str_pizarra')}</th>
                   <th>{$lang->get('str_descripcion')}</th>
                   <th>{$lang->get('str_modulo')}</th>
-                  <th width="150">{$lang->get('str_operacion')}</th>
+                  <th width="200">{$lang->get('str_operacion')}</th>
                 </tr>
               </thead>
               <tbody></tbody>
@@ -100,6 +100,7 @@
 {/block}
 {block 'template' append}
 <template id="tpl_btn_pizarras">
+  <a href="{$_layoutParams.root}elearning/clase/clase/{$curso['Cur_IdCurso']}/{literal}{{modulo_id}}{/literal}/{literal}{{leccion_id}}{/literal}" class="btn btn-default btn-acciones  btn-sm" data-toggle="tooltip" data-placement="bottom" title="{$lang->get('elearning_cursos_ir_a_pizarra')}"><i class="glyphicon glyphicon-share-alt"></i></a>
   <a href="{$_layoutParams.root}elearning/gleccion/_view_leccion/{$curso['Cur_IdCurso']}/{literal}{{modulo_id}}{/literal}/{literal}{{leccion_id}}{/literal}" class="btn btn-default  btn-acciones  btn-sm" data-toggle="tooltip" data-placement="bottom" title="{$lang->get('str_ver_respuestas')}"><i class="glyphicon glyphicon-pencil"></i></a>
   <a href="{$_layoutParams.root}elearning/gleccion/asistencia/{literal}{{leccion_id}}{/literal}" class="btn btn-default btn-acciones btn-sm" data-toggle="tooltip" data-placement="bottom" title="{$lang->get('str_asistencia')}"><i class="glyphicon glyphicon-user"></i></a>
   <button data-id="{literal}{{leccion_id}}{/literal}" class="btn  btn-acciones btn-default btn-acciones btn-eliminar btn-sm" data-toggle="tooltip" data-placement="bottom" title="{$lang->get('str_eliminar')}"><i class="glyphicon glyphicon-trash"></i></button>

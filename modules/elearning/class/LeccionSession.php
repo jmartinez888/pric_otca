@@ -25,6 +25,10 @@ class LeccionSession extends Eloquent
   public static function getSession ($leccion_id) {
     
   }
+
+  public function links_video () {
+    return $this->hasMany('App\LeccionSessionLinkVideo', 'Les_IdLeccSess');
+  }
   public function scopeSelectParaAsistencia ($query) {
     return $query->select('Les_IdLeccSess', 'Lec_IdLeccion', 'Les_Tipo');
   }
