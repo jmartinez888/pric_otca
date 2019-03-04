@@ -238,7 +238,7 @@ class _gestionCursoModel extends Model {
                  c.Cur_Estado,
                  c.Row_Estado,
                  fn_devolverIdioma('curso',c.Cur_IdCurso,'$Idi_IdIdioma',c.Idi_IdIdioma) Idi_IdIdioma
-      FROM curso c WHERE c.Cur_IdCurso = $id AND c.Row_Estado = 1");
+      FROM curso c WHERE c.Cur_IdCurso = $id ");
       return count($res) > 0 ? $res[0] : null;
   }
   // JMart
