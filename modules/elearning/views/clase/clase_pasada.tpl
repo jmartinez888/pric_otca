@@ -42,7 +42,7 @@
         {/if}
         <span class="text-current-leccion">{$lang->get('str_leccion')} {$leccion["Index"]} {$lang->get('str_de')} {count($lecciones)}</span>
         {if $leccion["Index"] < {count($lecciones)} }
-        <form method="post" class="container-btn-next" action="{BASE_URL}elearning/cursos/_next_leccion/">
+        <form method="post" id="frm-next-leccion" class="container-btn-next" action="{BASE_URL}elearning/cursos/_next_leccion/">
           <input value="{$curso}" name="curso" hidden="hidden"/>
           <input value="{$leccion.Lec_IdLeccion}" name="leccion" hidden="hidden"/>
           <button type="submit" class="btn btn-sm btn-next-previous">
@@ -92,10 +92,11 @@
         <div class="panel-body contenedor-clase">
           
             <div class="col-xs-12">
-              <p style="text-align: center;"><span class="fa fa-check-circle" style="font-size: 13em;color: #00c0ef;"></span></p>
-              <div class="alert alert-info" role="alert" style="text-align: center;">
-                  <h3>La clase se desarrolló</h3>
+              <div class="alert" role="alert" style="background-color: #007cbe">
+                  <h2 style="color: #fff; text-transform: uppercase">{$lang->get('elearning_cursos_la_clase_finalizo_con_exito')}</h2>
+                  <h3 style="color: #fff">{$lang->get('str_para_continuar_presione')} <a id="goto-next" href="">{$lang->get('str_siguiente')}</a></h3>
               </div>
+              <p style="text-align: center;"><span class="glyphicon glyphicon-exclamation-sign" style="font-size: 13em;color: #007cbe;"></span></p>
             </div>
         </div>
       </div>
@@ -113,4 +114,10 @@
 
 {block 'js'}
 <script src="{BASE_URL}modules/elearning/views/clase/js/menu-interactive.js"></script>
+<script>
+  $('#goto-next').on('click', function(e) {
+    e.preventDefault()
+    $('#frm-next-leccion').submit()
+  })
+</script>
 {/block}
