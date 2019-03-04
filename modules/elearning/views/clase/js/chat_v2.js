@@ -342,7 +342,12 @@ $(document).ready(() => {
             document.querySelectorAll('.hidden-custom').forEach(function(div) {
               div.classList.remove('hidden-custom')
             })
-            document.getElementById('loader_circle').classList.add('hidden')
+            if (document.getElementById('panel-pizarra-final') != undefined)
+              document.getElementById('panel-pizarra-final').classList.remove('mt-4')
+            if (document.getElementById('navs-panel') != undefined)
+              document.getElementById('navs-panel').classList.remove('mt-4')
+            if (document.getElementById('loader_circle') != undefined)
+              document.getElementById('loader_circle').classList.add('hidden')
             axios.post(base_url('elearning/clase/obtener_mensaje_leccion_session'), parseData({
               leccion_id: this.LECCION.ID,
               hash_leccion_session: this.LECCION.SESSION_HASH
