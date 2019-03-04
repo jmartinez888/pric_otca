@@ -12,6 +12,8 @@ var mivue = new Vue({
 	el: '#modulo-contenedor',
 	data: function () {
 		return {
+			showLinksVideo: null,
+			spanCurrentPizarra: null,
 			imgTransparent100x100: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAQAAADa613fAAAAaElEQVR42u3PQREAAAwCoNm/9CL496ABuREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREWkezG8AZQ6nfncAAAAASUVORK5CYII=',
 			altura_opciones: 96,
 			razoncambio: 1.77777777,
@@ -28,7 +30,7 @@ var mivue = new Vue({
 			},
 
 			CURRENT_CREATE: {
-				MODE: 0,
+				MODE: MODE_OBJECT.NORMAL,
 				IS_DOWN: false,
 				INITIALIZED: false,
 				POINTER: {x: 0, y: 0},
@@ -40,6 +42,7 @@ var mivue = new Vue({
 			current_element: 'none',
 			current_type: 'none',
 			current_pizarra: 0,
+			current_pizarra_index: undefined,
 			lapizOn: false,
 			elementos: [],
 			rect: null,
@@ -51,7 +54,7 @@ var mivue = new Vue({
 			count_id: Date.now(),
 			opcelements: {
 				fontSize: 40,
-				text: 'Ingresar texto',
+				text: INGRESAR_TEXTO,
 				top: 0,
 				left: 0,
 				height: 0,
@@ -67,9 +70,12 @@ var mivue = new Vue({
 	},
 	watch: {
 		'opcelements.stroke': function (nv, ov) {
+			console.log(this.$refs.opcelementsStrokeSFH)
+			this.$refs.opcelementsStrokeSFH.style.backgroundColor = nv
 			this.onClick_renderCanvas();
 		},
 		'opcelements.fill': function (nv, ov) {
+			this.$refs.opcelementsFillSFH.style.backgroundColor = nv
 			this.onClick_renderCanvas();
 		},
 		'opcelements.strokeWidth': function (nv, ov) {
@@ -86,6 +92,37 @@ var mivue = new Vue({
 		},
 	},
 	methods: {
+		btnOnClick_ToolsOption: function (opcion) {
+			console.log(opcion)
+			switch (opcion) {
+				case 'borde':
+					this.$refs.opcelementsStroke.click()
+					break;
+				case 'fill':
+					this.$refs.opcelementsFill.click()
+					break;
+			}
+		},
+		frmOnSubmit_sendLinkVideo: function (e) {
+			console.log(e)
+			let link = e.target.elements.in_link_videollamada.value
+			axios.post(base_url('elearning/clase/send_link_video'), parseData({
+				leccion_id: this.LECCION.ID,
+				leccion_session_id: this.LECCION.SESSION_ID,
+				docente_id: this.LECCION.DOCENTE_ID,
+				leccion_session_hash: this.LECCION.SESSION_HASH,
+				link_video: link
+			})).then(res => {
+				if (this.showLinksVideo != null && this.showLinksVideo != undefined) {
+					let ta = document.createElement('a');
+					ta.text = link
+					ta.href = link
+					ta.classList.add('list-group-item')
+					this.showLinksVideo.append(ta);
+				}
+				this.objSocket.emit('LINK_VIDEO', link)
+			})
+		},
 		btnOnClick_finalizarLeccionOnline: function () {
 			console.log('asd')
 			// this.objSocket.emit('CLOSE_ONLINE','')
@@ -150,68 +187,62 @@ var mivue = new Vue({
 			console.log('dd')
 			console.log(this.$refs.panel_pizarra_final.offsetWidth)
 		},
-		onClick_seleccionPizarra: function (pizarra) {
+		onClick_seleccionPizarra: function (pizarra, index) {
+			//verificar ID pizarra
 			if (pizarra != this.current_pizarra) {
+				this.setNormal_Cursor()
+				let agregar_a_lista = true;
 				let p = this.canvas_leccion.find(v => {
 					return v.pizarra == this.current_pizarra
 				})
-				if (p == undefined) {
-					console.log('new')
-					//cuando current_pizarra == 0
+				if (p != undefined) {
+					//guardar objetos actuales
+					p.json = canvasdocente.toJSON(['objecto_id'])
+					let solicita = this.canvas_leccion.find(v => {
+						return v.pizarra == pizarra
+					})
+					
+					if (solicita != undefined) {
+						agregar_a_lista = false;
+						canvasdocente.loadFromJSON(solicita.json, x => {
+							canvasdocente.getObjects().forEach(obj => {
+								this.addEventosObjeto(obj)
+							})
+							this.objSocket.emit('send_all_data_canvas', {
+								json: solicita.json, 
+								canvas: {
+									width: this.CANVAS.width, 
+									height: this.CANVAS.height,
+									pizarra_index: index
+								}
+							})
+						})
+					}
+				}
+				if (this.spanCurrentPizarra != null && this.spanCurrentPizarra != undefined)
+					this.spanCurrentPizarra.innerText = index
+				if (agregar_a_lista) {
+					console.log('agregfar nuevo a lista')
 					canvasdocente.clear()
-					console.log(document.getElementById('pizarrabg_' + pizarra))
-					canvasdocente.setBackgroundImage(document.getElementById('pizarrabg_' + pizarra).src, x => {
+					let nodePizarra = document.getElementById('pizarrabg_' + pizarra)
+					canvasdocente.setBackgroundImage(nodePizarra.src, x => {
 						canvasdocente.renderAll.bind(canvasdocente)
 						this.canvas_leccion.push({
 							pizarra: pizarra,
-							json: ''
+							json: '',
+							nro_pizarra: nodePizarra.dataset.nro
 						})
 						canvasdocente.renderAll()
-						this.objSocket.emit('send_all_data_canvas', {json: canvasdocente.toJSON(['objecto_id']), canvas: {width: this.CANVAS.width, height: this.CANVAS.height}})
+						this.objSocket.emit('send_all_data_canvas', {json: canvasdocente.toJSON(['objecto_id']), canvas: {width: this.CANVAS.width, height: this.CANVAS.height, pizarra_index: index}})
 						// this.objSocket.emit('send_all_data_canvas', canvasdocente.toJSON(['objecto_id']))
 					}, {
 							backgroundImageStretch: false,
 							scaleX: this.CANVAS.width/650,
 							scaleY: this.CANVAS.height/365,
 					});
-
-
-				} else {
-					console.log(p)
-					let solicita = this.canvas_leccion.find(v => {
-						return v.pizarra == pizarra
-					})
-					p.json = canvasdocente.toJSON(['objecto_id'])
-					if (solicita == undefined) {
-						canvasdocente.clear()
-						canvasdocente.setBackgroundImage(document.getElementById('pizarrabg_' + pizarra).src, () => {
-
-							canvasdocente.renderAll.bind(canvasdocente)
-							this.canvas_leccion.push({
-								pizarra: pizarra,
-								json: ''
-							})
-							canvasdocente.renderAll()
-							this.objSocket.emit('send_all_data_canvas', {json: canvasdocente.toJSON(['objecto_id']), canvas: {width: this.CANVAS.width, height: this.CANVAS.height}})
-
-						}, {
-						    backgroundImageStretch: false
-						});
-
-					} else {
-						// this.objSocket.emit('send_all_data_canvas', solicita.json)
-						canvasdocente.loadFromJSON(solicita.json, x => {
-							canvasdocente.getObjects().forEach(obj => {
-								this.addEventosObjeto(obj)
-							})
-							this.objSocket.emit('send_all_data_canvas', {json: solicita.json, canvas: {width: this.CANVAS.width, height: this.CANVAS.height}})
-						})
-					}
-
-
 				}
-
 				this.current_pizarra = pizarra
+				this.current_pizarra_index = index
 			}
 
 
@@ -243,9 +274,15 @@ var mivue = new Vue({
 				return opciones.find(v => v == this.current_type) == undefined ? false : true
 		},
 		onClick_eliminarLimpiar: function () {
-			canvasdocente.clear()
-			canvasdocente.setBackgroundColor('white', () => canvasdocente.renderAll())
-			this.objSocket.emit('limpiar_canvas')
+			// canvasdocente.clear()
+			//canvasdocente.setBackgroundColor('white', () => canvasdocente.renderAll())
+			let ids = []
+			canvasdocente.getObjects().forEach(item => {
+				ids.push(item.objeto_id)
+				canvasdocente.remove(item)
+			})
+			this.objSocket.emit('eliminar_objetos', ids)
+			//this.objSocket.emit('limpiar_canvas')
 		},
 		onClick_eliminarObjecto: function () {
 			let obj = canvasdocente.getActiveObjects()
@@ -364,20 +401,21 @@ var mivue = new Vue({
 				v.set('selectable', opc)
 			})
 		},
+		setNormal_Cursor: function (null_object = true) {
+			this.CURRENT_CREATE.INITIALIZED = false
+			if (null_object)
+				this.CURRENT_CREATE.OBJECT = null
+			this.CURRENT_CREATE.MODE = MODE_OBJECT.NORMAL
+			canvasdocente.isDrawingMode = this.lapizOn = false
+			this.current_type = 'none'
+			this.setAllObjectsSelectable(true)
+		},
 		onClick_createObject: function (opc) {
-
-			console.log('create ' + opc)
 			canvasdocente.discardActiveObject()
 			canvasdocente.renderAll()
 			switch (opc) {
 				case 'normal':
-					this.CURRENT_CREATE.INITIALIZED = false
-					this.CURRENT_CREATE.OBJECT = null
-					this.CURRENT_CREATE.MODE = MODE_OBJECT.NORMAL
-						canvasdocente.isDrawingMode = this.lapizOn = false
-						this.current_type = 'none'
-						this.setAllObjectsSelectable(true)
-
+					this.setNormal_Cursor()
 					break;
 				case 'lapiz':
 						canvasdocente.isDrawingMode = this.lapizOn = true
@@ -386,7 +424,7 @@ var mivue = new Vue({
 						this.current_type = 'lapiz'
 						this.CURRENT_CREATE.INITIALIZED = false
 						this.CURRENT_CREATE.OBJECT = null
-						this.CURRENT_CREATE.MODE = MODE_OBJECT.NONE
+						this.CURRENT_CREATE.MODE = MODE_OBJECT.LAPIZ
 					break;
 				case 'rect':
 					canvasdocente.isDrawingMode = this.lapizOn = false
@@ -401,24 +439,14 @@ var mivue = new Vue({
 					if (!this.CURRENT_CREATE.INITIALIZED)
 						this.CURRENT_CREATE.INITIALIZED = true
 					this.setAllObjectsSelectable(false)
-					// this.addObjectCanvas(new fabric.Circle({
-					// 	fill: 'transparent',
-					// 	backgroundColor: 'transparent',
-					// 	stroke: 2,
-					// 	radius: 50,
-					// 	objeto_id: this.count_id++
-					// }))
 					break;
 				case 'texto':
+				this.current_type = 'text'
 				canvasdocente.isDrawingMode = this.lapizOn = false
 				this.CURRENT_CREATE.MODE = MODE_OBJECT.TEXTO
 					if (!this.CURRENT_CREATE.INITIALIZED)
 						this.CURRENT_CREATE.INITIALIZED = true
 					this.setAllObjectsSelectable(false)
-					// this.addEventosObjeto.opcelements.text = 'Ingresar texto'
-					// this.addObjectCanvas(new fabric.Text(this.opcelements.text, {
-					// 	objeto_id: this.count_id++
-					// }))
 				case 'image':
 
 					break;
@@ -454,6 +482,7 @@ var mivue = new Vue({
 		console.log(this)
 		console.log('creta!')
 		let hs = HASH_SESSION.split('-');
+		
 		this.LECCION.ID = LMS_LECCION
 		this.LECCION.DOCENTE_ID = DOCENTE_ID
 		this.LECCION.SESSION_ID = hs[1]
@@ -468,7 +497,8 @@ var mivue = new Vue({
 	mounted: function () {
 		
 		document.getElementById('tag-body').onresize = this.fnOnResize_PanelPizarra;
-		
+		this.showLinksVideo = document.getElementById('show_links_video');
+		this.spanCurrentPizarra = document.getElementById('nro_pízarra');
 		// this.$refs.opciones_canvas.classList.remove('hidden')
 
 		// this.$refs.panel_pizarra_final.classList.remove('hidden')
@@ -562,9 +592,7 @@ var mivue = new Vue({
 				canvasdocente.discardActiveObject()
 				if (this.CURRENT_CREATE.MODE == MODE_OBJECT.TEXTO) {
 					canvasdocente.setActiveObject(this.CURRENT_CREATE.OBJECT)
-					this.CURRENT_CREATE.INITIALIZED = false
-					this.CURRENT_CREATE.MODE = MODE_OBJECT.NONE
-					this.setAllObjectsSelectable(true)
+					this.setNormal_Cursor(false)
 				} else {
 					this.setAllObjectsSelectable(false)
 				}
@@ -641,7 +669,7 @@ var mivue = new Vue({
 					console.log('alumno conectado')
 					console.log(res)
 					if (res.success)
-						this.objSocket.emit('send_all_data_canvas', {json: canvasdocente.toJSON(), canvas: {width: this.CANVAS.width, height: this.CANVAS.height}})
+						this.objSocket.emit('send_all_data_canvas', {json: canvasdocente.toJSON(), canvas: {width: this.CANVAS.width, height: this.CANVAS.height, pizarra_index: this.current_pizarra_index}})
 				})
 				this.objSocket.emit('CONFIRMACARGACANVAS','Iniciando desde docente')	
 			})

@@ -389,12 +389,45 @@ width: 700px;*/
   background: #e8e8e8;
   border: 1px solid #9a9a9a;
 }
-
+#herramientas-canvas_v2 button.toolscanvas.active {
+  background: #9a9a9a;
+}
 #herramientas-canvas_v2 {
-  text-align: center;
+  /* text-align: center; */
   margin-bottom: 4px;
 }
 .canvas-ssss {
   border: 1px solid #ddd;
   margin-bottom: 4px;
+}
+
+#herramientas-canvas_v2 .toolscanvas.tool-option .span-fake-helper{
+  border: 1px solid #777777;
+  background: #000000;
+}
+#herramientas-canvas_v2 div.toolscanvas.tool-option {
+  background: #e8e8e8;
+  border: 1px solid #9a9a9a;
+  display: inline-flex;
+  padding: 4px;
+  height: 25px;
+  /* margin: 0px; */
+  line-height: 15px;
+}
+
+#herramientas-canvas_v2 div.toolscanvas.tool-option .label_options_object {
+  margin-right: 4px;
+  font-weight: normal;
+}
+#herramientas-canvas_v2 div.toolscanvas.tool-option > div {
+  width: 40px;
+  margin-top: -2.5px;
+}
+#herramientas-canvas_v2 div.toolscanvas.tool-option.tool-option-texto > div {
+  width: 120px;
+}
+
+#herramientas-canvas_v2 div.toolscanvas.tool-option > div > input {
+  height: 20px;
+  width: 100%;
 }

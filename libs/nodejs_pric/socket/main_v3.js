@@ -75,12 +75,12 @@ module.exports = function(app, test){
         if (+get(socket).docente == 0) {
           console.log('soy un alumno')
           console.log('hola profe soy ' + mi_nombre)
-          objSeccion = ManagerSessions.getSession(leccion_session);
-          let str_total_alumnos = 0;
-          if (objSeccion != undefined)
-            str_total_alumnos = objSeccion.list_usuarios.length
+          // objSeccion = ManagerSessions.getSession(leccion_session);
+          // let str_total_alumnos = 0;
+          // if (objSeccion != undefined)
+          //   str_total_alumnos = objSeccion.list_usuarios.length
           //el alumo informa de una al docente que se conectó
-          socket.to(nameRoom).emit('conexion_alumno', {success: true, name: mi_nombre, total_alumnos: str_total_alumnos})
+          socket.to(nameRoom).emit('conexion_alumno', {success: true, name: mi_nombre, total_alumnos: ManagerSessions.totalAlumnosBySession(leccion_session)})
         } else {
           console.log('soy docente')
           console.log('hola alumno soy ' + mi_nombre)//p´rofesor
@@ -92,10 +92,14 @@ module.exports = function(app, test){
             io.emit('show_img', result);
           });
           socket.on('CLOSE_ONLINE', msg => {
+            //socket.broadcast.to(nameRoom).emit('CLOSE_ONLINE_AL', msg)
             io.of('socket_canvas').in(nameRoom).emit('CLOSE_ONLINE_AL', msg)
           })
           socket.on('CLOSE_LECCION', msg => {
             io.of('socket_canvas').in(nameRoom).emit('CLOSE_ONLINE_AL', msg)
+          })
+          socket.on('LINK_VIDEO', msg => {
+            io.of('socket_canvas').in(nameRoom).emit('RECIVE_LINKS', msg)
           })
           socket.on('pos_cursor', (pos) => {
             // console.log(pos)
@@ -264,6 +268,9 @@ module.exports = function(app, test){
               console.log('>>>UPDATE CONECCTION >>>')
               console.log(data)
               socket.broadcast.to(nameRoom).emit('TOTALES_LECCION', {conectados: leccion.usuarios.length, usuario: {id: data.id, evento: 'new'}});
+            })
+            socket.on('CLOSE_LECCION', msg => {
+              io.of('socket_chat').in(nameRoom).emit('CLOSE_ONLINE_AL', msg)
             })
             //enviar lista de usuario al resto de los usuario en la sessión
             socket.broadcast.to(nameRoom).emit('NEW_CONNECTION', {usuarios: ManagerSessions.getUsuariosEnSession(procesa.data.Les_IdLeccSess, true)})

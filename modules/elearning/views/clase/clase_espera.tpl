@@ -96,6 +96,10 @@
                 <span class="glyphicon glyphicon-play-circle" aria-hidden="true"></span>
                 {$lang->get('elearning_cursos_iniciar_clase')}
               </button>
+              <button class="btn btn-success" id="btnIniciarFinalizarLeccion" data-url="{BASE_URL}elearning/clase/finalizar_leccion/{$leccion.Lec_IdLeccion}">
+                <span class="fa fa-lock" aria-hidden="true"></span>
+                {$lang->get('elearning_cursos_finalizar_leccion')}
+              </button>
 
           {else}
             <div id="divMensaje">{$lang->get('elearning_cursos_docente_no_inicio_clase')}</div>
@@ -110,7 +114,10 @@
         </h3>
         </div>
         <div class="panel-body" style="padding: 0px">
-          <div id="chat-base-espera">
+          <div id="loader_circle">
+              <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+          </div>
+          <div id="chat-base-espera" class="hidden-custom">
             {include 'chat.tpl'}
           </div>
           {* {if $ocurso.Usu_IdUsuario == $usuario}

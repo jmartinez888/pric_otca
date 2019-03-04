@@ -1,9 +1,12 @@
 var theimage = null;
 var canvasalumno = null;
+const ALTURA_TITULO_PIZARRA = 56;
 new Vue({
 	el: '#modulo-contenedor',
 	data: function () {
 		return {
+			showLinksVideo: null,
+			spanCurrentPizarra: null,
 			razoncambio: 1.77777777,
 			razonZoom: 0,
 			zoomAplicado: false,
@@ -28,6 +31,16 @@ new Vue({
 		}
 	},
 	methods: {
+		onSocket_RECIVE_LINKS: function(link) {
+			console.log(link)
+			if (this.showLinksVideo != null && this.showLinksVideo != undefined) {
+				let ta = document.createElement('a');
+				ta.text = link
+				ta.href = link
+				ta.classList.add('list-group-item')
+				this.showLinksVideo.append(ta);
+			}
+		},
 		onClick_openLapiz: function () {
 
 		},
@@ -50,6 +63,7 @@ new Vue({
 		console.log(this)
 		console.log('creta!')
 		let hs = HASH_SESSION.split('-');
+		
 		this.LECCION.ID = LMS_LECCION
 		this.LECCION.SESSION_ID = hs[1]
 		this.LECCION.SESSION_HASH = hs[0]
@@ -72,7 +86,8 @@ new Vue({
 	mounted: function () {
 		
 		// this.$refs.opciones_canvas.classList.remove('hidden')
-
+		this.showLinksVideo = document.getElementById('show_links_video')
+		this.spanCurrentPizarra = document.getElementById('nro_pízarra');
 		this.$refs.panel_pizarra_final.classList.remove('hidden')
 		this.$refs.micanvas.width = this.CANVAS.width = this.$refs.panel_pizarra_final.offsetWidth - 4
 
@@ -85,11 +100,11 @@ new Vue({
 		// this.$refs.pizarraPanel.style.height = (altura - this.$refs.navsPanel.offsetHeight) + 'px'
 		// let tabCH = this.$refs.navsPanel.offsetHeight + 75
 		// let tabBMT = this.$refs.navsPanel.offsetHeight + 30
-		$('#chat-msn-body')[0].style.height = (altura - 75) + 'px'
-		$('#chat-msn-body-usuarios')[0].style.height = (altura - 30) + 'px'
+		$('#chat-msn-body')[0].style.height = (altura - 75 + ALTURA_TITULO_PIZARRA) + 'px'
+		$('#chat-msn-body-usuarios')[0].style.height = (altura - 30 + ALTURA_TITULO_PIZARRA) + 'px'
 
 		this.$refs.refContainerChatPizarra.style.height = altura + 'px'
-		this.$refs.panel_pizarra_final.style.height = altura + 'px'
+		this.$refs.panel_pizarra_final.style.height = altura + ALTURA_TITULO_PIZARRA + 'px'
 		// this.$refs.panel_pizarra_final.offsetWidth
 		this.$refs.micanvas.height = altura - 2
 
@@ -124,7 +139,12 @@ new Vue({
 				console.log('SESSION_CANVAS_SUCCESS');
 				console.log(msg)
 				this.objSocket.on('all_data_canvas', canvas_json => {
-					
+					if (this.spanCurrentPizarra != null && this.spanCurrentPizarra != undefined) {
+						if (canvas_json.canvas.pizarra_index != undefined)
+							this.spanCurrentPizarra.innerText = canvas_json.canvas.pizarra_index
+						else this.spanCurrentPizarra.innerText = ''
+					}
+
 					if (!this.zoomAplicado) {
 						// if (+canvas_json.canvas.width > +this.$refs.micanvas.width)
 							this.razonZoom = this.CANVAS.width/canvas_json.canvas.width;
@@ -267,6 +287,7 @@ new Vue({
 					}
 
 				})
+				this.objSocket.on('RECIVE_LINKS', this.onSocket_RECIVE_LINKS)
 				this.objSocket.on('CLOSE_ONLINE_AL', () => {
 					window.location.reload()
 				})

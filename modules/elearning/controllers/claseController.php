@@ -5,6 +5,7 @@ use App\Leccion;
 use App\Usuario;
 use App\LeccionSession;
 use App\LeccionAsistencia;
+use App\LeccionSessionLinkVideo;
 use Illuminate\Database\Capsule\Manager as DB;
 
 /**
@@ -116,7 +117,7 @@ class claseController extends elearningController {
 
 		$this->_view->assign($data);
 
-
+		$session_activa = null;
 		if (!$obj_leccion->getSessionOnline()) {
 			if ($obj_leccion->Lec_LMSEstado == Leccion::ESTADO_INICIADO) {
 				$session_espera = $obj_leccion->getMinSessionEnEspera();
@@ -178,6 +179,7 @@ class claseController extends elearningController {
 
 		$this->_view->assign("chat", $mensajes);
 		$this->_view->assign("pizarra", $pizarras);
+		$this->_view->assign("list_links", $session_activa ? $session_activa->links_video : []);
 		$this->_view->assign("alumnos", $alumnos);
 		$this->_view->assign("alumnos_json", json_encode($alumnos_format));
 		$this->_view->assign("referencias", $Lmodel->getReferencias($OLeccion["Lec_IdLeccion"]));
@@ -185,7 +187,35 @@ class claseController extends elearningController {
 		// $this->_view->setJs(array("clase","colorPicker", "pizarra/Herramientas", "pizarra/events", "pizarras", "pizarra/base", "chat",array('https://apis.google.com/js/platform.js')));
 		$this->_view->render("clase");
 	}
-
+	public function send_link_video () {
+		$res = ['success' => false];
+		if ($this->has(['docente_id', 'leccion_session_id', 'leccion_session_hash', 'leccion_id'])) {
+			$this->_acl->autenticado();
+			$leccion = Leccion::find($this->getInt('leccion_id'));
+			if ($leccion) {
+				$docente_id = $this->getInt('docente_id');
+				if ($docente_id == Session::get("id_usuario") && $docente_id == $leccion->getDocente()) {
+					if ($this->_acl->tienePermisos('iniciar_leccion_dirigida')) {
+						$session = $leccion->getSessionActiva();
+						$pre_session = LeccionSession::getSessionByHashAndID($this->getTexto('leccion_session_hash'), $this->getInt('leccion_session_id'));
+						if ($session->Les_IdLeccSess == $pre_session->Les_IdLeccSess) {
+							DB::beginTransaction();
+							$linkvideo = new LeccionSessionLinkVideo();
+							$linkvideo->Lsl_Link = $this->getTexto('link_video');
+							$linkvideo->Les_IdLeccSess = $session->Les_IdLeccSess;
+							if ($linkvideo->save()) {
+								DB::commit();
+								$res['success'] = true;
+							} else {
+								DB::rollBack();
+							}
+						}
+					}
+				}
+			}
+		}
+		$this->_view->responseJson($res);
+	}
 	public function obtener_mensaje_leccion_session() {
 		$res = [];
 		if ($this->has(['leccion_id', 'hash_leccion_session'])) {
@@ -415,17 +445,25 @@ class claseController extends elearningController {
 				if ($docente_id == Session::get("id_usuario") && $docente_id == $leccion->getDocente()) {
 					if ($this->_acl->tienePermisos('iniciar_leccion_dirigida')) {
 						DB::beginTransaction();
+						if ($this->has(['modo_fin']) && $this->getInt('modo_fin') == 100) {
+							$session = $leccion->getSessionActiva(false);		
+						} else {
+							$session = $leccion->getSessionActiva();
+						}
+
 						$leccion->Lec_LMSEstado = Leccion::ESTADO_FINALIZADO;
-						$session = $leccion->getSessionActiva();
-						$pre_session = LeccionSession::getSessionByHashAndID($this->getTexto('leccion_session_espera_id'), $this->getInt('leccion_session_espera_id_b'));
-						if ($session->Les_IdLeccSess == $pre_session->Les_IdLeccSess) {
-							$session->Les_Concluido = LeccionSession::CONCLUIDO;
-							$session->Les_DateFin = new DateTime("now");
-							if ($session->save() && $leccion->save()) {
-								$res['success'] = true;
-								DB::commit();
-							} else {
-								DB::rollBack();
+						
+						if ($session) {
+							$pre_session = LeccionSession::getSessionByHashAndID($this->getTexto('leccion_session_espera_id'), $this->getInt('leccion_session_espera_id_b'));
+							if ($session->Les_IdLeccSess == $pre_session->Les_IdLeccSess) {
+								$session->Les_Concluido = LeccionSession::CONCLUIDO;
+								$session->Les_DateFin = new DateTime("now");
+								if ($session->save() && $leccion->save()) {
+									$res['success'] = true;
+									DB::commit();
+								} else {
+									DB::rollBack();
+								}
 							}
 						}
 					}

@@ -7,6 +7,12 @@ module.exports = {
       list_usuarios: []
     })
   },
+  totalAlumnosBySession: function(leccion_session_id) {
+    let ss = this.getSession(leccion_session_id);
+    if (ss != undefined)
+      return ss.list_usuarios.length;
+    else return 0;
+  },
   existeSession: function (leccion_session_id) {
     return this.getSession(leccion_session_id) != undefined ? true : false;
   },
