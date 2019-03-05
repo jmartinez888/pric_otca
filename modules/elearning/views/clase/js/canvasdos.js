@@ -260,7 +260,7 @@ var mivue = new Vue({
 					img.onload = () => {
 						this.addObjectCanvas(new fabric.Image(img, {
 						  objeto_id: this.count_id++,
-						}), true, true, true)
+						}), true, true, false)
 					}
 					console.log(fr.result)
 					img.src = fr.result
@@ -450,7 +450,14 @@ var mivue = new Vue({
 						this.CURRENT_CREATE.INITIALIZED = true
 					this.setAllObjectsSelectable(false)
 				case 'image':
-
+					
+				this.current_type = 'none'
+				canvasdocente.isDrawingMode = this.lapizOn = false
+				this.CURRENT_CREATE.MODE = MODE_OBJECT.NORMAL
+					// if (!this.CURRENT_CREATE.INITIALIZED)
+					this.CURRENT_CREATE.INITIALIZED = false
+					this.setAllObjectsSelectable(true)
+					document.getElementById('fileimg').click()
 					break;
 			}
 

@@ -118,7 +118,7 @@ module.exports = function(app, test){
             socket.volatile.broadcast.to(nameRoom).emit('change_object_alumno', pos)
           })
           socket.on('create_object', (pos) => {
-            // console.log(pos)
+            console.log(pos)
             socket.volatile.broadcast.to(nameRoom).emit('change_object_alumno', pos)
           })
   

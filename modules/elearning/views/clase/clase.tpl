@@ -214,7 +214,6 @@
                           <button :class="{ hidden: !show_tools, active: CURRENT_CREATE.MODE == MODE_OBJECT.TEXTO }" class="toolscanvas" @click="onClick_createObject('texto')"><i class="glyphicon glyphicon-text-color"></i></button>
                           <button :class="{ hidden: !show_tools, active: CURRENT_CREATE.MODE == MODE_OBJECT.IMAGE }" class="toolscanvas" @click="onClick_createObject('image')">
                             <input @change="onChange_loadImage" ref="fileimg" id="fileimg" type="file" name="" value="" placeholder="" class="hidden">
-                            <label class="toolscanvas" style="font-weight: 100; margin-bottom: inherit;" for="fileimg" />
                             <i class="glyphicon glyphicon-picture"></i>
                           </button>
                           <button :class="{ hidden: !show_tools }" type="button" class="toolscanvas" @click="onClick_eliminarObjecto"><i class="glyphicon glyphicon-erase"></i></button>
