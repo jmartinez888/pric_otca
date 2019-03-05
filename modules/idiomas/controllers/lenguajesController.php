@@ -264,13 +264,18 @@ class lenguajesController extends idiomasController {
 	}
 	public function datatable_file ($id) {
 		if (is_numeric($id)) {
-			$query = IdiomaFilesVars::byFile($id);
+			$query = IdiomaFilesVars::byFile($id)->select(
+				'idiomas_files_vars.Ifv_IdFileVar',
+				'idiomas_files_vars.Ifv_VarName'
+			)
+			->leftJoin('idiomas_files_vars_body', 'idiomas_files_vars.Ifv_IdFileVar', 'idiomas_files_vars_body.Ifv_IdFileVar')
+			->groupBy('idiomas_files_vars.Ifv_IdFileVar');
 			$records_total = $query->count();
 			$records_total_filter = $records_total;
 			if ($this->filledGet('buscar')) {
 				$query->where(function($q) {
-					$q->orWhere('Ifv_VarName', 'like', '%'.$this->getTexto('buscar').'%');
-						// ->orWhere('ODif_Descripcion', 'like', '%'.$_GET['buscar'].'%');
+					$q->orWhere('idiomas_files_vars.Ifv_VarName', 'like', '%'.$this->getTexto('buscar').'%');
+					$q->orWhere('idiomas_files_vars_body.Ifvb_Body', 'like', '%'.$this->getTexto('buscar').'%');
 				});
 				$records_total_filter = $query->count();
 			}
@@ -305,7 +310,9 @@ class lenguajesController extends idiomasController {
 			'idiomas_files_vars.Ifv_IdFileVar',
 			'idiomas_files_vars.Ifv_VarName'
 		])
-		->leftJoin('idiomas_files_vars', 'idiomas_files.Idif_IdIdiomaFile', 'idiomas_files_vars.Idif_IdIdiomaFile')->groupBy('idiomas_files.Idif_IdIdiomaFile');
+		->leftJoin('idiomas_files_vars', 'idiomas_files.Idif_IdIdiomaFile', 'idiomas_files_vars.Idif_IdIdiomaFile')
+		->leftJoin('idiomas_files_vars_body', 'idiomas_files_vars.Ifv_IdFileVar', 'idiomas_files_vars_body.Ifv_IdFileVar')
+		->groupBy('idiomas_files.Idif_IdIdiomaFile');
 		$records_total = $query->get()->count();
 		$records_total_filter = $records_total;
 		if ($this->filledGet('buscar')) {
@@ -316,8 +323,9 @@ class lenguajesController extends idiomasController {
 					return $carry;
 				});
 				foreach ($words as $key => $value) {
-					$q->orWhere('Idif_FileName', 'like', '%'.$value.'%');
-					$q->orWhere('Ifv_VarName', 'like', '%'.$value.'%');
+					$q->orWhere('idiomas_files.Idif_FileName', 'like', '%'.$value.'%');
+					$q->orWhere('idiomas_files_vars.Ifv_VarName', 'like', '%'.$value.'%');
+					$q->orWhere('idiomas_files_vars_body.Ifvb_Body', 'like', '%'.$value.'%');
 				}
 
 
