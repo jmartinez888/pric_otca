@@ -103,29 +103,33 @@ module.exports = function(app, test){
           })
           socket.on('pos_cursor', (pos) => {
             // console.log(pos)
-            socket.volatile.broadcast.to(nameRoom).emit('move_mouse', pos)
+            socket.broadcast.to(nameRoom).emit('move_mouse', pos)
           })
       
           socket.on('limpiar_canvas', (pos) => {
-            socket.volatile.broadcast.to(nameRoom).emit('alumnos_limpiar_canvas', pos)
+            console.log('limpiar_canvas')
+            socket.broadcast.to(nameRoom).emit('alumnos_limpiar_canvas', pos)
           })
       
           socket.on('eliminar_objetos', (ids) => {
-            socket.volatile.broadcast.to(nameRoom).emit('alumnos_eliminar_objetos', ids)
+            console.log('eliminar_objetos')
+            socket.broadcast.to(nameRoom).emit('alumnos_eliminar_objetos', ids)
           })
           socket.on('change_object', (pos) => {
+            console.log('change_object')
             // console.log(pos)
-            socket.volatile.broadcast.to(nameRoom).emit('change_object_alumno', pos)
+            socket.broadcast.to(nameRoom).emit('change_object_alumno', pos)
           })
           socket.on('create_object', (pos) => {
-            console.log(pos)
-            socket.volatile.broadcast.to(nameRoom).emit('change_object_alumno', pos)
+            console.log('create_object')
+            // console.log(pos.data.src.length)
+            socket.broadcast.to(nameRoom).emit('change_object_alumno', pos)
           })
   
           socket.on('send_all_data_canvas', canvas_json => {
             console.log(canvas_json)
             //solo existe en alumno
-            socket.volatile.broadcast.to(nameRoom).emit('all_data_canvas', canvas_json)
+            socket.broadcast.to(nameRoom).emit('all_data_canvas', canvas_json)
           })
 
           socket.on('finalizar_leccion', msg => {
@@ -138,7 +142,8 @@ module.exports = function(app, test){
 
     })
     socket.on('disconnect', () => {
-      console.log('>>> DISSCONECT ' + (tipo == TIPO.CHAT ? 'CHAT' : 'CANVAS'))
+      console.log('>>> DISSCONECT CANVAS' + (tipo == TIPO.CHAT ? 'CHAT' : 'CANVAS'))
+      console.log(get(socket).id)
       // let leccionremove = buscar_leccion(leccion_id);
       // if (tipo == 10) {
       //   leccionremove.usuarios.forEach((v, i) => {
@@ -160,7 +165,7 @@ module.exports = function(app, test){
     let mi_nombre = 'ALUMNO-' + get(socket).id
     let tipo = get(socket).tipob;
     
-    let usuario_id = get(socket).id;
+    var usuario_id = get(socket).id;
     let leccion_id = get(socket).leccion;
     let leccion_session = get(socket).leccion_session;
     let leccion_session_hash = get(socket).leccion_session_hash;
@@ -293,8 +298,9 @@ module.exports = function(app, test){
     socket.on('disconnect', () => {
       
       socket.leave(nameRoom);
-      socket.leave(socket.id);
-      console.log('>>> DISSCONECT ' + (+tipo == TIPO.CHAT ? 'CHAT' : 'CANVAS'))
+      // socket.leave(socket.id);
+      console.log('>>> DISSCONECT CHAT' + (+tipo == TIPO.CHAT ? 'CHAT' : 'CANVAS'))
+      console.log(usuario_id)
       console.log('DISCONECT EN : ' + leccion_asistencia_detalles_id)
       if (leccion_asistencia_detalles_id != 0)
         ModLeccionAsistenciaDetalles.finalizarConexionActiva(leccion_asistencia_detalles_id);
@@ -320,7 +326,7 @@ module.exports = function(app, test){
     console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>NORMAL CONECCTION<<<<<<<<<<<<<<<<<<<<<<<<')
 
     socket.on('disconnect', () => {
-      console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>DISCONNECT NORMAL<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<')
+      console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>DISCONNECT NORMAL GENERAL<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<')
       console.log(socket.id)
     })
 

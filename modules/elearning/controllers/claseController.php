@@ -194,6 +194,7 @@ class claseController extends elearningController {
 		// $this->_view->setJs(array("clase","colorPicker", "pizarra/Herramientas", "pizarra/events", "pizarras", "pizarra/base", "chat",array('https://apis.google.com/js/platform.js')));
 		$this->_view->render("clase");
 	}
+	
 	public function send_link_video () {
 		$res = ['success' => false];
 		if ($this->has(['docente_id', 'leccion_session_id', 'leccion_session_hash', 'leccion_id'])) {

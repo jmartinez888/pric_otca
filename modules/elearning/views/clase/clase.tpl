@@ -212,10 +212,12 @@
                           <button :class="{ hidden: !show_tools, active: CURRENT_CREATE.MODE == MODE_OBJECT.RECT }" type="button" class="toolscanvas" @click="onClick_createObject('rect')"><i class="glyphicon glyphicon-unchecked"></i></button>
                           <button :class="{ hidden: !show_tools, active: CURRENT_CREATE.MODE == MODE_OBJECT.CIRCULO }" type="button" class="toolscanvas" @click="onClick_createObject('circulo')"><i class="glyphicon glyphicon-record"></i></button>
                           <button :class="{ hidden: !show_tools, active: CURRENT_CREATE.MODE == MODE_OBJECT.TEXTO }" class="toolscanvas" @click="onClick_createObject('texto')"><i class="glyphicon glyphicon-text-color"></i></button>
+                          {*
                           <button :class="{ hidden: !show_tools, active: CURRENT_CREATE.MODE == MODE_OBJECT.IMAGE }" class="toolscanvas" @click="onClick_createObject('image')">
                             <input @change="onChange_loadImage" ref="fileimg" id="fileimg" type="file" name="" value="" placeholder="" class="hidden">
                             <i class="glyphicon glyphicon-picture"></i>
                           </button>
+                          *}
                           <button :class="{ hidden: !show_tools }" type="button" class="toolscanvas" @click="onClick_eliminarObjecto"><i class="glyphicon glyphicon-erase"></i></button>
                           <button :class="{ hidden: !show_tools }" type="button" class="toolscanvas" @click="onClick_eliminarLimpiar"><i class="glyphicon glyphicon-trash"></i></button>
                           <button type="button" class="toolscanvas tool-option" @click="btnOnClick_ToolsOption('borde')">

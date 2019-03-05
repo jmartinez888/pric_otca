@@ -11,6 +11,7 @@ class AppSocket {
   }
 
   emit (name, value) {
+    console.log(JSON.stringify(value).length)
       this._socket.emit(name, value)
   }
   init (callback = () => {}) {
@@ -49,6 +50,7 @@ class AppSocket {
   StartServer(initDefault = () => {}){
     
     this._socket.on('connect', () => {
+      console.log('connect ' + this._url)
       this.success_connection = true
       initDefault(this);
       this.OPES_SOCKET.forEach((row) => {
@@ -59,6 +61,7 @@ class AppSocket {
     });
 
     this._socket.on('disconnect', (ddd) => {
+      console.log('disconnect')
       this.success_connection = false
       this.OPES_SOCKET.forEach((row) => {
           if (row!=null && row.ID!=null && row.disconnect!=null){
@@ -70,6 +73,7 @@ class AppSocket {
       })
     });
     this._socket.on('reconnect_attempt', () => {
+      console.log('reconnect_attempt')
       this.OPES_SOCKET.forEach((row) => {
         if (row!=null && row.ID!=null && row.reconnect!=null){
           row.reconnect();
@@ -77,7 +81,7 @@ class AppSocket {
       });
     });
     this._socket.on('connect_error', (data) => {
-
+      console.log('connect_error')
       this.OPES_SOCKET.forEach((row) => {
         if (row!=null && row.ID!=null && row.disconnect!=null){
           row.disconnect();
@@ -89,6 +93,7 @@ class AppSocket {
       console.log("CONNECT_ERROR");
     });
     this._socket.on('reconnect_error', () => {
+      console.log('reconnect_error')
       this.OPES_SOCKET.forEach((row) => {
         if (row!=null && row.ID!=null && row.disconnect!=null){
           row.disconnect();
@@ -100,6 +105,7 @@ class AppSocket {
       //console.log("Error de reconnect_error");
     });
     this._socket.on('reconnect_failed', () => {
+      console.log('reconnect_failed')
       this.listeners.forEach(v => {
         this._socket.removeListener(v);
       })

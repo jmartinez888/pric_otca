@@ -72,23 +72,23 @@ var mivue = new Vue({
 		'opcelements.stroke': function (nv, ov) {
 			console.log(this.$refs.opcelementsStrokeSFH)
 			this.$refs.opcelementsStrokeSFH.style.backgroundColor = nv
-			this.onClick_renderCanvas();
+			this.onClick_renderCanvas(true);
 		},
 		'opcelements.fill': function (nv, ov) {
 			this.$refs.opcelementsFillSFH.style.backgroundColor = nv
-			this.onClick_renderCanvas();
+			this.onClick_renderCanvas(true);
 		},
 		'opcelements.strokeWidth': function (nv, ov) {
-			this.onClick_renderCanvas();
+			this.onClick_renderCanvas(true);
 		},
 		'opcelements.angle': function (nv, ov) {
-			this.onClick_renderCanvas();
+			this.onClick_renderCanvas(true);
 		},
 		'opcelements.fontSize': function (nv, ov) {
-			this.onClick_renderCanvas();
+			this.onClick_renderCanvas(true);
 		},
 		'opcelements.text': function (nv, ov) {
-			this.onClick_renderCanvas();
+			this.onClick_renderCanvas(true);
 		},
 	},
 	methods: {
@@ -262,7 +262,7 @@ var mivue = new Vue({
 						  objeto_id: this.count_id++,
 						}), true, true, false)
 					}
-					console.log(fr.result)
+					// console.log(fr.result)
 					img.src = fr.result
 				}
 				fr.readAsDataURL(this.$refs.fileimg.files[0])
@@ -295,7 +295,7 @@ var mivue = new Vue({
 			})
 			this.objSocket.emit('eliminar_objetos', ids)
 		},
-		onClick_renderCanvas: function () {
+		onClick_renderCanvas: function (use_emit = false) {
 			console.log('actualizar')
 
 
@@ -308,6 +308,7 @@ var mivue = new Vue({
 				})
 				if (el != undefined) {
 					console.log('toca esocger')
+					console.log(el.type)
 					switch (el.type) {
 						case 'text':
 							el.set('fontSize', +this.opcelements.fontSize)
@@ -330,6 +331,13 @@ var mivue = new Vue({
 							el.set('stroke', this.opcelements.stroke)//color border
 							el.set('strokeWidth', +this.opcelements.strokeWidth)
 							break;
+					}
+					if (use_emit) {
+						this.objSocket.emit('change_object', {
+							data: el.toObject(),
+							id: el.objeto_id,
+							event: 'modified'
+						})
 					}
 					canvasdocente.renderAll()
 				} else {
@@ -449,6 +457,7 @@ var mivue = new Vue({
 					if (!this.CURRENT_CREATE.INITIALIZED)
 						this.CURRENT_CREATE.INITIALIZED = true
 					this.setAllObjectsSelectable(false)
+					break;
 				case 'image':
 					
 				this.current_type = 'none'
@@ -630,7 +639,7 @@ var mivue = new Vue({
 		});
 
 		canvasdocente.on('mouse:move', (e) => {
-			console.log('mouse:move')
+			// console.log('mouse:move')
 			this.objSocket.emit('pos_cursor', e.pointer)
 			
 			if (this.CURRENT_CREATE.INITIALIZED && this.CURRENT_CREATE.IS_DOWN) {
@@ -677,8 +686,9 @@ var mivue = new Vue({
 					//docente recive la conexión de un alumno y envia los datos del canvas
 					console.log('alumno conectado')
 					console.log(res)
-					if (res.success)
+					if (res.success) {
 						this.objSocket.emit('send_all_data_canvas', {json: canvasdocente.toJSON(), canvas: {width: this.CANVAS.width, height: this.CANVAS.height, pizarra_index: this.current_pizarra_index}})
+					}
 				})
 				this.objSocket.emit('CONFIRMACARGACANVAS','Iniciando desde docente')	
 			})
