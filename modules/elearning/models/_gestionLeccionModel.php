@@ -51,19 +51,37 @@ class _gestionLeccionModel extends Model {
     return $this->getArray($sql);
   }
 
-  public function getLeccionId($leccion){
-    $sql = "SELECT L.*,
-              C.Con_Descripcion as Tipo
-            FROM leccion L
-            INNER JOIN constante C ON C.Con_Valor = L.Lec_Tipo AND C.Con_Codigo = 2000
-            WHERE L.Lec_IdLeccion = {$leccion}
-              AND L.Row_Estado = 1";
+  public function getLeccionId($leccion, $Idi_IdIdioma = ""){
+    if ($Idi_IdIdioma == "" && isset($Idi_IdIdioma)) {
+        $sql = "SELECT L.*,
+              C.Con_Descripcion as Tipo ";
+    } else {
+        $sql = "SELECT L.Lec_IdLeccion,
+            L.Moc_IdModuloCurso,
+            fn_TraducirContenido('leccion','Lec_Titulo',L.Lec_IdLeccion,'$Idi_IdIdioma',L.Lec_Titulo) Lec_Titulo,
+            fn_TraducirContenido('leccion','Lec_Descripcion',L.Lec_IdLeccion,'$Idi_IdIdioma',L.Lec_Descripcion) Lec_Descripcion,
+            fn_TraducirContenido('leccion','Lec_TiempoDedicacion',L.Lec_IdLeccion,'$Idi_IdIdioma',L.Lec_TiempoDedicacion) Lec_TiempoDedicacion,
+            fn_TraducirContenido('leccion','Lec_Tipo',L.Lec_IdLeccion,'$Idi_IdIdioma',L.Lec_Tipo) Lec_Tipo,
+            L.Lec_FechaDesde,
+            L.Lec_FechaHasta,
+            L.Lec_FechaReg,
+            L.Lec_LMSEstado,
+            L.Lec_LMSPizarra,
+            L.Lec_Estado,
+            L.Row_Estado,
+            L.Lec_Hash,
+            C.Con_Descripcion as Tipo,
+            fn_devolverIdioma('modulo_curso',L.Lec_IdLeccion,'$Idi_IdIdioma',L.Idi_IdIdioma) Idi_IdIdioma ";
+    }
+    
+      $sql .= " FROM leccion L
+      INNER JOIN constante C ON C.Con_Valor = L.Lec_Tipo AND C.Con_Codigo = 2000
+      WHERE L.Lec_IdLeccion = {$leccion} AND L.Row_Estado = 1";
     if (isset($this->getArray($sql)[0]) && count($this->getArray($sql)[0])) {      
         return $this->getArray($sql)[0];
     } else {
         return $this->getArray($sql);
     }
-              
   }
 
 

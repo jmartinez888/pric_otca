@@ -129,5 +129,33 @@ $(document).ready(function(){
       }
     });
   });
+
+
+  $("body").on('click', ".idioma_s", function (e) {
+      e.preventDefault();
+      var id = $(this).attr("id");
+      var idIdioma = $("#hd_" + id).val();
+      gestion_idiomas_view_leccion($("#hidden_leccion").val(), $("#IdiomaOriginal").val(), idIdioma);
+      // buscar($("#palabra").val(), $("#buscarTipo").val(), $("#idPadreIdiomas").val(),idIdioma); 
+  }); 
+
+    
 });
 
+function gestion_idiomas_view_leccion(Lec_IdLeccion, idIdiomaOriginal, idIdioma) {
+    $("#cargando").show();
+    $.post(_root_  + _modulo + '/gleccion/gestion_idiomas_view_leccion',
+            {
+                idIdioma: idIdioma,
+                Lec_IdLeccion: Lec_IdLeccion,
+                idIdiomaOriginal: idIdiomaOriginal
+            }, function (data) {
+        $("#gestion_idiomas").html('');
+        $("#cargando").hide(); 
+        $("#gestion_idiomas").html(data);
+
+        // cargarCKeditor();
+        // $('textarea#editor1').ckeditor();
+        // $('form').validator();
+    });
+}
