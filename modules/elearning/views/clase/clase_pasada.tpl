@@ -83,8 +83,8 @@
           
             <div class="col-xs-12">
               <div class="alert" role="alert" style="background-color: #007cbe">
-                  <h2 style="color: #fff; text-transform: uppercase">{$lang->get('elearning_cursos_la_clase_finalizo_con_exito')}</h2>
-                  <h3 style="color: #fff">{$lang->get('str_para_continuar_presione')} <a id="goto-next" href="">{$lang->get('str_siguiente')}</a></h3>
+                  <h3 style="color: #fff; text-transform: uppercase"><strong>{$lang->get('elearning_cursos_la_clase_finalizo_con_exito')}</strong></h3>
+                  <h4 style="color: #fff;font-weight: normal">{$lang->get('str_para_continuar_presione')} <a id="goto-next" href="">{$lang->get('str_siguiente')}</a></h4>
               </div>
               <p style="text-align: center;"><span class="glyphicon glyphicon-exclamation-sign" style="font-size: 13em;color: #007cbe;"></span></p>
             </div>
