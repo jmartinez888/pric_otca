@@ -212,8 +212,11 @@ class _gestionCursoModel extends Model {
       }
   }
 
-  public function getCursoXId($id, $Idi_IdIdioma = "es") {
-      $res = $this->getArray("SELECT c.Cur_IdCurso,
+  public function getCursoXId($id, $Idi_IdIdioma = "") {
+      if ($Idi_IdIdioma = "" && $Idi_IdIdioma) {
+         $sql = "SELECT c.* FROM curso c WHERE c.Cur_IdCurso = $id ";
+      } else {
+         $sql = "SELECT c.Cur_IdCurso,
                  c.Usu_IdUsuario,
                  c.Moa_IdModalidad,       
                  fn_TraducirContenido('curso','Cur_UrlBanner',c.Cur_IdCurso,'$Idi_IdIdioma',c.Cur_UrlBanner) Cur_UrlBanner,       
@@ -238,7 +241,11 @@ class _gestionCursoModel extends Model {
                  c.Cur_Estado,
                  c.Row_Estado,
                  fn_devolverIdioma('curso',c.Cur_IdCurso,'$Idi_IdIdioma',c.Idi_IdIdioma) Idi_IdIdioma
-      FROM curso c WHERE c.Cur_IdCurso = $id ");
+                  FROM curso c WHERE c.Cur_IdCurso = $id ";
+
+      }
+      
+      $res = $this->getArray($sql);
       return count($res) > 0 ? $res[0] : null;
   }
   // JMart

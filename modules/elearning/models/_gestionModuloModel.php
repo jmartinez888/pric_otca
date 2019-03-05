@@ -25,7 +25,8 @@ class _gestionModuloModel extends Model {
     return $this->getArray($sql);
   }
 
-  public function getModuloId($curso, $Idi_IdIdioma = "es"){
+  public function getModuloId($Moc_IdModuloCurso, $Idi_IdIdioma = "es"){
+    $sql = "SELECT * FROM modulo_curso WHERE Moc_IdModuloCurso = {$Moc_IdModuloCurso} AND Row_Estado = 1 ";
     $sql = "SELECT Moc_IdModuloCurso,
     Cur_IdCurso,
     fn_TraducirContenido('modulo_curso','Moc_Titulo',Moc_IdModuloCurso,'$Idi_IdIdioma',Moc_Titulo) Moc_Titulo,
@@ -36,7 +37,7 @@ class _gestionModuloModel extends Model {
     Moc_Estado,
     Row_Estado,
     fn_devolverIdioma('modulo_curso',Moc_IdModuloCurso,'$Idi_IdIdioma',Idi_IdIdioma) Idi_IdIdioma
-    FROM modulo_curso WHERE Moc_IdModuloCurso = {$curso} AND Row_Estado = 1";
+    FROM modulo_curso WHERE Moc_IdModuloCurso = {$Moc_IdModuloCurso} AND Row_Estado = 1";
     return $this->getArray($sql)[0];
   }
   public function getContTraducido($Cot_Tabla = "", $Cot_IdRegistro = "", $Idi_IdIdioma = "")

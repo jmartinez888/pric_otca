@@ -46,8 +46,8 @@ function InitUploader(post, params){
   var idioma = params.Idi_Ididioma || "";
   $("#hidden-uploader-route").val(route);  
   $("#hidden-uploader-Idi_Ididioma").val(idioma);
-  alert(route);
-  alert(idioma);
+  // alert(route);
+  // alert(idioma);
   jQuery.event.props.push('dataTransfer');
   var isAdvancedUpload = function(){
     var div = document.createElement('div');
