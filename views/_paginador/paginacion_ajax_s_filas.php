@@ -65,7 +65,7 @@
     <p>
         <small>
             <span >
-                Mostrar filas:
+                <?=$this->_lenguaje["paginador_mostrar_filas"]?>
                 <select id="s_filas_<?php echo $this->_nombrelista;?>" class="form-control s_filas" 
                     nombre="<?php echo $this->_nombrelista;?>" parametros="<?php echo $this->_parametros;?>"  pagina="1"
                     total_registros="<?php echo $this->_paginacion['total_registros']; ?>" 
