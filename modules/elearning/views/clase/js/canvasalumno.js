@@ -195,7 +195,8 @@ new Vue({
 									break;
 								case 'image':
 										console.log('se selecciono una imagen')
-										fabric.Image.fromURL(msg.dataUrl, (o) => {
+										// fabric.Image.fromURL(msg.dataUrl, (o) => {
+										fabric.Image.fromURL(msg.data.src, (o) => {
 											console.log('iamgen cargada')
 											o.objeto_id = msg.id
 											canvasalumno.add(o)
