@@ -117,6 +117,7 @@ var mivue = new Vue({
 					let ta = document.createElement('a');
 					ta.text = link
 					ta.href = link
+					ta.target ="_blank"
 					ta.classList.add('list-group-item')
 					this.showLinksVideo.append(ta);
 				}
@@ -261,6 +262,7 @@ var mivue = new Vue({
 						  objeto_id: this.count_id++,
 						}), true, true, true)
 					}
+					console.log(fr.result)
 					img.src = fr.result
 				}
 				fr.readAsDataURL(this.$refs.fileimg.files[0])
