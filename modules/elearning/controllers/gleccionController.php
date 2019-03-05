@@ -1039,8 +1039,7 @@ class gleccionController extends elearningController {
         $this->service->Send();
     }
 
-    public function _view_leccion($curso = 0, $modulo = 0, $leccion = 0){
-
+    public function _view_leccion($curso = 0, $modulo = 0, $leccion = 0){ 
         $this->validarUrlIdioma();
         $this->_view->setTemplate(LAYOUT_FRONTEND);
          $lang = $this->_view->getLenguaje(['elearning_cursos'], false, true);
@@ -1069,6 +1068,115 @@ class gleccionController extends elearningController {
         $cursoDatos = $Cmodel->getCursoXId($curso);
         $modulo = $Mmodel->getModuloId($modulo);
         $leccion = $model->getLeccionId($leccion);
+        $referencias = $model->getReferenciaLeccion($leccion["Lec_IdLeccion"]);
+        $material = $model->getMaterialLeccion($leccion["Lec_IdLeccion"]);
+        $trabajo = $Tmodel->getTrabajoUsuario($leccion["Lec_IdLeccion"]); //RODRIGO 20180605
+        $tipo_trabajo = $Tmodel->getConstanteTrabajo(); //RODRIGO 20180605
+        $data['titulo'] = $leccion['Tipo'].' - '.$leccion['Lec_Titulo'];
+
+        $this->_view->assign('idiomas',$_arquitectura->getIdiomas());
+        $this->_view->assign($data);
+        $view = "";
+        $this->_view->assign('porcentaje', $Porcentaje);
+        $this->_view->assign('menu', 'curso');
+        $this->_view->assign("curso", $cursoDatos);
+        $this->_view->assign("modulo", $modulo);
+        $this->_view->assign("leccion", $leccion);
+        $this->_view->assign("referencias", $referencias);
+        $this->_view->assign("material", $material);
+        $this->_view->assign("trabajo", $trabajo); //RODRIGO 20180605
+		$this->_view->assign("tipo_trabajo", $tipo_trabajo); //RODRIGO 20180605
+				
+        switch ($leccion["Lec_Tipo"]) {
+            case Leccion::TIPO_HTML:
+                $contenido = $model->getContenidoLeccion($leccion["Lec_IdLeccion"]);
+                $this->_view->assign("contenido", $contenido);
+                $this->_view->assign("Lec_Tipo",$leccion["Lec_Tipo"]);
+                $view = "ajax/_view_1";
+                break;
+            case Leccion::TIPO_VIDEO:
+                $contenido = $model->getDetalleLeccion2($leccion["Lec_IdLeccion"]);
+                $this->_view->assign("contenido", $contenido);
+                $view = "ajax/_view_2";
+                break;
+            case Leccion::TIPO_EXAMEN:
+                // $ExaModel = $this->loadModel("examen");
+                // $examen = $ExaModel->getExamenxLeccion($leccion["Lec_IdLeccion"]);
+                $condicion = " WHERE e.Lec_IdLeccion = ".$leccion["Lec_IdLeccion"]." ";
+                $this->_view->assign('examens',  $this->examen->getExamensCondicion(0,CANT_REG_PAG, $condicion));
+                $paginador = new Paginador();
+                $arrayRowCount = $this->examen->getExamenesRowCount($condicion);
+                $totalRegistros = $arrayRowCount['CantidadRegistros'];
+                $paginador->paginar($totalRegistros,"listarexamens", "", 0, CANT_REG_PAG, true);
+                $this->_view->assign('numeropagina', $paginador->getNumeroPagina());
+                $this->_view->assign('idcurso', $curso);
+
+
+                // $porcentaje = $this->examen->getExamensCondicion(0,CANT_REG_PAG, " WHERE e.Lec_IdLeccion = ".$leccion["Lec_IdLeccion"]." AND e.Exa_Estado = 1 AND e.Row_Estado = 1");
+                // // print_r($porcentaje);
+                // if (count($porcentaje)>0) {
+
+                // $this->_view->assign('porcentaje', $porcentaje['Porcentaje'] );
+                // } else {
+
+                // $this->_view->assign('porcentaje', "");
+                // }
+
+
+                // if ($examen && count($examen) > 0) {
+                // // print_r($examen);exit;
+                //     $this->redireccionar("elearning/examen/editarexamen/".$examen["Cur_IdCurso"]."/".$examen["Exa_IdExamen"]);
+                // } else {
+                //     $this->redireccionar("/elearning/examen/nuevoexamen/".$curso["Cur_IdCurso"]);
+                // }
+
+
+                // $examen = $model->insertExamenLeccion($leccion["Lec_IdLeccion"], "", 0, 0, 0);
+                // $preguntas = $model->getPreguntas($examen[0]["Exa_IdExamen"]);
+                // $this->_view->assign("examen", $examen);
+                // $this->_view->assign("preguntas", $preguntas);
+                $view = "ajax/_view_3";
+
+                break;
+            case Leccion::TIPO_DIRIGIDA:
+                $piz = $this->loadModel("pizarra");
+                $pizarras = $piz->getPizarrasLeccion($leccion["Lec_IdLeccion"]);
+                $this->_view->assign("pizarras", $pizarras);
+                $view = "ajax/_view_4";
+                break;
+            case 6:
+                $contenido = $model->getContenidoLeccion($leccion["Lec_IdLeccion"]);
+                $this->_view->assign("contenido", $contenido);
+                $this->_view->assign("Lec_Tipo",$leccion["Lec_Tipo"]);
+                $view = "ajax/_view_1";
+                break;
+				}
+        $this->_view->render($view);
+    }
+    public function gestion_idiomas_view_leccion(){
+        $this->validarUrlIdioma();
+        $this->_view->setTemplate(LAYOUT_FRONTEND);
+        $lang = $this->_view->getLenguaje(['elearning_cursos'], false, true);
+
+        $idIdiomaOriginal = $this->getPostParam('idIdiomaOriginal');  
+        $Idi_IdIdioma = $this->getPostParam('idIdioma');      
+        $Lec_IdLeccion = $this->getPostParam('Lec_IdLeccion');
+
+        $Tmodel = $this->loadModel("trabajo"); //RODRIGO 20180605
+        $Cmodel = $this->loadModel("_gestionCurso");
+        $Mmodel = $this->loadModel("_gestionModulo");
+        $model = $this->loadModel("_gestionLeccion");
+        $examen = $this->loadModel("examen");
+        $_arquitectura = $this->loadModel('index','arquitectura');
+
+        $leccion = $model->getLeccionId($Lec_IdLeccion, $Idi_IdIdioma);
+        $Exa_Porcentaje = $examen->getExamenesPorcentaje($curso);
+        $Tra_Porcentaje = $examen->getTrabajosPorcentaje($curso);
+
+        $Porcentaje = 100 - $Exa_Porcentaje['Exa_PorcentajeTotal'] - $Tra_Porcentaje['Tra_PorcentajeTotal'];
+
+        $cursoDatos = $Cmodel->getCursoXId($curso);
+        $modulo = $Mmodel->getModuloId($modulo);
         $referencias = $model->getReferenciaLeccion($leccion["Lec_IdLeccion"]);
         $material = $model->getMaterialLeccion($leccion["Lec_IdLeccion"]);
         $trabajo = $Tmodel->getTrabajoUsuario($leccion["Lec_IdLeccion"]); //RODRIGO 20180605

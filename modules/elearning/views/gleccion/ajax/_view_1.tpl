@@ -124,7 +124,7 @@
           <div class="panel-body">
             <form method="POST" action="gleccion/_registrar_contenido" id="frm_registro_contenido">
               <div class="col-lg-12 margin-t-10"><strong>Titulo</strong></div>
-              <input hidden="hidden" value="{$leccion.Lec_IdLeccion}" name="leccion"/>
+              <input hidden="hidden" value="{$leccion.Lec_IdLeccion}" name="leccion" id="hidden_leccion" />
               <div class="col-lg-12"><input class="form-control" name="titulo" id="inTituloCon"/></div>
               <div class="col-lg-12 margin-t-10"><strong>Contenido</strong></div>
               <div class="col-lg-12">
