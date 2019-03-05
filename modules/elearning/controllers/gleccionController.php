@@ -1170,8 +1170,8 @@ class gleccionController extends elearningController {
         $_arquitectura = $this->loadModel('index','arquitectura');
 
         $leccion = $model->getLeccionId($Lec_IdLeccion, $Idi_IdIdioma);
-        $Exa_Porcentaje = $examen->getExamenesPorcentaje($curso);
-        $Tra_Porcentaje = $examen->getTrabajosPorcentaje($curso);
+        // $Exa_Porcentaje = $examen->getExamenesPorcentaje($curso);
+        // $Tra_Porcentaje = $examen->getTrabajosPorcentaje($curso);
 
         $Porcentaje = 100 - $Exa_Porcentaje['Exa_PorcentajeTotal'] - $Tra_Porcentaje['Tra_PorcentajeTotal'];
 
