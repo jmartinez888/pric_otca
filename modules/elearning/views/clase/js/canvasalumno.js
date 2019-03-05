@@ -37,6 +37,7 @@ new Vue({
 				let ta = document.createElement('a');
 				ta.text = link
 				ta.href = link
+				ta.target ="_blank"
 				ta.classList.add('list-group-item')
 				this.showLinksVideo.append(ta);
 			}
@@ -193,7 +194,7 @@ new Vue({
 										xx = new fabric.Circle(msg.data)
 									break;
 								case 'image':
-	
+										console.log('se selecciono una imagen')
 										fabric.Image.fromURL(msg.dataUrl, (o) => {
 											console.log('iamgen cargada')
 											o.objeto_id = msg.id

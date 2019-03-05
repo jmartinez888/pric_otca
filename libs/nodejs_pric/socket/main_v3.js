@@ -103,29 +103,29 @@ module.exports = function(app, test){
           })
           socket.on('pos_cursor', (pos) => {
             // console.log(pos)
-            socket.broadcast.to(nameRoom).emit('move_mouse', pos)
+            socket.volatile.broadcast.to(nameRoom).emit('move_mouse', pos)
           })
       
           socket.on('limpiar_canvas', (pos) => {
-            socket.broadcast.to(nameRoom).emit('alumnos_limpiar_canvas', pos)
+            socket.volatile.broadcast.to(nameRoom).emit('alumnos_limpiar_canvas', pos)
           })
       
           socket.on('eliminar_objetos', (ids) => {
-            socket.broadcast.to(nameRoom).emit('alumnos_eliminar_objetos', ids)
+            socket.volatile.broadcast.to(nameRoom).emit('alumnos_eliminar_objetos', ids)
           })
           socket.on('change_object', (pos) => {
             // console.log(pos)
-            socket.broadcast.to(nameRoom).emit('change_object_alumno', pos)
+            socket.volatile.broadcast.to(nameRoom).emit('change_object_alumno', pos)
           })
           socket.on('create_object', (pos) => {
             // console.log(pos)
-            socket.broadcast.to(nameRoom).emit('change_object_alumno', pos)
+            socket.volatile.broadcast.to(nameRoom).emit('change_object_alumno', pos)
           })
   
           socket.on('send_all_data_canvas', canvas_json => {
             console.log(canvas_json)
             //solo existe en alumno
-            socket.broadcast.to(nameRoom).emit('all_data_canvas', canvas_json)
+            socket.volatile.broadcast.to(nameRoom).emit('all_data_canvas', canvas_json)
           })
 
           socket.on('finalizar_leccion', msg => {
