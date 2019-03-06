@@ -13,7 +13,7 @@
                     <div style="width: 90%; margin: 0px auto">
                         <form class="form-horizontal" id="form1" name="form1" role="form" data-toggle="validator" method="post" autocomplete="on">
                             <div class="form-group" >
-                                <label class="col-lg-3 control-label">{$lenguaje.label_idioma} : </label>
+                                <label class="col-lg-3 control-label">{$lenguaje.str_idioma} : </label>
                                 {if  isset($idiomas) && count($idiomas)}              
                                     <div class="form-inline col-lg-9"> 
                                         {foreach from=$idiomas item=idi}
@@ -52,7 +52,7 @@
                                     <select class="form-control" name="Fie_TipoDatoCampo" id="Fie_TipoDatoCampo" data-error="* {$lang->get('estandar_campo_obligatorio')}" required="">
                                         <option  value="" >-- {$lang->get('str_seleccionar')} --</option>
                                         <option  value="Decimal" >{$lang->get('str_decimal')}</option>
-                                        <option  value="Entero" >{$lang->get('str_entero_number')}</option>
+                                        <option  value="Entero" >{$lang->get('str_entero_numero')}</option>
                                         <option  value="Latitud" >{$lang->get('str_latitud')}</option>
                                         <option  value="Longitud" >{$lang->get('str_longitud')}</option>    
                                         <option  value="Texto" >{$lang->get('str_texto')}</option>
