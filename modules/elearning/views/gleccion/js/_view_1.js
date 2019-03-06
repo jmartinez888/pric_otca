@@ -144,9 +144,12 @@ $(document).ready(function(){
 
 function gestion_idiomas_view_leccion(Lec_IdLeccion, idIdiomaOriginal, idIdioma) {
     $("#cargando").show();
+    alert(Lec_IdLeccion+idIdioma+idIdiomaOriginal);
     $.post(_root_  + _modulo + '/gleccion/gestion_idiomas_view_leccion',
             {
                 idIdioma: idIdioma,
+                idCurso: $("#hidden_curso").val(),
+                idModulo: $("#hidden_modulo").val(),
                 Lec_IdLeccion: Lec_IdLeccion,
                 idIdiomaOriginal: idIdiomaOriginal
             }, function (data) {
