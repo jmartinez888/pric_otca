@@ -263,21 +263,21 @@ class lenguajesController extends idiomasController {
 
 	}
 	public function datatable_file ($id) {
+		DB::enableQueryLog();
 		if (is_numeric($id)) {
 			$query = IdiomaFilesVars::byFile($id)->select(
 				'idiomas_files_vars.Ifv_IdFileVar',
 				'idiomas_files_vars.Ifv_VarName'
 			)
-			->leftJoin('idiomas_files_vars_body', 'idiomas_files_vars.Ifv_IdFileVar', 'idiomas_files_vars_body.Ifv_IdFileVar')
+			->join('idiomas_files_vars_body', 'idiomas_files_vars.Ifv_IdFileVar', 'idiomas_files_vars_body.Ifv_IdFileVar')
 			->groupBy('idiomas_files_vars.Ifv_IdFileVar');
-			$records_total = $query->count();
-			$records_total_filter = $records_total;
+			$records_total = $records_total_filter = DB::query()->selectRaw('count(*) total from ('.$query->toSql().') table_total', $query->getBindings())->first()->total;
 			if ($this->filledGet('buscar')) {
 				$query->where(function($q) {
 					$q->orWhere('idiomas_files_vars.Ifv_VarName', 'like', '%'.$this->getTexto('buscar').'%');
 					$q->orWhere('idiomas_files_vars_body.Ifvb_Body', 'like', '%'.$this->getTexto('buscar').'%');
 				});
-				$records_total_filter = $query->count();
+				$records_total_filter = DB::query()->selectRaw('count(*) total from ('.$query->toSql().') table_total', $query->getBindings())->first()->total;
 			}
 			if ($this->filledGet('export')) {
 				$this->_export($query, $this->getTexto('export'));
@@ -292,7 +292,8 @@ class lenguajesController extends idiomasController {
 				$data = [
 					'draw' => $this->getInt('draw'),
 					'recordsTotal' => $records_total,
-	        'recordsFiltered' => $records_total_filter,
+					'recordsFiltered' => $records_total_filter,
+					'query' => DB::getQueryLog(),
 	        'data' => $rows
 				];
 				$this->_view->responseJson($data);
@@ -345,8 +346,8 @@ class lenguajesController extends idiomasController {
 				'draw' => $this->getInt('draw'),
 				'recordsTotal' => $records_total,
         'recordsFiltered' => $records_total_filter,
-        'data' => $rows,
-        'query' => DB::getQueryLog()
+        'data' => $rows
+        // 'query' => DB::getQueryLog()
 			];
 			$this->_view->responseJson($data);
 		}
