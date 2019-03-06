@@ -20,7 +20,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <!-- Font Awesome Icons -->
     <!--    <link href="{$_layoutParams.root_clear}public/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
         <link rel="stylesheet" href="{$_layoutParams.ruta_css}ionicons.min.css">
-        <!-- <link rel="stylesheet" href="{$_layoutParams.ruta_css}font-awesome.css"> -->
+        <link rel="stylesheet" href="{$_layoutParams.ruta_css}font-awesome.min.css">
         <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />  -->
         <!-- Ionicons -->
         <!-- <link href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css" />  -->
@@ -148,7 +148,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     {/if}
 
                     <!-- Sidebar Menu -->
-                    <ul class="sidebar-menu">
+                    <ul class="sidebar-menu tree" data-widget="tree">
                         {if $_acl->permiso("listar_arquitectura_web") || $_acl->permiso("listar_idiomas") || $_acl->permiso("listar_usuarios") || $_acl->permiso("listar_bitacora") || $_acl->permiso("listar_visita")}
                             <li class="header">{$lenguaje.menu_izquierdo_1}</li>
                             <!-- Optionally, you can add icons to the links -->
@@ -303,6 +303,36 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <script src="{$_layoutParams.ruta_js}bootstrap.min.js" type="text/javascript"></script>
         <!-- AdminLTE App -->
         <script src="{$_layoutParams.ruta_js}app.min.js" type="text/javascript"></script>
+        <script>
+            //PARA SIDEBAR
+            $(document).ready(function() {
+                $('.sidebar-menu li').each((v,lip) => {
+                    if (lip.classList.contains('treeview')) {
+                        let ul = lip.children.item(1)
+                        if (ul != undefined && (ul.localName == 'ul' && ul.classList.contains('treeview-menu'))) {
+                            ul.childNodes.forEach(li => {
+                                if (li.localName == 'li') {
+                                    if (li.children.item(0) != undefined) {
+                                        if (window.location.href.indexOf(li.children.item('a').href) == 0) {
+                                            console.log('menu abierto')
+                                            lip.classList.add('active')   
+                                            ul.classList.add('menu-open')        
+                                            ul.style.display = 'block'
+                                        }
+                                    }
+                                }
+                            })
+                        }
+                    } else {
+                        if (lip.children.item(0) != undefined ) {
+                            if (window.location.href.indexOf(lip.children.item(0).href) == 0)
+                                lip.classList.add('active')            
+                        }
+    
+                    }
+                })
+            })
+        </script>
         <script type="text/javascript" src="{$_layoutParams.root_clear}public/js/util.js"></script>
         <script type="text/javascript" src="{$_layoutParams.root_clear}public/js/validator.js"></script>
         <script type="text/javascript" src="{$_layoutParams.root_clear}public/js/jquery.slimscroll.min.js"></script>

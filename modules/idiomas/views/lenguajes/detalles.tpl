@@ -12,7 +12,7 @@
 	        </div>
 
 	        <div style="height: 0px;" aria-expanded="false" id="collapse_registro" class="panel-collapse collapse">
-	            <div id="nuevo_rol" class="panel-body" style="">
+	            <div id="nuevo_rol" class="panel-body">
 	                <div class="col-sm-8">
 	                    <form class="form-horizontal" data-toggle="validator"  role="form" @submit.prevent="onSubmit_registrar" novalidate="true">
 

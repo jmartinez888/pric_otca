@@ -28,10 +28,10 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-lg-3 control-label" >Tipo (*): </label>
+                                        <label class="col-lg-3 control-label" >{$lang->get('str_tipo')} (*): </label>
                                         <div class="col-lg-8">
-                                            <label class="radio-inline"><input type="radio" name="tipo" checked="" value="1">Default</label>
-                                            <label class="radio-inline"><input type="radio" name="tipo" value="2">Investigación</label>
+                                            <label class="radio-inline"><input type="radio" name="tipo" checked="" value="1">{$lang->get('str_por_defecto')}</label>
+                                            <label class="radio-inline"><input type="radio" name="tipo" value="2">{$lang->get('str_investigacion')}</label>
                                         </div>
                                     </div>
                                     <div class="form-group">

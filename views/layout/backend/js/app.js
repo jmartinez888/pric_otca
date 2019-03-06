@@ -375,9 +375,11 @@ function _init() {
    * @Usage: $.AdminLTE.tree('.sidebar')
    */
   $.AdminLTE.tree = function (menu) {
+    console.log(menu)
     var _this = this;
 
     $("li a", $(menu)).on('click', function (e) {
+      console.log('click')
       //Get the clicked link and the next element
       var $this = $(this);
       var checkElement = $this.next();

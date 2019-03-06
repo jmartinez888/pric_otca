@@ -268,3 +268,7 @@ background-color: #ce4438;
     height: 0px !important;
     overflow: hidden;
   }
+
+  .text-uppercase {
+    text-transform: uppercase !important;
+  }
