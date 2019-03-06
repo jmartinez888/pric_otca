@@ -13,7 +13,7 @@
                     <div style="width: 90%; margin: 0px auto">
                         <form class="form-horizontal" id="form1" name="form1" role="form" data-toggle="validator" method="post" autocomplete="on">
                             <div class="form-group" >
-                                <label class="col-lg-3 control-label">{$lenguaje.str_idioma} : </label>
+                                <label class="col-lg-3 control-label">{$lang->get('str_idioma')} : </label>
                                 {if  isset($idiomas) && count($idiomas)}              
                                     <div class="form-inline col-lg-9"> 
                                         {foreach from=$idiomas item=idi}
