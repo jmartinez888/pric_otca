@@ -136,7 +136,7 @@
                             <div class="table-responsive" >
                                 <table class="table" style=" text-align: center">
                                     <tr>
-                                        <th style=" text-align: center">{$lenguaje.label_n}</th>
+                                        <th style=" text-align: center">#</th>
                                         <th style=" text-align: center">{$lang->get('estandar_nombre_campo')}</th>
                                         <th style=" text-align: center">{$lang->get('label_nombre_tabla')}</th>                                        
                                         <th style=" text-align: center">{$lang->get('estandar_nombre_columna')}</th>
