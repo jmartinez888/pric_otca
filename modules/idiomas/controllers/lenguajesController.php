@@ -383,7 +383,7 @@ class lenguajesController extends idiomasController {
 	}
 
 	public function show ($id) {
-		$this->_view->getLenguaje('idiomas_lenguajes');
+		$lenguaje = $this->_view->getLenguaje('idiomas_lenguajes', false, true);
 		$row = IdiomaFiles::find($id);
 		if ($this->isAcceptJson()) {
 			$res = ['success' => $row != null, 'data' => null];
@@ -425,6 +425,7 @@ class lenguajesController extends idiomasController {
 					'idiomas' => $vars_idioma,
 					'file_id' => $row->Idif_IdIdiomaFile
 				];
+				$data['titulo'] = $lenguaje->get('idiomas_lenguajes_titulo').' - '.$row->Idif_FileName;
 				$data['elemento'] = $row;
 				$data['idiomas'] = $idiomas;
 				$data['data_vue'] = $data_vue;
@@ -436,7 +437,7 @@ class lenguajesController extends idiomasController {
 	public function index ($id = 'index') {
 		if ($id == 'index' || !is_numeric($id)) {
 			$lenguaje = $this->_view->getLenguaje('idiomas_lenguajes', false, true);
-			$data['titulo'] = $lenguaje->var('idiomas_lenguajes_titulo');
+			$data['titulo'] = $lenguaje->get('idiomas_lenguajes_titulo');
 			$this->_view->assign($data);
 			$this->_view->render('index');
 		} else {

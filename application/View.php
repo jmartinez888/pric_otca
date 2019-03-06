@@ -356,7 +356,7 @@ class View extends Smarty
 
     public function getLenguaje($archivo, $lang = false, $res_class = false)
     {
-
+        //CARGAR LENGUAJE EN TPL
         // if (!is_array($archivo))
         // {
         //     $archivo = array($archivo);
