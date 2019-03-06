@@ -179,7 +179,7 @@ class indexController extends estandarController
     {
         $this->_acl->acceso('editar_estandar');
         $this->validarUrlIdioma();                
-        $this->_view->getLenguaje("index_inicio");
+        $this->_view->getLenguaje(["index_inicio", "estandar_index"]);
         $this->_view->setJs(array('index'));
         $idEstandarRecurso = $this->filtrarInt($idEstandarRecurso);
         $estandar_recurso = $this->_estandar->getEstandar_recurso("WHERE Esr_IdEstandarRecurso=$idEstandarRecurso");
