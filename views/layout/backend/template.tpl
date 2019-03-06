@@ -212,8 +212,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                     <li><a href="{$_layoutParams.root}bdrecursos/import/excel/420">{$lenguaje.menu_izquierdo_2_6_3}</a></li>
                                     <li><a href="{$_layoutParams.root}bdrecursos/import/webservices/420">{$lenguaje.menu_izquierdo_2_6_4}</a></li>
                                     <!-- <li><a href="{$_layoutParams.root}pecari/registrar/index/420">Pecari</a></li> -->
-                                    <li><a href="{$_layoutParams.root}bdrecursos/import/rss/420">Importar RSS</a></li>
-                                    <li><a href="{$_layoutParams.root}bdrecursos/import/json/420">Importar JSON</a></li>
+                                    <li><a href="{$_layoutParams.root}bdrecursos/import/rss/420">{$lenguaje.menu_izquierdo_importar_rss}</a></li>
+                                    <li><a href="{$_layoutParams.root}bdrecursos/import/json/420">{$lenguaje.menu_izquierdo_importar_json}</a></li>
                                 </ul>
                             </li>
                             {/if}

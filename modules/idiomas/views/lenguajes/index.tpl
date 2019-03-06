@@ -3,7 +3,7 @@
 {block 'contenido'}
 <div id="container_vue" class="hidden">
     <div class="row" style="padding-left: 1.3em; padding-bottom: 20px;">
-        <h4 class="titulo-view">{lenguaje v='idiomas_lenguajes_titulo'}</h4>
+        <h4 class="titulo-view">{$lang->get('idiomas_lenguajes_titulo')}</h4>
     </div>
      <div class="panel panel-default">
                 <div class="panel-heading jsoftCollap">
