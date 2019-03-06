@@ -104,7 +104,7 @@
             <div class="panel-heading">
                 <form  id="form2" role="form" method="post" action="" autocomplete="on">
                     <h3 class="panel-title">
-                        <i class="glyphicon glyphicon-list-alt"></i>&nbsp;&nbsp;<strong class="text-uppsercase">{$lang->get('estandar_buscar_campo')} </strong>
+                        <i class="glyphicon glyphicon-list-alt"></i>&nbsp;&nbsp;<strong class="text-uppercase">{$lang->get('estandar_buscar_campo')} </strong>
                         {if isset($tablaGenerada) && $tablaGenerada == 1}
                             <button class="btn btn-xs btn-danger pull-right text-uppercase" id="bt_generarTabla" name="bt_generarTabla" type="submit" ><i class="glyphicon glyphicon-tasks " ></i>&nbsp; {$lang->get('estandar_procesar_estandar')}</button>                        
                         {/if}
