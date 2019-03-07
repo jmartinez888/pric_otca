@@ -1,8 +1,9 @@
 // Menu(1);
 RefreshTagUrl();
-$(document).ready(function(){
+$(document).on('ready', function () { 
   // Jhon Martinez
-  $("#item_titulo").click(function() {
+  $("body").on('click', "#item_titulo", function () {
+  // $("#item_titulo").click(function() {
     $(this).removeClass("active");
     $("#item_contenido").removeClass("active"); 
     $("#item_referencias").removeClass("active");
@@ -16,7 +17,8 @@ $(document).ready(function(){
     $('.div_materiales').css('display', 'none');
     $('.div_tareas').css('display', 'none');
   });
-  $("#item_contenido").click(function() {
+  $("body").on('click', "#item_contenido", function () {
+  // $("#item_contenido").click(function() {
     $(this).removeClass("active");
     $("#item_titulo").removeClass("active"); 
     $("#item_referencias").removeClass("active");
@@ -30,7 +32,8 @@ $(document).ready(function(){
     $('.div_materiales').css('display', 'none');
     $('.div_tareas').css('display', 'none');
   });
-  $("#item_referencias").click(function() {
+  $("body").on('click', "#item_referencias", function () {
+  // $("#item_referencias").click(function() {
     $(this).removeClass("active");
     $("#item_titulo").removeClass("active"); 
     $("#item_contenido").removeClass("active");
@@ -44,7 +47,8 @@ $(document).ready(function(){
     $('.div_materiales').css('display', 'none');
     $('.div_tareas').css('display', 'none');
   });
-  $("#item_materiales").click(function() {
+  $("body").on('click', "#item_materiales", function () {
+  // $("#item_materiales").click(function() {
     $(this).removeClass("active");
     $("#item_titulo").removeClass("active"); 
     $("#item_contenido").removeClass("active");
@@ -58,7 +62,8 @@ $(document).ready(function(){
     $('.div_referencias').css('display', 'none');
     $('.div_tareas').css('display', 'none');
   });
-  $("#item_tareas").click(function() {
+  $("body").on('click', "#item_tareas", function () {
+  // $("#item_tareas").click(function() {
     $(this).removeClass("active");
     $("#item_titulo").removeClass("active"); 
     $("#item_contenido").removeClass("active");
@@ -76,12 +81,14 @@ $(document).ready(function(){
 
   $('#inEditContenido').ckeditor();
   $('#inContenidoCon').ckeditor();
-  $("#btn_nuevo_contenido").click(function(){
+  $("body").on('click', "#btn_nuevo_contenido", function () {
+  // $("#btn_nuevo_contenido").click(function(){
     $("#panelNuevoContenido").modal("show");
     $("#inTituloCon").focus();
   });
 
-  $("#btn_registrar_contenido").click(function(e){
+  $("body").on('click', "#btn_registrar_contenido", function (e) {
+  // $("#btn_registrar_contenido").click(function(e){
     e.preventDefault();
 
     $.fn.Mensaje({ mensaje: "¿Desea registrar este contenido?", tipo: "SiNo",
@@ -98,8 +105,8 @@ $(document).ready(function(){
     });
   });
 
-
-  $(".btnEditar").click(function(e){
+  $("body").on('click', ".btnEditar", function (e) {
+  // $(".btnEditar").click(function(e){
     e.preventDefault();
 
     var Id = $(this).parent().find(".hidden_IdContenido").val();
@@ -113,7 +120,8 @@ $(document).ready(function(){
     $("#inEditContenido").val(Contenido);
   });
 
-  $("#btn_editar_contenido").click(function(e){
+  $("body").on('click', "#btn_editar_contenido", function (e) {
+  // $("#btn_editar_contenido").click(function(e){
     e.preventDefault();
 
     $.fn.Mensaje({ mensaje: "¿Desea actualizar este contenido?", tipo: "SiNo",
@@ -144,7 +152,7 @@ $(document).ready(function(){
 
 function gestion_idiomas_view_leccion(Lec_IdLeccion, idIdiomaOriginal, idIdioma) {
     $("#cargando").show();
-    alert(Lec_IdLeccion+idIdioma+idIdiomaOriginal);
+    // alert(Lec_IdLeccion+idIdioma+idIdiomaOriginal);
     $.post(_root_  + _modulo + '/gleccion/gestion_idiomas_view_leccion',
             {
                 idIdioma: idIdioma,

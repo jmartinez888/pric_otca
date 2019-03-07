@@ -246,9 +246,9 @@
         <form class="form-horizontal" id="frm_registro_referencia" method="post" action="gleccion/_registrar_referencia">
           <div class="col-lg-12 margin-t-10"><strong>Titulo</strong></div>
           <input hidden="hidden" value="{$leccion.Lec_IdLeccion}" name="leccion"/>
-          <div class="col-lg-12"><input class="form-control" name="titulo" id="inTituloRef" /></div>
+          <div class="col-lg-12"><input required="" class="form-control" name="titulo" id="inTituloRef" /></div>
           <div class="col-lg-12 margin-t-10"><strong>Referencia</strong></div>
-          <div class="col-lg-12"><input class="form-control" name="descripcionRef" id="inDescripcionRef" /></div>
+          <div class="col-lg-12"><input type="URL" required="" class="form-control" name="descripcionRef" id="inDescripcionRef" /></div>
           <div class="col-lg-12 margin-t-10"><button class="btn btn-success" id="btn_registrar_referencia">Registrar</button></div>
         </form>
       </div>
