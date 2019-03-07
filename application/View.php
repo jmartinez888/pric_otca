@@ -256,9 +256,10 @@ class View extends Smarty
         }
         else
         {
+            echo $this->_rutas['view'] . $vista . '.tpl';
             throw new Exception('Error de vista');
         }
-        //echo $this->_rutas['view'] . $vista . '.tpl'; exit();
+        
 
         $this->display('template.tpl');
     }
