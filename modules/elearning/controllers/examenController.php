@@ -1,5 +1,11 @@
 <?php
 
+use App\Curso;
+use App\Idioma;
+use App\OIndicadores;
+use App\ContenidoTraducido;
+use Illuminate\Database\Capsule\Manager as DB;
+
 /**
  * Description of loginController
  * @author ROLORO
@@ -450,9 +456,19 @@ class examenController extends elearningController {
         $modulos = $this->examen->getModulos($id);
 
         if ($this->botonPress("guardar")) {
-
-            $examen = $this->examen->insertExamen($id,$this->getSql("idiomaRadio"), $this->getSql("selectmodulo"), $this->getSql("titulo"), $this->getSql("porcentaje"), $this->getSql("puntaje"),  $this->getSql("intentos"), $this->getInt("selectleccion"));
-
+            // dd($_POST);
+            $examen = $this->examen->insertExamen(
+                $id,
+                $this->getSql("idiomaRadio"),
+                $this->getSql("selectmodulo"), 
+                $this->getSql("titulo"), 
+                $this->getSql("porcentaje"), 
+                $this->getSql("puntaje"),  
+                $this->getSql("intentos"), 
+                $this->getInt("selectleccion")
+                
+            );
+            // dd($_POST, $examen);
             if($examen){
                 $this->redireccionar('elearning/examen/preguntas/'.$id.'/'.$examen[0]);
             }
@@ -471,11 +487,62 @@ class examenController extends elearningController {
         $this->_view->assign('titulo', $titulo["Cur_Titulo"]);
         $this->_view->renderizar('nuevoexamen', 'elearning');
     }
+    public function editarexamen_gestion_idiomas () {
+        $this->_acl->autenticado();
+        if ($this->has(['idioma_original_id', 'idioma_id', 'curso_id', 'examen_id'])) {
+            $idioma_id = $this->getTexto('idioma_id');
+            $idioma_original_id = $this->getTexto('idioma_original_id');
+            $examen_id = $this->getInt('examen_id');
+            $curso_id = $this->getInt('curso_id');
+
+            $lang = $this->_view->getLenguaje('elearning_cursos', false, true);
+            $_aclm = $this->loadModel("index", "acl");
+       
+
+            if(strlen($curso_id)==0){ $curso_id = Session::get("learn_param_curso"); }
+            if(strlen($curso_id)==0){ exit; }
+            
+            $modulos = $this->examen->getModulos($curso_id, $idioma_id);
+            if ($modulos) {
+                // $titulo = $this->examen->getTituloCurso($id, Cookie::lenguaje());
+                // $examen = $this->examen->getExamen($examen_id, $idioma_id);
+                // $examen = $this->examen::boot();
+                // $examen = $this->examen::where('Exa_IdExamen', $examen_id)->first();
+                $this->examen::setForceLang($idioma_id);
+                $examen = $this->examen::find($examen_id);
+                if ($idioma_original_id != $idioma_id) { 
+
+                }
+                $examen->Idi_IdIdioma_Peticion = $idioma_id;
+                $examenAlumno = $this->examen->getExamenAlumnos($examen_id);
+                $Exa_Porcentaje = $this->examen->getExamenesPorcentaje($curso_id);
+                $Tra_Porcentaje = $this->examen->getTrabajosPorcentaje($curso_id);
+                $Porcentaje = 100 - $Exa_Porcentaje['Exa_PorcentajeTotal'] - $Tra_Porcentaje['Tra_PorcentajeTotal'] + $examen['Exa_Porcentaje'];
+                // echo $Porcentaje.'//'.$Exa_Porcentaje['Exa_PorcentajeTotal'].'//'.$Tra_Porcentaje['Tra_PorcentajeTotal'].'//'.$examen['Exa_Porcentaje']
+                // ;
+                $this->_view->assign('curso',Curso::find($curso_id));
+                // $this->_view->assign('titulo', $titulo["Cur_Titulo"]);
+                $this->_view->assign('modulos', $modulos);
+                $this->_view->assign('idiomas',Idioma::activos());
+                $this->_view->assign('examen', $examen);
+                $this->_view->assign('examenAlumno', $examenAlumno);
+                $this->_view->assign('porcentaje', $Porcentaje);
+                $this->_view->assign('lecciones', $this->examen->getLecciones($examen['Moc_IdModulo']), Cookie::lenguaje());
+                $this->_view->assign('idcurso', $curso_id);
+                $this->_view->render('editarexamen_gestion_idioma', 'elearning');
+            }
+    
+        } else {
+            echo 'NOT FOUND';
+        }
+
+    }
     public function editarexamen($id, $idExamen){
         // $this->_view->setCss(array("verificar"));
         // $id = $this->getTexto("id");
         $this->_view->setTemplate(LAYOUT_FRONTEND);
         $lang = $this->_view->getLenguaje('elearning_cursos', false, true);
+        $_aclm = $this->loadModel("index", "acl");
         $this->_view->setJs(array(array(BASE_URL . 'modules/elearning/views/gestion/js/core/util.js'), "index"));
 
         if(strlen($id)==0){ $id = Session::get("learn_param_curso"); }
@@ -490,29 +557,83 @@ class examenController extends elearningController {
             $this->redireccionar('elearning/examen/preguntas/'.$id.'/'.$idExamen);
         }
         if ($this->botonPress("guardarEditar")) {
-            $examen = $this->examen->editExamen($id,$this->getSql("selectmodulo"), $this->getSql("titulo"), $this->getSql("porcentaje"), $this->getInt("puntaje"),  $this->getSql("intentos"), $this->getInt("selectleccion"), $idExamen);
-            if($examen){
-                $this->_view->assign('_mensaje', 'Se guardo correctamente los cambios..!!');
+            // dd($_POST, $idExamen, $id);
+            
+            if ($this->has(['idioma_original_id', 'idioma_id'])) {
+                $idioma_id = $this->getTexto('idioma_id');
+                $idioma_original_id = $this->getTexto('idioma_original_id');    
+                $examen_id = $this->getInt('examen_id');
+                $curso_id = $this->getInt('curso_id');
+                // dd($_POST);
+                if ($examen_id == $idExamen && $curso_id == $id) {
+                    $objExamen = $this->examen::find($idExamen);
+                    if ($objExamen) {
+
+                        DB::beginTransaction();
+                        // $objExamen->Cur_IdCurso = 0;
+                        $objExamen->Moc_IdModulo = $this->getSql("selectmodulo");
+                        if ($idioma_id == $objExamen->Idi_IdIdioma) {
+                            $objExamen->Exa_Titulo = $this->getSql("titulo");
+                        } else {
+                            ContenidoTraducido::updateRow('examen', $examen_id, $idioma_id, [
+                                'Exa_Titulo' => $this->getSql("titulo"),
+                            ], true);
+                        }
+                        $objExamen->Exa_Porcentaje = $this->getSql("porcentaje");
+                        $objExamen->Exa_Peso = $this->getInt("puntaje");
+                        $objExamen->Exa_Intentos = $this->getSql("intentos");
+                        $objExamen->Lec_IdLeccion = $this->getInt("selectleccion");
+                        // $objExamen->Exa_IdExamen = 0;
+                        // $resup = $this->examen->editExamen(
+                        //     $id,
+                        //     $this->getSql("selectmodulo"), 
+                        //     $this->getSql("titulo"), 
+                        //     $this->getSql("porcentaje"), 
+                        //     $this->getInt("puntaje"),  
+                        //     $this->getSql("intentos"), 
+                        //     $this->getInt("selectleccion"), $idExamen);
+                        if($objExamen->save()){
+                            DB::commit();
+                            $this->_view->assign('_mensaje', 'Se guardo correctamente los cambios..!!');
+                        } else {
+                            DB::rollback();
+                        }
+                    }
+                }
+
+                // if ($idioma_id == $idioma_original_id) {
+                    
+                // } else {
+                //     ContenidoTraducido::updateRow('examen', $examen_id, $this->getSql("titulo"), [
+                //         'ODif_Titulo' => $post['idiomas'][$idioma_var]['titulo'],
+                //         'ODif_Descripcion' => $post['idiomas'][$idioma_var]['descripcion'],
+                //         'ODif_Contenido' => $post['idiomas'][$idioma_var]['contenido'],
+                //         'ODif_Palabras' => $post['idiomas'][$idioma_var]['palabras_clave'],
+                //     ], true);
+                // }
             }
         }
 
         $titulo = $this->examen->getTituloCurso($id, Cookie::lenguaje());
         $examen = $this->examen->getExamen($idExamen, Cookie::lenguaje());
+        // dd($examen);
+        $examen['Idi_IdIdioma_Peticion'] = $examen['Idi_IdIdioma'];
         $examenAlumno = $this->examen->getExamenAlumnos($idExamen);
         $Exa_Porcentaje = $this->examen->getExamenesPorcentaje($id);
         $Tra_Porcentaje = $this->examen->getTrabajosPorcentaje($id);
         $Porcentaje = 100 - $Exa_Porcentaje['Exa_PorcentajeTotal'] - $Tra_Porcentaje['Tra_PorcentajeTotal'] + $examen['Exa_Porcentaje'];
         // echo $Porcentaje.'//'.$Exa_Porcentaje['Exa_PorcentajeTotal'].'//'.$Tra_Porcentaje['Tra_PorcentajeTotal'].'//'.$examen['Exa_Porcentaje']
         // ;
-
+        $this->_view->assign('curso',Curso::find($id));
         $this->_view->assign('titulo', $titulo["Cur_Titulo"]);
         $this->_view->assign('modulos', $modulos);
+        $this->_view->assign('idiomas',$_aclm->getIdiomas());
         $this->_view->assign('examen', $examen);
         $this->_view->assign('examenAlumno', $examenAlumno);
         $this->_view->assign('porcentaje', $Porcentaje);
         $this->_view->assign('lecciones', $this->examen->getLecciones($examen['Moc_IdModulo']), Cookie::lenguaje());
         $this->_view->assign('idcurso', $id);
-        $this->_view->renderizar('editarexamen', 'elearning');
+        $this->_view->render('editarexamen', 'elearning');
     }
 
     // Respuestas (intentos)===================================================================================

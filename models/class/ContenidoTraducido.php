@@ -17,6 +17,14 @@ class ContenidoTraducido extends Eloquent
   							->get();
   }
 
+  
+  public static function existeRow ($table, $id, $lenguaje) {
+  	return self::where('Cot_Tabla', $table)
+  							->where('Cot_IdRegistro', $id)
+  							->where('Idi_IdIdioma', $lenguaje)
+  							->count() > 0;
+  }
+
   public static function setRow ($table, $id, $columna, $contenido, $idioma) {
     $traducido = new ContenidoTraducido();
     $traducido->Cot_Tabla = $table;

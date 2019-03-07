@@ -1,8 +1,36 @@
 <?php
 
-class examenModel extends Model {
+use Illuminate\Database\Capsule\Manager as DB;
+use Illuminate\Database\Eloquent\Builder;
 
-    public function __construct() { parent::__construct(); }
+class examenModel extends Model {
+    
+    protected $table = 'examen';
+    protected $primaryKey = 'Exa_IdExamen';
+    public $timestamps = false;
+
+    public function scopeAyuda ($query) {
+        return $query->where('Exa_Peso', 20);
+    }
+    
+    protected static function boot() {
+        parent::boot();
+        // exit;
+        static::addGlobalScope('translate', function (Builder $builder) {
+          $builder->select(
+            '*',
+            DB::raw("fn_TraducirContenido('examen','Exa_Titulo',examen.Exa_IdExamen,'".self::getCurrentLang()."',examen.Exa_Titulo)  Exa_Titulo")
+            // DB::raw("fn_TraducirContenido('ora_indicadores','OInd_Descripcion',ora_indicadores.OInd_IdIndicadores,'".\Cookie::lenguaje()."',ora_indicadores.OInd_Descripcion)  OInd_Descripcion")
+  
+          );
+  
+        });
+        // return self;
+    }
+    public function __construct() {
+        parent::__construct();
+        self::boot();
+    }
 
     // public function getExamen($leccion){
     //   $sql = "SELECT * FROM examen WHERE Lec_IdLeccion = {$leccion}
@@ -434,6 +462,7 @@ class examenModel extends Model {
     }
 
     public function editExamen($iCur_IdCurso,$iMoc_IdModulo, $iExa_Titulo, $iExa_Porcentaje, $iExa_Peso, $iExa_Intentos,$iLec_IdLeccion, $iExa_IdExamen){
+        
         try {             
             $sql = "call s_u_examen(?,?,?,?,?,?,?,?)";
             $result = $this->_db->prepare($sql);

@@ -37,7 +37,7 @@
                     <input type="hidden" id="idiomaTradu" value="{$modulo.Idi_IdIdioma}"/>
                 </li>    
             {/foreach}
-          </ul>
+          </ul> 
       </div>        
     {/if}
 

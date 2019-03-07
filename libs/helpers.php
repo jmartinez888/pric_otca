@@ -15,4 +15,18 @@
     }
   }
 
+  trait verificarIdioma {
+    public static function setForceLang ($lang, $force = true) {
+      self::$USE_FORCE_LANG = $force;
+      self::$FORCE_LANG = $lang;
+    }
+    public static function getCurrentLang () {
+      if (self::$USE_FORCE_LANG) {
+        return self::$FORCE_LANG;
+      } else {
+        return \Cookie::lenguaje();
+      }
+    }
+  }
+
  ?>

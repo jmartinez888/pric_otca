@@ -40,7 +40,7 @@ abstract class Controller
         $this->_view->render('component/'.$name);
     }
 
-    protected function loadModel($modelo, $modulo = false)
+    protected function loadModel($modelo, $modulo = false, $instance = false)
     {
         $modelo = $modelo . 'Model';
         $rutaModelo = ROOT . 'models' . DS . $modelo . '.php';

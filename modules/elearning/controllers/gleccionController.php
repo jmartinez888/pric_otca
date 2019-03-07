@@ -422,6 +422,7 @@ class gleccionController extends elearningController {
     }
 
     public function eliminar_encuesta ($leccion_id) {
+        
         $this->_acl->autenticado();
         $res = ['success' => false, 'msg' => ''];
         if ($this->_acl->tienePermisos('crear_encuestas_leccion')) {

@@ -99,8 +99,15 @@ $(document).on('ready', function () {
          }
 
     $("body").on('click', ".idioma_s", function () {
-        var id = $(this).attr("id");
-        var idIdioma = $("#hd_" + id).val();
+        let _this = $(this);
+
+        let parentLi = _this.parent('li');
+        console.log(parentLi);
+        var id = _this.attr("id");
+        var tag = $("#hd_" + id);
+        var idIdioma = tag.val();
+        console.log(idIdioma)
+        $('#idioma_target_id').val(idIdioma)
         gestionIdiomas($("#idRol").val(), $("#idIdiomaOriginal").val(), idIdioma);
     });
 
@@ -637,15 +644,16 @@ function buscarExamenAlumno(criterio, Exl_IdExamenAlumno=0) {
 
 function gestionIdiomas(idrol, idIdiomaOriginal, idIdioma) {
     $("#cargando").show();
-    $.post(_root_ + 'acl/index/gestion_idiomas_rol',
+    $.post(base_url('elearning/examen/editarexamen_gestion_idiomas'),
             {
-                idrol: idrol,        
-                idIdioma: idIdioma,
-                idIdiomaOriginal: idIdiomaOriginal
+                curso_id: $('#idcurso').val(),        
+                examen_id: $('#examen_id').val(),        
+                idioma_id: idIdioma,
+                idioma_original_id: idIdiomaOriginal
             }, function (data) {
-        $("#gestion_idiomas_rol").html('');
+        $("#replace_contenido").html('');
         $("#cargando").hide();
-        $("#gestion_idiomas_rol").html(data);
+        $("#replace_contenido").html(data);
         $('form').validator();
     });
 }

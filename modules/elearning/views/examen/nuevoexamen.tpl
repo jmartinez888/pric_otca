@@ -5,7 +5,7 @@
             <div class=" " style="margin-bottom: 0px !important">
                 <div class="text-center text-bold" style="margin-top: 20px; margin-bottom: 20px; color: #267161;">
                     <h3 style="text-transform: uppercase; margin: 0; font-weight: bold;">
-                    {$titulo}
+                    {$titulo} 
                     </h3>
                 </div>
             </div>
@@ -17,15 +17,15 @@
         <form class="form-horizontal" autocomplete="on" method="POST">
             <input type="hidden" value="1" name="enviar" />
             <input type="hidden" name="idcurso" id="idcurso" value="{$idcurso}">
-            <input type="hidden" name="hidden_curso" id="hidden_curso" value="{$idcurso}">
 
             <div class="form-group" >
-                <label class="col-lg-3 control-label">{$lenguaje.label_idioma} : </label>
+                <label class="col-lg-3 control-label">{$lang->get('str_idioma')} : </label>
                 {if  isset($idiomas) && count($idiomas)}              
                     <div class="form-inline col-lg-9">
                     {foreach from=$idiomas item=idi}
                         {if  isset($datos) && count($datos)}
-                        {if $datos.Idi_IdIdioma==$idi.Idi_IdIdioma} <input type="hidden" value="{$idi.Idi_Idioma}" id="idiomaRadio" name="idiomaRadio"> {/if}
+                        {if $datos.Idi_IdIdioma==$idi.Idi_IdIdioma} 
+                        <input type="hidden" value="{$idi.Idi_Idioma}" id="idiomaRadio" name="idiomaRadio"> {/if}
                         <div class="radio">
                             <label>
                                 <input disabled="true" type="radio"  value="{$idi.Idi_IdIdioma}" 
@@ -36,7 +36,7 @@
                         {else}
                         <div class="radio">
                             <label>
-                                <input type="radio"  name="idiomaRadio" id="idiomaRadio" value="{$idi.Idi_IdIdioma}"  
+                                <input type="radio"  name="idiomaRadio" id="idiomaRadio_{$idi.Idi_IdIdioma}" value="{$idi.Idi_IdIdioma}"  
                                     {if isset($idiomaUrl) && $idiomaUrl == $idi.Idi_IdIdioma } checked="checked" {/if} required>
                                 {$idi.Idi_Idioma} 
                             </label>  

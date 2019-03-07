@@ -2,11 +2,15 @@
 <?php
 use Illuminate\Database\Eloquent\Model as Eloquent;
 class Model extends Eloquent{
-
+    use \verificarIdioma;
+    
     private $_registry;
     protected $_db;
     protected $_request;
     protected $_acl;
+
+    private static $USE_FORCE_LANG = false;
+    private static $FORCE_LANG = '';
 
     public function __construct() {
         $this->_registry = Registry::getInstancia();
@@ -15,7 +19,18 @@ class Model extends Eloquent{
         $this->_db = $this->_registry->_db;
         $this->_db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
-
+    // protected static function boot() {
+    //     parent::boot();
+    //     // exit;
+    //     static::addGlobalScope('translate', function (Builder $builder) {
+    //       $builder->addSelect(
+    //         DB::raw("fn_TraducirContenido('examen','Exa_Titulo',examen.Exa_IdExamen,'pt',examen.Exa_Titulo)  Exa_Tituloxx")
+    //         // DB::raw("fn_TraducirContenido('ora_indicadores','OInd_Descripcion',ora_indicadores.OInd_IdIndicadores,'".\Cookie::lenguaje()."',ora_indicadores.OInd_Descripcion)  OInd_Descripcion")
+  
+    //       );
+  
+    //     });
+    // }
     protected function loadModel($modelo, $modulo = false) {
         $modelo = $modelo . 'Model';
         $rutaModelo = ROOT . 'models' . DS . $modelo . '.php';
