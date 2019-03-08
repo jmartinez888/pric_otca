@@ -1080,7 +1080,7 @@ class examenController extends elearningController {
         $this->_view->assign('titulo', $titulo["Cur_Titulo"]);
         $this->_view->assign('examen', $idExamen);
         $this->_view->assign('idcurso', $id);
-        $this->_view->renderizar('preguntas', 'preguntas');
+        $this->_view->render('preguntas', 'preguntas');
     }
 
     public function _paginacion_listarpreguntas($txtBuscar = false)

@@ -1,5 +1,7 @@
+{extends 'template.tpl'}
+{block 'contenido'}
 {include file='modules/elearning/views/gestion/menu/menu.tpl'}
-<div class="col-lg-10">
+<div class="col-xs-12 col-sm-12 col-md-9 col-lg-10">
     <div class="col-lg-12">
         <div class="col-lg-12">
           <div class=" " style="margin-bottom: 0px !important">
@@ -15,23 +17,23 @@
         <hr class="cursos-hr">
         <div class="row">
             <div class="col-sm-2 text-center">
-                <a class="nueva_pregunta" _href="{$_layoutParams.root}elearning/examen/registrarRespuestaUnica/{$examen}/{$idcurso}" ><img src="https://campus.chamilo.org/main/img/icons/64/mcua.png" alt="Respuesta única" data-toggle="tooltip" data-placement="top" title="{$lenguaje["elearning_preguntas_crearrespuestaunica"]}"></a>
+                <a class="nueva_pregunta" _href="{$_layoutParams.root}elearning/examen/registrarRespuestaUnica/{$examen}/{$idcurso}" ><img src="https://campus.chamilo.org/main/img/icons/64/mcua.png" alt="{$lang->get('elearning_preguntas_respU')}" data-toggle="tooltip" data-placement="top" title="{$lenguaje["elearning_preguntas_crearrespuestaunica"]}"></a>
             <label class="text-bold">{$lenguaje["elearning_pregunta_unica"]}</label>
             </div>
             <div class="col-sm-2 text-center">
-                <a class="nueva_pregunta" _href="{$_layoutParams.root}elearning/examen/registrarRespuestaMultiple/{$examen}/{$idcurso}" ><img src="https://campus.chamilo.org/main/img/icons/64/mcma.png" alt="Respuesta múltiple" data-toggle="tooltip" data-placement="top" title="{$lenguaje["elearning_preguntas_crearrespuestamult"]}"></a>
+                <a class="nueva_pregunta" _href="{$_layoutParams.root}elearning/examen/registrarRespuestaMultiple/{$examen}/{$idcurso}" ><img src="https://campus.chamilo.org/main/img/icons/64/mcma.png" alt="{$lang->get('elearning_preguntas_respM')}" data-toggle="tooltip" data-placement="top" title="{$lenguaje["elearning_preguntas_crearrespuestamult"]}"></a>
             <label class="text-bold">{$lenguaje["elearning_pregunta_respm"]}</label>
             </div>
             <div class="col-sm-2 text-center">
-                <a class="nueva_pregunta" _href="{$_layoutParams.root}elearning/examen/registrarRespuestaBlanco/{$examen}/{$idcurso}" ><img src="https://campus.chamilo.org/main/img/icons/64/fill_in_blanks.png" alt="Rellenar blancos" data-toggle="tooltip" data-placement="top" title="{$lenguaje["elearning_preguntas_rellenarblancos"]}"></a>
+                <a class="nueva_pregunta" _href="{$_layoutParams.root}elearning/examen/registrarRespuestaBlanco/{$examen}/{$idcurso}" ><img src="https://campus.chamilo.org/main/img/icons/64/fill_in_blanks.png" alt="{$lang->get('elearning_pregunta_rlleblancos')}" data-toggle="tooltip" data-placement="top" title="{$lenguaje["elearning_preguntas_rellenarblancos"]}"></a>
             <label class="text-bold">{$lenguaje["elearning_pregunta_rlleblancos"]}</label>
             </div>
             <div class="col-sm-2 text-center">
-                <a class="nueva_pregunta" _href="{$_layoutParams.root}elearning/examen/registrarRespuestaRelacionar/{$examen}/{$idcurso}" ><img src="https://campus.chamilo.org/main/img/icons/64/matching.png" alt="Relacionar" data-toggle="tooltip" data-placement="top" title="{$lenguaje["elearning_preguntas_relacionar"]}"></a>
+                <a class="nueva_pregunta" _href="{$_layoutParams.root}elearning/examen/registrarRespuestaRelacionar/{$examen}/{$idcurso}" ><img src="https://campus.chamilo.org/main/img/icons/64/matching.png" alt="{$lang->get('elearning_preguntas_relacionar')}" data-toggle="tooltip" data-placement="top" title="{$lenguaje["elearning_preguntas_relacionar"]}"></a>
             <label class="text-bold">{$lenguaje["elearning_preguntas_relacionar"]}</label>
             </div>
             <div class="col-sm-2 text-center">
-                <a class="nueva_pregunta" _href="{$_layoutParams.root}elearning/examen/registrarRespuestaAbierta/{$examen}/{$idcurso}" ><img src="https://campus.chamilo.org/main/img/icons/64/open_answer.png" alt="Respuesta abierta" data-toggle="tooltip" data-placement="top" title="{$lenguaje["elearning_preguntas_respabierta"]}"></a>
+                <a class="nueva_pregunta" _href="{$_layoutParams.root}elearning/examen/registrarRespuestaAbierta/{$examen}/{$idcurso}" ><img src="https://campus.chamilo.org/main/img/icons/64/open_answer.png" alt="{$lang->get('elearning_preguntas_resA')}" data-toggle="tooltip" data-placement="top" title="{$lenguaje["elearning_preguntas_respabierta"]}"></a>
             <label class="text-bold">{$lenguaje["elearning_preguntas_respuestaabierta"]}</label>
             </div>
             <!-- <div style="display:inline-block;padding-right:2em">
@@ -41,7 +43,7 @@
                <!--  <a {if $puntos_maximo>0} href="{$_layoutParams.root}elearning/examen/registrarRespuestaCombinacionExacta/{$examen}/{$idcurso}" {else}
              data-toggle="modal"  data-target="#msj-invalido" data-placement="bottom" 
             {/if}><img src="https://campus.chamilo.org/main/img/icons/64/mcmac.png" alt="Combinación Exacta" data-toggle="tooltip" data-placement="top" title="Crear pregunta con Combinación Exacta"></a> -->
-             <a class="nueva_pregunta" _href = "{$_layoutParams.root}elearning/examen/registrarRespuestaCombinacionExacta/{$examen}/{$idcurso}"><img src="https://campus.chamilo.org/main/img/icons/64/mcmac.png" alt="Combinación Exacta" data-toggle="tooltip" data-placement="top" title="{$lenguaje["elearning_preguntas_combinacionexacta"]}"></a>
+             <a class="nueva_pregunta" _href = "{$_layoutParams.root}elearning/examen/registrarRespuestaCombinacionExacta/{$examen}/{$idcurso}"><img src="https://campus.chamilo.org/main/img/icons/64/mcmac.png" alt="{$lang->get('elearning_preguntas_combinacione')}" data-toggle="tooltip" data-placement="top" title="{$lenguaje["elearning_preguntas_combinacionexacta"]}"></a>
             <label class="text-bold">{$lenguaje["elearning_preguntas_combinacionexacta"]}</label>
             </div>
         </div>
@@ -52,7 +54,7 @@
                 <div style="display:inline-block;padding-right:2em">
                     <input type="hidden" name="idexamen" id="idexamen" value="{$examen}">
                     <input type="hidden" name="idcurso" id="idcurso" value="{$idcurso}">          
-                    <input class="form-control" placeholder="Buscar Pregunta" style="width: 300px; float: left; margin: 0px 10px;" name="palabrapregunta" id="palabrapregunta">
+                    <input class="form-control" placeholder="{$lang->get('elearning_cursos_buscar_pregunta')}" style="width: 300px; float: left; margin: 0px 10px;" name="palabrapregunta" id="palabrapregunta">
                     <button class="btn btn-success" style=" float: left" type="button" id="buscarpregunta"  ><i class="glyphicon glyphicon-search"></i></button>
                 </div>
                 <a href="{$_layoutParams.root}elearning/examen/editarexamen/{$idcurso}/{$examen}" class="btn btn-danger margin-t-10 col-xs-2" id="btn_nuevo" ><i class="glyphicon glyphicon-triangle-left"></i>{$lenguaje["elearning_preguntas_btnregresar"]}</a>    
@@ -94,7 +96,7 @@
                                 </td>               
                                     <!-- {if $_acl->permiso("editar_rol")} -->
                                     <td style=" text-align: center">
-                                        <a data-toggle="tooltip" data-placement="bottom" class="btn btn-default btn-sm glyphicon glyphicon-refresh estado-pregunta" title="{$lenguaje.tabla_opcion_cambiar_est}" id_pregunta="{$rl.Pre_IdPregunta}" Pre_Puntos = "{$rl.Pre_Puntos}" estado="{$rl.Pre_Estado}"> </a>
+                                        <a data-toggle="tooltip" data-placement="bottom" class="btn btn-default btn-sm glyphicon glyphicon-refresh estado-pregunta" title="{$lang->get('str_cambiar_estado')}" id_pregunta="{$rl.Pre_IdPregunta}" Pre_Puntos = "{$rl.Pre_Puntos}" estado="{$rl.Pre_Estado}"> </a>
                                         
                                         <a data-toggle="tooltip" data-placement="bottom" class="btn btn-default btn-sm glyphicon glyphicon-edit" title="{$lenguaje["elearning_preguntas_botoneditar"]}" href="{$_layoutParams.root}elearning/examen/{if $rl.Pre_Tipo==1}editarRespuestaUnica{/if}{if $rl.Pre_Tipo==2}editarRespuestaMultiple{/if}{if $rl.Pre_Tipo==3}editarRespuestaBlanco{/if}{if $rl.Pre_Tipo==4}editarRespuestaRelacionar{/if}{if $rl.Pre_Tipo==5}editarRespuestaAbierta{/if}{if $rl.Pre_Tipo==6}editarRespuestaZonasImagen{/if}{if $rl.Pre_Tipo==7}editarRespuestaCombinacionExacta{/if}/{$rl.Pre_IdPregunta}/{$idcurso}"></a>
 
@@ -104,7 +106,7 @@
                                             class="btn btn-default btn-sm  glyphicon glyphicon-ok confirmar-habilitar-pregunta" title="{$lenguaje.label_habilitar}" 
                                         {else}
                                             data-book-id="{$rl.Pre_Descripcion}"
-                                            data-toggle="modal"  data-target="#confirm-delete"
+                                            data-toggle="modal"  data-target="#confirm-delete" title="{$lang->get('str_eliminar')}"
                                             class="btn btn-default btn-sm  glyphicon glyphicon-trash confirmar-eliminar-pregunta" {/if}
                                         id_pregunta="{$rl.Pre_IdPregunta}" data-placement="bottom" > </a>
                                         
@@ -167,6 +169,7 @@
         </div>
     </div>
 </div>
+{/block}
 <!-- <script type="text/javascript">
     Menu(1);
     RefreshTagUrl();
