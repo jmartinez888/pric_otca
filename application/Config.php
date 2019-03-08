@@ -45,8 +45,8 @@ const LIST_ABC = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M
 define('APP_NAME', 'ADMINISTRACION PRIC');
 define('APP_SLOGAN', 'Framework MVC en PHP');
 define('APP_COMPANY', 'www.iiap.org.pe');
-define('COOKIE_TIME', 60 * (1 * 24)); //minutos()
-define('SESSION_TIME', 10000000000000000);
+define('COOKIE_TIME', 0); //minutos()
+define('SESSION_TIME', 0);
 define('HASH_KEY', '4f6a6d832be79');
 
 define('DB_HOST', 'localhost');
