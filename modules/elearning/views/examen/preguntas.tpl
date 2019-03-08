@@ -106,7 +106,7 @@
                                             class="btn btn-default btn-sm  glyphicon glyphicon-ok confirmar-habilitar-pregunta" title="{$lenguaje.label_habilitar}" 
                                         {else}
                                             data-book-id="{$rl.Pre_Descripcion}"
-                                            data-toggle="modal"  data-target="#confirm-delete" title="{$lang->get('str_eliminar')}"
+                                            data-toggle="tooltip" data-toggle="modal"  data-target="#confirm-delete" title="{$lang->get('str_eliminar')}"
                                             class="btn btn-default btn-sm  glyphicon glyphicon-trash confirmar-eliminar-pregunta" {/if}
                                         id_pregunta="{$rl.Pre_IdPregunta}" data-placement="bottom" > </a>
                                         
