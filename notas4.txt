@@ -1,0 +1,16 @@
+PENDIENTES
+  BD
+    PA:s_i_examen
+    -Agrear Idi_Idioma en procedemiento "s_i_examen"
+    TABBLE
+      examen
+        Exa_Restrictivo set default 0
+        Exa_NroPreguntas set default 0
+
+IDIOMAS
+  strings_lang
+    str_titulo
+
+
+PROCEDIMIENTO
+  s_u_examen : NO ENCONTRADO

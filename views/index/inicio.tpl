@@ -77,7 +77,7 @@
                     <div class="col-md-8 col-sm-8 col-xs-8">
                         <div class="card-block ">
                             <h3 class="card-title" style="font-size: 15px;">OTCA celebra el Día Mundial del Agua con varias actividades en el 8º Foro Mundial de Agua.</h3>
-                            <p class="card-text" style="font-size: 12px;"><i class="fa fa-calendar"></i> Publicado: 22 de Marzo, 2018</p>
+                            <p class="card-text" style="font-size: 12px;"><i class="fa fa-calendar"></i> Publicadoss: 22 de Marzo, 2018</p>
                         </div>
                     </div>
                 </a>

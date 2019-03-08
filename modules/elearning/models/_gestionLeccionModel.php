@@ -33,7 +33,7 @@ class _gestionLeccionModel extends Model {
     fn_TraducirContenido('leccion','Lec_Titulo',L.Lec_IdLeccion,'$Idi_IdIdioma',L.Lec_Titulo) Lec_Titulo,
     fn_TraducirContenido('leccion','Lec_Descripcion',L.Lec_IdLeccion,'$Idi_IdIdioma',L.Lec_Descripcion) Lec_Descripcion,
     fn_TraducirContenido('leccion','Lec_TiempoDedicacion',L.Lec_IdLeccion,'$Idi_IdIdioma',L.Lec_TiempoDedicacion) Lec_TiempoDedicacion,
-    fn_TraducirContenido('leccion','Lec_Tipo',L.Lec_IdLeccion,'$Idi_IdIdioma',L.Lec_Tipo) Lec_Tipo,
+    L.Lec_Tipo,
     L.Lec_FechaDesde,
     L.Lec_FechaHasta,
     L.Lec_FechaReg,
@@ -53,15 +53,14 @@ class _gestionLeccionModel extends Model {
 
   public function getLeccionId($leccion, $Idi_IdIdioma = ""){
     if ($Idi_IdIdioma == "" && isset($Idi_IdIdioma)) {
-        $sql = "SELECT L.*,
-              C.Con_Descripcion as Tipo ";
+        $sql = "SELECT L.*, C.Con_Descripcion as Tipo ";
     } else {
         $sql = "SELECT L.Lec_IdLeccion,
             L.Moc_IdModuloCurso,
             fn_TraducirContenido('leccion','Lec_Titulo',L.Lec_IdLeccion,'$Idi_IdIdioma',L.Lec_Titulo) Lec_Titulo,
             fn_TraducirContenido('leccion','Lec_Descripcion',L.Lec_IdLeccion,'$Idi_IdIdioma',L.Lec_Descripcion) Lec_Descripcion,
             fn_TraducirContenido('leccion','Lec_TiempoDedicacion',L.Lec_IdLeccion,'$Idi_IdIdioma',L.Lec_TiempoDedicacion) Lec_TiempoDedicacion,
-            fn_TraducirContenido('leccion','Lec_Tipo',L.Lec_IdLeccion,'$Idi_IdIdioma',L.Lec_Tipo) Lec_Tipo,
+            L.Lec_Tipo,
             L.Lec_FechaDesde,
             L.Lec_FechaHasta,
             L.Lec_FechaReg,
@@ -118,8 +117,16 @@ class _gestionLeccionModel extends Model {
     $this->execQuery($sql);
   }
 
-  public function getReferenciaLeccion($leccion){
-    $sql = "SELECT * FROM referencia_leccion WHERE Lec_IdLeccion = {$leccion} AND Row_Estado = 1";
+  public function getReferenciaLeccion($leccion, $Idi_IdIdioma = "es"){
+    $sql = "SELECT Ref_IdReferencia, 
+            Lec_IdLeccion, 
+            fn_TraducirContenido('referencia_leccion','Ref_Titulo', Ref_IdReferencia,'$Idi_IdIdioma',Ref_Titulo) Ref_Titulo, 
+            Ref_Descripcion, 
+            Ref_FechaReg, 
+            fn_devolverIdioma('referencia_leccion', Ref_IdReferencia,'$Idi_IdIdioma', Idi_IdIdioma) Idi_IdIdioma, 
+            Ref_Estado, 
+            Row_Estado
+             FROM referencia_leccion WHERE Lec_IdLeccion = {$leccion} AND Row_Estado = 1";
     return $this->getArray($sql);
   }
 

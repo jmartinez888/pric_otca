@@ -18,9 +18,9 @@
             <label>Tiempo de Dedicación</label>
             <input class="form-control" name="dedicacion" value="{$leccion.Lec_TiempoDedicacion}" />
           </div>
-          <input hidden="hidden" id="hidden_curso" name="id_curso" value="{$curso.Cur_IdCurso}" />
+          <input hidden="hidden" id="_hidden_curso" name="id_curso" value="{$curso.Cur_IdCurso}" />
           <input name="id_modulo" id="hidden_modulo" hidden="hidden" value="{$modulo.Moc_IdModuloCurso}" />
-          <input name="id_leccion" id="hidden_leccion" hidden="hidden" value="{$leccion.Lec_IdLeccion}" />
+          <input name="id_leccion" id="_hidden_leccion" hidden="hidden" value="{$leccion.Lec_IdLeccion}" />
       </form>
       <button class="btn btn-success pull-right margin-t-10" id="btn-actualizar-leccion">Actualizar</button>
     </div>

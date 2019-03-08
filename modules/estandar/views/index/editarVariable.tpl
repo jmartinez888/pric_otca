@@ -1,11 +1,11 @@
 <div  class="container-fluid" >
     <div class="row" style="padding-left: 1.3em; padding-bottom: 20px;">
-        <h4 class="titulo-view">ESTANDARES DEL SISTEMA INTEGRADO</h4>
+        <h4 class="titulo-view text-uppercase">{$lang->get('titulo_estandar')}</h4>
     </div>
     {if isset($tablaGenerada) && $tablaGenerada == 1}
         <div class="panel panel-default">
             <div class="panel-heading jsoftCollap">
-                <h3 aria-expanded="false" data-toggle="collapse" href="#collapse3" class="panel-title collapsed"><i style="float:right"class="fa fa-ellipsis-v"></i><i class="glyphicon glyphicon-inbox  "></i>&nbsp;&nbsp;<strong>NUEVO CAMPO TABLA VARIABLE</strong></h3>
+                <h3 aria-expanded="false" data-toggle="collapse" href="#collapse3" class="panel-title collapsed"><i style="float:right"class="fa fa-ellipsis-v"></i><i class="glyphicon glyphicon-inbox  "></i>&nbsp;&nbsp;<strong>{$lang->get('estandar_nuevo_campo_tabla_variable')}</strong></h3>
             </div>        
             <div style="height: 0px;" aria-expanded="false" id="collapse3" class="panel-collapse collapse">
                 <div class="panel-body">
@@ -19,7 +19,7 @@
                                                 {$fi.Fie_CampoFicha} :
                                             </label> 
                                             <div class="col-lg-8">
-                                                <input type="text" name="{$fi.Fie_ColumnaTabla}" class="form-control" placeholder="{$fi.Fie_CampoFicha} ({if $fi.Fie_TipoDatoCampo=="int"} Entero {/if}{if $fi.Fie_TipoDatoCampo=="double"} Decimal {/if}{if $fi.Fie_TipoDatoCampo=="varchar" } Texto {/if})"/>
+                                                <input type="text" name="{$fi.Fie_ColumnaTabla}" class="form-control" placeholder="{$fi.Fie_CampoFicha} ({if $fi.Fie_TipoDatoCampo=="int"} gls{$lang->get('str_entero_numero')} {/if}{if $fi.Fie_TipoDatoCampo=="double"} {$lang->get('str_decimal')} {/if}{if $fi.Fie_TipoDatoCampo=="varchar" } {$lang->get('str_texto')} {/if})"/>
                                             </div>                                            
                                         </div>
                                     {/foreach}

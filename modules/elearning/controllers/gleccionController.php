@@ -422,6 +422,7 @@ class gleccionController extends elearningController {
     }
 
     public function eliminar_encuesta ($leccion_id) {
+        
         $this->_acl->autenticado();
         $res = ['success' => false, 'msg' => ''];
         if ($this->_acl->tienePermisos('crear_encuestas_leccion')) {
@@ -1154,13 +1155,15 @@ class gleccionController extends elearningController {
         $this->_view->render($view);
     }
     public function gestion_idiomas_view_leccion(){
-        $this->validarUrlIdioma();
+        // $this->validarUrlIdioma();
         $this->_view->setTemplate(LAYOUT_FRONTEND);
         $lang = $this->_view->getLenguaje(['elearning_cursos'], false, true);
 
-        $idIdiomaOriginal = $this->getPostParam('idIdiomaOriginal');  
-        $Idi_IdIdioma = $this->getPostParam('idIdioma');      
-        $Lec_IdLeccion = $this->getPostParam('Lec_IdLeccion');
+        $idIdiomaOriginal = $this->getTexto('idIdiomaOriginal');  
+        $Idi_IdIdioma = $this->getTexto('idIdioma');
+        $Lec_IdLeccion = $this->getInt('Lec_IdLeccion');
+        $Cur_IdCurso = $this->getInt('idCurso');
+        $Moc_IdModuloCurso = $this->getInt('idModulo');
 
         $Tmodel = $this->loadModel("trabajo"); //RODRIGO 20180605
         $Cmodel = $this->loadModel("_gestionCurso");
@@ -1168,16 +1171,38 @@ class gleccionController extends elearningController {
         $model = $this->loadModel("_gestionLeccion");
         $examen = $this->loadModel("examen");
         $_arquitectura = $this->loadModel('index','arquitectura');
-
+        // echo "string".$idIdiomaOriginal.$Idi_IdIdioma.$Lec_IdLeccion.$Cur_IdCurso.$Moc_IdModuloCurso;
         $leccion = $model->getLeccionId($Lec_IdLeccion, $Idi_IdIdioma);
-        // $Exa_Porcentaje = $examen->getExamenesPorcentaje($curso);
-        // $Tra_Porcentaje = $examen->getTrabajosPorcentaje($curso);
+        // print_r($leccion);
+        // $Porcentaje = 100 - $Exa_Porcentaje['Exa_PorcentajeTotal'] - $Tra_Porcentaje['Tra_PorcentajeTotal'];
 
-        $Porcentaje = 100 - $Exa_Porcentaje['Exa_PorcentajeTotal'] - $Tra_Porcentaje['Tra_PorcentajeTotal'];
 
-        $cursoDatos = $Cmodel->getCursoXId($curso);
-        $modulo = $Mmodel->getModuloId($modulo);
-        $referencias = $model->getReferenciaLeccion($leccion["Lec_IdLeccion"]);
+        if ($leccion["Idi_IdIdioma"] != $Idi_IdIdioma) {
+
+            $leccion["Lec_Titulo"] = " ";
+            $leccion["Lec_Descripcion"]="";
+            $leccion["Lec_TiempoDedicacion"]="";
+            // $leccion["Lec_Tipo"]="";
+            $leccion["Idi_IdIdioma"] = $Idi_IdIdioma;
+            // print_r($leccion);
+
+        }     
+
+        $cursoDatos = $Cmodel->getCursoXId($Cur_IdCurso, $Idi_IdIdioma);
+        // $modulo = $Mmodel->getModuloId($Moc_IdModuloCurso, $Idi_IdIdioma);
+        $referencias = $model->getReferenciaLeccion($leccion["Lec_IdLeccion"], $Idi_IdIdioma);
+        // print_r($referencias);
+        // echo  $referencias["Idi_IdIdioma"] ;
+        for ($i=0; $i < count($referencias); $i++) { 
+        	
+	        if ( $referencias[$i]["Idi_IdIdioma"] != $Idi_IdIdioma) {
+	            
+				unset($referencias[$i]);
+
+	        }     
+
+        }
+
         $material = $model->getMaterialLeccion($leccion["Lec_IdLeccion"]);
         $trabajo = $Tmodel->getTrabajoUsuario($leccion["Lec_IdLeccion"]); //RODRIGO 20180605
         $tipo_trabajo = $Tmodel->getConstanteTrabajo(); //RODRIGO 20180605
@@ -1187,10 +1212,10 @@ class gleccionController extends elearningController {
         $this->_view->assign('idiomas',$_arquitectura->getIdiomas());
         $this->_view->assign($data);
         $view = "";
-        $this->_view->assign('porcentaje', $Porcentaje);
+        // $this->_view->assign('porcentaje', $Porcentaje);
         $this->_view->assign('menu', 'curso');
         $this->_view->assign("curso", $cursoDatos);
-        $this->_view->assign("modulo", $modulo);
+        // $this->_view->assign("modulo", $modulo);
         $this->_view->assign("leccion", $leccion);
         $this->_view->assign("referencias", $referencias);
         $this->_view->assign("material", $material);
@@ -1200,9 +1225,10 @@ class gleccionController extends elearningController {
         switch ($leccion["Lec_Tipo"]) {
             case Leccion::TIPO_HTML:
                 $contenido = $model->getContenidoLeccion($leccion["Lec_IdLeccion"]);
+                // print_r($contenido);
                 $this->_view->assign("contenido", $contenido);
                 $this->_view->assign("Lec_Tipo",$leccion["Lec_Tipo"]);
-                $view = "ajax/_view_1";
+                $view = "ajax/gestion_idiomas_view_1";
                 break;
             case Leccion::TIPO_VIDEO:
                 $contenido = $model->getDetalleLeccion2($leccion["Lec_IdLeccion"]);
@@ -1263,7 +1289,8 @@ class gleccionController extends elearningController {
 
 
 				}
-        $this->_view->render($view);
+
+        $this->_view->renderizar($view, false, true);
     }
 
     public function _cambiarEstadoExamenPO(){

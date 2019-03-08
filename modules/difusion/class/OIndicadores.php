@@ -8,17 +8,20 @@ use Illuminate\Database\Eloquent\Model as Eloquent;
 
 class OIndicadores extends Eloquent
 {
+  use \verificarIdioma;
   protected $table = 'ora_indicadores';
   protected $primaryKey = 'OInd_IdIndicadores';
   public $timestamps = false;
 
+  private static $USE_FORCE_LANG = false;
+  private static $FORCE_LANG = '';
   public function scopeActivos ($query) {
   	return $query->where('OInd_Estado', 1);
   }
   public function scopeVisibles ($query) {
   	return $query->where('Row_Estado', 1);
   }
-
+  
   protected $formated = [
     'id' => 'OInd_IdIndicadores',
     'titulo' => 'OInd_Titulo',
@@ -70,12 +73,13 @@ class OIndicadores extends Eloquent
 
   protected static function boot() {
       parent::boot();
-
+      dump(\Cookie::get('langsiigef'));
       static::addGlobalScope('translate', function (Builder $builder) {
+        
         $builder->select(
           '*',
-          DB::raw("fn_TraducirContenido('ora_indicadores','OInd_Titulo',ora_indicadores.OInd_IdIndicadores,'".\Cookie::lenguaje()."',ora_indicadores.OInd_Titulo)  OInd_Titulo"),
-          DB::raw("fn_TraducirContenido('ora_indicadores','OInd_Descripcion',ora_indicadores.OInd_IdIndicadores,'".\Cookie::lenguaje()."',ora_indicadores.OInd_Descripcion)  OInd_Descripcion")
+          DB::raw("fn_TraducirContenido('ora_indicadores','OInd_Titulo',ora_indicadores.OInd_IdIndicadores,'".self::getCurrentLang()."',ora_indicadores.OInd_Titulo)  OInd_Titulo"),
+          DB::raw("fn_TraducirContenido('ora_indicadores','OInd_Descripcion',ora_indicadores.OInd_IdIndicadores,'".self::getCurrentLang()."',ora_indicadores.OInd_Descripcion)  OInd_Descripcion")
 
         );
 

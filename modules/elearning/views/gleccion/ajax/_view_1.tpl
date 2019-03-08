@@ -42,7 +42,7 @@
 
 {block 'subcontenido'}
 {include file='modules/elearning/views/gestion/menu/tag_url.tpl'}
-
+<input type="hidden" id="IdiomaOriginal" value="{$leccion.Idi_IdIdioma}"/>
 <div id="gestion_idiomas">
     {if  isset($idiomas) && count($idiomas)}
         <div class="col-lg-12">
