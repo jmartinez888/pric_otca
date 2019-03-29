@@ -2,6 +2,7 @@
 
 use App\Curso;
 use App\Idioma;
+use App\Pregunta;
 use App\OIndicadores;
 use App\ContenidoTraducido;
 use Illuminate\Database\Capsule\Manager as DB;
@@ -54,6 +55,7 @@ class examenController extends elearningController {
 
     // Examenes ======================================================================
     public function examens($idcurso=false, $idLeccion = false){
+        $this->_acl->autenticado();
         // $codigo = $this->getTexto("certificado");
         // $this->_view->setCss(array("verificar"));
         $this->validarUrlIdioma();
@@ -127,7 +129,7 @@ class examenController extends elearningController {
 
         $this->_view->assign("curso", $curso);
 
-        $this->_view->renderizar('examens');
+        $this->_view->render('examens');
     }
     public function _cambiarEstadoExamen(){
         $this->_acl->acceso('agregar_rol');
@@ -421,6 +423,7 @@ class examenController extends elearningController {
         $this->_view->renderizar('ajax/listarexamens', false, true);
     }
     public function nuevoexamen($id = 0, $idLeccion = false){
+        $this->_acl->autenticado();    
         // $this->_view->setCss(array("verificar"));
         // $id = $this->getTexto("id");
         $this->_view->setTemplate(LAYOUT_FRONTEND);
@@ -485,7 +488,7 @@ class examenController extends elearningController {
         $this->_view->assign('idcurso', $id);
         // $this->_view->assign('titulo_Curso', $titulo);
         $this->_view->assign('titulo', $titulo["Cur_Titulo"]);
-        $this->_view->renderizar('nuevoexamen', 'elearning');
+        $this->_view->render('nuevoexamen', 'elearning');
     }
     public function editarexamen_gestion_idiomas () {
         $this->_acl->autenticado();
@@ -639,7 +642,13 @@ class examenController extends elearningController {
     // Respuestas (intentos)===================================================================================
     public function intentos($idcurso = false, $idExamen = false, $idRespuesta = false){
         $this->_view->setTemplate(LAYOUT_FRONTEND);
-        $this->_view->setJs(array(array(BASE_URL . 'modules/elearning/views/gestion/js/core/util.js'),array(BASE_URL . 'modules/elearning/views/gestion/js/framework/lodash.js'),array(BASE_URL . 'modules/elearning/views/gestion/js/core/controller.js'),array(BASE_URL . 'modules/elearning/views/gestion/js/index.js'),array(BASE_URL . 'modules/elearning/views/gestion/js/core/view.js'), "index"));
+        $this->_view->setJs(array(
+            array(BASE_URL . 'modules/elearning/views/gestion/js/core/util.js'),
+            array(BASE_URL . 'modules/elearning/views/gestion/js/framework/lodash.js'),
+            array(BASE_URL . 'modules/elearning/views/gestion/js/core/controller.js'),
+            array(BASE_URL . 'modules/elearning/views/gestion/js/index.js'),
+            array(BASE_URL . 'modules/elearning/views/gestion/js/core/view.js'), "index"
+            ));
         $this->_view->getLenguaje("index_inicio");
 
         $pagina = $this->getInt('pagina');
@@ -651,16 +660,18 @@ class examenController extends elearningController {
         $ordeBy = " ORDER BY u.Usu_Nombre ASC, u.Usu_Apellidos ASC, Exl_Fecha DESC ";
         $condicion = "  WHERE ea.Exa_IdExamen = $idExamen ";
         $soloActivos = 0;
+        //ver solo de los usuarios activos
         if (!$this->_acl->permiso('ver_eliminados')) {
             $soloActivos = 1;
-            $condicion .= " AND ea.Row_Estado = $soloActivos ";
+            $condicion .= " AND u.Row_Estado = $soloActivos ";
         } else {
-            $ordeBy .= ", ea.Row_Estado DESC ";
+            $ordeBy .= ", u.Row_Estado DESC ";
         }
 
         $Cmodel = $this->loadModel("_gestionCurso");
 
         $curso = $Cmodel->getCursoById($idcurso, Cookie::lenguaje());
+        
         $data['titulo'] = $lang->get('str_examen').' - '.str_limit($curso['Cur_Titulo'], 20);
         $data['active'] = 'respuestas';
         $this->_view->assign($data);
@@ -670,8 +681,9 @@ class examenController extends elearningController {
 
         // print_r($arrayRowCount);
         // $ExamenAlumnos = $this->examen->getExamensAlumnoCondicion(0,CANT_REG_PAG, $condicion);
-
-        $this->_view->assign('respuestas',  $this->examen->getExamensAlumnoCondicion($pagina,CANT_REG_PAG, $condicion.$ordeBy));
+        $ress = $this->examen->getExamensAlumnoCondicion($pagina,CANT_REG_PAG, $condicion.$ordeBy);
+        
+        $this->_view->assign('respuestas',  $ress);
         // print_r($this->examen->getExamensAlumnoCondicion($pagina,CANT_REG_PAG, $condicion.$ordeBy));
         $paginador->paginar( $arrayRowCount['CantidadRegistros'],"listarExamensAlumno", "", $pagina, CANT_REG_PAG, true);
 
@@ -690,7 +702,7 @@ class examenController extends elearningController {
 
         $this->_view->assign("curso", $curso);
 
-        $this->_view->renderizar('intentos');
+        $this->_view->render('intentos');
     }
     public function _cambiarEstadoExamenAlumno(){
         // $this->_acl->acceso('agregar_rol');
@@ -790,6 +802,7 @@ class examenController extends elearningController {
     public function _paginacion_listarExamensAlumno($txtBuscar = false){
         //$this->validarUrlIdioma();
         $pagina = $this->getInt('pagina');
+        $Exa_IdExamen = $this->getInt('examen_id');
         $filas=$this->getInt('filas');
         $idcurso=$this->getInt('idcurso');
         $totalRegistros = $this->getInt('total_registros');
@@ -804,6 +817,7 @@ class examenController extends elearningController {
         {
             $condicion = " WHERE ea.Exa_IdExamen = $Exa_IdExamen AND (u.Usu_Nombre liKe '%$txtBuscar%' OR u.Usu_Apellidos like '%$txtBuscar%') ";
             //Filtro por Activos/Eliminados
+            //solo para usuarios
             if (!$this->_acl->permiso('ver_eliminados')) {
                 $soloActivos = 1;
                 $condicion .= " AND ea.Row_Estado = $soloActivos ";
@@ -1009,6 +1023,7 @@ class examenController extends elearningController {
     }
 
     public function preguntas($id,$idExamen){
+        $this->_acl->autenticado();
         // $id = $this->getTexto("id");
         // $idLeccion = $this->getTexto("idleccion");
 
@@ -1028,10 +1043,13 @@ class examenController extends elearningController {
         // url
         $Examen = $this->examen->getExamenID($idExamen, Cookie::lenguaje());
         $Mmodel = $this->loadModel("_gestionModulo");
+        $CModel = $this->loadModel("curso");
         $model = $this->loadModel("_gestionLeccion");
         $leccion = $model->getLeccionId($Examen["Lec_IdLeccion"]);
         $modulo = $Mmodel->getModuloId($Examen["Moc_IdModulo"]);
-        $this->_view->assign("curso", $Mmodel->getCursoId($id), Cookie::lenguaje());
+        $curso = $CModel->getCursoID($id, Cookie::lenguaje())[0];
+        // dump($curso);
+        $this->_view->assign("curso", $curso);
         $this->_view->assign("modulo", $modulo);
         $this->_view->assign("leccion", $leccion);
         $this->_view->assign('idLeccion', $Examen["Lec_IdLeccion"]);
@@ -1359,10 +1377,11 @@ class examenController extends elearningController {
     }
 
     public function registrarRespuestaUnica($idExamen, $id){
+        $this->_acl->autenticado();
         // $this->_view->setCss(array("verificar"));
         $this->_view->setTemplate(LAYOUT_FRONTEND);
         $lang = $this->_view->getLenguaje('elearning_cursos', false, true);
-        $this->_view->setJs(array(array(BASE_URL . 'modules/elearning/views/gestion/js/core/util.js'), "index"));
+        // $this->_view->setJs(array(array(BASE_URL . 'modules/elearning/views/gestion/js/core/util.js'), "index"));
 
         if(strlen($id)==0){ $id = Session::get("learn_param_curso"); }
         if(strlen($id)==0){ exit; }
@@ -1374,6 +1393,7 @@ class examenController extends elearningController {
         $puntos_maximo=$peso['Exa_Peso']-$puntos_pregunta['puntos_pregunta'];
 
         if ($this->botonPress("btn_registrar_pregunta")) {
+            // dd($_POST);
             $pregunta = $this->getSql("in_pregunta");
             $valor = $this->getTexto("valor_preg");
             $contador = $this->getTexto("contador");
@@ -1388,8 +1408,16 @@ class examenController extends elearningController {
                 }
             }
 
-            $pregunta =$this->examen->insertPregunta($idExamen, $pregunta, $cont, 1, null,  $this->getInt("puntos"));
-
+            $pregunta =$this->examen->insertPregunta(
+                $idExamen, 
+                $pregunta, 
+                $cont, 
+                1, 
+                null,  
+                $this->getInt("puntos"),
+                $this->getTexto('idiomaRadio')
+            );
+            // dump($pregunta);
             if($pregunta){
 
                 $alternativa=0;
@@ -1398,25 +1426,51 @@ class examenController extends elearningController {
                 for($i=1;$i<=$contador;$i++)
 
                 if($this->getSql("alt".$i)!=null){
-                    $alternativa =$this->examen->insertAlternativa($pregunta[0], $j, $this->getSql("alt".$i),0,0);
+                    $alternativa =$this->examen->insertAlternativa(
+                        $pregunta[0], $j, 
+                        $this->getSql("alt".$i),0,0, $this->getTexto('idiomaRadio'));
                     $j++;
                 }
 
                 if($alternativa)
                     $this->redireccionar("elearning/examen/preguntas/$id/$idExamen");
             }
+            // exit;
         }
 
         $titulo =  $this->examen->getTituloCurso($id);
+        // dd($titulo);
         $this->_view->assign('titulo', $titulo["Cur_Titulo"]);
         $this->_view->assign('puntos_maximo', $puntos_maximo );
         $this->_view->assign('examen', $idExamen );
+        $this->_view->assign('idiomas', Idioma::activos() );
         $this->_view->assign('idcurso', $id);
-        $this->_view->renderizar('respuestaunica', 'respuestaunica');
+        $this->_view->assign('idiomaUrl', Cookie::lenguaje());
+        $this->_view->render('respuestaunica', 'respuestaunica');
     }
-
+    
     public function editarRespuestaUnica($id, $idcurso){
+        $this->_acl->autenticado();
+        $idioma_id = Cookie::lenguaje();
+        $gestion_idioma = false;
+        $procesa = true;
+        
+        if ($this->has(['mode', 'curso_id', 'idioma_id', 'idioma_original_id'], 'post')) {
+        
+            if ($this->getTexto('mode') == 'get_tpl_idioma') {
+                $gestion_idioma = true;
+                
+                $idioma_id = $this->getTexto('idioma_id');
+                $idioma_original_id = $this->getTexto('idioma_original_id');
+                $examen_id = $this->getInt('examen_id');
+                $curso_id = $this->getInt('curso_id');
+            } else {
+                $procesa = false;
+            }
+        }
+        
         // $this->_view->setCss(array("verificar"));
+        
         $this->_view->setTemplate(LAYOUT_FRONTEND);
         $lang = $this->_view->getLenguaje('elearning_cursos', false, true);
         $this->_view->setJs(array(array(BASE_URL . 'modules/elearning/views/gestion/js/core/util.js'), "index"));
@@ -1426,48 +1480,114 @@ class examenController extends elearningController {
         Session::set("learn_url_tmp", "examen/registrarRespuestaUnica");
         Session::set("learn_param_curso", $idcurso);
 
-
-        $alternativas =$this->examen->getAlternativas($id, Cookie::lenguaje());
-
-        $preguntaedit =$this->examen->getValorPregunta($id);
-
-
-        if ($this->botonPress("btn_registrar_pregunta")) {
-
-            $countrpta=$this->examen->deleteAlternativa($id);
-            $pregunta = $this->getSql("in_pregunta");
-            $valor = $this->getTexto("valor_preg");
-            $contador = $this->getTexto("contador");
-            $cont=0;
-
-            for($i=1;$i<=$contador;$i++){
-                if($this->getSql("alt".$i)!=null){
-                    $cont++;
-
-                    if($i==$valor)
-                        break;
-                }
-            }
-
-            $pregunta =$this->examen->updatePregunta($id, $pregunta, $cont, $this->getInt("puntos"));
-
-            if($pregunta){
-
-                $alternativa=0;
-                $j=1;
-
-                for($i=1;$i<=$contador;$i++)
-
-                if($this->getSql("alt".$i)!=null){
-                    $alternativa =$this->examen->insertAlternativa($id, $j, $this->getSql("alt".$i),0,0);
-                    $j++;
-                }
-
-                if($alternativa)
-                    $this->redireccionar("elearning/examen/preguntas/$idcurso/".$preguntaedit['Exa_IdExamen']);
-            }
+        if ($gestion_idioma) {
+            // dump($idioma_id);
+            // $this->examen::setForceLang($idioma_id);
         }
 
+        $alternativas =$this->examen->getAlternativas($id, $idioma_id);
+
+        $preguntaedit =$this->examen->getValorPregunta($id, $gestion_idioma ? $idioma_id : false);
+
+        if ($this->botonPress("btn_registrar_pregunta")) {
+            // dump($_POST);
+            if ($this->has(['idioma_original_id', 'idioma_id'])) {
+                $idioma_id = $this->getTexto('idioma_id');
+                $idioma_original_id = $this->getTexto('idioma_original_id');   
+                $pregunta_id = $this->getTexto('pregunta_id');   
+                $curso_id = $this->getTexto('idcurso');   
+                // $countrpta=$this->examen->deleteAlternativa($id);
+                $pregunta = $this->getSql("in_pregunta");
+                $valor = $this->getTexto("valor_preg");
+                $contador = $this->getTexto("contador");
+                $cont=0;
+                $alternativasPost = $this->getSql('alt');
+                if ($pregunta_id == $id && $idcurso == $curso_id) {
+                    $objPregunta = Pregunta::find($id);
+                    $alternativasList = $objPregunta->alternativas;
+                    $idsAlternativaActual = $objPregunta->getIdsAlternativas();
+                    
+                    
+                    // dd($alternativasPost);
+                    if ($objPregunta) {
+                        for($i=1;$i<=$contador;$i++){
+                            if($this->getSql("alt".$i)!=null){
+                                $cont++;
+            
+                                if($i==$valor)
+                                    break;
+                            }
+                        }
+                        DB::beginTransaction();
+                        try {
+                            if ($objPregunta->Idi_IdIdioma == $idioma_id) {
+                                $pregunta_res =$this->examen->updatePregunta($id, $pregunta, $cont, $this->getInt("puntos"));
+                                
+                            } else {
+                                $pregunta_res = ContenidoTraducido::updateRow('pregunta', $objPregunta->Pre_IdPregunta, $idioma_id, [
+                                    'Pre_Descripcion' => $pregunta
+                                ], true);
+                            }
+                            // dump($pregunta_res);
+                            if($pregunta){
+                
+                                // $alternativa=0;
+                                // $j=1;
+                
+                                // for($i=1;$i<=$contador;$i++)
+    
+                                $idAlternativasPost = [];
+                                foreach($alternativasPost as $item) {
+                                    if (is_numeric($item['id'])) {
+                                        $idAlternativasPost[] = $item['id'];
+                                    } else if ($item['id'] == 'new') {
+                                        //insertar nuevo
+                                        $this->examen->insertAlternativa($id, $item['valor'], $item['value'],0,0, 0, $idioma_id);
+                                    }
+                                }
+                                foreach($alternativasList as $alt) {
+                                    $delete = true;
+                                    foreach($alternativasPost as $key => $alt_post) {
+                                        if ($alt->Alt_IdAlternativa == $alt_post['id']) {
+                                            $delete = false;
+                                            if ($alt->Idi_IdIdioma == $idioma_id) {
+                                                $alt->Alt_Etiqueta = $alt_post['value'];
+                                                $alt->save();
+                                            } else {
+                                                $pregunta_res = ContenidoTraducido::updateRow('alternativa', $alt->Alt_IdAlternativa, $idioma_id, [
+                                                    'Alt_Etiqueta' => $alt_post['value']
+                                                ], true);
+                                            }
+                                            unset($alternativasPost[$key]);
+                                            //reduce
+
+                                        }
+                                    }
+                                    if ($delete) {
+                                        //DELTE
+                                        $alt->delete();
+                                    }
+                                 
+                                }
+                                
+                                // if($this->getSql("alt".$i)!=null){
+                                //     $alternativa =$this->examen->insertAlternativa($id, $j, $this->getSql("alt".$i),0,0);
+                                //     $j++;
+                                // }
+                                // exit;
+                                // if($alternativa)
+                                DB::commit();
+                            }
+
+                        } catch(Exception $exce) {
+                            DB::rollback();
+                        }
+                        $this->redireccionar("elearning/examen/preguntas/$idcurso/".$preguntaedit['Exa_IdExamen']);
+                    }
+                }
+            }
+        }
+        
         $peso= $this->examen->getExamenPeso($preguntaedit['Exa_IdExamen']);
         $puntos_pregunta= $this->examen->getPuntosPregunta($preguntaedit['Exa_IdExamen']);
         $puntos_maximo=$peso['Exa_Peso']-$puntos_pregunta['puntos_pregunta'];
@@ -1478,11 +1598,19 @@ class examenController extends elearningController {
         $this->_view->assign('puntos_maximo', $puntos_maximo );
         $this->_view->assign('examen', $preguntaedit['Exa_IdExamen'] );
         $this->_view->assign('idcurso', $idcurso);
-
+        $this->_view->assign('idiomas', Idioma::activos());
         $this->_view->assign('alternativas', $alternativas);
-         $this->_view->assign('nextinput', count($alternativas)+1);
+        $this->_view->assign('idioma_id', $idioma_id);
+        $this->_view->assign('nextinput', count($alternativas)+1);
         $this->_view->assign('preguntaedit', $preguntaedit);
-        $this->_view->renderizar('editarrespuestaunica');
+        if ($procesa) {
+            if ($gestion_idioma)
+                $this->_view->render('editarrespuestaunica_gestion_idioma');
+            else
+                $this->_view->render('editarrespuestaunica');
+        } else {
+            $this->show404();
+        }
     }
 
     public function registrarRespuestaMultiple($idExamen, $id){

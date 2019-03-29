@@ -1,7 +1,8 @@
 <?php
 
-use Illuminate\Database\Capsule\Manager as DB;
+use App\Pregunta;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Capsule\Manager as DB;
 
 class examenModel extends Model {
     
@@ -128,7 +129,9 @@ class examenModel extends Model {
             $this->registrarBitacora("elearning(examenModel)", "getExamen", "Error Model", $exception);
             return $exception->getTraceAsString();
         }
+        
     }
+    
     public function getExamenAlumnos($Exa_IdExamen = 0)
     {
         try{
@@ -377,6 +380,7 @@ class examenModel extends Model {
             // echo $sql;
             return $result->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $exception) {
+            dump($exception);
             $this->registrarBitacora("elearning(examenModel)", "getExamensAlumnoCondicion", "Error Model", $exception);
             return $exception->getTraceAsString();
         }
@@ -701,9 +705,9 @@ class examenModel extends Model {
             return $exception->getTraceAsString();
         }
     }
-    public function insertPregunta($examen, $descripcion, $valor, $tipo, $descripcion2='', $puntos){
+    public function insertPregunta($examen, $descripcion, $valor, $tipo, $descripcion2='', $puntos, $idioma){
         try {             
-            $sql = "call s_i_pregunta(?,?,?,?,?,?)";
+            $sql = "call s_i_pregunta(?,?,?,?,?,?,?)";
             $result = $this->_db->prepare($sql);
             $result->bindParam(1, $examen, PDO::PARAM_INT);
             $result->bindParam(2, $descripcion, PDO::PARAM_STR);
@@ -711,6 +715,7 @@ class examenModel extends Model {
             $result->bindParam(4, $tipo, PDO::PARAM_INT); 
             $result->bindParam(5, $descripcion2, PDO::PARAM_STR);
             $result->bindParam(6, $puntos, PDO::PARAM_INT);                    
+            $result->bindParam(7, $idioma, PDO::PARAM_STR);
             $result->execute();
             return $result->fetch();
         } catch (PDOException $exception) {
@@ -751,9 +756,10 @@ class examenModel extends Model {
             return $exception->getTraceAsString();
         }
     }
-    public function insertAlternativa($pregunta, $valor, $descripcion, $relacion=0, $check=0, $puntos=0){
+    public function insertAlternativa($pregunta, $valor, $descripcion, $relacion=0, $check=0, $puntos=0, $idioma = false){
+        $idioma = $idioma ?: Cookie::lenguaje();
         try {             
-            $sql = "call s_i_alternativa(?,?,?,?,?,?)";
+            $sql = "call s_i_alternativa(?,?,?,?,?,?,?)";
             $result = $this->_db->prepare($sql);
             $result->bindParam(1, $pregunta, PDO::PARAM_STR);
             $result->bindParam(2, $valor, PDO::PARAM_INT);
@@ -761,6 +767,7 @@ class examenModel extends Model {
             $result->bindParam(4, $relacion, PDO::PARAM_INT); 
             $result->bindParam(5, $check, PDO::PARAM_INT);   
             $result->bindParam(6, $puntos, PDO::PARAM_STR);                 
+            $result->bindParam(7, $idioma, PDO::PARAM_STR);                 
             $result->execute();
             return $result->fetch();
         } catch (PDOException $exception) {
@@ -818,13 +825,22 @@ class examenModel extends Model {
             return $exception->getTraceAsString();
         }
     }
-    public function getValorPregunta($pregunta = "")
+    public function getValorPregunta($pregunta = "", $idioma_id = false)
     {
         try{
-            $sql = " SELECT * FROM pregunta WHERE Pre_IdPregunta = $pregunta ";
-            $result = $this->_db->prepare($sql);
-            $result->execute();
-            return $result->fetch(PDO::FETCH_ASSOC);
+            // $sql = "
+            // SELECT 
+            // *
+            // FROM pregunta WHERE Pre_IdPregunta = $pregunta 
+            // ";
+            if ($idioma_id) {
+                Pregunta::setForceLang($idioma_id);
+            }
+            $pre = Pregunta::find($pregunta);
+            // $result = $this->_db->prepare($sql);
+            // $result->execute();
+            // return $result->fetch(PDO::FETCH_ASSOC);
+            return $pre != null ? $pre->toArray() : [];
         } catch (PDOException $exception) {
             $this->registrarBitacora("elearning(examenModel)", "getValorPregunta", "Error Model", $exception);
             return $exception->getTraceAsString();

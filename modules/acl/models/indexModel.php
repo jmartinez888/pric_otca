@@ -639,7 +639,11 @@ class indexModel extends Model
     
     public function getIdiomas() {
         try {
-            $idiomas = $this->_db->query("SELECT * FROM idioma");
+            $idiomas = $this->_db->query("
+            SELECT 
+            *,
+            fn_TraducirContenido('idioma','Idi_Idioma',idioma.Idi_CharCode,'".self::getCurrentLang()."',idioma.Idi_Idioma)  Idi_Idioma
+            FROM idioma");
             return $idiomas->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $exception) {
             $this->registrarBitacora("acl(indexModel)", "getIdiomas", "Error Model", $exception);

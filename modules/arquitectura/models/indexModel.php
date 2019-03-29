@@ -389,7 +389,10 @@ class indexModel extends Model {
     public function getIdiomas() {
         try{
             $idiomas = $this->_db->query(
-                    "select * from idioma where Idi_Estado = 1"
+                    "select 
+                    *,
+                    fn_TraducirContenido('idioma','Idi_Idioma',idioma.Idi_CharCode,'".self::getCurrentLang()."',idioma.Idi_Idioma) Idi_Idioma
+                    from idioma where Idi_Estado = 1"
             );
             return $idiomas->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $exception) {

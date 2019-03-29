@@ -7,7 +7,7 @@ class indexModel extends Model
         parent::__construct();
     }
 
-    public function getTablasBD() 
+    public function getTablasBD()
     {
         try
         {
@@ -15,15 +15,15 @@ class indexModel extends Model
                 "SHOW FULL TABLES FROM siigef"
             );
             return $esr->fetchAll(PDO::FETCH_ASSOC);
-        } 
-        catch (PDOException $exception) 
+        }
+        catch (PDOException $exception)
         {
             $this->registrarBitacora("estandar(indexModel)", "getTablasBD", "Error Model", $exception);
             return $exception->getTraceAsString();
-        }     
+        }
     }
 
-    public function getTablasGeneradas() 
+    public function getTablasGeneradas()
     {
         try
         {
@@ -31,15 +31,15 @@ class indexModel extends Model
             );
 
             return $esr->fetchAll(PDO::FETCH_ASSOC);
-        } 
-        catch (PDOException $exception) 
+        }
+        catch (PDOException $exception)
         {
             $this->registrarBitacora("estandar(indexModel)", "getTablasGeneradas", "Error Model", $exception);
             return $exception->getTraceAsString();
-        }     
+        }
     }
 
-    public function consultaEstandar($Esr_NombreTabla) 
+    public function consultaEstandar($Esr_NombreTabla)
     {
         try
         {
@@ -47,12 +47,12 @@ class indexModel extends Model
                 "select * from $Esr_NombreTabla limit 5"
             );
             return $esr->fetchAll();
-        } 
-        catch (PDOException $exception) 
+        }
+        catch (PDOException $exception)
         {
             $this->registrarBitacora("estandar(indexModel)", "consultaEstandar", "Error Model", $exception);
             return $exception->getTraceAsString();
-        }  
+        }
     }
 
     public function getEstandar_recurso($condicion = '')
@@ -62,12 +62,12 @@ class indexModel extends Model
             $esr = $this->_db->query("select * from estandar_recurso $condicion");
 
             return $esr->fetchAll(PDO::FETCH_ASSOC);
-        } 
-        catch (PDOException $exception) 
+        }
+        catch (PDOException $exception)
         {
             $this->registrarBitacora("estandar(indexModel)", "getEstandar_recurso", "Error Model", $exception);
             return $exception->getTraceAsString();
-        }        
+        }
     }
     public function getEstandar_recurso2($condicion = '')
     {
@@ -75,14 +75,14 @@ class indexModel extends Model
         {
             $esr = $this->_db->query("select * from estandar_recurso $condicion");
             return $esr->fetch(PDO::FETCH_ASSOC);
-        } 
-        catch (PDOException $exception) 
+        }
+        catch (PDOException $exception)
         {
             $this->registrarBitacora("estandar(indexModel)", "getEstandar_recurso2", "Error Model", $exception);
             return $exception->getTraceAsString();
-        }        
+        }
     }
-    
+
     public function registrarEstandar($Esr_Nombre, $Esr_NombreTabla,$Esr_Estado,$Idi_IdIdioma, $Esr_Descripcion, $Esr_Tipo)
     {
         try
@@ -96,15 +96,15 @@ class indexModel extends Model
             $result->bindParam(5, $Esr_Descripcion, PDO::PARAM_STR);
             $result->bindParam(6, $Esr_Tipo, PDO::PARAM_INT);
             $result->execute();
-            return $result->fetch(PDO::FETCH_ASSOC);            
-        } 
-        catch (PDOException $exception) 
+            return $result->fetch(PDO::FETCH_ASSOC);
+        }
+        catch (PDOException $exception)
         {
             $this->registrarBitacora("estandar(indexModel)", "registrarEstandar", "Error Model", $exception);
             return $exception->getTraceAsString();
-        }                
+        }
     }
-    
+
     public function verificarEstandar($Esr_NombreTabla)
     {
         try
@@ -113,15 +113,15 @@ class indexModel extends Model
                 "select Esr_IdEstandarRecurso from estandar_recurso where Esr_NombreTabla = '$Esr_NombreTabla'"
             );
             return $esr->fetch(PDO::FETCH_ASSOC);
-        } 
-        catch (PDOException $exception) 
+        }
+        catch (PDOException $exception)
         {
             $this->registrarBitacora("estandar(indexModel)", "verificarEstandar", "Error Model", $exception);
             return $exception->getTraceAsString();
-        }        
+        }
     }
-    
-    public function getFicha_Estandar($Esr_IdEstandarRecurso, $condicion = '') 
+
+    public function getFicha_Estandar($Esr_IdEstandarRecurso, $condicion = '')
     {
         try
         {
@@ -129,14 +129,14 @@ class indexModel extends Model
                 "select * from ficha_estandar where Esr_IdEstandarRecurso = $Esr_IdEstandarRecurso  $condicion"
             );
             return $esr->fetchAll(PDO::FETCH_ASSOC);
-        } 
-        catch (PDOException $exception) 
+        }
+        catch (PDOException $exception)
         {
             $this->registrarBitacora("estandar(indexModel)", "getFicha_Estandar", "Error Model", $exception);
             return $exception->getTraceAsString();
-        } 
+        }
     }
-    
+
     public function getFicha_Variable($nombre_tabla)
     {
         try
@@ -165,7 +165,7 @@ class indexModel extends Model
         }
     }
 
-    public function getFicha_Estandar2($Fie_IdFichaEstandar) 
+    public function getFicha_Estandar2($Fie_IdFichaEstandar)
     {
         try
         {
@@ -173,15 +173,15 @@ class indexModel extends Model
                 "select * from ficha_estandar where Fie_IdFichaEstandar = $Fie_IdFichaEstandar "
             );
             return $esr->fetch(PDO::FETCH_ASSOC);
-        } 
-        catch (PDOException $exception) 
+        }
+        catch (PDOException $exception)
         {
             $this->registrarBitacora("estandar(indexModel)", "getFicha_Estandar2", "Error Model", $exception);
             return $exception->getTraceAsString();
-        } 
+        }
     }
-    
-    public function getFichaTraducida($condicion1 = "",$Idi_IdIdioma) 
+
+    public function getFichaTraducida($condicion1 = "",$Idi_IdIdioma)
     {
         try
         {
@@ -199,14 +199,14 @@ class indexModel extends Model
                     . " from ficha_estandar fie $condicion1 "
             );
             return $esr->fetch(PDO::FETCH_ASSOC);
-        } 
-        catch (PDOException $exception) 
+        }
+        catch (PDOException $exception)
         {
             $this->registrarBitacora("estandar(indexModel)", "getFichaTraducida", "Error Model", $exception);
             return $exception->getTraceAsString();
-        } 
+        }
     }
-    
+
     public function registrarFicha_Estandar($Fie_CampoFicha, $Esr_IdEstandarRecurso, $Fie_NombreTabla, $Fie_TipoDatoCampo, $Fie_TamanoColumna, $Fie_ColumnaTabla, $Fie_ColumnaObligatorio, $Fie_ColumnaTraduccion, $Fie_ColumnaTipo, $Idi_IdIdioma)
     {
         try
@@ -224,15 +224,15 @@ class indexModel extends Model
             $result->bindParam(9, $Fie_ColumnaTipo, PDO::PARAM_STR);
             $result->bindParam(10, $Idi_IdIdioma , PDO::PARAM_STR);
             $result->execute();
-            return $result->fetch(PDO::FETCH_ASSOC);            
-        } 
-        catch (PDOException $exception) 
+            return $result->fetch(PDO::FETCH_ASSOC);
+        }
+        catch (PDOException $exception)
         {
             $this->registrarBitacora("estandar(indexModel)", "registrarFicha_Estandar", "Error Model", $exception);
             return $exception->getTraceAsString();
-        }                
+        }
     }
-    
+
     public function actualizarFicha_Estandar($Fie_IdFichaEstandar, $Fie_CampoFicha, $Esr_IdEstandarRecurso, $Fie_NombreTabla, $Fie_TipoDatoCampo, $Fie_TamanoColumna, $Fie_ColumnaTabla, $Fie_ColumnaObligatorio, $Fie_ColumnaTraduccion, $Fie_ColumnaTipo, $Idi_IdIdioma)
     {
         try
@@ -251,27 +251,27 @@ class indexModel extends Model
             $result->bindParam(10, $Idi_IdIdioma , PDO::PARAM_STR);
             $result->bindParam(11, $Fie_IdFichaEstandar, PDO::PARAM_INT);
             $result->execute();
-            return $result->rowCount(PDO::FETCH_ASSOC);            
-        } 
-        catch (PDOException $exception) 
+            return $result->rowCount(PDO::FETCH_ASSOC);
+        }
+        catch (PDOException $exception)
         {
             $this->registrarBitacora("estandar(indexModel)", "actualizarFicha_Estandar", "Error Model", $exception);
             return $exception->getTraceAsString();
-        }                
+        }
     }
-    public function editarTraduccionFicha($Cot_Traduccion, $Cot_IdRegistro, $Idi_IdIdioma) 
+    public function editarTraduccionFicha($Cot_Traduccion, $Cot_IdRegistro, $Idi_IdIdioma)
     {
         $ContTradNombre = $this->buscarCampoTraducido('ficha_estandar', $Cot_IdRegistro, 'Fie_CampoFicha', $Idi_IdIdioma);
-        
-        $Cot_IdContenidoTraducido = $ContTradNombre['Cot_IdContenidoTraducido'];        
 
-        if (isset($Cot_IdContenidoTraducido)) 
+        $Cot_IdContenidoTraducido = $ContTradNombre['Cot_IdContenidoTraducido'];
+
+        if (isset($Cot_IdContenidoTraducido))
         {
             $this->_db->query(
                     "UPDATE contenido_traducido SET Cot_Traduccion = '$Cot_Traduccion' WHERE Cot_IdContenidoTraducido = $Cot_IdContenidoTraducido"
             );
-        } 
-        else 
+        }
+        else
         {
             $this->_db->prepare(
                             "INSERT INTO contenido_traducido VALUES (null, 'ficha_estandar', :Cot_IdRegistro, 'Fie_CampoFicha' , :Idi_IdIdioma, :Cot_Traduccion)"
@@ -283,22 +283,22 @@ class indexModel extends Model
             ));
         }
     }
-    
-    public function buscarCampoTraducido($tabla, $Cot_IdRegistro, $Cot_Columna, $Idi_IdIdioma) 
+
+    public function buscarCampoTraducido($tabla, $Cot_IdRegistro, $Cot_Columna, $Idi_IdIdioma)
     {
         try
         {
             $post = $this->_db->query(
                     "SELECT * FROM contenido_traducido WHERE Cot_Tabla = '$tabla' AND Cot_IdRegistro =  $Cot_IdRegistro AND  Cot_Columna = '$Cot_Columna' AND Idi_IdIdioma= '$Idi_IdIdioma'");
             return $post->fetch();
-        } 
-        catch (PDOException $exception) 
+        }
+        catch (PDOException $exception)
         {
             $this->registrarBitacora("estandar(indexModel)", "buscarCampoTraducido", "Error Model", $exception);
             return $exception->getTraceAsString();
         }
-    }    
-    
+    }
+
     public function verificarFichaEstandar($Fie_CampoFicha,$Esr_IdEstandarRecurso)
     {
         try
@@ -307,12 +307,12 @@ class indexModel extends Model
                 "SELECT Fie_IdFichaEstandar FROM ficha_estandar WHERE Esr_IdEstandarRecurso = $Esr_IdEstandarRecurso AND Fie_CampoFicha = '$Fie_CampoFicha'"
             );
             return $esr->fetch(PDO::FETCH_ASSOC);
-        } 
-        catch (PDOException $exception) 
+        }
+        catch (PDOException $exception)
         {
             $this->registrarBitacora("estandar(indexModel)", "verificarFichaEstandar", "Error Model", $exception);
             return $exception->getTraceAsString();
-        }        
+        }
     }
 
     public function eliminarRegistroFicha($Fie_IdFichaEstandar)
@@ -323,14 +323,14 @@ class indexModel extends Model
                 "DELETE FROM ficha_estandar WHERE Fie_IdFichaEstandar = $Fie_IdFichaEstandar  "
             );
             return $esr->rowCount(PDO::FETCH_ASSOC);
-        } 
-        catch (PDOException $exception) 
+        }
+        catch (PDOException $exception)
         {
             $this->registrarBitacora("estandar(indexModel)", "eliminarRegistroFicha", "Error Model", $exception);
             return $exception->getTraceAsString();
-        }        
+        }
     }
-    
+
     public function eliminarRegistroEstandar($Esr_IdEstandarRecurso)
     {
         try
@@ -339,46 +339,47 @@ class indexModel extends Model
                 "DELETE FROM ficha_estandar WHERE Esr_IdEstandarRecurso = $Esr_IdEstandarRecurso  "
             );
             return $esr->rowCount(PDO::FETCH_ASSOC);
-        } 
-        catch (PDOException $exception) 
+        }
+        catch (PDOException $exception)
         {
             $this->registrarBitacora("estandar(indexModel)", "eliminarRegistroEstandar", "Error Model", $exception);
             return $exception->getTraceAsString();
-        }        
+        }
     }
-    
-    public function generarTablaEstandar($tabla) 
+
+    public function generarTablaEstandar($tabla)
     {
         try
         {
            //echo $tabla; exit;
             $result = $this->_db->prepare($tabla);
             $result->execute();
-            
+
            // return $result->rowCount(PDO::FETCH_ASSOC);
-        } 
-        catch (PDOException $exception) 
+        }
+        catch (PDOException $exception)
         {
             $this->registrarBitacora("estandar(indexModel)", "generarTablaEstandar", "Error Model", $exception);
             return $exception->getTraceAsString();
-        }    
-    }    
-    
-    public function getIdiomas() 
+        }
+    }
+
+    public function getIdiomas()
     {
         try
         {
             $idiomas = $this->_db->query(
-                    "select * from idioma where Idi_Estado = 1"
+                    "select *, fn_TraducirContenido('idioma','Idi_Idioma',idioma.Idi_CharCode,'".self::getCurrentLang()."',idioma.Idi_Idioma)  Idi_Idioma
+                    from idioma where Idi_Estado = 1"
             );
             return $idiomas->fetchAll(PDO::FETCH_ASSOC);
-        } 
-        catch (PDOException $exception) 
+        }
+        catch (PDOException $exception)
         {
             $this->registrarBitacora("estandar(indexModel)", "getIdiomas", "Error Model", $exception);
             return $exception->getTraceAsString();
         }
     }
 
-    
+
 }

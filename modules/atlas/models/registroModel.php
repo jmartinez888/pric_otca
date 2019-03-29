@@ -73,7 +73,11 @@ class registroModel extends Model{
     public function getIdiomas()
     {
         $post = $this->_db->query(
-        " SELECT * FROM idioma ");        
+        "
+        SELECT 
+        *, fn_TraducirContenido('idioma','Idi_Idioma',idioma.Idi_CharCode,'".self::getCurrentLang()."',idioma.Idi_Idioma) Idi_Idioma
+        FROM idioma 
+        ");        
         return $post->fetchAll();
     }
     

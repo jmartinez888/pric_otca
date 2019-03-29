@@ -1,4 +1,19 @@
 <?php
+  if (! function_exists('charsToInt')) {
+    /**
+     * [charsToInt generar int ASCCI concatenado, 2 caracteres]
+     *
+     * @return  [int]  [return  int]
+     */
+    function charsToInt ($char) {
+      $t = str_split($char);
+      $tt = '';
+      foreach($t as $x) {
+        $tt .= ord($x);
+      }
+      return +$tt;
+    }
+  }
   if (! function_exists('get_lenguaje')) {
       function get_lenguaje($var)
       {

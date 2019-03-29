@@ -211,15 +211,27 @@ abstract class Controller
             return true;
         } else return false;
     }
-    protected function has($array) {
+    protected function has($array, $mode = 'request') {
         if (is_array($array)) {
             foreach ($array as $value) {
-                if (!isset($_REQUEST[$value]))
-                    return false;
+                switch ($mode) {
+                    case 'post':
+                        if (!isset($_POST[$value])) return false;
+                        break;
+                    case 'get':
+                        if (!isset($_GET[$value])) return false;
+                        break;
+                    default:
+                        if (!isset($_REQUEST[$value])) return false;
+                }
             }
             return true;
         } else {
-            return isset($_REQUEST[$array]);
+            switch ($mode) {
+                case 'post': return isset($_POST[$array]); break;
+                case 'get': return isset($_GET[$array]); break;
+                default: return isset($_REQUEST[$array]);
+            }
         }
         return false;
     }
@@ -358,32 +370,59 @@ abstract class Controller
         }
     }
 
+    private function _sql ($value) {
+        if (!is_array($value)) {
+            $value = strip_tags($value);
+            $value = htmlspecialchars($value, ENT_QUOTES);
+            return trim($value);
+        } else {
+            
+            foreach ($value as $key => $item) {
+                $value[$key] = $this->_sql($item);
+            }
+            return $value;
+        }
+    }
     protected function getSql($clave)
     {
         if(isset($_POST[$clave]) && !empty($_POST[$clave]))
         {
-            $_POST[$clave] = strip_tags($_POST[$clave]);
-
-            if(!get_magic_quotes_gpc())
-            {
-                #$_POST[$clave] = mysqli_escape_string($_POST[$clave]);
-                $_POST[$clave] = ($_POST[$clave]);
+            if (!is_array($_POST[$clave])) {
+                $_POST[$clave] = strip_tags($_POST[$clave]);
+    
+                if(!get_magic_quotes_gpc())
+                {
+                    #$_POST[$clave] = mysqli_escape_string($_POST[$clave]);
+                    $_POST[$clave] = ($_POST[$clave]);
+                }
+    
+                return trim($_POST[$clave]);
+            } else {
+                foreach ($_POST[$clave] as $key => $item) {
+                    $_POST[$clave][$key] = $this->_sql($item);
+                }
+                return $_POST[$clave];
             }
-
-            return trim($_POST[$clave]);
         }
 
         if(isset($_GET[$clave]) && !empty($_GET[$clave]))
         {
-            $_GET[$clave] = strip_tags($_GET[$clave]);
-
-            if(!get_magic_quotes_gpc())
-            {
-                #$_GET[$clave] = mysqli_escape_string($_GET[$clave]);
-                $_GET[$clave] = ($_GET[$clave]);
+            if (!is_array($_GET($clave))) {
+                $_GET[$clave] = strip_tags($_GET[$clave]);
+    
+                if(!get_magic_quotes_gpc())
+                {
+                    #$_GET[$clave] = mysqli_escape_string($_GET[$clave]);
+                    $_GET[$clave] = ($_GET[$clave]);
+                }
+    
+                return trim($_GET[$clave]);
+            } else {
+                foreach ($_GET[$clave] as $key => $item) {
+                    $_GET[$clave][$key] = $this->_sql($item);
+                }
+                return $_GET[$clave];
             }
-
-            return trim($_GET[$clave]);
         }
     }
 
@@ -467,6 +506,12 @@ abstract class Controller
         }
     }
 
+    public function show404 () {
+        // header('Content-type: application/json');
+        echo '404 NOT FOUND';
+        http_response_code(404);
+        die();
+    }
     // public function getContTrad($Cot_Tabla, $Cot_IdRegistro, $Idi_IdIdioma)
     // {
     //     return Model::getContTrad($Cot_Tabla, $Cot_IdRegistro, $Idi_IdIdioma);

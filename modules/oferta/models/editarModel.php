@@ -41,7 +41,8 @@ class editarModel extends Model {
     {
         try{
             $lista_final=array();
-            $listaInstituciones = $this->_db->query("SELECT * FROM idioma");
+            $listaInstituciones = $this->_db->query("
+            SELECT *, fn_TraducirContenido('idioma','Idi_Idioma',idioma.Idi_CharCode,'".self::getCurrentLang()."',idioma.Idi_Idioma) Idi_Idioma  FROM idioma");
             $listaInstituciones=$listaInstituciones->fetchAll(PDO::FETCH_ASSOC);
             if(count($listaInstituciones)){
                 for ($i=0; $i <count($listaInstituciones) ; $i++) { 

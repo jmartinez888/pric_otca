@@ -112,12 +112,17 @@ class Model extends Eloquent{
         
         try {
             $data = $this->_db->query($query);
+            return $data->fetchAll(PDO::FETCH_ASSOC);
         } catch (Exception $e) {
-            echo $query;
-            dd($e);
+            $this->registrarBitacora("model(ModelClass)", "getArray", "Error Model default", $e);
+            if (DEV_MODE) {
+                echo $query;
+                dump($e);
+            }
         }
-        $data = $this->_db->query($query);
-        return $data->fetchAll(PDO::FETCH_ASSOC);
+        return [];
+        // $data = $this->_db->query($query);
+        
     }
 
     public function execQuery($query, $get_id = false){

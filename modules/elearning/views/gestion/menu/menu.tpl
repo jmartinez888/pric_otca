@@ -472,24 +472,24 @@
         </a>
     </ul>
     <ul id="item-tareas-curso">
-        <div class="side-menu2 {if $active == 'tareas'}active{/if}">
+        <a href="{$_layoutParams.root}elearning/gmodulo/_view_tareas_curso/{$Cur_IdCurso}" class="side-menu2 {if isset($active) && $active == 'tareas'}active{/if}">
           <li class="side-menu side-menu-center-mid" style="position: relative">
             <i class="fa fa-pencil-square"></i>
             &nbsp;
             <span> {$lang->get('str_tareas_asignadas')} </span>
           </li>
-        </div>
+        </a>
     </ul>
 
     <!-- Jhon Martinez -->
     <ul id="item-examen-curso">
-      <div class="side-menu2 {if $active == 'examen'}active{/if}">
+      <a href="{$_layoutParams.root}elearning/examen/examens/{$Cur_IdCurso}" class="side-menu2 {if isset($active) && $active == 'examen'}active{/if}">
         <li class="side-menu side-menu-center-mid" style="position: relative">
           <i class="fa fa-edit"></i>
           &nbsp;
           <span> {$lang->get('str_examen')} </span>
         </li>
-      </div>
+      </a>
     </ul>
     <ul>
       <a href="{$_layoutParams.root}elearning/gleccion/encuestas/{$Cur_IdCurso}" class="side-menu2 {if isset($active) && $active == 'encuestas'}active{/if}">
@@ -520,23 +520,23 @@
     
     </ul>
     <ul id="item-certificado-curso">
-      <div class="side-menu2 {if $active == 'certificado'}active{/if}">
-        <li class="side-menu side-menu-center-mid" style="position: relative">
-          <i class="glyphicon glyphicon-education"></i>
-          &nbsp;
-          <span> {$lang->get('str_certificado')} </span>
-        </li>
-      </div>
+        <a href="{$_layoutParams.root}elearning/certificado/plantilla_opcion/{$Cur_IdCurso}" class="side-menu2 {if isset($active) && $active == 'certificado'}active{/if}">
+          <li class="side-menu side-menu-center-mid" style="position: relative">
+            <i class="glyphicon glyphicon-education"></i>
+            &nbsp;
+            <span> {$lang->get('str_certificado')} </span>
+          </li>
+        </a>
     </ul>
 
     <ul id="item-alumnos-curso">
-      <div class="side-menu2 {if $active == 'alumnos'}active{/if}">
-        <li class="side-menu side-menu-center-mid" style="position: relative">
-          <i class="fa fa-users"></i>
-          &nbsp;
-          <span> {$lang->get('str_alumnos1')} </span>
-        </li>
-      </div>
+        <a href="{$_layoutParams.root}elearning/gestion/matriculados/{$Cur_IdCurso}" class="side-menu2 {if isset($active) && $active == 'alumnos'}active{/if}">
+          <li class="side-menu side-menu-center-mid" style="position: relative">
+            <i class="fa fa-users"></i>
+            &nbsp;
+            <span> {$lang->get('str_alumnos1')} </span>
+          </li>
+        </a>
     </ul>
 
     <!-- <ul id="item-calendario-curso">
@@ -553,74 +553,3 @@
 
   </div>
 </div>
-
-<script type="text/javascript">
-  var idcurso = "";
-  if ($("#hidden_curso").val() != "") {
-    idcurso = $("#hidden_curso").val();
-  } else {
-    idcurso = $("#hidden_curso").attr("value");
-  }
-  $(document).ready(() => {
-
-    // setTimeout(function(){
-      $("#item-lista-curso").click(function(){
-        location.href = _root_ + _modulo + "/gestion/_inicio";
-        // CargarPagina("gcurso/_view_mis_cursos", { id: $("#hidden_curso").val() }, false, $(this));
-      });
-      $("#item-ficha-curso").click(function(){
-        location.href = _root_ + _modulo + '/gcurso/_view_finalizar_registro/' + idcurso;
-        // CargarPagina("gcurso/_view_finalizar_registro", { id: $("#hidden_curso").val() }, false, $(this));
-      });
-      $("#item-modulos-curso").click(function(){
-        location.href = _root_ + _modulo + '/gmodulo/_view_modulos_curso/' + idcurso;
-        // CargarPagina("gmodulo/_view_modulos_curso", { id: $("#hidden_curso").val() }, false, $(this));
-      });
-      $("#item-formularios").click(function(){
-        location.href = _root_lang + 'elearning/gcurso/formulario/' + idcurso;
-        // CargarPagina("gmodulo/_view_modulos_curso", { id: $("#hidden_curso").val() }, false, $(this));
-      });
-      $("#item-tareas-curso").click(function(){
-        location.href = _root_ + _modulo + '/gmodulo/_view_tareas_curso/' + idcurso;
-        // CargarPagina("gmodulo/_view_tareas_curso", { id: idcurso }, false, $(this));
-      });
-      //  $("#item-examen-curso").click(function(){
-      //     // location.href = "{$_layoutParams.root}elearning/examen/examens/"+$("#hidden_curso").val();
-      //     CargarPagina("examen/examens", { id: $("#hidden_curso").val() }, false, $(this));
-      // });
-      $("#item-examen-curso").click(function(){
-        // location.href = "{$_layoutParams.root}elearning/examen/examens/"+$("#hidden_curso").val();
-        // CargarPagina("examen/examens", { id: $("#hidden_curso").val() }, false, $(this));
-        // var Curso =  $("#hidden_curso").val();
-        var Link = _root_ + _modulo + "/examen/examens/" + idcurso;
-        location.href = Link;
-      });
-
-      // $("#item-anuncios-curso").click(function(){
-      //   // location.href = "{$_layoutParams.root}elearning/examen/examens/"+$("#hidden_curso").val();
-      //   // CargarPagina("examen/examens", { id: $("#hidden_curso").val() }, false, $(this));
-      //   // var Curso =  $("#hidden_curso").val();
-      //   var Link = _root_ + _modulo + "/gestion/anuncios/" + idcurso;
-      //   location.href = Link;
-      // });
-
-      $("#item-certificado-curso").click(function(){
-        // location.href = "{$_layoutParams.root}elearning/examen/examens/"+$("#hidden_curso").val();
-        // CargarPagina("examen/examens", { id: $("#hidden_curso").val() }, false, $(this));
-        // var Curso =  $("#hidden_curso").val();
-        var Link = _root_ + _modulo + "/certificado/plantilla_opcion/" + idcurso;
-        location.href = Link;
-      });
-
-      $("#item-alumnos-curso").click(function(){
-        // var Curso =  $("#hidden_curso").val();
-        var Link = _root_ + _modulo + "/gestion/matriculados/" + idcurso;
-        location.href = Link;
-      });
-    // }, 400);
-
-  })
-
-
-
-</script>

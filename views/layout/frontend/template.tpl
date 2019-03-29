@@ -80,15 +80,11 @@
                         </div>
                         <div class="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul class="nav navbar-nav">
+                                {foreach from=\App\Idioma::activos() item=idioma}
                                 <li class="nav-item" style="background: #565656;">
-                                    <a class="nav-link txt-color-white f-z-14 {if Cookie::lenguaje()=='es'}lang-active{/if}" href="{$_layoutParams.root_clear}index/_loadLang/es">Español</a>
+                                    <a class="nav-link txt-color-white f-z-14 {if Cookie::lenguaje()==$idioma->Idi_IdIdioma}lang-active{/if}" href="{$_layoutParams.root_clear}index/_loadLang/{$idioma.Idi_IdIdioma}"> {if !$idioma@first}|{/if} {$idioma.Idi_Idioma}</a>
                                 </li>
-                                <li class="nav-item" style="background: #565656;">
-                                    <a class="nav-link txt-color-white f-z-14 {if Cookie::lenguaje()=='pt'}lang-active{/if}" href="{$_layoutParams.root_clear}index/_loadLang/pt"> | Portugues</a>
-                                </li>
-                                <li class="nav-item" style="background: #565656;">
-                                    <a class="nav-link txt-color-white f-z-14 {if Cookie::lenguaje()=='en'}lang-active{/if}" href="{$_layoutParams.root_clear}index/_loadLang/en"> | English</a>
-                                </li>
+                                {/foreach}
                                 <li class="nav-item">
                                     <a class="nav-link txt-color-white f-z-14" href="{$_layoutParams.root}acercade/contacto"> | Contácto</a>
                                 </li>

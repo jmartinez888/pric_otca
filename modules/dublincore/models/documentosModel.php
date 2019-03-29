@@ -387,8 +387,9 @@ GROUP BY d.Dub_PalabraClave ");
     {
         try
         {
-            $idiomas = $this->_db->query(
-                    "SELECT * FROM idioma WHERE Idi_Estado = 1"
+            $idiomas = $this->_db->query("
+            SELECT *, fn_TraducirContenido('idioma','Idi_Idioma',idioma.Idi_CharCode,'".self::getCurrentLang()."',idioma.Idi_Idioma) Idi_Idioma
+            FROM idioma WHERE Idi_Estado = 1"
             );
             return $idiomas->fetchAll(PDO::FETCH_ASSOC);
         } 

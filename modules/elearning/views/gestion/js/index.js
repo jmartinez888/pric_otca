@@ -1,13 +1,13 @@
 $(document).ready(function(){
-  var url_tmp_session = $("#hidden_tmp_session").val();
-  if(url_tmp_session!=null && url_tmp_session.length > 0){
+  // var url_tmp_session = $("#hidden_tmp_session").val();
+  // if(url_tmp_session!=null && url_tmp_session.length > 0){
     
-    // CargarPagina(url_tmp_session, {});
-    location.href = _root_ + _modulo + "/" + url_tmp_session ;
-  }else{
-    // CargarPagina("gestion/_view_mis_cursos", {});
-    location.href = _root_ + _modulo + "/gestion/_view_mis_cursos" ;
-  }
+  //   // CargarPagina(url_tmp_session, {});
+  //   location.href = _root_ + _modulo + "/" + url_tmp_session ;
+  // }else{
+  //   // CargarPagina("gestion/_view_mis_cursos", {});
+  //   location.href = _root_ + _modulo + "/gestion/_view_mis_cursos" ;
+  // }
 });
 
 function Menu(value){

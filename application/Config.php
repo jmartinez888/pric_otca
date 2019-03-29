@@ -52,5 +52,8 @@ define('HASH_KEY', '4f6a6d832be79');
 define('DB_HOST', 'localhost');
 define('DB_USER', 'root');
 define('DB_PASS', 'pric');
-define('DB_NAME', 'pric_otca');
+define('DB_NAME', 'pric_otca_b');
 define('DB_CHAR', 'utf8');
+
+
+define('DEV_MODE', true);

@@ -442,7 +442,8 @@ class cursosController extends elearningController {
         $this->_view->assign("html", $html[0]);
       } else if ($OLeccion["Lec_Tipo"] == Leccion::TIPO_EXAMEN) {
         $examen = $Emodel->getExamenxLeccion($OLeccion["Lec_IdLeccion"], Cookie::lenguaje());
-
+        dump($examen);
+        dump($OLeccion);
         if ($idexamen && $idexamen == $examen["Exa_IdExamen"]) {
           // $this->_view->setTemplate(LAYOUT_FRONTEND);
           // $this->_view->setJs(array(array(BASE_URL . 'modules/elearning/views/gestion/js/core/util.js'), "index"));
@@ -454,9 +455,11 @@ class cursosController extends elearningController {
           $peso = $Emodel->getExamenPeso($idexamen);
           if (Session::get("intento") < 1 || Session::get("preguntas")[0]["Exa_IdExamen"] != $idexamen) {
             $preguntas = $Emodel->getPreguntas($idexamen, Cookie::lenguaje());
+            dump($preguntas);
             Session::set("preguntas", $preguntas);
             Session::set("intento", 1);
           }
+          dump(Session::get('preguntas'));
           if ($this->botonPress("terminar")) {
 
             $intento = $Emodel->insertExamenAlumno($idexamen, Session::get("id_usuario"));

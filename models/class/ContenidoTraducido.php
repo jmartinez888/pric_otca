@@ -63,6 +63,7 @@ class ContenidoTraducido extends Eloquent
 
 	    // }
 
-  	}
+    }
+    return true;
   }
 }

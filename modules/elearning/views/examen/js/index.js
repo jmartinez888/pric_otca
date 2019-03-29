@@ -98,7 +98,7 @@ $(document).on('ready', function () {
           $('#cuadro1').attr("style","background-image: url('"+result+"'); background-size: 100%; -moz-background-size: 100%; -o-background-size: 100%; -webkit-background-size: 100%; -khtml-background-size: 100%;  height:21cm; position: relative;");
          }
 
-    $("body").on('click', ".idioma_s", function () {
+    $("#gestion_idiomas").on('click', ".idioma_s", function () {
         let _this = $(this);
 
         let parentLi = _this.parent('li');
@@ -109,6 +109,37 @@ $(document).on('ready', function () {
         console.log(idIdioma)
         $('#idioma_target_id').val(idIdioma)
         gestionIdiomas($("#idRol").val(), $("#idIdiomaOriginal").val(), idIdioma);
+    });
+    
+    $("#gestion_idiomas_pregunta").on('click', ".idioma_s", function () {
+        let _this = $(this);
+
+        let parentLi = _this.parent('li');
+        console.log(parentLi);
+        var id = _this.attr("id");
+        var tag = $("#hd_" + id);
+        var idIdioma = tag.val();
+        console.log(idIdioma)
+        $('#idioma_target_id').val(idIdioma)
+
+        // idrol, idIdiomaOriginal, idIdioma
+        loading.show();
+        $.post(location.href,
+                {
+                    mode: 'get_tpl_idioma',
+                    curso_id: $('#idcurso').val(),        
+                    examen_id: $('#examen_id').val(),        
+                    idioma_id: idIdioma,
+                    idioma_original_id: $("#idioma_original_id").val()
+                }, function (data) {
+            $("#replace_contenido_pregunta").html('');
+            loading.hide();
+            $("#replace_contenido_pregunta").html(data);
+            $('form').validator();
+        });
+
+        
+        
     });
 
     var oldVal = "";
@@ -123,13 +154,17 @@ $(document).on('ready', function () {
         var textoseparado = texto.split("|");
         $("#alt").html("");
         var j=1;
-        var cabecera = "<div class='table-responsive'><table id='tabla' class='table' style='margin: 20px auto'><tr><th style='text-align: center'>Nº</th><th style='text-align: center'>Respuesta</th><th class='col-lg-3' style='text-align: center'>Puntos <button type='button' data-toggle='tooltip' data-placement='bottom' title='Asignar puntos automaticamente' class='btn btn-xs btn-warning margin-top-10' name='btn_asignar_puntos' id='btn_asignar_puntos'>Asignar</button> </th></tr></table></div>";
+        var cabecera = makeTemplate('tpl-cabezera');
         $("#alt").append(cabecera);
         contblanco=1;
         for(var i=0; i< textoseparado.length; i++){
             if(i%2!=0 &&i!=textoseparado.length-1){
                 // var campo = "<input type='text' id='espacio"+j+"' value='"+textoseparado[i]+"'>";
-                var campo = "<tr style='text-align: center'><td><b>"+j+".</b></td><td>"+textoseparado[i]+"</td><td><input placeholder='Puntos' class='form-control puntos_blanco' data-toggle='tooltip' data-placement='bottom' title='El valor debe ser inferior o igual a "+$("#maximo").val()+"' name='puntos"+j+"' id='puntos"+j+"' type='number' min='0' max='"+$("#maximo").val()+"' value='0'/></td></tr>";
+                let campo = makeTemplate('tpl-campo-pre-4', {
+                    maximo: $('#maximo').val(),
+                    varj: j,
+                    textoseparado: textoseparado[i]
+                })
                 $("#tabla").append(campo);
                 j++;
                 contblanco++;
@@ -141,7 +176,7 @@ $(document).on('ready', function () {
         // $("#alt").append(cierre);
         document.getElementById("btn_registrar_pregunta").disabled = false;
         if(j==1)
-            $("#alt").html("Por favor defina un espacio en blanco con estos separadores <b>|...|</b>");
+            $("#alt").html(LANG_UTILS_VIEW.espacio_blanco_con_separadores);
     });
 
     var oldVal2 = "";
@@ -159,7 +194,7 @@ $(document).on('ready', function () {
         }
 
         $("#puntos").val(suma);
-        $("#puntoslabel").text("Puntos: "+ suma);
+        $("#puntoslabel").text(`${LANG_UTILS_VIEW.str_puntos}: ${suma}`);
         var maximo = parseInt($("#maximo").val())-parseInt(suma);
         // $("#maximo").val(maximo);
         for(var i=1; i< contblanco; i++){
@@ -167,11 +202,11 @@ $(document).on('ready', function () {
             if($("#puntos"+i).val()==0)
             {
                 $("#puntos"+i).attr('max', parseInt(maximo));
-                $("#puntos"+i).attr('data-original-title', "El valor debe ser inferior o igual a " + maximo);
+                $("#puntos"+i).attr('data-original-title', `${LANG_UTILS_VIEW.nuevo_examen_porcentaje2} ${maximo}`);
             } else {
                 var _max = parseInt(maximo)+ parseInt($("#puntos"+i).val());
                 $("#puntos"+i).attr('max', parseInt(_max));
-                $("#puntos"+i).attr('data-original-title', "El valor debe ser inferior o igual a " + _max);
+                $("#puntos"+i).attr('data-original-title', `${LANG_UTILS_VIEW.elearning_label_mensaje} ${_max}`);
             }
         }  
         document.getElementById("btn_registrar_pregunta").disabled = false;      
@@ -188,19 +223,19 @@ $(document).on('ready', function () {
             // if("puntos"+i!=this.id)            
             $("#puntos"+i).val(puntosEnteros);
             $("#puntos"+i).attr('max', puntosEnteros);
-            $("#puntos"+i).attr('data-original-title', "El valor debe ser inferior o igual a " + puntosEnteros);
+            $("#puntos"+i).attr('data-original-title', `${LANG_UTILS_VIEW.nuevo_examen_porcentaje2} ${puntosEnteros}`);
         } 
         for (var j = 1; j < contblanco; j++) {
             if (puntosRestantes > 0) {
                 var _max = parseInt($("#puntos"+j).attr('max')) + 1;
                 $("#puntos"+j).val(_max);
                 $("#puntos"+j).attr('max', _max);
-                $("#puntos"+j).attr('data-original-title', "El valor debe ser inferior o igual a " + _max);
+                $("#puntos"+j).attr('data-original-title', `${LANG_UTILS_VIEW.elearning_label_mensaje} ${_max}`);
             } 
             puntosRestantes--;            
         }
         $("#puntos").val(maximo);
-        $("#puntoslabel").text("Puntos: "+ maximo);
+        $("#puntoslabel").text(`${LANG_UTILS_VIEW.str_puntos}: ${maximo}`);
         document.getElementById("btn_registrar_pregunta").disabled = false;
     });
 
@@ -326,13 +361,13 @@ $(document).on('ready', function () {
           });
         } else {
             if (parseInt($("#porcentaje").val())+parseInt($(this).attr("Exa_Porcentaje")) > 100 ) {
-                mensaje([["error"," No se puede habilitar examen porque supera el porcentaje máximo de 100%...!! "]]);
+                mensaje([["error", ` ${LANG_UTILS_VIEW.elearning_cursos_no_se_puede_habilitar_examen_supera_porcentaje} `]]);
             }
             if (_hidden_leccion == 1) {
-                mensaje([["error"," Solo se puede habilitar un examen por lección...!! "]]);
+                mensaje([["error", ` ${LANG_UTILS_VIEW.elearning_cursos_solo_puede_habilitar_examen_leccion} `]]);
             }
             if (parseInt($("#porcentaje").val()) > 100 ) {
-                mensaje([["error"," El porcentaje se superó...!! "]]);
+                mensaje([["error", ` ${LANG_UTILS_VIEW.elearning_cursos_porcentaje_supero} `]]);
             }
         }
       } else {
@@ -476,10 +511,10 @@ $(document).on('ready', function () {
             });
         } else {
             if (parseInt($("#puntos").val()) == 0) { 
-                mensaje([["error"," Ya se ha alcanzado todos los puntos del peso del examen con las preguntas registradas...!! "]]);
+                mensaje([["error", ` ${LANG_UTILS_VIEW.elearning_cursos_alcanzado_todos_puntos_peso_registrados} `]]);
             } else {
                 if (parseInt($(this).attr("Pre_Puntos")) > parseInt($("#puntos").val())) { 
-                    mensaje([["error"," El puntaje de la pregunta que quiere habilitar supera los puntos del peso del examen...!! "]]);
+                    mensaje([["error", ` ${LANG_UTILS_VIEW.elearning_cursos_puntaje_pregunta_supera_habilitar} `]]);
                 }                
             }
         }
@@ -661,7 +696,9 @@ function gestionIdiomas(idrol, idIdiomaOriginal, idIdioma) {
 $("#btn_añadir1").click(function(){
     if(contadorinputs<6){
         // var campo = "<div><div class='col-lg-10'><input placeholder='Alternativa' class='form-control margin-t-10' name='alt"+nextinput+"' id='alt"+nextinput+"'/></div><div class='col-lg-1'><input type='radio' value='"+nextinput+"' class='radioalt margin-t-10' name='valor_preg'/></div><div class='col-lg-1'><button class='btn btn-danger glyphicon pull-right margin-t-10 glyphicon-minus' class='btn_quitar' id='btn_quitar"+nextinput+"'></button></div></div>";
-        var campo = "<div class='col col-sm-12'><div class='col-sm-10'><input style='margin-top:10px;' placeholder='Alternativa' class='form-control margin-t-10' name='alt"+nextinput+"' id='alt"+nextinput+"'/></div><div class='col-sm-1'><input style='margin-top:10px;' type='radio' value='"+nextinput+"' class='radioalt margin-t-10' name='valor_preg'/></div><div class='col-sm-1'> <a style='margin-top:10px;' href='javascript:void(0);' class='remove_button btn btn-danger pull-right margin-t-10 ' data-toggle='tooltip' data-placement='right'  title='Eliminar Alternativa'><i class='glyphicon glyphicon-minus'></i></a></div></div>";
+        let campo = makeTemplate('tpl-campo-add1', {
+            nextinput: nextinput
+        })
         // var campo = "<div class='col-lg-11'><input placeholder='Alternativa "+nextinput+"' class='form-control margin-t-10' name='alt"+nextinput+"' id='alt"+nextinput+"'/></div><div class='col-lg-1'><input type='radio' value='"+nextinput+"' class='radioalt margin-t-10' name='valor_preg'/></div>";
         $("#alt").append(campo);
         nextinput++;
@@ -676,7 +713,9 @@ $("#btn_añadir1").click(function(){
 $("#btn_añadir2").click(function(){
     if(contadorinputs<6){
         // var campo = "<div><div class='col-lg-10'><input placeholder='Alternativa' class='form-control margin-t-10' name='alt"+nextinput+"' id='alt"+nextinput+"'/></div><div class='col-lg-1'><input type='radio' value='"+nextinput+"' class='radioalt margin-t-10' name='valor_preg'/></div><div class='col-lg-1'><button class='btn btn-danger glyphicon pull-right margin-t-10 glyphicon-minus' class='btn_quitar' id='btn_quitar"+nextinput+"'></button></div></div>";
-        var campo = "<div class='col col-sm-12'> <div class='col-sm-10'><input style='margin-top:10px;' placeholder='Alternativa' class='form-control margin-t-10' name='alt"+nextinput+"' id='alt"+nextinput+"'/></div><div class='col-sm-1'><input style='margin-top:10px;' type='checkbox' value='"+nextinput+"' class='radioalt margin-t-10' name='ckb"+nextinput+"' id='ckb"+nextinput+"' /></div><div class='col-sm-1'><a style='margin-top:10px;' href='javascript:void(0);' class='remove_button btn btn-danger pull-right margin-t-10 ' data-toggle='tooltip' data-placement='right'  title='Eliminar Alternativa'><i class='glyphicon glyphicon-minus'></i></a></div> </div>";
+        let campo = makeTemplate('tpl-campo-add2', {
+            nextinput: nextinput
+        })
         // var campo = "<div class='col-lg-11'><input placeholder='Alternativa "+nextinput+"' class='form-control margin-t-10' name='alt"+nextinput+"' id='alt"+nextinput+"'/></div><div class='col-lg-1'><input type='radio' value='"+nextinput+"' class='radioalt margin-t-10' name='valor_preg'/></div>";
         $("#alt").append(campo);
         nextinput++;
@@ -691,7 +730,9 @@ $("#btn_añadir2").click(function(){
 $("#btn_añadir4").click(function(){
     // var campo = "<div><div class='col-lg-10'><input placeholder='Alternativa' class='form-control margin-t-10' name='alt"+nextinput+"' id='alt"+nextinput+"'/></div><div class='col-lg-1'><input type='radio' value='"+nextinput+"' class='radioalt margin-t-10' name='valor_preg'/></div><div class='col-lg-1'><button class='btn btn-danger glyphicon pull-right margin-t-10 glyphicon-minus' class='btn_quitar' id='btn_quitar"+nextinput+"'></button></div></div>";
     if(contadorinputs<6){
-        var campo = "<div class='col col-sm-12'> <div class='col col-sm-11 margin-t-10'><label class=''>Enunciado "+nextinput+":</label><input placeholder='Enunciado "+nextinput+"' class='form-control' name='enu"+nextinput+"' id='enu"+nextinput+"'/><label class=''>Corresponde a:</label><input placeholder='Respuesta relacionada' class='form-control' name='rpta"+nextinput+"' id='rpta"+nextinput+"'/></div><div class='col col-sm-1' ><a href='javascript:void(0);' class='remove_button btn btn-danger pull-right' style='margin-top:100%;' data-toggle='tooltip' data-placement='right'  title='Eliminar Alternativa'><i class='glyphicon glyphicon-minus'></i></a></div></div>";
+        let campo = makeTemplate('tpl-campo-add4', {
+            nextinput: nextinput
+        })
     // var campo = "<div class='col-lg-11'><input placeholder='Alternativa "+nextinput+"' class='form-control margin-t-10' name='alt"+nextinput+"' id='alt"+nextinput+"'/></div><div class='col-lg-1'><input type='radio' value='"+nextinput+"' class='radioalt margin-t-10' name='valor_preg'/></div>";
         $("#alt").append(campo);
         nextinput++;

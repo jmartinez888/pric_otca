@@ -1,3 +1,5 @@
+{extends 'template.tpl'}
+{block 'css'}
 <style type="text/css">
     .tag-url{
         color: #75ACE5;
@@ -5,6 +7,9 @@
         cursor: pointer;
     }
 </style>
+{/block}
+
+{block 'contenido'}
 {include file='modules/elearning/views/gestion/menu/menu.tpl'}
 <div class="col-xs-12 col-sm-12 col-md-9 col-lg-10">
     <div class="col-xs-12">
@@ -21,7 +26,7 @@
                 </div>
             </div>
         </div>
-        <h3>Examenes</h3>
+        <h3>{$lang->get('str_examenes')}</h3>
         <hr class="cursos-hr">
     </div>
     <div class="col-xs-12">
@@ -35,7 +40,7 @@
                     {/if}
                     <input type="hidden" name="idcurso" id="idcurso" value="{$idcurso}">
                     <input type="hidden" name="hidden_curso" id="hidden_curso" value="{$idcurso}">
-                    <input class="form-control" placeholder="Buscar examen" style="width: 300px; float: left; margin: 0px 10px;" name="palabraexamen" id="palabraexamen">
+                    <input class="form-control" placeholder="{$lang->get('elearning_cursos_buscar_examen')}" style="width: 300px; float: left; margin: 0px 10px;" name="palabraexamen" id="palabraexamen">
                     <button class="btn btn-success" style=" float: left" type="button" id="buscarexamen"  ><i class="glyphicon glyphicon-search"></i></button>
                 </div>
             </div>
@@ -46,25 +51,25 @@
                         {if isset($idLeccion) && $idLeccion > 0}
                             <input type="hidden" class="estado" id="hidden_habilitado" value="{$Exa_Habilitado|default:'0'}" />
 
-                            <a href="{$_layoutParams.root}elearning/gleccion/_view_leccion/{$idcurso}/{$modulo.Moc_IdModuloCurso}/{$idLeccion}" class="btn btn-danger margin-t-10 " id="btn_nuevo" ><i class="glyphicon glyphicon-triangle-left"></i> Regresar</a>
+                            <a href="{$_layoutParams.root}elearning/gleccion/_view_leccion/{$idcurso}/{$modulo.Moc_IdModuloCurso}/{$idLeccion}" class="btn btn-danger margin-t-10 " id="btn_nuevo" ><i class="glyphicon glyphicon-triangle-left"></i> {$lang->get('str_regresar')}</a>
 
-                            <a href="{$_layoutParams.root}elearning/examen/nuevoexamen/{$idcurso}/{$idLeccion}" class="btn btn-primary margin-t-10 " id="btn_nuevo" > <i class="glyphicon glyphicon-plus"></i> Nuevo</a>
+                            <a href="{$_layoutParams.root}elearning/examen/nuevoexamen/{$idcurso}/{$idLeccion}" class="btn btn-primary margin-t-10 " id="btn_nuevo" > <i class="glyphicon glyphicon-plus"></i> {$lang->get('str_nuevo')}</a>
                         {else}
-                         <a href="{$_layoutParams.root}elearning/examen/nuevoexamen/{$idcurso}" class="btn btn-primary margin-t-10 glyphicon glyphicon-plus" id="btn_nuevo" > Nuevo</a>
+                         <a href="{$_layoutParams.root}elearning/examen/nuevoexamen/{$idcurso}" class="btn btn-primary margin-t-10 glyphicon glyphicon-plus" id="btn_nuevo" > {$lang->get('str_nuevo')}</a>
                         {/if}
                     {else}
-                     <a data-toggle="modal"  data-target="#msj-invalido" class="btn btn-danger margin-t-10 glyphicon glyphicon-plus" data-placement="bottom" > Nuevo</a>
+                     <a data-toggle="modal"  data-target="#msj-invalido" class="btn btn-danger margin-t-10 glyphicon glyphicon-plus" data-placement="bottom" > {$lang->get('str_nuevo')}</a>
                     {/if}
                     {if isset($examens) && count($examens)}
                         <div class="table-responsive">
                             <table class="table" style="  margin: 20px auto">
                                 <tr >
                                     <th style=" text-align: center">Nº</th>
-                                    <th style=" text-align: center">{$lenguaje["examen_titulo"]}</th>
-                                    <th style=" text-align: center">{$lenguaje["examen_intentos"]}</th>
-                                    <th style=" text-align: center">{$lenguaje["examen_procentaje"]}</th>
-                                    <th style=" text-align: center">{$lenguaje["examen_estado"]}</th>
-                                    <th style=" text-align: center">{$lenguaje["examen_opciones"]}</th>
+                                    <th style=" text-align: center">{$lang->get("examen_titulo")}</th>
+                                    <th style=" text-align: center">{$lang->get("examen_intentos")}</th>
+                                    <th style=" text-align: center">{$lang->get("examen_procentaje")}</th>
+                                    <th style=" text-align: center">{$lang->get("examen_estado")}</th>
+                                    <th style=" text-align: center">{$lang->get("examen_opciones")}</th>
                                 </tr>
                                 {foreach item=rl from=$examens}
                                     <tr {if $rl.Row_Estado==0}
@@ -92,9 +97,9 @@
                                             <a data-toggle="tooltip" data-placement="bottom" class="btn btn-default btn-sm glyphicon glyphicon-refresh estado-examen" title="{$lenguaje.tabla_opcion_cambiar_est}" Exa_Porcentaje = "{$rl.Exa_Porcentaje}"
                                             id_examen="{$rl.Exa_IdExamen}" estado="{$rl.Exa_Estado}"> </a>
                                             {/if}
-                                            <a data-toggle="tooltip" data-placement="bottom" class="btn btn-default btn-sm glyphicon glyphicon-edit" id="btn-Editar" title="Editar" href="{$_layoutParams.root}elearning/examen/editarexamen/{$idcurso}/{$rl.Exa_IdExamen}"></a>
+                                            <a data-toggle="tooltip" data-placement="bottom" class="btn btn-default btn-sm glyphicon glyphicon-edit" id="btn-Editar" title="{$lang->get('str_editar')}" href="{$_layoutParams.root}elearning/examen/editarexamen/{$idcurso}/{$rl.Exa_IdExamen}"></a>
 
-                                             <a data-toggle="tooltip" data-placement="bottom" class="btn btn-default btn-sm glyphicon glyphicon-question-sign btn-preguntas" title="Preguntas" href="{$_layoutParams.root}elearning/examen/preguntas/{$idcurso}/{$rl.Exa_IdExamen}"></a>
+                                             <a data-toggle="tooltip" data-placement="bottom" class="btn btn-default btn-sm glyphicon glyphicon-question-sign btn-preguntas" title="{$lang->get('str_preguntas')}" href="{$_layoutParams.root}elearning/examen/preguntas/{$idcurso}/{$rl.Exa_IdExamen}"></a>
 
                                             {if  $rl.Emitido>=0}
                                             <a
@@ -110,7 +115,7 @@
                                             {/if}
 
                                             {if $rl.Emitido>=1}
-                                             <a data-toggle="tooltip" data-placement="bottom" class="btn btn-default btn-sm glyphicon glyphicon-folder-open btn-respuestas" title="Ver Respuestas" href="{$_layoutParams.root}elearning/examen/intentos/{$idcurso}/{$rl.Exa_IdExamen}"></a>
+                                             <a data-toggle="tooltip" data-placement="bottom" class="btn btn-default btn-sm glyphicon glyphicon-folder-open btn-respuestas" title="{$lang->get('str_ver_respuestas')}" href="{$_layoutParams.root}elearning/examen/intentos/{$idcurso}/{$rl.Exa_IdExamen}"></a>
                                             {/if}
                                             <!-- {/if} -->
                                         </td>
@@ -120,7 +125,7 @@
                         </div>
                         {$paginacionexamens|default:""}
                     {else}
-                        No hay registros
+                        {$lang->get('str_no_hay_registros')}
                     {/if}
                 </div>
             </div>
@@ -133,18 +138,18 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="myModalLabel">Confirmación de Eliminación</h4>
+                <h4 class="modal-title" id="myModalLabel">{$lang->get('elearning_preguntas_confirmacioneliminacion')}</h4>
             </div>
             <div class="modal-body">
-                <p>Estás a punto de borrar un item, este procedimiento es irreversible</p>
-                <p>¿Deseas Continuar?</p>
-                <p>Eliminar: <strong  class="nombre-es">examen</strong></p>
+                <p>{$lang->get('str_eliminar_pregunta')}</p>
+                <p>{$lang->get('str_eliminar_continuar')}</p>
+                <p>{$lang->get('str_eliminar')}: <strong  class="nombre-es">{strtolower($lang->get('str_examen'))}</strong></p>
                 <label id="texto_" name='texto_'></label>
                 <!-- <input type='text' class='form-control' name='codigo' id='validate-number' placeholder='Codigo' required> -->
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                <a style="cursor:pointer"  data-dismiss="modal" class="btn btn-danger danger eliminar_examen">Eliminar</a>
+                <button type="button" class="btn btn-default" data-dismiss="modal">{$lang->get('str_cancelar')}</button>
+                <a style="cursor:pointer"  data-dismiss="modal" class="btn btn-danger danger eliminar_examen">{$lang->get('str_eliminar')}</a>
             </div>
         </div>
     </div>
@@ -155,19 +160,19 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="myModalLabel">Acción no Disponible</h4>
+                <h4 class="modal-title" id="myModalLabel">{$lang->get('str_accion_no_disponible')}</h4>
             </div>
             <div class="modal-body">
-                <p>Ya se ha alcanzado el 100% con los examenes registrados. Si desea crear uno nuevo modifique los porcentajes de los examenes, o inhabilite o elimine algún examen.</p>
+                <p>{$lang->get('elearning_cursos_examen_alcanzado_desea_crear_mie')}</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                <a style="cursor:pointer"  data-dismiss="modal" class="btn btn-danger danger eliminar_examen">Eliminar</a>
+                <button type="button" class="btn btn-default" data-dismiss="modal">{$lang->get('str_cancelar')}</button>
+                <a style="cursor:pointer"  data-dismiss="modal" class="btn btn-danger danger eliminar_examen">{$lang->get('str_eliminar')}</a>
             </div>
         </div>
     </div>
 </div>
-
+{/block}
 <!-- <script type="text/javascript">
     Menu(1);
     RefreshTagUrl();

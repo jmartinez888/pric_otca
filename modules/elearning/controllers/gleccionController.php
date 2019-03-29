@@ -52,7 +52,7 @@ class gleccionController extends elearningController {
 							$query->orderBy($nc, $value['dir']);
 						}
 					}
-					
+
 					if ($this->filledGet('export')) {
 						$this->_export($query, $this->getTexto('export'));
 					} else {
@@ -70,8 +70,6 @@ class gleccionController extends elearningController {
 					}
 				}
 			}
-			
-
 		}
 
 		public function asistencia_detalles ($leccion_id, $usuario_id) {
@@ -95,16 +93,16 @@ class gleccionController extends elearningController {
 					$data['objLeccion'] = $objLeccion;
 					$data['titulo'] = $lang->get('elearning_cursos_asistencia_detalles');
 					$data['asistencia_ref'] = $asistencia;
-					
+
 					$this->_view->setTemplate(LAYOUT_FRONTEND);
 					// dd($asistencia->toArray(), $asistencia[0]->detalles);
 					$this->_view->assign($data);
 					$this->_view->render('asistencia_leccion_detalles');
 				}
 			}
-			if (!$success) 
+			if (!$success)
 				$this->redireccionarReferer('elearning/cursos/cursos');
-			
+
 		}
 
 		public function registrar_asistencia () {
@@ -123,18 +121,18 @@ class gleccionController extends elearningController {
 				}
       }
       $this->_view->responseJson($res);
-		} 
+		}
 
 		public function datatable_asistencia ($leccion_id) {
 			$this->_acl->autenticado();
 			if ($this->_acl->tienePermisos('iniciar_leccion_dirigida') && is_numeric($leccion_id) && $leccion_id != 0) {
 				$objLeccion = Leccion::find($leccion_id);
-				if ($objLeccion) {				
+				if ($objLeccion) {
 					DB::enableQueryLog();
 					//OBTENER EL Máximo valor de Lea_Asistencia, para considerar que asistió a alguna de las sessiones de la lección
 					// $query = $objLeccion->leccion_asistencia()
 					$query_total = LeccionAsistencia::SelectParaAsistencia($objLeccion->Lec_IdLeccion, $objLeccion->getDocente());
-					
+
 					$query = LeccionAsistencia::SelectParaAsistencia($objLeccion->Lec_IdLeccion, $objLeccion->getDocente())
 						->SelectParaAsistenciaComplemento();
 					$records_total = $total_asistencia = DB::query()->selectRaw('count(*) total from ('.$query_total->toSql().') tt', $query_total->getBindings())->first()->total;
@@ -142,22 +140,22 @@ class gleccionController extends elearningController {
 					// dd($total_confirmados);
 					$total_sin_confirmados = DB::query()->selectRaw('count(*) total_sin_confirmadas from ('.$query_total->toSql().') tt', $query_total->getBindings())->where(DB::raw('confirma_asistencia'), LeccionAsistencia::ASISTENCIA_FALTA)->first()->total_sin_confirmadas;
 					$records_total_filter = $records_total;
-											
+
 					if ($this->has(['filter'])) {
 						// if ($_GET['filter']['filter_alumno'] != '') {
 							$query->where(function($query) {
-								if ($_GET['filter']['filter_alumno'] != '') 
+								if ($_GET['filter']['filter_alumno'] != '')
 									$query->orWhere(DB::raw("CONCAT(usuario.Usu_Nombre, ' ', usuario.Usu_Apellidos)"), 'like', '%'.$_GET['filter']['filter_alumno'].'%');
 
-								if (is_numeric($_GET['filter']['filter_session']) && $_GET['filter']['filter_session'] != -1) 
-									$query->where('leccion_asistencia.Les_IdLeccSess', $_GET['filter']['filter_session']);	
+								if (is_numeric($_GET['filter']['filter_session']) && $_GET['filter']['filter_session'] != -1)
+									$query->where('leccion_asistencia.Les_IdLeccSess', $_GET['filter']['filter_session']);
 							});
 							$query_total->where(function($query) {
-								if ($_GET['filter']['filter_alumno'] != '') 
+								if ($_GET['filter']['filter_alumno'] != '')
 									$query->orWhere(DB::raw("CONCAT(usuario.Usu_Nombre, ' ', usuario.Usu_Apellidos)"), 'like', '%'.$_GET['filter']['filter_alumno'].'%');
 
-								if (is_numeric($_GET['filter']['filter_session']) && $_GET['filter']['filter_session'] != -1) 
-									$query->where('leccion_asistencia.Les_IdLeccSess', $_GET['filter']['filter_session']);	
+								if (is_numeric($_GET['filter']['filter_session']) && $_GET['filter']['filter_session'] != -1)
+									$query->where('leccion_asistencia.Les_IdLeccSess', $_GET['filter']['filter_session']);
 							});
 							$records_total_filter = $total_asistencia = DB::query()->selectRaw('count(*) total from ('.$query_total->toSql().') tt', $query_total->getBindings())->first()->total;
 							$total_confirmados = DB::query()->selectRaw('count(*) total_confirmadas from ('.$query_total->toSql().') tt', $query_total->getBindings())->where(DB::raw('confirma_asistencia'), LeccionAsistencia::ASISTENCIA_CONFIRMADA)->first()->total_confirmadas;
@@ -182,7 +180,7 @@ class gleccionController extends elearningController {
 						$rows = $query->offset($this->getInt('start'))
 							->limit($this->getInt('length'))
 							->get()->map(function($item) {
-								
+
 								$idss = explode('-', $item->str_sessiones);
 								$ssf = [];
 								foreach ($idss as $key => $value) {
@@ -195,7 +193,7 @@ class gleccionController extends elearningController {
 									];
 								}
 								$item->sessiones_format = $ssf;
-								
+
 								return [
 									'id' 								=> $item->Lea_IdLeccAsis,
 									'nombre_completo' 	=> $item->nombre_completo,
@@ -248,7 +246,7 @@ class gleccionController extends elearningController {
 						->whereNotIn('leccion_asistencia.Usu_IdUsuario', [$objLeccion->getDocente()])
 						->groupBy('leccion_asistencia.Les_IdLeccSess')
 						->get();
-					
+
 					$this->_view->assign($data);
 					$this->_view->render('asistencia_leccion');
 
@@ -258,7 +256,7 @@ class gleccionController extends elearningController {
 			} else {
 				$this->redireccionarReferer('elearning/cursos/cursos');
 			}
-      
+
 		}
     public function pizarras ($curso_id) {
     $this->validarUrlIdioma();
@@ -279,7 +277,7 @@ class gleccionController extends elearningController {
 										$mod_ids[] = $value['Moc_IdModuloCurso'];
 								}
 								$pizarras = Leccion::getByModulos($mod_ids)->getPizarras()->get();
-								
+
 								$data['pizarras'] = $pizarras;
 								$data['modulos'] = $modulos;
                 $data['active'] = 'pizarras';
@@ -337,7 +335,7 @@ class gleccionController extends elearningController {
             $desc = $this->getTexto('descripcion');
             $tiempo = $this->getTexto('tiempo');
             $modulo = $this->getTexto('modulo');
-            
+
             if ($modulo != 0 || $modulo == Formulario::hashEncuestaLibre()) {
                 $lang = $this->_view->getLenguaje(['elearning_cursos', 'elearning_formulario_responder'], false, true);
                 $Mmodel = $this->loadModel("_gestionLeccion");
@@ -347,7 +345,7 @@ class gleccionController extends elearningController {
                     $leccion_id = $Mmodel->insertLeccion(null , Leccion::TIPO_ENCUESTA_LIBRE, $titulo, $desc, $tiempo);
                     $tipo_formulario = Formulario::TIPO_ENCUESTA_LIBRE;
                 }
-                else 
+                else
                     $leccion_id = $Mmodel->insertLeccion($modulo , Leccion::TIPO_ENCUESTA, $titulo, $desc, $tiempo);
 
 
@@ -379,7 +377,7 @@ class gleccionController extends elearningController {
       $this->agregar_encuesta($curso_id, 'pizarras');
     }
     /**
-     * [agregar_encuesta registrar encuestas y lecciones 
+     * [agregar_encuesta registrar encuestas y lecciones
      *  $modo|encuestas, registra solo encuestas
      *  $modo|pizarras, solo pizarras
      * ]
@@ -422,7 +420,7 @@ class gleccionController extends elearningController {
     }
 
     public function eliminar_encuesta ($leccion_id) {
-        
+
         $this->_acl->autenticado();
         $res = ['success' => false, 'msg' => ''];
         if ($this->_acl->tienePermisos('crear_encuestas_leccion')) {
@@ -446,9 +444,9 @@ class gleccionController extends elearningController {
         }
         $this->_view->responseJson($res);
 	}
-		
+
     public function datatable_lecciones ($curso_id, $modo = 'default') {
-        $this->_acl->autenticado();	
+        $this->_acl->autenticado();
         if ($modo != 'default') {
             $objCurso = Curso::find($curso_id);
             if ($objCurso) {
@@ -470,9 +468,9 @@ class gleccionController extends elearningController {
                 foreach ($modulos as $key => $value) {
                         $mod_ids[] = $value['Moc_IdModuloCurso'];
                 }
-                
 
-                
+
+
 
                 if ($modo == 'pizarras') {
                     $query = Leccion::getByModulos($mod_ids)->select()->addSelect('modulo_curso.Moc_Titulo as Moc_Titulo_Format')
@@ -485,12 +483,12 @@ class gleccionController extends elearningController {
                     );
                     $query->whereIn('leccion.Lec_Tipo', [Leccion::TIPO_ENCUESTA, Leccion::TIPO_ENCUESTA_LIBRE]);
                 }
-                
+
                 $datatable_response['recordsTotal'] = $datatable_response['recordsFiltered'] = $query->count();
-                
+
                 if ($this->has('filter')) {
                     $query->where(function($query) use($lang){
-                        if (isset($_GET['filter']['query']) && $_GET['filter']['query'] != '') 
+                        if (isset($_GET['filter']['query']) && $_GET['filter']['query'] != '')
                             $query->orWhere(DB::raw("CONCAT(Lec_Titulo, ' ', IFNULL(modulo_curso.Moc_Titulo, '".$lang->get('str_encuesta_libre')."'))"), 'like', '%'.$_GET['filter']['query'].'%');
                         if (isset($_GET['filter']['modulo_id']) && $_GET['filter']['modulo_id'] != -1)
                             if ($_GET['filter']['modulo_id'] == Formulario::hashEncuestaLibre())
@@ -500,7 +498,7 @@ class gleccionController extends elearningController {
                     });
                 }
 
-                
+
                 if ($this->has(['order', 'columns'])) {
                     foreach ($_GET['order'] as $key => $value) {
                         $nc = $_GET['columns'][$value['column']]['data'];
@@ -532,7 +530,7 @@ class gleccionController extends elearningController {
                     }
                 }
 
-                // if ($this->filledGet('export')) 
+                // if ($this->filledGet('export'))
                 $rows = $query->offset($this->getInt('start'))
                     ->limit($this->getInt('length'))
                     ->get()->map(function($item) {
@@ -590,7 +588,7 @@ class gleccionController extends elearningController {
 
 		}
 		public function datatable_encuesta_respuestas ($leccion_id) {
-			$this->_acl->autenticado();	
+			$this->_acl->autenticado();
 			$datatable_response = [
 				'draw' 						=> $this->getInt('draw'),
 				'recordsTotal' 		=> 0,
@@ -612,15 +610,15 @@ class gleccionController extends elearningController {
 						->joinUsuarios();
 				}
 				$datatable_response['recordsTotal'] = $datatable_response['recordsFiltered'] = $query->count();
-				
+
 				if ($this->has('filter')) {
 					$query->where(function($query) {
-						if (isset($_GET['filter']['query']) && $_GET['filter']['query'] != '') 
+						if (isset($_GET['filter']['query']) && $_GET['filter']['query'] != '')
 							$query->orWhere(DB::raw("CONCAT(usuario.Usu_Nombre, ' ', usuario.Usu_Apellidos)"), 'like', '%'.$_GET['filter']['query'].'%');
 					});
 				}
 
-				
+
 				if ($this->has(['order', 'columns'])) {
 					foreach ($_GET['order'] as $key => $value) {
 						$nc = $_GET['columns'][$value['column']]['data'];
@@ -636,7 +634,7 @@ class gleccionController extends elearningController {
 					}
 				}
 
-				// if ($this->filledGet('export')) 
+				// if ($this->filledGet('export'))
 				$rows = $query->offset($this->getInt('start'))
 					->limit($this->getInt('length'))
 					->get()->map(function($item) {
@@ -652,10 +650,10 @@ class gleccionController extends elearningController {
 					});
 				$datatable_response['data'] = $rows;
 				$datatable_response['query'] = DB::getQueryLog();
-				
+
 			}
 			$this->_view->responseJson($datatable_response);
-		
+
 		}
 		public function encuesta_resumen_export ($leccion_id, $modo = 'none') {
 			$this->_acl->autenticado();
@@ -665,13 +663,13 @@ class gleccionController extends elearningController {
 				if ($lecc_frm) {
 					$formulario = $lecc_frm->formulario;
 					if ($formulario) {
-						$preguntas = $formulario->preguntas; 
+						$preguntas = $formulario->preguntas;
                         $respuestas = $formulario->respuestas;
 						$titulo = $lang->get('elearning_cursos_resumen_encuesta').'-'.$lecc_frm->formulario->curso->Cur_Titulo;
 						if ($preguntas) {
 							// dd($preguntas->toArray());
 							if ($modo == 'excel') {
-								
+
 								$spreadsheet = new Spreadsheet();
 								// $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
 								$spreadsheet->getProperties()
@@ -684,15 +682,15 @@ class gleccionController extends elearningController {
 										// ->setCategory('');
 
 								// Add some data
-								
+
 								$build_header = collect();
 								$spreadsheet->setActiveSheetIndex(0)->setCellValueByColumnAndRow(1, 1, 'USUARIO');
 								$columnas = 2;
 								foreach ($preguntas as $pre) {
-									
+
 									if ($pre->Fpr_Tipo == 'cuadricula' || $pre->Fpr_Tipo == 'casilla') {
 										foreach($pre->hijos as $prehijo) {
-                                            $spreadsheet->setActiveSheetIndex(0)->setCellValueByColumnAndRow($columnas, 1, $pre->Fpr_Pregunta.'['.$prehijo->Fpr_Pregunta.']');	
+                                            $spreadsheet->setActiveSheetIndex(0)->setCellValueByColumnAndRow($columnas, 1, $pre->Fpr_Pregunta.'['.$prehijo->Fpr_Pregunta.']');
                                             $build_header->push([
                                                 'pregunta_id' => $prehijo->Fpr_IdForPreguntas,
                                                 'index' => $columnas
@@ -707,8 +705,8 @@ class gleccionController extends elearningController {
                                             ]);
                                         $columnas++;
                                     }
-                                    
-									
+
+
 								}
 								$resp = [];
 								$row = 2;
@@ -732,7 +730,7 @@ class gleccionController extends elearningController {
                                                     case 'box':
                                                         $opc_ids = explode('-', $det->Fre_Respuesta);
                                                         $opciones = FormularioPreguntasOpciones::select('Fpo_Opcion')->whereIn('Fpo_IdForPrOpc', $opc_ids)->get();
-                                                        for ($i=0; $i < $opciones->count(); $i++) { 
+                                                        for ($i=0; $i < $opciones->count(); $i++) {
                                                             $text_respu .= $opciones[$i]->Fpo_Opcion;
                                                             if ($i < $opciones->count() - 1){
                                                                 $text_respu .= ', ';
@@ -755,7 +753,7 @@ class gleccionController extends elearningController {
                                                             ]
                                                         ]);
                                                         $asignar = false;
-														break;												
+														break;
                                                     default:
                                                         $text_respu = $det->Fre_Respuesta;
                                                         break;
@@ -779,9 +777,9 @@ class gleccionController extends elearningController {
 								// header('Content-Type: application/vnd.ms-excel');
 								header('Content-Disposition: attachment;filename="'.$titulo.'.xls"');
 								header('Cache-Control: max-age=0');
-								
+
 								//header('Cache-Control: max-age=1');
-								
+
 								// If you're serving to IE over SSL, then the following may be needed
 								// header('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
 								// header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT'); // always modified
@@ -794,7 +792,7 @@ class gleccionController extends elearningController {
 								// $writer = IOFactory::createWriter($spreadsheet, 'Xls');
 							}
 						}
-						
+
 					}
 				}
 			}
@@ -813,11 +811,11 @@ class gleccionController extends elearningController {
 								$leccion = $mod_leccion->getLeccionId($leccion_id);
 								// dd($leccion);
                 if ($leccion) {
-										
+
                     $data["modulo"] =  $modulo ?? null;
                     $data["leccion"] =  $leccion;
                     $data['idLeccion'] =  $leccion_id;
-										
+
 										$mod_curso = $this->loadModel("_gestionCurso");
 
 										$lecc_frm = LeccionFormulario::findByLeccion($leccion_id);
@@ -830,14 +828,14 @@ class gleccionController extends elearningController {
 										if ($leccion['Lec_Tipo'] == Leccion::TIPO_ENCUESTA_LIBRE) {
 											$curso = $mod_curso->getCursoById($lecc_frm->formulario->Cur_IdCurso, Cookie::lenguaje());
 										}
-                    
+
                     $data['titulo'] = $lang->get('str_encuesta').' - '.str_limit($curso['Cur_Titulo'], 20);
                     // $data['active'] = 'examen';
 
                     $data['idcurso'] = $curso['Cur_IdCurso'];
                     $data['curso'] = $curso;
 
-                    
+
                     // dd($lecc_frm->formulario);
                     $data['formulario'] = null;
                     // $data['respuestas'] = null;
@@ -847,7 +845,7 @@ class gleccionController extends elearningController {
 											// 		// $data['respuestas'] = $formulario->respuestas;
 											// }
 										}
-										
+
                     //buscar formulario
                 }
 
@@ -876,7 +874,7 @@ class gleccionController extends elearningController {
 
         $Lmodel = $this->loadModel("_gestionLeccion");
         $Cmodel = $this->loadModel("_gestionCurso");
-        $Mmodel = $this->loadModel("_gestionModulo");  
+        $Mmodel = $this->loadModel("_gestionModulo");
         $_arquitectura = $this->loadModel('index','arquitectura');
 
         $curso = $Cmodel->getCursoXId($id_curso, Cookie::lenguaje());
@@ -900,14 +898,14 @@ class gleccionController extends elearningController {
 
     //JM-Ya
     public function gestion_idiomas() {
-        // $this->_view->getLenguaje(['elearning_gcurso', 'elearning_cursos'], false, true);   
+        // $this->_view->getLenguaje(['elearning_gcurso', 'elearning_cursos'], false, true);
         $_arquitectura = $this->loadModel('index','arquitectura');
         $condicion1 = '';
-        $idIdiomaOriginal = $this->getPostParam('idIdiomaOriginal');  
-        $Idi_IdIdioma = $this->getPostParam('idIdioma');      
+        $idIdiomaOriginal = $this->getPostParam('idIdiomaOriginal');
+        $Idi_IdIdioma = $this->getPostParam('idIdioma');
         $Moc_IdModuloCurso = $this->getPostParam('Moc_IdModuloCurso');
 
-        // $condicion1 .= " WHERE m.Moc_IdModuloCurso = $Moc_IdModuloCurso ";            
+        // $condicion1 .= " WHERE m.Moc_IdModuloCurso = $Moc_IdModuloCurso ";
         // $datos = $this->_arquitectura->getPaginaTraducida($condicion1,$Idi_IdIdioma);
         // echo $condicion1;
         $Mmodel = $this->loadModel("_gestionModulo");
@@ -916,7 +914,7 @@ class gleccionController extends elearningController {
         $this->_view->assign('idiomas',$_arquitectura->getIdiomas());
         // echo $Idi_IdIdioma;
         // echo $idIdiomaOriginal ;
-        if ($idIdiomaOriginal != $Idi_IdIdioma) { 
+        if ($idIdiomaOriginal != $Idi_IdIdioma) {
             $Moc_TiempoDedicacion = $datos["Moc_TiempoDedicacion"];
             $datos = array();
             $datos["Moc_IdModuloCurso"] = $Moc_IdModuloCurso;
@@ -932,13 +930,13 @@ class gleccionController extends elearningController {
 
             $contTrad = $Mmodel->getContTraducido("modulo_curso", $Moc_IdModuloCurso, $Idi_IdIdioma);
             // print_r($contTrad);
-            for ($i=0; $i < count($contTrad); $i++) { 
+            for ($i=0; $i < count($contTrad); $i++) {
                 $datos[$contTrad[$i]["Cot_Columna"]] = $contTrad[$i]["Cot_Traduccion"];
             }
           // print_r($datos);
         }
 
-        $this->_view->assign('modulo',$datos);  
+        $this->_view->assign('modulo',$datos);
 
         $this->_view->assign('IdiomaOriginal',$this->getPostParam('idIdiomaOriginal'));
         // $this->_view->assign('parametros', $parametros);
@@ -1040,7 +1038,7 @@ class gleccionController extends elearningController {
         $this->service->Send();
     }
 
-    public function _view_leccion($curso = 0, $modulo = 0, $leccion = 0){ 
+    public function _view_leccion($curso = 0, $modulo = 0, $leccion = 0){
         $this->validarUrlIdioma();
         $this->_view->setTemplate(LAYOUT_FRONTEND);
          $lang = $this->_view->getLenguaje(['elearning_cursos'], false, true);
@@ -1087,7 +1085,7 @@ class gleccionController extends elearningController {
         $this->_view->assign("material", $material);
         $this->_view->assign("trabajo", $trabajo); //RODRIGO 20180605
 		$this->_view->assign("tipo_trabajo", $tipo_trabajo); //RODRIGO 20180605
-				
+
         switch ($leccion["Lec_Tipo"]) {
             case Leccion::TIPO_HTML:
                 $contenido = $model->getContenidoLeccion($leccion["Lec_IdLeccion"]);
@@ -1159,7 +1157,7 @@ class gleccionController extends elearningController {
         $this->_view->setTemplate(LAYOUT_FRONTEND);
         $lang = $this->_view->getLenguaje(['elearning_cursos'], false, true);
 
-        $idIdiomaOriginal = $this->getTexto('idIdiomaOriginal');  
+        $idIdiomaOriginal = $this->getTexto('idIdiomaOriginal');
         $Idi_IdIdioma = $this->getTexto('idIdioma');
         $Lec_IdLeccion = $this->getInt('Lec_IdLeccion');
         $Cur_IdCurso = $this->getInt('idCurso');
@@ -1186,20 +1184,20 @@ class gleccionController extends elearningController {
             $leccion["Idi_IdIdioma"] = $Idi_IdIdioma;
             // print_r($leccion);
 
-        }     
+        }
 
         $cursoDatos = $Cmodel->getCursoXId($Cur_IdCurso, $Idi_IdIdioma);
         // $modulo = $Mmodel->getModuloId($Moc_IdModuloCurso, $Idi_IdIdioma);
         $referencias = $model->getReferenciaLeccion($leccion["Lec_IdLeccion"], $Idi_IdIdioma);
         // print_r($referencias);
         // echo  $referencias["Idi_IdIdioma"] ;
-        for ($i=0; $i < count($referencias); $i++) { 
-        	
+        for ($i=0; $i < count($referencias); $i++) {
+
 	        if ( $referencias[$i]["Idi_IdIdioma"] != $Idi_IdIdioma) {
-	            
+
 				unset($referencias[$i]);
 
-	        }     
+	        }
 
         }
 
@@ -1221,7 +1219,7 @@ class gleccionController extends elearningController {
         $this->_view->assign("material", $material);
         $this->_view->assign("trabajo", $trabajo); //RODRIGO 20180605
 		$this->_view->assign("tipo_trabajo", $tipo_trabajo); //RODRIGO 20180605
-				
+
         switch ($leccion["Lec_Tipo"]) {
             case Leccion::TIPO_HTML:
                 $contenido = $model->getContenidoLeccion($leccion["Lec_IdLeccion"]);

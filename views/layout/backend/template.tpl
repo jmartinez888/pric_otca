@@ -118,9 +118,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     </div>
                     <section class="pull-right " >
                         <ul class="idiomas">
+                            {*
                             <li><a href="{$_layoutParams.root_clear}index/_loadLang/es">Español</a></li>
                             <li><a href="{$_layoutParams.root_clear}index/_loadLang/en">English</a></li>
                             <li><a href="{$_layoutParams.root_clear}index/_loadLang/pt">Português</a></li>
+                            *}
+                            {foreach from=\App\Idioma::activos() item=idioma}
+                            <li><a href="{$_layoutParams.root_clear}index/_loadLang/{$idioma->Idi_IdIdioma}">{$idioma->Idi_Idioma}</a></li>
+                            {/foreach}
                         </ul>
                     </section>
                 </nav>

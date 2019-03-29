@@ -49,7 +49,7 @@
               </button>
             </form>
             {else}
-              {if $leccion.Lec_Tipo == 3 }
+              {if $leccion.Lec_Tipo == App\Leccion::TIPO_EXAMEN }
                 {if isset($ultimoexamen) && count($ultimoexamen) }
                   {if $ultimoexamen.Exl_Nota / $examen.Exa_Peso >= $parametrosCurso.Par_NotaMinima / $parametrosCurso.Par_NotaMaxima}
                     <!-- Para siguiente modulo tiene que aprobar el examen -->
@@ -106,14 +106,14 @@
                 </div> *}
                 {if isset($leccion) && count($leccion)}
                     <div class="panel-body contenedor-clase">
-                        {if $leccion["Lec_Tipo"]==1 || $leccion["Lec_Tipo"]==6}
+                        {if $leccion["Lec_Tipo"]== App\Leccion::TIPO_HTML || $leccion["Lec_Tipo"]==6}
                           {if isset($cont_html) && count($cont_html)>0}
                               {foreach from=$cont_html item=h}
                                 <div class="col-xs-12" style="text-align: justify;">{html_entity_decode($h.CL_Descripcion)}</div>
                               {/foreach}
                           {/if}
                         {/if}
-                        {if $leccion["Lec_Tipo"]==2}
+                        {if $leccion["Lec_Tipo"]== App\Leccion::TIPO_VIDEO}
                           {if isset($html) && count($html) > 0 }
                             <div class="col-md-offset-1 col-md-10 " id="div_video" style="padding: 5px; border: 2px solid #00a65a;">
                                   <object width="100%" height="344">
@@ -125,7 +125,7 @@
                               </div>
                           {/if}
                         {/if}
-                        {if $leccion["Lec_Tipo"]==3}
+                        {if $leccion["Lec_Tipo"]== App\Leccion::TIPO_EXAMEN}
                             {if isset($preguntas) && count($preguntas)}
                                 <div  class="col-xs-12" style="padding-bottom: 20px;">
                                     <form class="" role="form" method="post" action="" autocomplete="on">

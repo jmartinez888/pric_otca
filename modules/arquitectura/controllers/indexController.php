@@ -14,8 +14,8 @@ class indexController extends arquitecturaController
     {        
         $this->_acl->acceso('listar_arquitectura_web');        
         $this->validarUrlIdioma();
-        $this->_view->getLenguaje("index_inicio");
-        $this->_view->assign('titulo', 'Arquitectura');
+        $lang = $this->_view->getLenguaje("index_inicio", false, true);
+        $this->_view->assign('titulo', $lang->get('str_arquitectura'));
         $this->_view->setJs(array('index',array(BASE_URL.'public/ckeditor/ckeditor.js'),array(BASE_URL.'public/ckeditor/adapters/jquery.js')));
                 
         $registros  = $this->getInt('registros');

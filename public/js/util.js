@@ -1,3 +1,11 @@
+function makeTemplate (template_id, view_object = {}) {
+    let template_tag = document.getElementById(template_id)
+    if (typeof Mustache != 'undefined' && template_tag != null) {
+        return Mustache.render(template_tag.innerHTML, view_object)
+    }
+    return ''
+}
+
 function parseData(data) {
     let f = new FormData();
     for(let x in data) {
@@ -71,9 +79,7 @@ function mensaje(resultado) {
 
             setTimeout(() => {
                 div.remove()
-                console.log(value)
-                if (x !== "undefined" && value[3] != ''){
-                    console.log('vere')
+                if (value[3] !== undefined && value[3] != ''){
                     window.location.href = value[3]
                 }
             }, 5000)
