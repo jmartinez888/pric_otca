@@ -407,7 +407,7 @@ abstract class Controller
 
         if(isset($_GET[$clave]) && !empty($_GET[$clave]))
         {
-            if (!is_array($_GET($clave))) {
+            if (!is_array($_GET[$clave])) {
                 $_GET[$clave] = strip_tags($_GET[$clave]);
     
                 if(!get_magic_quotes_gpc())
